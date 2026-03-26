@@ -1,0 +1,5 @@
+# Default configuration for tychon-odmr-ml
+dataset_dir: ~/projects/tychon-shared-data/golden
+n_freq_points: 100
+output_dim: 3
+device: cpu
