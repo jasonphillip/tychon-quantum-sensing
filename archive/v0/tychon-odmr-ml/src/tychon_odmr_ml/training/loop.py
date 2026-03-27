@@ -7,6 +7,7 @@ by corruption parameters to reveal regime-specific failures.
 
 from __future__ import annotations
 
+import logging
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -22,6 +23,9 @@ from tychon_odmr_ml.training.losses import (
 )
 
 
+log = logging.getLogger(__name__)
+
+
 @dataclass
 class TrainConfig:
     """Training hyperparameters.
@@ -31,6 +35,13 @@ class TrainConfig:
     weight_decay : float
         Mandatory for INT8 QAT weight bounding. Keeps weights in a
         narrow range that quantizes cleanly.
+    huber_delta : float
+        Huber loss transition threshold in µT. Residuals below delta
+        are penalized quadratically; above delta, linearly. Default 1.0 µT.
+        For label ranges much larger than 1 µT (e.g. the golden dataset's
+        5,000–15,000 µT), this puts Huber entirely in linear mode. Set
+        delta to ~1-5% of the label range for mixed quadratic/linear
+        behavior (e.g. delta=100–500 for the golden dataset).
     """
 
     lr: float = 1e-3
@@ -221,6 +232,8 @@ def train(
     for epoch in range(1, config.epochs + 1):
         model.train()
         epoch_loss = 0.0
+        epoch_angular = 0.0
+        epoch_huber = 0.0
         n_batches = 0
 
         for batch in train_loader:
@@ -235,11 +248,23 @@ def train(
             optimizer.step()
 
             epoch_loss += losses["loss"].item()
+            epoch_angular += losses["angular"].item()
+            epoch_huber += losses["huber"].item()
             n_batches += 1
 
         scheduler.step()
         avg_loss = epoch_loss / max(n_batches, 1)
+        avg_angular = epoch_angular / max(n_batches, 1)
+        avg_huber = epoch_huber / max(n_batches, 1)
         final_train_loss = avg_loss
+        current_lr = scheduler.get_last_lr()[0]
+
+        # Per-epoch logging
+        if epoch == 1 or epoch % config.log_every == 0:
+            log.info(
+                "epoch %3d | loss %.4f | angular %.4f | huber %.4f | lr %.2e",
+                epoch, avg_loss, avg_angular, avg_huber, current_lr,
+            )
 
         entry: dict = {"epoch": epoch, "train_loss": avg_loss}
 
@@ -248,6 +273,12 @@ def train(
         if val_loader is not None and epoch % config.val_every == 0:
             val_metrics = validate_physics_regimes(model, val_loader, device)
             entry["val_metrics"] = val_metrics
+            log.info(
+                "  val | angle_err %.4f° | bz_err %.1f nT | mag_err %.1f nT",
+                val_metrics["angle_err_deg"],
+                val_metrics["bz_err_nT"],
+                val_metrics["magnitude_err_nT"],
+            )
 
             if val_metrics["angle_err_deg"] < best_angle_err:
                 best_angle_err = val_metrics["angle_err_deg"]
