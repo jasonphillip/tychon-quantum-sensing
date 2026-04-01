@@ -127,6 +127,119 @@ def generate_b1_trajectory(
     return ou_process(params.theta_B1, params.mu_B1, params.sigma_B1, dt, n_steps, seed)
 
 
+def _orbital_thermal_baseline(
+    t_array_s: np.ndarray,
+    T_mean_K: float,
+    delta_T_orb_K: float,
+    tau_orb_s: float,
+) -> np.ndarray:
+    """Compute deterministic orbital thermal baseline T_env(t).
+
+    Parameters
+    ----------
+    t_array_s : np.ndarray
+        Time array in seconds.
+    T_mean_K : float
+        Mean temperature in Kelvin.
+    delta_T_orb_K : float
+        Orbital temperature half-amplitude in Kelvin.
+    tau_orb_s : float
+        Orbital period in seconds.
+
+    Returns
+    -------
+    np.ndarray
+        T_env(t) = T_mean + delta_T_orb * sin(2*pi*t / tau_orb), in Kelvin.
+    """
+    return T_mean_K + delta_T_orb_K * np.sin(2.0 * np.pi * t_array_s / tau_orb_s)
+
+
+def _cascaded_sde_pair(
+    ou_config: OUNoiseConfig,
+    n_samples: int,
+    seed: int | None = None,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Generate cascaded T(t) -> B1(t) trajectories via exact OU kernel.
+
+    SDE system (integrated with exact OU transition kernel for stability):
+
+        T_env(t) = T_mean + dT_orb * sin(2*pi*t / tau_orb)
+        dT  = -theta_T * (T - T_env(t)) * dt + sigma_T * dW_T
+        B1_target(t) = B1_nom * [1 + alpha_B1 * (T(t) - T_mean)]
+        dB1 = -theta_B1 * (B1 - B1_target(t)) * dt + sigma_B1 * dW_B1
+
+    Causal ordering: T is computed first, then drives B1_target.
+    Independent Wiener processes; correlation arises through the coupling.
+
+    Parameters
+    ----------
+    ou_config : OUNoiseConfig
+        Configuration with cascaded SDE fields (alpha_B1 != 0).
+    n_samples : int
+        Number of trajectory samples.
+    seed : int, optional
+        Random seed for reproducibility.
+
+    Returns
+    -------
+    tuple[np.ndarray, np.ndarray]
+        (T_trajectory_K, B1_trajectory) each of shape (n_samples,).
+    """
+    T_mean_K = ou_config.T_mean_C + 273.15
+    dt = ou_config.trajectory_dt_s
+
+    # Orbital baseline
+    t_array = np.arange(n_samples) * dt
+    T_env = _orbital_thermal_baseline(
+        t_array, T_mean_K, ou_config.delta_T_orb_C, ou_config.tau_orb_s
+    )
+
+    # Two independent RNG streams
+    ss = np.random.SeedSequence(seed)
+    seed_T, seed_B1 = ss.spawn(2)
+    rng_T = np.random.default_rng(seed_T)
+    rng_B1 = np.random.default_rng(seed_B1)
+
+    noise_T = rng_T.standard_normal(n_samples - 1)
+    noise_B1 = rng_B1.standard_normal(n_samples - 1)
+
+    # Precompute exact OU kernel coefficients
+    decay_T = np.exp(-ou_config.theta_T * dt)
+    noise_scale_T = ou_config.sigma_T * np.sqrt(
+        (1.0 - decay_T**2) / (2.0 * ou_config.theta_T)
+    )
+
+    decay_B1 = np.exp(-ou_config.theta_B1 * dt)
+    noise_scale_B1 = ou_config.sigma_B1 * np.sqrt(
+        (1.0 - decay_B1**2) / (2.0 * ou_config.theta_B1)
+    )
+
+    T_traj = np.zeros(n_samples)
+    B1_traj = np.zeros(n_samples)
+
+    # Initial conditions
+    T_traj[0] = T_env[0]
+    B1_traj[0] = ou_config.B1_nominal
+
+    for i in range(n_samples - 1):
+        # --- Temperature step: revert to T_env[i] ---
+        T_traj[i + 1] = (
+            T_env[i] + (T_traj[i] - T_env[i]) * decay_T
+            + noise_scale_T * noise_T[i]
+        )
+
+        # --- B1 step: target depends causally on just-computed T ---
+        B1_target = ou_config.B1_nominal * (
+            1.0 + ou_config.alpha_B1 * (T_traj[i + 1] - T_mean_K)
+        )
+        B1_traj[i + 1] = (
+            B1_target + (B1_traj[i] - B1_target) * decay_B1
+            + noise_scale_B1 * noise_B1[i]
+        )
+
+    return T_traj, B1_traj
+
+
 def sample_ou_trajectory_pair(
     ou_config: OUNoiseConfig,
     n_samples: int,
@@ -153,6 +266,36 @@ def sample_ou_trajectory_pair(
         (T_trajectory, B1_trajectory) each of shape (n_samples,).
         Disabled channels return constant mu values.
     """
+    # --- Cascaded causal SDE mode (alpha_B1 != 0) ---
+    if ou_config.alpha_B1 != 0.0:
+        T_traj, B1_traj = _cascaded_sde_pair(ou_config, n_samples, seed)
+
+        if not ou_config.enable_thermal_noise:
+            T_mean_K = ou_config.T_mean_C + 273.15
+            T_traj = np.full(n_samples, T_mean_K)
+        else:
+            n_clipped = int(np.sum(T_traj <= 0))
+            if n_clipped > 0:
+                warnings.warn(
+                    f"Cascaded T trajectory: {n_clipped} samples clipped to >0 K",
+                    UserWarning,
+                )
+                T_traj = np.clip(T_traj, 1e-3, None)
+
+        if not ou_config.enable_mw_noise:
+            B1_traj = np.full(n_samples, ou_config.B1_nominal)
+        else:
+            n_clipped = int(np.sum(B1_traj <= 0))
+            if n_clipped > 0:
+                warnings.warn(
+                    f"Cascaded B1 trajectory: {n_clipped} samples clipped to >0",
+                    UserWarning,
+                )
+                B1_traj = np.clip(B1_traj, 1e-6, None)
+
+        return T_traj, B1_traj
+
+    # --- Legacy independent OU mode (alpha_B1 == 0) ---
     # Split seed into independent sub-seeds for T and B1
     ss = np.random.SeedSequence(seed)
     seed_T, seed_B1 = ss.spawn(2)

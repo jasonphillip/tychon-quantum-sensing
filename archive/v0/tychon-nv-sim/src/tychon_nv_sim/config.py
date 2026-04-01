@@ -24,18 +24,27 @@ class OUNoiseConfig:
     in a split gets one (T, B1) sample from the OU trajectory, producing
     temporally correlated parameter drift across the dataset.
 
+    Two modes controlled by ``alpha_B1``:
+
+    - **Independent** (``alpha_B1 == 0.0``, default): T and B1 are independent
+      OU processes reverting to ``mu_T`` and ``mu_B1`` respectively.
+    - **Cascaded causal** (``alpha_B1 != 0.0``): orbital thermal baseline
+      drives sensor T(t), which causally modulates B1 target. Uses exact
+      OU transition kernel (stable for any dt). ``mu_T`` / ``mu_B1`` are
+      overridden by ``T_mean_C + 273.15`` and ``B1_nominal``.
+
     Parameters
     ----------
     theta_T : float
         Temperature mean reversion rate (1/s).
     mu_T : float
-        Temperature long-term mean (K). Center of the OU trajectory.
+        Temperature long-term mean (K). Used in independent mode only.
     sigma_T : float
         Temperature volatility (K/sqrt(s)).
     theta_B1 : float
         MW power mean reversion rate (1/s).
     mu_B1 : float
-        MW power long-term mean (normalized, 1.0 = nominal).
+        MW power long-term mean (normalized). Used in independent mode only.
     sigma_B1 : float
         MW power volatility (fractional/sqrt(s)).
     trajectory_dt_s : float
@@ -44,6 +53,18 @@ class OUNoiseConfig:
         Enable OU noise on the temperature channel.
     enable_mw_noise : bool
         Enable OU noise on the MW power channel.
+    alpha_B1 : float
+        T->B1 coupling coefficient (1/K). Negative means gain drops with
+        heat. Set to 0.0 for independent mode (legacy). Reference:
+        SBQuantum arXiv:2509.19179, ~-0.03 dB/°C for COTS amplifiers.
+    T_mean_C : float
+        Mean sensor temperature in Celsius. Cascaded mode only.
+    delta_T_orb_C : float
+        Orbital thermal half-amplitude in Celsius (or Kelvin, it's a delta).
+    tau_orb_s : float
+        Orbital period in seconds. 5400 = 90-min LEO.
+    B1_nominal : float
+        Nominal MW amplitude (dimensionless, 1.0 = full power).
     """
 
     theta_T: float = 0.1
@@ -55,6 +76,12 @@ class OUNoiseConfig:
     trajectory_dt_s: float = 1.0
     enable_thermal_noise: bool = True
     enable_mw_noise: bool = True
+    # Cascaded SDE fields (alpha_B1 != 0.0 activates cascaded mode)
+    alpha_B1: float = 0.0
+    T_mean_C: float = 20.0
+    delta_T_orb_C: float = 15.0
+    tau_orb_s: float = 5400.0
+    B1_nominal: float = 1.0
 
 
 @dataclass

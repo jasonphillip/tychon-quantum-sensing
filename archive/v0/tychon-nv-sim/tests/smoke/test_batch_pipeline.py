@@ -139,6 +139,62 @@ def test_stochastic_batch_generation():
 
 
 @pytest.mark.smoke
+def test_cascaded_stochastic_batch_generation():
+    """Generate a stochastic dataset via cascaded causal SDE model."""
+    from tychon_nv_sim.config import OUNoiseConfig
+    from tychon_nv_sim.datasets.loaders import DatasetLoader
+    from tychon_nv_sim.pipelines.batch_generate import generate_dataset
+
+    ou_config = OUNoiseConfig(
+        theta_T=1.0e-3, sigma_T=0.05,
+        theta_B1=10.0, sigma_B1=0.006,
+        trajectory_dt_s=1.0,
+        alpha_B1=-0.0035,
+        T_mean_C=20.0,
+        delta_T_orb_C=15.0,
+        tau_orb_s=5400.0,
+        B1_nominal=1.0,
+    )
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        output = generate_dataset(
+            output_dir=tmpdir,
+            n_train=5,
+            n_val=2,
+            n_test=2,
+            master_seed=88,
+            n_freq_points=20,
+            noise_mode="stochastic",
+            ou_noise_config=ou_config,
+        )
+
+        out = Path(output)
+        assert (out / "dataset.h5").exists()
+        assert (out / "manifest.json").exists()
+
+        loader = DatasetLoader(output)
+        manifest = loader.load_manifest()
+        assert manifest.noise_mode == "stochastic"
+        assert manifest.ou_params is not None
+        assert manifest.ou_params["alpha_B1"] == pytest.approx(-0.0035)
+
+        spectra, freqs, labels, params, seeds = loader.load_split("train")
+        assert spectra.shape == (5, 20)
+        assert params.shape == (5, 5)
+        assert np.all(np.isfinite(spectra))
+
+        # T values should be near 293.15 K (20°C), within orbital + OU range
+        T_vals = params[:, 1]
+        assert np.all(T_vals > 250.0), "Temperature unreasonably low"
+        assert np.all(T_vals < 340.0), "Temperature unreasonably high"
+
+        # MW power scale should be near 1.0
+        mw_scales = params[:, 4]
+        assert np.all(mw_scales > 0.5)
+        assert np.all(mw_scales < 1.5)
+
+
+@pytest.mark.smoke
 def test_both_mode_batch_generation():
     """Generate paired deterministic + stochastic datasets."""
     import h5py

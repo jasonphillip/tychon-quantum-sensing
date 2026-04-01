@@ -1,8 +1,11 @@
-# Batch generation with OU stochastic noise on T(t) and B1(t).
+# Batch generation with cascaded causal SDE noise: T(t) -> B1(t).
 #
-# Temperature and MW power are sampled from Ornstein-Uhlenbeck trajectories
-# (temporally correlated drift) instead of uniform random sampling.
+# Orbital thermal baseline drives sensor temperature via OU process,
+# which causally modulates MW amplifier gain. This creates correlated
+# noise that a PID cannot untangle but a learned model can.
 # All other parameters (p1, b1_gradient, b_perp, Bz) remain uniformly sampled.
+#
+# Reference: SBQuantum arXiv:2509.19179
 
 noise_mode: stochastic
 
@@ -16,17 +19,25 @@ b1_gradient_range: [0.05, 0.30]
 b_perp_range_T: [0.0, 50.0e-6]
 bz_range_T: [0.005, 0.015]
 
-# OU noise configuration
+# OU noise configuration — cascaded causal SDE mode
 ou_noise:
-  theta_T: 0.1        # T mean reversion rate (1/s)
-  mu_T: 300.0         # T long-term mean (K)
-  sigma_T: 0.5        # T volatility (K/sqrt(s))
-  theta_B1: 1.0       # B1 mean reversion rate (1/s)
-  mu_B1: 1.0          # B1 long-term mean (normalized)
-  sigma_B1: 0.05      # B1 volatility (fractional/sqrt(s))
-  trajectory_dt_s: 1.0  # Time between successive spectra (s)
+  # Temperature OU (sensor thermal mass, tau ~16 min)
+  theta_T: 1.0e-3       # T mean reversion rate (1/s)
+  mu_T: 293.15           # T long-term mean (K) — overridden in cascaded mode
+  sigma_T: 0.05          # T volatility (K/sqrt(s)), steady-state std ~1.1°C
+  # MW amplitude OU (electronic regulation loop, tau ~0.1 s)
+  theta_B1: 10.0         # B1 mean reversion rate (1/s)
+  mu_B1: 1.0             # B1 long-term mean — overridden in cascaded mode
+  sigma_B1: 0.006        # B1 volatility (fractional/sqrt(s)), steady-state ~0.2%
+  trajectory_dt_s: 1.0   # Time between successive spectra (s)
   enable_thermal_noise: true
   enable_mw_noise: true
+  # Cascaded SDE coupling (set alpha_B1 to 0.0 for independent mode)
+  alpha_B1: -0.0035      # T->B1 coupling (1/K). COTS amplifier ~-0.03 dB/°C.
+  T_mean_C: 20.0         # Mean sensor temperature (°C)
+  delta_T_orb_C: 15.0    # Orbital thermal half-amplitude (°C), payload +5 to +35
+  tau_orb_s: 5400.0      # LEO orbital period (s), 90 min
+  B1_nominal: 1.0        # Nominal MW amplitude (dimensionless)
 
 # Split sizes
 n_train: 1000

@@ -260,13 +260,21 @@ def generate_dataset(
     if noise_mode_enum == NoiseMode.DETERMINISTIC:
         manifest_temp_range = temp_range_K
     else:
-        # OU stationary distribution 3σ bounds
         assert ou_noise_config is not None
         sigma_stat = ou_noise_config.sigma_T / np.sqrt(2 * ou_noise_config.theta_T)
-        manifest_temp_range = (
-            ou_noise_config.mu_T - 3 * sigma_stat,
-            ou_noise_config.mu_T + 3 * sigma_stat,
-        )
+        if ou_noise_config.alpha_B1 != 0.0:
+            # Cascaded mode: orbital baseline + OU fluctuation
+            T_mean_K = ou_noise_config.T_mean_C + 273.15
+            manifest_temp_range = (
+                T_mean_K - ou_noise_config.delta_T_orb_C - 3 * sigma_stat,
+                T_mean_K + ou_noise_config.delta_T_orb_C + 3 * sigma_stat,
+            )
+        else:
+            # Legacy: stationary distribution around mu_T
+            manifest_temp_range = (
+                ou_noise_config.mu_T - 3 * sigma_stat,
+                ou_noise_config.mu_T + 3 * sigma_stat,
+            )
 
     # Serialize OU params for manifest
     ou_params_dict = (
