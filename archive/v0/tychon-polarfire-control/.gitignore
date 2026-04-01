@@ -1,0 +1,25 @@
+# Libero SoC work directories
+work/
+ip_cache/
+component/
+simulation/
+stimulus/
+designer/
+smartgen/
+
+# Synthesis outputs (committed selectively via libero/reports/)
+*.job
+*.stp
+
+# VectorBlox compiled models (transferred via tychon-shared-data/)
+*.vnnx
+
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# Logs
+*.log

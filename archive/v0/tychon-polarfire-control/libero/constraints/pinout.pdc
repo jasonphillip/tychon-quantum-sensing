@@ -1,0 +1,7 @@
+# pinout.pdc — Physical Design Constraints
+#
+# Board-specific physical I/O assignments.
+# Populate when target board is selected (Icicle Kit for Phase I eval).
+#
+# Example:
+#   set_io -port_name {actuator_out} -pin_name {H12} -io_std {LVCMOS33}
