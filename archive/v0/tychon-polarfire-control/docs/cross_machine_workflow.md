@@ -57,9 +57,21 @@ wsl -d Ubuntu -u jason
 source ~/vbx-env/bin/activate
 ```
 
+**Python and dependency pinning (hard requirements):**
+
+The WSL venv (`~/vbx-env`) must use **Python 3.10** — not 3.11 or 3.12. The SDK's `setup_vars.sh` and compiled `.so` files expect 3.10 ABI. Newer Python versions cause silent binary validation failures in `vnnx_compile` output.
+
+Pinned versions:
+```
+python3.10 -m venv ~/vbx-env
+pip install tensorflow-cpu==2.15.1 numpy==1.23.5
+```
+
+**flatc must be v23.5.26** (from [PINTO0309 flatbuffers releases](https://github.com/PINTO0309/flatbuffers/releases)), not the apt default. The apt version produces schema-incompatible FlatBuffer binaries that pass compilation but fail silently at inference time.
+
 **Hidden dependencies:** The SDK's `setup.py` doesn't declare all deps. After `pip install -e .`, you also need:
 ```
-pip install tensorflow silence_tensorflow natsort
+pip install tensorflow-cpu silence_tensorflow natsort
 ```
 
 **TensorFlow CUDA/oneDNN warnings** appear on every SDK run. They are cosmetic — ignore them.
