@@ -100,6 +100,10 @@ class DatasetManifest:
     b1_gradient_range: tuple[float, float] = (0.05, 0.30)
     b_perp_range_T: tuple[float, float] = (0.0, 50e-6)
 
+    # Noise mode and OU parameters
+    noise_mode: str = "deterministic"
+    ou_params: dict | None = None  # OUNoiseConfig as dict, None for deterministic
+
     # Units (SI, explicit)
     units: dict[str, str] = field(
         default_factory=lambda: {
@@ -109,6 +113,7 @@ class DatasetManifest:
             "p1_concentration": "ppm",
             "b1_gradient": "fraction",
             "b_perp": "T",
+            "mw_power_scale": "dimensionless",
             "time": "s",
         }
     )
@@ -167,6 +172,10 @@ class DatasetManifest:
         ):
             if key in d:
                 d[key] = tuple(d[key])
+
+        # Backward compat: older manifests lack noise fields
+        d.setdefault("noise_mode", "deterministic")
+        d.setdefault("ou_params", None)
 
         return cls(**d)
 

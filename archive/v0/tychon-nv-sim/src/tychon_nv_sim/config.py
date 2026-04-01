@@ -3,8 +3,58 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from enum import Enum
 
 import numpy as np
+
+
+class NoiseMode(str, Enum):
+    """Noise injection mode for batch generation pipeline."""
+
+    DETERMINISTIC = "deterministic"
+    STOCHASTIC = "stochastic"
+    BOTH = "both"
+
+
+@dataclass
+class OUNoiseConfig:
+    """Ornstein-Uhlenbeck trajectory configuration for stochastic noise mode.
+
+    Controls how T(t) and B1(t) trajectories are sampled. Each spectrum
+    in a split gets one (T, B1) sample from the OU trajectory, producing
+    temporally correlated parameter drift across the dataset.
+
+    Parameters
+    ----------
+    theta_T : float
+        Temperature mean reversion rate (1/s).
+    mu_T : float
+        Temperature long-term mean (K). Center of the OU trajectory.
+    sigma_T : float
+        Temperature volatility (K/sqrt(s)).
+    theta_B1 : float
+        MW power mean reversion rate (1/s).
+    mu_B1 : float
+        MW power long-term mean (normalized, 1.0 = nominal).
+    sigma_B1 : float
+        MW power volatility (fractional/sqrt(s)).
+    trajectory_dt_s : float
+        Time step between successive spectra in the trajectory (seconds).
+    enable_thermal_noise : bool
+        Enable OU noise on the temperature channel.
+    enable_mw_noise : bool
+        Enable OU noise on the MW power channel.
+    """
+
+    theta_T: float = 0.1
+    mu_T: float = 300.0
+    sigma_T: float = 0.5
+    theta_B1: float = 1.0
+    mu_B1: float = 1.0
+    sigma_B1: float = 0.05
+    trajectory_dt_s: float = 1.0
+    enable_thermal_noise: bool = True
+    enable_mw_noise: bool = True
 
 
 @dataclass

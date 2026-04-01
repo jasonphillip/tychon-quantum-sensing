@@ -7,7 +7,9 @@ HDF5 layout per split:
     /{split}/spectra          — shape (N, n_freq_points)
     /{split}/frequencies      — shape (n_freq_points,)
     /{split}/labels           — shape (N, 3) (B-field vector ground truth)
-    /{split}/corruption_params — shape (N, 4) (p1, T, b1_grad, b_perp)
+    /{split}/corruption_params — shape (N, 4 or 5):
+        deterministic: (p1, T, b1_grad, b_perp)
+        stochastic:    (p1, T, b1_grad, b_perp, mw_power_scale)
     /{split}/seeds            — shape (N,) (per-spectrum seeds)
 """
 
@@ -59,7 +61,7 @@ class DatasetWriter:
         labels : np.ndarray
             Ground truth B-field vectors, shape (N, 3).
         corruption_params : np.ndarray
-            Corruption parameters, shape (N, 4) = (p1, T, b1_grad, b_perp).
+            Corruption parameters, shape (N, 4) or (N, 5). See module docstring.
         seeds : np.ndarray
             Per-spectrum random seeds, shape (N,).
         split : str

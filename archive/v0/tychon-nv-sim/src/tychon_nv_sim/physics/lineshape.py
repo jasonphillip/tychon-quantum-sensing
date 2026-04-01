@@ -30,6 +30,7 @@ def apply_b1_gradient(
     gradient_frac: float,
     p1_ppm: float | None = None,
     n_spatial_bins: int = 10,
+    mw_power_scale: float = 1.0,
 ) -> tuple[np.ndarray, np.ndarray]:
     """Generate ODMR spectrum with spatial B1 gradient averaging.
 
@@ -50,6 +51,9 @@ def apply_b1_gradient(
         P1 concentration in ppm. Defaults to config value.
     n_spatial_bins : int
         Number of spatial positions to average over.
+    mw_power_scale : float
+        Temporal MW power scaling from OU B1(t) drift (1.0 = nominal).
+        Composes multiplicatively with the spatial gradient.
 
     Returns
     -------
@@ -59,8 +63,10 @@ def apply_b1_gradient(
     if p1_ppm is None:
         p1_ppm = config.p1_concentration_ppm
 
-    # B1 scaling factors across the diamond (spatially varying MW drive)
-    b1_factors = np.linspace(1 - gradient_frac / 2, 1 + gradient_frac / 2, n_spatial_bins)
+    # B1 scaling factors: spatial gradient × temporal power drift
+    b1_factors = mw_power_scale * np.linspace(
+        1 - gradient_frac / 2, 1 + gradient_frac / 2, n_spatial_bins
+    )
 
     spectra = []
     frequencies = None
@@ -125,6 +131,7 @@ def corrupt_spectrum(
     b_perp_T: float,
     p1_ppm: float | None = None,
     n_spatial_bins: int = 10,
+    mw_power_scale: float = 1.0,
 ) -> tuple[np.ndarray, np.ndarray, dict]:
     """Apply both corruption channels to produce asymmetric ODMR spectrum.
 
@@ -142,6 +149,8 @@ def corrupt_spectrum(
         P1 concentration in ppm. Defaults to config value.
     n_spatial_bins : int
         Number of spatial bins for B1 gradient averaging.
+    mw_power_scale : float
+        Temporal MW power scaling from OU B1(t) drift (1.0 = nominal).
 
     Returns
     -------
@@ -158,7 +167,8 @@ def corrupt_spectrum(
 
     try:
         frequencies, spectrum = apply_b1_gradient(
-            adapter, config, b1_gradient_frac, p1_ppm=p1_ppm, n_spatial_bins=n_spatial_bins
+            adapter, config, b1_gradient_frac, p1_ppm=p1_ppm,
+            n_spatial_bins=n_spatial_bins, mw_power_scale=mw_power_scale,
         )
     finally:
         adapter.config.b_perp_T = original_b_perp
@@ -168,6 +178,7 @@ def corrupt_spectrum(
         "b_perp_T": b_perp_T,
         "n_spatial_bins": n_spatial_bins,
         "p1_ppm": p1_ppm,
+        "mw_power_scale": mw_power_scale,
     }
 
     return frequencies, spectrum, corruption_params

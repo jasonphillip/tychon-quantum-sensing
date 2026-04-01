@@ -13,6 +13,7 @@ References
 
 from __future__ import annotations
 
+import warnings
 from typing import TYPE_CHECKING
 
 import numpy as np
@@ -20,7 +21,7 @@ import numpy as np
 import simos
 
 if TYPE_CHECKING:
-    from tychon_nv_sim.config import NoiseConfig
+    from tychon_nv_sim.config import NoiseConfig, OUNoiseConfig
     from tychon_nv_sim.physics.parameters import OUProcessParams
 
 
@@ -124,6 +125,79 @@ def generate_b1_trajectory(
         B1 amplitude trajectory (normalized), shape (n_steps,).
     """
     return ou_process(params.theta_B1, params.mu_B1, params.sigma_B1, dt, n_steps, seed)
+
+
+def sample_ou_trajectory_pair(
+    ou_config: OUNoiseConfig,
+    n_samples: int,
+    seed: int | None = None,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Generate paired OU trajectories for T(t) and B1(t).
+
+    Produces temporally correlated samples for use in the batch generation
+    pipeline. Each element represents the quasi-static (T, B1) value for
+    one CW ODMR sweep.
+
+    Parameters
+    ----------
+    ou_config : OUNoiseConfig
+        OU trajectory configuration (theta, mu, sigma for each channel).
+    n_samples : int
+        Number of samples (one per spectrum in the split).
+    seed : int, optional
+        Random seed. Split into independent sub-seeds for T and B1.
+
+    Returns
+    -------
+    tuple[np.ndarray, np.ndarray]
+        (T_trajectory, B1_trajectory) each of shape (n_samples,).
+        Disabled channels return constant mu values.
+    """
+    # Split seed into independent sub-seeds for T and B1
+    ss = np.random.SeedSequence(seed)
+    seed_T, seed_B1 = ss.spawn(2)
+
+    if ou_config.enable_thermal_noise:
+        T_traj = ou_process(
+            theta=ou_config.theta_T,
+            mu=ou_config.mu_T,
+            sigma=ou_config.sigma_T,
+            dt=ou_config.trajectory_dt_s,
+            n_steps=n_samples,
+            seed=seed_T.generate_state(1)[0],
+        )
+        # Clip to physical bounds (temperature must be positive)
+        n_clipped = np.sum(T_traj <= 0)
+        if n_clipped > 0:
+            warnings.warn(
+                f"OU temperature trajectory: {n_clipped} samples clipped to >0 K",
+                UserWarning,
+            )
+            T_traj = np.clip(T_traj, 1e-3, None)
+    else:
+        T_traj = np.full(n_samples, ou_config.mu_T)
+
+    if ou_config.enable_mw_noise:
+        B1_traj = ou_process(
+            theta=ou_config.theta_B1,
+            mu=ou_config.mu_B1,
+            sigma=ou_config.sigma_B1,
+            dt=ou_config.trajectory_dt_s,
+            n_steps=n_samples,
+            seed=seed_B1.generate_state(1)[0],
+        )
+        # Clip to physical bounds (MW power must be positive)
+        n_clipped = np.sum(B1_traj <= 0)
+        if n_clipped > 0:
+            warnings.warn(
+                f"OU B1 trajectory: {n_clipped} samples clipped to >0",
+                UserWarning,
+            )
+            B1_traj = np.clip(B1_traj, 1e-6, None)
+    else:
+        B1_traj = np.full(n_samples, ou_config.mu_B1)
+
+    return T_traj, B1_traj
 
 
 class CoupledNoiseInjector:
