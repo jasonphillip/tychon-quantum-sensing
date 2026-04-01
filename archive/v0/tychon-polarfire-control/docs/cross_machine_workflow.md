@@ -35,28 +35,52 @@ DGX Spark:
 
 ## Beelink Environment Setup
 
-**VectorBlox SDK v2.0.3** — installed at `C:\Microchip\VectorBlox-SDK\` (checked out at tag `release-v2.0.3`).
+Beelink runs two environments — native Windows for FPGA synthesis, WSL for VectorBlox SDK.
 
-**Conda environment required.** Before ANY VectorBlox SDK command on Beelink, activate the dedicated env:
-```
-conda activate vbx
-```
-- The `vbx` env is Python 3.11 (SDK dependencies are incompatible with Python 3.13)
-- `vnnx_compile` and all `tflite_*` tools are in `~\miniconda3\envs\vbx\Scripts\`
-
-**vnnx_infer (bit-accurate simulator) does NOT work on bare Windows** — it requires Linux `.so` libraries. Run model verification on DGX Spark instead.
+### Native Windows: SmartHLS / Libero
 
 **SmartHLS** — `C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\bin\shls.bat`
 
+SmartHLS and Libero run natively on Windows. No special environment needed beyond the Microchip install.
+
+### WSL (Ubuntu): VectorBlox SDK
+
+**VectorBlox SDK v2.0.3** — installed at `C:\Microchip\VectorBlox-SDK\` (checked out at tag `release-v2.0.3`). The SDK's compiled `.so` libraries are x86-64 Linux only — `vnnx_compile`, `vnnx_infer`, and all `tflite_*` tools must run inside WSL, not native Windows.
+
+**⚠ The Windows-side `conda vbx` env does not work** — it appears functional but the SDK tools fail without the Linux `.so`. Do not use it.
+
+**⚠ DGX Sparks are ARM64 — the SDK cannot run there either.** Beelink WSL is the only machine that can run VectorBlox tools.
+
+To enter the WSL environment:
+```
+wsl -d Ubuntu -u jason
+source ~/vbx-env/bin/activate
+```
+
+**Hidden dependencies:** The SDK's `setup.py` doesn't declare all deps. After `pip install -e .`, you also need:
+```
+pip install tensorflow silence_tensorflow natsort
+```
+
+**TensorFlow CUDA/oneDNN warnings** appear on every SDK run. They are cosmetic — ignore them.
+
 ## Beelink Quick Start Checklist
 
-For 2am synthesis runs:
+For 2am synthesis runs — two workflows depending on what you need:
 
+### SmartHLS / Libero (native Windows)
 1. Open Git Bash
-2. `conda activate vbx`
-3. `cd ~\projects\tychon-polarfire-control` (once cloned)
+2. `cd ~\projects\tychon-polarfire-control` (once cloned)
+3. `git pull origin master`
+4. Run `shls` commands or Libero Tcl scripts
+5. Commit reports, push
+
+### VectorBlox SDK (WSL)
+1. `wsl -d Ubuntu -u jason`
+2. `source ~/vbx-env/bin/activate`
+3. `cd /mnt~/projects/tychon-polarfire-control`
 4. `git pull origin master`
-5. Run SmartHLS or VectorBlox commands
+5. Run `vnnx_compile`, `vnnx_infer`, or `tflite_*` commands
 6. Commit reports, push
 
 ## Transfer Protocol for Upstream Artifacts
