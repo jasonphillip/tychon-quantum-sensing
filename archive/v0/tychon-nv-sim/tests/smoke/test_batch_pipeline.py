@@ -25,6 +25,7 @@ def test_tiny_batch_generation():
             n_test=1,
             master_seed=99,
             n_freq_points=20,
+            field_sampling="z_only",
         )
 
         out = Path(output)
@@ -71,6 +72,7 @@ def test_batch_corruption_params_vary():
             n_test=0,
             master_seed=123,
             n_freq_points=20,
+            field_sampling="z_only",
         )
 
         from tychon_nv_sim.datasets.loaders import DatasetLoader
@@ -107,6 +109,7 @@ def test_stochastic_batch_generation():
             n_freq_points=20,
             noise_mode="stochastic",
             ou_noise_config=ou_config,
+            field_sampling="z_only",
         )
 
         out = Path(output)
@@ -166,6 +169,7 @@ def test_cascaded_stochastic_batch_generation():
             n_freq_points=20,
             noise_mode="stochastic",
             ou_noise_config=ou_config,
+            field_sampling="z_only",
         )
 
         out = Path(output)
@@ -218,6 +222,7 @@ def test_both_mode_batch_generation():
             n_freq_points=20,
             noise_mode="both",
             ou_noise_config=ou_config,
+            field_sampling="z_only",
         )
 
         out = Path(output)
@@ -249,3 +254,55 @@ def test_both_mode_batch_generation():
         np.testing.assert_array_almost_equal(det_params[:, 0], sto_params[:, 0])  # p1
         np.testing.assert_array_almost_equal(det_params[:, 2], sto_params[:, 2])  # b1_grad
         np.testing.assert_array_almost_equal(det_params[:, 3], sto_params[:, 3])  # b_perp
+
+
+@pytest.mark.smoke
+def test_spherical_field_sampling():
+    """Generate dataset with spherical B-field sampling and verify diverse orientations."""
+    from tychon_nv_sim.datasets.loaders import DatasetLoader
+    from tychon_nv_sim.pipelines.batch_generate import generate_dataset
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        output = generate_dataset(
+            output_dir=tmpdir,
+            n_train=10,
+            n_val=0,
+            n_test=0,
+            master_seed=42,
+            n_freq_points=20,
+            field_sampling="spherical",
+            b_mag_range_T=(30e-6, 60e-6),
+        )
+
+        out = Path(output)
+        assert (out / "dataset.h5").exists()
+        assert (out / "manifest.json").exists()
+
+        loader = DatasetLoader(output)
+        manifest = loader.load_manifest()
+        assert manifest.field_sampling == "spherical"
+        assert manifest.b_mag_range_T == pytest.approx((30e-6, 60e-6))
+        assert manifest.b_perp_range_T == pytest.approx((0.0, 0.0))
+
+        spectra, freqs, labels, params, seeds = loader.load_split("train")
+        assert spectra.shape == (10, 20)
+        assert labels.shape == (10, 3)
+
+        # Labels should have diverse Bx, By, Bz (not all z-only)
+        assert np.std(labels[:, 0]) > 1e-6, "Bx has no variance"
+        assert np.std(labels[:, 1]) > 1e-6, "By has no variance"
+        assert np.std(labels[:, 2]) > 1e-6, "Bz has no variance"
+
+        # Field magnitudes should be within range
+        b_mags = np.linalg.norm(labels, axis=1)
+        assert np.all(b_mags >= 30e-6 - 1e-12)
+        assert np.all(b_mags <= 60e-6 + 1e-12)
+
+        # b_perp column (col 3) should be all zeros in spherical mode
+        assert np.all(params[:, 3] == 0.0), "b_perp should be 0 in spherical mode"
+
+        # Spectra should be finite and have ODMR features
+        assert np.all(np.isfinite(spectra))
+        for i in range(spectra.shape[0]):
+            signal_range = np.max(spectra[i]) - np.min(spectra[i])
+            assert signal_range > 0, f"Spectrum {i} has no ODMR features"

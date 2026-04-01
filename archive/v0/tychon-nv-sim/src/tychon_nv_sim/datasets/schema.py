@@ -100,6 +100,10 @@ class DatasetManifest:
     b1_gradient_range: tuple[float, float] = (0.05, 0.30)
     b_perp_range_T: tuple[float, float] = (0.0, 50e-6)
 
+    # Field sampling mode and magnitude range
+    field_sampling: str = "z_only"
+    b_mag_range_T: tuple[float, float] | None = None
+
     # Noise mode and OU parameters
     noise_mode: str = "deterministic"
     ou_params: dict | None = None  # OUNoiseConfig as dict, None for deterministic
@@ -130,6 +134,8 @@ class DatasetManifest:
             "b_perp_range_T",
         ):
             d[key] = list(d[key])
+        if d.get("b_mag_range_T") is not None:
+            d["b_mag_range_T"] = list(d["b_mag_range_T"])
         return d
 
     def to_json(self, path: str | Path) -> None:
@@ -176,6 +182,12 @@ class DatasetManifest:
         # Backward compat: older manifests lack noise fields
         d.setdefault("noise_mode", "deterministic")
         d.setdefault("ou_params", None)
+        d.setdefault("field_sampling", "z_only")
+        d.setdefault("b_mag_range_T", None)
+
+        # Convert b_mag_range_T list back to tuple if present
+        if d.get("b_mag_range_T") is not None:
+            d["b_mag_range_T"] = tuple(d["b_mag_range_T"])
 
         return cls(**d)
 
@@ -248,3 +260,9 @@ class DatasetManifest:
         ]:
             if lo > hi:
                 raise ValueError(f"{name}: min ({lo}) > max ({hi})")
+
+        # Validate b_mag_range_T if spherical mode
+        if self.field_sampling == "spherical" and self.b_mag_range_T is not None:
+            lo, hi = self.b_mag_range_T
+            if lo > hi:
+                raise ValueError(f"b_mag_range_T: min ({lo}) > max ({hi})")

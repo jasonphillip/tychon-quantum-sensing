@@ -16,6 +16,13 @@ class NoiseMode(str, Enum):
     BOTH = "both"
 
 
+class FieldSampling(str, Enum):
+    """B-field sampling strategy for batch generation."""
+
+    Z_ONLY = "z_only"
+    SPHERICAL = "spherical"
+
+
 @dataclass
 class OUNoiseConfig:
     """Ornstein-Uhlenbeck trajectory configuration for stochastic noise mode.

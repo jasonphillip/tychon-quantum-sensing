@@ -113,3 +113,57 @@ def test_manifest_rejects_invalid_range():
     )
     with pytest.raises(ValueError, match="freq_range_Hz"):
         manifest.validate()
+
+
+def test_manifest_spherical_field_roundtrip():
+    """Manifest with spherical field sampling survives JSON roundtrip."""
+    import tempfile
+    from pathlib import Path
+
+    manifest = _make_valid_manifest(
+        field_sampling="spherical",
+        b_mag_range_T=(20e-6, 70e-6),
+    )
+    manifest.validate()
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir) / "manifest.json"
+        manifest.to_json(path)
+        loaded = DatasetManifest.from_json(path)
+
+        assert loaded.field_sampling == "spherical"
+        assert loaded.b_mag_range_T == pytest.approx((20e-6, 70e-6))
+
+
+def test_manifest_z_only_backward_compat():
+    """Manifests without field_sampling field default to z_only."""
+    import json
+    import tempfile
+    from pathlib import Path
+
+    manifest = _make_valid_manifest()
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir) / "manifest.json"
+        manifest.to_json(path)
+
+        # Simulate old manifest: strip field_sampling and b_mag_range_T
+        with open(path) as f:
+            d = json.load(f)
+        d.pop("field_sampling", None)
+        d.pop("b_mag_range_T", None)
+        with open(path, "w") as f:
+            json.dump(d, f)
+
+        loaded = DatasetManifest.from_json(path)
+        assert loaded.field_sampling == "z_only"
+        assert loaded.b_mag_range_T is None
+
+
+def test_manifest_spherical_validates_b_mag_range():
+    """Spherical mode with inverted b_mag_range should fail validation."""
+    manifest = _make_valid_manifest(
+        field_sampling="spherical",
+        b_mag_range_T=(70e-6, 20e-6),  # Inverted
+    )
+    with pytest.raises(ValueError, match="b_mag_range_T"):
+        manifest.validate()

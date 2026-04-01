@@ -23,7 +23,7 @@ from pathlib import Path
 import numpy as np
 
 from tychon_nv_sim.adapters.simos_adapter import SimOSAdapter
-from tychon_nv_sim.config import NoiseMode, OUNoiseConfig, SimulationConfig
+from tychon_nv_sim.config import FieldSampling, NoiseMode, OUNoiseConfig, SimulationConfig
 from tychon_nv_sim.datasets.schema import DatasetManifest
 from tychon_nv_sim.datasets.writer import DatasetWriter
 from tychon_nv_sim.physics.lineshape import corrupt_spectrum
@@ -48,6 +48,34 @@ def _get_versions() -> tuple[str, str]:
     return simos.__version__, qutip.__version__
 
 
+def _sample_spherical_field(
+    rng: np.random.Generator, b_mag_range_T: tuple[float, float]
+) -> np.ndarray:
+    """Sample a B-field vector uniformly on the sphere.
+
+    Parameters
+    ----------
+    rng : np.random.Generator
+        NumPy random generator for reproducibility.
+    b_mag_range_T : tuple[float, float]
+        (min, max) field magnitude in Tesla.
+
+    Returns
+    -------
+    np.ndarray
+        3-vector [Bx, By, Bz] in Tesla.
+    """
+    b_mag = rng.uniform(*b_mag_range_T)
+    cos_theta = rng.uniform(-1.0, 1.0)
+    phi = rng.uniform(0.0, 2 * np.pi)
+    sin_theta = np.sqrt(1.0 - cos_theta * cos_theta)
+    return np.array([
+        b_mag * sin_theta * np.cos(phi),
+        b_mag * sin_theta * np.sin(phi),
+        b_mag * cos_theta,
+    ])
+
+
 def _generate_split_deterministic(
     adapter: SimOSAdapter,
     config: SimulationConfig,
@@ -59,6 +87,8 @@ def _generate_split_deterministic(
     bz_range_T: tuple[float, float],
     n_freq_points: int,
     split_name: str,
+    field_sampling: str = "z_only",
+    b_mag_range_T: tuple[float, float] = (20e-6, 70e-6),
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray | None]:
     """Generate spectra for a split using deterministic (uniform) sampling."""
     n_split = len(split_seeds)
@@ -75,10 +105,15 @@ def _generate_split_deterministic(
         T_K = sp_rng.uniform(*temp_range_K)
         b1_grad = sp_rng.uniform(*b1_gradient_range)
         b_perp = sp_rng.uniform(*b_perp_range_T)
-        Bz = sp_rng.uniform(*bz_range_T)
+
+        if field_sampling == "spherical":
+            B_vec = _sample_spherical_field(sp_rng, b_mag_range_T)
+        else:
+            Bz = sp_rng.uniform(*bz_range_T)
+            B_vec = np.array([0.0, 0.0, Bz])
 
         adapter.config.temperature_K = T_K
-        adapter.config.B_field_T = np.array([0.0, 0.0, Bz])
+        adapter.config.B_field_T = B_vec
         adapter.config.p1_concentration_ppm = p1
 
         freqs, signal, _ = corrupt_spectrum(
@@ -89,7 +124,7 @@ def _generate_split_deterministic(
             freqs_out = freqs
 
         spectra[idx] = signal
-        labels[idx] = [0.0, 0.0, Bz]
+        labels[idx] = B_vec
         params[idx] = [p1, T_K, b1_grad, b_perp]
 
         if (idx + 1) % 100 == 0:
@@ -110,6 +145,8 @@ def _generate_split_stochastic(
     bz_range_T: tuple[float, float],
     n_freq_points: int,
     split_name: str,
+    field_sampling: str = "z_only",
+    b_mag_range_T: tuple[float, float] = (20e-6, 70e-6),
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray | None]:
     """Generate spectra for a split using OU stochastic trajectory sampling."""
     from tychon_nv_sim.physics.noise_injection import sample_ou_trajectory_pair
@@ -139,10 +176,15 @@ def _generate_split_stochastic(
         _T_K_unused = sp_rng.uniform(0.0, 1.0)  # noqa: F841 — advance RNG state to keep Bz etc. aligned
         b1_grad = sp_rng.uniform(*b1_gradient_range)
         b_perp = sp_rng.uniform(*b_perp_range_T)
-        Bz = sp_rng.uniform(*bz_range_T)
+
+        if field_sampling == "spherical":
+            B_vec = _sample_spherical_field(sp_rng, b_mag_range_T)
+        else:
+            Bz = sp_rng.uniform(*bz_range_T)
+            B_vec = np.array([0.0, 0.0, Bz])
 
         adapter.config.temperature_K = T_K
-        adapter.config.B_field_T = np.array([0.0, 0.0, Bz])
+        adapter.config.B_field_T = B_vec
         adapter.config.p1_concentration_ppm = p1
 
         freqs, signal, _ = corrupt_spectrum(
@@ -154,7 +196,7 @@ def _generate_split_stochastic(
             freqs_out = freqs
 
         spectra[idx] = signal
-        labels[idx] = [0.0, 0.0, Bz]
+        labels[idx] = B_vec
         params[idx] = [p1, T_K, b1_grad, b_perp, mw_power_scale]
 
         if (idx + 1) % 100 == 0:
@@ -178,6 +220,8 @@ def generate_dataset(
     bz_range_T: tuple[float, float] = (0.005, 0.015),
     noise_mode: str = "deterministic",
     ou_noise_config: OUNoiseConfig | None = None,
+    field_sampling: str = "spherical",
+    b_mag_range_T: tuple[float, float] = (20e-6, 70e-6),
 ) -> str:
     """Generate a complete synthetic ODMR dataset with manifest.
 
@@ -202,11 +246,16 @@ def generate_dataset(
     b_perp_range_T : tuple[float, float]
         Transverse field sampling range in Tesla.
     bz_range_T : tuple[float, float]
-        Axial B-field sampling range in Tesla.
+        Axial B-field sampling range in Tesla (z_only mode).
     noise_mode : str
         Noise injection mode: "deterministic" (default), "stochastic", or "both".
     ou_noise_config : OUNoiseConfig, optional
         OU trajectory config. Required when noise_mode is "stochastic" or "both".
+    field_sampling : str
+        B-field sampling mode: "spherical" (uniform on sphere, default) or
+        "z_only" (legacy z-axis only).
+    b_mag_range_T : tuple[float, float]
+        B-field magnitude range in Tesla (spherical mode only).
 
     Returns
     -------
@@ -219,6 +268,17 @@ def generate_dataset(
     except ValueError:
         valid = ", ".join(f'"{m.value}"' for m in NoiseMode)
         raise ValueError(f"Invalid noise_mode='{noise_mode}'. Must be one of: {valid}")
+
+    # Validate field_sampling
+    try:
+        field_sampling_enum = FieldSampling(field_sampling)
+    except ValueError:
+        valid = ", ".join(f'"{m.value}"' for m in FieldSampling)
+        raise ValueError(f"Invalid field_sampling='{field_sampling}'. Must be one of: {valid}")
+
+    # In spherical mode, override b_perp to (0, 0) — transverse field is in B_field_T
+    if field_sampling_enum == FieldSampling.SPHERICAL:
+        b_perp_range_T = (0.0, 0.0)
 
     if noise_mode_enum in (NoiseMode.STOCHASTIC, NoiseMode.BOTH) and ou_noise_config is None:
         raise ValueError(
@@ -250,7 +310,7 @@ def generate_dataset(
     # Build config hash for provenance
     config_str = (
         f"{master_seed}:{n_freq_points}:{freq_range_Hz}:{p1_range_ppm}:{temp_range_K}"
-        f":{noise_mode}"
+        f":{noise_mode}:{field_sampling}"
     )
     if ou_noise_config is not None:
         config_str += f":{dataclasses.asdict(ou_noise_config)}"
@@ -306,6 +366,8 @@ def generate_dataset(
         b_perp_range_T=b_perp_range_T,
         noise_mode=noise_mode,
         ou_params=ou_params_dict,
+        field_sampling=field_sampling,
+        b_mag_range_T=b_mag_range_T if field_sampling == "spherical" else None,
     )
     manifest.validate()
 
@@ -333,6 +395,8 @@ def generate_dataset(
         b_perp_range_T=b_perp_range_T,
         bz_range_T=bz_range_T,
         n_freq_points=n_freq_points,
+        field_sampling=field_sampling,
+        b_mag_range_T=b_mag_range_T,
     )
 
     for split_name, split_seeds in splits:

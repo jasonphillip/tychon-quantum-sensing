@@ -19,6 +19,10 @@ b1_gradient_range: [0.05, 0.30]
 b_perp_range_T: [0.0, 50.0e-6]
 bz_range_T: [0.005, 0.015]
 
+# Field sampling mode: "spherical" (uniform on sphere) or "z_only" (legacy z-axis only)
+field_sampling: spherical
+b_mag_range_T: [20.0e-6, 70.0e-6]  # Near-Earth field magnitude range (T)
+
 # OU noise configuration — cascaded causal SDE mode
 ou_noise:
   # Temperature OU (sensor thermal mass, tau ~16 min)
