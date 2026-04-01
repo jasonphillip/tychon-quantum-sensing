@@ -8,6 +8,13 @@ Solo founder, 90-day sprint. This is Repo 3 of a three-repo architecture.
 - `docs/phase1-context/requirements.md` — Deliverable 3 requirements extracted from playbook
 - `docs/phase1-context/safety_architecture.md` — Lur'e/Circle Criterion formal framing
 
+## Local Reference Documents (not in git)
+- `docs/reference/tychon_repo3_scaffold_spec.md` — scaffold decisions, PID code rationale, safety architecture checklist
+- `docs/reference/tychon_microchip_toolchain_reference.md` — SmartHLS/Libero/VectorBlox versions and CLI commands
+- `docs/reference/beelink-fpga-machine-snapshot-2026-04-01.md` — Beelink synthesis machine installed tools and setup status
+
+Read these at the start of any session involving architecture decisions, SmartHLS pragmas, or cross-machine workflow. These files are gitignored — they exist only on local machines.
+
 ## What This Repo Does
 - SmartHLS C++ PID controller with bumpless AI→PID transfer
 - Sector saturation clamps (±5%) and slew-rate limiting on AI output

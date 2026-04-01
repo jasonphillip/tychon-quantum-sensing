@@ -26,3 +26,6 @@ __pycache__/
 
 # Logs
 *.log
+
+# Local reference docs (authoritative sources, not for git)
+docs/reference/
