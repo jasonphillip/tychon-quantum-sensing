@@ -40,6 +40,8 @@ Read these at the start of any session involving architecture decisions, SmartHL
 - Source edited on DGX Spark, pushed to GitHub
 - Beelink pulls, runs SmartHLS and Libero synthesis, pushes reports
 - Never edit source on Beelink
+- GitHub remote is live at https://github.com/jasonphillip/tychon-polarfire-control.git (private). Always push after commits so Beelink can pull.
+- VectorBlox SDK tools (vnnx_compile, vnnx_infer) run in WSL on Beelink, not native Windows. See docs/cross_machine_workflow.md for the full two-environment setup.
 
 ## Do NOT
 - Add CI workflows unless explicitly asked
