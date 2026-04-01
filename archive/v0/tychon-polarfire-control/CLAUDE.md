@@ -12,6 +12,8 @@ Solo founder, 90-day sprint. This is Repo 3 of a three-repo architecture.
 - `docs/reference/tychon_repo3_scaffold_spec.md` — scaffold decisions, PID code rationale, safety architecture checklist
 - `docs/reference/tychon_microchip_toolchain_reference.md` — SmartHLS/Libero/VectorBlox versions and CLI commands
 - `docs/reference/beelink-fpga-machine-snapshot-2026-04-01.md` — Beelink synthesis machine installed tools and setup status
+- `docs/reference/tychon_phase1_decision_log.md` — all architecture and engineering decisions with rationale
+- `docs/reference/tychon_post_scaffold_quickref.md` — ordered next steps and validation sequence
 
 Read these at the start of any session involving architecture decisions, SmartHLS pragmas, or cross-machine workflow. These files are gitignored — they exist only on local machines.
 
