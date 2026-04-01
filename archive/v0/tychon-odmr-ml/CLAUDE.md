@@ -31,3 +31,6 @@ Runtime: torch, numpy, h5py, pyyaml
 Dev: pytest
 
 No CI, no pre-commit, no Claude skills on Day 1.
+
+## Cross-Repo Data Flow
+Repo 3 (tychon-polarfire-control) is scaffolded and on GitHub. .vnnx models from this repo's export pipeline go to ~/projects/tychon-shared-data/models/ and must be compiled with vnnx_compile -s V250 using SDK v2.0.3 in WSL on Beelink.
