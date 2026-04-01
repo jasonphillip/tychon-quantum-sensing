@@ -54,3 +54,6 @@ Solo founder, 90-day sprint. This is Repo 1 of a planned two-repo architecture.
 - Over-scaffold — create files only when there is immediate use for them
 - Put business-sensitive material (IP strategy, contacts, competitive intel) in this repo
 - Import or depend on any ML training libraries (torch, tensorflow) — those belong in Repo 2
+
+## Cross-Repo Data Flow
+Repo 3 (tychon-polarfire-control) is scaffolded and on GitHub. Synthetic ODMR CSVs from this repo go to ~/projects/tychon-shared-data/ for Repo 3 consumption via hls/tb/stimulus/.
