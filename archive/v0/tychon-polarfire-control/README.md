@@ -36,7 +36,7 @@ then pushes reports back. See `docs/cross_machine_workflow.md` for details.
 
 - SmartHLS type: `hls::ap_fixpt<W,I>` (NOT `ap_fixed` — that's Xilinx)
 - VectorBlox SDK **v2.0.3** (NOT v3.0) — matches CoreVectorBlox IP v2.0.1
-- `.vnnx` compiled with `-s V250` flag; NOT committed to git
+- `.vnnx` compiled with `-c V250` flag; NOT committed to git
 - Silver license → MPFS250T (fallback MPFS460T); RT PolarFire is Phase II only
 - Bare-metal C on RISC-V MSS — no Linux (jitter violates <150 µs guarantee)
 

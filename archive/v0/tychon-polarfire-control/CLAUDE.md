@@ -32,7 +32,7 @@ Read these at the start of any session involving architecture decisions, SmartHL
 
 ## Critical Constraints
 - VectorBlox SDK v2.0.3 (NOT v3.0) — matches CoreVectorBlox IP v2.0.1
-- .vnnx files compiled with `-s V250` flag
+- .vnnx files compiled with `-c V250` flag
 - SmartHLS type: hls::ap_fixpt (NOT ap_fixed — that's Xilinx)
 - Silver license targets MPFS250T (fallback MPFS460T), NOT RT PolarFire (Gold, Phase II)
 
