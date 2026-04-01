@@ -1,4 +1,4 @@
-"""Training module: losses, training loop, and physics-stratified validation."""
+"""Training module: losses, training loop, QAT, and physics-stratified validation."""
 
 from tychon_odmr_ml.training.losses import (
     CompositeAngularHuberLoss,
@@ -11,6 +11,12 @@ from tychon_odmr_ml.training.loop import (
     train,
     validate_physics_regimes,
 )
+from tychon_odmr_ml.training.qat import (
+    extract_clean_state_dict,
+    load_clean_weights,
+    make_int8_symmetric_qconfig,
+    prepare_model_qat,
+)
 
 __all__ = [
     "CompositeAngularHuberLoss",
@@ -20,4 +26,8 @@ __all__ = [
     "init_weights_kaiming_he",
     "train",
     "validate_physics_regimes",
+    "extract_clean_state_dict",
+    "load_clean_weights",
+    "make_int8_symmetric_qconfig",
+    "prepare_model_qat",
 ]
