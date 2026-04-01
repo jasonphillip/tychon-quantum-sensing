@@ -8,11 +8,11 @@
 
 # Run SmartHLS C++ software testbench (Beelink x86 only)
 hls-test:
-	$(MAKE) -C hls sw_run
+	cd hls && shls sw_run
 
 # Clean all build artifacts
 clean:
-	$(MAKE) -C hls clean
+	cd hls && shls clean
 
 # Show available targets
 help:
