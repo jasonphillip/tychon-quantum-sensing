@@ -3,8 +3,11 @@ work/
 ip_cache/
 component/
 simulation/
-stimulus/
+/stimulus/
 designer/
+
+# Allow HLS testbench stimulus directory
+!hls/tb/stimulus/
 smartgen/
 
 # Synthesis outputs (committed selectively via libero/reports/)
