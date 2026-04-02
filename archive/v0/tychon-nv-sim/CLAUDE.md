@@ -57,3 +57,7 @@ Solo founder, 90-day sprint. This is Repo 1 of a planned two-repo architecture.
 
 ## Cross-Repo Data Flow
 Repo 3 (tychon-polarfire-control) is scaffolded and on GitHub. Synthetic ODMR CSVs from this repo go to ~/projects/tychon-shared-data/ for Repo 3 consumption via hls/tb/stimulus/.
+
+## Compute
+This machine has an NVIDIA Blackwell GPU (DGX Spark). Use device="cuda" for all training and simulation runs that support it.
+
