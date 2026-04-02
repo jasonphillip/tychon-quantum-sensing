@@ -178,6 +178,8 @@ def train(
     val_loader: DataLoader | None,
     config: TrainConfig,
     device: torch.device,
+    criterion: nn.Module | None = None,
+    val_fn: object | None = "default",
 ) -> dict:
     """Train with AdamW, CosineAnnealingLR, gradient clipping.
 
@@ -196,6 +198,12 @@ def train(
         Training hyperparameters.
     device : torch.device
         Compute device.
+    criterion : nn.Module or None
+        Custom loss function. Must accept (pred, true) and return a dict
+        with at least a "loss" key. Default: CompositeAngularHuberLoss.
+    val_fn : callable, "default", or None
+        Validation function(model, val_loader, device) -> dict.
+        "default" uses validate_physics_regimes. None skips validation.
 
     Returns
     -------
@@ -206,9 +214,12 @@ def train(
     torch.manual_seed(config.seed)
 
     model.to(device)
-    criterion = CompositeAngularHuberLoss(
-        alpha=config.alpha, huber_delta=config.huber_delta
-    )
+    if criterion is None:
+        criterion = CompositeAngularHuberLoss(
+            alpha=config.alpha, huber_delta=config.huber_delta
+        )
+    if val_fn == "default":
+        val_fn = validate_physics_regimes
 
     optimizer = torch.optim.AdamW(
         model.parameters(),
@@ -270,24 +281,35 @@ def train(
 
         # Validation
         val_metrics: dict[str, float] | None = None
-        if val_loader is not None and epoch % config.val_every == 0:
-            val_metrics = validate_physics_regimes(model, val_loader, device)
+        if val_loader is not None and val_fn is not None and epoch % config.val_every == 0:
+            val_metrics = val_fn(model, val_loader, device)
             entry["val_metrics"] = val_metrics
-            log.info(
-                "  val | angle_err %.4f° | bz_err %.1f nT | mag_err %.1f nT",
-                val_metrics["angle_err_deg"],
-                val_metrics["bz_err_nT"],
-                val_metrics["magnitude_err_nT"],
-            )
+            # Log available metrics
+            if "angle_err_deg" in val_metrics:
+                log.info(
+                    "  val | angle_err %.4f° | bz_err %.1f nT | mag_err %.1f nT",
+                    val_metrics["angle_err_deg"],
+                    val_metrics.get("bz_err_nT", 0.0),
+                    val_metrics.get("magnitude_err_nT", 0.0),
+                )
+            elif "mae_uT" in val_metrics:
+                log.info(
+                    "  val | MAE %.2f uT | RMSE %.2f uT",
+                    val_metrics["mae_uT"],
+                    val_metrics.get("rmse_uT", 0.0),
+                )
 
-            if val_metrics["angle_err_deg"] < best_angle_err:
-                best_angle_err = val_metrics["angle_err_deg"]
+            # Checkpoint by first metric key
+            ckpt_key = next(iter(val_metrics))
+            ckpt_val = val_metrics[ckpt_key]
+            if ckpt_val < best_angle_err:
+                best_angle_err = ckpt_val
                 torch.save(
                     {
                         "epoch": epoch,
                         "model_state_dict": model.state_dict(),
                         "optimizer_state_dict": optimizer.state_dict(),
-                        "best_angle_err": best_angle_err,
+                        "best_val_metric": best_angle_err,
                     },
                     ckpt_dir / "best_model.pt",
                 )
@@ -296,10 +318,10 @@ def train(
 
     training_time = time.monotonic() - t0
 
-    # Final validation if we have a val_loader
+    # Final validation if we have a val_loader and val_fn
     final_val_metrics: dict[str, float] = {}
-    if val_loader is not None:
-        final_val_metrics = validate_physics_regimes(model, val_loader, device)
+    if val_loader is not None and val_fn is not None:
+        final_val_metrics = val_fn(model, val_loader, device)
 
     return {
         "final_train_loss": final_train_loss,

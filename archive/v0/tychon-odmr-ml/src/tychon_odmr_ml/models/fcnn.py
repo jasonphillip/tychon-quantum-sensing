@@ -1,11 +1,14 @@
-"""Architecture B-alt: Fully Convolutional CNN for ODMR spectrum -> 3D B-field vector.
+"""Architecture B-alt: Fully Convolutional CNN for ODMR spectral inversion.
 
 VectorBlox V250 compatible: CONV_2D + RELU only. NO Linear layers anywhere.
 The final Conv2d with kernel matching the remaining spatial dimension replaces
 the traditional Flatten -> Linear head.
 
-All convolutions use (1, k) kernels on input reshaped to (batch, 1, 1, length),
+All convolutions use (1, k) kernels on input reshaped to (batch, C, 1, length),
 satisfying VectorBlox's no-CONV_1D constraint.
+
+Supports multi-channel input (e.g., 2-channel: spectrum + PID anchor) via
+the ``in_channels`` parameter.
 """
 
 from __future__ import annotations
@@ -25,7 +28,9 @@ class OdmrFCNN(nn.Module):
     input_dim : int
         Number of frequency points per spectrum (default 100).
     output_dim : int
-        Output vector dimension (default 3 for [Bx, By, Bz]).
+        Output vector dimension (default 3 for [Bx, By, Bz], 1 for scalar).
+    in_channels : int
+        Number of input channels (default 1). Set to 2 for spectrum + anchor.
     channels : list[int]
         Channel sizes for strided conv layers. Default [8, 16, 24].
     kernel_size : int
@@ -38,6 +43,7 @@ class OdmrFCNN(nn.Module):
         self,
         input_dim: int = 100,
         output_dim: int = 3,
+        in_channels: int = 1,
         channels: list[int] | None = None,
         kernel_size: int = 5,
         stride: int = 2,
@@ -46,11 +52,14 @@ class OdmrFCNN(nn.Module):
         if channels is None:
             channels = [8, 16, 24]
 
+        self.in_channels = in_channels
+        self.input_dim = input_dim
+
         # Build strided conv layers and track spatial dimension
         self.convs = nn.ModuleList()
         self.relus = nn.ModuleList()
         spatial = input_dim
-        prev_c = 1
+        prev_c = in_channels
         for c in channels:
             self.convs.append(
                 nn.Conv2d(prev_c, c, kernel_size=(1, kernel_size), stride=(1, stride))
@@ -68,15 +77,16 @@ class OdmrFCNN(nn.Module):
         Parameters
         ----------
         x : Tensor
-            Shape (batch, input_dim).
+            Shape (batch, in_channels * input_dim). Reshaped internally
+            to (batch, in_channels, 1, input_dim) for 2D convolution.
 
         Returns
         -------
         Tensor
             Shape (batch, output_dim).
         """
-        # (batch, 100) -> (batch, 1, 1, 100) for 2D conv
-        x = x.unsqueeze(1).unsqueeze(2)
+        # (batch, C*100) -> (batch, C, 1, 100)
+        x = x.view(x.size(0), self.in_channels, 1, self.input_dim)
         for conv, relu in zip(self.convs, self.relus):
             x = relu(conv(x))
         x = self.conv_head(x)  # (batch, output_dim, 1, 1)
