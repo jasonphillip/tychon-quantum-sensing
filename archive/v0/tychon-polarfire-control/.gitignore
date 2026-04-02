@@ -26,6 +26,7 @@ __pycache__/
 
 # Logs
 *.log
+!libero/reports/*.log
 
 # Local reference docs (authoritative sources, not for git)
 docs/reference/
