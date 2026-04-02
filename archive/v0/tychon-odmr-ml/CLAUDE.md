@@ -32,5 +32,9 @@ Dev: pytest
 
 No CI, no pre-commit, no Claude skills on Day 1.
 
+## Compute
+
+This machine has a Blackwell GPU. Use device='cuda' for all training runs. CPU-only is acceptable for tiny models (<1000 params) but anything larger should use GPU. The DGX Spark's GPU is massively underutilized — training a 3K-param FCNN on CPU took 7 minutes; on GPU it would take seconds.
+
 ## Cross-Repo Data Flow
 Repo 3 (tychon-polarfire-control) is scaffolded and on GitHub. .vnnx models from this repo's export pipeline go to ~/projects/tychon-shared-data/models/ and must be compiled with vnnx_compile -c V250 using SDK v2.0.3 in WSL on Beelink.
