@@ -195,26 +195,48 @@ resolution advantage: [CITE: 0.27 µT/bit] (residual) vs 0.39 µT/bit (absolute)
 
 ### 6.3 Resource Utilization
 
-**> TABLE:** Resource utilization breakdown
-- Status: **TO BE WRITTEN** (from Libero synthesis reports)
-- Content: LUTs, LSRAM blocks, Math Blocks, DSPs for PID + VectorBlox combined
+**Source:** Libero SoC 2025.2 synthesis + P&R on MPFS250T Icicle Kit (FCVG484, STD speed grade).
+Design includes full Icicle Kit reference (MSS, PCIe, DMA, SRAM) + CoreVectorBlox V1000 + SmartHLS PID.
+Reports at: `/mnt/nas/projects/tychon-artifacts/libero_reports/`
 
-| Resource | PID (SmartHLS) | VectorBlox V250 | Total | Available (MPFS250T) | Utilization % |
-|----------|---------------|-----------------|-------|---------------------|---------------|
-| LUTs | [PENDING] | [PENDING] | [PENDING] | [PENDING] | [PENDING] |
-| LSRAM | [PENDING] | [PENDING] | [PENDING] | [PENDING] | [PENDING] |
-| Math Blocks | [PENDING] | [PENDING] | [PENDING] | [PENDING] | [PENDING] |
+| Resource | Used | Available (MPFS250T) | Utilization |
+|----------|------|---------------------|-------------|
+| 4LUT | [CITE: 62,837] | 254,196 | [CITE: 24.72%] |
+| DFF | [CITE: 64,079] | 254,196 | [CITE: 25.21%] |
+| uSRAM | [CITE: 434] | 2,352 | [CITE: 18.45%] |
+| LSRAM | [CITE: 96] | 812 | [CITE: 11.82%] |
+| Math/DSP | [CITE: 164] | 784 | [CITE: 20.92%] |
+| PLL | 2 | 8 | 25.00% |
+| User I/O | 65 | 144 | 45.14% |
+
+> **Note:** VectorBlox configured as V1000 (PRESET:1) in this synthesis. V250 would use fewer
+> resources. The full Icicle Kit design (MSS, PCIe, DMA, peripherals) is included — production
+> firmware would strip unused peripherals, further reducing utilization.
 
 ### 6.4 Timing & Power
+
+**SmartTime Timing Analysis (post-layout, multi-corner):**
+
+| Clock Domain | Frequency | Worst Slack | Status |
+|-------------|-----------|-------------|--------|
+| VectorBlox main (PF_CCC_C1 OUT0) | [CITE: 100 MHz] | [CITE: +1.522 ns] | PASS |
+| VectorBlox 2x (PF_CCC_C1 OUT1) | [CITE: 200 MHz] | [CITE: +1.040 ns] | PASS |
+| FIC_0 / FIC_1 (PF_CCC_C0 OUT0/1) | 125 MHz | +2.065 ns | PASS |
+| FIC_3 (PF_CCC_C0 OUT3) | 50 MHz | [CITE: +0.165 ns] | PASS |
+
+- **P&R:** Passed on first seed (1 of 20 iterations)
+- **All clock domains:** Positive slack = no timing violations
+- **Worst path:** FIC_3 APB readback (MSS ↔ fabric, not PID or VBX critical path)
+- **Conditions:** slow_lv_ht corner (worst case: 100°C, 1.0185V)
+
+**SmartPower:**
+- Status: **NOT YET RUN** — listed as remaining step in Beelink session log
+- [PLACEHOLDER — run SmartPower on Beelink to get static + dynamic power estimates]
 
 **> FIGURE 4:** Execution timeline (Gantt-style)
 - Status: **TO BE CREATED**
 - Content: PID cycles (deterministic, <150 µs) interleaved with CNN async updates (<1 ms). Show watchdog window.
 - Placement: Half-page
-
-**> TABLE/FIGURE:** Libero SmartTime / SmartPower results
-- Status: **PENDING** — requires synthesis run on Beelink (Libero SoC Silver license)
-- Content: Timing closure report, static power analysis
 
 ---
 
@@ -363,9 +385,10 @@ operators while sharing >80% common firmware."]
 | 7 | Train/test separation table | §4 | TO BE WRITTEN | Dataset manifests |
 | 8 | Architecture evolution table | §5 | TO BE WRITTEN | `docs/phase1-findings.md` |
 | 9 | Quantization Impact Matrix | §5 | TO BE WRITTEN | Export artifacts |
-| 10 | Resource utilization table | §6 | PENDING | Libero synthesis (Beelink) |
+| 10 | Resource utilization table | §6 | **DONE** | `/mnt/nas/projects/tychon-artifacts/libero_reports/` |
 | 11 | Execution timeline | §6 | TO BE CREATED | SmartHLS timing |
-| 12 | SmartTime/SmartPower | §6 | PENDING | Libero synthesis (Beelink) |
+| 12 | SmartTime timing | §6 | **DONE** | Same NAS path — timing_r1_s1.rpt |
+| 12b | SmartPower | §6 | NOT YET RUN | Needs Beelink session |
 | **13** | **Heading error sweep** | **§7** | **EXISTS** | `experiments/heading_sweep_figure.pdf` |
 | 14 | Bias histogram | §7 | TO BE CREATED / Phase 2 | — |
 | 15 | PSD plot | §7 | TO BE CREATED / Phase 2 | — |
