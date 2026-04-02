@@ -74,3 +74,25 @@ Predicting ±35 µT residual (instead of absolute 0-100 µT) with INT8 gives:
 - **Heading Error KPP** (>50% reduction): Achievable if CNN residual MAE < 7.5 µT (half of PID's 15 µT)
 - **Asymmetric Inversion Bias KPP** (<5 nT): Requires subsequent bias field experiments in Phase 2
 - **Architecture**: Both MLP and FCNN remain V250-compatible; only the task changes
+
+## Allan Deviation Results (April 2, 2026)
+
+3 LEO orbits (16,200s) simulated with cascaded OU noise and satellite tumble (1 rotation/orbit at 50 µT).
+
+| τ (s) | PID OADEV (µT) | FCNN+PID OADEV (µT) | Improvement |
+|-------|---------------|---------------------|-------------|
+| 1 | 3.40 | 2.56 | 24.6% |
+| 10 | 3.46 | 2.17 | 37.2% |
+| 100 | 6.85 | 3.58 | 47.7% |
+| 1000 | 15.84 | 8.07 | 49.1% |
+| 2700 | 14.85 | 2.35 | **84.2%** |
+
+At the operationally relevant half-orbit timescale (τ=2700s), the FCNN+PID hybrid reduces measurement instability by 84%.
+
+## VectorBlox V250 Compilation (April 2, 2026)
+
+The scalar residual FCNN v1 (2,905 params) compiles to a 12.5 KB .vnnx binary on VectorBlox V250.
+- TFLite ops: CONV_2D only (no SHAPE/STRIDED_SLICE/PACK after export fix)
+- Input: (1, 1, 100, 2) NHWC — pre-shaped, no dynamic reshape
+- Output: (1, 1, 1, 1) — scalar ΔB correction
+- Weight fidelity: max |PT - TF| = 1.91e-05
