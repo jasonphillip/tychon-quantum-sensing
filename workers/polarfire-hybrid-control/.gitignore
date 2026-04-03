@@ -1,0 +1,29 @@
+# Libero SoC work directories
+work/
+ip_cache/
+component/
+simulation/
+/stimulus/
+designer/
+
+# Allow HLS testbench stimulus directory
+!hls/tb/stimulus/
+smartgen/
+
+# Synthesis outputs (committed selectively via libero/reports/)
+*.job
+*.stp
+
+# VectorBlox compiled models (large binaries, not committed)
+*.vnnx
+
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+!libero/reports/*.log

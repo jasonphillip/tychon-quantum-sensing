@@ -1,0 +1,9 @@
+#------------------------------------------------------------------------------------------------------------------------------------------
+# RUN NUMBER: 1   DATE: 12:06:13 02-Apr-2026
+# INVOKED AS: C:/Microchip/Libero_SoC_2025.2/Libero_SoC/Designer/bin/libero.exe extended_run_lib.tcl -skip_open_project -root {C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\designer\MPFS_ICICLE_KIT_BASE_DESIGN} -n 20 -starting_seed_index 1 -compare_criteria violations -analysis max -slack_criteria worst -stop_on_success
+#------------------------------------------------------------------------------------------------------------------------------------------
+# Seed Index  Seed      Maximum Delay        Worst Slack  Report Analyzed                                Saved Design
+# ==========  ========  ===============  ===============  =============================================  ===================================
+           1         0    N/A                        0.165  MPFS_ICICLE_KIT_BASE_DESIGN_timing_violations_max_r1_s1.rpt  MPFS_ICICLE_KIT_BASE_DESIGN_r1_s1
+  The best result MPFS_ICICLE_KIT_BASE_DESIGN_r1_s1 has been saved into the project.
+
