@@ -1,0 +1,55 @@
+# Architecture
+
+NV Sensor Sim follows an adapter-based architecture with three layers matching the physics sensor model.
+
+## Module Layout
+
+```
+SimOS Adapter ──→ Physics Modules ──→ Dataset Writer ──→ Manifest
+     │                  │
+     │            ┌─────┴─────┐
+     │            │           │
+     ▼            ▼           ▼
+  NVSystem   hamiltonian   noise_injection   lineshape
+             (Layer 1)     (Layer 2)         (asymmetry)
+                                │
+                          parameters.py
+                          (Layer 3: published values)
+```
+
+## Layers
+
+### Layer 1 — NV Physics Engine
+`adapters/simos_adapter.py` + `physics/hamiltonian.py`
+
+SimOS NVSystem provides the 7-level photophysics model (GS triplet + ES triplet + SS singlet). The Hamiltonian module adds temperature-dependent ZFS correction and transverse field injection.
+
+### Layer 2 — Coupled Noise Injection
+`physics/noise_injection.py`
+
+Ornstein-Uhlenbeck stochastic processes for T(t) and B1(t) injected at the Hamiltonian level via SimOS StochasticLiouvilleParameters. Not post-processing — the Lindblad master equation captures state-mixing inherently.
+
+### Layer 3 — Published Parameters
+`physics/parameters.py`
+
+All noise parameters from peer-reviewed literature (CCE study for P1 bath, textbook dD/dT, SBQuantum space qualification data). No first-principles derivation.
+
+### Asymmetric Lineshape Generation
+`physics/lineshape.py`
+
+Two corruption channels: spatial B1 gradient (5-30%) and transverse B_perp (0-50 µT). Forces downstream ML to learn on realistic Fano-like lineshapes.
+
+### Dataset Contract
+`datasets/schema.py` + `datasets/writer.py`
+
+Versioned manifest with seeds, units, splits, provenance. Consumed by downstream ML training pipelines.
+
+## Adapter Strategy
+
+| Backend | Status | File |
+|---------|--------|------|
+| SimOS | Primary (implemented) | `adapters/simos_adapter.py` |
+| QuaCCAToo | Stub (planned) | `adapters/quaccatoo_adapter.py` |
+| CUDA-Q | Stub (planned) | `adapters/cudaq_adapter.py` |
+| QDsiM | Stub (no public repo) | `adapters/qdsim_adapter.py` |
+
