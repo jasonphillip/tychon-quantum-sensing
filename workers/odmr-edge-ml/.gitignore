@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# PyTorch / ML artifacts
+*.pt
+*.pth
+*.onnx
+*.tflite
+*.vnnx
+artifacts/bundles/
+
+# Data (not tracked)
+*.h5
+*.hdf5
+*.npz
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env
+*.env
+
+# Data symlinks
+data/golden
+data/production_50k
+
+# Model exports
+exports/
+
+# OS
+.DS_Store
+Thumbs.db
