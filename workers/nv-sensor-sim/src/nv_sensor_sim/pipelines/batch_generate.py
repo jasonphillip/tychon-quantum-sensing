@@ -29,6 +29,42 @@ from nv_sensor_sim.datasets.writer import DatasetWriter
 from nv_sensor_sim.physics.lineshape import corrupt_spectrum
 
 
+def _shift_range(
+    lo: float,
+    hi: float,
+    mean_shift_frac: float = 0.125,
+    width_factor: float = 1.2,
+    floor: float | None = None,
+) -> tuple[float, float]:
+    """Compute a shifted parameter range for anti-inverse-crime test sets.
+
+    Parameters
+    ----------
+    lo, hi : float
+        Original (train) range bounds.
+    mean_shift_frac : float
+        Fractional shift applied to the range midpoint (default 12.5%).
+    width_factor : float
+        Multiplicative expansion of the range width (default 1.2 = +20%).
+    floor : float, optional
+        Hard lower bound (e.g. 0.0 for non-negative quantities).
+
+    Returns
+    -------
+    tuple[float, float]
+        Shifted (lo, hi) range.
+    """
+    mean = (lo + hi) / 2.0
+    width = hi - lo
+    new_mean = mean * (1.0 + mean_shift_frac)
+    new_width = width * width_factor
+    new_lo = new_mean - new_width / 2.0
+    new_hi = new_mean + new_width / 2.0
+    if floor is not None:
+        new_lo = max(new_lo, floor)
+    return (new_lo, new_hi)
+
+
 def _get_git_sha() -> str:
     """Get current git SHA, or 'unknown' if not in a git repo."""
     try:
@@ -222,6 +258,11 @@ def generate_dataset(
     ou_noise_config: OUNoiseConfig | None = None,
     field_sampling: str = "spherical",
     b_mag_range_T: tuple[float, float] = (20e-6, 70e-6),
+    shift_test_ranges: bool = False,
+    test_p1_range_ppm: tuple[float, float] | None = None,
+    test_temp_range_K: tuple[float, float] | None = None,
+    test_b1_gradient_range: tuple[float, float] | None = None,
+    test_b_perp_range_T: tuple[float, float] | None = None,
 ) -> str:
     """Generate a complete synthetic ODMR dataset with manifest.
 
@@ -256,6 +297,18 @@ def generate_dataset(
         "z_only" (legacy z-axis only).
     b_mag_range_T : tuple[float, float]
         B-field magnitude range in Tesla (spherical mode only).
+    shift_test_ranges : bool
+        When True and no explicit test_*_range params are given, automatically
+        shift test-set corruption parameter distributions (mean +12.5%,
+        width +20%) to prevent inverse crime. Default False (backward compat).
+    test_p1_range_ppm : tuple[float, float], optional
+        Explicit P1 range for test split. Overrides auto-shift.
+    test_temp_range_K : tuple[float, float], optional
+        Explicit temperature range for test split. Overrides auto-shift.
+    test_b1_gradient_range : tuple[float, float], optional
+        Explicit B1 gradient range for test split. Overrides auto-shift.
+    test_b_perp_range_T : tuple[float, float], optional
+        Explicit transverse field range for test split. Overrides auto-shift.
 
     Returns
     -------
@@ -285,6 +338,33 @@ def generate_dataset(
             f"ou_noise_config is required when noise_mode='{noise_mode}'"
         )
 
+    # --- Anti-inverse-crime: compute test-split parameter ranges ---
+    # Explicit overrides take precedence, then auto-shift, then same as train.
+    has_any_test_override = any(
+        r is not None for r in (
+            test_p1_range_ppm, test_temp_range_K,
+            test_b1_gradient_range, test_b_perp_range_T,
+        )
+    )
+    inverse_crime_active = shift_test_ranges or has_any_test_override
+
+    if test_p1_range_ppm is None and shift_test_ranges:
+        test_p1_range_ppm = _shift_range(*p1_range_ppm, floor=0.0)
+    if test_temp_range_K is None and shift_test_ranges:
+        test_temp_range_K = _shift_range(*temp_range_K, floor=0.0)
+    if test_b1_gradient_range is None and shift_test_ranges:
+        test_b1_gradient_range = _shift_range(*b1_gradient_range, floor=0.0)
+    if test_b_perp_range_T is None and shift_test_ranges:
+        # In spherical mode b_perp is always (0,0); don't shift zeros.
+        if b_perp_range_T != (0.0, 0.0):
+            test_b_perp_range_T = _shift_range(*b_perp_range_T, floor=0.0)
+
+    # Effective test ranges (fall back to train ranges when not shifted)
+    eff_test_p1 = test_p1_range_ppm if test_p1_range_ppm is not None else p1_range_ppm
+    eff_test_temp = test_temp_range_K if test_temp_range_K is not None else temp_range_K
+    eff_test_b1 = test_b1_gradient_range if test_b1_gradient_range is not None else b1_gradient_range
+    eff_test_bperp = test_b_perp_range_T if test_b_perp_range_T is not None else b_perp_range_T
+
     rng = np.random.default_rng(master_seed)
     total = n_train + n_val + n_test
 
@@ -310,7 +390,7 @@ def generate_dataset(
     # Build config hash for provenance
     config_str = (
         f"{master_seed}:{n_freq_points}:{freq_range_Hz}:{p1_range_ppm}:{temp_range_K}"
-        f":{noise_mode}:{field_sampling}"
+        f":{noise_mode}:{field_sampling}:{inverse_crime_active}"
     )
     if ou_noise_config is not None:
         config_str += f":{dataclasses.asdict(ou_noise_config)}"
@@ -368,6 +448,12 @@ def generate_dataset(
         ou_params=ou_params_dict,
         field_sampling=field_sampling,
         b_mag_range_T=b_mag_range_T if field_sampling == "spherical" else None,
+        # Anti-inverse-crime: test-specific ranges (None when same as train)
+        inverse_crime_shift=inverse_crime_active,
+        test_p1_concentration_range_ppm=test_p1_range_ppm,
+        test_temperature_range_K=test_temp_range_K,
+        test_b1_gradient_range=test_b1_gradient_range,
+        test_b_perp_range_T=test_b_perp_range_T,
     )
     manifest.validate()
 
@@ -383,13 +469,9 @@ def generate_dataset(
     )
     adapter = SimOSAdapter(config)
 
-    splits = [
-        ("train", train_seeds),
-        ("val", val_seeds),
-        ("test", test_seeds),
-    ]
-
-    common_kwargs = dict(
+    # Per-split parameter ranges: test uses shifted ranges when active
+    split_ranges: dict[str, dict] = {}
+    train_val_kwargs = dict(
         p1_range_ppm=p1_range_ppm,
         b1_gradient_range=b1_gradient_range,
         b_perp_range_T=b_perp_range_T,
@@ -398,17 +480,38 @@ def generate_dataset(
         field_sampling=field_sampling,
         b_mag_range_T=b_mag_range_T,
     )
+    test_kwargs = dict(
+        p1_range_ppm=eff_test_p1,
+        b1_gradient_range=eff_test_b1,
+        b_perp_range_T=eff_test_bperp,
+        bz_range_T=bz_range_T,
+        n_freq_points=n_freq_points,
+        field_sampling=field_sampling,
+        b_mag_range_T=b_mag_range_T,
+    )
+    split_ranges["train"] = train_val_kwargs
+    split_ranges["val"] = train_val_kwargs
+    split_ranges["test"] = test_kwargs
+
+    splits = [
+        ("train", train_seeds),
+        ("val", val_seeds),
+        ("test", test_seeds),
+    ]
 
     for split_name, split_seeds in splits:
         if len(split_seeds) == 0:
             continue
 
+        kwargs = split_ranges[split_name]
+        split_temp = eff_test_temp if split_name == "test" else temp_range_K
+
         if noise_mode_enum == NoiseMode.DETERMINISTIC:
             spectra, labels, params, seed_arr, freqs = _generate_split_deterministic(
                 adapter, config, split_seeds,
-                temp_range_K=temp_range_K,
+                temp_range_K=split_temp,
                 split_name=split_name,
-                **common_kwargs,
+                **kwargs,
             )
             writer.write_spectra(spectra, freqs, labels, params, seed_arr, split_name)
 
@@ -419,7 +522,7 @@ def generate_dataset(
                 ou_noise_config=ou_noise_config,
                 ou_trajectory_seed=ou_traj_seeds[split_name],
                 split_name=split_name,
-                **common_kwargs,
+                **kwargs,
             )
             writer.write_spectra(spectra, freqs, labels, params, seed_arr, split_name)
 
@@ -428,9 +531,9 @@ def generate_dataset(
             # Deterministic pass
             s_det, l_det, p_det, sd_det, f_det = _generate_split_deterministic(
                 adapter, config, split_seeds,
-                temp_range_K=temp_range_K,
+                temp_range_K=split_temp,
                 split_name=f"{split_name}_deterministic",
-                **common_kwargs,
+                **kwargs,
             )
             writer.write_spectra(
                 s_det, f_det, l_det, p_det, sd_det, f"{split_name}_deterministic"
@@ -442,7 +545,7 @@ def generate_dataset(
                 ou_noise_config=ou_noise_config,
                 ou_trajectory_seed=ou_traj_seeds[split_name],
                 split_name=f"{split_name}_stochastic",
-                **common_kwargs,
+                **kwargs,
             )
             writer.write_spectra(
                 s_sto, f_sto, l_sto, p_sto, sd_sto, f"{split_name}_stochastic"

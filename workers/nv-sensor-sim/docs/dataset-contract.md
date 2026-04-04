@@ -26,22 +26,45 @@ Every generated dataset MUST include a manifest with the following fields. This 
 - `n_freq_points` — Frequency points per spectrum
 - `freq_range_Hz` — Sweep range (start, stop) in Hz
 
-### Corruption Parameter Ranges
+### Corruption Parameter Ranges (Train/Val)
 - `p1_concentration_range_ppm` — P1 concentration range in ppm
 - `temperature_range_K` — Temperature range in Kelvin
 - `b1_gradient_range` — B1 gradient fraction range
 - `b_perp_range_T` — Transverse field range in Tesla
+
+### Anti-Inverse-Crime: Test-Specific Ranges
+- `inverse_crime_shift` — Boolean flag: whether test-split distributions are shifted
+- `test_p1_concentration_range_ppm` — Test P1 range (null when same as train)
+- `test_temperature_range_K` — Test temperature range (null when same as train)
+- `test_b1_gradient_range` — Test B1 gradient range (null when same as train)
+- `test_b_perp_range_T` — Test transverse field range (null when same as train)
+
+When `inverse_crime_shift` is true, the test split draws corruption parameters from
+shifted distributions (default: mean +12.5%, width +20%) so the model is evaluated
+on out-of-training-distribution conditions. This prevents the "inverse crime" where
+train and test data share identical generative distributions.
+
+Callers can also supply explicit test ranges for full control (e.g., to shift only
+temperature while keeping P1 the same).
 
 ### Units
 - `units` — Dictionary mapping quantity names to SI unit strings
 
 ## Train/Test Data Separation Protocol
 
-**Critical:** Train seeds MUST NOT overlap with test seeds. This is enforced by `DatasetManifest.validate()`.
+**Two-layer separation:**
 
-- Training set uses one set of random seeds and corruption parameter distributions
-- Test set uses DIFFERENT random seeds AND can use DIFFERENT noise parameter distributions (shifted means, wider variance)
-- This separation is enforced at the manifest level and documented explicitly
+1. **Seed separation (always enforced):** Train, val, and test splits use pairwise
+   disjoint random seeds. Enforced at generation time (`replace=False`) and validated
+   by `DatasetManifest.validate()`, which raises `ValueError` on any overlap.
+
+2. **Distribution separation (opt-in):** When `shift_test_ranges=True` is passed to
+   `generate_dataset()`, or when explicit `test_*_range` parameters are provided, the
+   test split samples corruption parameters from shifted distributions. The manifest
+   records the exact test ranges used.
+
+Default behavior (backward compatible): all splits share the same parameter ranges;
+only seeds differ.
 
 ## File Format
 

@@ -167,3 +167,98 @@ def test_manifest_spherical_validates_b_mag_range():
     )
     with pytest.raises(ValueError, match="b_mag_range_T"):
         manifest.validate()
+
+
+def test_manifest_inverse_crime_fields_roundtrip():
+    """Manifest with shifted test ranges survives JSON roundtrip."""
+    import tempfile
+    from pathlib import Path
+
+    manifest = _make_valid_manifest(
+        inverse_crime_shift=True,
+        test_p1_concentration_range_ppm=(50.0, 400.0),
+        test_temperature_range_K=(285.0, 340.0),
+        test_b1_gradient_range=(0.06, 0.36),
+        test_b_perp_range_T=(0.0, 60e-6),
+    )
+    manifest.validate()
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir) / "manifest.json"
+        manifest.to_json(path)
+        loaded = DatasetManifest.from_json(path)
+
+        assert loaded.inverse_crime_shift is True
+        assert loaded.test_p1_concentration_range_ppm == pytest.approx((50.0, 400.0))
+        assert loaded.test_temperature_range_K == pytest.approx((285.0, 340.0))
+        assert loaded.test_b1_gradient_range == pytest.approx((0.06, 0.36))
+        assert loaded.test_b_perp_range_T == pytest.approx((0.0, 60e-6))
+
+
+def test_manifest_inverse_crime_backward_compat():
+    """Old manifests without inverse-crime fields load with defaults."""
+    import json
+    import tempfile
+    from pathlib import Path
+
+    manifest = _make_valid_manifest()
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir) / "manifest.json"
+        manifest.to_json(path)
+
+        # Simulate old manifest: strip inverse-crime fields
+        with open(path) as f:
+            d = json.load(f)
+        for key in (
+            "inverse_crime_shift",
+            "test_p1_concentration_range_ppm",
+            "test_temperature_range_K",
+            "test_b1_gradient_range",
+            "test_b_perp_range_T",
+        ):
+            d.pop(key, None)
+        with open(path, "w") as f:
+            json.dump(d, f)
+
+        loaded = DatasetManifest.from_json(path)
+        assert loaded.inverse_crime_shift is False
+        assert loaded.test_p1_concentration_range_ppm is None
+        assert loaded.test_temperature_range_K is None
+
+
+def test_manifest_rejects_invalid_test_range():
+    """Inverted test ranges should fail validation."""
+    manifest = _make_valid_manifest(
+        inverse_crime_shift=True,
+        test_p1_concentration_range_ppm=(400.0, 50.0),  # Inverted
+    )
+    with pytest.raises(ValueError, match="test_p1_concentration_range_ppm"):
+        manifest.validate()
+
+
+def test_shift_range_moves_mean_and_widens():
+    """_shift_range should shift midpoint up and widen the interval."""
+    from nv_sensor_sim.pipelines.batch_generate import _shift_range
+
+    lo, hi = 10.0, 20.0
+    new_lo, new_hi = _shift_range(lo, hi)
+
+    orig_mean = (lo + hi) / 2.0
+    orig_width = hi - lo
+    new_mean = (new_lo + new_hi) / 2.0
+    new_width = new_hi - new_lo
+
+    # Mean shifted up by 12.5%
+    assert new_mean == pytest.approx(orig_mean * 1.125)
+    # Width expanded by 20%
+    assert new_width == pytest.approx(orig_width * 1.2)
+
+
+def test_shift_range_respects_floor():
+    """_shift_range should clamp the lower bound at the floor."""
+    from nv_sensor_sim.pipelines.batch_generate import _shift_range
+
+    # A range near zero: shifting could produce negative lower bound
+    lo, hi = 0.0, 10.0
+    new_lo, new_hi = _shift_range(lo, hi, floor=0.0)
+    assert new_lo >= 0.0

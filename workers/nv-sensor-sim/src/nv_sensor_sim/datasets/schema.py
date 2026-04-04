@@ -94,11 +94,19 @@ class DatasetManifest:
     n_freq_points: int = 100
     freq_range_Hz: tuple[float, float] = (2.82e9, 2.92e9)
 
-    # Corruption parameter ranges
+    # Corruption parameter ranges (train/val)
     p1_concentration_range_ppm: tuple[float, float] = (1.0, 300.0)
     temperature_range_K: tuple[float, float] = (280.0, 320.0)
     b1_gradient_range: tuple[float, float] = (0.05, 0.30)
     b_perp_range_T: tuple[float, float] = (0.0, 50e-6)
+
+    # Anti-inverse-crime: shifted test-set parameter ranges
+    # When non-None, test split uses these ranges instead of the train ranges.
+    test_p1_concentration_range_ppm: tuple[float, float] | None = None
+    test_temperature_range_K: tuple[float, float] | None = None
+    test_b1_gradient_range: tuple[float, float] | None = None
+    test_b_perp_range_T: tuple[float, float] | None = None
+    inverse_crime_shift: bool = False
 
     # Field sampling mode and magnitude range
     field_sampling: str = "z_only"
@@ -136,6 +144,15 @@ class DatasetManifest:
             d[key] = list(d[key])
         if d.get("b_mag_range_T") is not None:
             d["b_mag_range_T"] = list(d["b_mag_range_T"])
+        # Shifted test ranges (None when not active)
+        for key in (
+            "test_p1_concentration_range_ppm",
+            "test_temperature_range_K",
+            "test_b1_gradient_range",
+            "test_b_perp_range_T",
+        ):
+            if d.get(key) is not None:
+                d[key] = list(d[key])
         return d
 
     def to_json(self, path: str | Path) -> None:
@@ -185,9 +202,26 @@ class DatasetManifest:
         d.setdefault("field_sampling", "z_only")
         d.setdefault("b_mag_range_T", None)
 
+        # Backward compat: older manifests lack inverse-crime fields
+        d.setdefault("test_p1_concentration_range_ppm", None)
+        d.setdefault("test_temperature_range_K", None)
+        d.setdefault("test_b1_gradient_range", None)
+        d.setdefault("test_b_perp_range_T", None)
+        d.setdefault("inverse_crime_shift", False)
+
         # Convert b_mag_range_T list back to tuple if present
         if d.get("b_mag_range_T") is not None:
             d["b_mag_range_T"] = tuple(d["b_mag_range_T"])
+
+        # Convert test range lists back to tuples if present
+        for key in (
+            "test_p1_concentration_range_ppm",
+            "test_temperature_range_K",
+            "test_b1_gradient_range",
+            "test_b_perp_range_T",
+        ):
+            if d.get(key) is not None:
+                d[key] = tuple(d[key])
 
         return cls(**d)
 
@@ -260,6 +294,18 @@ class DatasetManifest:
         ]:
             if lo > hi:
                 raise ValueError(f"{name}: min ({lo}) > max ({hi})")
+
+        # Validate shifted test ranges (when present)
+        for name, rng in [
+            ("test_p1_concentration_range_ppm", self.test_p1_concentration_range_ppm),
+            ("test_temperature_range_K", self.test_temperature_range_K),
+            ("test_b1_gradient_range", self.test_b1_gradient_range),
+            ("test_b_perp_range_T", self.test_b_perp_range_T),
+        ]:
+            if rng is not None:
+                lo, hi = rng
+                if lo > hi:
+                    raise ValueError(f"{name}: min ({lo}) > max ({hi})")
 
         # Validate b_mag_range_T if spherical mode
         if self.field_sampling == "spherical" and self.b_mag_range_T is not None:

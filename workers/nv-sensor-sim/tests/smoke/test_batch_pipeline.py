@@ -257,6 +257,75 @@ def test_both_mode_batch_generation():
 
 
 @pytest.mark.smoke
+def test_shifted_test_ranges_no_overlap():
+    """Verify that shift_test_ranges produces non-overlapping train/test distributions."""
+    from nv_sensor_sim.datasets.loaders import DatasetLoader
+    from nv_sensor_sim.pipelines.batch_generate import generate_dataset
+
+    # Use narrow, well-separated ranges so the shift clearly moves outside train
+    train_p1 = (10.0, 20.0)
+    train_temp = (290.0, 310.0)
+    train_b1 = (0.10, 0.20)
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        output = generate_dataset(
+            output_dir=tmpdir,
+            n_train=10,
+            n_val=0,
+            n_test=10,
+            master_seed=42,
+            n_freq_points=20,
+            p1_range_ppm=train_p1,
+            temp_range_K=train_temp,
+            b1_gradient_range=train_b1,
+            field_sampling="z_only",
+            shift_test_ranges=True,
+        )
+
+        loader = DatasetLoader(output)
+        manifest = loader.load_manifest()
+
+        # Manifest should record shift
+        assert manifest.inverse_crime_shift is True
+        assert manifest.test_p1_concentration_range_ppm is not None
+        assert manifest.test_temperature_range_K is not None
+        assert manifest.test_b1_gradient_range is not None
+
+        # Shifted test ranges should differ from train ranges
+        assert manifest.test_p1_concentration_range_ppm != pytest.approx(train_p1)
+        assert manifest.test_temperature_range_K != pytest.approx(train_temp)
+        assert manifest.test_b1_gradient_range != pytest.approx(train_b1)
+
+        # Load actual data and verify parameter values
+        _, _, _, train_params, _ = loader.load_split("train")
+        _, _, _, test_params, _ = loader.load_split("test")
+
+        # Test P1 values should have a higher mean than train
+        train_p1_mean = np.mean(train_params[:, 0])
+        test_p1_mean = np.mean(test_params[:, 0])
+        assert test_p1_mean > train_p1_mean, (
+            f"Test P1 mean ({test_p1_mean:.1f}) should exceed "
+            f"train P1 mean ({train_p1_mean:.1f})"
+        )
+
+        # Test temperature values should have a higher mean than train
+        train_T_mean = np.mean(train_params[:, 1])
+        test_T_mean = np.mean(test_params[:, 1])
+        assert test_T_mean > train_T_mean, (
+            f"Test T mean ({test_T_mean:.1f}) should exceed "
+            f"train T mean ({train_T_mean:.1f})"
+        )
+
+        # Test B1 gradient values should have a higher mean than train
+        train_b1_mean = np.mean(train_params[:, 2])
+        test_b1_mean = np.mean(test_params[:, 2])
+        assert test_b1_mean > train_b1_mean, (
+            f"Test B1 mean ({test_b1_mean:.4f}) should exceed "
+            f"train B1 mean ({train_b1_mean:.4f})"
+        )
+
+
+@pytest.mark.smoke
 def test_spherical_field_sampling():
     """Generate dataset with spherical B-field sampling and verify diverse orientations."""
     from nv_sensor_sim.datasets.loaders import DatasetLoader
