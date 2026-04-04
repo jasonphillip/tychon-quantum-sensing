@@ -17,6 +17,12 @@ constexpr double MAX_SLEW_PER_CYCLE = 0.001;
 // Triggers AI isolation and bumpless transfer to pure PID on timeout
 constexpr unsigned int WATCHDOG_TIMEOUT_CYCLES = 200000;
 
+// Watchdog cooldown: minimum cycles in PID-only mode after a timeout
+// before AI is allowed to re-enter. Prevents high-frequency limit-cycling
+// (chattering) between AI+PID and pure PID modes.
+// 1000 cycles at 200 MHz = 5.0 µs
+constexpr unsigned int WATCHDOG_COOLDOWN_CYCLES = 1000;
+
 // Clock frequency (Hz) — PolarFire SoC fabric clock
 constexpr unsigned int CLOCK_FREQ_HZ = 200000000;
 

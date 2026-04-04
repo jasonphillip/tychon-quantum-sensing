@@ -84,3 +84,16 @@ The AI feedforward path is bounded by three safety mechanisms:
 3. **Hardware watchdog** -- 1 ms timeout triggers bumpless transfer from AI+PID to pure PID mode
 
 These mechanisms guarantee that the AI component cannot destabilize the classical PID control loop, regardless of inference output. See `docs/safety_architecture.md` for formal details.
+
+## Power Analysis
+
+SmartPower synthesis reports are generated on the Beelink build host and archived on the NAS (`/mnt/nas/projects/polarfire-hybrid-control/reports/`). Key numbers from the most recent analysis:
+
+| Component | Power |
+|-----------|-------|
+| FPGA fabric (PID + VBX + interconnect) | 2,664 mW |
+| Total system (MPFS250T + DDR + I/O) | ~5.2 W |
+| **SWaP budget** | **12 W** |
+| **Margin** | **~57%** |
+
+Static power is derived from SmartPower estimation (activity-factor based, no VCD). The `smartpower_report.rpt` artifact is not committed to this repo — it is regenerated on each synthesis run via `libero/scripts/04_synth_pnr.tcl`.

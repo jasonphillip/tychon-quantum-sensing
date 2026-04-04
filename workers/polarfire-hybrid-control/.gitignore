@@ -17,6 +17,12 @@ smartgen/
 # VectorBlox compiled models (large binaries, not committed)
 *.vnnx
 
+# SmartHLS ap_fixpt software shim (local testbench only, not for synthesis)
+hls/include/hls/
+
+# Compiled test binaries
+hls/tb_bumpless
+
 # Python
 __pycache__/
 *.pyc
