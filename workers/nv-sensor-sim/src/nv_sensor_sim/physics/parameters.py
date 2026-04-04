@@ -101,7 +101,7 @@ class AsymmetryParams:
     """
 
     b1_gradient_range: tuple[float, float] = (0.05, 0.30)  # 5-30% variation
-    b_perp_range_T: tuple[float, float] = (0.0, 50e-6)  # 0 to 50 µT
+    b_perp_range_T: tuple[float, float] = (0.0, 50e-6)  # Range in Tesla (0 to 50 µT = 0 to 50e-6 T)
 
 
 def compute_linewidth(p1_ppm: float, inhomogeneous_fwhm_hz: float = 0.0) -> float:
