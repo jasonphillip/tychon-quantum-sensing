@@ -16,6 +16,8 @@ from __future__ import annotations
 import torch.nn as nn
 from torch import Tensor
 
+from odmr_edge_ml.training.loop import init_weights_kaiming_he
+
 
 class OdmrFCNN(nn.Module):
     """Fully convolutional neural network for ODMR inversion.
@@ -37,6 +39,9 @@ class OdmrFCNN(nn.Module):
         Kernel width for (1, k) convolutions. Default 5.
     stride : int
         Stride for strided conv layers. Default 2.
+    init_weights : bool
+        If True (default), apply Kaiming He Normal initialization.
+        Set to False when loading pretrained weights.
     """
 
     def __init__(
@@ -47,6 +52,7 @@ class OdmrFCNN(nn.Module):
         channels: list[int] | None = None,
         kernel_size: int = 5,
         stride: int = 2,
+        init_weights: bool = True,
     ) -> None:
         super().__init__()
         if channels is None:
@@ -70,6 +76,9 @@ class OdmrFCNN(nn.Module):
 
         # Head conv: collapse remaining spatial to (1,1), replacing Linear
         self.conv_head = nn.Conv2d(prev_c, output_dim, kernel_size=(1, spatial))
+
+        if init_weights:
+            init_weights_kaiming_he(self)
 
     def forward(self, x: Tensor) -> Tensor:
         """Forward pass.

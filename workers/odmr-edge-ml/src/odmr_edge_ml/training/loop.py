@@ -55,8 +55,39 @@ class TrainConfig:
     log_every: int = 5
     alpha: float = 0.7
     huber_delta: float = 1.0
+    fold_sign: bool = True
     seed: int = 42
     checkpoint_dir: str = "artifacts/checkpoints"
+
+
+def fold_bz_sign(b_field: torch.Tensor) -> torch.Tensor:
+    """Fold negative-Bz samples to positive hemisphere.
+
+    CW-ODMR spectra at the target field strengths (20-70 µT) cannot
+    resolve B-field direction due to quantum degeneracy: +B and -B
+    produce identical spectra. Folding restricts labels to one hemisphere,
+    breaking the symmetry so the network doesn't face an ambiguous target.
+
+    Only applied when labels have >= 3 components (vector output).
+    Scalar residual labels (output_dim=1) are unaffected.
+
+    Parameters
+    ----------
+    b_field : Tensor
+        Shape (batch, D) where D >= 3. Column 2 is Bz.
+
+    Returns
+    -------
+    Tensor
+        Same shape, with rows where Bz < 0 multiplied by -1.
+    """
+    if b_field.shape[1] < 3:
+        return b_field
+    neg_mask = b_field[:, 2] < 0
+    if neg_mask.any():
+        b_field = b_field.clone()
+        b_field[neg_mask] *= -1.0
+    return b_field
 
 
 def init_weights_kaiming_he(model: nn.Module) -> None:
@@ -250,6 +281,8 @@ def train(
         for batch in train_loader:
             spectra = batch["spectra"].to(device)
             b_true = batch["b_field_uT"].to(device)
+            if config.fold_sign and b_true.shape[1] >= 3:
+                b_true = fold_bz_sign(b_true)
 
             optimizer.zero_grad()
             b_pred = model(spectra)

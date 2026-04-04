@@ -9,6 +9,8 @@ from __future__ import annotations
 import torch.nn as nn
 from torch import Tensor
 
+from odmr_edge_ml.training.loop import init_weights_kaiming_he
+
 
 class OdmrMLP(nn.Module):
     """Multi-layer perceptron for ODMR inversion.
@@ -23,6 +25,9 @@ class OdmrMLP(nn.Module):
         Sizes of hidden layers.
     activation : str
         "relu" or "relu6" (both VectorBlox-compatible).
+    init_weights : bool
+        If True (default), apply Kaiming He Normal initialization.
+        Set to False when loading pretrained weights.
     """
 
     def __init__(
@@ -31,6 +36,7 @@ class OdmrMLP(nn.Module):
         output_dim: int = 3,
         hidden_dims: list[int] | None = None,
         activation: str = "relu",
+        init_weights: bool = True,
     ) -> None:
         super().__init__()
         if hidden_dims is None:
@@ -48,6 +54,9 @@ class OdmrMLP(nn.Module):
         # Output layer — no activation (regression)
         layers.append(nn.Linear(prev_dim, output_dim))
         self.net = nn.Sequential(*layers)
+
+        if init_weights:
+            init_weights_kaiming_he(self)
 
     def forward(self, x: Tensor) -> Tensor:
         """Forward pass.

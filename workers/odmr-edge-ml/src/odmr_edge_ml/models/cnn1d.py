@@ -12,6 +12,8 @@ from __future__ import annotations
 import torch.nn as nn
 from torch import Tensor
 
+from odmr_edge_ml.training.loop import init_weights_kaiming_he
+
 
 class DepthwiseSeparableConv2d(nn.Module):
     """Depthwise-separable convolution via Conv2d with (1, k) kernels."""
@@ -66,6 +68,9 @@ class OdmrCNN1D(nn.Module):
         subsequent elements add residual blocks with channel projection.
     kernel_size : int
         Kernel width for (1, k) convolutions.
+    init_weights : bool
+        If True (default), apply Kaiming He Normal initialization.
+        Set to False when loading pretrained weights.
     """
 
     def __init__(
@@ -74,6 +79,7 @@ class OdmrCNN1D(nn.Module):
         output_dim: int = 3,
         channels: list[int] | None = None,
         kernel_size: int = 5,
+        init_weights: bool = True,
     ) -> None:
         super().__init__()
         if channels is None:
@@ -100,6 +106,9 @@ class OdmrCNN1D(nn.Module):
 
         # FC head
         self.head = nn.Linear(channels[-1], output_dim)
+
+        if init_weights:
+            init_weights_kaiming_he(self)
 
     def forward(self, x: Tensor) -> Tensor:
         """Forward pass.

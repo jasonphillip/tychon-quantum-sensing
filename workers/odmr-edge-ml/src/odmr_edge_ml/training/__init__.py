@@ -7,6 +7,7 @@ from odmr_edge_ml.training.losses import (
 )
 from odmr_edge_ml.training.loop import (
     TrainConfig,
+    fold_bz_sign,
     init_weights_kaiming_he,
     train,
     validate_physics_regimes,
@@ -23,6 +24,7 @@ __all__ = [
     "angular_error_deg",
     "component_error_nT",
     "TrainConfig",
+    "fold_bz_sign",
     "init_weights_kaiming_he",
     "train",
     "validate_physics_regimes",

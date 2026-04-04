@@ -35,6 +35,7 @@ from odmr_edge_ml.evaluation.residual_dataset import (
 from odmr_edge_ml.models.fcnn import OdmrFCNN
 from odmr_edge_ml.training.loop import TrainConfig, init_weights_kaiming_he, train
 from odmr_edge_ml.training.qat import extract_clean_state_dict, prepare_model_qat
+from odmr_edge_ml.export import export_onnx as _export_onnx_module
 from odmr_edge_ml.validation.ops_guard import check_model_ops
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -49,7 +50,11 @@ EXPORT_DIR = Path(__file__).resolve().parent.parent / "exports"
 V1_CKPT = Path(__file__).resolve().parent / "scalar_residual/fcnn/checkpoints/best_model.pt"
 V1_SWEEP = Path(__file__).resolve().parent / "heading_sweep_results.npz"
 
-CLAMP_UT = 2.25  # ±4.5% of 50 µT sector clamp
+# Sector clamp: ±4.5% of 50 µT deployment field.
+# Widening to ±15 µT for full 360° heading sweeps is under evaluation.
+# See Gemini ±30% Circle Criterion analysis for INT8 resolution trade-offs:
+# current resolution ~17.6 nT/level vs ~117.6 nT/level at ±15 µT.
+CLAMP_UT = 2.25
 
 
 # ---------------------------------------------------------------------------
@@ -210,19 +215,10 @@ def collate_residual(batch: list[dict]) -> dict:
 # Export helpers (copied from v1 for self-containedness)
 # ---------------------------------------------------------------------------
 def export_onnx(model: nn.Module, onnx_path: Path, input_dim: int) -> None:
-    import onnx
-
-    model.eval()
-    dummy = torch.randn(1, input_dim)
-    torch.onnx.export(
-        model, (dummy,), str(onnx_path),
-        input_names=["input"], output_names=["delta_b_uT"],
-        dynamic_axes={"input": {0: "batch"}, "delta_b_uT": {0: "batch"}},
-        opset_version=17,
+    """Delegate to the canonical export module in src/."""
+    _export_onnx_module(
+        model, onnx_path, input_shape=(1, input_dim), skip_ops_check=True,
     )
-    onnx_model = onnx.load(str(onnx_path))
-    onnx.checker.check_model(onnx_model)
-    log.info("  ONNX: %s (%.1f KB)", onnx_path, onnx_path.stat().st_size / 1024)
 
 
 def convert_fcnn_to_tflite_int8(
