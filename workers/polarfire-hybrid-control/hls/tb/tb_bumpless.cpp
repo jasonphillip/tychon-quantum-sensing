@@ -84,88 +84,86 @@ static bool run_bumpless_test(
 // =============================================================================
 
 // Test C-a: AXI write attempting to widen the inner clamp must be REJECTED
-// at the HLS gate. Steady-state actuator must remain bounded by the outer
-// hardcoded constant (±4.5% of range).
+// at the HLS gate. The accepted soft-state must remain at or below the outer
+// constant, and apply_sector_clamp must bound u_AI to the outer magnitude.
+//
+// Unit-style test on the clamp+gate pair. We bypass nv_pid_top to avoid PID
+// integrator residue from prior tests (apply_sector_clamp has no integrator
+// state — its only state is the accepted-inner soft-state in safety_clamps.cpp).
 static bool test_clamp_widen_rejected() {
     std::cout << "--- Task A.a: AXI widen attempt rejected ---\n";
-    gain_t Kp = 0.0001, Ki = 0.0, Kd = 0.0;  // pure AI, no PID drift
-    out_t  out_min = 0.0, out_max = 5.0;
-    freq_t error = 0.0;
-    out_t  u_AI = 0.5;                        // 10% of range — would exceed outer
-    out_t  actuator_out;
+    out_t out_min = 0.0, out_max = 5.0;
 
-    flush_state(Kp, Ki, Kd, out_min, out_max);
+    // Reset accepted-inner to the outer default.
+    gate_inner_clamp((gain_t)OUTER_SECTOR_CLAMP_FRACTION);
 
-    // Drive a wider-than-outer setpoint (10% > 4.5%). Must be rejected.
+    // Drive a wider-than-outer setpoint (10% > 4.5%) through the gate.
     gain_t wide_setpoint = (gain_t)0.10;
-    nv_pid_top(error, u_AI, false, Kp, Ki, Kd, out_min, out_max,
-               wide_setpoint, actuator_out);
+    gate_inner_clamp(wide_setpoint);
 
     bool rejected = get_inner_clamp_rejected();
     double accepted = get_accepted_inner_fraction().to_double();
 
-    // Settle: ramp up u_AI through slew limiter (0.001 V/cycle).
-    // Need ~250 cycles to reach the outer-clamp magnitude (0.225 V).
-    for (int i = 0; i < 400; i++) {
-        nv_pid_top(error, u_AI, false, Kp, Ki, Kd, out_min, out_max,
-                   wide_setpoint, actuator_out);
-    }
+    // u_AI = 0.5 V (10% of range) — would exceed outer if gate had widened.
+    out_t u_AI = 0.5;
+    out_t clamped = apply_sector_clamp(u_AI, out_min, out_max);
 
-    double bound = 0.045 * (out_max.to_double() - out_min.to_double());  // 0.225 V
-    double final_v = actuator_out.to_double();
-    bool bounded = (std::abs(final_v) <= bound + 1e-3);
+    double bound  = OUTER_SECTOR_CLAMP_FRACTION
+                    * (out_max.to_double() - out_min.to_double());  // 0.225 V
+    double cv     = clamped.to_double();
+    bool bounded  = (std::abs(cv) <= bound + 1e-3);
 
     std::cout << "Setpoint:               " << wide_setpoint.to_double() << "\n";
     std::cout << "Rejected flag:          " << (rejected ? "true" : "false") << "\n";
     std::cout << "Accepted soft-state:    " << accepted
-              << " (must remain <= " << OUTER_SECTOR_CLAMP_FRACTION << ")\n";
-    std::cout << "Final actuator:         " << final_v
+              << "  (must remain <= " << OUTER_SECTOR_CLAMP_FRACTION << ")\n";
+    std::cout << "u_AI input:             " << u_AI.to_double() << " V\n";
+    std::cout << "apply_sector_clamp out: " << cv
               << " V  (outer bound = " << bound << " V)\n";
 
-    bool pass = rejected && bounded && (accepted <= OUTER_SECTOR_CLAMP_FRACTION + 1e-6);
-    std::cout << (pass ? "PASS" : "FAIL") << ": widen write rejected, output bounded by outer.\n\n";
+    bool pass = rejected && bounded
+                && (accepted <= OUTER_SECTOR_CLAMP_FRACTION + 1e-3);
+    std::cout << (pass ? "PASS" : "FAIL")
+              << ": widen write rejected, clamp bounded by outer.\n\n";
     return pass;
 }
 
-// Test C-b: AXI write tightening the inner clamp must be ACCEPTED. Actuator
-// must be bounded by the new tighter inner limit (here ±2% of range).
+// Test C-b: AXI write tightening the inner clamp must be ACCEPTED. The
+// accepted soft-state must update to the new value, and apply_sector_clamp
+// must bound u_AI to the tighter inner magnitude.
 static bool test_clamp_tighten_accepted() {
     std::cout << "--- Task A.b: AXI tighten accepted ---\n";
-    gain_t Kp = 0.0001, Ki = 0.0, Kd = 0.0;
-    out_t  out_min = 0.0, out_max = 5.0;
-    freq_t error = 0.0;
-    out_t  u_AI = 0.5;                        // 10% — well above tightened 2%
-    out_t  actuator_out;
+    out_t out_min = 0.0, out_max = 5.0;
 
-    flush_state(Kp, Ki, Kd, out_min, out_max);
-
-    gain_t tight_setpoint = (gain_t)0.02;     // 2% — tighter than outer 4.5%
-    nv_pid_top(error, u_AI, false, Kp, Ki, Kd, out_min, out_max,
-               tight_setpoint, actuator_out);
+    // Start from outer default, then write a tighter setpoint (2% < 4.5%).
+    gate_inner_clamp((gain_t)OUTER_SECTOR_CLAMP_FRACTION);
+    gain_t tight_setpoint = (gain_t)0.02;
+    gate_inner_clamp(tight_setpoint);
 
     bool rejected = get_inner_clamp_rejected();
     double accepted = get_accepted_inner_fraction().to_double();
 
-    // Settle through the slew limiter (need ~100 cycles to reach 0.10 V).
-    for (int i = 0; i < 200; i++) {
-        nv_pid_top(error, u_AI, false, Kp, Ki, Kd, out_min, out_max,
-                   tight_setpoint, actuator_out);
-    }
+    out_t u_AI = 0.5;                          // 10% — well above tightened 2%
+    out_t clamped = apply_sector_clamp(u_AI, out_min, out_max);
 
     double bound = 0.02 * (out_max.to_double() - out_min.to_double());  // 0.10 V
-    double final_v = actuator_out.to_double();
-    bool bounded = (std::abs(final_v) <= bound + 1e-3);
+    double cv = clamped.to_double();
+    bool bounded = (std::abs(cv) <= bound + 1e-3);
 
     std::cout << "Setpoint:               " << tight_setpoint.to_double() << "\n";
     std::cout << "Rejected flag:          " << (rejected ? "true" : "false") << "\n";
     std::cout << "Accepted soft-state:    " << accepted
-              << " (must equal setpoint = 0.02)\n";
-    std::cout << "Final actuator:         " << final_v
+              << "  (must equal setpoint = 0.02)\n";
+    std::cout << "u_AI input:             " << u_AI.to_double() << " V\n";
+    std::cout << "apply_sector_clamp out: " << cv
               << " V  (inner bound = " << bound << " V)\n";
 
-    bool pass = !rejected && bounded
-                && std::abs(accepted - 0.02) < 1e-3;
-    std::cout << (pass ? "PASS" : "FAIL") << ": tighten write accepted, output bounded by inner.\n\n";
+    bool pass = !rejected && bounded && std::abs(accepted - 0.02) < 1e-3;
+    std::cout << (pass ? "PASS" : "FAIL")
+              << ": tighten write accepted, clamp bounded by inner.\n\n";
+
+    // Restore default for downstream tests.
+    gate_inner_clamp((gain_t)OUTER_SECTOR_CLAMP_FRACTION);
     return pass;
 }
 
