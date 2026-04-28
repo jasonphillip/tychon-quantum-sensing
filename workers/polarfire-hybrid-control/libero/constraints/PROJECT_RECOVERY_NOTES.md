@@ -70,20 +70,42 @@ Investigated `MPFS_ICICLE_KIT_BASE_DESIGN_2023_02.job` — discovered it is a
 data), NOT a project archive. Libero's `restore_project` Tcl returned an opaque
 empty error against it. Cannot use this for project recovery.
 
-**B4 — MPFS_ICICLE_KIT_REFERENCE_DESIGN.tcl in fresh dir** (TIME-BUDGET LIMITED).
-The reference Tcl creates a project from scratch when one doesn't exist. Initial
-attempt failed because rsync isn't on Beelink and copying the script_support tree
-needs more orchestration. This is the cleanest recovery path but requires:
-1. Copy of `~/dev/projects/.../ref_design/script_support/` and the Tcl into a
-   fresh empty directory.
-2. `cd` into it.
-3. `libero "SCRIPT:MPFS_ICICLE_KIT_REFERENCE_DESIGN.tcl" VECTORBLOX:1`
-4. After clean project creates, re-apply the decision-2-option-c HLS overlay
-   (re-run `libero/scripts/decision-2-c-overlay.tcl` against the new dir).
-5. Pre-stage `decision-2-option-c.pdc` in `<new>/constraint/fp/`.
-6. Run the pipeline.
+**B4 — MPFS_ICICLE_KIT_REFERENCE_DESIGN.tcl in fresh dir** (FAILED: install bug).
+Successfully copied the Tcl + script_support to fresh dirs and ran both
+`VECTORBLOX:1` and `SPI_LOOPBACK:1` variants. **Both fail with the same
+device-mismatch error**:
 
-Estimated effort: 30-60 min hands-on.
+```
+Error: MSS component 'ICICLE_MSS' created using 'an engineering sample' device
+cannot be imported to current libero SoC project targeted to 'a non-engineering
+sample' device.
+Please regenerate the MSS component using the same device as current Libero SoC
+project and then import it back. [OK]
+Error: Libero failed to import '~\AppData\Local\Temp\d_p_z_unzip\ICICLE_MSS.cxf'.
+Error: The command 'import_mss_component' failed.
+Error: Failure when executing Tcl script. [Line 96]
+```
+
+The bundled `ICICLE_MSS.cxf` shipped with the SmartHLS reference designs on
+Beelink was generated for **engineering-sample (ES)** silicon, but the
+reference Tcl creates new projects targeting `MPFS250T` production die.
+This is the actual install-level toolchain bug.
+
+**B5 — Project clone to /c/temp/** (FAILED, but informative).
+Copied the entire `MPFS_ICICLE_Vectorblox/` to `/c/temp/MPFS_clone_d2c/` and
+ran load-only there. **Same byte-deterministic crash** (607 lines / 82527 bytes
+— different byte count only because the new path is shorter, same number of
+files read). Confirms the corruption travels with the project files, not the
+filesystem location.
+
+Combined with B4: the ORIGINAL project's `component/work/ICICLE_MSS/` is the
+only production-targeted MSS on the system (it was hand-regenerated at some
+point in the project's history). The fresh-project flow can't replicate it
+without either:
+1. A production-targeted MSS .cxf bundle (would need from a fresh SmartHLS
+   install on a clean machine), or
+2. Hands-on MSS configurator work in Libero GUI to regenerate ICICLE_MSS for
+   `PA5SOC250T` production silicon.
 
 ### Other observations
 
@@ -111,20 +133,30 @@ Backups retained on Beelink for future investigation:
 
 ## Recommended next steps (in priority order)
 
-1. **Hands-on Beelink GUI session**. Open the project in Libero GUI (not CLI)
-   to see if any modal dialogs appear on load that the batch mode is silently
-   dismissing. The GUI may reveal what specifically about the saved state
-   is corrupting `open_project`.
+1. **Hands-on Beelink GUI session — Libero GUI open of the existing project**.
+   The CLI batch mode crashes silently. Opening the original project in the
+   GUI may surface the actual modal dialog/error that's killing the batch
+   load. Most likely the dialog asks about regenerating ICICLE_MSS (because
+   of an internal device-version mismatch similar to the fresh-project flow),
+   and the GUI lets you accept the regeneration where the CLI can't.
 
-2. **Fresh project from MPFS_ICICLE_KIT_REFERENCE_DESIGN.tcl** (Strategy B4).
-   Most reliable recovery. Apply HLS overlay + PDC after fresh creation.
-   ~30-60 min of attended work.
+2. **Hands-on MSS regeneration in Libero GUI for production silicon**.
+   Independently from #1: in the Libero GUI, open the existing project's
+   ICICLE_MSS component and regenerate it for `PA5SOC250T` (production)
+   target. Then re-overlay HLS, run pipeline. This may also fix the silent
+   open_project crash if the cause is indeed an MSS device mismatch.
 
-3. **Reinstall SmartHLS reference designs** on Beelink — the package likely has
-   a clean tarball Libero can re-extract.
+3. **Run on a different machine** with a clean Libero 2025.2 install +
+   SmartHLS reference designs configured for production silicon (NOT
+   engineering sample). The HLS source, PDC, and overlay scripts in this
+   branch are toolchain-portable. A pristine install on Spark1 or another
+   x86 dev machine would bypass both the install bug (B4) and the project
+   corruption (B1, B2, B5).
 
-4. **Run on a different machine** with a clean Libero 2025.2 install. The HLS
-   source, PDC, and overlay scripts in this branch are toolchain-portable.
+4. **File a Microchip support case** about the SmartHLS reference designs
+   shipping with an ES-targeted ICICLE_MSS.cxf that fails to import into
+   production-die projects. This blocks any user trying to follow the
+   reference design's intended workflow on production MPFS250T silicon.
 
 ## What NOT to do
 
