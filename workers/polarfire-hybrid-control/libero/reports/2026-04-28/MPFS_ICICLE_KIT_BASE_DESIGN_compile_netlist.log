@@ -1,0 +1,45 @@
+Info: [127205813]:  CMPPF_149: Added 'ADLIB:ICB_CLKINT' instance type before pin 'CLOCKS_AND_RESETS_inst_0/GLITCHLESS_MUX_inst_0/GLITCHLESS_MUX_0/I_CLKINT:A'.
+Info: [127205813]:  CMPPF_149: Added 'ADLIB:ICB_INT' instance type before pin 'CLOCKS_AND_RESETS_inst_0/GLITCHLESS_MUX_inst_0/GLITCHLESS_MUX_0/I_NGMUX:CLK1'.
+Info: [127205813]:  CMPPF_149: Added 'ADLIB:ICB_CLKINT' instance type before pin 'FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/clkint_0:A'.
+Info: [127205813]:  CMPPF_149: Added 'ADLIB:ICB_CLKINT' instance type before pin 'FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/clkint_4:A'.
+Info: [127205813]:  CMPPF_149: Added 'ADLIB:CRN_INT' instance type before pin 'FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/pll_inst_0:REF_CLK_0'.
+Info: [127205813]:  CMPPF_149: Added 'ADLIB:ICB_CLKINT' instance type before pin 'CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/clkint_0:A'.
+Info: [127205813]:  CMPPF_149: Added 'ADLIB:ICB_CLKINT' instance type before pin 'CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/clkint_4:A'.
+Info: [127205813]:  CMPPF_149: Added 'ADLIB:ICB_CLKINT' instance type before pin 'CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/clkint_12:A'.
+Info: [127205813]:  CMPPF_149: Added 'ADLIB:CRN_INT' instance type before pin 'CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0:REF_CLK_0'.
+
+===============================================================================.
+
+Info: Global design data: 
+      Total globals:                       13 
+      Globals that cannot be demoted:      6 
+      Globals considered for demotion:     7 
+
+
+Info: List of globals that cannot be demoted: 
+    CLK    ASYN   DATA   Instance Name 
+    ---    ----   ----   ------------- 
+    31773  0      0      'FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/clkint_4' 
+    7290   0      0      'FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/clkint_0' 
+    7021   0      0      'CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/clkint_0' 
+    3482   0      0      'CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/clkint_12' 
+    2293   0      0      'CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/clkint_4' 
+    1      0      0      'CLOCKS_AND_RESETS_inst_0/GLITCHLESS_MUX_inst_0/GLITCHLESS_MUX_0/I_CLKINT' 
+
+Info: List of globals considered for demotion: 
+    CLK    ASYN   DATA   Instance Name 
+    ---    ----   ----   ------------- 
+    0      3253   0      'FIC_0_PERIPHERALS_1/FIC0_INITIATOR_inst_0/FIC0_INITIATOR_0/arst_aclk_sync/sysReset_RNISJ6L2' 
+    0      2121   0      'CLOCKS_AND_RESETS_inst_0/RESET_FIC_0_CLK/CORERESET_0/dff_15_RNIGR743[0]' 
+    0      1996   0      'FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/arst_aclk_sync/sysReset_RNILUTV1' 
+    0      1488   0      'FIC_0_PERIPHERALS_1/DMA_INITIATOR_inst_0/DMA_INITIATOR_0/arst_aclk_sync/sysReset_RNISKAM4' 
+    0      1123   0      'FIC_1_PERIPHERALS_1/FIC_1_INITIATOR_0/FIC_1_INITIATOR_0/arst_aclk_sync/sysReset_RNI06ON6' 
+    0      1051   0      'FIC_1_PERIPHERALS_1/PCIE_INITIATOR_inst_0/PCIE_INITIATOR_0/arst_aclk_sync/sysReset_RNIRK8T2' 
+    0      0      2      'CLOCKS_AND_RESETS_inst_0/CLKINT_REF_CLK_50MHz' 
+
+Info: Demotion information: 
+Info: [127205381]:  CMPPF_302: Added 0 row global instances.
+Info: [127205382]:  CMPPF_303: Deleted 0 global instances.
+
+===============================================================================.
+

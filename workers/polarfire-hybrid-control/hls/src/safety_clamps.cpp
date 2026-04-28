@@ -24,77 +24,85 @@
 //                        the effective bound past it. Chosen as the tighter
 //                        of the design report's ±5% / ±4.5% sector pair.
 //
-//   INNER (AXI-config) : `inner_clamp_setpoint` AXI target register. Each
-//                        cycle the gate validates the setpoint against the
-//                        outer constant. Tightening writes (setpoint <= outer)
-//                        update the accepted soft-state. Widening writes
-//                        (setpoint > outer) are rejected at the HLS gate;
-//                        the previously accepted value is retained, and the
-//                        rejection status is latched on `s_inner_rejected`.
+//   INNER (AXI-config) : The runtime `inner_clamp_setpoint` argument is the
+//                        AXI target register. Each call validates it against
+//                        the outer constant. Tightening writes (setpoint <=
+//                        outer) update the function-local accepted soft-
+//                        state; widening writes leave the soft-state
+//                        untouched and report rejection via *out_rejected.
 //
-//   SEU robustness     : The runtime path in apply_sector_clamp() re-clamps
-//                        the soft-state fraction itself to the outer constant
-//                        before computing the magnitude, AND clamps once more
-//                        at the magnitude level after the inner pass. If a
-//                        single-event upset corrupts the accepted-inner
-//                        register to a wider value, the actuator output is
-//                        still bounded by ±OUTER_SECTOR_CLAMP_FRACTION of the
-//                        actuator range.
+//   SEU robustness     : The runtime path re-clamps the soft-state fraction
+//                        itself to the outer constant before computing the
+//                        magnitude, AND clamps once more at the magnitude
+//                        level after the inner pass. If a single-event upset
+//                        corrupts the accepted-inner soft-state to a wider
+//                        value, the actuator output is still bounded by
+//                        ±OUTER_SECTOR_CLAMP_FRACTION of the actuator range.
+//
+//   SmartHLS note      : The accepted-inner state is held as a `static` in
+//                        the body of nv_pid_top and passed to this function
+//                        by reference. SmartHLS reliably infers statics
+//                        defined inside the top function as internal
+//                        registers; statics inside helper functions get
+//                        hoisted to external Scalar Memory interfaces even
+//                        when the helper is force-inlined.
 // =============================================================================
 
-// File-scope soft-state. Default at reset: accepted-inner equals the outer
-// constant (i.e., no AXI tightening applied yet). Inner-rejected flag clears
-// at reset and is latched true on any out-of-range AXI write.
-static gain_t s_accepted_inner_fraction = (gain_t)OUTER_SECTOR_CLAMP_FRACTION;
-static bool   s_inner_rejected          = false;
-
-// Per-cycle AXI write gate. Called from nv_pid_top with the current value
-// of the inner_clamp_setpoint AXI register. Tightening writes update the
-// soft-state and clear the rejection flag; widening writes leave the
-// soft-state untouched and latch the rejection flag.
-void gate_inner_clamp(gain_t setpoint_fraction) {
-    #pragma HLS function inline
-    gain_t outer_q = (gain_t)OUTER_SECTOR_CLAMP_FRACTION;
-    gain_t zero_q  = (gain_t)0;
-    if (setpoint_fraction < zero_q || setpoint_fraction > outer_q) {
-        s_inner_rejected = true;
-    } else {
-        s_accepted_inner_fraction = setpoint_fraction;
-        s_inner_rejected = false;
-    }
-}
-
-bool   get_inner_clamp_rejected()       { return s_inner_rejected; }
-gain_t get_accepted_inner_fraction()    { return s_accepted_inner_fraction; }
-
-#ifndef __SYNTHESIS__
-// Testbench-only hook. Bypasses the gate to forcibly write the accepted-inner
-// soft-state, simulating a single-event upset that flips bits in the register
-// AFTER it was written. NOT compiled into the synthesized netlist.
-void seu_force_inner_clamp_fraction(gain_t forced_fraction) {
-    s_accepted_inner_fraction = forced_fraction;
-}
-#endif
-
-// Sector Saturation Clamp (hybrid: AXI-tightened inner + hardcoded outer)
+// Sector Saturation Clamp with integrated AXI tightening gate.
+//
+// State (`accepted_state`) is passed by reference. The caller owns the
+// storage — typically a `static` declared inside nv_pid_top, which SmartHLS
+// infers as an internal register.
+//
+// Args:
+//   u_AI                 : raw AI feedforward sample
+//   out_min, out_max     : actuator range
+//   inner_clamp_setpoint : AXI-driven setpoint for the inner clamp fraction
+//   accepted_state       : caller-owned soft-state for the most recently
+//                          accepted inner clamp fraction. Updated on a
+//                          tightening setpoint or under seu_force_state.
+//   out_rejected         : optional pointer; set true if the gate rejected a
+//                          widening setpoint, false otherwise
+//   seu_force_state      : testbench-only knob; when true, bypasses the gate
+//                          and forces accepted_state to inner_clamp_setpoint
+//                          (for SEU defense-in-depth verification). nv_pid_top
+//                          always passes false; SmartHLS constant-folds the
+//                          bypass path away in synthesis.
+//
 // Formal role: implements the nonlinear bound phi(y,t) in the
 // Lur'e/Circle Criterion absolute stability proof.
-out_t apply_sector_clamp(out_t u_AI, out_t out_min, out_t out_max) {
+out_t apply_sector_clamp_gated(out_t u_AI, out_t out_min, out_t out_max,
+                                gain_t inner_clamp_setpoint,
+                                gain_t &accepted_state,
+                                bool *out_rejected,
+                                bool seu_force_state) {
     #pragma HLS function inline
 
-    out_t  range   = out_max - out_min;
     gain_t outer_q = (gain_t)OUTER_SECTOR_CLAMP_FRACTION;
     gain_t zero_q  = (gain_t)0;
 
-    // Read accepted-inner soft-state, then re-clamp the fraction itself to
-    // [0, outer]. This is the SEU defense at the fraction level — even if the
-    // soft-state is corrupted to a wider value, the effective fraction here
-    // is bounded by OUTER_SECTOR_CLAMP_FRACTION before any magnitude is
-    // computed.
-    gain_t inner_q = s_accepted_inner_fraction;
+    bool rejected = false;
+    if (seu_force_state) {
+        // Testbench-only: bypass gate to corrupt the soft-state.
+        accepted_state = inner_clamp_setpoint;
+    } else {
+        if (inner_clamp_setpoint < zero_q || inner_clamp_setpoint > outer_q) {
+            rejected = true;
+        } else {
+            accepted_state = inner_clamp_setpoint;
+        }
+    }
+    if (out_rejected != 0) *out_rejected = rejected;
+
+    // Read the soft-state and re-clamp the fraction itself to [0, outer].
+    // SEU defense at the fraction level — even if accepted_state is corrupted
+    // to a wider value, the effective fraction here is bounded by outer
+    // before any magnitude is computed.
+    gain_t inner_q = accepted_state;
     if (inner_q > outer_q) inner_q = outer_q;
     if (inner_q < zero_q)  inner_q = zero_q;
 
+    out_t range     = out_max - out_min;
     out_t inner_mag = (out_t)(range * inner_q);
     out_t outer_mag = (out_t)(range * outer_q);
     out_t neg_inner = (out_t)(0) - inner_mag;

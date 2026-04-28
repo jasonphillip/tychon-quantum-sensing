@@ -2,9 +2,12 @@
 #include "../include/rta_config.hpp"
 
 // Forward declarations for safety clamp functions (safety_clamps.cpp)
-out_t apply_sector_clamp(out_t u_AI, out_t out_min, out_t out_max);
+out_t apply_sector_clamp_gated(out_t u_AI, out_t out_min, out_t out_max,
+                                gain_t inner_clamp_setpoint,
+                                gain_t &accepted_state,
+                                bool *out_rejected,
+                                bool seu_force_state);
 out_t apply_slew_limit(out_t u_AI_new, out_t u_AI_prev);
-void  gate_inner_clamp(gain_t setpoint_fraction);
 
 void nv_pid_top(
     freq_t error,
@@ -38,11 +41,10 @@ void nv_pid_top(
     static out_t u_AI_latch = 0;
     static unsigned int cooldown_counter = 0;
     static bool in_cooldown = false;
-
-    // Per-cycle AXI gate for the inner sector clamp. Tightening writes update
-    // the accepted soft-state in safety_clamps.cpp; widening writes are rejected
-    // (rejection latched on s_inner_rejected, queryable via accessor).
-    gate_inner_clamp(inner_clamp_setpoint);
+    // Inner sector clamp soft-state. Default at reset = outer constant
+    // (no AXI tightening applied). SmartHLS infers this as an internal
+    // register because it lives in the top function body.
+    static gain_t inner_clamp_state = (gain_t)OUTER_SECTOR_CLAMP_FRACTION;
 
     pid.set_limits(out_min, out_max);
 
@@ -78,7 +80,14 @@ void nv_pid_top(
         // Safety chain: hybrid sector bound (AXI inner + hardcoded outer)
         // → slew limit → sum with PID → final actuator saturation.
         // MAX_SLEW_PER_CYCLE = 0.001 corresponds to 200 V/ms at 200 MHz.
-        out_t u_AI_clamped = apply_sector_clamp(u_AI_in, out_min, out_max);
+        // seu_force_state=false in synthesized hardware (testbench-only knob).
+        bool dummy_rejected;
+        out_t u_AI_clamped = apply_sector_clamp_gated(
+            u_AI_in, out_min, out_max,
+            inner_clamp_setpoint,
+            inner_clamp_state,
+            &dummy_rejected,
+            false);
         out_t u_AI_safe = apply_slew_limit(u_AI_clamped, u_AI_latch);
         total_out = u_AI_safe + u_pid;
         u_AI_latch = u_AI_safe;
