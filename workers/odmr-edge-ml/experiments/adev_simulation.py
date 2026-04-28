@@ -60,7 +60,8 @@ P1_PPM = 50.0
 B1_GRADIENT_FRAC = 0.15
 B_PERP_T = 0.0
 N_SPATIAL_BINS = 10
-ANCHOR_SIGMA = 1.5
+import os as _os  # parameterize ckpt + σ via env vars (Phase C v2 reuse)
+ANCHOR_SIGMA = float(_os.environ.get("ADEV_ANCHOR_SIGMA", "1.5"))
 
 # Cascaded OU noise config (matching heading_sweep.py / production dataset)
 OU_CONFIG = OUNoiseConfig(
@@ -79,10 +80,12 @@ OU_CONFIG = OUNoiseConfig(
 )
 
 # Paths
-CKPT_PATH = Path(__file__).resolve().parent / "scalar_residual/fcnn/checkpoints/best_model.pt"
-OUTPUT_NPZ = Path(__file__).resolve().parent / "adev_results.npz"
-OUTPUT_PNG = Path(__file__).resolve().parent / "adev_figure.png"
-OUTPUT_PDF = Path(__file__).resolve().parent / "adev_figure.pdf"
+_DEFAULT_CKPT = Path(__file__).resolve().parent / "scalar_residual/fcnn/checkpoints/best_model.pt"
+CKPT_PATH = Path(_os.environ.get("ADEV_CKPT_PATH", str(_DEFAULT_CKPT)))
+_OUTPUT_TAG = _os.environ.get("ADEV_OUTPUT_TAG", "")
+OUTPUT_NPZ = Path(__file__).resolve().parent / f"adev_results{_OUTPUT_TAG}.npz"
+OUTPUT_PNG = Path(__file__).resolve().parent / f"adev_figure{_OUTPUT_TAG}.png"
+OUTPUT_PDF = Path(__file__).resolve().parent / f"adev_figure{_OUTPUT_TAG}.pdf"
 
 
 # ---------------------------------------------------------------------------
