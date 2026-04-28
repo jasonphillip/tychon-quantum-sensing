@@ -17,7 +17,7 @@
 
 set REF_PROJECT_DIR "C:/Microchip/Libero_SoC_2025.2/SmartHLS/SmartHLS/reference_designs/Icicle_SoC/ref_design/MPFS_ICICLE_Vectorblox"
 set REF_PROJECT     "$REF_PROJECT_DIR/MPFS_ICICLE_Vectorblox.prjx"
-set IN_PROJ_PDC     "$REF_PROJECT_DIR/constraint/io/decision-2-option-c.pdc"
+set IN_PROJ_PDC     "$REF_PROJECT_DIR/constraint/fp/decision-2-option-c.pdc"
 set REF_TOP         "MPFS_ICICLE_KIT_BASE_DESIGN"
 
 if {![file exists $IN_PROJ_PDC]} {
@@ -27,13 +27,15 @@ if {![file exists $IN_PROJ_PDC]} {
 puts "==> Opening reference design project"
 open_project -file $REF_PROJECT
 
-# Import the PDC from its in-project location. Libero 2025.2 treats io_pdc
-# files imported this way as members of both the Synthesis and PlaceRoute
-# constraint sets automatically — no organize_tool_files needed. If the file
-# is already a project member from a prior run, Libero updates the timestamp
-# and continues without prompting.
-puts "==> Importing supplementary I/O PDC: $IN_PROJ_PDC"
-if {[catch {import_files -io_pdc [list $IN_PROJ_PDC]} err]} {
+# Import the PDC from its in-project location as an fp_pdc (floorplan PDC).
+# `set_location -inst_name` constraints live in fp_pdc files, alongside the
+# existing constraint/fp/NW_PLL.pdc which holds the CCC PLL placements.
+# Importing this as -io_pdc previously caused Libero to crash silently
+# during project-load constraint validation.
+# Libero 2025.2 auto-organizes fp_pdc files into both Synthesis and
+# PlaceRoute constraint sets — no organize_tool_files needed.
+puts "==> Importing supplementary FP PDC: $IN_PROJ_PDC"
+if {[catch {import_files -fp_pdc [list $IN_PROJ_PDC]} err]} {
     puts "NOTE: import_files returned: $err"
     puts "      Continuing — assuming file is already a project member."
 }
