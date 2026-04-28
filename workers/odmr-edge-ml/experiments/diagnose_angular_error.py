@@ -250,8 +250,10 @@ def experiment_magnitude_only() -> None:
     train_ds = FlexibleDataset("train", fold_sign=False, label_transform="magnitude")
     val_ds = FlexibleDataset("val", fold_sign=False, label_transform="magnitude")
 
-    train_loader = DataLoader(train_ds, batch_size=64, shuffle=True, collate_fn=collate_with_meta)
-    val_loader = DataLoader(val_ds, batch_size=64, shuffle=False, collate_fn=collate_with_meta)
+    train_loader = DataLoader(train_ds, batch_size=64, shuffle=True, collate_fn=collate_with_meta,
+                              pin_memory=True, num_workers=4)
+    val_loader = DataLoader(val_ds, batch_size=64, shuffle=False, collate_fn=collate_with_meta,
+                            pin_memory=True, num_workers=4)
 
     # 1-output MLP for magnitude prediction
     model = OdmrMLP(input_dim=100, output_dim=1, hidden_dims=[64, 32])
@@ -262,7 +264,8 @@ def experiment_magnitude_only() -> None:
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=50, eta_min=1e-5)
     criterion = nn.HuberLoss(delta=5.0)  # delta=5 uT for magnitude range [20, 70]
 
-    device = torch.device("cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    log.info("Device: %s", device)
     model.to(device)
 
     log.info("  Label: scalar |B| in uT, range [20, 70]")
@@ -350,9 +353,11 @@ def experiment_unit_vectors() -> None:
 
         train_loader = DataLoader(
             train_ds, batch_size=64, shuffle=True, collate_fn=collate_with_meta,
+            pin_memory=True, num_workers=4,
         )
         val_loader = DataLoader(
             val_ds, batch_size=64, shuffle=False, collate_fn=collate_with_meta,
+            pin_memory=True, num_workers=4,
         )
 
         model = OdmrMLP(input_dim=100, output_dim=3, hidden_dims=[64, 32])
@@ -373,7 +378,7 @@ def experiment_unit_vectors() -> None:
             checkpoint_dir=f"/tmp/diag_unit_vec_{'folded' if fold_sign else 'raw'}",
         )
 
-        device = torch.device("cpu")
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         results = train(model, train_loader, val_loader, config, device)
 
         log.info("  Final train loss: %.6f", results["final_train_loss"])

@@ -82,6 +82,9 @@ OU_CONFIG = OUNoiseConfig(
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+
 def load_fcnn(ckpt_path: Path) -> OdmrFCNN:
     """Load trained FCNN from QAT checkpoint, stripping observer keys."""
     ckpt = torch.load(ckpt_path, map_location="cpu", weights_only=False)
@@ -91,7 +94,7 @@ def load_fcnn(ckpt_path: Path) -> OdmrFCNN:
     model = OdmrFCNN(input_dim=100, output_dim=1, in_channels=2)
     model.load_state_dict(clean_sd, strict=True)
     model.eval()
-    return model
+    return model.to(DEVICE)
 
 
 def preprocess_for_fcnn(spectrum: np.ndarray, lock_bin: int) -> torch.Tensor:
@@ -108,7 +111,7 @@ def preprocess_for_fcnn(spectrum: np.ndarray, lock_bin: int) -> torch.Tensor:
     anchor = np.exp(-0.5 * ((bins - lock_bin) / ANCHOR_SIGMA) ** 2)
 
     combined = np.concatenate([spec_norm, anchor])
-    return torch.from_numpy(combined).float().unsqueeze(0)
+    return torch.from_numpy(combined).float().unsqueeze(0).to(DEVICE)
 
 
 # ---------------------------------------------------------------------------

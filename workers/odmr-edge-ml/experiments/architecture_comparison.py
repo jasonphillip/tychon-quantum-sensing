@@ -363,7 +363,8 @@ def main() -> None:
     log.info("ARCHITECTURE COMPARISON: MLP vs FCNN on 50K Production Dataset")
     log.info("=" * 60)
 
-    device = torch.device("cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    log.info("Device: %s", device)
 
     # ── Load data ─────────────────────────────────────────────
     log.info("Loading production 50K dataset from %s", DATA_DIR)
@@ -373,9 +374,11 @@ def main() -> None:
 
     train_loader = DataLoader(
         train_ds, batch_size=64, shuffle=True, collate_fn=collate_with_meta,
+        pin_memory=True, num_workers=4,
     )
     val_loader = DataLoader(
         val_ds, batch_size=64, shuffle=False, collate_fn=collate_with_meta,
+        pin_memory=True, num_workers=4,
     )
 
     # Calibration data for TFLite (subsample for speed)

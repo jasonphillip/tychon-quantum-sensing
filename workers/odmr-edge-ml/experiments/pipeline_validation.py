@@ -205,10 +205,12 @@ def main() -> None:
     train_ds = GoldenDataset(DATA_DIR, split="train")
     val_ds = GoldenDataset(DATA_DIR, split="val")
     train_loader = DataLoader(
-        train_ds, batch_size=32, shuffle=True, collate_fn=collate_with_meta
+        train_ds, batch_size=32, shuffle=True, collate_fn=collate_with_meta,
+        pin_memory=True, num_workers=4,
     )
     val_loader = DataLoader(
-        val_ds, batch_size=32, shuffle=False, collate_fn=collate_with_meta
+        val_ds, batch_size=32, shuffle=False, collate_fn=collate_with_meta,
+        pin_memory=True, num_workers=4,
     )
     log.info("  Train: %d samples, Val: %d samples", len(train_ds), len(val_ds))
 
@@ -239,7 +241,9 @@ def main() -> None:
         log_every=5,
         checkpoint_dir=str(ARTIFACT_DIR / "checkpoints"),
     )
-    results = train(model, train_loader, val_loader, config, torch.device("cpu"))
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    log.info("Device: %s", device)
+    results = train(model, train_loader, val_loader, config, device)
 
     log.info("  Final train loss: %.6f", results["final_train_loss"])
     log.info("  Best val angle err: %.4f°", results["best_val_angle_err"])

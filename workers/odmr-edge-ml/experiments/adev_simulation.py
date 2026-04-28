@@ -88,16 +88,33 @@ OUTPUT_PDF = Path(__file__).resolve().parent / "adev_figure.pdf"
 # ---------------------------------------------------------------------------
 # Helpers (duplicated from heading_sweep.py — experiment scripts, not library)
 # ---------------------------------------------------------------------------
+DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+
 def load_fcnn(ckpt_path: Path) -> OdmrFCNN:
-    """Load trained FCNN from QAT checkpoint, stripping observer keys."""
+    """Load trained FCNN from QAT checkpoint, stripping observer keys.
+
+    Handles both the original Apr-1 v1 checkpoint format and torch.compile-
+    wrapped state_dicts (which prefix every key with '_orig_mod.'). Also
+    drops v2-only training params ('sigma', 'bins') that don't exist in
+    the deployed OdmrFCNN.
+    """
     ckpt = torch.load(ckpt_path, map_location="cpu", weights_only=False)
     sd = ckpt["model_state_dict"]
     skip = ("fake_quant", "activation_post_process", "observer")
-    clean_sd = {k: v for k, v in sd.items() if not any(p in k for p in skip)}
+    clean_sd: dict = {}
+    for k, v in sd.items():
+        if any(p in k for p in skip):
+            continue
+        if k.startswith("_orig_mod."):
+            k = k[len("_orig_mod."):]
+        clean_sd[k] = v
     model = OdmrFCNN(input_dim=100, output_dim=1, in_channels=2)
+    target_keys = set(model.state_dict().keys())
+    clean_sd = {k: v for k, v in clean_sd.items() if k in target_keys}
     model.load_state_dict(clean_sd, strict=True)
     model.eval()
-    return model
+    return model.to(DEVICE)
 
 
 def preprocess_for_fcnn(spectrum: np.ndarray, lock_bin: int) -> torch.Tensor:
@@ -110,7 +127,7 @@ def preprocess_for_fcnn(spectrum: np.ndarray, lock_bin: int) -> torch.Tensor:
     anchor = np.exp(-0.5 * ((bins - lock_bin) / ANCHOR_SIGMA) ** 2)
 
     combined = np.concatenate([spec_norm, anchor])
-    return torch.from_numpy(combined).float().unsqueeze(0)
+    return torch.from_numpy(combined).float().unsqueeze(0).to(DEVICE)
 
 
 # ---------------------------------------------------------------------------

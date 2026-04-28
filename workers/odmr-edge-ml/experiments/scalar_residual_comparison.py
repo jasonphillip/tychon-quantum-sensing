@@ -254,7 +254,8 @@ def main() -> None:
     log.info("SCALAR RESIDUAL COMPARISON: MLP vs FCNN")
     log.info("=" * 60)
 
-    device = torch.device("cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    log.info("Device: %s", device)
 
     # Generate PID labels if needed
     npz_path = DATA_DIR / "pid_residuals.npz"
@@ -276,8 +277,10 @@ def main() -> None:
     log.info("Train: %d, Val: %d, input dim: %d", len(train_ds), len(val_ds),
              train_ds.spectra.shape[1])
 
-    train_loader = DataLoader(train_ds, batch_size=64, shuffle=True, collate_fn=collate_residual)
-    val_loader = DataLoader(val_ds, batch_size=64, shuffle=False, collate_fn=collate_residual)
+    train_loader = DataLoader(train_ds, batch_size=64, shuffle=True, collate_fn=collate_residual,
+                              pin_memory=True, num_workers=4)
+    val_loader = DataLoader(val_ds, batch_size=64, shuffle=False, collate_fn=collate_residual,
+                            pin_memory=True, num_workers=4)
 
     calibration = train_ds.spectra.numpy()[:1000]
 

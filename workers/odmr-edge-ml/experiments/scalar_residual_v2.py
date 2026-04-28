@@ -13,6 +13,7 @@ Usage:
 from __future__ import annotations
 
 import logging
+import os
 import shutil
 import sys
 import time
@@ -428,7 +429,8 @@ def main() -> None:
     log.info("  Huber delta: 10.0")
     log.info("  Learnable sigma (init 1.5)")
 
-    device = torch.device("cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    log.info("Device: %s", device)
 
     # -- PID labels --
     npz_path = DATA_DIR / "pid_residuals.npz"
@@ -456,9 +458,11 @@ def main() -> None:
 
     train_loader = DataLoader(
         train_ds, batch_size=64, shuffle=True, collate_fn=collate_residual,
+        pin_memory=True, num_workers=4,
     )
     val_loader = DataLoader(
         val_ds, batch_size=64, shuffle=False, collate_fn=collate_residual,
+        pin_memory=True, num_workers=4,
     )
 
     # -- Model --
@@ -481,6 +485,16 @@ def main() -> None:
     log.info("Preparing QAT (symmetric INT8)")
     qat_model = prepare_model_qat(model, example_input=torch.randn(1, 101))
 
+    # -- GPU placement + optional torch.compile --
+    qat_model = qat_model.to(device)
+    use_compile = device.type == "cuda" and bool(int(os.environ.get("V2_USE_COMPILE", "1")))
+    if use_compile:
+        try:
+            qat_model = torch.compile(qat_model)
+            log.info("torch.compile enabled on QAT model")
+        except Exception as exc:
+            log.warning("torch.compile failed (%s) — proceeding without", exc)
+
     # -- Train --
     config = TrainConfig(
         lr=1e-3, weight_decay=1e-3, epochs=100, T_max=100, eta_min=1e-5,
@@ -489,10 +503,18 @@ def main() -> None:
         checkpoint_dir=str(ARTIFACT_DIR / "checkpoints"),
     )
     criterion = ScalarHuberLoss(delta=10.0)
-    results = train(
-        qat_model, train_loader, val_loader, config, device,
-        criterion=criterion, val_fn=validate_scalar,
-    )
+    # bf16 autocast wraps the entire train() call. With bf16 (vs fp16) no
+    # GradScaler is needed — bf16 has fp32-equivalent dynamic range, AdamW
+    # maintains fp32 master weights, so backward+optimizer.step() inside the
+    # autocast region remain numerically correct.
+    autocast_enabled = device.type == "cuda"
+    with torch.autocast(
+        device_type=device.type, dtype=torch.bfloat16, enabled=autocast_enabled,
+    ):
+        results = train(
+            qat_model, train_loader, val_loader, config, device,
+            criterion=criterion, val_fn=validate_scalar,
+        )
 
     log.info("Final train loss: %.6f", results["final_train_loss"])
     log.info("Training time: %.1fs", results["training_time_s"])
@@ -567,6 +589,7 @@ def main() -> None:
         v1_ds = ResidualDataset(DATA_DIR, "val")
         v1_loader = DataLoader(
             v1_ds, batch_size=64, shuffle=False, collate_fn=collate_residual,
+            pin_memory=True, num_workers=4,
         )
         v1_metrics = validate_scalar(v1_model, v1_loader, device)
         v1_mae = v1_metrics["mae_uT"]

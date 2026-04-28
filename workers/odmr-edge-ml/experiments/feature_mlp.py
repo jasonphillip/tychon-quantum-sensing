@@ -235,12 +235,15 @@ def train_one_model(
 
     train_loader = DataLoader(
         train_ds, batch_size=64, shuffle=True, collate_fn=collate_residual,
+        pin_memory=True, num_workers=4,
     )
     val_loader = DataLoader(
         val_ds, batch_size=64, shuffle=False, collate_fn=collate_residual,
+        pin_memory=True, num_workers=4,
     )
     test_loader = DataLoader(
         test_ds, batch_size=64, shuffle=False, collate_fn=collate_residual,
+        pin_memory=True, num_workers=4,
     )
 
     # Model
@@ -364,7 +367,8 @@ def main() -> None:
     log.info("PHYSICS-INFORMED FEATURE MLP")
     log.info("=" * 70)
 
-    device = torch.device("cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    log.info("Device: %s", device)
 
     # -- PID labels --
     npz_path = DATA_DIR / "pid_residuals.npz"
