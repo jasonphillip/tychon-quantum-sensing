@@ -128,20 +128,24 @@ def convert_mlp_to_tflite_int8(model: nn.Module, cal: np.ndarray, path: Path) ->
 
 
 def convert_fcnn_to_tflite_int8(model: OdmrFCNN, cal: np.ndarray, path: Path) -> None:
+    """vnnx-compatible TFLite INT8 export for v1 FCNN.
+
+    Fixed batch=1 via batch_shape=(1, 1, 100, in_channels) and no trailing
+    Flatten — see scripts/fix_fcnn_export.py for the reference pattern.
+    """
     import tensorflow as tf
 
     pt_convs = list(model.convs) + [model.conv_head]
-    # Keras channels_last: (batch, H=1, W=100, C=in_channels)
     in_ch = model.in_channels
-    inp = tf.keras.layers.Input(shape=(1, 100, in_ch))
+    inp = tf.keras.layers.Input(batch_shape=(1, 1, 100, in_ch), name="odmr_input")
     x = inp
     for i, pt_c in enumerate(pt_convs):
         is_last = i == len(pt_convs) - 1
         act = None if is_last else "relu"
         x = tf.keras.layers.Conv2D(
             pt_c.out_channels, pt_c.kernel_size, strides=pt_c.stride,
-            activation=act, padding="valid")(x)
-    x = tf.keras.layers.Flatten()(x)
+            activation=act, padding="valid",
+            name=f"conv_{i}" if not is_last else "conv_head")(x)
     tf_model = tf.keras.Model(inputs=inp, outputs=x)
     tf_conv_layers = [l for l in tf_model.layers if isinstance(l, tf.keras.layers.Conv2D)]
     for pt_c, tf_l in zip(pt_convs, tf_conv_layers):

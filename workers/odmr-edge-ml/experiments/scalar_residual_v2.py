@@ -230,11 +230,19 @@ def export_onnx(model: nn.Module, onnx_path: Path, input_dim: int) -> None:
 def convert_fcnn_to_tflite_int8(
     model: OdmrFCNN, cal: np.ndarray, path: Path,
 ) -> None:
+    """Build a vnnx-compatible TFLite INT8 from a clean OdmrFCNN.
+
+    Uses a *fixed* batch size of 1 (``batch_shape=(1, 1, 100, in_ch)``) and
+    omits the trailing Flatten so the converter never emits SHAPE /
+    STRIDED_SLICE / PACK ops — those are outside the V250 op whitelist and
+    are what historically forced ``scripts/fix_fcnn_export.py`` to be run as
+    a separate recovery step. See that script for the reference pattern.
+    """
     import tensorflow as tf
 
     pt_convs = list(model.convs) + [model.conv_head]
     in_ch = model.in_channels
-    inp = tf.keras.layers.Input(shape=(1, 100, in_ch))
+    inp = tf.keras.layers.Input(batch_shape=(1, 1, 100, in_ch), name="odmr_input")
     x = inp
     for i, pt_c in enumerate(pt_convs):
         is_last = i == len(pt_convs) - 1
@@ -242,8 +250,8 @@ def convert_fcnn_to_tflite_int8(
         x = tf.keras.layers.Conv2D(
             pt_c.out_channels, pt_c.kernel_size, strides=pt_c.stride,
             activation=act, padding="valid",
+            name=f"conv_{i}" if not is_last else "conv_head",
         )(x)
-    x = tf.keras.layers.Flatten()(x)
     tf_model = tf.keras.Model(inputs=inp, outputs=x)
     tf_conv_layers = [
         layer for layer in tf_model.layers

@@ -82,27 +82,39 @@ def prepare_model_qat(
     return prepared
 
 
+_COMPILE_PREFIX = "_orig_mod."
+
+
 def extract_clean_state_dict(
     qat_model: GraphModule,
 ) -> dict[str, Tensor]:
     """Extract weight/bias tensors from a QAT model, stripping FakeQuantize keys.
 
+    Also strips the ``_orig_mod.`` prefix that ``torch.compile`` prepends to
+    every state_dict key when the module has been wrapped by Dynamo. Keys
+    without the prefix (uncompiled checkpoints) pass through untouched, so
+    this is idempotent and backward-compatible with pre-compile checkpoints.
+
     Parameters
     ----------
     qat_model : GraphModule
-        QAT-prepared model after training.
+        QAT-prepared model after training, optionally torch.compile-wrapped.
 
     Returns
     -------
     dict[str, Tensor]
-        State dict with only weight/bias parameters (no FakeQuantize or observer state).
+        State dict with only weight/bias parameters (no FakeQuantize or
+        observer state, and no ``_orig_mod.`` prefix).
     """
     skip_patterns = ("fake_quant", "activation_post_process", "observer")
-    return {
-        k: v
-        for k, v in qat_model.state_dict().items()
-        if not any(pat in k for pat in skip_patterns)
-    }
+    cleaned: dict[str, Tensor] = {}
+    for k, v in qat_model.state_dict().items():
+        if any(pat in k for pat in skip_patterns):
+            continue
+        if k.startswith(_COMPILE_PREFIX):
+            k = k[len(_COMPILE_PREFIX):]
+        cleaned[k] = v
+    return cleaned
 
 
 def load_clean_weights(

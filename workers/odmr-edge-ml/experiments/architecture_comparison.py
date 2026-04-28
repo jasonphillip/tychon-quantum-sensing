@@ -179,17 +179,24 @@ def convert_fcnn_to_tflite_int8(
 ) -> None:
     """Convert PyTorch FCNN to TFLite INT8 via weight-copy to Keras.
 
-    Keras uses channels_last (NHWC), so input shape is (1, 100, 1) and
-    weights are transposed from PyTorch (C_out, C_in, kH, kW) to Keras
-    (kH, kW, C_in, C_out).
+    Keras uses channels_last (NHWC). Input is *fixed-batch*
+    (1, 1, 100, in_channels) and the trailing Flatten is dropped so the
+    converter never emits SHAPE / STRIDED_SLICE / PACK ops — see
+    scripts/fix_fcnn_export.py for the reference pattern.
+
+    Weights are transposed from PyTorch (C_out, C_in, kH, kW) to Keras
+    (kH, kW, C_in, C_out). For fidelity verification we run the Keras model
+    one sample at a time because the fixed-batch input forbids batched eval.
     """
     import tensorflow as tf
 
-    # Collect all Conv2d layers in forward-pass order
+    in_ch = model.in_channels
     pt_convs: list[nn.Conv2d] = list(model.convs) + [model.conv_head]
 
-    # Build matching Keras model (channels_last: input H=1, W=100, C=1)
-    inp = tf.keras.layers.Input(shape=(1, 100, 1))
+    # Fixed batch=1 NHWC input — eliminates dynamic shape ops.
+    inp = tf.keras.layers.Input(
+        batch_shape=(1, 1, 100, in_ch), name="odmr_input",
+    )
     x = inp
     for i, pt_conv in enumerate(pt_convs):
         is_last = i == len(pt_convs) - 1
@@ -200,8 +207,8 @@ def convert_fcnn_to_tflite_int8(
             strides=pt_conv.stride,
             activation=activation,
             padding="valid",
+            name=f"conv_{i}" if not is_last else "conv_head",
         )(x)
-    x = tf.keras.layers.Flatten()(x)
     tf_model = tf.keras.Model(inputs=inp, outputs=x)
 
     # Copy weights: PT (C_out, C_in, kH, kW) -> Keras (kH, kW, C_in, C_out)
@@ -214,17 +221,20 @@ def convert_fcnn_to_tflite_int8(
         b = pt_conv.bias.detach().numpy()
         tf_layer.set_weights([w, b])
 
-    # Verify fidelity
+    # Fidelity check (one sample at a time because batch is fixed at 1).
     test_np = calibration_spectra[:4].astype(np.float32)
     pt_out = model(torch.from_numpy(test_np)).detach().numpy()
-    tf_in = test_np.reshape(-1, 1, 100, 1)
-    tf_out = tf_model(tf_in).numpy()
+    tf_in = test_np.reshape(-1, 1, 100, in_ch)
+    tf_outs = np.stack([
+        tf_model(tf_in[i:i + 1]).numpy().reshape(-1) for i in range(len(tf_in))
+    ])
+    tf_out = tf_outs.reshape(pt_out.shape)
     max_diff = np.abs(pt_out - tf_out).max()
     log.info("  FCNN weight-copy fidelity: max |PT - TF| = %.2e", max_diff)
     assert max_diff < 1e-4, f"Weight copy divergence: {max_diff}"
 
-    # Calibration data reshaped for NHWC
-    cal_nhwc = calibration_spectra.reshape(-1, 1, 100, 1)
+    # Calibration data reshaped for NHWC.
+    cal_nhwc = calibration_spectra.reshape(-1, 1, 100, in_ch)
     _convert_keras_to_tflite_int8(tf_model, cal_nhwc, tflite_path)
 
 

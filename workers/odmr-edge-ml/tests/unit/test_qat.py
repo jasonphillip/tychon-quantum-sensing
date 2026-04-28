@@ -50,6 +50,40 @@ def test_extract_clean_state_dict_fcnn():
     assert set(clean.keys()) == original_keys
 
 
+def test_extract_clean_state_dict_strips_compile_prefix():
+    """torch.compile-wrapped QAT models still yield clean (unprefixed) keys.
+
+    Regression for KeyError('sigma') seen during Phase B scalar-residual v2
+    export: torch.compile(qat_model) wraps the module and prepends
+    '_orig_mod.' to every state_dict key. extract_clean_state_dict must
+    strip that prefix so the export model's load_state_dict(strict=True)
+    finds 'sigma', 'convs.0.weight', etc.
+    """
+    model = OdmrFCNN()
+    original_keys = set(model.state_dict().keys())
+    qat = prepare_model_qat(model)
+    compiled: torch.nn.Module = torch.compile(qat)  # type: ignore[assignment]
+    raw_keys = set(compiled.state_dict().keys())
+    assert any(k.startswith("_orig_mod.") for k in raw_keys), (
+        "Test precondition failed: torch.compile did not add expected prefix"
+    )
+
+    clean = extract_clean_state_dict(compiled)  # type: ignore[arg-type]
+    assert set(clean.keys()) == original_keys
+    assert not any(k.startswith("_orig_mod.") for k in clean.keys())
+
+
+def test_extract_clean_state_dict_idempotent_on_unprefixed():
+    """Uncompiled checkpoints pass through unchanged (backward compatibility)."""
+    model = OdmrFCNN()
+    original_keys = set(model.state_dict().keys())
+    qat = prepare_model_qat(model)
+    first = extract_clean_state_dict(qat)
+    second = extract_clean_state_dict(qat)
+    assert set(first.keys()) == original_keys
+    assert set(second.keys()) == set(first.keys())
+
+
 def test_load_clean_weights_roundtrip():
     """Weights survive QAT prepare -> extract -> load into clean model."""
     model = OdmrMLP(hidden_dims=[64, 32])
