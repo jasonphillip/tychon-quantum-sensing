@@ -45,11 +45,16 @@ log = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 # Paths & constants
 # ---------------------------------------------------------------------------
-DATA_DIR = Path(__file__).resolve().parent.parent / "data/production_50k"
-ARTIFACT_DIR = Path(__file__).resolve().parent / "scalar_residual_v2"
+# Dataset / variant selection via env vars so a single script can train
+# v2 on production_50k (Apr-1 baseline) or on production_50k_v2_aic (Phase B).
+DATASET_NAME = os.environ.get("V2_DATASET", "production_50k")
+VARIANT_SUFFIX = os.environ.get("V2_VARIANT_SUFFIX", "")  # e.g. "_dataset_a"
+DATA_DIR = Path(__file__).resolve().parent.parent / f"data/{DATASET_NAME}"
+ARTIFACT_DIR = Path(__file__).resolve().parent / f"scalar_residual_v2{VARIANT_SUFFIX}"
 EXPORT_DIR = Path(__file__).resolve().parent.parent / "exports"
 V1_CKPT = Path(__file__).resolve().parent / "scalar_residual/fcnn/checkpoints/best_model.pt"
 V1_SWEEP = Path(__file__).resolve().parent / "heading_sweep_results.npz"
+RUN_SWEEP = os.environ.get("V2_RUN_SWEEP", "0") == "1"
 
 # Sector clamp: ±4.5% of 50 µT deployment field.
 # Widening to ±15 µT for full 360° heading sweeps is under evaluation.
@@ -485,6 +490,31 @@ def main() -> None:
     log.info("Preparing QAT (symmetric INT8)")
     qat_model = prepare_model_qat(model, example_input=torch.randn(1, 101))
 
+    # -- σ-gradient instrumentation (Phase B B-2) --
+    # Hook on the σ Parameter to capture per-backward grad norms. Hook fires
+    # during backward, before optimizer.step() runs. CSV row per backward.
+    sigma_param = None
+    for n, p in qat_model.named_parameters():
+        if n.endswith("sigma"):
+            sigma_param = p
+            break
+    sigma_traj: list[tuple[int, float, float]] = []  # (step, sigma_value, grad_norm)
+    sigma_step = [0]
+    if sigma_param is not None:
+        def _sigma_hook(grad: torch.Tensor) -> torch.Tensor:
+            sigma_traj.append((
+                sigma_step[0],
+                float(sigma_param.item()),
+                float(grad.detach().norm().item()),
+            ))
+            sigma_step[0] += 1
+            return grad
+        sigma_param.register_hook(_sigma_hook)
+        log.info("σ-grad hook registered on parameter '%s' (init=%.4f)",
+                 "sigma", sigma_param.item())
+    else:
+        log.warning("σ parameter not found in qat_model — instrumentation skipped")
+
     # -- GPU placement + optional torch.compile --
     qat_model = qat_model.to(device)
     use_compile = device.type == "cuda" and bool(int(os.environ.get("V2_USE_COMPILE", "1")))
@@ -525,6 +555,32 @@ def main() -> None:
             v2_metrics["mae_uT"], v2_metrics.get("rmse_uT", 0),
         )
 
+    # -- Write σ trajectory CSV --
+    sigma_csv_path = ARTIFACT_DIR / "checkpoints" / "sigma_trajectory.csv"
+    sigma_csv_path.parent.mkdir(parents=True, exist_ok=True)
+    with sigma_csv_path.open("w") as f:
+        f.write("step,sigma,grad_norm\n")
+        for step, sval, gn in sigma_traj:
+            f.write(f"{step},{sval:.10f},{gn:.10g}\n")
+    log.info("σ trajectory: %d rows written to %s", len(sigma_traj), sigma_csv_path)
+
+    if sigma_traj:
+        sigma_init = sigma_traj[0][1]
+        sigma_final = sigma_traj[-1][1]
+        sigma_delta_pct = abs(sigma_final - sigma_init) / max(abs(sigma_init), 1e-12) * 100.0
+        gnorms = np.array([row[2] for row in sigma_traj])
+        log.info("σ init=%.6f  final=%.6f  Δ=%.2f%%", sigma_init, sigma_final, sigma_delta_pct)
+        log.info("σ.grad norm: median=%.3e  mean=%.3e  max=%.3e  zero_frac=%.3f",
+                 float(np.median(gnorms)), float(gnorms.mean()), float(gnorms.max()),
+                 float((gnorms < 1e-8).mean()))
+
+    # -- Rename checkpoint for variant if a suffix is set --
+    ckpt_default = ARTIFACT_DIR / "checkpoints" / "best_model.pt"
+    ckpt_renamed = ARTIFACT_DIR / "checkpoints" / f"best_model{VARIANT_SUFFIX}.pt"
+    if VARIANT_SUFFIX and ckpt_default.exists():
+        shutil.copy2(ckpt_default, ckpt_renamed)
+        log.info("Checkpoint also saved as: %s", ckpt_renamed)
+
     # -- Extract learned sigma & build clean export model --
     clean_sd = extract_clean_state_dict(qat_model)
     learned_sigma = clean_sd["sigma"].item()
@@ -536,12 +592,16 @@ def main() -> None:
     clean.eval()
 
     # -- Export ONNX + TFLite INT8 --
-    ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
+    # When VARIANT_SUFFIX is set, exports go under a variant subdir
+    # so multiple v2 lineages can coexist.
+    export_subdir = ARTIFACT_DIR / "checkpoints" / f"{DATASET_NAME}_export" \
+        if VARIANT_SUFFIX else ARTIFACT_DIR
+    export_subdir.mkdir(parents=True, exist_ok=True)
 
-    onnx_path = ARTIFACT_DIR / "model.onnx"
+    onnx_path = export_subdir / "model.onnx"
     export_onnx(clean, onnx_path, input_dim=200)
 
-    tflite_path = ARTIFACT_DIR / "model_int8.tflite"
+    tflite_path = export_subdir / "model_int8.tflite"
     # Calibration data uses learned sigma for anchor construction
     cal_ds = ResidualDataset(DATA_DIR, "train", sigma=learned_sigma)
     calibration = cal_ds.spectra.numpy()[:1000]
@@ -549,18 +609,19 @@ def main() -> None:
 
     # Deployment metadata
     np.savez(
-        ARTIFACT_DIR / "deployment_metadata.npz",
+        export_subdir / "deployment_metadata.npz",
         learned_sigma=np.float64(learned_sigma),
         clamp_uT=np.float64(CLAMP_UT),
         input_dim=np.int64(200),
-        model_version="v2",
+        model_version=f"v2{VARIANT_SUFFIX}",
+        dataset_name=DATASET_NAME,
     )
 
-    # Copy to exports
+    # Copy to exports (suffix in filename so multiple variants coexist)
     try:
         EXPORT_DIR.mkdir(parents=True, exist_ok=True)
-        exp_tflite = EXPORT_DIR / "fcnn_v2_residual_int8.tflite"
-        exp_onnx = EXPORT_DIR / "fcnn_v2_residual.onnx"
+        exp_tflite = EXPORT_DIR / f"fcnn_v2_residual{VARIANT_SUFFIX}_int8.tflite"
+        exp_onnx = EXPORT_DIR / f"fcnn_v2_residual{VARIANT_SUFFIX}.onnx"
         shutil.copy2(tflite_path, exp_tflite)
         shutil.copy2(onnx_path, exp_onnx)
         log.info("Export: %s (%.1f KB)", exp_tflite, exp_tflite.stat().st_size / 1024)
@@ -615,9 +676,12 @@ def main() -> None:
     log.info("%-30s %12s %12s", "Huber delta", "5.0", "10.0")
 
     # ==================================================================
-    # Heading sweep
+    # Heading sweep — only when explicitly requested (Phase B skips this;
+    # Phase C runs it via the dedicated eval suite).
     # ==================================================================
-    sweep_v2 = run_heading_sweep(clean, learned_sigma)
+    sweep_v2 = run_heading_sweep(clean, learned_sigma) if RUN_SWEEP else None
+    if not RUN_SWEEP:
+        log.info("Skipping heading sweep (V2_RUN_SWEEP != 1)")
 
     if sweep_v2 is not None and V1_SWEEP.exists():
         v1_data = np.load(V1_SWEEP)
