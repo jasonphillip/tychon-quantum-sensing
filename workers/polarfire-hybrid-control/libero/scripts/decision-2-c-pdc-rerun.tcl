@@ -45,7 +45,7 @@ save_project
 
 # Run the pipeline. Each stage is wrapped in its own catch so a failure
 # surfaces with a clear marker instead of just stopping the script silently.
-foreach stage {SYNTHESIZE PLACEROUTE VERITIMING POWERANALYSIS} {
+foreach stage {SYNTHESIZE PLACEROUTE VERIFYTIMING VERIFYPOWER} {
     puts "==> RUN_TOOL $stage"
     if {[catch {run_tool -name $stage} err]} {
         puts "==> STAGE_FAILED $stage : $err"

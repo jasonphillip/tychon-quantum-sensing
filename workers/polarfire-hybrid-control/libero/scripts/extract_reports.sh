@@ -30,12 +30,25 @@ ssh bee "cd $REF_PROJECT_DIR/designer/$REF_TOP && tar cf - \
     place_and_route_jitter_report.txt \
     2>/dev/null || true" | tar xf - -C "$DEST" 2>/dev/null || true
 
-# Per-seed timing reports (whichever seed succeeded)
-ssh bee "cd $REF_PROJECT_DIR/designer/$REF_TOP && tar cf - \
-    \$(ls ${REF_TOP}_timing_r*_s*.rpt 2>/dev/null | head -3) \
-    \$(ls ${REF_TOP}_timing_violations_max_r*_s*.rpt 2>/dev/null | head -3) \
-    \$(ls ${REF_TOP}_timing_violations_min_r*_s*.rpt 2>/dev/null | head -3) \
-    2>/dev/null || true" | tar xf - -C "$DEST" 2>/dev/null || true
+# Per-seed timing reports — pick the highest-numbered run/seed pair.
+# The earlier `head -3` of an alphabetic listing returned r1_s1, r2_s10, r2_s11
+# (lexicographic), missing the latest closure (r3_s22). Sort numerically on
+# (run, seed) and take the tail.
+RS=$(ssh bee "ls $REF_PROJECT_DIR/designer/$REF_TOP/${REF_TOP}_timing_r*_s*.rpt 2>/dev/null \
+    | sed 's|.*_timing_r\([0-9][0-9]*\)_s\([0-9][0-9]*\)\.rpt|\1 \2|' \
+    | sort -k1,1n -k2,2n | tail -1")
+RUN_N=$(echo "$RS" | awk '{print $1}')
+SEED_N=$(echo "$RS" | awk '{print $2}')
+if [ -n "$RUN_N" ] && [ -n "$SEED_N" ]; then
+    echo "==> Latest run/seed: r${RUN_N}_s${SEED_N}"
+    ssh bee "cd $REF_PROJECT_DIR/designer/$REF_TOP && tar cf - \
+        ${REF_TOP}_timing_r${RUN_N}_s${SEED_N}.rpt \
+        ${REF_TOP}_timing_violations_max_r${RUN_N}_s${SEED_N}.rpt \
+        ${REF_TOP}_timing_violations_min_r${RUN_N}_s${SEED_N}.rpt \
+        2>/dev/null || true" | tar xf - -C "$DEST" 2>/dev/null || true
+else
+    echo "==> WARN: no timing_r*_s*.rpt files found"
+fi
 
 # SmartPower
 ssh bee "find $REF_PROJECT_DIR/designer/$REF_TOP -maxdepth 1 -name '*power*' -o -name '*Power*' 2>/dev/null | head -10" \
