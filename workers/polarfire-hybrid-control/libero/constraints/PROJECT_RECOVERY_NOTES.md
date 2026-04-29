@@ -1,8 +1,57 @@
 # Project Recovery Notes — decision-2-option-c P&R Blocker
 
-**Last updated**: 2026-04-28 ~16:58 EDT
+**Last updated**: 2026-04-29 ~11:38 EDT
 **Branch**: decision-2-option-c
-**Status**: PDC fix correct and committed; Beelink toolchain state corrupted in a way
+**Status**: ✅ **RECOVERED**. VSS shadow-restore + PDC fix worked; full P&R closed
+at +1.215 ns slack (better than April 2 baseline's +0.165 ns). Reports captured under
+`libero/reports/2026-04-29-recovered/`. Two minor follow-ups: (1) VERITIMING and
+POWERANALYSIS need a tool-name fix in `decision-2-c-pdc-rerun.tcl` (script uses
+`VERITIMING`/`POWERANALYSIS` but Libero 2025.2 expects `VERIFYTIMING`/`SMARTPOWER`
+or similar); (2) jitter and SmartPower fabric-power numbers still pending those
+two stages.
+
+See `LOG_ARCHAEOLOGY_FINDINGS.md` (Phase A diagnosis), `TRUNCATION_FORENSICS.md`
+(byte-level evidence), and `LOAD_CRASH_FIX_PLAN.md` (recovery procedure) for the
+full investigation. Original notes preserved below for the project's blocker
+history.
+
+---
+
+## Recovery summary (2026-04-29)
+
+**Root cause**: 2026-04-28 12:00:41 failed-PnR save was a non-graceful Libero
+process termination that truncated `MPFS_ICICLE_Vectorblox.prjx` (363 KB → 178 KB,
+ends mid-`SUBBLOCK` line) and `tooldata/MPFS_ICICLE_Vectorblox.msg` (1.07 MB →
+211 bytes). All subsequent `open_project` calls aborted while parsing the
+truncated structures.
+
+**Recovery vector**: VSS HarddiskVolumeShadowCopy4 contained pristine pre-
+corruption versions (April 2 file mtimes, March 27 snapshot). Two-file restore
+(prjx + .msg) was sufficient — `tools.xml` was not truncated, omitted to preserve
+session-state evolution.
+
+**Recovery results (2026-04-29)**:
+- Worst slack: **+1.215 ns** at seed 22, multi-pass run 3 (April 2 baseline was
+  +0.165 ns; new result has 1+ ns more margin)
+- Multi-clock all positive: PLL OUT0 +2.707 ns, OUT1 +2.199 ns, OUT3 +1.809 ns
+- 4LUT: 24.71% (Δ −0.01% vs April 2 baseline 24.72%)
+- DFF: 25.13%, Math/DSP: 20.92%, LSRAM: 11.82%
+- PRPF_009: zero occurrences (PDC fix verified)
+- Synthesis confirmed reading decision-2-option-c HLS:
+  `nv_pid_top_inner_clamp_state_inferred_reg[N]` present in `.srr`
+- One mid-pipeline interruption (Beelink Windows Update servicing tail
+  shutdown at 09:58, recovered transparently with project files intact —
+  synthesis writes to `synthesis/`, not prjx, so no save was in flight when
+  power died)
+
+**Recovery wall time**: ~80 min total (8 min recovery + restore + load test, ~70 min
+P&R compute including one restart from the power-loss interruption).
+
+---
+
+## Original blocker notes (preserved for history)
+
+**Original status**: PDC fix correct and committed; Beelink toolchain state corrupted in a way
 that survives surgical repair attempts. Next step requires hands-on Libero GUI
 recovery or SmartHLS reference-design reinstall on Beelink.
 
