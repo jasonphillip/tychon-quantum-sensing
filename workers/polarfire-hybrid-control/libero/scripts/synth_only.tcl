@@ -15,6 +15,16 @@ flush stdout
 open_project -file $REF_PROJECT
 flush stdout
 
+# Import hand-coded HDL (idempotent — Libero ignores duplicates after first save).
+foreach hdl {pid_io_block.v watchdog_timer.v} {
+    set hdl_path [file normalize libero/hdl/$hdl]
+    puts "==> importing $hdl_path"
+    flush stdout
+    if {[catch {import_files -hdl_source $hdl_path} err]} {
+        puts "    NOTE: import returned: $err"
+    }
+}
+
 puts "==> rebuilding design hierarchy"
 flush stdout
 build_design_hierarchy
