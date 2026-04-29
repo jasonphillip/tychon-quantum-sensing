@@ -32,6 +32,7 @@ from odmr_edge_ml.models.mlp import OdmrMLP
 from odmr_edge_ml.training.loop import TrainConfig, init_weights_kaiming_he, train
 from odmr_edge_ml.training.qat import load_clean_weights, prepare_model_qat
 from odmr_edge_ml.validation.ops_guard import check_model_ops
+from odmr_edge_ml.validation.tflite_ops import verify_tflite_ops
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger(__name__)
@@ -171,6 +172,7 @@ def _to_tflite_int8(tf_model, cal: np.ndarray, path: Path) -> None:
     tflite = converter.convert()
     path.write_bytes(tflite)
     log.info("  TFLite INT8: %s (%.1f KB)", path, path.stat().st_size / 1024)
+    verify_tflite_ops(tflite)
 
 
 # ---------------------------------------------------------------------------
