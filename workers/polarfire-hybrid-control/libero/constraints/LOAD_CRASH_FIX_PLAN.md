@@ -155,38 +155,88 @@ Expected: clean completion ending with `==> LOAD_ONLY COMPLETE`.
 If this fails, **stop and escalate to full project restore** (Step 3
 escalation path).
 
-### Step 6 — Re-apply the decision-2-c overlay
+### Step 6 — Pre-flight integrity check, then PDC rerun
 
-After load-only succeeds, run the overlay again. The overlay is in
-`libero/scripts/decision-2-c-overlay.tcl` (or whichever script the morning
-session used; verify against `libero/reports/2026-04-28/overlay_session.log`
-for the exact command sequence). Pre-stage the PDC import via shell, then
-let Libero run synthesize + place-and-route in one shot:
+**Pre-flight (added 2026-04-29 per user review):** `decision-2-c-pdc-rerun.tcl`
+documents that the HLS overlay must already be applied. Confirm on-disk
+consistency before kicking off the heavy P&R run, otherwise risk a
+silent-wrong-answer where synthesis succeeds against a stale netlist that
+doesn't match the new HLS.
+
+Pre-flight checklist:
+1. `grep "wire .*5:0.* axi4target_araddr" component/work/MPFS_ICICLE_KIT_BASE_DESIGN/MPFS_ICICLE_KIT_BASE_DESIGN.v`
+   → must find at least one match (decision-2-option-c marker; pre-overlay
+   state is `[4:0]`)
+2. `grep "inner_clamp_setpoint" <hls_path>/nv_pid_top_nv_pid_top.v`
+   → must find at least one match (decision-2 Option C hybrid clamp marker)
+3. Verify prjx TIME / SIZE for the nv_pid_top entry matches the actual file
+   on disk (`stat -c "%Y %s"` vs prjx TIME field; epoch second-equality is
+   sufficient)
+
+If all three pass, **proceed directly to `decision-2-c-pdc-rerun.tcl`**.
+
+If any fail, run `decision-2-c-overlay.tcl` first to bring the project into
+a consistent decision-2-option-c state, then `decision-2-c-pdc-rerun.tcl`.
+Adds ~15-20 min wall time but eliminates silent-wrong-answer risk.
+
+Pre-flight result for THIS recovery (2026-04-29):
+
+| Check | Result |
+|---|---|
+| SmartDesign top has 6-bit araddr | ✅ `wire [5:0] axi4target_araddr_const_net_0;` (line 736) |
+| nv_pid_top has inner_clamp_setpoint | ✅ multiple matches |
+| prjx TIME / SIZE match on-disk file | ✅ TIME=1777390997 (Apr 28 11:43:17) / SIZE=257368 — both exact |
+
+**Conclusion**: VSS shadow captured a post-overlay, pre-corruption state.
+On-disk state is fully consistent with decision-2-option-c. `pdc-rerun.tcl`
+can run directly, no overlay re-run needed.
 
 ```bash
-ssh bee "cd ~/dev/projects/polarfire-hybrid-control && libero \"SCRIPT:libero/scripts/decision-2-c-pdc-rerun.tcl\""
+# Pre-stage the PDC (already done as part of restore prep — verify it's there):
+ssh bee 'ls -la /c/Microchip/Libero_SoC_2025.2/SmartHLS/SmartHLS/reference_designs/Icicle_SoC/ref_design/MPFS_ICICLE_Vectorblox/constraint/fp/decision-2-option-c.pdc'
+
+# Kick off the run (~30-60 min wall):
+ssh bee "cd ~/dev/projects/polarfire-hybrid-control && libero \"SCRIPT:libero/scripts/decision-2-c-pdc-rerun.tcl\"" \
+    | tee libero/reports/_pdc_rerun_postrestore.log
 ```
 
 The `decision-2-c-pdc-rerun.tcl` script imports the fp_pdc, re-runs
 synthesis, runs place-and-route with the XCVR_REF_CLK location lock, and
 extracts timing + power reports.
 
-### Step 7 — Pull reports back to Spark1 and commit
+### Step 7 — Pull reports back to Spark1, integrity check, commit
 
 ```bash
 # On Spark1:
 bash libero/scripts/extract_reports.sh
+```
+
+**Post-run integrity check** (added 2026-04-29 per user review): confirm the
+new reports actually correspond to decision-2-option-c HLS, not a stale
+netlist:
+1. `compile_netlist_resources.rpt` shows ~24.69% 4LUT (matches morning
+   overlay synthesis, demonstrating overlay HLS made it through)
+2. The synthesized netlist references the `inner_clamp_setpoint` register at
+   AXI offset 0x20. Verify in `MPFS_ICICLE_KIT_BASE_DESIGN_compile_netlist_hier_resources.csv`
+   or via `grep inner_clamp_setpoint synthesis/MPFS_ICICLE_KIT_BASE_DESIGN.srr`.
+3. `iteration_summary.rpt` shows positive worst slack at 200 MHz
+   (target: ≥0 ns; April 2 baseline was +0.165 ns, no PRPF_009)
+4. SmartPower fabric power within ±5% of 2,664 mW
+
+Only after all four checks pass:
+```bash
 git add libero/reports/2026-04-29-recovered/
 git commit -m "Recovery: post-VSS-restore P&R reports for decision-2-option-c overlay"
 ```
 
 Acceptance criteria for completing Phase I:
-- `MPFS_ICICLE_KIT_BASE_DESIGN_iteration_summary.rpt` shows positive worst
-  slack at 200 MHz (target: ≥0 ns; baseline was +0.165 ns)
-- `MPFS_ICICLE_KIT_BASE_DESIGN_compile_netlist_resources.rpt` confirms 4LUT
-  delta within ±1% of April 2 baseline (24.72%)
-- SmartPower fabric power within ±5% of 2,664 mW
-- No PRPF_009 in any layout log (the PDC fix targets exactly this)
+- 4LUT delta within ±1% of April 2 baseline (24.72%)
+- Worst slack ≥ 0 ns at 200 MHz
+- Fabric power within ±5% of 2,664 mW
+- No PRPF_009 anywhere in the layout logs (the PDC fix targets exactly this)
+- `inner_clamp_setpoint` register present at AXI offset 0x20 in the synth
+  output — proves the reports correspond to decision-2-option-c HLS, not
+  stale netlist
 
 ---
 
