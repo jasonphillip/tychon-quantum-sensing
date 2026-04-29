@@ -46,3 +46,5 @@ flush stdout
 save_project
 puts "==> SYNTH_ONLY COMPLETE"
 flush stdout
+close_project
+exit 0
