@@ -28,6 +28,13 @@ proc run_stage {name} {
     flush stdout
 }
 
+# Run SYNTHESIZE first to refresh the synth state — if synth is already
+# current, this is fast (Libero detects no source changes); if Libero's
+# freshness check thinks synth is stale (e.g. project was reopened with a
+# different profile after the prior synth saved), this re-runs it cleanly
+# rather than failing PLACEROUTE with "SYNTHESIZE Tool inputs are out of
+# date".
+run_stage SYNTHESIZE
 run_stage PLACEROUTE
 run_stage VERIFYTIMING
 run_stage VERIFYPOWER
