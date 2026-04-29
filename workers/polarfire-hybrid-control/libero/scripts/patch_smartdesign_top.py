@@ -18,6 +18,13 @@ Effects:
      instantiation, with its AXI master-side tapped from non-constant
      MSS-driven FIC_0 AXI signals (test stimulus only — Phase II will route
      a dedicated AXI4-Lite interconnect branch to this slave).
+  5. OR an observability tap (pid_io_block + nv_pid_top output bits) into
+     the LED0 chain. Without this, Synplify prunes pid_io_block_0 (its
+     outputs only drive nv_pid_top inputs, which themselves have no
+     observable destination), then cascade-prunes nv_pid_top_0 — defeating
+     the entire point of the integration. The OR-into-LED gives at least
+     one bit of each module a path to a top-level output pin, which is
+     what Synplify requires to preserve the modules.
 
 Usage:
   python3 patch_smartdesign_top.py <path/to/MPFS_ICICLE_KIT_BASE_DESIGN.v>
@@ -50,6 +57,21 @@ wire        pid_io_block_0_ARREADY;
 wire [31:0] pid_io_block_0_RDATA;
 wire [1:0]  pid_io_block_0_RRESP;
 wire        pid_io_block_0_RVALID;
+// LED0 observability tap: ORs pid_io_block_0 + nv_pid_top_0 output bits with
+// the existing FIC_3 GPIO_OUT_0 driver. Without this, Synplify cascade-prunes
+// pid_io_block_0 (no observable output) and then nv_pid_top_0 (no observable
+// consumer for its outputs after pid_io_block dies). ORing into LED0 puts
+// at least one bit of each module's output on a top-level pin.
+wire        pid_observability_tap;
+wire        led0_or_pid_debug;
+assign pid_observability_tap = pid_io_block_0_BVALID
+                             | pid_io_block_0_AWREADY
+                             | pid_io_block_0_WREADY
+                             | pid_io_block_0_RVALID
+                             | (|pid_io_block_0_RDATA)
+                             | (|nv_pid_top_0_actuator_out_write_data)
+                             | nv_pid_top_0_actuator_out_write_en;
+assign led0_or_pid_debug = FIC_3_PERIPHERALS_1_GPIO_OUT_0 | pid_observability_tap;
 // ------------------------------------------------------------------------
 """
 
@@ -134,6 +156,24 @@ PATCHES = [
         re.compile(r"\.actuator_out_write_data\s*\(\s*\)"),
         ".actuator_out_write_data ( nv_pid_top_0_actuator_out_write_data )",
         "bind nv_pid_top_0.actuator_out_write_data",
+        1,
+    ),
+    # 6. Re-route the LED0 OR2 .B input from FIC_3_PERIPHERALS_1_GPIO_OUT_0
+    #    to led0_or_pid_debug, which folds in pid_observability_tap.
+    (
+        re.compile(
+            r"OR2 MSS_GPIO_2_16_OR_COREGPIO_C0_GPIO_OUT_0\(\s*"
+            r"// Inputs\s*"
+            r"\.A \( MSS_WRAPPER_1_GPIO_2_M2F_16 \),\s*"
+            r"\.B \( FIC_3_PERIPHERALS_1_GPIO_OUT_0 \),"
+        ),
+        (
+            "OR2 MSS_GPIO_2_16_OR_COREGPIO_C0_GPIO_OUT_0(\n"
+            "        // Inputs\n"
+            "        .A ( MSS_WRAPPER_1_GPIO_2_M2F_16 ),\n"
+            "        .B ( led0_or_pid_debug ),"
+        ),
+        "rewire LED0 OR2 .B to led0_or_pid_debug (observability tap)",
         1,
     ),
 ]
