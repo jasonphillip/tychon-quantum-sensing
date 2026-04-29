@@ -14,12 +14,9 @@ REF="/c/Microchip/Libero_SoC_2025.2/SmartHLS/SmartHLS/reference_designs/Icicle_S
 HANG_TIMEOUT=600          # 10 min of no file activity = hang
 POLL_INTERVAL=60          # poll every minute
 
-monitor_files=(
-    "$REF/synthesis/MPFS_ICICLE_KIT_BASE_DESIGN.srr"
-    "$REF/synthesis/synplify.log"
-    "$REF/synthesis/synlog/MPFS_ICICLE_KIT_BASE_DESIGN_fpga_mapper.srr"
-    "$REF/designer/MPFS_ICICLE_KIT_BASE_DESIGN/MPFS_ICICLE_KIT_BASE_DESIGN_layout_log.log"
-    "$REF/designer/MPFS_ICICLE_KIT_BASE_DESIGN/MPFS_ICICLE_KIT_BASE_DESIGN_iteration_summary.rpt"
+monitor_dirs=(
+    "$REF/synthesis"
+    "$REF/designer"
 )
 
 LOG=/tmp/libero_closure.log
@@ -42,11 +39,15 @@ prev_state=""
 while kill -0 "$LIBERO_PID" 2>/dev/null; do
     sleep "$POLL_INTERVAL"
 
-    # snapshot mtimes (0 if file doesn't exist yet)
+    # snapshot the most-recent mtime across all files in monitored dirs.
+    # Catches activity in any synth or P&R artifact (multi-corner XMLs,
+    # VERIFYPOWER .spw, compile_netlist outputs, etc.) without needing
+    # to enumerate every artifact pattern.
     cur_state=""
-    for f in "${monitor_files[@]}"; do
-        m=$(stat -c "%Y" "$f" 2>/dev/null || echo 0)
-        cur_state="${cur_state}${m} "
+    for d in "${monitor_dirs[@]}"; do
+        m=$(find "$d" -type f -printf '%T@\n' 2>/dev/null \
+              | sort -nr | head -1 | cut -d. -f1)
+        cur_state="${cur_state}${m:-0} "
     done
 
     now=$(date +%s)
