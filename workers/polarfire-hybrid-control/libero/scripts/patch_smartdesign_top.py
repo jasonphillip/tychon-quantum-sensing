@@ -92,10 +92,14 @@ pid_io_block pid_io_block_0(
         .S_AXI_AWPROT            ( 3'b000 ),
         .S_AXI_AWVALID           ( FIC_0_PERIPHERALS_1_AXI4mslave0_AWVALID ),
         .S_AXI_AWREADY           ( pid_io_block_0_AWREADY ),
-        // Write data
+        // Write data (tap WVALID separately — was incorrectly tied to AWVALID
+        // in the initial integration, which conflated address-channel and
+        // data-channel handshake. AXI4-Lite spec: AWVALID and WVALID are
+        // independent valid signals and must each be observed before the
+        // slave can latch its respective channel.)
         .S_AXI_WDATA             ( FIC_0_PERIPHERALS_1_AXI4mslave0_WDATA[31:0] ),
         .S_AXI_WSTRB             ( 4'b1111 ),
-        .S_AXI_WVALID            ( FIC_0_PERIPHERALS_1_AXI4mslave0_AWVALID ),
+        .S_AXI_WVALID            ( FIC_0_PERIPHERALS_1_AXI4mslave0_WVALID ),
         .S_AXI_WREADY            ( pid_io_block_0_WREADY ),
         // Write response (drained)
         .S_AXI_BRESP             ( pid_io_block_0_BRESP ),
