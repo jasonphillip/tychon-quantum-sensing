@@ -159,6 +159,33 @@ class OdmrFCNNv2(nn.Module):
         self.conv_head = nn.Conv2d(prev_c, output_dim, kernel_size=(1, spatial))
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """Forward pass.
+
+        Footgun (TFLite / vnnx_compile): the ``x.view(x.size(0), 2, 1, ...)``
+        below queries the batch dim at runtime. PyTorch eager and
+        ``torch.export`` both happily handle this with a symbolic batch axis,
+        but the downstream Keras→TFLite converter — when given a dynamic batch
+        — emits SHAPE / STRIDED_SLICE / PACK ops to reconstruct the runtime
+        shape. ``vnnx_compile -c V250`` then rejects the TFLite (those three
+        ops are outside the V250 whitelist; see CLAUDE.md → "Known Gotchas").
+
+        Symptom: TFLite conversion succeeds, then ``vnnx_compile`` fails with
+        a "VECTORBLOX ERROR: unsupported op SHAPE/STRIDED_SLICE/PACK" message
+        on the .tflite produced from this model. The same trap caught v1 and
+        is what ``scripts/fix_fcnn_export.py`` was written to undo.
+
+        Fix when exporting:
+          * Do not export this module directly to TFLite via the dynamic-batch
+            Keras path. Either: (a) build the Keras model with a *fixed* batch
+            dim (``Input(batch_shape=(1, 1, 100, 2))``) and skip the inline
+            ``view``, as ``convert_fcnn_to_tflite_int8`` and the recovery
+            script ``scalar_residual_v2_export_recovery.py`` now do; or
+          * (b) trace with ``torch.jit.trace`` against a representative input
+            so the batch dim is baked to a concrete value before conversion.
+          * Always run ``odmr_edge_ml.validation.verify_tflite_ops`` on the
+            converted bytes to catch any leak-through before the artifact
+            ships to Beelink for ``vnnx_compile``.
+        """
         spectrum = x[:, :self.input_dim]   # (batch, 100)
         lock_bin = x[:, self.input_dim:]   # (batch, 1)
 
