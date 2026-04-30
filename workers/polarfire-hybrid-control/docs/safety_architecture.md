@@ -48,6 +48,21 @@ The PID derivative term `Kd * (error - prev_error)` is an unfiltered first diffe
 
 If the Circle Criterion proves insufficient under discrete-time effects (ZOH phase loss, transport delay, derivative noise), Integral Quadratic Constraints (IQC) provide a more general multiplier-based stability framework. IQC can handle rate-bounded and slope-restricted nonlinearities jointly, which would allow the sector clamp and slew limiter to be analyzed as a single composite constraint rather than independently. This is a contingency — not required if (a) and (b) confirm adequate margins.
 
+## Residual Phase II Proof Obligations
+
+The following items must be discharged before any "AI cannot destabilize the loop" claim is treated as proved (rather than as a sector-bounded design intent). Each cites the corpus reference that defines the standard.
+
+| Obligation | Standard | Corpus Reference |
+|------------|----------|------------------|
+| Plant model identification (gain, bandwidth, dominant poles, ZOH at the actuator) | Required input to the Circle Criterion check | Khalil, *Nonlinear Systems 3rd ed.*, Ch. 7 (sector-bounded nonlinearities); `~/.corpus/polarfire-control-corpus/raw/` |
+| Quantitative phase margin under ZOH at the operational sample period | Nyquist plot of loop transfer must remain outside the critical circle defined by the +/-5% sector | Same |
+| Bounded transport delay characterization (CoreVectorBlox inference latency distribution) | Worst-case delay enters the IQC multiplier or extended Popov criterion | Khalil §7.1 + corpus user-contributed sector-bounded NN feedback notes |
+| Derivative filter system identification | Unfiltered first-difference derivative amplifies high-frequency noise; needs measured plant frequency response to size a proper filter | `docs/safety_architecture.md` §(b) |
+| ReLU NN sector verification (positivity, positive homogeneity, complementarity) | Strengthened circle criterion for ReLU networks per Richardson et al. 2023 IEEE | Corpus paper at `raw/arxiv/strengthened-circle-popov-relu.md` |
+| Workload-driven SmartPower (VCD-based) | Replaces default-toggle SmartPower estimate before final SWaP claim | Corpus: VectorBlox SDK Programmer's Guide power section |
+
+Until these items are discharged, statements about absolute stability should be qualified as "sector-bounded by design within the Phase I assumptions" rather than "proved cannot destabilize."
+
 ## Implementation
 
 | Mechanism | File | Function |

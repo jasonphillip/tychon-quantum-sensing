@@ -55,15 +55,16 @@ Remote checks:
 
 | Area | Result | Evidence |
 |---|---|---|
-| HLS behavior tests | Confirmed by local test | Existing bumpless, clamp, SEU, and watchdog chatter tests all pass through `hls-test-local`. |
+| HLS behavior tests | Confirmed by local test | Existing bumpless, clamp, SEU, and watchdog chatter tests all pass through `hls-test-local`. **Updated this branch:** added Tasks C.d/C.e/C.f covering repeated/missed/stuck-high `output_valid` scenarios; all pass. |
 | SmartHLS type choice | Confirmed by corpus | Repo uses `hls::ap_fixpt`; corpus/CLAUDE guidance warns against Xilinx `ap_fixed`. |
 | Constant-folding diagnosis | Confirmed by corpus | Corpus says inactive AXI writes make coefficients constant-propagatable; `patch_smartdesign_axi_target_experiment.py` states and tests that exact hypothesis. |
-| Real PID closure evidence | Mostly confirmed | `2026-04-29-pid-real` has positive parsed slack, 45 `nv_pid_top` hierarchy rows, summed PID footprint of 2390 4LUT / 1728 DFF / 25 Math blocks, and aggregate Math grows from 164 to 189. |
-| Production AXI integration | Risky/contradicted | The real closure depends on an experimental FIC_0 tap, not an address-decoded AXI4-Lite slave slot. The corpus says a real FIC_0 interconnect path and readback are the safe rule. |
-| Watchdog source | Risky/under-evidenced | Current hardware report uses MSS GPIO as heartbeat stimulus. The report audit now also flags CoreVectorBlox `output_valid` warnings: port not found, net undriven, and net floating. Corpus says `output_valid` is a level-like completion bit that should be edge-detected or deliberately treated as level-held. |
-| Synplify pruning cleanliness | Needs review | Real closure has strong resource evidence but still contains PID-scoped pruning excerpts. The audit now separates likely critical multiplier pruning from expected fixed-width/state-bit pruning, but coefficient/full-width impact still needs toolchain review. |
-| Safety proof claims | Correct but under-evidenced | Code has hard outer clamp, slew limiting, cooldown, and bumpless transfer. Full "cannot destabilize" claims still depend on plant/ZOH/delay assumptions documented as residual work. |
-| Power claim | Under-evidenced | Closure report says SmartPower uses default toggle rates; corpus-backed conclusion is that workload/VCD-driven power is needed before treating power as final. |
+| Real PID closure evidence | Mostly confirmed | `2026-04-29-pid-real` has positive parsed slack, 45 `nv_pid_top` hierarchy rows, summed PID footprint of 2390 4LUT / 1728 DFF / 25 Math blocks, and aggregate Math grows from 164 to 189. Re-synthesis with this branch's patches is pending Beelink reachability — see overnight-r* tags. |
+| Production AXI integration | Locally fixed; pending Beelink synth | `patch_smartdesign_pid_axi.py` (new) supersedes the experiment with a full read+write channel rewire and 8'hFF wstrb (corpus rule HB0919 p.12). Residual two-slot interconnect work is now scoped explicitly as Phase II SmartDesign canvas surgery. |
+| Watchdog source | Locally fixed; opt-in via flag | `vbx_completion_sync.v` (new, 2-FF + edge detect) and `--vbx-output-valid` flag in `patch_smartdesign_watchdog.py` give a corpus-aligned path (HB0919 §6.4 p.15). Default still GPIO test stimulus; flag fails fast if `Vectorblox_ss_output_valid` is not exposed at top level. |
+| Synplify pruning cleanliness | Pending Beelink synth | Strict audit gates now flag CL189/CL260 critical pruning hits as fail-fast violations on `pid-real` / `overnight-*` / `*-strict` bundles. Existing `2026-04-29-pid-real` correctly fails strict mode with 4 critical hits + 3 output_valid wiring issues — the gap this branch's patches must close. |
+| Safety proof claims | Correct, claim-tightened | README replaces "cannot destabilize" with sector-bounded language and a pointer to residual Phase II proof obligations. `docs/safety_architecture.md` adds an explicit Residual Phase II Proof Obligations table (plant model, ZOH, transport delay, derivative filter, ReLU sector verification, VCD-driven SmartPower) with corpus citations. |
+| Power claim | Claim-tightened | Power table relabeled as "default-toggle estimate" with explicit "preliminary until workload-driven" language. Workload-driven SmartPower remains future work. |
+| Status observability | Locally added, pending Beelink synth | `pid_io_block.v` extended with coefficient shadow registers, status CSRs (saturation, watchdog event counter, ai_active, cooldown, integrator), and an axi_write_count register that proves the slave is alive. New ports wired in `patch_smartdesign_top.py`. |
 
 ## What The General Model Got Right
 
