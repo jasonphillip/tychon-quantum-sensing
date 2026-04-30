@@ -35,11 +35,16 @@ if ! ssh -o BatchMode=yes -o ConnectTimeout=8 "${BEE}" hostname >>"${LOG}" 2>&1;
     exit 2
 fi
 
-log "pushing branch ${LOCAL_BRANCH} to origin (force only if local diverges from origin tip)"
-git push origin "${LOCAL_BRANCH}" 2>&1 | tee -a "${LOG}"
+log "pushing branch ${LOCAL_BRANCH} to origin (best effort)"
+git push origin "${LOCAL_BRANCH}" 2>&1 | tee -a "${LOG}" || true
 
-log "remote checkout"
-ssh "${BEE}" "bash -lc 'cd ${BEE_REPO} && git fetch origin && git checkout ${LOCAL_BRANCH} && git reset --hard origin/${LOCAL_BRANCH}'" 2>&1 | tee -a "${LOG}"
+# Beelink fetches from the `spark1` remote (ssh://badwillhunt@spark1/...) so
+# we don't need GitHub SSH on Beelink. Fall back to origin if spark1 isn't
+# configured.
+log "remote checkout via spark1 remote"
+REMOTE_FETCH_CMD="(git fetch spark1 ${LOCAL_BRANCH}:refs/remotes/spark1/${LOCAL_BRANCH} 2>/dev/null || git fetch origin ${LOCAL_BRANCH}:refs/remotes/origin/${LOCAL_BRANCH})"
+REMOTE_TRACK_REF="refs/remotes/spark1/${LOCAL_BRANCH}"
+ssh "${BEE}" "bash -lc 'cd ${BEE_REPO} && ${REMOTE_FETCH_CMD} && git checkout -B ${LOCAL_BRANCH} ${REMOTE_TRACK_REF} 2>/dev/null || git checkout -B ${LOCAL_BRANCH} refs/remotes/origin/${LOCAL_BRANCH}'" 2>&1 | tee -a "${LOG}"
 if [[ ${PIPESTATUS[0]} -ne 0 ]]; then
     log "FAIL: branch ${LOCAL_BRANCH} not reachable on ${BEE}"
     exit 3

@@ -48,6 +48,27 @@ The PID derivative term `Kd * (error - prev_error)` is an unfiltered first diffe
 
 If the Circle Criterion proves insufficient under discrete-time effects (ZOH phase loss, transport delay, derivative noise), Integral Quadratic Constraints (IQC) provide a more general multiplier-based stability framework. IQC can handle rate-bounded and slope-restricted nonlinearities jointly, which would allow the sector clamp and slew limiter to be analyzed as a single composite constraint rather than independently. This is a contingency — not required if (a) and (b) confirm adequate margins.
 
+## Residual Phase II Proof Obligations
+
+The Phase I claims above hold *within the assumptions documented in
+`Phase II Stability Analysis`*. The following items are **not** proven
+yet and must be discharged before any "cannot destabilize" claim is
+admissible:
+
+| Obligation | Why required | Corpus / standard reference |
+|---|---|---|
+| Plant model identification | Circle Criterion needs a sector-bounded plant; Phase I assumes "any positive gain" | Khalil 3rd ed. §7 (corpus `Lur'e/Circle Criterion` bundle) |
+| Quantitative phase margin under ZOH | Sampled-data closure changes Nyquist contour | Khalil §11 (digital control); Astrom-Hagglund Ch.6 |
+| Bounded transport delay verification | 1 ms watchdog is the worst case; nominal delay bound must be measured | corpus ODMR closed-loop bundle (FPGA-PID architectures) |
+| Derivative filter SI | Unfiltered first-difference amplifies HF noise at expanded authority | Astrom-Hagglund Ch.4 |
+| ReLU sector verification (NN-in-loop) | The AI block is a sector-bounded nonlinearity only if the trained weights satisfy a sector bound | Recent arxiv 2025 on sector-bounded NN feedback (corpus) |
+| Workload-driven SmartPower | Default-toggle estimate is an upper bound, not an operational measurement | Microchip SmartPower UG 2025.2 |
+
+Until these items are discharged, all stability and power claims in this
+file and the README are **explicitly qualified** as "sector-bounded by
+design within the Phase I assumptions" rather than "proved cannot
+destabilize."
+
 ## Implementation
 
 | Mechanism | File | Function |
