@@ -15,6 +15,51 @@ Round 0 is the same for everyone. Rounds 1 and 2 are **independent**
 corpus-grounded passes from the same baseline. They can be compared
 against each other and against Round 0.
 
+## Headline Finding — Where The Corpus Paid Off
+
+The decisive Round 1 vs Round 2 difference is **audit calibration on
+identical synthesis evidence**, not HDL or design. Three explicit
+points:
+
+1. **The synthesis evidence (slack, LUT/DFF/MATH, power) was identical
+   in both runs because the same Beelink Libero project state was
+   synthesized.** Round 1 never actually produced a closure (Beelink was
+   unreachable for every Codex attempt); Round 2's `2026-04-30-claude-r2`
+   bundle is the first fresh closure on this project state. Both audits
+   read the same 45-row `nv_pid_top` hierarchy with `LUT=2390`,
+   `DFF=1728`, `Math=25`, slack `+0.728 ns`. There is no slack/area/power
+   delta to attribute to the corpus.
+
+2. **The corpus-grounded audit produces zero false positives on
+   `legup_mult_*` SmartHLS arithmetic primitives, where Codex's audit
+   classifies them as PID-coefficient pruning (BN115 critical → 4 false
+   hits, strict-mode FAIL).** Run on identical input (the
+   `2026-04-29-pid-real` bundle), Codex's strict audit fails with "4
+   critical PID-coefficient pruning hits"; mine passes the critical-
+   pruning gate with 0 hits. The 4 hits Codex flags are all BN115 on
+   `legup_mult_pipelined_inst` / `legup_mult_unsigned_15_17_1_23` /
+   similar — these are SmartHLS-generated arithmetic-primitive
+   alternatives that Synplify routinely removes when only one variant
+   is wired to the live datapath. They are *not* coefficient
+   constant-folding. The corpus itself flags BN115 as speculative
+   (`preventing-synplify-constant-folding-smarthls-pid.md:111`: "Not
+   located verbatim in the public OEM reference … verify against local
+   log") and treats CL189 → CL260 → BN362 as the verbatim-confirmed
+   cascade.
+
+3. **At this stage the corpus value is in audit calibration, not in HDL
+   changes.** The new Phase B HDL (`pid_csr_block.v`,
+   `vbx_pulse_gen.v`, the Phase I tap patch, the Phase II canvas
+   runbook) is committed and testbench-validated, but it is not in the
+   synthesized netlist that Round 2's closure measured — the Beelink
+   Libero project state was not re-imported with the new HDL in this
+   pass. That re-import + re-synth is honestly Phase II work per
+   `docs/smartdesign_two_slot_canvas_runbook.md`. The corpus-grounded
+   delta visible in this pass is entirely in **which signals the audit
+   gate alarms on**, which is exactly where the corpus's user-
+   contributed deep-research files are most explicit and most
+   actionable.
+
 ## Methodology
 
 - Each row of the scorecard is judged against a specific corpus
