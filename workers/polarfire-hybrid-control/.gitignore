@@ -33,3 +33,5 @@ __pycache__/
 # Logs
 *.log
 !libero/reports/*.log
+!libero/reports/**/*.log
+.build/

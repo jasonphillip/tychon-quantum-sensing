@@ -1,0 +1,684 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<?xml-stylesheet href="rptstyle.xsl" type="text/xsl" ?>
+<doc>
+<text></text>
+<title>Power Report for design MPFS_ICICLE_KIT_BASE_DESIGN with the following settings:</title>
+<text></text>
+<table>
+<header>
+</header>
+<row>
+ <cell>Vendor:</cell>
+ <cell>Microchip Technology Inc.</cell>
+</row>
+<row>
+ <cell>Program:</cell>
+ <cell>Microchip Libero Software, Release 2025.2 (Version 2025.2.0.14)</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell>Copyright (C) 1989-</cell>
+</row>
+<row>
+ <cell>Date:</cell>
+ <cell>Wed Apr 29 12:36:57 2026</cell>
+</row>
+<row>
+ <cell>Version:</cell>
+ <cell>3.0</cell>
+</row>
+</table>
+<text></text>
+<table>
+<header>
+</header>
+<row>
+ <cell>Design:</cell>
+ <cell>MPFS_ICICLE_KIT_BASE_DESIGN</cell>
+</row>
+<row>
+ <cell>Family:</cell>
+ <cell>PolarFireSoC</cell>
+</row>
+<row>
+ <cell>Die:</cell>
+ <cell>MPFS250T</cell>
+</row>
+<row>
+ <cell>Package:</cell>
+ <cell>FCVG484</cell>
+</row>
+<row>
+ <cell>Temperature Range:</cell>
+ <cell>EXT</cell>
+</row>
+<row>
+ <cell>Voltage Range:</cell>
+ <cell>EXT</cell>
+</row>
+<row>
+ <cell>Operating Conditions:</cell>
+ <cell>Typical</cell>
+</row>
+<row>
+ <cell>Operating Mode:</cell>
+ <cell>Active</cell>
+</row>
+<row>
+ <cell>Process:</cell>
+ <cell>Typical</cell>
+</row>
+<row>
+ <cell>Data Source:</cell>
+ <cell>Production</cell>
+</row>
+</table>
+<text></text>
+<section><name>Power Summary</name></section>
+<table>
+<header>
+ <cell/>
+ <cell>Power (mW)</cell>
+ <cell>Percentage</cell>
+</header>
+<row>
+ <cell>Total Power</cell>
+ <cell>  2672.418</cell>
+ <cell>    100.0%</cell>
+</row>
+<row>
+ <cell>Static Power</cell>
+ <cell>   445.612</cell>
+ <cell>     16.7%</cell>
+</row>
+<row>
+ <cell>Dynamic Power</cell>
+ <cell>  2226.806</cell>
+ <cell>     83.3%</cell>
+</row>
+</table>
+<text></text>
+<section><name>Breakdown by Rail</name></section>
+<table>
+<header>
+ <cell/>
+ <cell>Power (mW)</cell>
+ <cell>Voltage (V)</cell>
+ <cell>Current (mA)</cell>
+</header>
+<row>
+ <cell>Rail VDD</cell>
+ <cell>  2224.413</cell>
+ <cell>     1.050</cell>
+ <cell>  2118.489</cell>
+</row>
+<row>
+ <cell>Rail VDD18</cell>
+ <cell>    23.508</cell>
+ <cell>     1.800</cell>
+ <cell>    13.060</cell>
+</row>
+<row>
+ <cell>Rail VDDI 1.1</cell>
+ <cell>   224.662</cell>
+ <cell>     1.100</cell>
+ <cell>   204.239</cell>
+</row>
+<row>
+ <cell>Rail VDDAUX</cell>
+ <cell>     6.613</cell>
+ <cell>     2.500</cell>
+ <cell>     2.645</cell>
+</row>
+<row>
+ <cell>Rail VDDI 3.3</cell>
+ <cell>     1.628</cell>
+ <cell>     3.300</cell>
+ <cell>     0.493</cell>
+</row>
+<row>
+ <cell>Rail VDDA</cell>
+ <cell>   109.403</cell>
+ <cell>     1.050</cell>
+ <cell>   104.193</cell>
+</row>
+<row>
+ <cell>Rail VDDA25</cell>
+ <cell>    51.304</cell>
+ <cell>     2.500</cell>
+ <cell>    20.521</cell>
+</row>
+<row>
+ <cell>Rail VDDI 1.8</cell>
+ <cell>     0.071</cell>
+ <cell>     1.800</cell>
+ <cell>     0.039</cell>
+</row>
+<row>
+ <cell>Rail VDD25</cell>
+ <cell>    28.025</cell>
+ <cell>     2.500</cell>
+ <cell>    11.210</cell>
+</row>
+<row>
+ <cell>Rail XCVR_VDD_CLK 2.5</cell>
+ <cell>     2.791</cell>
+ <cell>     2.500</cell>
+ <cell>     1.116</cell>
+</row>
+</table>
+<text></text>
+<section><name>Breakdown by Clock</name></section>
+<table>
+<header>
+ <cell/>
+ <cell>Power (mW)</cell>
+ <cell>Percentage</cell>
+</header>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/TRANSMIT_PLL_0/TRANSMIT_PLL_0/txpll_isnt_0:BIT_CLK (clocks)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/TRANSMIT_PLL_0/TRANSMIT_PLL_0/txpll_isnt_0:BIT_CLK (register outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/TRANSMIT_PLL_0/TRANSMIT_PLL_0/txpll_isnt_0:BIT_CLK (primary inputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/TRANSMIT_PLL_0/TRANSMIT_PLL_0/txpll_isnt_0:BIT_CLK (combinational outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/TRANSMIT_PLL_0/TRANSMIT_PLL_0/txpll_isnt_0:BIT_CLK (set/reset nets)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>REF_CLK_PAD_P (clocks)</cell>
+ <cell>     0.122</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>REF_CLK_PAD_P (register outputs)</cell>
+ <cell>     0.031</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>REF_CLK_PAD_P (primary inputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>REF_CLK_PAD_P (combinational outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>REF_CLK_PAD_P (set/reset nets)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/OSCILLATOR_160MHz_inst_0/OSCILLATOR_160MHz_0/I_OSC_160:CLK (clocks)</cell>
+ <cell>     0.055</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/OSCILLATOR_160MHz_inst_0/OSCILLATOR_160MHz_0/I_OSC_160:CLK (register outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/OSCILLATOR_160MHz_inst_0/OSCILLATOR_160MHz_0/I_OSC_160:CLK (primary inputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/OSCILLATOR_160MHz_inst_0/OSCILLATOR_160MHz_0/I_OSC_160:CLK (combinational outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/OSCILLATOR_160MHz_inst_0/OSCILLATOR_160MHz_0/I_OSC_160:CLK (set/reset nets)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/CLK_160MHz_to_CLK_80MHz/CLK_DIV_0/I_CD:Y_DIV (clocks)</cell>
+ <cell>     0.054</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/CLK_160MHz_to_CLK_80MHz/CLK_DIV_0/I_CD:Y_DIV (register outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/CLK_160MHz_to_CLK_80MHz/CLK_DIV_0/I_CD:Y_DIV (primary inputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/CLK_160MHz_to_CLK_80MHz/CLK_DIV_0/I_CD:Y_DIV (combinational outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/CLK_160MHz_to_CLK_80MHz/CLK_DIV_0/I_CD:Y_DIV (set/reset nets)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/GLITCHLESS_MUX_inst_0/GLITCHLESS_MUX_0/I_NGMUX:Y (clocks)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/GLITCHLESS_MUX_inst_0/GLITCHLESS_MUX_0/I_NGMUX:Y (register outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/GLITCHLESS_MUX_inst_0/GLITCHLESS_MUX_0/I_NGMUX:Y (primary inputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/GLITCHLESS_MUX_inst_0/GLITCHLESS_MUX_0/I_NGMUX:Y (combinational outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/GLITCHLESS_MUX_inst_0/GLITCHLESS_MUX_0/I_NGMUX:Y (set/reset nets)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0:OUT1 (clocks)</cell>
+ <cell>     6.296</cell>
+ <cell>      0.9%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0:OUT1 (register outputs)</cell>
+ <cell>     0.398</cell>
+ <cell>      0.1%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0:OUT1 (primary inputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0:OUT1 (combinational outputs)</cell>
+ <cell>     1.880</cell>
+ <cell>      0.3%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0:OUT1 (set/reset nets)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0:OUT3 (clocks)</cell>
+ <cell>     4.469</cell>
+ <cell>      0.6%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0:OUT3 (register outputs)</cell>
+ <cell>     0.640</cell>
+ <cell>      0.1%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0:OUT3 (primary inputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0:OUT3 (combinational outputs)</cell>
+ <cell>     1.985</cell>
+ <cell>      0.3%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0:OUT3 (set/reset nets)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0:OUT0 (clocks)</cell>
+ <cell>    14.872</cell>
+ <cell>      2.2%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0:OUT0 (register outputs)</cell>
+ <cell>    17.596</cell>
+ <cell>      2.5%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0:OUT0 (primary inputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0:OUT0 (combinational outputs)</cell>
+ <cell>    22.154</cell>
+ <cell>      3.2%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0:OUT0 (set/reset nets)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/pll_inst_0:OUT1 (clocks)</cell>
+ <cell>   205.472</cell>
+ <cell>     29.8%</cell>
+</row>
+<row>
+ <cell>FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/pll_inst_0:OUT1 (register outputs)</cell>
+ <cell>   198.756</cell>
+ <cell>     28.8%</cell>
+</row>
+<row>
+ <cell>FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/pll_inst_0:OUT1 (primary inputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/pll_inst_0:OUT1 (combinational outputs)</cell>
+ <cell>   136.133</cell>
+ <cell>     19.7%</cell>
+</row>
+<row>
+ <cell>FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/pll_inst_0:OUT1 (set/reset nets)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/pll_inst_0:OUT0 (clocks)</cell>
+ <cell>    33.740</cell>
+ <cell>      4.9%</cell>
+</row>
+<row>
+ <cell>FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/pll_inst_0:OUT0 (register outputs)</cell>
+ <cell>    22.241</cell>
+ <cell>      3.2%</cell>
+</row>
+<row>
+ <cell>FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/pll_inst_0:OUT0 (primary inputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/pll_inst_0:OUT0 (combinational outputs)</cell>
+ <cell>    21.527</cell>
+ <cell>      3.1%</cell>
+</row>
+<row>
+ <cell>FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/pll_inst_0:OUT0 (set/reset nets)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>REFCLK (clocks)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>REFCLK (register outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>REFCLK (primary inputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>REFCLK (combinational outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>REFCLK (set/reset nets)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE2_Pipe_AXI1:PCLK_OUT_0 (clocks)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE2_Pipe_AXI1:PCLK_OUT_0 (register outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE2_Pipe_AXI1:PCLK_OUT_0 (primary inputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE2_Pipe_AXI1:PCLK_OUT_0 (combinational outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE2_Pipe_AXI1:PCLK_OUT_0 (set/reset nets)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIE_COMMON_INSTANCE:AXI_CLK_OUT (clocks)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIE_COMMON_INSTANCE:AXI_CLK_OUT (register outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIE_COMMON_INSTANCE:AXI_CLK_OUT (primary inputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIE_COMMON_INSTANCE:AXI_CLK_OUT (combinational outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIE_COMMON_INSTANCE:AXI_CLK_OUT (set/reset nets)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE0_Pipe_AXI0:PCLK_OUT_0 (clocks)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE0_Pipe_AXI0:PCLK_OUT_0 (register outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE0_Pipe_AXI0:PCLK_OUT_0 (primary inputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE0_Pipe_AXI0:PCLK_OUT_0 (combinational outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE0_Pipe_AXI0:PCLK_OUT_0 (set/reset nets)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE3_Pipe_AXI0:PCLK_OUT_0 (clocks)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE3_Pipe_AXI0:PCLK_OUT_0 (register outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE3_Pipe_AXI0:PCLK_OUT_0 (primary inputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE3_Pipe_AXI0:PCLK_OUT_0 (combinational outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE3_Pipe_AXI0:PCLK_OUT_0 (set/reset nets)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE1_Pipe_AXI1:PCLK_OUT_0 (clocks)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE1_Pipe_AXI1:PCLK_OUT_0 (register outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE1_Pipe_AXI1:PCLK_OUT_0 (primary inputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE1_Pipe_AXI1:PCLK_OUT_0 (combinational outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE1_Pipe_AXI1:PCLK_OUT_0 (set/reset nets)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/TRANSMIT_PLL_0/TRANSMIT_PLL_0/txpll_isnt_0:DIV_CLK (clocks)</cell>
+ <cell>     0.015</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/TRANSMIT_PLL_0/TRANSMIT_PLL_0/txpll_isnt_0:DIV_CLK (register outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/TRANSMIT_PLL_0/TRANSMIT_PLL_0/txpll_isnt_0:DIV_CLK (primary inputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/TRANSMIT_PLL_0/TRANSMIT_PLL_0/txpll_isnt_0:DIV_CLK (combinational outputs)</cell>
+ <cell>     1.244</cell>
+ <cell>      0.2%</cell>
+</row>
+<row>
+ <cell>CLOCKS_AND_RESETS_inst_0/TRANSMIT_PLL_0/TRANSMIT_PLL_0/txpll_isnt_0:DIV_CLK (set/reset nets)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>REF_CLK_50MHz (clocks)</cell>
+ <cell>     0.589</cell>
+ <cell>      0.1%</cell>
+</row>
+<row>
+ <cell>REF_CLK_50MHz (register outputs)</cell>
+ <cell>     0.017</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>REF_CLK_50MHz (primary inputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>REF_CLK_50MHz (combinational outputs)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>REF_CLK_50MHz (set/reset nets)</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>Input to Output</cell>
+ <cell>     0.000</cell>
+ <cell>      0.0%</cell>
+</row>
+</table>
+<text></text>
+<section><name>Breakdown by Type</name></section>
+<table>
+<header>
+ <cell/>
+ <cell>Power (mW)</cell>
+ <cell>Percentage</cell>
+</header>
+<row>
+ <cell>Type Net</cell>
+ <cell>   312.486</cell>
+ <cell>     11.7%</cell>
+</row>
+<row>
+ <cell>Type Gate</cell>
+ <cell>  1383.078</cell>
+ <cell>     51.8%</cell>
+</row>
+<row>
+ <cell>Type I/O</cell>
+ <cell>   298.949</cell>
+ <cell>     11.2%</cell>
+</row>
+<row>
+ <cell>Type Memory</cell>
+ <cell>    49.875</cell>
+ <cell>      1.9%</cell>
+</row>
+<row>
+ <cell>Type Core Static</cell>
+ <cell>   148.990</cell>
+ <cell>      5.6%</cell>
+</row>
+<row>
+ <cell>Type Other Rails Static</cell>
+ <cell>     0.450</cell>
+ <cell>      0.0%</cell>
+</row>
+<row>
+ <cell>Type DSP</cell>
+ <cell>   158.772</cell>
+ <cell>      5.9%</cell>
+</row>
+<row>
+ <cell>Type XCVR</cell>
+ <cell>   319.817</cell>
+ <cell>     12.0%</cell>
+</row>
+</table>
+<text></text>
+</doc>

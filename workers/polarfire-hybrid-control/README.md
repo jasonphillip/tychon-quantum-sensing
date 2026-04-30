@@ -83,17 +83,17 @@ The AI feedforward path is bounded by three safety mechanisms:
 2. **Slew-rate limiter** -- Per-cycle AI output change bounded to prevent plant resonance excitation
 3. **Hardware watchdog** -- 1 ms timeout triggers bumpless transfer from AI+PID to pure PID mode
 
-These mechanisms guarantee that the AI component cannot destabilize the classical PID control loop, regardless of inference output. See `docs/safety_architecture.md` for formal details.
+These mechanisms make the AI feedforward path **sector-bounded by design within the Phase I assumptions** documented in `docs/safety_architecture.md`. They do not constitute a proof that the AI cannot destabilize the loop — that requires discharging the Residual Phase II Proof Obligations table in the same document (plant model identification, ZOH phase margin, transport delay bound, derivative filter SI, ReLU sector verification, workload-driven SmartPower).
 
 ## Power Analysis
 
-SmartPower synthesis reports are generated on the Beelink build host and archived on the NAS (`/mnt/nas/projects/polarfire-hybrid-control/reports/`). Key numbers from the most recent analysis:
+SmartPower synthesis reports are generated on the Beelink build host and archived on the NAS (`/mnt/nas/projects/polarfire-hybrid-control/reports/`). The numbers below are **default-toggle estimates** (activity-factor heuristic, no VCD): preliminary until workload-driven SmartPower is run with a representative input trace.
 
-| Component | Power |
+| Component | Power (default-toggle estimate) |
 |-----------|-------|
 | FPGA fabric (PID + VBX + interconnect) | 2,664 mW |
 | Total system (MPFS250T + DDR + I/O) | ~5.2 W |
 | **SWaP budget** | **12 W** |
-| **Margin** | **~57%** |
+| **Margin** | **~57%** (preliminary) |
 
-Static power is derived from SmartPower estimation (activity-factor based, no VCD). The `smartpower_report.rpt` artifact is not committed to this repo — it is regenerated on each synthesis run via `libero/scripts/04_synth_pnr.tcl`.
+Static power is derived from SmartPower estimation. The `smartpower_report.rpt` artifact is not committed to this repo — it is regenerated on each synthesis run via `libero/scripts/04_synth_pnr.tcl`. Workload-driven SmartPower is one of the Residual Phase II Proof Obligations in `docs/safety_architecture.md`.

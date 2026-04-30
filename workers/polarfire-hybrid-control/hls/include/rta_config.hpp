@@ -3,10 +3,20 @@
 
 #include "fp_types.hpp"
 
-// Sector saturation clamp: ±4.5% of actuator range in hardware
-// Provides margin for fixed-point rounding to guarantee ±5.0% compliance
-// with Lur'e/Circle Criterion formal stability bounds
-constexpr double SECTOR_CLAMP_FRACTION = 0.045;
+// Outer sector saturation clamp: hardcoded ±4.5% of actuator range.
+// This is the absolute hardware safety bound — synthesized as an immutable
+// constant, untouchable by any AXI transaction or software write. It is the
+// last line of defense against single-event upset (SEU) of soft-state in the
+// AXI-configurable inner clamp register (Decision 2 Option C, hybrid arch).
+//
+// Chosen as the MORE CONSERVATIVE (tighter) value of the design report's
+// ±5% vs ±4.5% sector pair. The 4.5% hardware limit also guarantees ±5%
+// compliance after worst-case Q16.16 fixed-point rounding.
+//
+// FLAG: the design report has a residual-clamp inconsistency (±2.5 µT vs
+// ±2.25 µT). We adopt the tighter ±2.25 µT figure operationally — to be
+// reconciled in Section 1.3 / 6.4 of the doc.
+constexpr double OUTER_SECTOR_CLAMP_FRACTION = 0.045;
 
 // Maximum slew rate per cycle for AI feedforward output (du_AI/dt bound)
 // Units: out_t per clock cycle at 200 MHz

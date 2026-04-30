@@ -2,7 +2,11 @@
 #include "../include/rta_config.hpp"
 
 // Forward declarations for safety clamp functions (safety_clamps.cpp)
-out_t apply_sector_clamp(out_t u_AI, out_t out_min, out_t out_max);
+out_t apply_sector_clamp_gated(out_t u_AI, out_t out_min, out_t out_max,
+                                gain_t inner_clamp_setpoint,
+                                gain_t &accepted_state,
+                                bool *out_rejected,
+                                bool seu_force_state);
 out_t apply_slew_limit(out_t u_AI_new, out_t u_AI_prev);
 
 void nv_pid_top(
@@ -11,6 +15,7 @@ void nv_pid_top(
     bool ai_watchdog_timeout,
     gain_t Kp, gain_t Ki, gain_t Kd,
     out_t out_min, out_t out_max,
+    gain_t inner_clamp_setpoint,
     out_t &actuator_out
 ) {
     #pragma HLS function top
@@ -23,6 +28,7 @@ void nv_pid_top(
     #pragma HLS interface argument(Kd) type(axi_target)
     #pragma HLS interface argument(out_min) type(axi_target)
     #pragma HLS interface argument(out_max) type(axi_target)
+    #pragma HLS interface argument(inner_clamp_setpoint) type(axi_target)
 
     // Bare wires for real-time nanosecond datapath
     #pragma HLS interface argument(error) type(simple)
@@ -35,6 +41,10 @@ void nv_pid_top(
     static out_t u_AI_latch = 0;
     static unsigned int cooldown_counter = 0;
     static bool in_cooldown = false;
+    // Inner sector clamp soft-state. Default at reset = outer constant
+    // (no AXI tightening applied). SmartHLS infers this as an internal
+    // register because it lives in the top function body.
+    static gain_t inner_clamp_state = (gain_t)OUTER_SECTOR_CLAMP_FRACTION;
 
     pid.set_limits(out_min, out_max);
 
@@ -67,9 +77,17 @@ void nv_pid_top(
         // A stale inference result is bounded by the sector clamp and slew
         // limiter, but a proper handshake would avoid processing stale data.
 
-        // Safety clamp chain: sector bound → slew limit
-        // MAX_SLEW_PER_CYCLE = 0.001 corresponds to 200 V/ms at 200 MHz
-        out_t u_AI_clamped = apply_sector_clamp(u_AI_in, out_min, out_max);
+        // Safety chain: hybrid sector bound (AXI inner + hardcoded outer)
+        // → slew limit → sum with PID → final actuator saturation.
+        // MAX_SLEW_PER_CYCLE = 0.001 corresponds to 200 V/ms at 200 MHz.
+        // seu_force_state=false in synthesized hardware (testbench-only knob).
+        bool dummy_rejected;
+        out_t u_AI_clamped = apply_sector_clamp_gated(
+            u_AI_in, out_min, out_max,
+            inner_clamp_setpoint,
+            inner_clamp_state,
+            &dummy_rejected,
+            false);
         out_t u_AI_safe = apply_slew_limit(u_AI_clamped, u_AI_latch);
         total_out = u_AI_safe + u_pid;
         u_AI_latch = u_AI_safe;

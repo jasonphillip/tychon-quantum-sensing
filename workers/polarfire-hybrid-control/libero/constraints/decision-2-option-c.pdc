@@ -1,0 +1,52 @@
+# decision-2-option-c.pdc
+#
+# Supplementary I/O PDC for the decision-2-option-c overlay on the Icicle Kit
+# baseline reference design (MPFS_ICICLE_KIT_BASE_DESIGN, MPFS250T).
+#
+# Why this file exists
+# --------------------
+# The April 2 baseline P&R placed the dedicated XCVR reference clock macro
+# instance for the PCIe block implicitly: the placer ran against a clean
+# netlist and recorded its placement decision into the designer scratch file
+# MPFS_ICICLE_KIT_BASE_DESIGN.nmatinit.pdc with -fixed false.
+#
+# When SmartDesign was regenerated on April 28 to overlay the new
+# decision-2-option-c HLS (nv_pid_top with hardcoded outer + AXI inner sector
+# clamp), the netlist hierarchy changed enough that Libero's place-and-route
+# database no longer carried the implicit lock forward. P&R then aborted on
+# the first dedicated transceiver port with PRPF_009 across all 20 seeds:
+#
+#   PRPF_009: Dedicated XCVR reference clock port(s) for instance
+#   'CLOCKS_AND_RESETS_inst_0/PCIE_REF_CLK_0/PCIE_REF_CLK_0/I_IO'
+#   must be placed and locked before running Place and Route.
+#
+# The constraint below makes the placement explicit and locked, matching the
+# coordinates the April 2 placer chose. ICICLE_PCIE.pdc still pins the
+# top-level REF_CLK_PAD_P/N ports (L19/L20); this file complements it by
+# pinning the dedicated XCVR_REF_CLK macro the netlist instantiates inside
+# CLOCKS_AND_RESETS_inst_0.
+#
+# Instance path verification
+# --------------------------
+# Path matches both the regenerated SmartDesign netlist
+# (component/work/MPFS_ICICLE_KIT_BASE_DESIGN/MPFS_ICICLE_KIT_BASE_DESIGN.v
+#  -> CLOCKS_AND_RESETS CLOCKS_AND_RESETS_inst_0
+#     -> PCIE_REF_CLK PCIE_REF_CLK_0
+#        -> I_IO)
+# and the April 2 nmatinit.pdc entry at x=2468, y=236.
+#
+# Durability
+# ----------
+# This lock will remain valid as long as the SmartDesign hierarchy keeps the
+# CLOCKS_AND_RESETS_inst_0/PCIE_REF_CLK_0/PCIE_REF_CLK_0 nesting and the IP
+# component name stays "PCIE_REF_CLK". If the Clocks_And_Resets subsystem is
+# ever reorganized, update the -inst_name path here. The PCIE_REF_CLK macro
+# physically targets the same XCVR reference clock pad pair (REF_CLK_PAD_P/N
+# = L19/L20 on the Icicle Kit), so the (x,y) coordinate is stable across
+# overlays.
+
+set_location \
+    -inst_name CLOCKS_AND_RESETS_inst_0/PCIE_REF_CLK_0/PCIE_REF_CLK_0/I_IO \
+    -fixed true \
+    -x 2468 \
+    -y 236
