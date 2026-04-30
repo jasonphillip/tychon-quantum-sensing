@@ -4,11 +4,23 @@
 # HLS testbench runs on x86 (SmartHLS requirement). Libero synthesis
 # requires Libero SoC installed on the build host.
 
-.PHONY: hls-test clean help
+.PHONY: hls-test hls-test-local audit-reports verify-local clean help
 
 # Run SmartHLS C++ software testbench (x86 only)
 hls-test:
 	cd hls && shls sw_run
+
+# Run the HLS testbench with the checked-in software-only ap_fixpt shim.
+# This is a local behavioral smoke test; SmartHLS remains authoritative.
+hls-test-local:
+	g++ -std=c++17 -Ihls/include -Ihls/src hls/src/nv_pid.cpp hls/src/safety_clamps.cpp hls/tb/tb_bumpless.cpp -o /tmp/polarfire_tb_bumpless
+	/tmp/polarfire_tb_bumpless
+
+# Audit archived Libero/Synplify reports for timing and PID survival evidence.
+audit-reports:
+	python3 tools/audit_libero_reports.py
+
+verify-local: hls-test-local audit-reports
 
 # Clean all build artifacts
 clean:
@@ -18,6 +30,12 @@ clean:
 help:
 	@echo "PolarFire Hybrid Control — Make Targets"
 	@echo "  hls-test   Run SmartHLS C++ software testbench (x86 only)"
+	@echo "  hls-test-local"
+	@echo "             Run local g++ testbench with software ap_fixpt shim"
+	@echo "  audit-reports"
+	@echo "             Audit archived Libero/Synplify report bundles"
+	@echo "  verify-local"
+	@echo "             Run local testbench and report audit"
 	@echo "  clean      Remove all build artifacts"
 	@echo "  help       Show this message"
 	@echo ""
