@@ -1,25 +1,78 @@
 # PolarFire Hybrid Control — Top-Level Makefile
 #
-# This orchestrates builds across the HLS and Libero subsystems.
-# HLS testbench runs on x86 (SmartHLS requirement). Libero synthesis
-# requires Libero SoC installed on the build host.
+# Orchestrates builds across the HLS and Libero subsystems and the local
+# corpus-grounded verification harness.
+#
+# - HLS testbench (`hls-test`) runs on a host with SmartHLS installed.
+# - HLS testbench shim (`hls-test-local`) runs anywhere with g++.
+# - Libero synthesis is host-side; remote runs use `beelink-verify`.
 
-.PHONY: hls-test clean help
+.PHONY: hls-test hls-test-local clean help \
+        audit-reports audit-reports-strict audit-citations \
+        verify-local verify-strict beelink-verify
 
-# Run SmartHLS C++ software testbench (x86 only)
+REPORT_DIRS ?= libero/reports
+TAG ?=
+BEE_REMOTE ?= bee
+BEE_REPO ?= ~/dev/projects/polarfire-hybrid-control
+
+# ---------------------------------------------------------------------------
+# HLS
+# ---------------------------------------------------------------------------
+
+# Run SmartHLS C++ software testbench (requires shls on PATH).
 hls-test:
 	cd hls && shls sw_run
 
-# Clean all build artifacts
-clean:
-	cd hls && shls clean
+# Compile and run the bumpless testbench against the checked-in ap_fixpt
+# software shim. No SmartHLS required. Used by `verify-local`.
+hls-test-local:
+	@mkdir -p .build
+	g++ -std=c++17 -O0 -g -Wall -Wno-unknown-pragmas \
+		-Ihls/include -Ihls/src \
+		hls/tb/tb_bumpless.cpp \
+		hls/src/nv_pid.cpp hls/src/safety_clamps.cpp hls/src/watchdog.cpp \
+		-o .build/tb_bumpless_local
+	.build/tb_bumpless_local
 
-# Show available targets
+clean:
+	rm -rf .build
+	-cd hls && shls clean
+
+# ---------------------------------------------------------------------------
+# Corpus-grounded audit
+# ---------------------------------------------------------------------------
+
+audit-reports:
+	python3 tools/audit_libero_reports.py $(REPORT_DIRS)
+
+audit-reports-strict:
+	python3 tools/audit_libero_reports.py --strict $(REPORT_DIRS)
+
+audit-citations:
+	python3 tools/audit_corpus_citations.py docs/ libero/ tools/ Makefile README.md
+
+verify-local: hls-test-local audit-reports audit-citations
+
+verify-strict: hls-test-local audit-reports-strict audit-citations
+
+# ---------------------------------------------------------------------------
+# Remote (Beelink) synthesis closure
+# ---------------------------------------------------------------------------
+# Captures `shls sw_run`, full Libero closure, report extraction, and audit
+# into libero/reports/$(TAG)/. TAG is required.
+beelink-verify:
+	@if [ -z "$(TAG)" ]; then echo "TAG=<dated-tag> is required"; exit 2; fi
+	bash tools/run_beelink_verification.sh "$(TAG)" "$(BEE_REMOTE)" "$(BEE_REPO)"
+
 help:
 	@echo "PolarFire Hybrid Control — Make Targets"
-	@echo "  hls-test   Run SmartHLS C++ software testbench (x86 only)"
-	@echo "  clean      Remove all build artifacts"
-	@echo "  help       Show this message"
-	@echo ""
-	@echo "NOTE: SmartHLS and Libero targets require x86 host with Microchip tools installed."
-	@echo "Libero Tcl scripts are in libero/scripts/ — run via Libero Tcl console."
+	@echo "  hls-test            Run SmartHLS C++ testbench (needs shls)"
+	@echo "  hls-test-local      Run testbench via ap_fixpt shim (no shls)"
+	@echo "  audit-reports       Audit Libero report bundles vs corpus"
+	@echo "  audit-reports-strict  Same, fail-fast on critical pruning"
+	@echo "  audit-citations     Verify corpus citations resolve"
+	@echo "  verify-local        hls-test-local + audit-reports + audit-citations"
+	@echo "  verify-strict       hls-test-local + audit-reports-strict + audit-citations"
+	@echo "  beelink-verify TAG=<tag>  Run full closure on Beelink, capture into libero/reports/<tag>/"
+	@echo "  clean               Remove build artifacts"
