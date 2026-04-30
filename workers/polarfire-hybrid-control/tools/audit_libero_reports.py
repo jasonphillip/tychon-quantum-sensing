@@ -135,8 +135,10 @@ def _read_text(path: Path) -> str:
 
 
 def parse_pid_hierarchy(bundle: Path, ev: BundleEvidence) -> None:
-    """Sum LUT/DFF/MATH across nv_pid_top hierarchy rows in
-    compile_netlist_hier_resources.csv (or _resources_pruned variant)."""
+    """Sum Fabric 4LUT / Fabric DFF / Math across nv_pid_top hierarchy
+    rows in compile_netlist_hier_resources.csv. Columns are picked by
+    HEADER NAME (not index), since interface/fabric/io columns interleave
+    in this report layout."""
     candidates = list(bundle.glob("*compile_netlist_hier_resources*.csv"))
     if not candidates:
         return
@@ -144,30 +146,44 @@ def parse_pid_hierarchy(bundle: Path, ev: BundleEvidence) -> None:
     text = _read_text(csv)
     if not text:
         return
+    lines = text.splitlines()
+    header_idx = None
+    headers: list[str] = []
+    for i, line in enumerate(lines):
+        if line.startswith("Module Name"):
+            header_idx = i
+            headers = [h.strip() for h in line.split(",")]
+            break
+    if header_idx is None:
+        return
+
+    def col(name_substring: str) -> int:
+        for j, h in enumerate(headers):
+            if name_substring.lower() in h.lower():
+                return j
+        return -1
+
+    lut_idx = col("Fabric 4LUT")
+    dff_idx = col("Fabric DFF")
+    math_idx = col("Math")
+    if min(lut_idx, dff_idx, math_idx) < 0:
+        return
+
     rows = 0
     lut = dff = math = 0
-    for line in text.splitlines():
+    for line in lines[header_idx + 1 :]:
         if "nv_pid_top" not in line:
             continue
         parts = [p.strip() for p in line.split(",")]
+        if len(parts) <= max(lut_idx, dff_idx, math_idx):
+            continue
         rows += 1
-        for p in parts:
-            try:
-                _ = int(p)
-            except ValueError:
-                continue
-        # Heuristic: the first three numeric columns after the name are
-        # 4LUT / DFF / MATH in this repo's report layout. Tolerate variation.
-        nums = []
-        for p in parts:
-            try:
-                nums.append(int(p))
-            except ValueError:
-                pass
-        if len(nums) >= 3:
-            lut += nums[0]
-            dff += nums[1]
-            math += nums[2]
+        try:
+            lut += int(parts[lut_idx])
+            dff += int(parts[dff_idx])
+            math += int(parts[math_idx])
+        except ValueError:
+            continue
     if rows:
         ev.has_pid_hierarchy = True
         ev.pid_hier_rows = rows

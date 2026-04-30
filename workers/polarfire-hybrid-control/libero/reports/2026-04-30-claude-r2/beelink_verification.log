@@ -1,0 +1,275 @@
+[2026-04-30T12:09:41-0400] tag=2026-04-30-claude-r2 branch=claude/corpus-verification bee=bee bee_repo=~/dev/projects/polarfire-hybrid-control
+Bee
+[2026-04-30T12:09:41-0400] pushing branch claude/corpus-verification to origin (force only if local diverges from origin tip)
+Everything up-to-date
+[2026-04-30T12:09:41-0400] remote checkout
+git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+[2026-04-30T12:09:45-0400] FAIL: branch claude/corpus-verification not reachable on bee
+[2026-04-30T12:10:47-0400] tag=2026-04-30-claude-r2 branch=claude/corpus-verification bee=bee bee_repo=~/dev/projects/polarfire-hybrid-control
+Bee
+[2026-04-30T12:10:47-0400] pushing branch claude/corpus-verification to origin (best effort)
+Everything up-to-date
+[2026-04-30T12:10:47-0400] remote checkout via spark1 remote
+D	libero/reports/2026-04-29-recovered/MPFS_ICICLE_KIT_BASE_DESIGN.srr
+D	libero/reports/2026-04-29-recovered/MPFS_ICICLE_KIT_BASE_DESIGN_compile_netlist_hier_resources.csv
+branch 'claude/corpus-verification' set up to track 'spark1/claude/corpus-verification'.
+[2026-04-30T12:10:51-0400] remote SmartHLS sw_run
+[1m[33m> 'Source Code and/or Project Settings' is more recent than 'Compile Software' step.[39m[0m
+  Enter 'Y' (yes) to run the following step(s) automatically before continuing to 'Run Software'.
+  Alternatively, you may override the step(s) as up to date if the source code or project setting changes do not affect the step(s) below.
+
+  - Compile Software
+
+Y - yes (default)
+s - no, skip above step(s)
+o - no, skip and override above step(s) as up to date
+c - cancel
+[Y/s/o/c]:
+Info: Running the following targets: sw_compile sw_run
+Info: Compiling Software...
+=== SmartHLS NV-Magnetometer Bumpless Transfer Testbench ===
+
+--- Test A: 5 kHz error (delta = 0.100 V) ---
+Cycle 1 [AI Active]        Actuator Output: 0.535049 V
+Cycle 2 [AI Active]        Actuator Output: 0.612335 V
+Cycle 3 [Watchdog Trip]    Actuator Output: 0.688629 V
+Delta at transition:   0.0762939 V
+Expected natural step: 0.0762939 V
+PASS: Bumpless transfer successful.
+
+--- Test B: 4 kHz error (delta = 0.076 V) ---
+Cycle 1 [AI Active]        Actuator Output: 0.659103 V
+Cycle 2 [AI Active]        Actuator Output: 0.72113 V
+Cycle 3 [Watchdog Trip]    Actuator Output: 0.782166 V
+Delta at transition:   0.0610352 V
+Expected natural step: 0.0610352 V
+PASS: Bumpless transfer successful.
+
+--- Task A.a: AXI widen attempt rejected ---
+Setpoint:               0.0999908
+Rejected flag:          true
+u_AI input:             0.5 V
+apply_sector_clamp out: 0.224991 V  (outer bound = 0.225 V)
+PASS: widen write rejected, clamp bounded by outer.
+
+--- Task A.b: AXI tighten accepted ---
+Setpoint:               0.019989
+Rejected flag:          false
+u_AI input:             0.5 V
+apply_sector_clamp out: 0.0999451 V  (inner bound = 0.1 V)
+PASS: tighten write accepted, clamp bounded by inner.
+
+--- Task A.c: SEU on inner soft-state — outer holds ---
+Forced soft-state:      0.0999908  (gate bypassed via seu_force_state=true)
+u_AI input:             0.399994 V
+Clamped output:         0.224991 V  (outer bound = 0.225 V)
+PASS: outer hardcoded clamp bounds actuator under SEU corruption.
+
+--- Task B: Watchdog 1 kHz chatter — cooldown observation ---
+Baseline (pre-toggle):  5 V
+Cycles run:             400000
+Watchdog rising edges:  2
+Max |delta_actuator|:   0 V/cycle
+Large steps (>0.5 V): 0
+PASS: cooldown chatter behavior as expected (no excess transitions).
+
+--- Test D.1: Repeated completions hold AI+PID basin ---
+Max single-cycle |delta|: 0 V
+PASS: repeated completions stay inside AI+PID basin.
+
+--- Test D.2: Missed completion, then recovery ---
+Max |delta| across timeout+recovery: 0 V
+PASS: missed completion handled bumplessly.
+
+--- Test D.3: Stuck-high output_valid (firmware no-clear) ---
+Max |delta| in steady-state PID-only (after 100 cycles): 0 V
+PASS: stuck-high output_valid -> stable PID-only.
+
+ALL TESTS PASSED.
+[2026-04-30T12:11:01-0400] remote Libero closure
+[watchdog] 2026-04-30 12:11:03 launching libero pnr_verify_only
+[watchdog] libero PID 1319; log /tmp/libero_closure.log
+[watchdog] 12:12:08 progress detected; mtimes=1777501997 1777506707 
+[watchdog] 12:12:08 idle=0s libero alive
+[watchdog] 12:13:08 progress detected; mtimes=1777565588 1777565552 
+[watchdog] 12:13:08 idle=0s libero alive
+[watchdog] 12:14:08 progress detected; mtimes=1777565648 1777565552 
+[watchdog] 12:14:08 idle=0s libero alive
+[watchdog] 12:15:08 progress detected; mtimes=1777565706 1777565552 
+[watchdog] 12:15:08 idle=0s libero alive
+[watchdog] 12:16:09 progress detected; mtimes=1777565768 1777565552 
+[watchdog] 12:16:09 idle=0s libero alive
+[watchdog] 12:17:09 progress detected; mtimes=1777565829 1777565552 
+[watchdog] 12:17:09 idle=0s libero alive
+[watchdog] 12:18:09 progress detected; mtimes=1777565889 1777565552 
+[watchdog] 12:18:09 idle=0s libero alive
+[watchdog] 12:19:09 progress detected; mtimes=1777565949 1777565552 
+[watchdog] 12:19:09 idle=0s libero alive
+[watchdog] 12:20:10 progress detected; mtimes=1777566000 1777565552 
+[watchdog] 12:20:10 idle=0s libero alive
+[watchdog] 12:21:10 progress detected; mtimes=1777566068 1777565552 
+[watchdog] 12:21:10 idle=0s libero alive
+[watchdog] 12:22:10 progress detected; mtimes=1777566091 1777565552 
+[watchdog] 12:22:10 idle=0s libero alive
+[watchdog] 12:23:10 progress detected; mtimes=1777566187 1777565552 
+[watchdog] 12:23:10 idle=0s libero alive
+[watchdog] 12:24:11 progress detected; mtimes=1777566248 1777565552 
+[watchdog] 12:24:11 idle=0s libero alive
+[watchdog] 12:25:11 progress detected; mtimes=1777566308 1777565552 
+[watchdog] 12:25:11 idle=0s libero alive
+[watchdog] 12:26:11 progress detected; mtimes=1777566371 1777565552 
+[watchdog] 12:26:11 idle=0s libero alive
+[watchdog] 12:27:11 progress detected; mtimes=1777566427 1777565552 
+[watchdog] 12:27:11 idle=0s libero alive
+[watchdog] 12:28:12 progress detected; mtimes=1777566490 1777565552 
+[watchdog] 12:28:12 idle=0s libero alive
+[watchdog] 12:29:12 idle=60s libero alive
+[watchdog] 12:30:12 idle=120s libero alive
+[watchdog] 12:31:12 idle=180s libero alive
+[watchdog] 12:32:12 idle=240s libero alive
+[watchdog] 12:33:12 idle=300s libero alive
+[watchdog] 12:34:13 progress detected; mtimes=1777566490 1777566852 
+[watchdog] 12:34:13 idle=0s libero alive
+[watchdog] 12:35:13 progress detected; mtimes=1777566490 1777566910 
+[watchdog] 12:35:13 idle=0s libero alive
+[watchdog] 12:36:13 progress detected; mtimes=1777566490 1777566960 
+[watchdog] 12:36:13 idle=0s libero alive
+[watchdog] 12:37:13 progress detected; mtimes=1777566490 1777566976 
+[watchdog] 12:37:13 idle=0s libero alive
+[watchdog] 12:38:13 progress detected; mtimes=1777566490 1777567042 
+[watchdog] 12:38:13 idle=0s libero alive
+[watchdog] 12:39:14 progress detected; mtimes=1777566490 1777567135 
+[watchdog] 12:39:14 idle=0s libero alive
+[watchdog] 12:40:14 progress detected; mtimes=1777566490 1777567214 
+[watchdog] 12:40:14 idle=0s libero alive
+[watchdog] 12:41:14 progress detected; mtimes=1777566490 1777567234 
+[watchdog] 12:41:14 idle=0s libero alive
+[watchdog] 12:42:14 idle=60s libero alive
+[watchdog] 12:43:14 progress detected; mtimes=1777566490 1777567351 
+[watchdog] 12:43:14 idle=0s libero alive
+[watchdog] 12:44:15 progress detected; mtimes=1777566490 1777567444 
+[watchdog] 12:44:15 idle=0s libero alive
+[watchdog] 12:45:15 idle=60s libero alive
+[watchdog] 12:46:15 progress detected; mtimes=1777566490 1777567555 
+[watchdog] 12:46:15 idle=0s libero alive
+[watchdog] 12:47:15 idle=60s libero alive
+[watchdog] 12:48:15 idle=120s libero alive
+[watchdog] 12:49:15 idle=180s libero alive
+[watchdog] 12:50:16 progress detected; mtimes=1777566490 1777567759 
+[watchdog] 12:50:16 idle=0s libero alive
+[watchdog] 12:51:16 idle=60s libero alive
+[watchdog] 12:52:16 idle=120s libero alive
+[watchdog] 12:53:16 idle=180s libero alive
+[watchdog] 12:54:16 idle=240s libero alive
+[watchdog] 12:55:17 idle=301s libero alive
+[watchdog] 12:56:17 idle=361s libero alive
+[watchdog] 12:57:17 idle=421s libero alive
+[watchdog] 12:58:17 idle=481s libero alive
+[watchdog] 12:59:17 idle=541s libero alive
+[watchdog] 13:00:17 progress detected; mtimes=1777566490 1777568371 
+[watchdog] 13:00:17 idle=0s libero alive
+[watchdog] 13:01:18 progress detected; mtimes=1777566490 1777568419 
+[watchdog] 13:01:18 idle=0s libero alive
+[watchdog] 13:02:18 idle=60s libero alive
+[watchdog] 13:03:18 idle=120s libero alive
+[watchdog] 13:04:18 idle=180s libero alive
+[watchdog] 13:05:18 progress detected; mtimes=1777566490 1777568710 
+[watchdog] 13:05:18 idle=0s libero alive
+[watchdog] 13:06:18 progress detected; mtimes=1777566490 1777568756 
+[watchdog] 13:06:19 idle=0s libero alive
+[watchdog] 13:07:19 progress detected; mtimes=1777566490 1777568811 
+[watchdog] 13:07:19 idle=0s libero alive
+[watchdog] 13:08:19 idle=60s libero alive
+[watchdog] 13:09:19 idle=120s libero alive
+[watchdog] 13:10:19 idle=180s libero alive
+[watchdog] 13:11:23 progress detected; mtimes=1777566490 1777569082 
+[watchdog] 13:11:23 idle=0s libero alive
+[watchdog] 13:12:23 progress detected; mtimes=1777566490 1777569133 
+[watchdog] 13:12:23 idle=0s libero alive
+[watchdog] 13:13:23 progress detected; mtimes=1777566490 1777569171 
+[watchdog] 13:13:23 idle=0s libero alive
+[watchdog] 13:14:23 progress detected; mtimes=1777566490 1777569233 
+[watchdog] 13:14:23 idle=0s libero alive
+[watchdog] 13:15:24 idle=61s libero alive
+[watchdog] 13:16:24 idle=121s libero alive
+[watchdog] 13:17:24 idle=181s libero alive
+[watchdog] 13:18:24 progress detected; mtimes=1777566490 1777569502 
+[watchdog] 13:18:24 idle=0s libero alive
+[watchdog] 13:19:24 progress detected; mtimes=1777566490 1777569556 
+[watchdog] 13:19:24 idle=0s libero alive
+[watchdog] 13:20:25 progress detected; mtimes=1777566490 1777569571 
+[watchdog] 13:20:25 idle=0s libero alive
+[watchdog] 13:21:25 progress detected; mtimes=1777566490 1777569635 
+[watchdog] 13:21:25 idle=0s libero alive
+[watchdog] 13:22:25 progress detected; mtimes=1777566490 1777569741 
+[watchdog] 13:22:25 idle=0s libero alive
+[watchdog] 13:23:25 progress detected; mtimes=1777566490 1777569805 
+[watchdog] 13:23:25 idle=0s libero alive
+[watchdog] 13:24:25 progress detected; mtimes=1777566490 1777569854 
+[watchdog] 13:24:25 idle=0s libero alive
+[watchdog] 13:25:26 idle=61s libero alive
+[watchdog] 13:26:26 idle=121s libero alive
+[watchdog] 13:27:26 idle=181s libero alive
+[watchdog] 13:28:26 idle=241s libero alive
+[watchdog] 13:29:26 progress detected; mtimes=1777566490 1777570165 
+[watchdog] 13:29:26 idle=0s libero alive
+[watchdog] 13:30:26 progress detected; mtimes=1777566490 1777570210 
+[watchdog] 13:30:26 idle=0s libero alive
+[watchdog] 13:31:27 progress detected; mtimes=1777566490 1777570274 
+[watchdog] 13:31:27 idle=0s libero alive
+[watchdog] 13:32:27 idle=60s libero alive
+[watchdog] 13:33:27 idle=120s libero alive
+[watchdog] 13:34:27 idle=180s libero alive
+[watchdog] 13:35:27 idle=240s libero alive
+[watchdog] 13:36:28 progress detected; mtimes=1777566490 1777570587 
+[watchdog] 13:36:28 idle=0s libero alive
+[watchdog] 13:37:28 progress detected; mtimes=1777566490 1777570645 
+[watchdog] 13:37:28 idle=0s libero alive
+[watchdog] 13:38:28 progress detected; mtimes=1777566490 1777570705 
+[watchdog] 13:38:28 idle=0s libero alive
+[watchdog] 13:39:28 progress detected; mtimes=1777566490 1777570746 
+[watchdog] 13:39:28 idle=0s libero alive
+[watchdog] 13:40:29 idle=61s libero alive
+[watchdog] 13:41:29 idle=121s libero alive
+[watchdog] 13:42:29 idle=181s libero alive
+[watchdog] 13:43:29 idle=241s libero alive
+[watchdog] 13:44:29 idle=301s libero alive
+[watchdog] 13:45:30 idle=362s libero alive
+[watchdog] 13:46:30 idle=422s libero alive
+[watchdog] 13:47:30 idle=482s libero alive
+[watchdog] 13:48:30 idle=542s libero alive
+[watchdog] 13:49:30 progress detected; mtimes=1777566490 1777571356 
+[watchdog] 13:49:30 idle=0s libero alive
+[watchdog] libero exited at 2026-04-30 13:49:30 with code 0
+[watchdog] tail of libero log:
+Info: Timing constraints have been met.
+==> STAGE_OK VERIFYTIMING
+==> RUN_TOOL VERIFYPOWER
+
+Info: [44564681]:  Derived clock created at pin: CLOCKS_AND_RESETS_inst_0/TRANSMIT_PLL_0/TRANSMIT_PLL_0/txpll_isnt_0:DIV_CLK.
+Info: [44564681]:  Derived clock created at pin: FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE1_Pipe_AXI1:PCLK_OUT_0.
+Info: [44564681]:  Derived clock created at pin: FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE3_Pipe_AXI0:PCLK_OUT_0.
+Info: [44564681]:  Derived clock created at pin: FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE0_Pipe_AXI0:PCLK_OUT_0.
+Info: [44564681]:  Derived clock created at pin: FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIE_COMMON_INSTANCE:AXI_CLK_OUT.
+Info: [44564681]:  Derived clock created at pin: FIC_1_PERIPHERALS_1/PCIE/PF_PCIE_C0_0/PCIESS_LANE2_Pipe_AXI1:PCLK_OUT_0.
+Info: [44564681]:  Derived clock created at pin: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/pll_inst_0:OUT0.
+Info: [44564681]:  Derived clock created at pin: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/pll_inst_0:OUT1.
+Info: [44564681]:  Derived clock created at pin: CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0:OUT0.
+Info: [44564681]:  Derived clock created at pin: CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0:OUT3.
+Info: [44564681]:  Derived clock created at pin: CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0:OUT1.
+Info: [44564681]:  Derived clock created at pin: CLOCKS_AND_RESETS_inst_0/GLITCHLESS_MUX_inst_0/GLITCHLESS_MUX_0/I_NGMUX:Y.
+Potential clocks are:
+         CLOCKS_AND_RESETS_inst_0/TRANSMIT_PLL_0/TRANSMIT_PLL_0/txpll_isnt_0:FAB_LOCK.
+Info: [44564681]:  Derived clock created at pin: CLOCKS_AND_RESETS_inst_0/CLK_160MHz_to_CLK_80MHz/CLK_DIV_0/I_CD:Y_DIV.
+Info: [44564681]:  Derived clock created at pin: CLOCKS_AND_RESETS_inst_0/TRANSMIT_PLL_0/TRANSMIT_PLL_0/txpll_isnt_0:BIT_CLK.
+==> STAGE_OK VERIFYPOWER
+==> PNR_VERIFY_ONLY COMPLETE
+    Reports under: C:/Microchip/Libero_SoC_2025.2/SmartHLS/SmartHLS/reference_designs/Icicle_SoC/ref_design/MPFS_ICICLE_Vectorblox/designer/MPFS_ICICLE_KIT_BASE_DESIGN/
+The MPFS_ICICLE_Vectorblox project was closed.
+The Execute Script command succeeded.
+[2026-04-30T13:49:32-0400] extracting reports under libero/reports/2026-04-30-claude-r2
+==> Extracting reports to libero/reports/2026-04-30-claude-r2

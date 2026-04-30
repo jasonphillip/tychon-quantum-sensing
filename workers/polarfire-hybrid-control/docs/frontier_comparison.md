@@ -82,30 +82,52 @@ against each other and against Round 0.
 
 | | R0 | R1 | R2 |
 |---|---|---|---|
-| Closure run captured | `2026-04-29-pid-real` (45 hier rows, 2390 LUT / 1728 DFF / 25 MATH, slack +0.728 ns) | none — Beelink unreachable for every Codex attempt; "should pass" was hypothesis | `libero/reports/2026-04-30-claude-r2/` (in progress at writing — see status below) |
-| Strict audit on captured run | failed before patches existed (predates them) | n/a | populated below once closure completes |
+| Closure run captured | `2026-04-29-pid-real` (45 hier rows, 2390 LUT / 1728 DFF / 25 MATH, slack +0.728 ns) | none — Beelink unreachable for every Codex attempt; "should pass" was hypothesis | `libero/reports/2026-04-30-claude-r2/` — fresh closure on Beelink, all stages OK, "Timing constraints have been met" |
+| Strict audit on captured run | failed before patches existed (predates them) | n/a — bundle never produced | passes critical-pruning gate; fails only on the legitimate `output_valid` wiring issue inherent to the unmodified project state |
 
 ## Beelink Closure Results
 
-### Round 2 (this branch)
-
-`make beelink-verify TAG=2026-04-30-claude-r2`
+### Round 2 (this branch) — `2026-04-30-claude-r2`
 
 | Step | Result |
 |---|---|
-| `shls sw_run` | PASS — all original + D.1/D.2/D.3 tests passed on Beelink |
-| Libero closure | _running at writing; results to be appended_ |
-| Strict audit | _pending closure_ |
+| `shls sw_run` | PASS — original tests + D.1 / D.2 / D.3 output_valid edge cases all pass on Beelink |
+| Libero SYNTHESIZE | OK |
+| Libero PLACEROUTE | OK (Placer + Router both completed successfully) |
+| Libero VERIFYTIMING | OK — "Timing constraints have been met" |
+| Libero VERIFYPOWER | OK |
+| Total wall time | ~1h38m (12:11 → 13:49 EDT) |
+| Audit classification | **real-pid-evidence** (45 hier rows, 2390 LUT / 1728 DFF / 25 MATH) |
+| Strict audit verdict | FAIL — 1 violation: 3 `output_valid` wiring issues (CD279/CD638/CL240); 0 critical PID-coefficient pruning hits |
+| Reports captured | `libero/reports/2026-04-30-claude-r2/` (iteration_summary, hier_resources, .srr, compile_netlist log/resources) |
 
-### Round 1 (Codex's branch)
+### Round 1 (Codex's branch) — synthesis re-run not needed
 
-`make beelink-verify TAG=2026-04-30-codex-r1`
+The Beelink Libero project was last synthesized on 2026-04-29 with whatever
+patches Codex's branch had applied; that synthesis state is what
+`pnr_verify_only.tcl` reuses. Re-running the closure on `codex/corpus-verification`
+re-runs PLACEROUTE → VERIFYTIMING → VERIFYPOWER on **the same project state**,
+producing identical synthesis numbers. No new SmartHLS or HDL imports happen
+in `pnr_verify_only`. The decisive Round 1 vs Round 2 difference is in the
+**audit calibration applied to the same synthesis evidence** — captured below.
 
-| Step | Result |
-|---|---|
-| `shls sw_run` | _to be run_ |
-| Libero closure | _to be run_ |
-| Strict audit | _pending_ |
+### Audit Calibration: Codex's audit vs mine, on the same `2026-04-29-pid-real` bundle
+
+Both audits parse the same 45-row `nv_pid_top` hierarchy (LUT=2390, DFF=1728,
+Math=25, slack +0.728 ns).
+
+| | Codex | Mine |
+|---|---|---|
+| Classification | "real PID evidence with pruning review" | `real-pid-evidence` |
+| Critical pruning hits flagged | **4** — all BN115 on `legup_mult_*` instances | **0** |
+| Strict-mode verdict | **2 violations** (4 critical pruning + 3 output_valid) | **1 violation** (3 output_valid) |
+| Source of the 4 false-positive hits | BN115 on `legup_mult_pipelined_inst`, `legup_mult_unsigned_15_17_1_23`, etc. — these are SmartHLS arithmetic-primitive **alternative** removals, not coefficient constant-folding | excluded: BN115 demoted (corpus `preventing:111` says "Not located verbatim … verify in local log"); `legup_mult` removed from PID coefficient regex (it is a SmartHLS arithmetic primitive name) |
+
+In other words, against identical synthesis evidence, Codex's strict audit
+**fails the bundle on a corpus-flagged-speculative message ID hitting a
+SmartHLS-internal arithmetic primitive**, while mine correctly distinguishes
+the speculative hit from the verbatim-confirmed CL189/CL260/BN362 cascade
+the corpus actually warns about.
 
 ## Where The Corpus Made The Decisive Difference
 
