@@ -294,6 +294,127 @@ int main() {
 
     if (!test_chatter_cooldown())       failures++;
 
+    // =========================================================================
+    // Task C — CoreVectorBlox output_valid edge cases (P3)
+    // =========================================================================
+    // The hardware watchdog refresh comes from a one-cycle pulse derived from
+    // CoreVectorBlox.output_valid via vbx_completion_sync.v (HB0919 §4.1
+    // p.7-8: output_valid is level-held until firmware clears it). At the HLS
+    // level the pulse maps to the `ai_watchdog_timeout` bool that nv_pid_top
+    // sees: false = inference fresh enough, true = no fresh inference within
+    // 1 ms. These three tests cover the failure modes the corpus calls out:
+    // repeated completions, a missed completion, and a stuck-high level.
+
+    // Test C-d: repeated completions. The watchdog never fires; the actuator
+    //          stays inside the AI+PID basin. We model "every Nth call has a
+    //          fresh inference" by keeping ai_watchdog_timeout=false the
+    //          entire run. The expected outcome is that the post-flush
+    //          baseline remains stable (no large jumps).
+    {
+        std::cout << "--- Task C.d: Repeated output_valid completions ---\n";
+        gain_t Kp = 0.0001, Ki = 0.00002, Kd = 0.00001;
+        out_t  out_min = 0.0, out_max = 5.0;
+        flush_state(Kp, Ki, Kd, out_min, out_max);
+        out_t actuator_out, prev = 0.0;
+        double max_delta = 0.0;
+        for (int i = 0; i < 2000; i++) {
+            nv_pid_top(5000.0, 0.225, /*ai_watchdog_timeout=*/false,
+                       Kp, Ki, Kd, out_min, out_max,
+                       INNER_CLAMP_DEFAULT, actuator_out);
+            double d = std::abs(actuator_out.to_double() - prev.to_double());
+            if (i > 0 && d > max_delta) max_delta = d;
+            prev = actuator_out;
+        }
+        bool pass = max_delta < 0.5;
+        std::cout << "Max single-cycle |delta|: " << max_delta << " V\n";
+        std::cout << (pass ? "PASS" : "FAIL")
+                  << ": repeated completions hold AI+PID without large jumps.\n\n";
+        if (!pass) failures++;
+    }
+
+    // Test C-e: missed completion (timeout-then-recovery). One watchdog
+    //          window passes with no fresh inference; the next inference
+    //          arrives. Confirms bumpless behavior on entry to PID-only mode
+    //          AND on return to AI+PID mode after recovery.
+    {
+        std::cout << "--- Task C.e: Missed completion, then recovery ---\n";
+        gain_t Kp = 0.0001, Ki = 0.00002, Kd = 0.00001;
+        out_t  out_min = 0.0, out_max = 5.0;
+        flush_state(Kp, Ki, Kd, out_min, out_max);
+        out_t actuator_out, prev = 0.0;
+        double max_delta = 0.0;
+        // Phase A: AI active for 200 cycles
+        for (int i = 0; i < 200; i++) {
+            nv_pid_top(5000.0, 0.225, false,
+                       Kp, Ki, Kd, out_min, out_max,
+                       INNER_CLAMP_DEFAULT, actuator_out);
+            double d = std::abs(actuator_out.to_double() - prev.to_double());
+            if (i > 0 && d > max_delta) max_delta = d;
+            prev = actuator_out;
+        }
+        // Phase B: 1500 cycles of timeout (PID-only) — covers cooldown
+        for (int i = 0; i < 1500; i++) {
+            nv_pid_top(5000.0, 0.0, /*timeout=*/true,
+                       Kp, Ki, Kd, out_min, out_max,
+                       INNER_CLAMP_DEFAULT, actuator_out);
+            double d = std::abs(actuator_out.to_double() - prev.to_double());
+            if (d > max_delta) max_delta = d;
+            prev = actuator_out;
+        }
+        // Phase C: AI inference returns
+        for (int i = 0; i < 200; i++) {
+            nv_pid_top(5000.0, 0.225, false,
+                       Kp, Ki, Kd, out_min, out_max,
+                       INNER_CLAMP_DEFAULT, actuator_out);
+            double d = std::abs(actuator_out.to_double() - prev.to_double());
+            if (d > max_delta) max_delta = d;
+            prev = actuator_out;
+        }
+        bool pass = max_delta < 0.5;
+        std::cout << "Max |delta| across timeout+recovery: " << max_delta << " V\n";
+        std::cout << (pass ? "PASS" : "FAIL")
+                  << ": missed completion handled bumplessly.\n\n";
+        if (!pass) failures++;
+    }
+
+    // Test C-f: stuck-high output_valid. Per HB0919 §4.1 p.8, output_valid
+    //          must be cleared by firmware once per inference. If firmware
+    //          fails to clear it, vbx_completion_sync emits exactly one pulse
+    //          and then nothing — so the watchdog correctly times out. We
+    //          model this at the HLS level as a single false-then-permanent-
+    //          true transition on ai_watchdog_timeout, and confirm the
+    //          actuator settles to its PID-only steady state without
+    //          oscillating.
+    {
+        std::cout << "--- Task C.f: Stuck-high output_valid (no clear) ---\n";
+        gain_t Kp = 0.0001, Ki = 0.00002, Kd = 0.00001;
+        out_t  out_min = 0.0, out_max = 5.0;
+        flush_state(Kp, Ki, Kd, out_min, out_max);
+        out_t actuator_out, prev = 0.0;
+        // First pulse arrives — AI active for 1 cycle
+        nv_pid_top(5000.0, 0.225, false,
+                   Kp, Ki, Kd, out_min, out_max,
+                   INNER_CLAMP_DEFAULT, actuator_out);
+        prev = actuator_out;
+        // Then stuck-high level — no further fresh inferences. Watchdog
+        // permanently times out from cycle 2 onwards.
+        double max_delta = 0.0;
+        for (int i = 0; i < 5000; i++) {
+            nv_pid_top(5000.0, 0.0, /*timeout=*/true,
+                       Kp, Ki, Kd, out_min, out_max,
+                       INNER_CLAMP_DEFAULT, actuator_out);
+            double d = std::abs(actuator_out.to_double() - prev.to_double());
+            if (d > max_delta) max_delta = d;
+            prev = actuator_out;
+        }
+        bool pass = max_delta < 0.5;
+        std::cout << "Max |delta| under stuck-high: " << max_delta << " V\n";
+        std::cout << (pass ? "PASS" : "FAIL")
+                  << ": stuck-high level produces single pulse then PID-only "
+                  << "steady state.\n\n";
+        if (!pass) failures++;
+    }
+
     if (failures == 0) {
         std::cout << "ALL TESTS PASSED.\n";
     } else {
