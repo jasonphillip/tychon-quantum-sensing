@@ -294,6 +294,116 @@ int main() {
 
     if (!test_chatter_cooldown())       failures++;
 
+    // -------------------------------------------------------------------
+    // Output_valid edge-case tests
+    //
+    // CoreVectorBlox `output_valid` is a level-held W1C bit (HB0919:361,
+    // 499, 784); the watchdog input is a one-cycle pulse from
+    // libero/hdl/vbx_pulse_gen.v. At the HLS level we test the same
+    // failure modes the corpus calls out (preserving:121-125):
+    // repeated completions, missed completion, stuck-high (firmware
+    // failure to clear the bit).
+    //
+    // Modeled at the HLS level as transitions of the
+    // `ai_watchdog_timeout` boolean: false = inference fresh enough,
+    // true = no fresh inference within the 1 ms window.
+    // -------------------------------------------------------------------
+
+    {
+        std::cout << "--- Test D.1: Repeated completions hold AI+PID basin ---\n";
+        gain_t Kp = 0.0001, Ki = 0.00002, Kd = 0.00001;
+        out_t  out_min = 0.0, out_max = 5.0;
+        flush_state(Kp, Ki, Kd, out_min, out_max);
+        out_t actuator_out, prev = 0.0;
+        double max_delta = 0.0;
+        for (int i = 0; i < 2000; i++) {
+            nv_pid_top(5000.0, 0.225, /*ai_watchdog_timeout=*/false,
+                       Kp, Ki, Kd, out_min, out_max,
+                       INNER_CLAMP_DEFAULT, actuator_out);
+            double d = std::abs(actuator_out.to_double() - prev.to_double());
+            if (i > 0 && d > max_delta) max_delta = d;
+            prev = actuator_out;
+        }
+        bool pass = max_delta < 0.5;
+        std::cout << "Max single-cycle |delta|: " << max_delta << " V\n";
+        std::cout << (pass ? "PASS" : "FAIL")
+                  << ": repeated completions stay inside AI+PID basin.\n\n";
+        if (!pass) failures++;
+    }
+
+    {
+        std::cout << "--- Test D.2: Missed completion, then recovery ---\n";
+        gain_t Kp = 0.0001, Ki = 0.00002, Kd = 0.00001;
+        out_t  out_min = 0.0, out_max = 5.0;
+        flush_state(Kp, Ki, Kd, out_min, out_max);
+        out_t actuator_out, prev = 0.0;
+        double max_delta = 0.0;
+        for (int i = 0; i < 200; i++) {
+            nv_pid_top(5000.0, 0.225, false,
+                       Kp, Ki, Kd, out_min, out_max,
+                       INNER_CLAMP_DEFAULT, actuator_out);
+            double d = std::abs(actuator_out.to_double() - prev.to_double());
+            if (i > 0 && d > max_delta) max_delta = d;
+            prev = actuator_out;
+        }
+        for (int i = 0; i < 1500; i++) {
+            nv_pid_top(5000.0, 0.0, /*ai_watchdog_timeout=*/true,
+                       Kp, Ki, Kd, out_min, out_max,
+                       INNER_CLAMP_DEFAULT, actuator_out);
+            double d = std::abs(actuator_out.to_double() - prev.to_double());
+            if (d > max_delta) max_delta = d;
+            prev = actuator_out;
+        }
+        for (int i = 0; i < 200; i++) {
+            nv_pid_top(5000.0, 0.225, false,
+                       Kp, Ki, Kd, out_min, out_max,
+                       INNER_CLAMP_DEFAULT, actuator_out);
+            double d = std::abs(actuator_out.to_double() - prev.to_double());
+            if (d > max_delta) max_delta = d;
+            prev = actuator_out;
+        }
+        bool pass = max_delta < 0.5;
+        std::cout << "Max |delta| across timeout+recovery: " << max_delta << " V\n";
+        std::cout << (pass ? "PASS" : "FAIL")
+                  << ": missed completion handled bumplessly.\n\n";
+        if (!pass) failures++;
+    }
+
+    {
+        std::cout << "--- Test D.3: Stuck-high output_valid (firmware no-clear) ---\n";
+        // The vbx_pulse_gen emits exactly one pulse on the rising edge of
+        // output_valid; if firmware never clears the bit, no further
+        // pulses fire and the watchdog correctly times out. At HLS
+        // level: one false->true transition on ai_watchdog_timeout, then
+        // true forever. Confirms steady-state PID-only without
+        // oscillation.
+        gain_t Kp = 0.0001, Ki = 0.00002, Kd = 0.00001;
+        out_t  out_min = 0.0, out_max = 5.0;
+        flush_state(Kp, Ki, Kd, out_min, out_max);
+        out_t actuator_out, prev = 0.0;
+        double max_delta = 0.0;
+        for (int i = 0; i < 100; i++) {
+            nv_pid_top(5000.0, 0.225, false,
+                       Kp, Ki, Kd, out_min, out_max,
+                       INNER_CLAMP_DEFAULT, actuator_out);
+            prev = actuator_out;
+        }
+        for (int i = 0; i < 3000; i++) {
+            nv_pid_top(5000.0, 0.0, /*ai_watchdog_timeout=*/true,
+                       Kp, Ki, Kd, out_min, out_max,
+                       INNER_CLAMP_DEFAULT, actuator_out);
+            double d = std::abs(actuator_out.to_double() - prev.to_double());
+            if (i > 100 && d > max_delta) max_delta = d;
+            prev = actuator_out;
+        }
+        bool pass = max_delta < 0.05;
+        std::cout << "Max |delta| in steady-state PID-only (after 100 cycles): "
+                  << max_delta << " V\n";
+        std::cout << (pass ? "PASS" : "FAIL")
+                  << ": stuck-high output_valid -> stable PID-only.\n\n";
+        if (!pass) failures++;
+    }
+
     if (failures == 0) {
         std::cout << "ALL TESTS PASSED.\n";
     } else {
