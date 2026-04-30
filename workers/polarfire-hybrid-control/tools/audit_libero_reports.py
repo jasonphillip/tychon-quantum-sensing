@@ -300,18 +300,125 @@ def format_result(result: AuditResult) -> str:
     return "\n".join(lines)
 
 
+# --- Strict-mode helpers --------------------------------------------------
+# Strict mode applies fail-fast corpus rules to bundles that claim production-
+# grade closure (names ending in pid-real, overnight-*, or -strict). Baseline
+# and paper-shell bundles are skipped because they intentionally embody the
+# pre-corpus failure modes for comparison.
+STRICT_BUNDLE_PATTERNS = (
+    re.compile(r"pid-real$"),
+    re.compile(r"^overnight-"),
+    re.compile(r"-strict$"),
+)
+
+
+def _is_strict_bundle(result: AuditResult) -> bool:
+    name = result.path.name
+    return any(p.search(name) for p in STRICT_BUNDLE_PATTERNS)
+
+
+def _strict_check(result: AuditResult) -> list[str]:
+    """Return list of strict-gate violations for a single bundle. Empty list
+    means the bundle passes strict mode."""
+    violations: list[str] = []
+    if not result.path.exists():
+        violations.append(f"{result.path.name}: report bundle missing")
+        return violations
+    # 1. Must be classified as real PID evidence (with or without pruning review)
+    if not result.classification.startswith("real PID evidence"):
+        violations.append(
+            f"{result.path.name}: classification is "
+            f"'{result.classification}' (expected 'real PID evidence')"
+        )
+    # 2. Timing must close (positive slack)
+    if result.timing_passes is False:
+        violations.append(
+            f"{result.path.name}: timing slack negative "
+            f"({result.timing_worst_slack_ns} ns)"
+        )
+    # 3. No critical pruning hits — corpus rule from
+    #    preserving-real-smarthls-pid-datapath.md: CL189+CL260 sequences on
+    #    coefficient registers indicate constant-folding survived. Each hit
+    #    references one of the critical PID terms (Kp/Ki/Kd/out_min/out_max/
+    #    inner_clamp_setpoint/legup_mult/etc.).
+    if result.critical_prune_hits:
+        violations.append(
+            f"{result.path.name}: {len(result.critical_prune_hits)} critical "
+            "PID-coefficient pruning hits (CL189/CL260 on Kp/Ki/Kd or "
+            "legup_mult cone). First: "
+            f"{result.critical_prune_hits[0][:160]}"
+        )
+    # 4. No CoreVectorBlox output_valid wiring issues — corpus rule from
+    #    HB0919: the port must be propagated through the SmartDesign canvas.
+    if result.vectorblox_output_valid_issues:
+        violations.append(
+            f"{result.path.name}: {len(result.vectorblox_output_valid_issues)} "
+            "CoreVectorBlox output_valid wiring issues "
+            "(undriven/floating/component-declaration). First: "
+            f"{result.vectorblox_output_valid_issues[0][:160]}"
+        )
+    return violations
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("report_dirs", nargs="*", type=Path, help="Report directories to audit")
     parser.add_argument("--json", action="store_true", help="Emit machine-readable JSON")
+    parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="Apply corpus-backed fail-fast gates (pruning, output_valid, "
+        "timing) to any bundle whose name ends in pid-real, starts with "
+        "overnight-, or ends with -strict. Other bundles are reported but "
+        "do not affect the exit code in strict mode either.",
+    )
+    parser.add_argument(
+        "--fail-on-prune-pid-coeff",
+        action="store_true",
+        help="Subset of --strict: only the coefficient-pruning gate.",
+    )
+    parser.add_argument(
+        "--require-status-csrs",
+        action="store_true",
+        help="(Reserved for future use once overnight bundles include the "
+        "new status CSR signals.) Asserts that the readback nets for "
+        "kp/ki/kd shadows and watchdog timeout counters appear in the "
+        "synthesis reports without pruning. Today this is a soft check.",
+    )
+    parser.add_argument(
+        "--fail-on-output-valid-issue",
+        action="store_true",
+        help="Subset of --strict: only the CoreVectorBlox output_valid gate.",
+    )
     args = parser.parse_args()
 
     report_dirs = args.report_dirs or list(DEFAULT_REPORT_DIRS)
     results = [audit_dir(path.resolve()) for path in report_dirs]
 
+    strict_violations: list[str] = []
+    if args.strict or args.fail_on_prune_pid_coeff or args.fail_on_output_valid_issue:
+        strict_targets = [r for r in results if _is_strict_bundle(r)]
+        if not strict_targets:
+            strict_violations.append(
+                "no strict-eligible bundles found "
+                "(names matching pid-real$, ^overnight-, or -strict$)"
+            )
+        for r in strict_targets:
+            for v in _strict_check(r):
+                if args.strict:
+                    strict_violations.append(v)
+                elif args.fail_on_prune_pid_coeff and "pruning hits" in v:
+                    strict_violations.append(v)
+                elif args.fail_on_output_valid_issue and "output_valid" in v:
+                    strict_violations.append(v)
+
     if args.json:
-        print(json.dumps([result.to_dict() for result in results], indent=2, sort_keys=True))
-        return 0 if not _real_pid_failures(results) else 1
+        payload = {
+            "results": [result.to_dict() for result in results],
+            "strict_violations": strict_violations,
+        }
+        print(json.dumps(payload, indent=2, sort_keys=True))
+        return 1 if (strict_violations or _real_pid_failures(results)) else 0
 
     print("# Libero/Synplify Report Audit")
     print("")
@@ -320,6 +427,27 @@ def main() -> int:
     for result in results:
         print(format_result(result))
 
+    if args.strict or args.fail_on_prune_pid_coeff or args.fail_on_output_valid_issue:
+        print("## Strict-Mode Verdict")
+        if not strict_violations:
+            print("All strict-eligible bundles pass corpus gates.")
+        else:
+            print(f"{len(strict_violations)} strict violation(s):")
+            for v in strict_violations:
+                print(f"- {v}")
+        print("")
+
+    if args.require_status_csrs:
+        print("## Status CSR Coverage (soft check)")
+        print(
+            "Reserved for overnight-r* bundles that include the new "
+            "pid_io_block status registers (kp_shadow, ki_shadow, kd_shadow, "
+            "watchdog_timeout_event_count, etc.). Currently informational only."
+        )
+        print("")
+
+    if strict_violations:
+        return 1
     return 1 if _real_pid_failures(results) else 0
 
 
