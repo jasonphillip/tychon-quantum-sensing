@@ -4,7 +4,7 @@
 # HLS testbench runs on x86 (SmartHLS requirement). Libero synthesis
 # requires Libero SoC installed on the build host.
 
-.PHONY: hls-test hls-test-local audit-reports verify-local clean help
+.PHONY: hls-test hls-test-local audit-reports verify-local beelink-verify clean help
 
 # Run SmartHLS C++ software testbench (x86 only)
 hls-test:
@@ -22,6 +22,11 @@ audit-reports:
 
 verify-local: hls-test-local audit-reports
 
+# Run the noninteractive Beelink verification wrapper. Optional:
+#   make beelink-verify TAG=2026-04-30-corpus
+beelink-verify:
+	tools/run_beelink_verification.sh $(TAG)
+
 # Clean all build artifacts
 clean:
 	cd hls && shls clean
@@ -36,6 +41,8 @@ help:
 	@echo "             Audit archived Libero/Synplify report bundles"
 	@echo "  verify-local"
 	@echo "             Run local testbench and report audit"
+	@echo "  beelink-verify"
+	@echo "             Run noninteractive Beelink SmartHLS/Libero verification"
 	@echo "  clean      Remove all build artifacts"
 	@echo "  help       Show this message"
 	@echo ""

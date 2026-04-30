@@ -14,17 +14,22 @@
 // because nv_pid.cpp already declares the only `#pragma HLS function top`
 // in the build).
 //
-// Heartbeat source: CoreVectorBlox IP `output_valid` interrupt output
-// (HB0919 Table 5-4). Per HB0919, output_valid mirrors Control Register
-// bit 3 at offset 0x00 — sets once per inference completion, cleared by
-// MSS firmware writing 1 to it before the next inference.
+// Intended production heartbeat source: CoreVectorBlox IP `output_valid`
+// interrupt output (HB0919 Table 5-4). Per HB0919, output_valid mirrors
+// Control Register bit 3 at offset 0x00 -- set once per inference completion
+// and cleared by MSS firmware writing 1 to it before the next inference.
+//
+// Current Phase I SmartDesign patch wires ai_heartbeat to MSS GPIO stimulus
+// because the checked report bundle shows the VectorBlox output_valid port is
+// not yet propagated through the generated canvas. Keep this edge detector;
+// replace only the source net when the CoreVectorBlox port is exposed.
 
 module watchdog_timer #(
     parameter integer WATCHDOG_TIMEOUT_CYCLES = 200_000
 ) (
     input  wire clk,
     input  wire resetn,         // active-low fabric reset (FIC_0 domain)
-    input  wire ai_heartbeat,   // CoreVectorBlox output_valid (IP-level)
+    input  wire ai_heartbeat,   // Phase I GPIO stimulus; Phase II output_valid
     output reg  timeout         // -> nv_pid_top.ai_watchdog_timeout
 );
 

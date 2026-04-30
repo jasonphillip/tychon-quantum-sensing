@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -28,6 +29,12 @@ DEFAULT_REPORT_DIRS = (
 
 REPORT_TOP = "MPFS_ICICLE_KIT_BASE_DESIGN"
 PRUNE_IDS = ("CL168", "CL189", "CL260", "CL279", "BN115", "BN362", "MO129", "MO156")
+OUTPUT_VALID_ISSUE_TERMS = (
+    "not found",
+    "undriven",
+    "floating",
+    "component declaration",
+)
 PID_TERMS = (
     "nv_pid",
     "pid_io_block",
@@ -39,6 +46,32 @@ PID_TERMS = (
     "kp",
     "ki",
     "kd",
+)
+CRITICAL_PID_TERMS = (
+    "kp",
+    "ki",
+    "kd",
+    "out_min",
+    "out_max",
+    "inner_clamp_setpoint",
+    "pid_integral",
+    "prev_error",
+    "u_ai_latch",
+    "legup_mult",
+)
+INFORMATIONAL_PID_TERMS = (
+    "mem_size_",
+    "down_convert_shift_dist",
+    "ii_counter",
+    "prev_watchdog",
+    "cooldown_counter",
+)
+PID_PATTERNS = tuple(re.compile(r"(?<![a-z0-9])" + re.escape(term) + r"(?![a-z0-9])") for term in PID_TERMS)
+CRITICAL_PID_PATTERNS = tuple(
+    re.compile(r"(?<![a-z0-9])" + re.escape(term) + r"(?![a-z0-9])") for term in CRITICAL_PID_TERMS
+)
+INFORMATIONAL_PID_PATTERNS = tuple(
+    re.compile(r"(?<![a-z0-9])" + re.escape(term) + r"(?![a-z0-9])") for term in INFORMATIONAL_PID_TERMS
 )
 
 
@@ -52,7 +85,10 @@ class AuditResult:
     pid_math: int = 0
     pid_rows: int = 0
     scoped_prune_hits: list[str] = field(default_factory=list)
+    critical_prune_hits: list[str] = field(default_factory=list)
+    informational_prune_hits: list[str] = field(default_factory=list)
     global_prune_counts: dict[str, int] = field(default_factory=dict)
+    vectorblox_output_valid_issues: list[str] = field(default_factory=list)
 
     @property
     def has_real_pid_footprint(self) -> bool:
@@ -69,12 +105,32 @@ class AuditResult:
         if not self.path.exists():
             return "missing"
         if self.has_real_pid_footprint and self.timing_passes is True:
+            if self.critical_prune_hits:
+                return "real PID evidence with pruning review"
             return "real PID evidence"
         if self.pid_rows == 0 or self.pid_fabric_4lut < 1000:
             return "baseline/paper-shell evidence"
         if self.scoped_prune_hits:
             return "needs pruning review"
         return "partial evidence"
+
+    def to_dict(self) -> dict[str, object]:
+        return {
+            "path": str(self.path),
+            "classification": self.classification,
+            "timing_worst_slack_ns": self.timing_worst_slack_ns,
+            "timing_passes": self.timing_passes,
+            "resource_totals": self.resource_totals,
+            "pid_rows": self.pid_rows,
+            "pid_fabric_4lut": self.pid_fabric_4lut,
+            "pid_fabric_dff": self.pid_fabric_dff,
+            "pid_math": self.pid_math,
+            "pid_scoped_prune_hits": len(self.scoped_prune_hits),
+            "critical_prune_hits": self.critical_prune_hits,
+            "informational_prune_hits": self.informational_prune_hits,
+            "global_prune_counts": self.global_prune_counts,
+            "vectorblox_output_valid_issues": self.vectorblox_output_valid_issues,
+        }
 
 
 def parse_int(value: str) -> int | None:
@@ -148,8 +204,10 @@ def parse_pid_hierarchy(report_dir: Path) -> tuple[int, int, int, int]:
     return rows, fabric_4lut, fabric_dff, math
 
 
-def parse_pruning(report_dir: Path) -> tuple[list[str], dict[str, int]]:
+def parse_pruning(report_dir: Path) -> tuple[list[str], list[str], list[str], dict[str, int]]:
     scoped_hits: list[str] = []
+    critical_hits: list[str] = []
+    informational_hits: list[str] = []
     counts = {message_id: 0 for message_id in PRUNE_IDS}
     reports = list(report_dir.glob("*.srr")) + list(report_dir.glob("*.log"))
     id_re = re.compile(r"\b(" + "|".join(PRUNE_IDS) + r")\b")
@@ -162,10 +220,28 @@ def parse_pruning(report_dir: Path) -> tuple[list[str], dict[str, int]]:
             lowered = line.lower()
             for message_id in ids:
                 counts[message_id] += 1
-            if any(term in lowered for term in PID_TERMS):
-                scoped_hits.append(f"{report.name}: {line.strip()[:220]}")
+            if any(pattern.search(lowered) for pattern in PID_PATTERNS):
+                hit = f"{report.name}: {line.strip()[:220]}"
+                scoped_hits.append(hit)
+                if any(pattern.search(lowered) for pattern in CRITICAL_PID_PATTERNS):
+                    critical_hits.append(hit)
+                elif any(pattern.search(lowered) for pattern in INFORMATIONAL_PID_PATTERNS):
+                    informational_hits.append(hit)
 
-    return scoped_hits[:20], counts
+    return scoped_hits[:20], critical_hits[:20], informational_hits[:20], counts
+
+
+def parse_output_valid_issues(report_dir: Path) -> list[str]:
+    issues: list[str] = []
+    reports = list(report_dir.glob("*.srr")) + list(report_dir.glob("*.log"))
+    for report in reports:
+        for line in report.read_text(errors="replace").splitlines():
+            lowered = line.lower()
+            if "output_valid" not in lowered:
+                continue
+            if any(term in lowered for term in OUTPUT_VALID_ISSUE_TERMS):
+                issues.append(f"{report.name}: {line.strip()[:220]}")
+    return issues[:20]
 
 
 def audit_dir(report_dir: Path) -> AuditResult:
@@ -173,7 +249,13 @@ def audit_dir(report_dir: Path) -> AuditResult:
     result.timing_worst_slack_ns = parse_timing_worst_slack(report_dir)
     result.resource_totals = parse_resource_totals(report_dir / f"{REPORT_TOP}_compile_netlist_resources.rpt")
     result.pid_rows, result.pid_fabric_4lut, result.pid_fabric_dff, result.pid_math = parse_pid_hierarchy(report_dir)
-    result.scoped_prune_hits, result.global_prune_counts = parse_pruning(report_dir)
+    (
+        result.scoped_prune_hits,
+        result.critical_prune_hits,
+        result.informational_prune_hits,
+        result.global_prune_counts,
+    ) = parse_pruning(report_dir)
+    result.vectorblox_output_valid_issues = parse_output_valid_issues(report_dir)
     return result
 
 
@@ -192,6 +274,9 @@ def format_result(result: AuditResult) -> str:
         f"- nv_pid_top hierarchy rows: `{result.pid_rows}`",
         f"- nv_pid_top summed footprint: 4LUT `{result.pid_fabric_4lut}`, DFF `{result.pid_fabric_dff}`, Math `{result.pid_math}`",
         f"- PID-scoped pruning hits: `{len(result.scoped_prune_hits)}`",
+        f"- Critical pruning review hits: `{len(result.critical_prune_hits)}`",
+        f"- Informational pruning hits: `{len(result.informational_prune_hits)}`",
+        f"- CoreVectorBlox output_valid wiring issues: `{len(result.vectorblox_output_valid_issues)}`",
         "- Global pruning-message counts: "
         + ", ".join(f"{message_id}={count}" for message_id, count in result.global_prune_counts.items() if count),
     ]
@@ -199,8 +284,17 @@ def format_result(result: AuditResult) -> str:
         lines[-1] = "- Global pruning-message counts: none found"
     if result.scoped_prune_hits:
         lines.append("")
-        lines.append("PID-scoped pruning excerpts:")
-        for hit in result.scoped_prune_hits:
+        if result.critical_prune_hits:
+            lines.append("Critical pruning review excerpts:")
+        else:
+            lines.append("Informational pruning review excerpts:")
+        critical_excerpt = result.critical_prune_hits or result.scoped_prune_hits
+        for hit in critical_excerpt[:10]:
+            lines.append(f"- `{hit}`")
+    if result.vectorblox_output_valid_issues:
+        lines.append("")
+        lines.append("CoreVectorBlox output_valid wiring excerpts:")
+        for hit in result.vectorblox_output_valid_issues[:10]:
             lines.append(f"- `{hit}`")
     lines.append("")
     return "\n".join(lines)
@@ -209,10 +303,15 @@ def format_result(result: AuditResult) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("report_dirs", nargs="*", type=Path, help="Report directories to audit")
+    parser.add_argument("--json", action="store_true", help="Emit machine-readable JSON")
     args = parser.parse_args()
 
     report_dirs = args.report_dirs or list(DEFAULT_REPORT_DIRS)
     results = [audit_dir(path.resolve()) for path in report_dirs]
+
+    if args.json:
+        print(json.dumps([result.to_dict() for result in results], indent=2, sort_keys=True))
+        return 0 if not _real_pid_failures(results) else 1
 
     print("# Libero/Synplify Report Audit")
     print("")
@@ -221,13 +320,17 @@ def main() -> int:
     for result in results:
         print(format_result(result))
 
+    return 1 if _real_pid_failures(results) else 0
+
+
+def _real_pid_failures(results: list[AuditResult]) -> list[AuditResult]:
     failures = []
     for result in results:
         if not result.path.exists() or not result.path.name.endswith("pid-real"):
             continue
-        if result.classification != "real PID evidence":
+        if not result.classification.startswith("real PID evidence"):
             failures.append(result)
-    return 1 if failures else 0
+    return failures
 
 
 if __name__ == "__main__":

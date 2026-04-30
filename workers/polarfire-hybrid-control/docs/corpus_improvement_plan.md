@@ -40,6 +40,15 @@ Acceptance criteria:
 
 Replace MSS GPIO heartbeat stimulus with CoreVectorBlox `output_valid`.
 
+Current status:
+
+- `libero/hdl/watchdog_timer.v` already implements rising-edge refresh
+  semantics.
+- `libero/scripts/patch_smartdesign_watchdog.py` still wires Phase I heartbeat
+  to MSS GPIO stimulus.
+- Archived Synplify reports contain CoreVectorBlox `output_valid` warnings
+  showing the port is not yet propagated through the generated canvas.
+
 Implementation requirement:
 
 - Treat `output_valid` as a level-held completion indication.
@@ -60,10 +69,12 @@ Promote the new local checks into the normal workflow.
 Acceptance criteria:
 
 - `make verify-local` passes before report archival.
-- Beelink runs record `shls sw_run`, synthesis status, report audit output, and
-  exact run/seed tag.
+- `make beelink-verify TAG=<date-tag>` records `shls sw_run`, synthesis status,
+  report audit output, and exact run/seed tag when `bee` is reachable.
 - `tools/audit_libero_reports.py` classifies known paper-shell bundles as
-  baseline/paper-shell and the real closure as real PID evidence.
+  baseline/paper-shell and the real closure as real PID evidence, while
+  separately flagging PID pruning and CoreVectorBlox `output_valid` wiring
+  issues for review.
 
 ## Priority 5: Documentation Tightening
 
