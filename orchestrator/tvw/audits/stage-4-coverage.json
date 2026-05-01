@@ -1,0 +1,166 @@
+{
+  "total_claims": 97,
+  "verdicts_qwen3_coder": {
+    "SUPPORTED": 92,
+    "UNSUPPORTED": 4,
+    "WEAK": 1
+  },
+  "verdicts_nemotron_mini": {
+    "SUPPORTED": 84,
+    "ERROR": 13
+  },
+  "disagreement_count": 18,
+  "by_section": {
+    "(unsectioned)": {
+      "total": 97,
+      "with_doc_evidence": 97,
+      "with_code_evidence": 97
+    }
+  },
+  "disagreements": [
+    {
+      "claim_id": "c0003",
+      "claim": "The complete hybrid control loop --- SmartHLS PID (II=1, \\~48 ns latency, 3,000\u00d7 margin over 150 \u00b5s budget) plus VectorBlox-accelerated INT8 CNN (12.5 KB .vnnx) --- synthesizes on the MPFS250T PolarFi",
+      "qwen_verdict": "SUPPORTED",
+      "qwen_rationale": "Evidence confirms 5.2 W power, 0.728 ns worst slack, and integrated PID datapath timing.",
+      "nemo_verdict": "ERROR",
+      "nemo_rationale": "unparseable response: {\"verdict\": \"SUPPORTED\", \"evidence_chunks\": [0, 1], \"rationale\": \"The claim is supported by the retrieved evidence as it contains specific details about the hybrid control loop and the VectorBlox-acce"
+    },
+    {
+      "claim_id": "c0004",
+      "claim": "The system is bounded by a hardware-enforced Simplex RTA safety architecture that guarantees absolute stability via the Circle Criterion under sector saturation clamps (Decision-2-Option-C hardcoded o",
+      "qwen_verdict": "SUPPORTED",
+      "qwen_rationale": "Multiple chunks explicitly confirm hardware-enforced safety boundaries, watchdog timer specifics, and simplex RTA architecture details.",
+      "nemo_verdict": "ERROR",
+      "nemo_rationale": "unparseable response: {\"verdict\": \"SUPPORTED\", \"evidence_chunks\": [0, 1], \"rationale\": \"The retrieved evidence explicitly supports the claim's specific assertion.\""
+    },
+    {
+      "claim_id": "c0008",
+      "claim": "4              Total Power    \\<12 W         \\~5.2 W        PASS",
+      "qwen_verdict": "SUPPORTED",
+      "qwen_rationale": "Chunk 3 explicitly states 'Total Power <12 W' and '~5.2 W (SmartPower post-P&R)' which directly supports the claim.",
+      "nemo_verdict": "ERROR",
+      "nemo_rationale": "unparseable response: {\n  \"verdict\": \"SUPPORTED\",\n  \"evidence_chunks\": [1, 2],\n  \"rationale\": \"The first chunk explicitly states that the P1 concentration range is from 0 to 7 MHz and the second chunk provides a specific v"
+    },
+    {
+      "claim_id": "c0010",
+      "claim": "Three hardware-enforced boundaries in the FPGA fabric guarantee BIBO stability: sector saturation clamps (\u00b14.5% actuator range, \u00b12.25 \u00b5T for a 50 \u00b5T operating field), slew-rate limiting on the AI outp",
+      "qwen_verdict": "SUPPORTED",
+      "qwen_rationale": "Multiple chunks explicitly confirm the three hardware-enforced boundaries: sector clamps, slew-rate limiting, and watchdog timer with specified parameters.",
+      "nemo_verdict": "ERROR",
+      "nemo_rationale": "unparseable response: {\"verdict\": \"SUPPORTED\", \"evidence_chunks\": [0, 1], \"rationale\": \"The retrieved evidence explicitly supports the hardware-enforced boundaries in FPGA fabric and their synthesis into the integrated ove"
+    },
+    {
+      "claim_id": "c0013",
+      "claim": "The bounded hybrid architecture ensures the AI can never destabilize the sensor --- only improve it.",
+      "qwen_verdict": "SUPPORTED",
+      "qwen_rationale": "Multiple chunks explicitly state the AI operates as a bounded feedforward compensator, not in direct feedback, preventing destabilization.",
+      "nemo_verdict": "ERROR",
+      "nemo_rationale": "unparseable response: {\"verdict\": \"SUPPORTED\", \"evidence_chunks\": [0, 1], \"rationale\": \"The retrieved evidence explicitly supports the claim's specific assertion.\""
+    },
+    {
+      "claim_id": "c0014",
+      "claim": "*Figure 1: Concept of operations --- AI-cognitive engine for quantum PNT, with the three-boundary safety triad (clamp + slew + watchdog) on the RT PolarFire SoC.*",
+      "qwen_verdict": "SUPPORTED",
+      "qwen_rationale": "Evidence confirms AI-cognitive engine with three-boundary safety triad (clamp + slew + watchdog) on RT PolarFire SoC.",
+      "nemo_verdict": "ERROR",
+      "nemo_rationale": "unparseable response: {\"verdict\": \"SUPPORTED\", \"evidence_chunks\": [0, 1], \"rationale\": \"The retrieved evidence explicitly supports the concept of operations in Figure 1.\""
+    },
+    {
+      "claim_id": "c0019",
+      "claim": "The watchdog driver is a standalone hand-coded Verilog module (hdl/watchdog_timer.v, 200 MHz \u00d7 200,000-cycle counter with \\$clog2-derived width) instantiated in the SmartDesign top as watchdog_timer_0",
+      "qwen_verdict": "SUPPORTED",
+      "qwen_rationale": "Code chunks 4, 5, and 6 directly support the claim's assertion about the watchdog driver being a hand-coded Verilog module instantiated in SmartDesign.",
+      "nemo_verdict": "ERROR",
+      "nemo_rationale": "unparseable response: {\"verdict\": \"SUPPORTED\", \"evidence_chunks\": [0, 1], \"rationale\": \"The first two chunks explicitly support the claim's specific assertion.\""
+    },
+    {
+      "claim_id": "c0021",
+      "claim": "The trigger logic inside nv_pid_top_0 (rising-edge detector on ai_watchdog_timeout, cooldown counter at WATCHDOG_COOLDOWN_CYCLES = 1000 = 5.0 \u00b5s at 200 MHz) is also present in the placed netlist along",
+      "qwen_verdict": "SUPPORTED",
+      "qwen_rationale": "Evidence shows watchdog timer instantiated in SmartDesign top and ai_watchdog_timeout signal connected to nv_pid_top.",
+      "nemo_verdict": "ERROR",
+      "nemo_rationale": "unparseable response: {\"verdict\": \"SUPPORTED\", \"evidence_chunks\": [0, 1], \"rationale\": \"The retrieved evidence explicitly supports that the trigger logic inside nv\\_pid\\_top is present in the placed netlist alongside the i"
+    },
+    {
+      "claim_id": "c0049",
+      "claim": "Per-rail breakdown: Rail VDD (1.050 V): 2,244.9 mW (2,138 mA).",
+      "qwen_verdict": "UNSUPPORTED",
+      "qwen_rationale": "No evidence found for the specific rail voltage and power values mentioned in the claim.",
+      "nemo_verdict": "SUPPORTED",
+      "nemo_rationale": "Evidence explicitly supports the claim's specific assertion."
+    },
+    {
+      "claim_id": "c0050",
+      "claim": "The integrated PID datapath adds approximately +20.5 mW over the prior r3_s22 paper-shell total (2,692.9 mW vs 2,672.4 mW), reflecting the actual switching activity of the 25 DSP multipliers plus inte",
+      "qwen_verdict": "SUPPORTED",
+      "qwen_rationale": "Evidence shows the integrated PID adds 25 DSP multipliers and registers, matching the claimed +20.5 mW increase.",
+      "nemo_verdict": "ERROR",
+      "nemo_rationale": "unparseable response: {\"verdict\": \"SUPPORTED\", \"evidence_chunks\": [0, 1], \"rationale\": \"The integrated PID datapath adds approximately +20.5 mW over the prior r3\\_s22 paper-shell total (2,692.9 mW vs 2,672.4 mW), reflectin"
+    },
+    {
+      "claim_id": "c0052",
+      "claim": "The Vectorblox inference engine accounts for the largest single contribution to fabric power at \\~610 mW across its clock domains, approximately 23% of total fabric.",
+      "qwen_verdict": "WEAK",
+      "qwen_rationale": "Evidence shows Vectorblox contributes significantly to power but doesn't confirm 610 mW or 23% of total fabric.",
+      "nemo_verdict": "SUPPORTED",
+      "nemo_rationale": "The retrieved evidence explicitly supports the claim's specific assertion."
+    },
+    {
+      "claim_id": "c0057",
+      "claim": "The worst slack across the design is **+0.728 ns** on the FIC_0 PLL OUT0 (125 MHz / 8 ns) domain, on a path **internal to the integrated PID compute datapath** (nv_pid_top_0/\\.../nv_pid_top_pid_integr",
+      "qwen_verdict": "SUPPORTED",
+      "qwen_rationale": "Explicitly states the worst slack is +0.728 ns on FIC_0 PLL OUT0 domain.",
+      "nemo_verdict": "ERROR",
+      "nemo_rationale": "unparseable response: {\"verdict\": \"SUPPORTED\", \"evidence_chunks\": [0, 1], \"rationale\": \"Evidence explicitly supports the specific assertion in the claim.\""
+    },
+    {
+      "claim_id": "c0061",
+      "claim": "*Figure 4: Hybrid control-loop execution timeline.",
+      "qwen_verdict": "UNSUPPORTED",
+      "qwen_rationale": "No evidence of a specific 'Hybrid control-loop execution timeline' figure in the retrieved chunks.",
+      "nemo_verdict": "SUPPORTED",
+      "nemo_rationale": "The specific assertion is supported by the retrieved evidence from the project's own documents and source code."
+    },
+    {
+      "claim_id": "c0062",
+      "claim": "Classical SmartHLS PID at II=1 (\\~48 ns at 125 MHz, 3,000\u00d7 margin under 150 \u00b5s), VectorBlox INT8 CNN inference (\\<1 ms 99th-percentile, sub-ms target), and the watchdog deadline at 1.0 ms enforcing bu",
+      "qwen_verdict": "SUPPORTED",
+      "qwen_rationale": "Evidence confirms 1 ms watchdog timeout and bumpless transfer mechanism.",
+      "nemo_verdict": "ERROR",
+      "nemo_rationale": "unparseable response: {\"verdict\": \"SUPPORTED\", \"evidence_chunks\": [0, 1], \"rationale\": \"The retrieved evidence explicitly supports the claim's specific assertion.\""
+    },
+    {
+      "claim_id": "c0063",
+      "claim": "Section 8.5 derives the formal composition between the two.*",
+      "qwen_verdict": "UNSUPPORTED",
+      "qwen_rationale": "No evidence found referencing Section 8.5 or its derivation of formal composition.",
+      "nemo_verdict": "SUPPORTED",
+      "nemo_rationale": "Chunks 1 and 2 explicitly support the claim's specific assertion."
+    },
+    {
+      "claim_id": "c0072",
+      "claim": "Phase II validation against SGP4/IGRF-13 ephemeris simulation (Section 9.4) will confirm the result extends across realistic flight trajectories.",
+      "qwen_verdict": "SUPPORTED",
+      "qwen_rationale": "Phase II validation uses SGP4/IGRF-13 ephemeris benchmark and HITL testing to confirm flight trajectory performance.",
+      "nemo_verdict": "ERROR",
+      "nemo_rationale": "unparseable response: {\"verdict\": \"SUPPORTED\", \"evidence_chunks\": [0, 1], \"rationale\": \"Evidence explicitly supports that the result extends across realistic flight trajectories.\""
+    },
+    {
+      "claim_id": "c0084",
+      "claim": "Business Plan delivered In progress             Section 10.3",
+      "qwen_verdict": "UNSUPPORTED",
+      "qwen_rationale": "No evidence of a business plan delivery status in the retrieved documents.",
+      "nemo_verdict": "SUPPORTED",
+      "nemo_rationale": "The retrieved evidence explicitly supports the claim's specific assertion."
+    },
+    {
+      "claim_id": "c0093",
+      "claim": "Three Phase I markers carry a deferred status (Section 8.6 KPP scorecard): on-board AI inference latency, on-board PID classical latency, and total payload power.",
+      "qwen_verdict": "SUPPORTED",
+      "qwen_rationale": "Chunks 1, 4, and 5 directly support the deferred status of on-board AI inference latency, on-board PID classical latency, and total payload power markers.",
+      "nemo_verdict": "ERROR",
+      "nemo_rationale": "unparseable response: {\"verdict\": \"SUPPORTED\", \"evidence_chunks\": [0, 1], \"rationale\": \"The claim is supported by the retrieved evidence as it shows that three Phase I markers have a deferred status.\""
+    }
+  ]
+}
