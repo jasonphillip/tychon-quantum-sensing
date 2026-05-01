@@ -1,0 +1,13 @@
+Embedding: Qwen3-Embedding-4B (Spark 2)
+Dimensions: 2560
+Chunk size: 6000 chars
+
+Files to process: 101
+
+==================================================
+Processing complete for 'tychon-docs'
+  Files: 1 processed, 100 unchanged, 0 failed (of 101)
+  Chunks: 23 new (0 dupes, 0 noise filtered, 0 embed-dropped)
+  Total in DB: 492
+  Time: 6.8s
+  DB: ~/.corpus/tychon-docs/processed/chunks.db
