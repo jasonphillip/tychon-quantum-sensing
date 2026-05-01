@@ -1,0 +1,17 @@
+Embedding: Qwen3-Embedding-4B (Spark 2)
+Dimensions: 2560
+Chunk size: 6000 chars
+
+Files to process: 33
+  [10/33] refs/tychon_repo3_scaffold_spec_2026-04-01.md: 3 chunks (0 dupes, 2 noise, 0 dropped) — 10.8s elapsed
+  [20/33] sessions/session_summary_2026-04-01_final.md: 1 chunks (0 dupes, 0 noise, 0 dropped) — 23.0s elapsed
+  [30/33] sessions/tychon_recent_advancements_2026-04-01_earlier.md: 3 chunks (0 dupes, 0 noise, 0 dropped) — 28.8s elapsed
+  [33/33] status/STATUS.md: 2 chunks (0 dupes, 0 noise, 0 dropped) — 34.4s elapsed
+
+==================================================
+Processing complete for 'tychon-docs'
+  Files: 33 processed, 0 unchanged, 0 failed (of 33)
+  Chunks: 86 new (0 dupes, 2 noise filtered, 0 embed-dropped)
+  Total in DB: 86
+  Time: 34.4s
+  DB: ~/.corpus/tychon-docs/processed/chunks.db
