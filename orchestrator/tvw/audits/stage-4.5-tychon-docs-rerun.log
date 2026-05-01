@@ -1,0 +1,28 @@
+Embedding: Qwen3-Embedding-4B (Spark 2)
+Dimensions: 2560
+Chunk size: 6000 chars
+
+Files to process: 92
+  [10/92] beelink_final_report_data/timing_analysis.md: 1 chunks (0 dupes, 0 noise, 0 dropped) — 5.3s elapsed
+
+==================================================
+Processing complete for 'tychon-docs'
+  Files: 13 processed, 79 unchanged, 0 failed (of 92)
+  Chunks: 12 new (7 dupes, 0 noise filtered, 0 embed-dropped)
+  Total in DB: 436
+  Time: 6.2s
+  DB: ~/.corpus/tychon-docs/processed/chunks.db
+Embedding: Qwen3-Embedding-4B (Spark 2)
+Dimensions: 2560
+Chunk size: 6000 chars
+
+Files to process: 101
+  [20/101] beelink_libero_reports/MPFS_ICICLE_KIT_BASE_DESIGN_timing_violations_min_r1_s1.txt: 8 chunks (0 dupes, 0 noise, 0 dropped) — 31.3s elapsed
+
+==================================================
+Processing complete for 'tychon-docs'
+  Files: 9 processed, 92 unchanged, 0 failed (of 101)
+  Chunks: 62 new (0 dupes, 0 noise filtered, 0 embed-dropped)
+  Total in DB: 498
+  Time: 31.8s
+  DB: ~/.corpus/tychon-docs/processed/chunks.db
