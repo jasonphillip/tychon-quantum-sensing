@@ -1,0 +1,47 @@
+{
+  "stage": 2,
+  "query_spot_checks": [
+    {
+      "query": "200 MHz clock domain",
+      "hits": 5,
+      "top_source": "polarfire-hybrid-control/libero/reports/2026-04-29-axi-target-experiment/MPFS_ICICLE_KIT_BASE_DESIGN.patched.v",
+      "top_score": 0.595,
+      "top5_sources": [
+        "polarfire-hybrid-control/libero/reports/2026-04-29-axi-target-experiment/MPFS_ICICLE_KIT_BASE_DESIGN.patched.v",
+        "polarfire-hybrid-control/hls/include/rta_config.hpp",
+        "polarfire-hybrid-control/hls/src/safety_clamps.cpp",
+        "polarfire-hybrid-control/libero/reports/2026-04-29-axi-target-experiment/MPFS_ICICLE_KIT_BASE_DESIGN.patched.v",
+        "polarfire-hybrid-control/libero/reports/2026-04-29-axi-target-experiment/MPFS_ICICLE_KIT_BASE_DESIGN.patched.v"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "query": "PID controller integration",
+      "hits": 5,
+      "top_source": "polarfire-hybrid-control/hls/src/nv_pid.hpp",
+      "top_score": 0.85,
+      "top5_sources": [
+        "polarfire-hybrid-control/hls/src/nv_pid.hpp",
+        "polarfire-hybrid-control/hls/src/nv_pid.cpp",
+        "polarfire-hybrid-control/hls/tb/tb_bumpless.cpp",
+        "odmr-edge-ml/experiments/adev_simulation.py",
+        "polarfire-hybrid-control/libero/hdl/pid_csr_block.v"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "query": "VectorBlox model export",
+      "hits": 5,
+      "top_source": "odmr-edge-ml/src/odmr_edge_ml/validation/ops_guard.py",
+      "top_score": 0.7693376901051754,
+      "top5_sources": [
+        "odmr-edge-ml/src/odmr_edge_ml/validation/ops_guard.py",
+        "odmr-edge-ml/src/odmr_edge_ml/export/onnx_export.py",
+        "odmr-edge-ml/src/odmr_edge_ml/export/__init__.py",
+        "odmr-edge-ml/src/odmr_edge_ml/validation/__init__.py",
+        "odmr-edge-ml/src/odmr_edge_ml/validation/tflite_ops.py"
+      ],
+      "verdict": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+Embedding: Qwen3-Embedding-4B (Spark 2)
+Dimensions: 2560
+Topic: tychon-code
+Repos: polarfire-hybrid-control
+
+--- polarfire-hybrid-control ---
+  polarfire-hybrid-control: 117 tracked → 18 first-party source
+    NOTE: universal-ctags not on PATH — symbol/xref tables empty
+
+============================================================
+tychon-code build complete — 23.1s
+  Source files seen:    117
+  Source files chunked: 18
+  Files skipped (unchanged): 0
+  Files failed:        0
+  Chunks total in DB:  55
+  Symbols total in DB: 0
+  Xrefs total in DB:   0
+  Per-repo symbols:    {}
+  DB:                  ~/.corpus/tychon-code/processed/chunks.db

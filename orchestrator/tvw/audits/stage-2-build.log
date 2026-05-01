@@ -1,0 +1,27 @@
+Embedding: Qwen3-Embedding-4B (Spark 2)
+Dimensions: 2560
+Topic: tychon-code
+Repos: polarfire-hybrid-control, odmr-edge-ml, nv-sensor-sim, tychon-shared-data
+
+--- polarfire-hybrid-control ---
+  polarfire-hybrid-control: 117 tracked → 18 first-party source
+    NOTE: universal-ctags not on PATH — symbol/xref tables empty
+--- odmr-edge-ml ---
+  odmr-edge-ml: 80 tracked → 61 first-party source
+    NOTE: universal-ctags not on PATH — symbol/xref tables empty
+--- nv-sensor-sim ---
+  nv-sensor-sim: 74 tracked → 37 first-party source
+    NOTE: universal-ctags not on PATH — symbol/xref tables empty
+--- tychon-shared-data ---
+
+============================================================
+tychon-code build complete — 42.0s
+  Source files seen:    271
+  Source files chunked: 83
+  Files skipped (unchanged): 18
+  Files failed:        0
+  Chunks total in DB:  187
+  Symbols total in DB: 0
+  Xrefs total in DB:   0
+  Per-repo symbols:    {}
+  DB:                  ~/.corpus/tychon-code/processed/chunks.db
