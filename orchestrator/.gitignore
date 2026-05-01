@@ -1,0 +1,20 @@
+# corpus data lives in ~/.corpus/ — never under TVW; this is defense-in-depth
+corpus-data/
+# local model checkpoints (Stage 8) are too big to commit
+checkpoints/
+models/
+*.gguf
+*.safetensors
+*.pt
+*.ckpt
+# raw critic transcripts (may contain claim text we haven't scrubbed yet)
+tvw/audits/raw/
+# python clutter
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+# editor / OS
+.DS_Store
+.vscode/
+.idea/
