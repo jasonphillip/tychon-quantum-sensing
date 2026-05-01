@@ -1,0 +1,10 @@
+{"id": "c0001", "text": "Tychon AI demonstrates that the primary failure mode of classical", "section": "", "source_line": 20, "kind": "definitive"}
+{"id": "c0002", "text": "deviation at the half-orbit period (τ = 2,700 s) by 96.1% (25.9×", "section": "", "source_line": 30, "kind": "numerical"}
+{"id": "c0003", "text": "The complete hybrid control loop --- SmartHLS PID (II=1, \\~48 ns", "section": "", "source_line": 37, "kind": "numerical"}
+{"id": "c0004", "text": "latency, 3,000× margin over 150 µs budget) plus VectorBlox-accelerated", "section": "", "source_line": 38, "kind": "numerical"}
+{"id": "c0005", "text": "post-place-and-route timing closure (worst slack +0.728 ns on the 125", "section": "", "source_line": 41, "kind": "numerical"}
+{"id": "c0006", "text": "PID compute datapath) at \\~5.2 W FPGA + MSS subsystem power.", "section": "", "source_line": 43, "kind": "numerical"}
+{"id": "c0007", "text": "**\\#**         **Metric**     **Target**     **Achieved**   **Status**", "section": "", "source_line": 55, "kind": "definitive"}
+{"id": "c0008", "text": "2              Classical Loop \\<150 µs       \\~48 ns (II=1, PASS", "section": "", "source_line": 60, "kind": "numerical"}
+{"id": "c0009", "text": "Latency                       125 MHz)", "section": "", "source_line": 61, "kind": "numerical"}
+{"id": "c0010", "text": "3              AI Inference   \\<1 ms         Timing closure PASS\\*", "section": "", "source_line": 63, "kind": "numerical"}
