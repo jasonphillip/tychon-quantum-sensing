@@ -1,0 +1,145 @@
+{
+  "stage": 1.5,
+  "spot_checks": [
+    {
+      "corpus": "tychon-docs",
+      "query": "system prompt for SBIR FastTrack",
+      "expected_prefixes": [
+        "web_export/sbir-fasttrack/"
+      ],
+      "top_hit": "web_export/sbir-fasttrack/docs/gemini-deep-think-combined-2026-04-01.md",
+      "top3_sources": [
+        "web_export/sbir-fasttrack/docs/gemini-deep-think-combined-2026-04-01.md",
+        "web_export/sbir-fasttrack/_project.md",
+        "web_export/sbir-fasttrack/docs/gemini-deep-think-combined-2026-04-01.md"
+      ],
+      "results": [
+        {
+          "source": "web_export/sbir-fasttrack/docs/gemini-deep-think-combined-2026-04-01.md",
+          "score": 0.595
+        },
+        {
+          "source": "web_export/sbir-fasttrack/_project.md",
+          "score": 0.48
+        },
+        {
+          "source": "web_export/sbir-fasttrack/docs/gemini-deep-think-combined-2026-04-01.md",
+          "score": 0.333
+        }
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "corpus": "tychon-docs",
+      "query": "Tychon project overview",
+      "expected_prefixes": [
+        "web_export/sbir-fasttrack/"
+      ],
+      "top_hit": "status/STATUS.md",
+      "top3_sources": [
+        "status/STATUS.md",
+        "web_export/sbir-fasttrack/docs/status.md",
+        "sessions/archive_bundle_README_2026-04-30.md"
+      ],
+      "results": [
+        {
+          "source": "status/STATUS.md",
+          "score": 0.595
+        },
+        {
+          "source": "web_export/sbir-fasttrack/docs/status.md",
+          "score": 0.553
+        },
+        {
+          "source": "sessions/archive_bundle_README_2026-04-30.md",
+          "score": 0.439
+        }
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "corpus": "tychon-claude-history",
+      "query": "Setting up repo 3 on spark1",
+      "expected_prefixes": [
+        "web_export/sbir-fasttrack/conversations/"
+      ],
+      "top_hit": "web_export/sbir-fasttrack/conversations/c55925b8-be29-4e0d-9efe-6c26ce861126.md",
+      "top3_sources": [
+        "web_export/sbir-fasttrack/conversations/c55925b8-be29-4e0d-9efe-6c26ce861126.md",
+        "web_export/sbir-fasttrack/conversations/c55925b8-be29-4e0d-9efe-6c26ce861126.md",
+        "web_export/sbir-fasttrack/conversations/c55925b8-be29-4e0d-9efe-6c26ce861126.md"
+      ],
+      "results": [
+        {
+          "source": "web_export/sbir-fasttrack/conversations/c55925b8-be29-4e0d-9efe-6c26ce861126.md",
+          "score": 1.0
+        },
+        {
+          "source": "web_export/sbir-fasttrack/conversations/c55925b8-be29-4e0d-9efe-6c26ce861126.md",
+          "score": 1.0
+        },
+        {
+          "source": "web_export/sbir-fasttrack/conversations/c55925b8-be29-4e0d-9efe-6c26ce861126.md",
+          "score": 1.0
+        }
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "corpus": "tychon-claude-history",
+      "query": "AI-augmented engineering audits",
+      "expected_prefixes": [
+        "web_export/sbir-fasttrack/conversations/"
+      ],
+      "top_hit": "web_export/sbir-fasttrack/conversations/44de5e7c-1214-4120-9da0-e2e0a3e35d7a.md",
+      "top3_sources": [
+        "web_export/sbir-fasttrack/conversations/44de5e7c-1214-4120-9da0-e2e0a3e35d7a.md",
+        "web_export/sbir-fasttrack/conversations/44de5e7c-1214-4120-9da0-e2e0a3e35d7a.md",
+        "web_export/sbir-fasttrack/conversations/74be4508-e649-43a7-a679-ea4d185a335e.md"
+      ],
+      "results": [
+        {
+          "source": "web_export/sbir-fasttrack/conversations/44de5e7c-1214-4120-9da0-e2e0a3e35d7a.md",
+          "score": 0.9
+        },
+        {
+          "source": "web_export/sbir-fasttrack/conversations/44de5e7c-1214-4120-9da0-e2e0a3e35d7a.md",
+          "score": 0.9
+        },
+        {
+          "source": "web_export/sbir-fasttrack/conversations/74be4508-e649-43a7-a679-ea4d185a335e.md",
+          "score": 0.9
+        }
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "corpus": "tychon-claude-history",
+      "query": "scrubbing sensitive data",
+      "expected_prefixes": [
+        "web_export/sbir-fasttrack/conversations/"
+      ],
+      "top_hit": "web_export/sbir-fasttrack/conversations/e984e42d-12cc-47b6-be51-28acdd78ac2b.md",
+      "top3_sources": [
+        "web_export/sbir-fasttrack/conversations/e984e42d-12cc-47b6-be51-28acdd78ac2b.md",
+        "web_export/sbir-fasttrack/conversations/e984e42d-12cc-47b6-be51-28acdd78ac2b.md",
+        "web_export/sbir-fasttrack/conversations/e984e42d-12cc-47b6-be51-28acdd78ac2b.md"
+      ],
+      "results": [
+        {
+          "source": "web_export/sbir-fasttrack/conversations/e984e42d-12cc-47b6-be51-28acdd78ac2b.md",
+          "score": 0.95
+        },
+        {
+          "source": "web_export/sbir-fasttrack/conversations/e984e42d-12cc-47b6-be51-28acdd78ac2b.md",
+          "score": 0.9
+        },
+        {
+          "source": "web_export/sbir-fasttrack/conversations/e984e42d-12cc-47b6-be51-28acdd78ac2b.md",
+          "score": 0.9
+        }
+      ],
+      "verdict": "PASS"
+    }
+  ]
+}

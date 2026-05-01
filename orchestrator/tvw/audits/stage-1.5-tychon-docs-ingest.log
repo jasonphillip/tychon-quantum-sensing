@@ -1,0 +1,28 @@
+Matched project: 'sbir fasttrack' (uuid=019cbb1b-e706-7665-9064-5f88e0eed8d1)
+Loaded conversations.json: 72 total
+Redaction rules loaded: 10
+Output corpus: ~/.corpus/tychon-docs
+Project root:  ~/.corpus/tychon-docs/raw/web_export/sbir-fasttrack
+Tier 1: project metadata + 24 docs
+Skipping Tier 2 (--tier1-only)
+
+Log appended: ~/.corpus/tychon-docs/meta/web_export_ingest.log
+
+Invoking process_chunks.py tychon-docs …
+
+Embedding: Qwen3-Embedding-4B (Spark 2)
+Dimensions: 2560
+Chunk size: 6000 chars
+
+Files to process: 79
+  [60/79] web_export/sbir-fasttrack/docs/gemini-integration-tracker-2026-04-04.md: 4 chunks (0 dupes, 0 noise, 0 dropped) — 9.5s elapsed
+  [70/79] web_export/sbir-fasttrack/docs/tychon-capability-brief.md: 2 chunks (0 dupes, 0 noise, 0 dropped) — 24.1s elapsed
+  [79/79] web_export/sbir-fasttrack/docs/tychon-repo3-scaffold-spec.md: 4 chunks (0 dupes, 1 noise, 0 dropped) — 45.7s elapsed
+
+==================================================
+Processing complete for 'tychon-docs'
+  Files: 25 processed, 54 unchanged, 0 failed (of 79)
+  Chunks: 144 new (24 dupes, 1 noise filtered, 0 embed-dropped)
+  Total in DB: 424
+  Time: 45.7s
+  DB: ~/.corpus/tychon-docs/processed/chunks.db

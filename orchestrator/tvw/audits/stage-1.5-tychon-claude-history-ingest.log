@@ -1,0 +1,32 @@
+Matched project: 'sbir fasttrack' (uuid=019cbb1b-e706-7665-9064-5f88e0eed8d1)
+Loaded conversations.json: 72 total
+Redaction rules loaded: 10
+Output corpus: ~/.corpus/tychon-claude-history
+Project root:  ~/.corpus/tychon-claude-history/raw/web_export/sbir-fasttrack
+Tier 1: project metadata + 24 docs
+Tier 2: 37 conversations with ≥3 keyword hits
+
+Log appended: ~/.corpus/tychon-claude-history/meta/web_export_ingest.log
+
+Invoking process_chunks.py tychon-claude-history …
+
+Embedding: Qwen3-Embedding-4B (Spark 2)
+Dimensions: 2560
+Chunk size: 6000 chars
+
+Files to process: 62
+  [10/62] web_export/sbir-fasttrack/conversations/44de5e7c-1214-4120-9da0-e2e0a3e35d7a.md: 54 chunks (0 dupes, 0 noise, 0 dropped) — 24.3s elapsed
+  [20/62] web_export/sbir-fasttrack/conversations/907612e0-c3b3-41ae-9850-ea75618a6d08.md: 3 chunks (0 dupes, 0 noise, 0 dropped) — 55.0s elapsed
+  [30/62] web_export/sbir-fasttrack/conversations/b665fc49-b244-40d8-8479-9f06beb52d9f.md: 1 chunks (0 dupes, 0 noise, 0 dropped) — 126.0s elapsed
+  [40/62] web_export/sbir-fasttrack/docs/customer-memo-draft-2.md: 3 chunks (0 dupes, 0 noise, 0 dropped) — 187.1s elapsed
+  [50/62] web_export/sbir-fasttrack/docs/synthesis-synplify.md: 1 chunks (0 dupes, 0 noise, 0 dropped) — 202.8s elapsed
+  [60/62] web_export/sbir-fasttrack/docs/tychon-phase2-proposal-core.md: 4 chunks (0 dupes, 0 noise, 0 dropped) — 229.0s elapsed
+  [62/62] web_export/sbir-fasttrack/docs/tychon-repo3-scaffold-spec.md: 4 chunks (0 dupes, 1 noise, 0 dropped) — 231.6s elapsed
+
+==================================================
+Processing complete for 'tychon-claude-history'
+  Files: 62 processed, 0 unchanged, 0 failed (of 62)
+  Chunks: 939 new (4 dupes, 1 noise filtered, 0 embed-dropped)
+  Total in DB: 939
+  Time: 231.6s
+  DB: ~/.corpus/tychon-claude-history/processed/chunks.db
