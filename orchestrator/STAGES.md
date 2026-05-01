@@ -5,7 +5,7 @@ Each stage produces a working artifact and a verifiable stop-gate. The orchestra
 | # | Stage | Stop-gate | Status |
 |---|---|---|---|
 | 0 | Bootstrap | repo exists, `git status` clean, Spark 2 health green | complete (2026-05-01) |
-| 1 | tychon-docs corpus | `chunks.db >100` chunks; 3/3 known-claim spot-checks return supporting source as top-3 hit; CONTEXT.md exists | blocked (2026-05-01): 86 chunks < 100; spot-checks 3/3 PASS; CONTEXT.md exists. Recall is functionally fine — gate fails only on chunk count. Orchestrator decides: expand sources (02_foundational, 03_phase1_planning, 04_phase2_planning, 06_research_inputs adds 21 .md/.txt files) or relax count threshold. |
+| 1 | tychon-docs corpus | `chunks.db >100` chunks; 3/3 known-claim spot-checks return supporting source as top-3 hit; CONTEXT.md exists | blocked (2026-05-01, rerun): 280 chunks ✅ (>100); 3/4 spot-checks PASS but "Phase II proposal" query returns phase1_planning hit instead of phase2_planning. SQL confirms phase2_planning IS indexed (16 chunks, 4 sources) — failure is vocabulary mismatch in semantic search, not an indexing fault. Orchestrator decides: accept (3/4 PASS + reachability confirmed by SQL), reword the 4th probe, or tune ranking. |
 | 2 | tychon-code corpus | `symbols` row for `pid_step` at canonical site; nv-sensor-sim post-filter <2,000 files; cross-corpus query returns hits from both | pending |
 | 3 | NIM critic ensemble | both NIMs respond <30s; critic_loop.py CSV shows ≥1 disagreement on 5-claim run | pending |
 | 4 | audit-and-implement against report | tvw/audits/audit-001.md has ≥10 severity-tagged findings; ≥80% triaged legitimate | pending |

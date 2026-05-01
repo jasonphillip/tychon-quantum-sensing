@@ -1,0 +1,255 @@
+{
+  "corpus": "tychon-docs",
+  "stage": 1,
+  "rerun": true,
+  "chunks_total": 280,
+  "unique_sources": 54,
+  "previous_chunks_total": 86,
+  "spot_checks": [
+    {
+      "query": "200 MHz timing closure",
+      "expected": "supporting source from closure/ or report/",
+      "expected_source_prefixes": [
+        "closure/",
+        "report/"
+      ],
+      "top_hit": "report/Tychon_Phase_I_Final_Report_2026-04-30.md",
+      "top5_sources": [
+        "report/Tychon_Phase_I_Final_Report_2026-04-30.md",
+        "phase1_planning/phase1_closeout_findings_2026-04-30.md",
+        "closure/CLOSURE_DELIVERABLE.md",
+        "phase1_planning/tychon_phase1_decision_log_v1.1_2026-04-30.md",
+        "research_inputs/frontier_comparison_with_vs_without_corpus_2026-04-30.md"
+      ],
+      "results": [
+        {
+          "source": "report/Tychon_Phase_I_Final_Report_2026-04-30.md",
+          "score": 0.595,
+          "match_type": "vector",
+          "hybrid": 0.595,
+          "vec": 1.0,
+          "bm25": 0.0
+        },
+        {
+          "source": "phase1_planning/phase1_closeout_findings_2026-04-30.md",
+          "score": 0.447,
+          "match_type": "vector",
+          "hybrid": 0.447,
+          "vec": 0.752,
+          "bm25": 0.0
+        },
+        {
+          "source": "closure/CLOSURE_DELIVERABLE.md",
+          "score": 0.442,
+          "match_type": "vector",
+          "hybrid": 0.442,
+          "vec": 0.744,
+          "bm25": 0.0
+        },
+        {
+          "source": "phase1_planning/tychon_phase1_decision_log_v1.1_2026-04-30.md",
+          "score": 0.425,
+          "match_type": "vector",
+          "hybrid": 0.425,
+          "vec": 0.714,
+          "bm25": 0.0
+        },
+        {
+          "source": "research_inputs/frontier_comparison_with_vs_without_corpus_2026-04-30.md",
+          "score": 0.376,
+          "match_type": "vector",
+          "hybrid": 0.376,
+          "vec": 0.632,
+          "bm25": 0.0
+        }
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "query": "PolarFire MPFS250T",
+      "expected": "supporting source from refs/ or report/",
+      "expected_source_prefixes": [
+        "refs/",
+        "report/"
+      ],
+      "top_hit": "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+      "top5_sources": [
+        "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+        "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+        "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+        "refs/gemini-dt-repo3-architecture-reviewed_2026-03-27.md",
+        "refs/tychon_repo3_scaffold_spec_2026-04-01.md"
+      ],
+      "results": [
+        {
+          "source": "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+          "score": 0.595,
+          "match_type": "vector",
+          "hybrid": 0.595,
+          "vec": 1.0,
+          "bm25": 0.0
+        },
+        {
+          "source": "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+          "score": 0.455,
+          "match_type": "vector",
+          "hybrid": 0.455,
+          "vec": 0.765,
+          "bm25": 0.0
+        },
+        {
+          "source": "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+          "score": 0.44,
+          "match_type": "vector",
+          "hybrid": 0.44,
+          "vec": 0.739,
+          "bm25": 0.0
+        },
+        {
+          "source": "refs/gemini-dt-repo3-architecture-reviewed_2026-03-27.md",
+          "score": 0.323,
+          "match_type": "vector",
+          "hybrid": 0.323,
+          "vec": 0.542,
+          "bm25": 0.0
+        },
+        {
+          "source": "refs/tychon_repo3_scaffold_spec_2026-04-01.md",
+          "score": 0.307,
+          "match_type": "vector",
+          "hybrid": 0.307,
+          "vec": 0.516,
+          "bm25": 0.0
+        }
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "query": "VectorBlox",
+      "expected": "supporting source from refs/",
+      "expected_source_prefixes": [
+        "refs/"
+      ],
+      "top_hit": "phase1_planning/tychon_phase1_closeout_plan_v3_2026-04-27.md",
+      "top5_sources": [
+        "phase1_planning/tychon_phase1_closeout_plan_v3_2026-04-27.md",
+        "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+        "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+        "refs/gemini-dt-repo3-architecture-reviewed_2026-03-27.md",
+        "refs/gemini-dt-repo3-architecture-reviewed_2026-03-27.md"
+      ],
+      "results": [
+        {
+          "source": "phase1_planning/tychon_phase1_closeout_plan_v3_2026-04-27.md",
+          "score": 0.595,
+          "match_type": "vector",
+          "hybrid": 0.595,
+          "vec": 1.0,
+          "bm25": 0.0
+        },
+        {
+          "source": "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+          "score": 0.485,
+          "match_type": "vector",
+          "hybrid": 0.485,
+          "vec": 0.816,
+          "bm25": 0.0
+        },
+        {
+          "source": "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+          "score": 0.418,
+          "match_type": "vector",
+          "hybrid": 0.418,
+          "vec": 0.703,
+          "bm25": 0.0
+        },
+        {
+          "source": "refs/gemini-dt-repo3-architecture-reviewed_2026-03-27.md",
+          "score": 0.366,
+          "match_type": "vector",
+          "hybrid": 0.366,
+          "vec": 0.615,
+          "bm25": 0.0
+        },
+        {
+          "source": "refs/gemini-dt-repo3-architecture-reviewed_2026-03-27.md",
+          "score": 0.306,
+          "match_type": "vector",
+          "hybrid": 0.306,
+          "vec": 0.514,
+          "bm25": 0.0
+        }
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "query": "Phase II proposal",
+      "expected": "any phase2_planning/ source in top-5 (proves new subdir reachable via search)",
+      "expected_source_prefixes": [
+        "phase2_planning/"
+      ],
+      "top_hit": "phase1_planning/phase1_closeout_findings_2026-04-30.md",
+      "top5_sources": [
+        "phase1_planning/phase1_closeout_findings_2026-04-30.md",
+        "sessions/tychon_session_log_2026-04-28.md",
+        "status/STATUS.md",
+        "phase1_planning/tychon_phase1_decision_log_v1.1_2026-04-30.md",
+        "sessions/tychon_session_log_2026-04-28.md"
+      ],
+      "results": [
+        {
+          "source": "phase1_planning/phase1_closeout_findings_2026-04-30.md",
+          "score": 0.595,
+          "match_type": "vector",
+          "hybrid": 0.595,
+          "vec": 1.0,
+          "bm25": 0.0
+        },
+        {
+          "source": "sessions/tychon_session_log_2026-04-28.md",
+          "score": 0.495,
+          "match_type": "vector",
+          "hybrid": 0.495,
+          "vec": 0.831,
+          "bm25": 0.0
+        },
+        {
+          "source": "status/STATUS.md",
+          "score": 0.489,
+          "match_type": "vector",
+          "hybrid": 0.489,
+          "vec": 0.821,
+          "bm25": 0.0
+        },
+        {
+          "source": "phase1_planning/tychon_phase1_decision_log_v1.1_2026-04-30.md",
+          "score": 0.399,
+          "match_type": "vector",
+          "hybrid": 0.399,
+          "vec": 0.67,
+          "bm25": 0.0
+        },
+        {
+          "source": "sessions/tychon_session_log_2026-04-28.md",
+          "score": 0.361,
+          "match_type": "vector",
+          "hybrid": 0.361,
+          "vec": 0.607,
+          "bm25": 0.0
+        }
+      ],
+      "verdict": "FAIL"
+    }
+  ],
+  "diagnostics": {
+    "phase2_planning_indexed": true,
+    "phase2_planning_chunk_count": 16,
+    "phase2_planning_source_files": [
+      "phase2_planning/phase2_priority1_hierarchical_int8_corrected_2026-04-29.md",
+      "phase2_planning/phase2_priority2_ephemeris_sampling_corrected_2026-04-29.md",
+      "phase2_planning/tychon_phase2_proposal_core_v1_2026-04-30.md",
+      "phase2_planning/tychon_phase2_proposal_core_v2_2026-04-30.md"
+    ],
+    "note": "phase2_planning IS indexed (confirmed via SQL); query 'Phase II proposal' surfaces phase1_planning/phase1_closeout_findings_2026-04-30.md (which has section literally titled 'Phase II proposal seed') above the actual Phase II proposal core docs in phase2_planning/ due to vocabulary mismatch in semantic search, not an indexing fault."
+  }
+}
