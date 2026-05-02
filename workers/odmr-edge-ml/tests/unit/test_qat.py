@@ -9,11 +9,34 @@ from odmr_edge_ml.models.mlp import OdmrMLP
 from odmr_edge_ml.training.qat import (
     extract_clean_state_dict,
     load_clean_weights,
+    make_int8_symmetric_qconfig,
     prepare_model_qat,
 )
 
 # FX QAT is deprecated in torch 2.11 but functional; suppress noise
 warnings.filterwarnings("ignore", category=DeprecationWarning, module="torch.ao")
+
+
+def test_qconfig_weights_are_per_tensor_symmetric():
+    """Locked invariant: weights MUST be per-tensor symmetric.
+
+    PolarFire VectorBlox SDK 2.0.x rejects per-channel weights, and
+    tychon_shared_data.cascade.CascadeManifest.validate() hard-rejects
+    quantization_granularity != "per_tensor". If this test fails, the
+    cascade manifest emission in src/odmr_edge_ml/cascade/manifest_emit.py
+    will refuse to write a valid manifest.
+    """
+    qconfig = make_int8_symmetric_qconfig()
+    # Both observers go through FakeQuantize.with_args; introspect the kwargs
+    # captured on the partial (FakeQuantize doesn't expose qscheme directly
+    # until instantiated, so we instantiate and check).
+    weight_fq = qconfig.weight()
+    assert weight_fq.qscheme == torch.per_tensor_symmetric, (
+        f"Weights must be per_tensor_symmetric for VectorBlox V250 + "
+        f"CascadeManifest compatibility; got {weight_fq.qscheme}"
+    )
+    activation_fq = qconfig.activation()
+    assert activation_fq.qscheme == torch.per_tensor_symmetric
 
 
 def test_prepare_mlp_qat():

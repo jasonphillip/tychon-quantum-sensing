@@ -5,7 +5,13 @@ fuses Conv2d+ReLU and Linear+ReLU pairs and inserts FakeQuantize nodes.
 
 Symmetric INT8 quantization matches VectorBlox TFLite runtime requirements:
 - Activations: per_tensor_symmetric (zero_point = 0)
-- Weights: per_channel_symmetric (separate scale per output channel)
+- Weights: per_tensor_symmetric (single scale per tensor)
+
+Weights are per-tensor (not per-channel) because PolarFire VectorBlox SDK
+2.0.x is per-tensor-only and tychon_shared_data.cascade.CascadeManifest
+hard-rejects per-channel granularity. Earlier per-channel weights gave a
+small accuracy edge that the cascade composition (P3-11B) recovers via
+COARSE+FINE additive correction within the ±2.25 µT sector clamp.
 """
 
 from __future__ import annotations
@@ -16,7 +22,6 @@ from torch import Tensor
 from torch.ao.quantization import (
     FakeQuantize,
     MovingAverageMinMaxObserver,
-    MovingAveragePerChannelMinMaxObserver,
     QConfig,
     QConfigMapping,
 )
@@ -31,7 +36,7 @@ def make_int8_symmetric_qconfig() -> QConfig:
     -------
     QConfig
         Activations: per_tensor_symmetric INT8 [-128, 127].
-        Weights: per_channel_symmetric INT8 [-128, 127].
+        Weights: per_tensor_symmetric INT8 [-128, 127].
     """
     act_fq = FakeQuantize.with_args(
         observer=MovingAverageMinMaxObserver,
@@ -41,12 +46,11 @@ def make_int8_symmetric_qconfig() -> QConfig:
         qscheme=torch.per_tensor_symmetric,
     )
     wt_fq = FakeQuantize.with_args(
-        observer=MovingAveragePerChannelMinMaxObserver,
+        observer=MovingAverageMinMaxObserver,
         quant_min=-128,
         quant_max=127,
         dtype=torch.qint8,
-        qscheme=torch.per_channel_symmetric,
-        ch_axis=0,
+        qscheme=torch.per_tensor_symmetric,
     )
     return QConfig(activation=act_fq, weight=wt_fq)
 

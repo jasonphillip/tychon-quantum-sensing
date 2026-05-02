@@ -17,6 +17,9 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "pytest>=8.0",
+    # Cascade manifest reader/composer + orbit benchmark loader. Editable
+    # install path: pip install -e ~/projects/tychon-shared-data
+    "tychon-shared-data",
 ]
 
 [tool.setuptools.packages.find]
