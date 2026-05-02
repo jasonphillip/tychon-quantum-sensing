@@ -1,7 +1,22 @@
-.PHONY: install test smoke lint format clean lock
+.PHONY: install install-orbit orbit-wheels test smoke lint format clean lock
 
 install:
 	pip install -e ".[dev]"
+
+install-orbit:
+	pip install -e ".[orbit]"
+
+# Pre-stage manylinux2014_aarch64 wheels for air-gapped DGX Spark targets.
+# Run on a connected box, then sync wheels/orbit/ to each Spark and install
+# with: pip install --no-index --find-links wheels/orbit sgp4 ppigrf
+orbit-wheels:
+	mkdir -p wheels/orbit
+	pip download \
+		--platform manylinux2014_aarch64 \
+		--python-version 3.11 \
+		--only-binary=:all: \
+		-d wheels/orbit \
+		sgp4 ppigrf
 
 test:
 	python -m pytest tests/ -v

@@ -22,6 +22,24 @@ For GPU acceleration (CUDA-Q backend):
 pip install -e ".[gpu]"
 ```
 
+For the orbit-in-the-loop benchmark (SGP4 + IGRF-14):
+
+```bash
+make install-orbit
+```
+
+Pre-stage manylinux2014_aarch64 wheels for an air-gapped DGX Spark target:
+
+```bash
+# On a connected box:
+make orbit-wheels
+# Sync wheels/orbit/ to the Spark, then on the Spark:
+pip install --no-index --find-links wheels/orbit sgp4 ppigrf
+```
+
+The benchmark itself is configured in `configs/orbit_benchmark_v1.yaml` (TLEs
+baked inline; see the file header for ADEV statistical-power notes).
+
 ## Quick Start
 
 ```bash

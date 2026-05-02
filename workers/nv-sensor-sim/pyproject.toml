@@ -23,6 +23,10 @@ dependencies = [
 gpu = [
     "cudaq",
 ]
+orbit = [
+    "sgp4>=2.23",
+    "ppigrf>=2.0",
+]
 dev = [
     "pytest>=7.0",
     "ruff>=0.1",
