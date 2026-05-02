@@ -23,7 +23,7 @@ from pathlib import Path
 import numpy as np
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import DataLoader, Dataset, WeightedRandomSampler
 
 warnings.filterwarnings("ignore", category=DeprecationWarning, module="torch.ao")
 
@@ -185,6 +185,7 @@ def train_stage(
     seed: int = 42,
     use_compile: bool | None = None,
     num_workers: int = 4,
+    train_sample_weights: np.ndarray | None = None,
 ) -> StageResult:
     """Train one cascade stage and export INT8 artifacts.
 
@@ -212,10 +213,38 @@ def train_stage(
 
     train_ds = _ResidualTensorDataset(train_x, train_y)
     val_ds = _ResidualTensorDataset(val_x, val_y)
-    train_loader = DataLoader(
-        train_ds, batch_size=batch_size, shuffle=True, collate_fn=_collate,
-        pin_memory=True, num_workers=num_workers,
-    )
+
+    if train_sample_weights is not None:
+        if train_sample_weights.shape != (len(train_x),):
+            raise ValueError(
+                f"train_sample_weights shape {train_sample_weights.shape} "
+                f"!= ({len(train_x)},)"
+            )
+        sampler = WeightedRandomSampler(
+            weights=torch.from_numpy(
+                train_sample_weights.astype(np.float64),
+            ),
+            num_samples=len(train_x),
+            replacement=True,
+        )
+        log.info(
+            "[stage=%s] using WeightedRandomSampler (weights mean=%.4f, "
+            "min=%.4f, max=%.4f, max/median=%.2f)",
+            name,
+            float(train_sample_weights.mean()),
+            float(train_sample_weights.min()),
+            float(train_sample_weights.max()),
+            float(train_sample_weights.max() / max(np.median(train_sample_weights), 1e-12)),
+        )
+        train_loader = DataLoader(
+            train_ds, batch_size=batch_size, sampler=sampler,
+            collate_fn=_collate, pin_memory=True, num_workers=num_workers,
+        )
+    else:
+        train_loader = DataLoader(
+            train_ds, batch_size=batch_size, shuffle=True, collate_fn=_collate,
+            pin_memory=True, num_workers=num_workers,
+        )
     val_loader = DataLoader(
         val_ds, batch_size=batch_size, shuffle=False, collate_fn=_collate,
         pin_memory=True, num_workers=num_workers,

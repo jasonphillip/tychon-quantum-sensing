@@ -50,6 +50,10 @@ from odmr_edge_ml.evaluation.residual_dataset import (
     _normalize_symmetric,
     generate_pid_labels,
 )
+from odmr_edge_ml.sampling import (
+    ephemeris_theta_weights,
+    inverse_theta_weights,
+)
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger(__name__)
@@ -131,6 +135,15 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--seed", type=int, default=42,
     )
+    parser.add_argument(
+        "--sampler", choices=("none", "inverse_theta", "ephemeris"),
+        default="none",
+        help=("Bias-aware importance sampler (P3-12). 'none' uses uniform "
+              "shuffle (default, reproduces commit-3 baseline). "
+              "'inverse_theta' reweights to make θ marginal uniform on "
+              "[0, π]. 'ephemeris' reweights to match the v1 LEO orbit "
+              "benchmark θ-density."),
+    )
     args = parser.parse_args(argv)
 
     # ----- Device / GPU verification ---------------------------------------
@@ -162,6 +175,8 @@ def main(argv: list[str] | None = None) -> int:
     with h5py.File(data_dir / "dataset.h5", "r") as f:
         train_spectra_norm = _normalize_symmetric(f["train"]["spectra"][:])
         val_spectra_norm = _normalize_symmetric(f["val"]["spectra"][:])
+        # Full B-vector labels (tesla); only used by the bias-aware samplers.
+        train_label_vecs = f["train"]["labels"][:].astype(np.float64)
 
     train_lock_bins = npz["train_lock_bins"]
     val_lock_bins = npz["val_lock_bins"]
@@ -169,6 +184,30 @@ def main(argv: list[str] | None = None) -> int:
     val_b_true = npz["val_b_mag_uT"].astype(np.float32)
     train_b_pid = npz["train_b_pid_uT"].astype(np.float32)
     val_b_pid = npz["val_b_pid_uT"].astype(np.float32)
+
+    # ----- Bias-aware sampler weights (P3-12) -----------------------------
+    train_sample_weights: np.ndarray | None
+    if args.sampler == "none":
+        train_sample_weights = None
+    elif args.sampler == "inverse_theta":
+        train_sample_weights = inverse_theta_weights(train_label_vecs)
+        log.info(
+            "sampler=inverse_theta: weights mean=%.4f min=%.4f max=%.4f",
+            float(train_sample_weights.mean()),
+            float(train_sample_weights.min()),
+            float(train_sample_weights.max()),
+        )
+    elif args.sampler == "ephemeris":
+        log.info("sampler=ephemeris: loading orbit benchmark v1...")
+        train_sample_weights = ephemeris_theta_weights(train_label_vecs)
+        log.info(
+            "sampler=ephemeris: weights mean=%.4f min=%.4f max=%.4f",
+            float(train_sample_weights.mean()),
+            float(train_sample_weights.min()),
+            float(train_sample_weights.max()),
+        )
+    else:  # pragma: no cover — argparse already gates this
+        raise ValueError(f"unknown sampler: {args.sampler!r}")
 
     # COARSE labels: same recipe as the monolithic v2 production model.
     coarse_train_labels = np.clip(
@@ -197,6 +236,7 @@ def main(argv: list[str] | None = None) -> int:
         batch_size=batch_size,
         seed=args.seed,
         num_workers=num_workers,
+        train_sample_weights=train_sample_weights,
     )
     coarse_tflite = output_dir / "coarse_int8.tflite"
     coarse_onnx = output_dir / "coarse.onnx"
@@ -249,6 +289,7 @@ def main(argv: list[str] | None = None) -> int:
         batch_size=batch_size,
         seed=args.seed + 1,  # different init from COARSE
         num_workers=num_workers,
+        train_sample_weights=train_sample_weights,
     )
     fine_tflite = output_dir / "fine_int8.tflite"
     fine_onnx = output_dir / "fine.onnx"
@@ -284,7 +325,8 @@ def main(argv: list[str] | None = None) -> int:
             f"P3-11B Path B cascade. dataset={data_dir.name} "
             f"epochs={epochs} clamp_uT={CLAMP_UT} "
             f"coarse_sigma={coarse.learned_sigma:.4f} "
-            f"fine_sigma={fine.learned_sigma:.4f}"
+            f"fine_sigma={fine.learned_sigma:.4f} "
+            f"sampler={args.sampler}"
         ),
     )
     log.info("manifest: %s", manifest_path)
