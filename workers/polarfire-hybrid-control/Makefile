@@ -7,7 +7,7 @@
 # - HLS testbench shim (`hls-test-local`) runs anywhere with g++.
 # - Libero synthesis is host-side; remote runs use `beelink-verify`.
 
-.PHONY: hls-test hls-test-local clean help \
+.PHONY: hls-test hls-test-local hls-test-cascade-local clean help \
         audit-reports audit-reports-strict audit-citations \
         verify-local verify-strict beelink-verify
 
@@ -35,6 +35,19 @@ hls-test-local:
 		-o .build/tb_bumpless_local
 	.build/tb_bumpless_local
 
+# Compile and run the cascade composition + safety-pipeline-survival
+# testbench. Same shim path as hls-test-local. No SmartHLS required.
+# Reads fixture from hls/tb/stimulus/cascade_synthetic_v1/ — must be invoked
+# from the repo root (which is what `make` does by default).
+hls-test-cascade-local:
+	@mkdir -p .build
+	g++ -std=c++17 -O0 -g -Wall -Wno-unknown-pragmas \
+		-Ihls/include -Ihls/src \
+		hls/tb/tb_cascade.cpp \
+		hls/src/nv_pid.cpp hls/src/safety_clamps.cpp hls/src/watchdog.cpp \
+		-o .build/tb_cascade_local
+	.build/tb_cascade_local
+
 clean:
 	rm -rf .build
 	-cd hls && shls clean
@@ -52,9 +65,9 @@ audit-reports-strict:
 audit-citations:
 	python3 tools/audit_corpus_citations.py docs/ libero/ tools/ Makefile README.md
 
-verify-local: hls-test-local audit-reports audit-citations
+verify-local: hls-test-local hls-test-cascade-local audit-reports audit-citations
 
-verify-strict: hls-test-local audit-reports-strict audit-citations
+verify-strict: hls-test-local hls-test-cascade-local audit-reports-strict audit-citations
 
 # ---------------------------------------------------------------------------
 # Remote (Beelink) synthesis closure
@@ -68,7 +81,8 @@ beelink-verify:
 help:
 	@echo "PolarFire Hybrid Control — Make Targets"
 	@echo "  hls-test            Run SmartHLS C++ testbench (needs shls)"
-	@echo "  hls-test-local      Run testbench via ap_fixpt shim (no shls)"
+	@echo "  hls-test-local      Run bumpless testbench via ap_fixpt shim (no shls)"
+	@echo "  hls-test-cascade-local  Run cascade testbench (Phase II P3-11B)"
 	@echo "  audit-reports       Audit Libero report bundles vs corpus"
 	@echo "  audit-reports-strict  Same, fail-fast on critical pruning"
 	@echo "  audit-citations     Verify corpus citations resolve"
