@@ -22,8 +22,6 @@ from pathlib import Path
 
 import numpy as np
 
-from odmr_edge_ml.models.fcnn_v2 import OdmrFCNNv2
-
 
 def _gaussian_anchor(
     lock_bins: np.ndarray, input_dim: int, sigma: float,
@@ -85,7 +83,9 @@ def _run_tflite_int8(
 
 def compute_fine_labels(
     coarse_tflite_path: Path,
-    coarse_model: OdmrFCNNv2,
+    *,
+    coarse_learned_sigma: float,
+    input_dim: int,
     spectra_norm: np.ndarray,
     lock_bins: np.ndarray,
     b_true_uT: np.ndarray,
@@ -98,16 +98,16 @@ def compute_fine_labels(
     ----------
     coarse_tflite_path
         Path to the deployed-INT8 COARSE TFLite file.
-    coarse_model
-        The float OdmrFCNNv2 the COARSE TFLite was exported from. Used
-        only to read the learned sigma for the host-side anchor — its
-        weights are NOT invoked.
+    coarse_learned_sigma
+        The σ value the COARSE OdmrFCNNv2 settled on during training.
+        Anchor is recomputed host-side with this σ — mirrors the
+        deployment-time host pipeline.
+    input_dim
+        Number of frequency bins per spectrum (default in this repo: 100).
     spectra_norm
-        ``(N, input_dim)`` symmetric-normalized spectra (matches what
-        ``ResidualDatasetV2`` packs as the first 100 columns of its
-        101-dim input).
+        ``(N, input_dim)`` symmetric-normalized spectra.
     lock_bins
-        ``(N,)`` lock bin indices (the +1 column in ResidualDatasetV2).
+        ``(N,)`` lock bin indices.
     b_true_uT, b_pid_uT
         ``(N,)`` ground truth and PID baseline magnitudes in µT.
     clamp_uT
@@ -119,9 +119,7 @@ def compute_fine_labels(
     np.ndarray
         ``(N,)`` float32 FINE labels in µT, clipped to ±``clamp_uT``.
     """
-    sigma = float(coarse_model.sigma.detach().cpu().item())
-    input_dim = int(coarse_model.input_dim)
-    anchors = _gaussian_anchor(lock_bins, input_dim, sigma)
+    anchors = _gaussian_anchor(lock_bins, input_dim, coarse_learned_sigma)
     coarse_pred_uT = _run_tflite_int8(coarse_tflite_path, spectra_norm, anchors)
     raw = b_true_uT - b_pid_uT - coarse_pred_uT
     return np.clip(raw, -clamp_uT, clamp_uT).astype(np.float32)

@@ -18,12 +18,20 @@ Public surface:
 from odmr_edge_ml.cascade.fine_labels import compute_fine_labels
 from odmr_edge_ml.cascade.manifest_emit import emit_cascade_manifest
 from odmr_edge_ml.cascade.quant_gap import measure_quantization_gap
+from odmr_edge_ml.cascade.runners import (
+    make_float_runner,
+    make_int8_runner,
+    quantize_input,
+)
 from odmr_edge_ml.cascade.train_stage import StageResult, train_stage
 
 __all__ = [
     "StageResult",
     "compute_fine_labels",
     "emit_cascade_manifest",
+    "make_float_runner",
+    "make_int8_runner",
     "measure_quantization_gap",
+    "quantize_input",
     "train_stage",
 ]
