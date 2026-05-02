@@ -28,6 +28,7 @@ from torch.utils.data import DataLoader, Dataset
 
 warnings.filterwarnings("ignore", category=DeprecationWarning, module="torch.ao")
 
+from odmr_edge_ml.cascade.train_stage import train_stage
 from odmr_edge_ml.evaluation.residual_dataset import (
     ResidualDataset,
     _normalize_symmetric,
@@ -409,161 +410,88 @@ def main() -> None:
         pid_mae_val, pid_mae_val_clipped,
     )
 
-    # -- Datasets --
-    train_ds = ResidualDatasetV2(DATA_DIR, "train")
-    val_ds = ResidualDatasetV2(DATA_DIR, "val")
+    # -- Load PID labels + raw spectra into per-split arrays ---------------
+    npz = np.load(DATA_DIR / "pid_residuals.npz")
+    with h5py.File(DATA_DIR / "dataset.h5", "r") as f:
+        train_spectra_norm = _normalize_symmetric(f["train"]["spectra"][:])
+        val_spectra_norm = _normalize_symmetric(f["val"]["spectra"][:])
+
+    train_lock_bins = npz["train_lock_bins"]
+    val_lock_bins = npz["val_lock_bins"]
+    train_labels = np.clip(
+        npz["train_delta_b_uT"], -CLAMP_UT, CLAMP_UT,
+    ).astype(np.float32)
+    val_labels = np.clip(
+        npz["val_delta_b_uT"], -CLAMP_UT, CLAMP_UT,
+    ).astype(np.float32)
+
     log.info(
-        "Train: %d, Val: %d, input dim: %d",
-        len(train_ds), len(val_ds), train_ds.spectra.shape[1],
+        "Train: %d, Val: %d, input dim: 101 (spectrum 100 + lock_bin 1)",
+        len(train_spectra_norm), len(val_spectra_norm),
     )
 
-    train_loader = DataLoader(
-        train_ds, batch_size=64, shuffle=True, collate_fn=collate_residual,
-        pin_memory=True, num_workers=4,
+    # -- Train via canonical cascade train_stage() helper ------------------
+    # When VARIANT_SUFFIX is set, exports go under a variant subdir so
+    # multiple v2 lineages can coexist.
+    export_subdir = (
+        ARTIFACT_DIR / "checkpoints" / f"{DATASET_NAME}_export"
+        if VARIANT_SUFFIX else ARTIFACT_DIR
     )
-    val_loader = DataLoader(
-        val_ds, batch_size=64, shuffle=False, collate_fn=collate_residual,
-        pin_memory=True, num_workers=4,
+    use_compile = device.type == "cuda" and bool(
+        int(os.environ.get("V2_USE_COMPILE", "1"))
     )
-
-    # -- Model --
-    model = OdmrFCNNv2(input_dim=100, output_dim=1)
-    n_params = sum(p.numel() for p in model.parameters())
-    log.info("OdmrFCNNv2: %d params (sigma init=%.2f)", n_params, model.sigma.item())
-
-    # Ops guard on the equivalent export model
-    export_check = OdmrFCNN(input_dim=100, output_dim=1, in_channels=2)
-    report = check_model_ops(export_check, input_shape=(1, 200))
-    log.info("Ops guard (export model): compatible=%s", report.is_compatible)
-    if report.disallowed:
-        log.error("DISALLOWED ops: %s", report.disallowed)
-        sys.exit(1)
-    del export_check
-
-    init_weights_kaiming_he(model)
-
-    # -- QAT --
-    log.info("Preparing QAT (symmetric INT8)")
-    qat_model = prepare_model_qat(model, example_input=torch.randn(1, 101))
-
-    # -- σ-gradient instrumentation (Phase B B-2) --
-    # Hook on the σ Parameter to capture per-backward grad norms. Hook fires
-    # during backward, before optimizer.step() runs. CSV row per backward.
-    sigma_param = None
-    for n, p in qat_model.named_parameters():
-        if n.endswith("sigma"):
-            sigma_param = p
-            break
-    sigma_traj: list[tuple[int, float, float]] = []  # (step, sigma_value, grad_norm)
-    sigma_step = [0]
-    if sigma_param is not None:
-        def _sigma_hook(grad: torch.Tensor) -> torch.Tensor:
-            sigma_traj.append((
-                sigma_step[0],
-                float(sigma_param.item()),
-                float(grad.detach().norm().item()),
-            ))
-            sigma_step[0] += 1
-            return grad
-        sigma_param.register_hook(_sigma_hook)
-        log.info("σ-grad hook registered on parameter '%s' (init=%.4f)",
-                 "sigma", sigma_param.item())
-    else:
-        log.warning("σ parameter not found in qat_model — instrumentation skipped")
-
-    # -- GPU placement + optional torch.compile --
-    qat_model = qat_model.to(device)
-    use_compile = device.type == "cuda" and bool(int(os.environ.get("V2_USE_COMPILE", "1")))
-    if use_compile:
-        try:
-            qat_model = torch.compile(qat_model)
-            log.info("torch.compile enabled on QAT model")
-        except Exception as exc:
-            log.warning("torch.compile failed (%s) — proceeding without", exc)
-
-    # -- Train --
-    config = TrainConfig(
-        lr=1e-3, weight_decay=1e-3, epochs=100, T_max=100, eta_min=1e-5,
-        batch_size=64, val_every=10, log_every=10, alpha=0.7,
-        huber_delta=10.0, seed=42,
-        checkpoint_dir=str(ARTIFACT_DIR / "checkpoints"),
+    stage = train_stage(
+        name="model",
+        train_spectra_norm=train_spectra_norm,
+        train_lock_bins=train_lock_bins,
+        train_labels_uT=train_labels,
+        val_spectra_norm=val_spectra_norm,
+        val_lock_bins=val_lock_bins,
+        val_labels_uT=val_labels,
+        output_dir=export_subdir,
+        device=device,
+        input_dim=100,
+        epochs=int(os.environ.get("V2_EPOCHS", "100")),
+        batch_size=64,
+        huber_delta=10.0,
+        seed=42,
+        use_compile=use_compile,
     )
-    criterion = ScalarHuberLoss(delta=10.0)
-    # bf16 autocast wraps the entire train() call. With bf16 (vs fp16) no
-    # GradScaler is needed — bf16 has fp32-equivalent dynamic range, AdamW
-    # maintains fp32 master weights, so backward+optimizer.step() inside the
-    # autocast region remain numerically correct.
-    autocast_enabled = device.type == "cuda"
-    with torch.autocast(
-        device_type=device.type, dtype=torch.bfloat16, enabled=autocast_enabled,
-    ):
-        results = train(
-            qat_model, train_loader, val_loader, config, device,
-            criterion=criterion, val_fn=validate_scalar,
-        )
-
-    log.info("Final train loss: %.6f", results["final_train_loss"])
-    log.info("Training time: %.1fs", results["training_time_s"])
-    v2_metrics = results["final_val_metrics"]
+    log.info("Training time: %.1fs", stage.training_time_s)
+    v2_metrics = stage.val_metrics
     if v2_metrics:
         log.info(
             "v2 val MAE: %.4f µT, RMSE: %.4f µT",
             v2_metrics["mae_uT"], v2_metrics.get("rmse_uT", 0),
         )
 
-    # -- Write σ trajectory CSV --
-    sigma_csv_path = ARTIFACT_DIR / "checkpoints" / "sigma_trajectory.csv"
-    sigma_csv_path.parent.mkdir(parents=True, exist_ok=True)
-    with sigma_csv_path.open("w") as f:
-        f.write("step,sigma,grad_norm\n")
-        for step, sval, gn in sigma_traj:
-            f.write(f"{step},{sval:.10f},{gn:.10g}\n")
-    log.info("σ trajectory: %d rows written to %s", len(sigma_traj), sigma_csv_path)
-
+    # σ trajectory stats — train_stage already wrote the CSV
+    sigma_traj = stage.sigma_trajectory
     if sigma_traj:
         sigma_init = sigma_traj[0][1]
         sigma_final = sigma_traj[-1][1]
-        sigma_delta_pct = abs(sigma_final - sigma_init) / max(abs(sigma_init), 1e-12) * 100.0
+        sigma_delta_pct = (
+            abs(sigma_final - sigma_init) / max(abs(sigma_init), 1e-12) * 100.0
+        )
         gnorms = np.array([row[2] for row in sigma_traj])
-        log.info("σ init=%.6f  final=%.6f  Δ=%.2f%%", sigma_init, sigma_final, sigma_delta_pct)
+        log.info("σ init=%.6f  final=%.6f  Δ=%.2f%%",
+                 sigma_init, sigma_final, sigma_delta_pct)
         log.info("σ.grad norm: median=%.3e  mean=%.3e  max=%.3e  zero_frac=%.3f",
-                 float(np.median(gnorms)), float(gnorms.mean()), float(gnorms.max()),
-                 float((gnorms < 1e-8).mean()))
+                 float(np.median(gnorms)), float(gnorms.mean()),
+                 float(gnorms.max()), float((gnorms < 1e-8).mean()))
 
-    # -- Rename checkpoint for variant if a suffix is set --
-    ckpt_default = ARTIFACT_DIR / "checkpoints" / "best_model.pt"
-    ckpt_renamed = ARTIFACT_DIR / "checkpoints" / f"best_model{VARIANT_SUFFIX}.pt"
+    # -- Rename checkpoint for variant if a suffix is set ------------------
+    ckpt_default = export_subdir / "checkpoints" / "best_model.pt"
+    ckpt_renamed = export_subdir / "checkpoints" / f"best_model{VARIANT_SUFFIX}.pt"
     if VARIANT_SUFFIX and ckpt_default.exists():
         shutil.copy2(ckpt_default, ckpt_renamed)
         log.info("Checkpoint also saved as: %s", ckpt_renamed)
 
-    # -- Extract learned sigma & build clean export model --
-    clean_sd = extract_clean_state_dict(qat_model)
-    learned_sigma = clean_sd["sigma"].item()
-    log.info("Learned sigma: %.4f (init was 1.5)", learned_sigma)
-
-    clean = OdmrFCNN(input_dim=100, output_dim=1, in_channels=2)
-    export_sd = {k: v for k, v in clean_sd.items() if k in clean.state_dict()}
-    clean.load_state_dict(export_sd, strict=True)
-    clean.eval()
-
-    # -- Export ONNX + TFLite INT8 --
-    # When VARIANT_SUFFIX is set, exports go under a variant subdir
-    # so multiple v2 lineages can coexist.
-    export_subdir = ARTIFACT_DIR / "checkpoints" / f"{DATASET_NAME}_export" \
-        if VARIANT_SUFFIX else ARTIFACT_DIR
-    export_subdir.mkdir(parents=True, exist_ok=True)
-
-    onnx_path = export_subdir / "model.onnx"
-    export_onnx(clean, onnx_path, input_dim=200)
-
-    tflite_path = export_subdir / "model_int8.tflite"
-    # Calibration data uses learned sigma for anchor construction
-    cal_ds = ResidualDataset(DATA_DIR, "train", sigma=learned_sigma)
-    calibration = cal_ds.spectra.numpy()[:1000]
-    convert_fcnn_to_tflite_int8(clean, calibration, tflite_path)
-
-    # Deployment metadata
+    # -- Deployment metadata (consumed by polarfire-hybrid-control) --------
+    learned_sigma = stage.learned_sigma
+    onnx_path = stage.onnx_path
+    tflite_path = stage.tflite_path
+    clean = stage.clean_model
     np.savez(
         export_subdir / "deployment_metadata.npz",
         learned_sigma=np.float64(learned_sigma),
@@ -573,7 +501,7 @@ def main() -> None:
         dataset_name=DATASET_NAME,
     )
 
-    # Copy to exports (suffix in filename so multiple variants coexist)
+    # -- Copy to exports/ with variant-aware filenames ---------------------
     try:
         EXPORT_DIR.mkdir(parents=True, exist_ok=True)
         exp_tflite = EXPORT_DIR / f"fcnn_v2_residual{VARIANT_SUFFIX}_int8.tflite"
