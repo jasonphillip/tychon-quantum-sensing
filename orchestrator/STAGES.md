@@ -1,6 +1,8 @@
 # TVW Stage Roadmap
 
-Each stage produces a working artifact and a verifiable stop-gate. The orchestrator (separate Claude session in `~/projects/skills/`) checks the stop-gate before advancing.
+Each stage produces a working artifact and a verifiable stop-gate.
+
+> **Note (2026-05-03):** TVW was refactored from "Verification Workbench" to "Orchestration Workbench." The audit-pipeline stages (1–9) below are still tracked, but they are now **one capability among several**, not the sole purpose. TVW also drives the May 1 fix list, edits the SBIR shared folder directly, runs web-enabled corpus acquisition, and dispatches committable changes to the four implementation repos. Stages 5–9 (heavyweight reviewer, multi-agent chatbot, txt2kg, fine-tune, publish-repo) remain **optional** — pursue them if their stop-gate is the right next step, otherwise prioritize fix-list orchestration.
 
 | # | Stage | Stop-gate | Status |
 |---|---|---|---|
@@ -21,3 +23,24 @@ Each stage produces a working artifact and a verifiable stop-gate. The orchestra
 | 9 | publish-repo Dist A scrub | zero matches for `FX255-PCS02-0044` + sponsor names; metadata stripped | pending |
 
 Natural quitting points: after Stage 1 (searchable docs), Stage 4 (audited punch list), Stage 6 (chat workbench), or Stage 8 (Tychon-owned model).
+
+## Active driver: May 1, 2026 Document Fix List
+
+Source of truth: `tvw/source/sbir/tychon-nv-sim-repos/May_1_2026_Document_Fix_List.md`. Per-fix status: `tvw/source/sbir/tychon-nv-sim-repos/fix-list-status.csv`. Items split by where the work belongs (post-2026-05-03 refactor):
+
+**TVW does directly:**
+- Editorial passes against the report (`Tychon_Phase_I_Final_Report_v3.1_*.md`) and capability brief (`Tychon_Capability_Brief_*.docx` ↔ `.md` round-trip).
+- §5.1 / §5.2 / §5.3 / §10.2 prose drafts — pull citations from `tychon-docs`, ground architecture claims via `tychon-code-search`.
+- Figures 2–3 regen, Q-CTRL/MIT-LL inline citations, KPP scorecard editorial.
+- Appendix C citation verification (DOI / page / volume / Microchip-portal lookups) via `WebFetch` / firecrawl / `acquire-corpus`.
+- §10.3 BoM analysis (component pricing via distributor sites — Digi-Key / Mouser).
+- Direct edits to STATUS.md, INDEX.md, fix-list-status.csv, the DLOG, and audit mirror.
+
+**TVW dispatches to other sessions:**
+- Items 11a / 11b (Path A/B clamp authority), 12 (bias-aware augmentation), 13 (orbit-in-the-loop benchmark) — heavy ML on the dual DGX Sparks. TVW prepares + monitors; the long-running compute lives on spark1/spark2 background runners (`nohup` + pidfile). Note: SGP4 (`sgp4`) and IGRF-13 (`ppigrf`) pip packages must be staged onto Spark wheels before use.
+- Repo commits — TVW edits files in the implementation repos but does not commit. Each repo's own Claude session owns the commit step.
+
+**Stays on the user (not Claude-doable):**
+- §10.4 Letters of Support (outreach / relationship work).
+
+Mirror any TVW-produced audit artifacts to `tvw/source/sbir/tychon-nv-sim-repos/01_deliverables/audits/` (the audit mirror target).
