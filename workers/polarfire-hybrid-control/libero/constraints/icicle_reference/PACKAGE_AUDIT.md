@@ -1,5 +1,33 @@
 # Package-Cross-Mapping Audit — FCVG484 → FCSG536e (HW-04b)
 
+> **⚠ SUPERSEDED — 2026-05-03**
+>
+> HW-01's claim that silicon is FCSG536e was **incorrect**. The physical
+> Icicle Kit silkscreen reads `MPFS250T-FCVG484E` with date code `2241`
+> (ISO week 41 of 2022 — canonical production silicon, not engineering
+> sample). This is corroborated by the pristine Beelink project log
+> `tooldata/MPFS_ICICLE_Vectorblox.log` (2026-04-02), which records
+> `MPFS250T-FCVG484E` as the project device.
+>
+> **Consequence:** the staged `icicle_reference/` PDC bundle is already
+> pin-correct for the silicon. **All 120 `MAP_TBD` rows below are
+> reclassified as `MAP_OK`** (same package, same balls). The
+> FCVG484 → FCSG536e remap work is no longer required; HW-04c can adopt
+> the recommended PDC subset directly.
+>
+> **Repo correction applied:** `libero/scripts/01_scaffold_proj.tcl`
+> updated from `set DEVICE_PACKAGE "FCSG536"` to `"FCVG484"`.
+>
+> **Outstanding ground-truth gap:** UG0726 (PolarFire SoC Pin Descriptions)
+> is still missing from the corpus and is needed for any future pin
+> additions beyond the reference design's surface (e.g. fabric-side
+> mikroBUS extensions). Fetch is tracked under audit-005 / new corpus
+> `tychon-fpga-mpfs250t-fcvg484e`.
+>
+> The original audit text below is preserved for provenance.
+
+---
+
 This audit documents every pin assignment in the staged `icicle_reference/` PDC bundle and flags how each must be handled when integrated into `libero/constraints/pinout.pdc` for the FCSG536e silicon (engineering-sample variant). The reference bundle is FCVG484-keyed; HW-01 confirmed silicon is FCSG536e (not FCVG484), so each pin name needs verification against the FCSG536e ball matrix.
 
 ## Summary

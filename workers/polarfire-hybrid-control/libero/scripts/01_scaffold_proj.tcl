@@ -21,10 +21,17 @@ set CONSTR_DIR  [file join $REPO_ROOT libero constraints]
 # ──────────────────────────────────────────────────────
 # Device selection — change DEVICE_DIE to MPFS460T if
 # resource estimation fails after 02_import_ip.tcl
+#
+# Package: FCVG484 confirmed from physical Icicle Kit silkscreen
+# (MPFS250T-FCVG484E, date code 2241 = ISO week 41 of 2022).
+# Corroborated by the pristine Beelink project log
+# `MPFS_ICICLE_Vectorblox.log` (2026-04-02), which records the
+# same MPFS250T-FCVG484E project info. Supersedes the prior
+# FCSG536e working assumption from HW-01.
 # ──────────────────────────────────────────────────────
 set DEVICE_FAMILY  "PolarFireSoC"
 set DEVICE_DIE     "MPFS250T"
-set DEVICE_PACKAGE "FCSG536"
+set DEVICE_PACKAGE "FCVG484"
 set DEVICE_SPEED   "STD"
 set PROJECT_NAME   "polarfire_hybrid_control"
 

@@ -30,32 +30,26 @@ foreach pdc {
 The existing `decision-2-option-c.pdc` (XCVR REF_CLK explicit-lock fix) layers
 on top and should be imported AFTER `ICICLE_PCIE.pdc`.
 
-## CRITICAL: Package mismatch — must verify before use
+## Package mismatch — RESOLVED 2026-05-03
 
 The reference design targets **MPFS250T-FCVG484** (484-ball flip-chip BGA).
-The current project scaffold (`01_scaffold_proj.tcl`) declares **FCSG536**.
 
-Pin names in these PDC files (e.g. `V19`, `U18`, `W18`, `L19`, `L20`) are the
-canonical FCVG484 ball locations and **will fail validation if the project
-device package is FCSG536** — those balls don't exist on the FCSG536 substrate.
+**Silicon confirmed:** physical Icicle Kit silkscreen reads
+`MPFS250T-FCVG484E`, date code `2241` (ISO week 41 of 2022). Corroborated
+by the pristine Beelink project log
+`tooldata/MPFS_ICICLE_Vectorblox.log` (2026-04-02).
 
-### Action required
-
-1. Read the part number off the silkscreen of the actual Icicle Kit board.
-2. If silkscreen says `MPFS250T-FCVG484E` (canonical Icicle Kit):
-   - Update `01_scaffold_proj.tcl`:
-     `set DEVICE_PACKAGE "FCVG484"` (was `"FCSG536"`)
-   - These PDCs will then validate cleanly.
-3. If silkscreen confirms `MPFS250T-FCSG536` (rare variant):
-   - These PDCs cannot be used as-is.
-   - Pin remapping required — translate FCVG484 ball coords to FCSG536 via
-     the Microchip pin-translation tables in `aPA5SOC/PA5SOC250/pinouts/`.
+**Action taken:** `01_scaffold_proj.tcl` updated to
+`set DEVICE_PACKAGE "FCVG484"`. The PDCs in this bundle are now
+pin-correct for the project device and validate cleanly. The earlier
+HW-01 finding that silicon was FCSG536e is superseded; see
+`PACKAGE_AUDIT.md` header for the full record.
 
 The April 28 P&R reports in `libero/reports/2026-04-28/` succeeded, which
 implies the project was previously built against a working PDC set (likely
-imported inside Libero GUI rather than via the Tcl scaffold). Compare the
-Libero-managed `*.pdc` inside `libero/work/` (when it exists) against this
-bundle to identify any local edits.
+imported inside Libero GUI rather than via the Tcl scaffold). With the
+scaffold now declaring FCVG484, regenerated runs through `01_scaffold_proj.tcl`
+should match the GUI-imported behavior.
 
 ## License
 
