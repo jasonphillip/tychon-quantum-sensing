@@ -1,32 +1,39 @@
 # Track 0 — Icicle Kit First-Bitstream Bring-Up Runbook
 
-This runbook drives the four hardware-bring-up items (HW-01..HW-04) that gate the first PID-only bitstream onto the physical Icicle Kit acquired 2026-05-02. Items HW-02 and HW-03 are Beelink-side vendor-infrastructure edits the agent attempts via `ssh bee` with per-action approval; manual recipes are documented as fallback. HW-04 has the most surgical work because the staged reference PDC bundle is FCVG484-keyed but the silicon is FCSG536e — a per-pin package-cross-mapping audit is required before integration.
+This runbook drives the four hardware-bring-up items (HW-01..HW-04) that gate the first PID-only bitstream onto the physical Icicle Kit acquired 2026-05-02. As of the 2026-05-04 refresh below, HW-01 / HW-02 / HW-03 are RESOLVED and HW-04b is OBSOLETED; remaining work (HW-04c populate `pinout.pdc`, HW-04d persist bitstream artifact, then program the kit and bring up demo firmware) is now driven by the demo-bringup plan at `~/.claude/plans/i-plugged-in-j11-optimized-quilt.md`. Original recipes are retained below for re-application reference; the active hand-off lives in the demo-bringup plan.
 
-## Status summary
+## Status summary (refreshed 2026-05-04)
 
 | Item | Status | Owner |
 |---|---|---|
-| HW-01 — silkscreen package verification | RESOLVED 2026-05-02 (FCSG536e) | n/a |
-| HW-02 — License.dat line 269 split | OPEN | agent via `ssh bee` (per-action approval), or user manual fallback |
-| HW-03 — CP210x VCP driver install | OPEN | agent via `ssh bee` (per-action approval), or user manual fallback |
-| HW-04 — pinout.pdc integration | OPEN, gated on HW-04b audit | agent (4 sub-steps, a/b/c/d) |
-| Track 0 closure | OPEN | user (FPExpress GUI on Beelink) |
+| HW-01 — silkscreen package verification | **RESOLVED 2026-05-03** (silicon corrected to **MPFS250T-FCVG484E**, scaffold updated in commit `8d794e5`) | n/a |
+| HW-02 — License.dat line 269 split | **RESOLVED 2026-05-02 evening** (FlexLM lists CoreVectorBlox feature) | n/a |
+| HW-03 — CP210x VCP driver install | **RESOLVED 2026-05-02 evening** (Silicon Labs CP2108 enumerates as 4 COM ports under Windows on Beelink) | n/a |
+| HW-04a — bundle synced | **RESOLVED 2026-05-02** | n/a |
+| HW-04b — package-cross-mapping audit | **OBSOLETED 2026-05-03** (silicon now matches bundle's native FCVG484 package; no per-pin mapping required — see HW-04b note below) | n/a |
+| HW-04c — pinout.pdc populated from reference | **OPEN** | covered by demo-bringup plan Part 1 |
+| HW-04d — explicit bitstream artifact persistence | **OPEN** | covered by demo-bringup plan Part 1 |
+| Track 0 closure (program kit) | **OPEN** | covered by demo-bringup plan Part 2 |
+| Demo firmware (Options A→C) | **OPEN** | covered by demo-bringup plan Parts 3–5 |
 
-## HW-01 — Silkscreen package verification (RESOLVED)
+**Hardware connectivity verified 2026-05-04 (this session):** Both Icicle Kit USB headers (J11 and J33) plugged into Beelink. `Get-PnpDevice` enumerates **both** the FlashPro embedded programmer (`VID_1514 PID_200B`, status OK, HID class) **and** the Silicon Labs CP2108 quad UART bridge (`VID_10C4 PID_EA71`, 4 interfaces visible as COM3 / COM4 / COM5 / COM6). Per-port mapping (which physical header carries which chip) is NOT yet verified — selectively unplug one in Part 2 and re-enumerate to disambiguate. Note: an earlier draft of HW-03 below states "J11 connector is a Silicon Labs CP2108"; this is unverified in either direction at the time of this refresh.
 
-Silkscreen reads `MPFS250T-FCSG536e`. The trailing `e` is the engineering-sample marker; Libero's device DB tracks ES dies as `PA5SOC250 ES` (or similar) separately from production silicon.
+## HW-01 — Silkscreen package verification (RESOLVED 2026-05-03)
+
+Initial reading was `MPFS250T-FCSG536e` (engineering-sample marker). Re-reading on 2026-05-03 against the actual silicon and Microchip datasheet DS00004248 confirmed the production part is **MPFS250T-FCVG484E** — 484-ball flip-chip BGA, **STD speed grade**, Production silicon, **Extended Commercial 0–100 °C** ("E" suffix). The earlier `FCSG536e` reading conflated the engineering-sample suffix `e` with the package code.
 
 Resolution applied:
-- `libero/scripts/01_scaffold_proj.tcl:27` (`set DEVICE_PACKAGE "FCSG536"`) — **no change**, scaffold matches silicon.
-- `2026-04-29-pid-real/r6_s25` retroactive validity is preserved; r6_s25 is the canonical baseline for r6_s25 power and timing.
+- `libero/scripts/01_scaffold_proj.tcl:27` updated from `FCSG536` to `FCVG484` in commit `8d794e5` ("Fix FPGA package designator: FCSG536 → FCVG484 (silkscreen-confirmed)").
+- TVW audit-006 (commit `0a33ac4`) re-validated that the r6_s25 timing closure (+0.728 ns slack on the 125 MHz FIC CCC PLL OUT0 user clock at slow_lv_ht) was actually generated against FCVG484 STD-grade Production silicon — SmartTime report header confirms `Package: FCVG484 / Speed Grade: STD / Data source: Production`.
+- The reference PDC bundle staged at `libero/constraints/icicle_reference/` is FCVG484-keyed (sourced from `polarfire-soc/icicle-kit-reference-design@fd0aebb`); pin mapping is therefore **MAP_OK** with no cross-package remap needed (see HW-04b OBSOLETED note below).
 
-ES variant verification (defer to HW-04b execution time): when the scaffold runs against Libero 2025.2, log the resolved device label after `new_project` and confirm it lands on the ES entry rather than production-die. If Libero silently uses production-die ball assignments against ES silicon, pin assignments may diverge — check Libero's Pin Description data for ES-specific entries.
+## HW-02 — License.dat line 269 split (RESOLVED 2026-05-02 evening)
 
-## HW-02 — License.dat line 269 split
+The CoreVectorBlox license stanza in `C:\Microchip\Libero_SoC_2025.2\License.dat` had a literal `nn` between the comment banner and the `FEATURE AIPOSOLCORECORE_VECTORBLOX` keyword instead of two real newlines. FlexLM was treating the entire line as a comment, so CoreVectorBlox was invisible.
 
-The CoreVectorBlox license stanza in `C:\Microchip\Libero_SoC_2025.2\License.dat` has a literal `nn` between the comment banner and the `FEATURE AIPOSOLCORECORE_VECTORBLOX` keyword instead of two real newlines. FlexLM treats the entire line as a comment, so CoreVectorBlox is invisible.
+**Status:** Fix applied 2026-05-02 evening; `lmutil lmstat -a` now lists CoreVectorBlox as a checkable feature. License backup saved at `License.dat.bak-pre-fix-*`.
 
-Required only for AI/CoreVectorBlox demo. PID-only Track 0 closure does not depend on this.
+Required only for AI/CoreVectorBlox demo. PID-only Track 0 closure does not depend on this. Recipes below retained for re-application reference.
 
 ### Agent-driven recipe (via `ssh bee`, per-action approval)
 
@@ -76,11 +83,13 @@ Stop-gate: `lmutil lmstat -a` lists CoreVectorBlox as a checkable feature.
 
 Open `C:\Microchip\Libero_SoC_2025.2\License.dat` in a text editor that preserves UNIX line endings (Notepad++, VSCode). Find line 269. The literal sequence `-nnFEATURE` should be `-\n\nFEATURE`. Save. Run `lmutil lmstat -a` and confirm CoreVectorBlox is visible.
 
-## HW-03 — CP210x VCP driver install
+## HW-03 — CP210x VCP driver install (RESOLVED 2026-05-02 evening)
 
-The Icicle Kit's J11 connector is a Silicon Labs CP2108 quad-UART bridge. Without the CP210x VCP driver, the four virtual COM ports (including MSS UART0 used for console) do not enumerate.
+The Icicle Kit exposes a Silicon Labs **CP2108 quad-UART bridge** on one of its USB headers (J11 or J33 — see connectivity verification note in Status Summary above). Without the CP210x VCP driver, the four virtual COM ports (including the MSS UART0 used for console) do not enumerate under Windows.
 
-Required only for runtime observability. Bitstream programming over JTAG works without this.
+**Status:** CP210x Universal Windows Driver installed on Beelink 2026-05-02 evening. Confirmed 2026-05-04: `Get-PnpDevice` shows all 4 CP2108 interfaces present and OK as **COM3 / COM4 / COM5 / COM6** (Interface 3 / 2 / 1 / 0 respectively). Which COM port carries MMUART0 (the MSS console) is verified post-programming in demo-bringup plan Part 2 by opening all four simultaneously and resetting the kit.
+
+Required only for runtime observability. Bitstream programming over JTAG works without this. Recipes below retained for re-application reference.
 
 ### Agent-driven recipe (via `ssh bee`, per-action approval)
 
@@ -112,15 +121,17 @@ Stop-gate: pnputil reports CP210x driver present in driver store. User confirms 
 3. Right-click `silabser.inf` → "Install".
 4. Verify Device Manager shows 4 virtual COM ports.
 
-## HW-04 — pinout.pdc integration (4 sub-steps)
+## HW-04 — pinout.pdc integration (sub-steps a/b done; c/d open)
 
-The riskiest item in Track 0. The staged reference bundle is FCVG484-keyed; silicon is FCSG536e. A per-pin audit precedes integration.
+The original concern (staged reference bundle is FCVG484-keyed but silicon is FCSG536e — a per-pin cross-package audit was required) was resolved when HW-01 was re-verified and the scaffold device was corrected to FCVG484E in commit `8d794e5`. Reference bundle now matches silicon natively. HW-04b is therefore obsoleted; HW-04c (single concatenated `pinout.pdc`) and HW-04d (explicit bitstream artifact persistence) remain open and are covered by the demo-bringup plan Part 1.
 
 ### HW-04a — Bundle synced
 
 Done 2026-05-02. The 17 reference PDC files plus README from `polarfire-soc/icicle-kit-reference-design@fd0aebb` now live at `libero/constraints/icicle_reference/` on spark1.
 
-### HW-04b — Package-cross-mapping audit (FCVG484 → FCSG536e)
+### HW-04b — Package-cross-mapping audit (FCVG484 → FCSG536e) — OBSOLETED 2026-05-03
+
+**This entire sub-step is obsoleted.** Silicon was re-verified as FCVG484E in HW-01 above; the reference bundle is FCVG484-native; no cross-package mapping is required. All pins are MAP_OK by construction. The procedure below is retained for historical reference only — do not execute.
 
 For each `set_io ... -pin_name {<ball>}` declaration in every sub-PDC, look up the ball coordinate in:
 - the FCVG484 ball matrix (484-ball, 19×19 mm) — the reference bundle's native package, AND
@@ -156,9 +167,9 @@ Order from the staged README, applied as concatenated section banners:
 
 Trim to the I/O actually exposed by `MPFS_ICICLE_KIT_BASE_DESIGN`. The top-level entity has 148 ports across input/output/inout — intersect against each sub-PDC's `set_io` declarations and drop unused.
 
-Apply the audit results: keep `MAP_OK` pins as-is; rewrite `MAP_REROUTE` pins to the FCSG536e ball; drop `MAP_DROP` pins.
+Apply the audit results: keep `MAP_OK` pins as-is. (HW-04b is obsoleted — there are no `MAP_REROUTE` or `MAP_DROP` pins because silicon and bundle now share the FCVG484 package natively.)
 
-Commit as `feat(pdc): populate pinout.pdc from Icicle reference bundle (FCVG484→FCSG536e mapped)`.
+Commit as `feat(pdc): populate pinout.pdc from Icicle reference bundle (FCVG484 native, MAP_OK)`.
 
 ### HW-04d — Extend `04_synth_pnr.tcl` for explicit bitstream artifact persistence
 
@@ -192,9 +203,9 @@ run_selected_actions
 ```
 
 Stop-gate (user-reported, since the agent has no Beelink GUI access):
-- FlashPro6 enumerates in Device Manager: VID `0x1514`, PID `0x200B`.
+- FlashPro embedded programmer enumerates in Device Manager: VID `0x1514`, PID `0x200B` (already verified 2026-05-04).
 - FPExpress `run_selected_actions` returns success.
-- Device verifies (DEVICE_INFO action returns the expected MPFS250T-FCSG536e signature).
+- Device verifies (DEVICE_INFO action returns the expected **MPFS250T-FCVG484E** signature).
 
 ## Verification chain
 
