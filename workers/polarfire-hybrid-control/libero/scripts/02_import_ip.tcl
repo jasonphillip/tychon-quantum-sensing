@@ -195,6 +195,42 @@ puts "INFO: Clock and reset infrastructure configured"
 # Verify imports
 # ──────────────────────────────────────────────────────
 build_design_hierarchy
+
+# ──────────────────────────────────────────────────────
+# Bind constraints to design-flow tools (deferred from 01)
+#
+# organize_tool_files -module requires the top-level module to exist in the
+# design hierarchy. That hierarchy is created by build_design_hierarchy
+# above, so this is the earliest valid point for the binding step.
+#
+# The SDC timing constraint applies to synthesis, P&R, and timing
+# verification. The PDC pinout constraint applies to P&R only.
+# ──────────────────────────────────────────────────────
+puts "INFO: Organizing constraints into tool flows..."
+
+set PROJECT_NAME "polarfire_hybrid_control"
+set SDC_FILE     [file join $PROJ_DIR constraint timing_200mhz.sdc]
+set PDC_FILE     [file join $PROJ_DIR constraint pinout.pdc]
+
+organize_tool_files \
+    -tool {SYNTHESIZE} \
+    -file $SDC_FILE \
+    -module "${PROJECT_NAME}::work" \
+    -input_type {constraint}
+
+organize_tool_files \
+    -tool {PLACEROUTE} \
+    -file $SDC_FILE \
+    -file $PDC_FILE \
+    -module "${PROJECT_NAME}::work" \
+    -input_type {constraint}
+
+organize_tool_files \
+    -tool {VERIFYTIMING} \
+    -file $SDC_FILE \
+    -module "${PROJECT_NAME}::work" \
+    -input_type {constraint}
+
 save_project
 
 puts ""

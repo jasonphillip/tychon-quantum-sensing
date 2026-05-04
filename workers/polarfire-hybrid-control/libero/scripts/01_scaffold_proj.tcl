@@ -70,34 +70,10 @@ import_files -sdc [file join $CONSTR_DIR timing_200mhz.sdc]
 # pinout.pdc contains set_io / set_iobank pin assignments → -io_pdc.
 import_files -io_pdc [file join $CONSTR_DIR pinout.pdc]
 
-# ──────────────────────────────────────────────────────
-# Associate constraints with design flow tools
-#
-# The SDC timing constraint applies to synthesis, P&R,
-# and SmartTime. The PDC pinout constraint applies to
-# P&R only. Constraint-to-tool binding ensures each
-# tool sees the right constraint set.
-# ──────────────────────────────────────────────────────
-puts "INFO: Organizing constraints into tool flows..."
-
-organize_tool_files \
-    -tool {SYNTHESIZE} \
-    -file [file join $PROJ_DIR constraint timing_200mhz.sdc] \
-    -module "${PROJECT_NAME}::work" \
-    -input_type {constraint}
-
-organize_tool_files \
-    -tool {PLACEROUTE} \
-    -file [file join $PROJ_DIR constraint timing_200mhz.sdc] \
-    -file [file join $PROJ_DIR constraint pinout.pdc] \
-    -module "${PROJECT_NAME}::work" \
-    -input_type {constraint}
-
-organize_tool_files \
-    -tool {VERITIMING} \
-    -file [file join $PROJ_DIR constraint timing_200mhz.sdc] \
-    -module "${PROJECT_NAME}::work" \
-    -input_type {constraint}
+# Constraint-to-tool binding (organize_tool_files -module ...) requires the
+# top-level module to exist in the project's design hierarchy. That hierarchy
+# is built by 02_import_ip.tcl after HDL is imported, so the binding step is
+# performed at the tail of 02 rather than here.
 
 # ──────────────────────────────────────────────────────
 # Save and report

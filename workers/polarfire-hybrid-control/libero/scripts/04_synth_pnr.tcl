@@ -34,9 +34,6 @@ open_project -file $PROJ_FILE
 # ──────────────────────────────────────────────────────
 puts "INFO: Running synthesis..."
 run_tool -name {SYNTHESIZE}
-
-# Check synthesis status
-set synth_status [run_tool -name {SYNTHESIZE} -script {REPORT}]
 puts "INFO: Synthesis complete."
 
 # ──────────────────────────────────────────────────────
@@ -54,7 +51,7 @@ puts "INFO: Place and route complete."
 # per-path timing detail.
 # ──────────────────────────────────────────────────────
 puts "INFO: Running SmartTime timing analysis..."
-run_tool -name {VERITIMING}
+run_tool -name {VERIFYTIMING}
 
 # SmartTime detailed text report (was previously calling export_prog_job
 # with smarttime_timing.xml as the job_file_name, which is the bitstream
@@ -78,7 +75,7 @@ puts "INFO: Timing report written to $REPORT_DIR"
 # from co-simulation would improve accuracy (future).
 # ──────────────────────────────────────────────────────
 puts "INFO: Running SmartPower analysis..."
-run_tool -name {POWERANALYSIS}
+run_tool -name {VERIFYPOWER}
 
 set power_rpt [file join $REPORT_DIR smartpower_report.rpt]
 report \
