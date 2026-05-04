@@ -35,3 +35,10 @@ __pycache__/
 !libero/reports/*.log
 !libero/reports/**/*.log
 .build/
+
+# Transient Libero report logs and run-log subdirs (kept locally on Beelink only)
+libero/reports/_*.log
+libero/reports/_run_logs/
+
+# SmartHLS build outputs (regenerated on every hls-test)
+hls/hls_output/
