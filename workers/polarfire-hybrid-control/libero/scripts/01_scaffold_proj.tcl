@@ -48,7 +48,8 @@ new_project \
     -die $DEVICE_DIE \
     -package $DEVICE_PACKAGE \
     -speed $DEVICE_SPEED \
-    -hdl "VERILOG"
+    -hdl "VERILOG" \
+    -overwrite 1
 
 # ──────────────────────────────────────────────────────
 # Import constraint files into project
