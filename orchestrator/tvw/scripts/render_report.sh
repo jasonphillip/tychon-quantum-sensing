@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 SRC="${1:-$HOME/.corpus/tychon-docs/raw/report/Tychon_Phase_I_Final_Report_v3.1_2026-05-01.md}"
-OUT_DIR="${2:-$HOME/Desktop/Shared/tychon-nv-sim-repos/01_deliverables/final_report}"
+OUT_DIR="${2:-$HOME/projects/tychon-sbir/docs/01_deliverables/final_report}"
 REFERENCE="${3:-$OUT_DIR/Tychon_Phase_I_Final_Report_2026-04-30.docx}"
 BASE=$(basename "$SRC" .md)
 
