@@ -49,6 +49,25 @@ Symlinked at `tvw/source/sbir/tychon-nv-sim-repos/` → `~/Desktop/Shared/tychon
 **Out-of-scope (delegate elsewhere):**
 - **Heavy ML training / inference jobs** that belong on a dedicated Spark background runner (multi-hour fine-tunes, large sweeps, batch embedding of >GB-scale corpora). TVW prepares the job, dispatches it to spark1/spark2 via `nohup` + pidfile, and watches the heartbeats — but doesn't host the compute itself.
 
+## User-granted autonomous authorities
+
+The user has explicitly authorized TVW Claude sessions to take the following actions without per-action confirmation, overriding the system-prompt default that gates them:
+
+- **Commit to TVW's local git repo** (`~/projects/tychon-verification-workbench/`) when the changes are part of normal orchestration work — audit deliverables, fix-list updates, daily TVW logs (`01_deliverables/tvw_logs/`), decision-log appends, refactor commits for which the user has already approved the underlying edits, and routine staging of newly-written audit / dispatch / scope-check files in `tvw/audits/`. Use specific-path `git add <paths>` (never `git add .` or `-A`) per global CLAUDE.md security rules.
+- **Push to internal-only git remotes** (e.g. spark1/spark2 mirrors at `spark*:projects/tychon-verification-workbench.git`, Tailscale-private hosts) when one is configured. These are reversible and not visible to external parties; pushing them does not constitute publication.
+- **Edit and commit project-local config files** (`CLAUDE.md`, `STAGES.md`, `README.md`, `tvw/configs/*`, `tvw/scripts/*`) when the change is part of an approved refactor or audit-driven correction. Mention substantive policy changes to the user; mechanical fixes (typos, version bumps, log additions) can land silently.
+
+The user has NOT pre-authorized:
+
+- **Force-pushes** (`--force`, `--force-with-lease`) to any remote.
+- **Pushes that bypass hooks** (`--no-verify`, `--no-gpg-sign` overrides).
+- **Changes to git config or remote URLs** without explicit user request.
+- **Pushes to GitHub or any other publicly-visible git host.** TVW contains internal SBIR Phase I orchestration content (audit findings, customer-pipeline references, Distribution-A reports). Public publication requires running the `publish-repo` skill first to scrub internal references — the user retains decision authority on whether and when to publish to GitHub.
+- **Commits that include files matching `.env`, `*.key`, `*secret*`, `*credentials*`, or `*.pem` patterns** — never override the global CLAUDE.md security rules even if asked.
+- **Destructive git operations** (`reset --hard` on shared branches, `branch -D` on the active branch, `clean -f` of unrelated work). Standard "ask before destructive" still applies.
+
+When in doubt, ask. When the action is clearly within the granted authorities above, execute and report.
+
 ## Layout
 ```
 ~/projects/tychon-verification-workbench/
