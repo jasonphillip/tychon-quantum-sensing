@@ -56,11 +56,9 @@ puts "INFO: Place and route complete."
 puts "INFO: Running SmartTime timing analysis..."
 run_tool -name {VERITIMING}
 
-# Export timing report
-set timing_xml [file join $REPORT_DIR smarttime_timing.xml]
-export_prog_job -job_file_name $timing_xml -export_dir $REPORT_DIR
-
-# SmartTime detailed text report
+# SmartTime detailed text report (was previously calling export_prog_job
+# with smarttime_timing.xml as the job_file_name, which is the bitstream
+# API misused for SmartTime — fixed 2026-05-04 in HW-04d).
 set timing_rpt [file join $REPORT_DIR smarttime_timing.rpt]
 report \
     -type {timing} \
@@ -112,20 +110,57 @@ report \
 puts "INFO: Resource report written to $REPORT_DIR"
 
 # ──────────────────────────────────────────────────────
-# Step 6: Export programming job file (.job)
+# Step 6: Export programming job file (.job) — HW-04d
 #
-# The .job file is the bitstream for board programming
-# via FlashPro. Useful for Icicle Kit eval.
+# Persists the bitstream artifact to a dated subdir so each
+# closure has a verifiable .job + sha256 sidecar. The base
+# `export_prog_job` call previously did not consistently land
+# the file on disk; we now copy + checksum explicitly.
 # ──────────────────────────────────────────────────────
 puts "INFO: Generating programming job file..."
 run_tool -name {GENERATEPROGRAMMINGDATA}
 
-set job_file [file join $REPORT_DIR polarfire_hybrid_control.job]
+# Dated subdir: libero/reports/YYYY-MM-DD-bringup/
+set TODAY        [clock format [clock seconds] -format "%Y-%m-%d"]
+set CLOSURE_DIR  [file join $REPORT_DIR "$TODAY-bringup"]
+file mkdir $CLOSURE_DIR
+
+# Primary export to the flat REPORT_DIR (matches existing tooling expectations)
 export_prog_job \
     -job_file_name {polarfire_hybrid_control} \
     -export_dir $REPORT_DIR
 
-puts "INFO: Programming job exported to $REPORT_DIR"
+# Resolve the produced .job, copy it (and any sibling .fs / .stp / .ppd)
+# into the dated closure subdir, and write a sha256 sidecar.
+set _job_glob [glob -nocomplain [file join $REPORT_DIR polarfire_hybrid_control.job]]
+if {[llength $_job_glob] == 0} {
+    puts "WARN: export_prog_job produced no .job in $REPORT_DIR"
+    puts "WARN: searching project tree for fallback artifact..."
+    set _job_glob [glob -nocomplain [file join $PROJ_DIR designer impl1 export "*.job"]]
+    if {[llength $_job_glob] == 0} {
+        puts "ERROR: no .job artifact found anywhere — bitstream export failed"
+    }
+}
+
+foreach _job $_job_glob {
+    set _basename [file tail $_job]
+    set _dest [file join $CLOSURE_DIR $_basename]
+    file copy -force $_job $_dest
+    puts "INFO: copied $_basename → $CLOSURE_DIR"
+
+    # sha256 sidecar — Tcl 8.6+ via sha256sum if available, else log a stub
+    set _sha_file [file join $CLOSURE_DIR "$_basename.sha256"]
+    if {![catch {exec sha256sum $_dest} _sha_out]} {
+        set _f [open $_sha_file w]
+        puts $_f $_sha_out
+        close $_f
+        puts "INFO: sha256 → $_sha_file"
+    } else {
+        puts "WARN: sha256sum not available; skipping checksum sidecar"
+    }
+}
+
+puts "INFO: Programming job exported to $CLOSURE_DIR"
 
 # ──────────────────────────────────────────────────────
 # Save and summary

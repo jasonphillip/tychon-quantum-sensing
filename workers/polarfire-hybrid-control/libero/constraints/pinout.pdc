@@ -1,7 +1,93 @@
-# pinout.pdc — Physical Design Constraints
+# pinout.pdc — Physical Design Constraints (Icicle Kit, MPFS250T-FCVG484E)
 #
-# Board-specific physical I/O assignments.
-# Populate when target board is selected (e.g. Icicle Kit).
+# Concatenated from libero/constraints/icicle_reference/ (HW-04c).
+# Reference bundle is FCVG484-keyed and matches silicon natively (no
+# per-pin remap, see HW-04b OBSOLETED note in track0_bringup_runbook.md).
 #
-# Example:
-#   set_io -port_name {actuator_out} -pin_name {H12} -io_std {LVCMOS33}
+# Sections kept minimal for the bring-up bitstream:
+#   1. ICICLE.pdc          — clocks, switches SW1-4, LEDs LED0-3
+#   2. ICICLE_MMUART0.pdc  — MSS UART0 console (TX/RX) for debug terminal
+#
+# Add additional subsystem PDCs (PCIe, MAC, USB, SDIO, etc.) only when
+# the corresponding top-level ports are exposed by hybrid_control_top.
+# Importing PDCs that bind to nonexistent ports will produce Libero
+# warnings and may halt PLACEROUTE if -fixed true is enforced.
+
+# ════════════════════════════════════════════════════════════════════
+# SECTION 1: ICICLE.pdc — clocks, switches, LEDs
+# Source: polarfire-soc/icicle-kit-reference-design@fd0aebb
+# ════════════════════════════════════════════════════════════════════
+
+set_iobank -bank_name Bank0  \
+    -vcci 1.80               \
+    -fixed true             \
+    -update_iostd true
+
+set_io -port_name SW1 \
+    -pin_name V19 \
+    -fixed true \
+    -DIRECTION INPUT
+
+set_io -port_name SW2 \
+    -pin_name U18 \
+    -fixed true \
+    -DIRECTION INPUT
+
+set_io -port_name SW3 \
+    -pin_name W19 \
+    -fixed true \
+    -DIRECTION INPUT
+
+set_io -port_name SW4 \
+    -pin_name W18 \
+    -fixed true \
+    -RES_PULL Up \
+    -SCHMITT_TRIGGER ON \
+    -DIRECTION INPUT
+
+set_io -port_name LED0 \
+    -pin_name V14 \
+    -fixed true \
+    -DIRECTION OUTPUT
+
+set_io -port_name LED1 \
+    -pin_name U13 \
+    -fixed true \
+    -DIRECTION OUTPUT
+
+set_io -port_name LED2 \
+    -pin_name T12 \
+    -fixed true \
+    -DIRECTION OUTPUT
+
+set_io -port_name LED3 \
+    -pin_name AB19 \
+    -fixed true \
+    -DIRECTION OUTPUT
+
+set_io -port_name REF_CLK_50MHz \
+    -pin_name W12 \
+    -fixed true \
+    -DIRECTION INPUT
+
+# ════════════════════════════════════════════════════════════════════
+# SECTION 2: ICICLE_MMUART0.pdc — MSS UART0 console (TX/RX)
+# Source: polarfire-soc/icicle-kit-reference-design@fd0aebb
+# ════════════════════════════════════════════════════════════════════
+
+set_iobank -bank_name Bank1  \
+    -vcci 3.30               \
+    -fixed true             \
+    -update_iostd true
+
+set_io -port_name MMUART_0_TXD_M2F \
+    -pin_name B14 \
+    -fixed true \
+    -DIRECTION OUTPUT \
+    -io_std LVCMOS33
+
+set_io -port_name MMUART_0_RXD_F2M \
+    -pin_name F15 \
+    -fixed true \
+    -DIRECTION INPUT \
+    -io_std LVCMOS33
