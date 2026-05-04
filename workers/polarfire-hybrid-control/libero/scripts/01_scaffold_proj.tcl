@@ -41,6 +41,15 @@ set PROJECT_NAME   "polarfire_hybrid_control"
 puts "INFO: Creating Libero project: $PROJECT_NAME"
 puts "INFO: Device: $DEVICE_DIE / $DEVICE_PACKAGE / $DEVICE_SPEED"
 
+# Libero 2025.2 new_project has no -overwrite flag and refuses if the
+# location already exists. Delete the previous work dir first so reruns
+# of the pipeline are idempotent. PROJ_DIR is libero/work/ — generated
+# scratch, never committed.
+if {[file exists $PROJ_DIR]} {
+    puts "INFO: removing existing project dir $PROJ_DIR for clean rebuild"
+    file delete -force $PROJ_DIR
+}
+
 new_project \
     -name $PROJECT_NAME \
     -location $PROJ_DIR \
@@ -48,8 +57,7 @@ new_project \
     -die $DEVICE_DIE \
     -package $DEVICE_PACKAGE \
     -speed $DEVICE_SPEED \
-    -hdl "VERILOG" \
-    -overwrite 1
+    -hdl "VERILOG"
 
 # ──────────────────────────────────────────────────────
 # Import constraint files into project
