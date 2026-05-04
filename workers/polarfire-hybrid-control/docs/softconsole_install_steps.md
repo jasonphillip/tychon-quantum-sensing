@@ -22,22 +22,28 @@ The Microchip SoftConsole installer is gated behind Akamai/Microchip portal sign
 
 4. The installer (`Microchip-SoftConsole-v2022.2-RISC-V-747-windows-x64-installer.exe`) downloads to `~\Downloads\`.
 
-5. Right-click the installer → **Run as administrator**. Default install location is `C:\Microchip\SoftConsole-v2022.2\`. Accept all defaults; the install populates:
-   - `C:\Microchip\SoftConsole-v2022.2\riscv-unknown-elf-gcc\bin\` — toolchain (note: actual subdir name may differ slightly; verify after install)
-   - `C:\Microchip\SoftConsole-v2022.2\eclipse\` — IDE
-   - `C:\Microchip\SoftConsole-v2022.2\openocd\` — debugger backend
+5. Right-click the installer → **Run as administrator**. Default install location: `C:\Microchip\SoftConsole-v2022.2-RISC-V-747\`. Accept all defaults. The install populates:
+   - `…\riscv-unknown-elf-gcc\bin\riscv64-unknown-elf-gcc.exe` — toolchain (xPack GCC 8.3.0, newlib bare-metal)
+   - `…\eclipse\` — IDE
+   - `…\openocd\bin\openocd.exe` — debugger backend
+   - `…\extras\mpfs\` — MPFS HAL source tree + reference drivers
+   - `…\build_tools\bin\make.exe` — bundled MSYS make
 
-6. After install, verify from MSYS2/Git Bash:
+6. **Verified install (2026-05-04):** SoftConsole 2022.2 build 747 installed at `/c/Microchip/SoftConsole-v2022.2-RISC-V-747/`. Toolchain confirmed working with a freestanding bare-metal smoke compile. Verify with:
    ```bash
-   ssh bee 'find /c/Microchip/SoftConsole-v2022.2 -maxdepth 4 -name "riscv-none-elf-gcc*" 2>/dev/null'
-   ssh bee '/c/Microchip/SoftConsole-v2022.2/riscv-unknown-elf-gcc/bin/riscv-none-elf-gcc.exe --version'
+   ssh bee '/c/Microchip/SoftConsole-v2022.2-RISC-V-747/riscv-unknown-elf-gcc/bin/riscv64-unknown-elf-gcc.exe --version'
    ```
-   Expected: prints GCC version (e.g., `riscv-none-elf-gcc (xPack GNU RISC-V Embedded GCC x86_64) 10.2.0` or similar).
+   Expected: `riscv64-unknown-elf-gcc.exe (xPack GNU RISC-V Embedded GCC (Microsemi SoftConsole build), 64-bit) 8.3.0`.
 
-7. (Optional but useful) Add the toolchain to `$PATH` for the `bee` user. Append to `~/.bashrc` on Beelink:
+7. (Optional but useful) Add the toolchain + bundled make to `$PATH` on Beelink. Append to `~/.bashrc`:
    ```bash
-   export PATH="/c/Microchip/SoftConsole-v2022.2/riscv-unknown-elf-gcc/bin:$PATH"
+   export SC_HOME=/c/Microchip/SoftConsole-v2022.2-RISC-V-747
+   export PATH="$SC_HOME/riscv-unknown-elf-gcc/bin:$SC_HOME/build_tools/bin:$PATH"
    ```
+
+## Note on the binary name
+
+Microchip uses the **older `riscv64-unknown-elf-` prefix** (not the modern `riscv-none-elf-` xPack convention). Makefiles for this repo's firmware should use `CROSS=riscv64-unknown-elf-` to match.
 
 ## What this unlocks
 
