@@ -57,7 +57,9 @@ new_project \
 puts "INFO: Importing constraint files..."
 
 import_files -sdc [file join $CONSTR_DIR timing_200mhz.sdc]
-import_files -pdc [file join $CONSTR_DIR pinout.pdc]
+# Libero 2025.2 split the legacy -pdc flag into -io_pdc and -fp_pdc.
+# pinout.pdc contains set_io / set_iobank pin assignments → -io_pdc.
+import_files -io_pdc [file join $CONSTR_DIR pinout.pdc]
 
 # ──────────────────────────────────────────────────────
 # Associate constraints with design flow tools
