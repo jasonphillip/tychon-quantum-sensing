@@ -80,11 +80,15 @@ When in doubt, ask. When the action is clearly within the granted authorities ab
 └── tvw/
     ├── configs/          endpoints.yaml, model lineup, MCP wiring
     ├── audits/           audit-NNN.md punch lists, verdict CSVs
+    ├── scripts/          render_report.sh, eod_close.sh (multi-repo EOD sweep + push driver)
     ├── services/         systemd unit drafts for NIMs / llama.cpp
     └── source/
         ├── repos/        symlinks → ~/projects/{4 repos}
         └── sbir/         symlink → ~/projects/tychon-sbir/docs
 ```
+
+## End-of-day close
+When the user signals end-of-day wrap-up intent ("wrapping up", "done for the day", "closing out", "EOD", etc.), proactively ask whether to run `tvw/scripts/eod_close.sh`. The script sweeps all 5 Tychon repos (TVW + 4 implementation), auto-pushes internal mirrors (NAS, spark1, spark2), runs a secrets sweep, and gates the GitHub push behind a single yes/N approval. Don't run without explicit yes; don't re-ask in the same session if declined. See memory entry `feedback_eod_close_trigger.md` for the full behavioral rule.
 
 ## Corpus locations
 - `~/.corpus/tychon-docs/` — prose corpus (built in Stage 1)
