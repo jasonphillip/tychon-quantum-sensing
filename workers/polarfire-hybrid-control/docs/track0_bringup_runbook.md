@@ -207,6 +207,67 @@ Stop-gate (user-reported, since the agent has no Beelink GUI access):
 - FPExpress `run_selected_actions` returns success.
 - Device verifies (DEVICE_INFO action returns the expected **MPFS250T-FCVG484E** signature).
 
+## Beelink — SmartHLS clang DLL collision (cygwin1.dll vs msys-2.0.dll)
+
+**Symptom:** `shls hw` aborts on the first source-file compile with
+`Return Code: 3221225794` (= `0xC0000142`, `STATUS_DLL_INIT_FAILED`).
+The error is byte-deterministic and surfaces during the LLVM clang
+invocation:
+
+```
+Error: Command failed!
+Command: 'C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\llvm-project\
+          llvm\Release+Asserts\bin\clang'
+Return Code: 3221225794
+Output: ''
+```
+
+`shls sw_run` works fine; only the `hw` target's clang fails.
+
+**Root cause (one-liner):** SmartHLS ships clang.exe as a Cygwin binary
+(see `cygclang-15.dll` next to the executable in
+`SmartHLS/llvm-project/llvm/Release+Asserts/bin`). It needs
+`cygwin1.dll`. When invoked from MSYS2's bash (which `ssh bee` lands
+in via Git Bash), MSYS2 shadows the Cygwin runtime with its own
+`msys-2.0.dll` fork. The two unix-on-Windows runtimes refuse to
+co-load → `STATUS_DLL_INIT_FAILED`.
+
+**Bypass:** invoke `shls hw` through `cmd.exe`, which does not preload
+MSYS2's runtime. The cleanest scriptable form is a tiny `.bat` wrapper
+in a Windows-native path:
+
+```bash
+# 1. Stage the wrapper at a path cmd.exe can resolve (NOT under /tmp,
+#    which is MSYS2-only).
+ssh bee 'cat > ~/run_shls_hw.bat << "EOF"
+@echo off
+cd /d ~\dev\projects\polarfire-hybrid-control\hls
+call C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\bin\shls.bat hw
+EOF'
+
+# 2. Run via cmd.exe; double-slash // is MSYS2's escape for /.
+ssh bee 'cmd //c "~\\run_shls_hw.bat" > /tmp/shls_hw.log 2>&1; echo EXIT=$?'
+
+# 3. Verify outputs landed.
+ssh bee 'find ~/dev/projects/polarfire-hybrid-control/hls/hls_output -name "*.v" | head -5'
+```
+
+Stop-gate: `EXIT=0` and at least one Verilog file under
+`hls/hls_output/rtl/`. The SmartHLS-generated Libero import script
+appears at `hls/hls_output/scripts/libero/create_hdl_plus.tcl`.
+
+**Why not just rewrite `~/bin/shls` to invoke cmd.exe?** Could be done,
+but the Beelink-side `shls` wrapper is shared toolchain not project
+state. Document the bypass here; reach for it explicitly when running
+the SmartHLS hw flow rather than mutating shared environment.
+
+**Note:** `libero.bat` is Windows-native (no Cygwin libraries) and
+runs cleanly from MSYS2 bash without the wrapper. The bypass is
+specific to SmartHLS's clang invocation.
+
+Validated 2026-05-04: cmd.exe bypass produces `nv_pid_top_nv_pid_top.v`
++ HDL+ import script in ~3 min. Discovery credit: TVW session.
+
 ## Verification chain
 
 ```bash
