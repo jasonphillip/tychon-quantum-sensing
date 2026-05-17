@@ -44,11 +44,16 @@ public:
         // Filtered derivative Kd·s/(1 + s·Tf), backward-Euler discretized:
         //   D[k] = a · D[k-1] + β · Kd · (error[k] - error[k-1])
         // Tf, a, β are synthesis-time constants from rta_config.hpp.
-        // Saturate D[k] to out_t range defensively.
-        gain_t a_coef    = (gain_t)DERIV_FILTER_A;
-        gain_t beta_coef = (gain_t)DERIV_FILTER_BETA;
-        out_t  d_input   = (out_t)(beta_coef * Kd * (error - prev_error));
-        out_t  d_term    = (out_t)(a_coef * prev_d) + d_input;
+        // Compute Kd·Δe first (same out_t-precision pattern as the
+        // legacy unfiltered form) to keep the intermediate value within
+        // Q16.16 range; THEN apply β. This avoids fractional precision
+        // loss that occurs if β·Kd is formed before multiplying by Δe
+        // (β·Kd ≈ 1e-6, near the Q16.16 LSB).
+        gain_t a_coef       = (gain_t)DERIV_FILTER_A;
+        gain_t beta_coef    = (gain_t)DERIV_FILTER_BETA;
+        out_t  d_unfiltered = (out_t)(Kd * (error - prev_error));
+        out_t  d_input      = (out_t)(beta_coef * d_unfiltered);
+        out_t  d_term       = (out_t)(a_coef * prev_d) + d_input;
         if (d_term > out_max) d_term = out_max;
         if (d_term < out_min) d_term = out_min;
         prev_d     = d_term;
