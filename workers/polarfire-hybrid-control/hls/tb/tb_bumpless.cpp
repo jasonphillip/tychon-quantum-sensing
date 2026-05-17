@@ -404,6 +404,98 @@ int main() {
         if (!pass) failures++;
     }
 
+    // -------------------------------------------------------------------
+    // Test E series — derivative filter Kd·s/(1+s·Tf)
+    //
+    // E.1: DC-gain == 1 on a slow linear ramp. The filtered derivative
+    //      should converge to Kd × ramp_per_cycle within a few settling
+    //      time constants (τ ≈ Tf/Ts cycles at the per-cycle level).
+    //
+    // E.2: High-frequency step rejection. A single-cycle large step in
+    //      the error should produce a bounded D output, not the
+    //      unfiltered first-difference's full Kd × Δerror spike.
+    //
+    // Both tests use Kp=Ki=0 to isolate the derivative path; out_min is
+    // negative so the filter can swing both directions without clipping
+    // at zero. Closes Phase-II Residual Proof Obligation #4.
+    // -------------------------------------------------------------------
+    {
+        std::cout << "--- Test E.1: Derivative filter DC gain == 1 on slow ramp ---\n";
+        gain_t Kp = 0.0, Ki = 0.0, Kd = 0.001;
+        out_t  out_min = -1000.0, out_max = 1000.0;
+        // Long flush — 10000 cycles > 5τ filter settling — to drain prev_d
+        // and overshoot from prior tests' large prev_error history.
+        for (int i = 0; i < 10000; i++) {
+            out_t dummy;
+            nv_pid_top(0.0, 0.0, false, Kp, Ki, Kd, out_min, out_max,
+                       INNER_CLAMP_DEFAULT, dummy);
+        }
+        // Capture baseline after flush. The static `integral` is sticky
+        // at a value carried over from earlier tests (Ki=0 here, so flush
+        // cannot drain it). Measuring delta from baseline isolates the
+        // filtered derivative contribution from the inherited integral.
+        out_t baseline_out;
+        nv_pid_top(0.0, 0.0, false, Kp, Ki, Kd, out_min, out_max,
+                   INNER_CLAMP_DEFAULT, baseline_out);
+
+        out_t  actuator_out      = baseline_out;
+        double ramp_per_cycle_hz = 100.0;
+        double freq_hz           = ramp_per_cycle_hz;
+        for (int i = 0; i < 20000; i++) {
+            nv_pid_top(freq_hz, 0.0, false,
+                       Kp, Ki, Kd, out_min, out_max,
+                       INNER_CLAMP_DEFAULT, actuator_out);
+            freq_hz += ramp_per_cycle_hz;
+        }
+        double delta    = actuator_out.to_double() - baseline_out.to_double();
+        double expected = 0.001 * ramp_per_cycle_hz;   // Kd · de/dt = 0.1
+        double rel_err  = (std::abs(expected) > 1e-9)
+                          ? std::abs(delta - expected) / std::abs(expected)
+                          : std::abs(delta);
+        bool   pass     = rel_err < 0.05;              // within 5% at steady state
+        std::cout << "Baseline (post-flush):  " << baseline_out.to_double() << " V\n";
+        std::cout << "End-state (post-ramp):  " << actuator_out.to_double() << " V\n";
+        std::cout << "Delta (D_ss):           " << delta
+                  << "   Expected: "            << expected
+                  << "   RelErr: "              << rel_err << "\n";
+        std::cout << (pass ? "PASS" : "FAIL")
+                  << ": filter DC gain == 1 on slow ramp.\n\n";
+        if (!pass) failures++;
+    }
+
+    {
+        std::cout << "--- Test E.2: Derivative filter attenuates HF step ---\n";
+        gain_t Kp = 0.0, Ki = 0.0, Kd = 0.001;
+        out_t  out_min = -1000.0, out_max = 1000.0;
+        // Long flush to fully drain filter state and prev_error history.
+        for (int i = 0; i < 10000; i++) {
+            out_t dummy;
+            nv_pid_top(0.0, 0.0, false, Kp, Ki, Kd, out_min, out_max,
+                       INNER_CLAMP_DEFAULT, dummy);
+        }
+        out_t baseline_out;
+        nv_pid_top(0.0, 0.0, false, Kp, Ki, Kd, out_min, out_max,
+                   INNER_CLAMP_DEFAULT, baseline_out);
+
+        // Single-cycle 100 kHz step in error.
+        out_t actuator_out;
+        nv_pid_top(1e5, 0.0, false,
+                   Kp, Ki, Kd, out_min, out_max,
+                   INNER_CLAMP_DEFAULT, actuator_out);
+        double step_response   = actuator_out.to_double() - baseline_out.to_double();
+        double unfiltered_pred = 0.001 * 1e5;          // Kd·Δerror = 100 V
+        double bound           = 0.5;                  // 5× filter β·Kd·Δe ≈ 0.1 V floor
+        bool   pass            = std::abs(step_response) < bound;
+        std::cout << "Baseline (post-flush):  " << baseline_out.to_double() << " V\n";
+        std::cout << "End-state (post-step):  " << actuator_out.to_double() << " V\n";
+        std::cout << "Filtered step delta:    " << step_response
+                  << " V  (unfiltered would be " << unfiltered_pred
+                  << " V; bound = "              << bound << " V)\n";
+        std::cout << (pass ? "PASS" : "FAIL")
+                  << ": filter attenuates HF step.\n\n";
+        if (!pass) failures++;
+    }
+
     if (failures == 0) {
         std::cout << "ALL TESTS PASSED.\n";
     } else {
