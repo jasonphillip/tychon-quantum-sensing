@@ -2,6 +2,7 @@
 #define NV_PID_HPP
 
 #include <hls/ap_fixpt.hpp>
+#include "../include/rta_config.hpp"
 
 // Fixed-point type definitions
 typedef hls::ap_fixpt<64, 34> freq_t; // Q34.30 (Hz Detuning Error)
@@ -12,11 +13,12 @@ class NVPID {
 private:
     out_t integral;
     freq_t prev_error;
+    out_t prev_d;
     out_t out_min;
     out_t out_max;
 
 public:
-    NVPID() : integral(0), prev_error(0), out_min(0), out_max(0) {}
+    NVPID() : integral(0), prev_error(0), prev_d(0), out_min(0), out_max(0) {}
 
     void set_limits(out_t min_val, out_t max_val) {
         out_min = min_val;
@@ -39,7 +41,17 @@ public:
         if (integral > out_max) integral = out_max;
         if (integral < out_min) integral = out_min;
 
-        out_t d_term = (out_t)(Kd * (error - prev_error));
+        // Filtered derivative Kd·s/(1 + s·Tf), backward-Euler discretized:
+        //   D[k] = a · D[k-1] + β · Kd · (error[k] - error[k-1])
+        // Tf, a, β are synthesis-time constants from rta_config.hpp.
+        // Saturate D[k] to out_t range defensively.
+        gain_t a_coef    = (gain_t)DERIV_FILTER_A;
+        gain_t beta_coef = (gain_t)DERIV_FILTER_BETA;
+        out_t  d_input   = (out_t)(beta_coef * Kd * (error - prev_error));
+        out_t  d_term    = (out_t)(a_coef * prev_d) + d_input;
+        if (d_term > out_max) d_term = out_max;
+        if (d_term < out_min) d_term = out_min;
+        prev_d     = d_term;
         prev_error = error;
 
         out_t output = p_term + integral + d_term;

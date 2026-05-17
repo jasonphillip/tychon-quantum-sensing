@@ -36,4 +36,27 @@ constexpr unsigned int WATCHDOG_COOLDOWN_CYCLES = 1000;
 // Clock frequency (Hz) — PolarFire SoC fabric clock
 constexpr unsigned int CLOCK_FREQ_HZ = 200000000;
 
+// Derivative filter time constant Tf for Kd·s/(1 + s·Tf).
+// Chosen as ~10× above the assumed 3 kHz closed-loop control bandwidth
+// (matching the ODMR modulation frequency upper bound). Filter corner =
+// 1/(2π·Tf) ≈ 32 kHz, sufficient to roll off high-frequency derivative
+// noise without consuming phase margin at the control bandwidth.
+//
+// Backward Euler discretization at Ts = 1/CLOCK_FREQ_HZ = 5 ns:
+//   D[k] = a · D[k-1] + β · Kd · (error[k] - error[k-1])
+//   a = Tf / (Ts + Tf)
+//   β = Ts / (Ts + Tf) = 1 - a
+//
+// At Tf = 5 µs and Ts = 5 ns:
+//   a ≈ 0.999000999, β ≈ 0.000999001
+//
+// FORMAL ARGUMENT: This is a synthesis-time constant. AXI writes cannot
+// modify Tf, a, or β. The filter preserves the Phase I sector bound
+// because at DC the gain is 1 (sector at DC unchanged) and at HF the
+// filter attenuates (sector contracts). See docs/derivative_filter_design.md
+// for the full derivation.
+constexpr double DERIV_FILTER_TF_SECONDS = 5e-6;
+constexpr double DERIV_FILTER_A          = 0.999000999;
+constexpr double DERIV_FILTER_BETA       = 0.000999001;
+
 #endif // RTA_CONFIG_HPP
