@@ -2,7 +2,11 @@
 
 import pytest
 
-from odmr_edge_ml.data.contracts import ContractViolation, validate_manifest
+from odmr_edge_ml.data.contracts import (
+    ContractViolation,
+    validate_manifest,
+    vector_readiness_view,
+)
 
 
 def make_valid_manifest() -> dict:
@@ -120,4 +124,62 @@ def test_empty_provenance_raises():
     m = make_valid_manifest()
     m["generator_git_sha"] = "   "
     with pytest.raises(ContractViolation, match="generator_git_sha.*empty"):
+        validate_manifest(m)
+
+
+# ---------------------------------------------------------------------------
+# Optional vector-readiness fields (B2.6 scaffold, 2026-05-17)
+
+
+def test_legacy_manifest_without_vector_fields_validates():
+    """Manifests written before the vector extension must still validate."""
+    m = make_valid_manifest()
+    for k in (
+        "bias_B0_T",
+        "bias_direction_uvw",
+        "concentrator_amplification",
+        "magnet_drift_ppm_per_K",
+    ):
+        assert k not in m
+    validate_manifest(m)
+
+
+def test_legacy_manifest_returns_defaults_via_view():
+    view = vector_readiness_view(make_valid_manifest())
+    assert view["bias_B0_T"] == 0.0
+    assert view["bias_direction_uvw"] == [0.0, 0.0, 1.0]
+    assert view["concentrator_amplification"] == 1.0
+    assert view["magnet_drift_ppm_per_K"] == 0.0
+
+
+def test_full_vector_manifest_validates():
+    m = make_valid_manifest()
+    m["bias_B0_T"] = 1.0e-3
+    m["bias_direction_uvw"] = [1.0, 0.0, 0.0]
+    m["concentrator_amplification"] = 25.0
+    m["magnet_drift_ppm_per_K"] = 50.0
+    validate_manifest(m)
+    view = vector_readiness_view(m)
+    assert view["bias_B0_T"] == 1.0e-3
+    assert view["concentrator_amplification"] == 25.0
+
+
+def test_vector_field_wrong_type_raises():
+    m = make_valid_manifest()
+    m["bias_B0_T"] = "1e-3"  # string instead of float
+    with pytest.raises(ContractViolation, match="bias_B0_T.*expected float"):
+        validate_manifest(m)
+
+
+def test_bias_direction_wrong_length_raises():
+    m = make_valid_manifest()
+    m["bias_direction_uvw"] = [1.0, 0.0]
+    with pytest.raises(ContractViolation, match="3 elements"):
+        validate_manifest(m)
+
+
+def test_bias_direction_non_unit_raises():
+    m = make_valid_manifest()
+    m["bias_direction_uvw"] = [1.0, 1.0, 0.0]  # |v| = sqrt(2) ≠ 1
+    with pytest.raises(ContractViolation, match="unit-norm"):
         validate_manifest(m)

@@ -58,6 +58,27 @@ REQUIRED_UNITS: dict[str, str] = {
     "time": "s",
 }
 
+# Optional vector-readiness fields added 2026-05-17 for the
+# ``production_50k_v3_vector`` lineage (B2.6 — flux-concentrator + 8-FCNN
+# + BLUE projection scaffold). All four have backwards-compatible defaults
+# so legacy datasets (production_50k, production_50k_v2_aic) still validate.
+OPTIONAL_VECTOR_FIELDS: dict[str, tuple[type, object]] = {
+    # Static bias field magnitude at the diamond (Tesla). 0.0 = legacy
+    # bias-free Earth-field regime; flux-concentrator path bumps this to
+    # ~0.5–1 mT after amplification; permanent-magnet path uses 2–5 mT.
+    "bias_B0_T": (float, 0.0),
+    # Lab-frame unit vector of the bias field. Default along +z so the
+    # legacy single-axis longitudinal regime keeps the same geometry.
+    "bias_direction_uvw": (list, [0.0, 0.0, 1.0]),
+    # Multiplicative amplification factor from the magnetic concentrator
+    # caps (Acosta-style soft-magnetic geometry). 1.0 = no concentrator.
+    "concentrator_amplification": (float, 1.0),
+    # Linear drift of the bias-field magnitude with temperature, in parts
+    # per million per Kelvin. Permanent-magnet path nonzero; concentrator
+    # path defaults to zero (Earth's field is the source, not the magnet).
+    "magnet_drift_ppm_per_K": (float, 0.0),
+}
+
 # Range fields that must have exactly 2 elements with lo <= hi
 _RANGE_FIELDS = [
     "freq_range_Hz",
@@ -167,6 +188,43 @@ def validate_manifest(manifest: dict) -> None:
     for prov_field in _PROVENANCE_FIELDS:
         if not manifest[prov_field].strip():
             raise ContractViolation(f"Provenance field '{prov_field}' is empty")
+
+    # 9. Optional vector-readiness fields: if present, must have the
+    # declared type. Missing keys are fine — they fall back to the defaults
+    # via :func:`vector_readiness_view`.
+    for field_name, (expected_type, _default) in OPTIONAL_VECTOR_FIELDS.items():
+        if field_name not in manifest:
+            continue
+        value = manifest[field_name]
+        if not isinstance(value, expected_type):
+            raise ContractViolation(
+                f"Optional vector field '{field_name}': expected "
+                f"{expected_type.__name__}, got {type(value).__name__}"
+            )
+        if field_name == "bias_direction_uvw":
+            if len(value) != 3:
+                raise ContractViolation(
+                    f"bias_direction_uvw must have 3 elements, got {len(value)}"
+                )
+            norm_sq = sum(float(c) ** 2 for c in value)
+            if abs(norm_sq - 1.0) > 1e-6:
+                raise ContractViolation(
+                    f"bias_direction_uvw must be unit-norm; got |v|^2 = {norm_sq:.6f}"
+                )
+
+
+def vector_readiness_view(manifest: dict) -> dict:
+    """Project a manifest onto the optional vector-readiness fields with defaults.
+
+    Returns a dict keyed by the names in :data:`OPTIONAL_VECTOR_FIELDS`. Used
+    by the 8-FCNN training script to know whether to spawn 8 windowed
+    instances (bias_B0_T > 0 and a known amplification) or fall back to the
+    legacy scalar model (bias_B0_T == 0).
+    """
+    out: dict = {}
+    for name, (_t, default) in OPTIONAL_VECTOR_FIELDS.items():
+        out[name] = manifest.get(name, default)
+    return out
 
 
 def validate_manifest_file(path: Path | str) -> dict:
