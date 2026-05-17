@@ -1,5 +1,21 @@
 # 05_smartpower_workload.tcl — Workload-driven SmartPower analysis (Phase II P3-RPO-6)
 #
+# STATUS (2026-05-17, DLOG-047): INFRASTRUCTURE PREP — not yet runnable.
+# Known gaps:
+#   1. PROJECT_PATH MISMATCH. The r6_s25 closure that the brief KPP refers to
+#      lives in the Microchip reference design at
+#         C:/Microchip/Libero_SoC_2025.2/SmartHLS/SmartHLS/reference_designs/Icicle_SoC/ref_design/MPFS_ICICLE_Vectorblox/
+#      NOT under libero/work/polarfire_hybrid_control/ which this script
+#      currently opens. The latter has empty designer/ — no placed netlist.
+#      To attach SmartPower to the r6_s25 netlist, change open_project to
+#      point at $REF_PROJECT (see closure_pipeline.tcl line 14-15 for the path).
+#   2. SmartPower VCD Tcl form is unverified (the catch fallback below exists
+#      precisely to discover which command form Libero 2025.2 accepts).
+#   3. VCD generation upstream — sim/modelsim_pid_workload.do has been
+#      corrected for SmartHLS 2025.2 port names but still has a documented
+#      gap around driving Kp_reg/Ki_reg/Kd_reg via hierarchical force or AXI
+#      transactions.
+#
 # Re-runs SmartPower against the existing 2026-04-29-pid-real/r6_s25 P&R
 # layout using a representative workload VCD as the activity source, instead
 # of Libero's default-toggle activity heuristic. This converts FTR §7.4 KPP
