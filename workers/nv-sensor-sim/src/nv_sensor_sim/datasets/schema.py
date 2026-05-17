@@ -112,6 +112,16 @@ class DatasetManifest:
     field_sampling: str = "z_only"
     b_mag_range_T: tuple[float, float] | None = None
 
+    # Vector-readiness: bias-field configuration (Path A magnet vs Path B concentrator).
+    # bias_B0_T=0.0 + concentrator_amplification=1.0 + magnet_drift_ppm_per_K=0.0 reproduces
+    # the legacy scalar regime, so older manifests without these keys load identically.
+    bias_B0_T: float = 0.0
+    bias_direction_uvw: tuple[float, float, float] = (0.0, 0.0, 1.0)
+    concentrator_amplification: float = 1.0
+    magnet_drift_ppm_per_K: float = 0.0
+    bias_B0_range_T: tuple[float, float] | None = None
+    multi_axis_mode: bool = False
+
     # Noise mode and OU parameters
     noise_mode: str = "deterministic"
     ou_params: dict | None = None  # OUNoiseConfig as dict, None for deterministic
@@ -127,6 +137,10 @@ class DatasetManifest:
             "b_perp": "T",
             "mw_power_scale": "dimensionless",
             "time": "s",
+            "bias_field": "T",
+            "bias_direction": "unit_vector",
+            "concentrator_amplification": "dimensionless",
+            "magnet_drift": "ppm/K",
         }
     )
 
@@ -153,6 +167,10 @@ class DatasetManifest:
         ):
             if d.get(key) is not None:
                 d[key] = list(d[key])
+        # Bias-field vector and range (always serialize direction as list)
+        d["bias_direction_uvw"] = list(d["bias_direction_uvw"])
+        if d.get("bias_B0_range_T") is not None:
+            d["bias_B0_range_T"] = list(d["bias_B0_range_T"])
         return d
 
     def to_json(self, path: str | Path) -> None:
@@ -222,6 +240,18 @@ class DatasetManifest:
         ):
             if d.get(key) is not None:
                 d[key] = tuple(d[key])
+
+        # Backward compat: bias-field fields (zero-bias scalar default = previous behavior)
+        d.setdefault("bias_B0_T", 0.0)
+        d.setdefault("bias_direction_uvw", [0.0, 0.0, 1.0])
+        d.setdefault("concentrator_amplification", 1.0)
+        d.setdefault("magnet_drift_ppm_per_K", 0.0)
+        d.setdefault("bias_B0_range_T", None)
+        d.setdefault("multi_axis_mode", False)
+        # Direction is a length-3 tuple; range (if present) is a length-2 tuple
+        d["bias_direction_uvw"] = tuple(d["bias_direction_uvw"])
+        if d.get("bias_B0_range_T") is not None:
+            d["bias_B0_range_T"] = tuple(d["bias_B0_range_T"])
 
         return cls(**d)
 
@@ -312,3 +342,25 @@ class DatasetManifest:
             lo, hi = self.b_mag_range_T
             if lo > hi:
                 raise ValueError(f"b_mag_range_T: min ({lo}) > max ({hi})")
+
+        # Validate bias-field configuration
+        if self.bias_B0_T < 0.0:
+            raise ValueError(f"bias_B0_T must be non-negative, got {self.bias_B0_T}")
+        if self.concentrator_amplification < 0.0:
+            raise ValueError(
+                f"concentrator_amplification must be non-negative, got "
+                f"{self.concentrator_amplification}"
+            )
+        if len(self.bias_direction_uvw) != 3:
+            raise ValueError(
+                f"bias_direction_uvw must be a 3-vector, got length "
+                f"{len(self.bias_direction_uvw)}"
+            )
+        if self.bias_B0_range_T is not None:
+            lo, hi = self.bias_B0_range_T
+            if lo > hi:
+                raise ValueError(f"bias_B0_range_T: min ({lo}) > max ({hi})")
+            if lo < 0.0:
+                raise ValueError(
+                    f"bias_B0_range_T lower bound must be non-negative, got {lo}"
+                )

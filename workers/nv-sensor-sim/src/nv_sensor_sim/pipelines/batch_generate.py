@@ -26,7 +26,7 @@ from nv_sensor_sim.adapters.simos_adapter import SimOSAdapter
 from nv_sensor_sim.config import FieldSampling, NoiseMode, OUNoiseConfig, SimulationConfig
 from nv_sensor_sim.datasets.schema import DatasetManifest
 from nv_sensor_sim.datasets.writer import DatasetWriter
-from nv_sensor_sim.physics.lineshape import corrupt_spectrum
+from nv_sensor_sim.physics.lineshape import corrupt_spectrum, corrupt_spectrum_multi_axis
 
 
 def _shift_range(
@@ -241,6 +241,70 @@ def _generate_split_stochastic(
     return spectra, labels, params, np.array(split_seeds), freqs_out
 
 
+def _generate_split_multi_axis(
+    adapter: SimOSAdapter,
+    config: SimulationConfig,
+    split_seeds: list[int],
+    p1_range_ppm: tuple[float, float],
+    temp_range_K: tuple[float, float],
+    b1_gradient_range: tuple[float, float],
+    extra_b_perp_range_T: tuple[float, float],
+    b_mag_range_T: tuple[float, float],
+    n_freq_points: int,
+    split_name: str,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray | None]:
+    """Generate vector-regime spectra: isotropic field sampling + 4-axis lineshape.
+
+    Each spectrum samples an isotropic lab-frame B-field whose magnitude is
+    drawn from ``b_mag_range_T`` (the bias-amplified regime, typically
+    0.5-5 mT), then averages the spectrum over the 4 NV crystallographic axes.
+    Labels are the total lab-frame field B_lab (what the geometry matrix A
+    inverts to recover from the resonance residuals).
+    """
+    n_split = len(split_seeds)
+    spectra = np.zeros((n_split, n_freq_points))
+    labels = np.zeros((n_split, 3))
+    params = np.zeros((n_split, 4))
+    freqs_out = None
+
+    print(f"Generating {n_split} spectra for {split_name} split (multi-axis)...")
+    for idx, seed in enumerate(split_seeds):
+        sp_rng = np.random.default_rng(seed)
+
+        p1 = sp_rng.uniform(*p1_range_ppm)
+        T_K = sp_rng.uniform(*temp_range_K)
+        b1_grad = sp_rng.uniform(*b1_gradient_range)
+        extra_b_perp = sp_rng.uniform(*extra_b_perp_range_T)
+
+        # Isotropic direction on the sphere, magnitude from bias-regime range
+        B_lab = _sample_spherical_field(sp_rng, b_mag_range_T)
+
+        adapter.config.temperature_K = T_K
+        adapter.config.p1_concentration_ppm = p1
+        adapter.config.B_field_T = B_lab
+
+        freqs, signal, _ = corrupt_spectrum_multi_axis(
+            adapter,
+            adapter.config,
+            B_lab,
+            b1_grad,
+            extra_b_perp_T=extra_b_perp,
+            p1_ppm=p1,
+        )
+
+        if freqs_out is None:
+            freqs_out = freqs
+
+        spectra[idx] = signal
+        labels[idx] = B_lab
+        params[idx] = [p1, T_K, b1_grad, extra_b_perp]
+
+        if (idx + 1) % 100 == 0:
+            print(f"  {split_name}: {idx + 1}/{n_split}")
+
+    return spectra, labels, params, np.array(split_seeds), freqs_out
+
+
 def generate_dataset(
     output_dir: str,
     n_train: int = 1000,
@@ -263,6 +327,12 @@ def generate_dataset(
     test_temp_range_K: tuple[float, float] | None = None,
     test_b1_gradient_range: tuple[float, float] | None = None,
     test_b_perp_range_T: tuple[float, float] | None = None,
+    multi_axis_mode: bool = False,
+    bias_B0_T: float = 0.0,
+    bias_direction_uvw: tuple[float, float, float] = (0.0, 0.0, 1.0),
+    concentrator_amplification: float = 1.0,
+    magnet_drift_ppm_per_K: float = 0.0,
+    bias_B0_range_T: tuple[float, float] | None = None,
 ) -> str:
     """Generate a complete synthetic ODMR dataset with manifest.
 
@@ -421,6 +491,19 @@ def generate_dataset(
         dataclasses.asdict(ou_noise_config) if ou_noise_config is not None else None
     )
 
+    # Multi-axis (vector-readiness) mode: bias-amplified regime, isotropic field
+    # sampling with magnitudes covering ~0.5-5 mT (union of Path A magnet + Path B
+    # concentrator operational ranges). When enabled, b_mag_range_T defaults to
+    # bias_B0_range_T (if supplied) so the spectrum samples the bias regime.
+    if multi_axis_mode:
+        if field_sampling_enum != FieldSampling.SPHERICAL:
+            raise ValueError(
+                "multi_axis_mode requires field_sampling='spherical' to draw "
+                "isotropic bias-regime fields"
+            )
+        if bias_B0_range_T is not None:
+            b_mag_range_T = bias_B0_range_T
+
     manifest = DatasetManifest(
         generator_git_sha=_get_git_sha(),
         config_hash=config_hash,
@@ -454,6 +537,13 @@ def generate_dataset(
         test_temperature_range_K=test_temp_range_K,
         test_b1_gradient_range=test_b1_gradient_range,
         test_b_perp_range_T=test_b_perp_range_T,
+        # Vector-readiness metadata
+        multi_axis_mode=multi_axis_mode,
+        bias_B0_T=bias_B0_T,
+        bias_direction_uvw=bias_direction_uvw,
+        concentrator_amplification=concentrator_amplification,
+        magnet_drift_ppm_per_K=magnet_drift_ppm_per_K,
+        bias_B0_range_T=bias_B0_range_T,
     )
     manifest.validate()
 
@@ -505,6 +595,23 @@ def generate_dataset(
 
         kwargs = split_ranges[split_name]
         split_temp = eff_test_temp if split_name == "test" else temp_range_K
+
+        if multi_axis_mode:
+            # Vector-readiness path: 4-axis ensemble, isotropic bias-regime field.
+            # In multi-axis mode b_perp acts as *extra* residual transverse field
+            # beyond the geometric per-axis projection of B_lab.
+            spectra, labels, params, seed_arr, freqs = _generate_split_multi_axis(
+                adapter, config, split_seeds,
+                p1_range_ppm=kwargs["p1_range_ppm"],
+                temp_range_K=split_temp,
+                b1_gradient_range=kwargs["b1_gradient_range"],
+                extra_b_perp_range_T=kwargs["b_perp_range_T"],
+                b_mag_range_T=kwargs["b_mag_range_T"],
+                n_freq_points=kwargs["n_freq_points"],
+                split_name=split_name,
+            )
+            writer.write_spectra(spectra, freqs, labels, params, seed_arr, split_name)
+            continue
 
         if noise_mode_enum == NoiseMode.DETERMINISTIC:
             spectra, labels, params, seed_arr, freqs = _generate_split_deterministic(

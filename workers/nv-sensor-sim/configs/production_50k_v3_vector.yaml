@@ -1,0 +1,51 @@
+# Full 50,000-spectrum production cut for the bias-amplified vector regime.
+# Generated only after production_50k_v3_vector_sanity1k.yaml has passed the
+# contract tests and the representative-spectrum sanity plot.
+#
+# Lineage: parallel to production_50k_v3 (legacy scalar) — same master_seed
+# conventions (master_seed = legacy seed + 0x76 for "v"ector). Both Path A
+# (permanent magnet) and Path B (flux concentrator) consume this dataset;
+# downstream BLUE projection on the 8-resonance residual vector is identical.
+
+# Split sizes
+n_train: 40000
+n_val: 5000
+n_test: 5000
+master_seed: 4218  # production_50k_v3 used master_seed=4096; +0x7A marks vector
+
+# Spectral parameters: 80 MHz window resolves ±28 MHz outer dips at 1 mT
+# and ±140 MHz outer dips at 5 mT only partially — production_50k_v3_vector_wide
+# (TBD) will use 300 MHz for the high end. This config covers the canonical
+# 0.5-2 mT operating envelope.
+n_freq_points: 800
+freq_range_Hz: [2.83e9, 2.91e9]
+
+# Vector-readiness mode
+multi_axis_mode: true
+field_sampling: spherical
+
+# Bias-regime field-magnitude range (union of Path A + Path B operational)
+bias_B0_range_T: [0.5e-3, 5.0e-3]
+b_mag_range_T: [0.5e-3, 5.0e-3]
+
+# Bias metadata (hardware intent, see sanity-slice config for full context)
+bias_B0_T: 0.0
+bias_direction_uvw: [0.0, 0.0, 1.0]
+concentrator_amplification: 1.0
+magnet_drift_ppm_per_K: 0.0
+
+# Corruption parameter ranges
+p1_range_ppm: [1.0, 300.0]
+temp_range_K: [280.0, 320.0]
+b1_gradient_range: [0.05, 0.30]
+b_perp_range_T: [0.0, 10.0e-6]
+
+# Anti-inverse-crime: shift test ranges
+shift_test_ranges: true
+
+# Physics options
+include_nitrogen: false
+use_optics: false
+
+# Output
+output_format: h5

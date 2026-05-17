@@ -262,3 +262,152 @@ def test_shift_range_respects_floor():
     lo, hi = 0.0, 10.0
     new_lo, new_hi = _shift_range(lo, hi, floor=0.0)
     assert new_lo >= 0.0
+
+
+# ---------------------------------------------------------------------------
+# Bias-field (vector-readiness) fields: backward compat + validation
+# ---------------------------------------------------------------------------
+
+
+def test_manifest_bias_field_defaults_match_scalar_v3():
+    """An unconfigured manifest has zero-bias, unit-amp, no drift = scalar regime."""
+    manifest = _make_valid_manifest()
+    assert manifest.bias_B0_T == 0.0
+    assert tuple(manifest.bias_direction_uvw) == (0.0, 0.0, 1.0)
+    assert manifest.concentrator_amplification == 1.0
+    assert manifest.magnet_drift_ppm_per_K == 0.0
+    assert manifest.bias_B0_range_T is None
+    assert manifest.multi_axis_mode is False
+
+
+def test_manifest_bias_field_roundtrip_path_a():
+    """Path A (permanent magnet) bias config survives JSON roundtrip."""
+    import tempfile
+    from pathlib import Path
+
+    manifest = _make_valid_manifest(
+        bias_B0_T=3.0e-3,
+        bias_direction_uvw=(0.0, 0.0, 1.0),
+        concentrator_amplification=1.0,
+        magnet_drift_ppm_per_K=300.0,
+        bias_B0_range_T=(0.5e-3, 5.0e-3),
+        multi_axis_mode=True,
+    )
+    manifest.validate()
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir) / "manifest.json"
+        manifest.to_json(path)
+        loaded = DatasetManifest.from_json(path)
+
+        assert loaded.bias_B0_T == pytest.approx(3.0e-3)
+        assert tuple(loaded.bias_direction_uvw) == pytest.approx((0.0, 0.0, 1.0))
+        assert loaded.magnet_drift_ppm_per_K == pytest.approx(300.0)
+        assert loaded.bias_B0_range_T == pytest.approx((0.5e-3, 5.0e-3))
+        assert loaded.multi_axis_mode is True
+        # Path A: concentrator_amplification should be unity
+        assert loaded.concentrator_amplification == pytest.approx(1.0)
+
+
+def test_manifest_bias_field_roundtrip_path_b():
+    """Path B (flux concentrator) bias config survives JSON roundtrip."""
+    import tempfile
+    from pathlib import Path
+
+    manifest = _make_valid_manifest(
+        bias_B0_T=1.5e-3,
+        bias_direction_uvw=(1.0, 0.3, 0.1),  # off-axis lab direction
+        concentrator_amplification=30.0,
+        magnet_drift_ppm_per_K=0.0,
+        bias_B0_range_T=(0.5e-3, 5.0e-3),
+        multi_axis_mode=True,
+    )
+    manifest.validate()
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir) / "manifest.json"
+        manifest.to_json(path)
+        loaded = DatasetManifest.from_json(path)
+
+        assert loaded.concentrator_amplification == pytest.approx(30.0)
+        assert tuple(loaded.bias_direction_uvw) == pytest.approx((1.0, 0.3, 0.1))
+        # Path B: no magnet drift
+        assert loaded.magnet_drift_ppm_per_K == pytest.approx(0.0)
+
+
+def test_manifest_bias_field_backward_compat():
+    """Old manifests without bias-field keys load with scalar-regime defaults."""
+    import json
+    import tempfile
+    from pathlib import Path
+
+    manifest = _make_valid_manifest()
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir) / "manifest.json"
+        manifest.to_json(path)
+
+        # Simulate a v3-era manifest: strip every bias-field key
+        with open(path) as f:
+            d = json.load(f)
+        for key in (
+            "bias_B0_T",
+            "bias_direction_uvw",
+            "concentrator_amplification",
+            "magnet_drift_ppm_per_K",
+            "bias_B0_range_T",
+            "multi_axis_mode",
+        ):
+            d.pop(key, None)
+        with open(path, "w") as f:
+            json.dump(d, f)
+
+        loaded = DatasetManifest.from_json(path)
+        # All previously-tracked manifest fields must still be intact
+        assert loaded.master_seed == manifest.master_seed
+        assert loaded.train_seeds == manifest.train_seeds
+        assert loaded.freq_range_Hz == pytest.approx(manifest.freq_range_Hz)
+        # And the new fields fall back to the scalar-regime defaults
+        assert loaded.bias_B0_T == 0.0
+        assert tuple(loaded.bias_direction_uvw) == (0.0, 0.0, 1.0)
+        assert loaded.concentrator_amplification == 1.0
+        assert loaded.magnet_drift_ppm_per_K == 0.0
+        assert loaded.bias_B0_range_T is None
+        assert loaded.multi_axis_mode is False
+        # And the manifest still validates
+        loaded.validate()
+
+
+def test_manifest_rejects_negative_bias_B0():
+    """Negative bias magnitude must be rejected."""
+    manifest = _make_valid_manifest(bias_B0_T=-1.0e-3)
+    with pytest.raises(ValueError, match="bias_B0_T"):
+        manifest.validate()
+
+
+def test_manifest_rejects_negative_concentrator_amplification():
+    """Negative concentrator amplification must be rejected."""
+    manifest = _make_valid_manifest(concentrator_amplification=-2.0)
+    with pytest.raises(ValueError, match="concentrator_amplification"):
+        manifest.validate()
+
+
+def test_manifest_rejects_wrong_length_bias_direction():
+    """bias_direction_uvw must be a 3-vector."""
+    manifest = _make_valid_manifest(bias_direction_uvw=(1.0, 0.0))  # type: ignore[arg-type]
+    with pytest.raises(ValueError, match="bias_direction_uvw"):
+        manifest.validate()
+
+
+def test_manifest_rejects_inverted_bias_range():
+    """Inverted bias_B0_range_T must be rejected."""
+    manifest = _make_valid_manifest(bias_B0_range_T=(5.0e-3, 1.0e-3))
+    with pytest.raises(ValueError, match="bias_B0_range_T"):
+        manifest.validate()
+
+
+def test_manifest_units_include_bias_field():
+    """Units dict must expose bias-field semantics for downstream consumers."""
+    manifest = _make_valid_manifest()
+    assert manifest.units.get("bias_field") == "T"
+    assert manifest.units.get("concentrator_amplification") == "dimensionless"
+    assert manifest.units.get("magnet_drift") == "ppm/K"
