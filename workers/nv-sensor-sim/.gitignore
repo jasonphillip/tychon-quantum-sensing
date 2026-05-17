@@ -38,3 +38,6 @@ Thumbs.db
 # Environment
 .env
 .env.local
+
+# Claude Code local settings (per-user, not team-wide)
+.claude/settings.local.json
