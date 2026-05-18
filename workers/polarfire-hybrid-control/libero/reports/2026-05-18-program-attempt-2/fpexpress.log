@@ -1,0 +1,35 @@
+Software Version: 2025.2.0.14
+creating folder: ~\dev\projects\polarfire-hybrid-control\libero\reports\2026-05-18-program\fpexpress_job_project\polarfire_hybrid_control
+===============================================================
+Programmer: Embedded FP6 '065D9ACD' : Version = EF9B
+===============================================================
+programmer '065D9ACD' : Embedded FlashPro6
+Created new project '~\dev\projects\polarfire-hybrid-control\libero\reports\2026-05-18-program\fpexpress_job_project\polarfire_hybrid_control\polarfire_hybrid_control.pro'
+PPD file '~\dev\projects\polarfire-hybrid-control\libero\reports\2026-05-18-program\fpexpress_job_project\polarfire_hybrid_control\polarfire_hybrid_control.ppd' has been loaded successfully.
+DESIGN : MPFS_ICICLE_KIT_BASE_DESIGN;  CHECKSUM : 9F8A;  PDB_VERSION : 1.0
+creating folder: ~\dev\projects\polarfire-hybrid-control\libero\reports\2026-05-18-program\fpexpress_job_project\polarfire_hybrid_control\projectData
+Software Version: 2025.2.0.14
+PPD file '~\dev\projects\polarfire-hybrid-control\libero\reports\2026-05-18-program\fpexpress_job_project\polarfire_hybrid_control\polarfire_hybrid_control.ppd' has been loaded successfully.
+DESIGN : MPFS_ICICLE_KIT_BASE_DESIGN;  CHECKSUM : 9F8A;  PDB_VERSION : 1.0
+===============================================================
+Programmer: Embedded FP6 '065D9ACD' : Version = EF9B
+===============================================================
+programmer '065D9ACD' : Embedded FlashPro6
+The 'create_job_project' command succeeded.
+STEP 1 OK: job project created
+The 'set_device_name' command succeeded.
+STEP 2 OK: chain device renamed MPFS250T -> MPFS250T_ES
+The 'set_programming_action' command succeeded.
+STEP 3 OK: PROGRAM action selected for device MPFS250T_ES
+programmer '065D9ACD' : Scan Chain...
+programmer '065D9ACD' : Check Chain...
+Error: programmer '065D9ACD' : Device 1: Found: MPFS250(T_ES|TS_ES), Expected: MPFS250T
+Error: programmer '065D9ACD' : Scan and Check Chain FAILED.
+Error: Failed to run Action.
+Exported log file ~/dev/projects/polarfire-hybrid-control/libero/reports/2026-05-18-program/fpexpress.log.
+Error: The command 'run_selected_actions' failed.
+FATAL: run_selected_actions failed: 
+PROGRAM FAILED after ES-override attempt — STOP per rollback rule.
+Do NOT retry. Do NOT power-cycle. Surface log to operator.
+Error: Failure when executing Tcl script. [ Line 106 ]
+Error: The Execute Script command failed.
