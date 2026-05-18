@@ -2,16 +2,58 @@
 
 ## Status
 
-**INFRASTRUCTURE PREP, NOT CLOSURE (2026-05-17, DLOG-047).** This session
-discovered three concrete gaps in the pre-existing scaffolding for the
-B2.3 workload-driven SmartPower flow. The scripts have been corrected
-where possible; the remaining gaps are now documented for a future
-session with hands-on Beelink GUI access.
+**INFRASTRUCTURE CLOSED 2026-05-18 (rung B partial closure). LIVE SMARTPOWER
+IMPORT DEFERRED to a clean Libero session.**
+
+All three gaps identified 2026-05-17 are closed at the *script* level on
+`bringup/part-B-smartpower-infra-met`:
+
+- Gap 1 (AXI register driving in modelsim_pid_workload.do): CLOSED via
+  ModelSim `find signals -recursive sim:/nv_pid_top_top/*<reg>` auto-discovery
+  + sized-hex force-freeze. Six register forces succeed cleanly. The
+  workload VCD `sim/output/pid_workload.vcd` was generated successfully on
+  bee 2026-05-18 17:26 (1,626,056 bytes, 1000 stim rows from
+  `odmr_representative_trace.csv`, 17 s wall, 0 errors).
+- Gap 2 (wrong .prjx in 05_smartpower_workload.tcl): CLOSED. Repointed
+  `open_project` to the Microchip reference-design path at
+  `C:/Microchip/Libero_SoC_2025.2/SmartHLS/SmartHLS/reference_designs/Icicle_SoC/ref_design/MPFS_ICICLE_Vectorblox/MPFS_ICICLE_Vectorblox.prjx`.
+- Gap 3 (SmartPower VCD Tcl form): CLOSED via corpus-verified
+  `smartpower_import_vcd -file {<path>} -opmode {Active}`. Implementation
+  requires SmartPower's tool-context Tcl namespace (smartpower_* commands
+  are NOT in Libero Designer's top-level batch namespace), accessed via
+  `run_tool -name {VERIFYPOWER} -script <inner.tcl>`. Two-file pattern
+  authored: `05_smartpower_workload.tcl` (Libero launcher) +
+  `05_smartpower_workload_inner.tcl` (SmartPower-context).
+
+**Live SmartPower import on 2026-05-18 hung at project-open phase** after
+4 sequential invocations. Symptoms: `libero.exe` consumed 1 min CPU over
+23 min wall, repeated file-reading log entries, no progress past
+"MPFS_ICICLE_Vectorblox project was opened" milestone. Smartpower.spw was
+deleted; needs a clean Libero startup session to validate (likely cause:
+.spw / .pro state contention after multiple iterating attempts during the
+same session). Surfaced as a known issue; final live run deferred.
 
 **Capability Brief Total System Power KPP: remains Partial.** The
 default-toggle r6_s25 number (2,692.88 mW total / 2,247.27 mW dynamic =
 ~2.7 W FPGA+MSS at the fabric tile-level) is the canonical Phase I
-evidence until the gaps below are resolved.
+evidence until a clean-session live SmartPower import lands.
+
+**Next-session recovery path (estimated 30 min on bee with no concurrent Libero):**
+
+1. Restart Beelink (or at minimum `taskkill /f /im libero.exe` to clear
+   any lingering process state).
+2. Verify `smartpower.spw` is absent from the reference-design designer/.
+3. Run `ssh bee "cd ~/dev/projects/polarfire-hybrid-control &&
+   libero SCRIPT:libero/scripts/05_smartpower_workload.tcl
+   LOGFILE:libero/reports/2026-05-XX-workload-power-launch.log"` —
+   update the date string in `05_smartpower_workload_inner.tcl` line 8
+   (REPORT_DIR_TAG) to match.
+4. Expect ~8 min wall: project-open (~2 min), VERIFYPOWER clean+run
+   (~3-5 min), inner script smartpower_import_vcd + smartpower_report_power
+   (~1-2 min). Total power report writes to
+   `libero/reports/<date>-workload-power/smartpower_workload.rpt`.
+5. If hang persists, escalate to operator for GUI session — SmartPower may
+   require interactive launch from Libero's Verify Power right-click menu.
 
 ## What this proof obligation requires
 

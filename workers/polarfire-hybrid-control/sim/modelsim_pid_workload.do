@@ -72,15 +72,17 @@ set CYCLES_PER_ROW 1
 puts "INFO: compiling SmartHLS-generated RTL from $RTL_DIR"
 
 if {[file exists "$RTL_DIR/nv_pid_top_nv_pid_top.v"]} {
-    vlog "$RTL_DIR/nv_pid_top_nv_pid_top.v"
+    # SmartHLS-generated RTL uses SystemVerilog syntax (int loop vars,
+    # compound assign operators, $fatal). Compile with -sv enabled.
+    vlog -sv "$RTL_DIR/nv_pid_top_nv_pid_top.v"
 } else {
     puts "FATAL: nv_pid_top_nv_pid_top.v not found under $RTL_DIR — re-run `shls hw`"
     exit 1
 }
 
-# Companion modules — pull anything else SmartHLS emits.
+# Companion modules — pull anything else SmartHLS emits, also as SV.
 foreach v [glob -nocomplain "$RTL_DIR/*.v"] {
-    if {[file tail $v] ne "nv_pid_top_nv_pid_top.v"} { vlog $v }
+    if {[file tail $v] ne "nv_pid_top_nv_pid_top.v"} { vlog -sv $v }
 }
 
 # ---------------------------------------------------------------------------
@@ -105,33 +107,44 @@ force -freeze sim:/nv_pid_top_top/reset 0 50ns
 run 50 ns
 
 # ---------------------------------------------------------------------------
-# GAP: drive AXI4 register block to load Kp/Ki/Kd/out_min/out_max/
-#      inner_clamp_setpoint at representative values.
+# Gap 1 closure (2026-05-18): Force AXI4 register values via hierarchical
+# force using ModelSim's `find signals -recursive` auto-discovery. This
+# avoids hardcoding instance paths through the SmartHLS generate blocks
+# (genReg). Registers are at nv_pid_top_nv_pid_top.v:1649-1674 inside
+# the nv_pid_top_nv_pid_top module (instantiated as nv_pid_top_inst
+# within nv_pid_top_hw_top).
 #
-# Two implementation options for a future session:
-#   (A) Issue real AXI write transactions on axi4target_aw/w/b channels at
-#       the addresses from the SmartHLS-generated address map (see
-#       hls/hls_output/reports/summary.hls.nv_pid_top.rpt §4 "AXI4 Target
-#       Interface Address Map").
-#   (B) Hierarchical force on the internal Kp_reg, Ki_reg, Kd_reg, out_min_reg,
-#       out_max_reg, inner_clamp_setpoint_reg signals — they exist at
-#       nv_pid_top_nv_pid_top.v:1649-1674 inside the
-#       nv_pid_top_axi4slv_register `ram` instance. The full hierarchy path
-#       needs to be discovered in vsim after elaboration:
-#           find signals -recursive sim:/nv_pid_top_top/* | grep _reg$
-#       then add forces of the form:
-#           force -freeze <hier>/Kp_reg  32'd7
-#           force -freeze <hier>/Ki_reg  32'd1
-#           force -freeze <hier>/Kd_reg  32'd66
-#           force -freeze <hier>/out_min_reg 32'd0
-#           force -freeze <hier>/out_max_reg 32'd327680
-#           force -freeze <hier>/inner_clamp_setpoint_reg 32'd2950
-#
-# Until one of (A) or (B) is wired, the gains remain at reset value (zero) and
-# the resulting VCD has near-zero datapath activity — SmartPower would
-# under-report dynamic power. Surfaced as a known gap in
-# docs/workload_smartpower_2026-05-17.md.
+# Q16.16 representative values per docs/workload_smartpower_2026-05-17.md:
+#   Kp                       = 0.0001   → 7
+#   Ki                       = 0.00002  → 1
+#   Kd                       = 0.001    → 66
+#   out_min                  = 0.0      → 0
+#   out_max                  = 5.0      → 327680
+#   inner_clamp_setpoint     = 0.045    → 2950
 # ---------------------------------------------------------------------------
+
+proc force_reg_by_name {regname value} {
+    # Use find to locate the register signal under the simulator hierarchy,
+    # then force-freeze whatever it returns. Robust to instance-name churn
+    # through generate blocks. If multiple matches, force them all.
+    set matches [find signals -recursive sim:/nv_pid_top_top/*${regname}]
+    if {[llength $matches] == 0} {
+        puts "WARN: no signal matched *${regname} under sim:/nv_pid_top_top/"
+        return 0
+    }
+    foreach m $matches {
+        puts "INFO: force-freeze $m = $value"
+        force -freeze $m $value
+    }
+    return [llength $matches]
+}
+
+force_reg_by_name Kp_reg                       32'd7
+force_reg_by_name Ki_reg                       32'd1
+force_reg_by_name Kd_reg                       32'd66
+force_reg_by_name out_min_reg                  32'd0
+force_reg_by_name out_max_reg                  32'd327680
+force_reg_by_name inner_clamp_setpoint_reg     32'd2950
 
 # ---------------------------------------------------------------------------
 # Drive the dynamic inputs (error, u_AI_in, ai_watchdog_timeout) from CSV.
@@ -143,12 +156,14 @@ run 50 ns
 # ---------------------------------------------------------------------------
 
 proc q_pack {value frac_bits width} {
-    # Convert float to fixed-point and emit a Verilog-style signed bit vector.
+    # Convert float to fixed-point and emit a Verilog unsigned-hex literal.
+    # Negative values masked into two's complement; emitted as unsigned hex
+    # because force values can't be decimal-negative (Invalid decimal digit
+    # error on vsim-4011 with leading `-`). Hex avoids that.
     set scaled [expr {round($value * (1 << $frac_bits))}]
-    # Mask into width-bit two's complement.
     set mask [expr {(1 << $width) - 1}]
     set packed [expr {$scaled & $mask}]
-    return [format "%d'd%d" $width $packed]
+    return [format "%d'h%x" $width $packed]
 }
 
 set fp [open $TRACE_CSV r]

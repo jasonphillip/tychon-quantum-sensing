@@ -42,24 +42,31 @@
 # Configuration
 # ---------------------------------------------------------------------------
 
-# Date-stamped report tag. Update when re-running for a new closure cycle.
-set REPORT_TAG "2026-05-XX-workload-power"
+# Date-stamped report tag.
+set REPORT_TAG [clock format [clock seconds] -format "%Y-%m-%d-workload-power"]
 
 set REPO_ROOT  [pwd]
 set PROJECT    "polarfire_hybrid_control"
 set REPORT_DIR [file join $REPO_ROOT libero reports $REPORT_TAG]
 set WORKLOAD_VCD [file join $REPO_ROOT sim output pid_workload.vcd]
 
+# Gap 2 closure (2026-05-18): point at the Microchip reference design where
+# the canonical r6_s25 placed netlist actually lives. The local
+# libero/work/polarfire_hybrid_control.prjx has an empty designer/ — no
+# placed netlist exists there. See closure_pipeline.tcl line 14-15 for the
+# canonical path.
+set REF_PRJX "C:/Microchip/Libero_SoC_2025.2/SmartHLS/SmartHLS/reference_designs/Icicle_SoC/ref_design/MPFS_ICICLE_Vectorblox/MPFS_ICICLE_Vectorblox.prjx"
+
 file mkdir $REPORT_DIR
 
 # ---------------------------------------------------------------------------
-# Open the existing project. The script assumes the canonical r6_s25
-# layout is the latest place-and-route result in the project workspace.
-# Re-running 04_synth_pnr.tcl is NOT required — SmartPower runs against the
+# Open the existing project. The script attaches SmartPower to the r6_s25
+# closed P&R'd netlist inside the Microchip reference design tree.
+# Re-running synth/P&R is NOT required — SmartPower runs against the
 # already-placed netlist.
 # ---------------------------------------------------------------------------
-puts "INFO: opening Libero project for workload SmartPower analysis"
-open_project -file [file join $REPO_ROOT libero work $PROJECT.prjx]
+puts "INFO: opening Libero reference-design project: $REF_PRJX"
+open_project -file $REF_PRJX
 
 # ---------------------------------------------------------------------------
 # Sanity: workload VCD must exist.
@@ -74,76 +81,31 @@ if {![file exists $WORKLOAD_VCD]} {
 puts "INFO: workload VCD: $WORKLOAD_VCD"
 
 # ---------------------------------------------------------------------------
-# Configure SmartPower to use the workload VCD as the activity source.
+# Gap 3 closure (2026-05-18): smartpower_* commands live in SmartPower's
+# Tcl namespace, NOT in Libero Designer's top-level batch namespace. Run
+# them via `update_and_run_tool -name {POWERANALYSIS} -script <inner.tcl>`
+# which invokes SmartPower with its tool-specific Tcl context.
 #
-# NOTE: The exact Tcl command for setting the VCD-based activity source in
-# Libero 2025.2 SmartPower is one of:
-#   - set_smartpower_options -vcd_file <path>
-#   - read_vcd <path>
-#   - import_files -smartpower_vcd <path>
-# Verify against the Libero 2025.2 SmartPower User Guide / Tcl Command
-# Reference at first execution, then pin the working form.
+# Inner script handles: smartpower_import_vcd + smartpower_report_power.
 # ---------------------------------------------------------------------------
-puts "INFO: registering workload VCD as SmartPower activity source"
-
-# Most likely form per recent Libero releases:
-catch {
-    set_smartpower_options -vcd_file $WORKLOAD_VCD
-} smartpower_set_err
-if {$smartpower_set_err ne ""} {
-    puts "WARN: set_smartpower_options -vcd_file failed: $smartpower_set_err"
-    puts "      trying alternate form..."
-    catch { read_vcd $WORKLOAD_VCD } read_vcd_err
-    if {$read_vcd_err ne ""} {
-        puts "FATAL: both set_smartpower_options and read_vcd failed."
-        puts "       Verify exact command name in Libero 2025.2 Tcl reference."
-        puts "       Errors: $smartpower_set_err / $read_vcd_err"
-        exit 2
-    }
+set INNER_SCRIPT "$REPO_ROOT/libero/scripts/05_smartpower_workload_inner.tcl"
+puts "INFO: invoking VERIFYPOWER with SmartPower inner script: $INNER_SCRIPT"
+if {[catch {
+    run_tool -name {VERIFYPOWER} -script $INNER_SCRIPT
+} err]} {
+    puts "FATAL: VERIFYPOWER via run_tool failed: $err"
+    exit 2
 }
+puts "INFO: VERIFYPOWER completed"
 
-# ---------------------------------------------------------------------------
-# Run SmartPower. The tool ingests the VCD activity and computes
-# workload-specific dynamic power, then combines with leakage.
-# ---------------------------------------------------------------------------
-puts "INFO: running POWERANALYSIS with workload VCD activity"
-run_tool -name {POWERANALYSIS}
-
-# ---------------------------------------------------------------------------
-# Export reports.
-# ---------------------------------------------------------------------------
-set power_rpt [file join $REPORT_DIR smartpower_workload.rpt]
-set power_xml [file join $REPORT_DIR \
-                MPFS_ICICLE_KIT_BASE_DESIGN_power_workload.xml]
-
-puts "INFO: exporting workload SmartPower text report -> $power_rpt"
-report \
-    -type {power} \
-    -format {text} \
-    [list -file $power_rpt]
-
-puts "INFO: exporting workload SmartPower XML breakdown -> $power_xml"
-report \
-    -type {power} \
-    -format {xml} \
-    [list -file $power_xml]
-
-# ---------------------------------------------------------------------------
-# Capture the SmartPower DB so a later session can re-open the analysis
-# without re-ingesting the VCD.
-# ---------------------------------------------------------------------------
-set spw_dst [file join $REPORT_DIR smartpower_workload.spw]
-set spw_src [file join $REPO_ROOT libero work $PROJECT.spw]
-if {[file exists $spw_src]} {
-    file copy -force $spw_src $spw_dst
-    puts "INFO: copied SmartPower DB -> $spw_dst"
-}
+# Report generation is handled by the inner SmartPower-context script
+# (smartpower_report_power -file <rpt>). The default report-dir tag is
+# computed identically in both files (clock format YYYY-MM-DD-workload-power).
 
 puts ""
 puts "DONE: workload-driven SmartPower closure landed in $REPORT_DIR"
 puts "  Compare against r6_s25 default-toggle baseline:"
 puts "    libero/reports/2026-04-29-pid-real/MPFS_ICICLE_KIT_BASE_DESIGN_power_report.xml"
 puts "  Default-toggle baseline: 2,692.88 mW total / 2,247.27 mW dynamic"
-puts "  KPP delta: see docs/track2_workload_smartpower.md (TBD on first run)"
 
 close_project -save 0
