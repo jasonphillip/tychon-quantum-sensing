@@ -99,7 +99,7 @@ Three patches stacked on the SmartDesign top:
 2. `patch_smartdesign_watchdog.py` (Task 2)
    - watchdog_timer_0 instantiated with 200,000-cycle counter
    - timeout drives nv_pid_top_0.ai_watchdog_timeout (replacing GND_net)
-   - ai_heartbeat from MSS_WRAPPER_1_GPIO_2_M2F_28 (test stimulus, Phase II
+   - ai_heartbeat from MSS_WRAPPER_1_GPIO_2_M2F_28 (test stimulus, follow-on
      swap to CoreVectorBlox output_valid pending sub-component canvas work)
 
 3. `patch_smartdesign_axi_target_experiment.py`
@@ -110,10 +110,10 @@ Three patches stacked on the SmartDesign top:
    - axi4target_bready → 1'b1 (always-ready)
    - This is the change that defeated the gain-fold and produced the
      above numbers; same FIC_0 master tap pattern as pid_io_block, not
-     address-decoded for nv_pid_top's address slot — Phase II proper
+     address-decoded for nv_pid_top's address slot — follow-on proper
      AXI4-Lite interconnect routing is the clean replacement.
 
-## Phase II next steps
+## Follow-On Next Steps
 
 1. **Real AXI4-Lite interconnect routing for nv_pid_top's gain registers.**
    Replace the FIC_0 master tap with a dedicated AXI4-Lite slave slot at

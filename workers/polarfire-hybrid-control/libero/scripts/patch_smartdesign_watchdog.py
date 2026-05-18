@@ -11,12 +11,12 @@ Runs AFTER patch_smartdesign_top.py (Task 1). Applies three edits:
 
 Heartbeat source: MSS_WRAPPER_1_GPIO_2_M2F_28 (Approach B, test stimulus).
 HB0919-documented Approach A (CoreVectorBlox output_valid interrupt port,
-mirror of Control Register bit 3 at offset 0x00) is the Phase II target;
+mirror of Control Register bit 3 at offset 0x00) is the follow-on target;
 the IP exports the signal correctly but the existing SmartDesign canvas
 leaves Vectorblox_ss.v line 467 with `.output_valid ( )` and the parent
 FIC_0_PERIPHERALS sub-component does not propagate it up. Wiring it
 properly requires patching both Microchip-shipped sub-components, which
-is deferred — see Phase II TODO in libero/hdl/watchdog_timer.v.
+is deferred — see Follow-on TODO in libero/hdl/watchdog_timer.v.
 
 Usage:
   python3 patch_smartdesign_watchdog.py <path/to/MPFS_ICICLE_KIT_BASE_DESIGN.v>
@@ -49,7 +49,7 @@ WATCHDOG_INSTANCE = """\
 //        nv_pid_top_0.ai_watchdog_timeout. Heartbeat source is currently
 //        MSS_WRAPPER_1_GPIO_2_M2F_28 as test stimulus — defeats Synplify
 //        constant-folding so the watchdog instance and downstream timeout
-//        propagation are preserved. Phase II will replace the heartbeat
+//        propagation are preserved. Follow-on deployment will replace the heartbeat
 //        with CoreVectorBlox output_valid (HB0919 Table 5-4) once the
 //        Vectorblox_ss / FIC_0_PERIPHERALS canvas wiring exposes it.)
 watchdog_timer #(

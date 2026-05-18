@@ -21,7 +21,7 @@ Either result is informative.
 This is a SYNTH-ONLY EXPERIMENT. The rewires use the same FIC_0 master
 signals as pid_io_block's tap, so the AXI traffic isn't address-decoded
 properly — gain-register writes won't be reliably software-controllable.
-That's fine for the discriminating test. Phase II proper wiring is a
+That's fine for the discriminating test. Follow-on proper wiring is a
 separate effort.
 
 Usage:

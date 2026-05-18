@@ -16,7 +16,7 @@ Effects:
      with named nets feeding pid_io_block_0.
   4. Insert pid_io_block_0 instantiation immediately after the nv_pid_top_0
      instantiation, with its AXI master-side tapped from non-constant
-     MSS-driven FIC_0 AXI signals (test stimulus only — Phase II will route
+     MSS-driven FIC_0 AXI signals (test stimulus only — follow-on deployment will route
      a dedicated AXI4-Lite interconnect branch to this slave).
   5. OR an observability tap (pid_io_block + nv_pid_top output bits) into
      the LED0 chain. Without this, Synplify prunes pid_io_block_0 (its
@@ -81,7 +81,7 @@ PID_IO_BLOCK_INSTANCE = """\
 //--------pid_io_block (Phase I integration: defeats Synplify constant-folding
 //        of nv_pid_top inputs and provides actuator_out readback register
 //        block. AXI master-side is tapped from MSS-driven FIC_0 AXI signals
-//        as test stimulus; Phase II will route a dedicated AXI4-Lite
+//        as test stimulus; follow-on deployment will route a dedicated AXI4-Lite
 //        interconnect branch here. Register map — see libero/hdl/pid_io_block.v.)
 pid_io_block pid_io_block_0(
         // AXI4-Lite slave clock/reset

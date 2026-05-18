@@ -66,7 +66,7 @@ correctly verified structural reachability (CL168 = 0, modules in
 synthesis source list), but structural reachability is not the same
 as semantic preservation.
 
-For Phase II, freeing `error`/`u_AI_in` is necessary but not
+For follow-on deployment, freeing `error`/`u_AI_in` is necessary but not
 sufficient. The AXI4-target inputs must also see non-constant traffic.
 Two options:
 

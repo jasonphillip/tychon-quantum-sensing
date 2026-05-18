@@ -106,8 +106,8 @@ pid_csr_block u_pid_csr_block (
     .u_ai_shadow_out                 (pid_csr_u_ai_shadow_w),
 
     // Phase I taps: drive from the same non-constant FIC_0 master signals
-    // so the status path is non-pruned. Phase II replaces these with real
-    // observability wires from nv_pid_top.
+    // so the status path is non-pruned. Follow-on deployment replaces these
+    // with real observability wires from nv_pid_top.
     .tap_pre_clamp_out      (FIC_0_PERIPHERALS_1_AXI4mslave0_WDATA[31:0]),
     .tap_post_clamp_out     (FIC_0_PERIPHERALS_1_AXI4mslave0_AWADDR[31:0]),
     .tap_integrator         ({16'h0, FIC_0_PERIPHERALS_1_AXI4mslave0_ARADDR}),
