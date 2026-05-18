@@ -1,4 +1,4 @@
-"""verify_bit_exact CI scaffold for the Phase II hierarchical INT8 cascade (P3-11B).
+"""verify_bit_exact CI scaffold for the follow-on hierarchical INT8 cascade (P3-11B).
 
 Asserts bit-exact equality between the canonical numpy reference at
 ``tychon_shared_data.cascade.cascade_ref:compose_int8`` and either:

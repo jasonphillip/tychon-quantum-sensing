@@ -7,7 +7,7 @@ CSV columns (one row per simulator clock cycle when consumed by
 sim/modelsim_pid_workload.do):
   cycle             — int, monotonically increasing
   error_hz          — float, frequency-domain detuning error fed to nv_pid_top
-                      (range ±5000 Hz, covering Phase II operating envelope)
+                      (range ±5000 Hz, covering follow-on operating envelope)
   u_ai_volts        — float, AI feedforward output in actuator-domain volts
                       (range [-0.225, +0.225] within outer sector clamp)
   ai_wd_timeout     — int, 0/1, the ai_watchdog_timeout boolean
