@@ -83,7 +83,7 @@ The AI feedforward path is bounded by three safety mechanisms:
 2. **Slew-rate limiter** -- Per-cycle AI output change bounded to prevent plant resonance excitation
 3. **Hardware watchdog** -- 1 ms timeout triggers bumpless transfer from AI+PID to pure PID mode
 
-These mechanisms make the AI feedforward path **sector-bounded by design within the Phase I assumptions** documented in `docs/safety_architecture.md`. They do not constitute a proof that the AI cannot destabilize the loop — that requires discharging the Residual Phase II Proof Obligations table in the same document (plant model identification, ZOH phase margin, transport delay bound, derivative filter SI, ReLU sector verification, workload-driven SmartPower).
+These mechanisms make the AI feedforward path **sector-bounded by design within the Phase I assumptions** documented in `docs/safety_architecture.md`. They do not constitute a proof that the AI cannot destabilize the loop — that requires discharging the Residual Proof Obligations table (closable under follow-on path) in the same document (plant model identification, ZOH phase margin, transport delay bound, derivative filter SI, ReLU sector verification, workload-driven SmartPower).
 
 ## Power Analysis
 
@@ -96,4 +96,4 @@ SmartPower synthesis reports are generated on the Beelink build host and archive
 | **SWaP budget** | **12 W** |
 | **Margin** | **~57%** (preliminary) |
 
-Static power is derived from SmartPower estimation. The `smartpower_report.rpt` artifact is not committed to this repo — it is regenerated on each synthesis run via `libero/scripts/04_synth_pnr.tcl`. Workload-driven SmartPower is one of the Residual Phase II Proof Obligations in `docs/safety_architecture.md`.
+Static power is derived from SmartPower estimation. The `smartpower_report.rpt` artifact is not committed to this repo — it is regenerated on each synthesis run via `libero/scripts/04_synth_pnr.tcl`. Workload-driven SmartPower is one of the Residual Proof Obligations (closable under follow-on path) in `docs/safety_architecture.md`.
