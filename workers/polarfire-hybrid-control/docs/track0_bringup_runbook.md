@@ -2,7 +2,7 @@
 
 This runbook drives the four hardware-bring-up items (HW-01..HW-04) that gate the first PID-only bitstream onto the physical Icicle Kit acquired 2026-05-02. As of the 2026-05-04 refresh below, HW-01 / HW-02 / HW-03 are RESOLVED and HW-04b is OBSOLETED; remaining work (HW-04c populate `pinout.pdc`, HW-04d persist bitstream artifact, then program the kit and bring up demo firmware) is now driven by the demo-bringup plan at `~/.claude/plans/i-plugged-in-j11-optimized-quilt.md`. Original recipes are retained below for re-application reference; the active hand-off lives in the demo-bringup plan.
 
-## Status summary (refreshed 2026-05-04)
+## Status summary (refreshed 2026-05-18)
 
 | Item | Status | Owner |
 |---|---|---|
@@ -11,12 +11,19 @@ This runbook drives the four hardware-bring-up items (HW-01..HW-04) that gate th
 | HW-03 — CP210x VCP driver install | **RESOLVED 2026-05-02 evening** (Silicon Labs CP2108 enumerates as 4 COM ports under Windows on Beelink) | n/a |
 | HW-04a — bundle synced | **RESOLVED 2026-05-02** | n/a |
 | HW-04b — package-cross-mapping audit | **OBSOLETED 2026-05-03** (silicon now matches bundle's native FCVG484 package; no per-pin mapping required — see HW-04b note below) | n/a |
-| HW-04c — pinout.pdc populated from reference | **OPEN** | covered by demo-bringup plan Part 1 |
-| HW-04d — explicit bitstream artifact persistence | **OPEN** | covered by demo-bringup plan Part 1 |
-| Track 0 closure (program kit) | **OPEN** | covered by demo-bringup plan Part 2 |
-| Demo firmware (Options A→C) | **OPEN** | covered by demo-bringup plan Parts 3–5 |
+| HW-04c — pinout.pdc populated from reference | **RESOLVED 2026-05-04** (Path IV ship-it: reused audit-006 seed_7 closure which has pinout via `MPFS_ICICLE_KIT_BASE_DESIGN`) | n/a |
+| HW-04d — explicit bitstream artifact persistence | **RESOLVED 2026-05-04** (`.job` + `.sha256` + `_job.digest` landed in `libero/reports/2026-05-04-bringup/` via `04b_export_only.tcl`) | n/a |
+| Seed sweep + timing closure (V250 incl.) | **RESOLVED 2026-05-03** (3 seeds — 7, 13, 23 — of `MPFS_ICICLE_Vectorblox.prjx` ran on bee; seed 7 won at +0.274 ns worst slack, 25.88% 4LUT) | n/a |
+| FPExpress GUI launch with kit attached | **STAGED 2026-05-04 20:13** (`~/AppData/Roaming/Actel/flashpro.def` created — proves launch; Construct Chain / Program click NOT evidenced) | covered by demo-bringup plan Part 2 |
+| Track 0 closure (PROGRAM PASS captured) | **OPEN** | covered by demo-bringup plan Part 2 |
+| Demo firmware (Options A→C) | **OPEN** (`firmware/` empty; SoftConsole 2022.2 build 747 installed and verified) | covered by demo-bringup plan Parts 3–5 |
+| RPO-4 derivative filter | **INFRA LANDED 2026-05-04 → 2026-05-17** (`Kd·s/(1+s·Tf)` form via commits `6a0002f`/`8dc37aa`/`4065f7f`; DLOG-046) | follow-on closure |
+| RPO-6 workload SmartPower | **INFRA PREP 2026-05-17** (3 gaps documented in `docs/workload_smartpower_2026-05-17.md`; ~half-day to close on next Beelink session) | follow-on closure |
+| Real ODMR sensor data | **OPEN** (separate hardware track — DIY benchtop or consultant; not gated by FPGA bring-up) | future |
 
-**Hardware connectivity verified 2026-05-04 (this session):** Both Icicle Kit USB headers (J11 and J33) plugged into Beelink. `Get-PnpDevice` enumerates **both** the FlashPro embedded programmer (`VID_1514 PID_200B`, status OK, HID class) **and** the Silicon Labs CP2108 quad UART bridge (`VID_10C4 PID_EA71`, 4 interfaces visible as COM3 / COM4 / COM5 / COM6). Per-port mapping (which physical header carries which chip) is NOT yet verified — selectively unplug one in Part 2 and re-enumerate to disambiguate. Note: an earlier draft of HW-03 below states "J11 connector is a Silicon Labs CP2108"; this is unverified in either direction at the time of this refresh.
+**Hardware connectivity verified 2026-05-04:** Both Icicle Kit USB headers (J11 and J33) plugged into Beelink. `Get-PnpDevice` enumerates **both** the FlashPro embedded programmer (`VID_1514 PID_200B`, status OK, HID class) **and** the Silicon Labs CP2108 quad UART bridge (`VID_10C4 PID_EA71`, 4 interfaces visible as COM3 / COM4 / COM5 / COM6). Per-port mapping (which physical header carries which chip) is NOT yet verified — selectively unplug one in Part 2 and re-enumerate to disambiguate. Note: an earlier draft of HW-03 below states "J11 connector is a Silicon Labs CP2108"; this is unverified in either direction at the time of this refresh.
+
+**Bitstream architecture confirmed 2026-05-18 (audit re-assessment):** The seed_7 closure is `MPFS_ICICLE_Vectorblox.prjx` — the Microchip MPFS_ICICLE_KIT_BASE_DESIGN base design **including CoreVectorBlox V250 NPU by construction**. The exported `polarfire_hybrid_control.job` (11.5 MB, sha256 `d5f3eb4e…`) contains the full hybrid PID + V250 stack, not PID-only. The 12.5 KB `models/fcnn_v2_residual_dataset_a.vnnx` model has a real execution target on the synthesized fabric; what remains is loading and exercising it via firmware. See TVW memory `fpga_bringup_state_2026-05-18.md` for the full corrected inventory.
 
 ## HW-01 — Silkscreen package verification (RESOLVED 2026-05-03)
 
