@@ -4,7 +4,7 @@
 
 The AI feedforward path is treated as a sector-bounded nonlinearity within a Lur'e system framework. Absolute stability is guaranteed via the Circle Criterion, which requires three conditions:
 
-1. **Sector saturation clamps (±5% Phase I bound)** — AI output bounded to a fraction of the actuator range. Implemented in `hls/src/safety_clamps.cpp` with a 4.5% hardware limit to guarantee ±5.0% compliance after worst-case fixed-point rounding. Analytical re-derivation (Phase II) confirms the Circle Criterion holds up to ±50% authority for any positive plant gain, with ±30% proposed as the expanded operational bound for Phase II deployment.
+1. **Sector saturation clamps (±5% Phase I bound)** — AI output bounded to a fraction of the actuator range. Implemented in `hls/src/safety_clamps.cpp` with a 4.5% hardware limit to guarantee ±5.0% compliance after worst-case fixed-point rounding. Analytical re-derivation (expanded-authority analysis) confirms the Circle Criterion holds up to ±50% authority for any positive plant gain, with ±30% proposed as the expanded operational bound for the follow-on deployment path.
 
 2. **Bounded slew rate** — Per-cycle change in AI feedforward output is clamped (`MAX_SLEW_PER_CYCLE = 0.001`, i.e. 200 V/ms at 200 MHz). Prevents abrupt AI corrections from exciting plant resonances or violating du/dt assumptions in the stability proof.
 
@@ -15,10 +15,10 @@ The AI feedforward path is treated as a sector-bounded nonlinearity within a Lur
 | Phase | Sector Bound | Status |
 |-------|-------------|--------|
 | Phase I (current) | ±5% (4.5% in hardware) | Implemented, conservative |
-| Phase II (proposed) | ±30% operational | Analytically confirmed stable |
+| Follow-on (proposed) | ±30% operational | Analytically confirmed stable |
 | Worst-case floor | ±50% | Circle Criterion limit for any positive plant gain |
 
-The ±5% Phase I bound was chosen conservatively for initial deployment. The Lur'e/Circle Criterion analysis shows k_max floors at ±50% — the nonlinearity sector [0, k_max] admits any gain up to half the actuator range. The ±30% Phase II bound provides margin below this theoretical limit.
+The ±5% Phase I bound was chosen conservatively for initial deployment. The Lur'e/Circle Criterion analysis shows k_max floors at ±50% — the nonlinearity sector [0, k_max] admits any gain up to half the actuator range. The ±30% expanded-authority bound (follow-on path) provides margin below this theoretical limit.
 
 ## Watchdog and Bumpless Transfer
 
@@ -30,9 +30,9 @@ A hardware watchdog (200 MHz counter, 1 ms timeout) monitors AI inference latenc
 
 ## Signal Path Assumptions
 
-Phase I assumes a simplified always-valid signal path for `u_AI_in`. The PID reads the VectorBlox output register combinatorially each cycle with no valid/ready handshake. Stale inference results are bounded by the sector clamp and slew limiter but are not distinguished from fresh results. Phase II should implement a valid/ready handshake to gate AI feedforward on actual inference completion.
+Phase I assumes a simplified always-valid signal path for `u_AI_in`. The PID reads the VectorBlox output register combinatorially each cycle with no valid/ready handshake. Stale inference results are bounded by the sector clamp and slew limiter but are not distinguished from fresh results. The follow-on deployment should implement a valid/ready handshake to gate AI feedforward on actual inference completion.
 
-## Phase II Stability Analysis
+## Stability Analysis (Follow-On Path)
 
 The following items extend the Phase I Lur'e/Circle Criterion proof to cover discrete-time and implementation effects:
 
@@ -48,10 +48,10 @@ The PID derivative term `Kd * (error - prev_error)` is an unfiltered first diffe
 
 If the Circle Criterion proves insufficient under discrete-time effects (ZOH phase loss, transport delay, derivative noise), Integral Quadratic Constraints (IQC) provide a more general multiplier-based stability framework. IQC can handle rate-bounded and slope-restricted nonlinearities jointly, which would allow the sector clamp and slew limiter to be analyzed as a single composite constraint rather than independently. This is a contingency — not required if (a) and (b) confirm adequate margins.
 
-## Residual Phase II Proof Obligations
+## Residual Proof Obligations (Closable Under Follow-On Path)
 
 The Phase I claims above hold *within the assumptions documented in
-`Phase II Stability Analysis`*. The following items are **not** proven
+`Stability Analysis (Follow-On Path)`*. The following items are **not** proven
 yet and must be discharged before any "cannot destabilize" claim is
 admissible:
 

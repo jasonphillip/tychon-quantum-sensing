@@ -1,4 +1,4 @@
-# Derivative Filter Design — Phase-II Residual Proof Obligation #4
+# Derivative Filter Design — Residual Proof Obligation #4 (Follow-On Closure)
 
 ## Status
 

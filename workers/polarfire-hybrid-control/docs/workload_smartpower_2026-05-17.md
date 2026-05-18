@@ -1,4 +1,4 @@
-# Workload-Driven SmartPower — Phase-II Residual Proof Obligation #6
+# Workload-Driven SmartPower — Residual Proof Obligation #6 (Follow-On Closure)
 
 ## Status
 
