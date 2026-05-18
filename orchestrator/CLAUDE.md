@@ -7,7 +7,7 @@
 > is preserved for git/symlink compatibility — only the role name changed.
 
 ## Mission
-Orchestrate Tychon SBIR Phase I deliverables (Proposal `FX255-PCS02-0044` (not selected 2026-05-12, never a contract), Topic `AFX25S-PCS02`, Distribution Statement A) and Phase II preparation. Concretely, TVW:
+Orchestrate Tychon SBIR Phase I deliverables (Proposal `FX255-PCS02-0044` (not selected 2026-05-12, never a contract), Topic `AFX25S-PCS02`, Distribution Statement A) and the active forward path (methodology and FPGA-stack portfolio). Concretely, TVW:
 
 1. **Verifies factual claims** in the Phase I final technical report against project ground truth (closure deliverables, technical references, four implementation repos) via the audit harness in Stages 1–4.
 2. **Drives the May 1, 2026 document fix list** — the active cross-document and cross-repo fix driver — including direct edits to the SBIR shared folder.
@@ -16,7 +16,7 @@ Orchestrate Tychon SBIR Phase I deliverables (Proposal `FX255-PCS02-0044` (not s
 
 ## SBIR Phase I working folder (single source of truth)
 Symlinked at `tvw/source/sbir/tychon-nv-sim-repos/` → `~/projects/tychon-sbir/docs/`. Read-only from TVW (never `git add` from here). Layout:
-- `May_1_2026_Document_Fix_List.md` — **active work driver.** v3 fix list, split into editorial fixes (Parts 1–2) and Phase II technical work (Part 3 — clamp authority, covariate shift, orbit-in-the-loop benchmark). Always re-read this before planning a fix session; it changes between runs.
+- `May_1_2026_Document_Fix_List.md` — **active work driver.** v3 fix list, split into editorial fixes (Parts 1–2) and technical work (Part 3 — clamp authority, covariate shift, orbit-in-the-loop benchmark). Always re-read this before planning a fix session; it changes between runs.
 - `INDEX.md`, `STATUS.md`, `OUTREACH_TRACKER.md` — running status files.
 - `01_deliverables/` — `final_report/`, `capability_brief/`, `audits/` (mirror target for TVW audit-NNN.md), `tvw_logs/`.
 - `02_foundational/`, `03_phase1_planning/`, `04_phase2_planning/` — proposal + Phase II priority docs (P1 hierarchical INT8, P2 ephemeris sampling, core proposal v2).
@@ -25,7 +25,7 @@ Symlinked at `tvw/source/sbir/tychon-nv-sim-repos/` → `~/projects/tychon-sbir/
 
 ## Hard rules
 
-1. **LLM critic inference is air-gapped.** The audit pipeline's critics (Stage 3 NIM/Ollama ensemble, Stage 5 Llama-3.3-70B reviewer) MUST resolve to `localhost`, `127.0.0.1`, `spark1`, `spark2`, or `192.168.*`. Any cloud LLM (Anthropic API, OpenAI, Gemini, Perplexity, Scite, etc.) is forbidden **as an audit critic** under Phase II CUI risk posture. The base Claude model running TVW is itself cloud-hosted — that's the harness, not a critic, and not a violation.
+1. **LLM critic inference is air-gapped.** The audit pipeline's critics (Stage 3 NIM/Ollama ensemble, Stage 5 Llama-3.3-70B reviewer) MUST resolve to `localhost`, `127.0.0.1`, `spark1`, `spark2`, or `192.168.*`. Any cloud LLM (Anthropic API, OpenAI, Gemini, Perplexity, Scite, etc.) is forbidden **as an audit critic** under the project's CUI risk posture. The base Claude model running TVW is itself cloud-hosted — that's the harness, not a critic, and not a violation.
 2. **NIM-first for critic inference.** Primary critics: `qwen/qwen3-32b-dgx-spark` and `nvidia/nvidia-nemotron-nano-9b-v2-dgx-spark`. Heavyweight reviewer (Stage 5): `meta/llama-3.3-70b-instruct` quantized Q4_K_M via llama.cpp built with `-DCMAKE_CUDA_ARCHITECTURES="121"`. NIM embedding containers fail on ARM64 Blackwell — keep the existing Qwen3-Embedding-4B service on Spark 2 as the embedder.
 3. **Symlinked sources are read-only.** `tvw/source/repos/*` and `tvw/source/sbir/*` are symlinks into the user's actual repos. Never `git add` to them via TVW; never modify their contents through the symlinks. (Editing the underlying canonical files at their real paths — e.g., `~/projects/tychon-sbir/docs/...` — is permitted and expected for fix-list orchestration.)
 4. **Never read or commit secrets.** `.env`, credentials, API keys are off-limits. Use `$VAR` references in commands.
