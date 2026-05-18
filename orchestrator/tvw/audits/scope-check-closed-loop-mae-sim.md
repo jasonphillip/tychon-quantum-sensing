@@ -104,18 +104,18 @@ Concretely:
 
 ## Scenario classification, recommendation
 
-**Scenario: 3 (defer to Phase II HIL).**
+**Scenario: 3 (defer to hardware-integration platform).**
 
 Rationale:
 - 3a (slap MAE on the existing series, ~5 LOC) is cheap but produces a number that is *not* closed-loop deployed MAE and would inherit the same framing error that motivated this audit. Publishing it under a "closed-loop integration" label in Phase I makes the v3.4 §8.3 problem worse, not better.
-- 3b (build the real closed-loop simulation) requires architectural commitments owned by `polarfire-hybrid-control` (FCNN integration mode, `Ki`, `τ_loop`, multi-rate model, plant definition). These are exactly the items that Phase II HIL is supposed to settle empirically. Front-running them with a sim built in the next few days, on the eve of the May 1 SBIR submission, optimizes for a single Phase I bullet at the cost of locking in choices the FPGA team will revisit.
+- 3b (build the real closed-loop simulation) requires architectural commitments owned by `polarfire-hybrid-control` (FCNN integration mode, `Ki`, `τ_loop`, multi-rate model, plant definition). These are exactly the items that hardware-integration testing (follow-on path) is supposed to settle empirically. Front-running them with a sim built in the next few days, on the eve of the May 1 SBIR submission, optimizes for a single Phase I bullet at the cost of locking in choices the FPGA team will revisit.
 - The available open-loop evidence (4.82 % τ=2700 s ADEV reduction, 6.91 % per-sample MAE reduction under ±2.25 µT clamp, 97.4 % clamp-saturation rate on val) is internally consistent and defensible as Phase I evidence **provided v3.4 §8.3 drops the "closed-loop integration" framing** and reports it as what it actually is: stationary-residual ADEV/MAE under disturbance-driven OU + tumble.
 
 ### Recommendation
 
 1. **Do not extend `adev_simulation.py` for Phase I.**
 2. **Reword v3.4 §8.3** to remove the "closed-loop integration" claim. Replace with: *"OADEV reduction on a 16,200-s disturbance-driven residual series (cascaded OU on T and B1, satellite tumble): 4.82 % at τ = T_orb/2 = 2700 s; per-sample MAE reduction under ±2.25 µT clamp on the v1 val split: 6.91 %."* Both numbers are auditable from the existing npz files.
-3. **Defer closed-loop deployed MAE to Phase II HIL,** where `τ_loop`, controller gains, and FCNN integration mode are real (not invented) and where the FPGA team is the joint owner of the architecture.
+3. **Defer closed-loop deployed MAE to the hardware-integration platform (follow-on path),** where `τ_loop`, controller gains, and FCNN integration mode are real (not invented) and where the FPGA team is the joint owner of the architecture.
 4. *(Optional, low cost)* If a Phase I bullet specifically needs a deployed-MAE number, compute 3a on the existing time series (~5 LOC) but **label it explicitly as "open-loop / per-sample MAE on the disturbance-driven residual series, no controller integrator modeled"**. Do not allow it to be reframed as closed-loop in any submission text.
 
 ### What would change the recommendation

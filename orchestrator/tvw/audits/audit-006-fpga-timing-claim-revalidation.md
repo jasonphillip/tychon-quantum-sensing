@@ -201,7 +201,7 @@ The `.vm` divergence (`44917cd6` ≠ `ae51d60d`) under identical RTL + identical
 
 3. **The audit becomes a recommendation, not a re-validation.** v3.4 cannot keep citing `+0.728 ns` as "the slack" because the underlying artifact is gone. Either:
    - Replace the headline with the §2.3 distribution from the `44917cd6` baseline (recommended — see §5), or
-   - Mark `+0.728 ns` as "captured 2026-04-29 against a now-superseded netlist" with a forward-looking commitment to re-run timing on Phase II RT-PolarFire baseline.
+   - Mark `+0.728 ns` as "captured 2026-04-29 against a now-superseded netlist" with a forward-looking commitment to re-run timing on production RT-PolarFire baseline (follow-on).
 
 **The defensibility paragraph (§2.1) needs to be revised** to acknowledge non-determinism rather than assert it. Updated form for v3.4 footnote / methodology appendix:
 
