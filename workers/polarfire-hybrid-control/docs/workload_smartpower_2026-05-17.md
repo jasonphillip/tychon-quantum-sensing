@@ -121,7 +121,7 @@ trace captures real activity on `error` (continuously changing 64-bit
 Q34.30) and held AXI-target configuration. The trace fits inside the
 range of operational frequencies the ODMR controller will see in flight.
 
-## Path to closure (Phase II)
+## Path to closure (Follow-On)
 
 1. Fix Gap 1: implement option A or B in `sim/modelsim_pid_workload.do`.
    For Option B, requires one round-trip to Beelink + ModelSim

@@ -42,7 +42,7 @@ Working hypothesis at end of T3.1: **`round_half_to_even`** (banker's rounding),
 ## T3.2 — SDK source confirmation (2026-05-02): RESOLVED to round_half_up
 
 Inspected the VectorBlox SDK at `C:\Microchip\VectorBlox-SDK\`, commit
-`4186f9a` (matches the Phase II brief). The closed-source firmware blob
+`4186f9a` (matches the follow-on deployment brief). The closed-source firmware blob
 (`fw/firmware.bin`, `fw/firmware.hex`) and bit-accurate simulator
 (`lib/libvbx_cnn_sim.so`) ship as compiled binaries — but the Python
 companion `python/vbx/vbx/generate/vnnx_tflite.py` contains the

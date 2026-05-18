@@ -79,9 +79,9 @@ the WSL python path is wired through it.
    - Compile-time flag changes (`vnnx_compile` defaults vary by SDK
      rev — pin to `-c V250`).
 
-## Phase II handoff
+## Follow-On Hardware Handoff
 
-For Phase II HIL bring-up, .vnnx artifacts get loaded onto the Icicle
+For follow-on HIL bring-up, .vnnx artifacts get loaded onto the Icicle
 Kit via the MSS bare-metal firmware. The firmware locates the .vnnx in
 the on-board flash partition reserved for AI models (memory map TBD —
 see `docs/seed_7_register_map_2026-05-04.md` and the empty `firmware/`

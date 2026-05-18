@@ -28,9 +28,9 @@ in `libero/scripts/patch_smartdesign_pid_csr.py` — it taps the FIC_0
 master to drive both slaves as eavesdroppers. That run defeats Synplify
 constant-folding (the corpus's first criterion) but does **not** provide
 software write-then-readback (the second criterion). Use Phase I for
-synthesis closure evidence, then Phase II (this runbook) for full proof.
+synthesis closure evidence, then follow-on (this runbook) for full proof.
 
-## Phase II: GUI / Tcl Steps
+## Follow-On Path: GUI / Tcl Steps
 
 Open the Libero project and the `MPFS_ICICLE_KIT_BASE_DESIGN` SmartDesign
 component.

@@ -9,7 +9,7 @@ preserved D.1/D.2/D.3), and synthesizes cleanly via `shls hw` on Beelink
 
 **Integrated P&R timing closure: DEFERRED.** Importing the filtered
 RTL into the Microchip reference design (`MPFS_ICICLE_Vectorblox`)
-requires the Phase II canvas refresh per
+requires the follow-on canvas refresh per
 `docs/smartdesign_two_slot_canvas_runbook.md`, which is GUI-driven and
 not autonomous-CLI feasible. The r6_s25 closure (+0.728 ns slack at
 200 MHz) remains the canonical Phase I integrated evidence; the
@@ -87,7 +87,7 @@ sector bound is unaffected (the filter is in series with the classical
 PID, not in the AI feedforward).
 
 **Conclusion:** filtering the derivative **preserves** the Phase I
-sector-bound argument and **improves** the Phase II expanded-authority
+sector-bound argument and **improves** the follow-on expanded-authority
 margin. This satisfies the formal acceptance criterion (a) of B2.4:
 "the filtered derivative remains within the sector bound the existing
 Lur'e/Circle Criterion argument relies on."
@@ -137,11 +137,11 @@ From `hls/hls_output/reports/summary.hls.nv_pid_top.rpt`:
 | Filter unit tests E.1/E.2 pass | verified | hls/tb/tb_bumpless.cpp + make hls-test-local |
 | make verify-local green | verified | tools/audit_libero_reports.py + audit_corpus_citations.py |
 | HLS synthesis II=1 | verified | hls/hls_output/reports/summary.hls.nv_pid_top.rpt |
-| Integrated P&R timing closure ≥ 0 ns at 200 MHz | **deferred** | requires Phase II canvas refresh runbook |
+| Integrated P&R timing closure ≥ 0 ns at 200 MHz | **deferred** | requires follow-on canvas refresh runbook |
 
-## Path to integrated closure (Phase II)
+## Path to integrated closure (Follow-On)
 
-1. Execute `docs/smartdesign_two_slot_canvas_runbook.md` Phase II steps
+1. Execute `docs/smartdesign_two_slot_canvas_runbook.md` follow-on steps
    1-8 (GUI-driven; ~30-60 min hands-on Libero work):
    - Add CoreAXI4Interconnect.
    - Place `nv_pid_top` axi_target on slot 0, `pid_csr_block` on slot 1.
@@ -162,5 +162,5 @@ From `hls/hls_output/reports/summary.hls.nv_pid_top.rpt`:
   inner-clamp pattern and clamp to a hardcoded upper bound) — only if
   field tuning need emerges.
 - Combined filter + slew limiter formal analysis via IQC framework per
-  `safety_architecture.md` Phase II Stability Analysis §(c) — contingent
+  `safety_architecture.md` Stability Analysis (Follow-On Path) §(c) — contingent
   on whether sector arguments suffice for expanded ±30% authority.

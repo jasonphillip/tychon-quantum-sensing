@@ -49,11 +49,11 @@ points:
 
 3. **At this stage the corpus value is in audit calibration, not in HDL
    changes.** The new Phase B HDL (`pid_csr_block.v`,
-   `vbx_pulse_gen.v`, the Phase I tap patch, the Phase II canvas
+   `vbx_pulse_gen.v`, the Phase I tap patch, the follow-on canvas
    runbook) is committed and testbench-validated, but it is not in the
    synthesized netlist that Round 2's closure measured — the Beelink
    Libero project state was not re-imported with the new HDL in this
-   pass. That re-import + re-synth is honestly Phase II work per
+   pass. That re-import + re-synth is honestly follow-on work per
    `docs/smartdesign_two_slot_canvas_runbook.md`. The corpus-grounded
    delta visible in this pass is entirely in **which signals the audit
    gate alarms on**, which is exactly where the corpus's user-
@@ -95,7 +95,7 @@ points:
 | Recognized as level-held W1C | no (treated as raw heartbeat) | yes (`HB0919:361, 784`) | yes (`HB0919:361, 499, 784`) |
 | Edge detect + CDC sync | no | `vbx_completion_sync.v` (2-FF + edge) | `vbx_pulse_gen.v` (2-FF + edge) |
 | HLS edge-case tests | none | C.d/C.e/C.f (repeated, missed-then-recovered, stuck-high) | D.1/D.2/D.3 (same scenarios, independently derived assertions) |
-| Default behavior | unwired | GPIO heartbeat retained for bring-up; flag enables vbx path | runbook documents Phase II canvas wiring; Phase I patch reuses existing watchdog |
+| Default behavior | unwired | GPIO heartbeat retained for bring-up; flag enables vbx path | runbook documents follow-on canvas wiring; Phase I patch reuses existing watchdog |
 
 ### Audit-gate calibration
 
@@ -196,7 +196,7 @@ the corpus actually warns about.
    generate a "production" patch that defeats constant-folding but never
    provides write-then-readback, and label it production. The corpus
    forces an explicit gate (`--check-readback-contract`) and an explicit
-   Phase II runbook.
+   follow-on runbook.
 
 4. **Output_valid semantics.** Without the corpus, `output_valid` looks
    like a generic interrupt. With the corpus

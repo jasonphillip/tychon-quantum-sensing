@@ -1,6 +1,6 @@
 # Cascade Serving Design — P3-11B (Tier 1, single-slot sequential)
 
-This doc locks the Phase II forcing path for the hierarchical INT8 cascade (P3-11B in the May 1 2026 fix list). Two .vnnx accelerators (coarse + fine residual) are served sequentially through a single CoreVectorBlox slot, with composition arithmetic done in MSS firmware (or a software harness pre-firmware) and a single composite `u_AI` value fed to the existing `nv_pid_top` axi_target. The on-FPGA safety pipeline (sector clamp + slew limiter + bumpless transfer + watchdog) remains bit-equivalent and untouched.
+This doc locks the forcing path for the hierarchical INT8 cascade (P3-11B in the May 1 2026 fix list) under the follow-on deployment path. Two .vnnx accelerators (coarse + fine residual) are served sequentially through a single CoreVectorBlox slot, with composition arithmetic done in MSS firmware (or a software harness pre-firmware) and a single composite `u_AI` value fed to the existing `nv_pid_top` axi_target. The on-FPGA safety pipeline (sector clamp + slew limiter + bumpless transfer + watchdog) remains bit-equivalent and untouched.
 
 ## Why Tier 1 (single-slot sequential), not Tier 2 (two-slot canvas)
 
@@ -11,9 +11,9 @@ This doc locks the Phase II forcing path for the hierarchical INT8 cascade (P3-1
 | BRAM cost | One model resident; reload between coarse and fine. ~2× weight load latency per inference. | Both models resident in separate slots. Lowest latency, highest BRAM. |
 | Firmware complexity | MSS firmware orchestrates: load coarse weights → invoke → store INT8 output → load fine weights → invoke → compose → write composite to `nv_pid_top` axi_target. | Firmware writes both inputs and reads both outputs in parallel; composition still required. |
 | Validation surface | Existing testbench surface + new `tb_cascade.cpp` covers composition + safety pipeline. | Adds netlist-level verification (write-then-readback proof per the existing two-slot canvas runbook). |
-| Phase II evidence value | Strongest near-term: closes P3-11B with bit-exact CI vs. silicon (post-HIL). | Architecturally cleaner, but heavier. Deferred to Phase II+1. |
+| Follow-on evidence value | Strongest near-term: closes P3-11B with bit-exact CI vs. silicon (post-HIL). | Architecturally cleaner, but heavier. Deferred to follow-on (post-follow-on). |
 
-User confirmed Tier 1 only. The existing testbench-validated runbook at `docs/smartdesign_two_slot_canvas_runbook.md` stays in-repo as the design reference for the eventual netlist refresh; no commits in this Phase II promote it.
+User confirmed Tier 1 only. The existing testbench-validated runbook at `docs/smartdesign_two_slot_canvas_runbook.md` stays in-repo as the design reference for the eventual netlist refresh; no commits in this follow-on phase promote it.
 
 ## Data-flow contract
 
@@ -57,7 +57,7 @@ if composition.saturate_int8:
     y_int8 = clip(y_int8, -128, 127)
 ```
 
-`round_per_manifest` is one of `round_half_to_even`, `round_half_up`, or `round_half_away_from_zero`. The PolarFire VectorBlox FPGA path's actual rounding mode is the forcing function for HW-05 (Track 3 in the Phase II plan); resolution feeds the `manifest.composition.rounding_mode` field. Pre-resolution, CI runs against a synthetic manifest that pins the rounding mode to a chosen default (see `tests/cascade/fixtures/`).
+`round_per_manifest` is one of `round_half_to_even`, `round_half_up`, or `round_half_away_from_zero`. The PolarFire VectorBlox FPGA path's actual rounding mode is the forcing function for HW-05 (Track 3 in the follow-on plan); resolution feeds the `manifest.composition.rounding_mode` field. Pre-resolution, CI runs against a synthetic manifest that pins the rounding mode to a chosen default (see `tests/cascade/fixtures/`).
 
 The composite-to-`out_t` conversion (in firmware) is:
 
@@ -104,7 +104,7 @@ from tychon_shared_data.cascade import compose_int8, verify_bit_exact, CascadeMa
 Two pytest modes via a `--mode={sim,hil}` flag:
 
 - **`--mode=sim`** (default, available immediately): asserts bit-exact equality between the numpy `compose_int8` output and the JSON-dumped C++ `tb_cascade` output for the synthetic fixture. Pre-Track-0, this is the only mode that runs green; it proves software/numerical agreement but not silicon agreement.
-- **`--mode=hil`** (post-Track-0): asserts bit-exact equality between numpy `compose_int8` and an FPGA capture (UART0 console dump or SmartDebug readback) for the same input set. This is the strongest possible Phase II evidence — closes the loop from numpy reference → C++ testbench → FPGA silicon with bit-exact equality.
+- **`--mode=hil`** (post-Track-0): asserts bit-exact equality between numpy `compose_int8` and an FPGA capture (UART0 console dump or SmartDebug readback) for the same input set. This is the strongest possible follow-on closure evidence — closes the loop from numpy reference → C++ testbench → FPGA silicon with bit-exact equality.
 
 Pin `tychon-shared-data` to whatever release replaces the `ROUNDING_MODE_TBD` placeholder (Track 3 dependency). Pre-resolution, the synthetic fixture in `tests/cascade/fixtures/` carries an explicit rounding mode chosen for the placeholder run; post-resolution, the manifest fixture is regenerated.
 
