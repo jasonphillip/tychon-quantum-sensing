@@ -67,6 +67,32 @@ under the operator autonomy grant; recorded here so it can be overridden.
 card is flashed and booted; nothing downstream of this decision is irreversible until then.
 The reshaped C–G plan (Linux-based) is authored separately for review.
 
+### 2026-06-15 — On-target rungs C / D / E / F executed (full evidence: `firmware/linux/reports/2026-06-15-bringup/`)
+
+SD flashed on spark1 (image gz sha256 `87bde545…c430d`); tools pre-staged at `/root/bringup`;
+target booted and reached over SSH (`192.168.x.x`) + CP2108 serial on bee. The **Linux/Yocto
+path (DLOG-053) is validated end-to-end** — SD boot, MSS↔fabric AXI access, `generic-uio` +
+`/dev/udmabuf-ddr-nc0`, and the V250 control plane all work on real silicon.
+
+- **Rung C — PASS.** HSS 2024.02 (factory) → U-Boot 2025.07 → Linux 6.18.17-2026.04.1 from SD
+  (`root=/dev/mmcblk0p3`); boot source proven SD-not-eMMC via a planted `/etc/tychon-sd-image-marker`,
+  `findmnt /`, and the kernel cmdline. HSS-reflash [NC] retired (old HSS chainloads the new image).
+- **Rung D — PASS.** MMUART0 = **COM8** (HSS console + monitor heartbeat); MMUART1 = **COM10**
+  (U-Boot + Linux login, ttyS1). CP2108 iface0→COM8, iface1→COM10, iface2→COM9, iface3→COM7.
+- **Rung E — BLOCKED by the bitstream.** Reading the PID slave `0x60001000` issues a non-responding
+  AXI transaction → U54 core hard-wedge (RCU stall + 143 s workqueue lockup; power-cycle to recover).
+  **Confirms the "eavesdropper severed read path"** the strategy audit predicted. Needs the clean
+  two-slot integration (`docs/smartdesign_two_slot_canvas_runbook.md`) — new bitstream, branch-only.
+- **Rung F — PARTIAL.** `vbx_cnn_init` → "V250 control plane alive"; `.vnnx` loads (1 in/1 out);
+  START asserted with IO/model pointers in `udmabuf-ddr-nc0`. But CTRL (`0x60030000`) is frozen at
+  `0x02` across **196,247 samples** — RUNNING/OUTPUT_VALID/ERROR never assert → the **V250 compute
+  datapath is not advancing** (compute clock not running / core not enabled in the seed_7 closure).
+  This is the `[NC]` V250-clock obligation, now diagnosed on silicon. Latency not quotable. Fix =
+  close the CCC→CoreVectorBlox clock/enable in the design, re-synth + re-program (branch-only).
+
+**Net:** the two remaining blockers are both **seed_7 bitstream-integration gaps** (PID read path;
+V250 compute clock/enable), not Linux/runtime issues. The rung-A seed_7 programming is untouched.
+
 ## HW-01 — Silkscreen package verification (RESOLVED 2026-05-03)
 
 Initial reading was `MPFS250T-FCSG536e` (engineering-sample marker). Re-reading on 2026-05-03 against the actual silicon and Microchip datasheet DS00004248 confirmed the production part is **MPFS250T-FCVG484E** — 484-ball flip-chip BGA, **STD speed grade**, Production silicon, **Extended Commercial 0–100 °C** ("E" suffix). The earlier `FCSG536e` reading conflated the engineering-sample suffix `e` with the package code.
