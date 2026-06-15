@@ -1,0 +1,49 @@
+/dts-v1/;
+/plugin/;
+
+/*
+ * seed7_vbx_pid.dtso — runtime device-tree overlay for the seed_7 bitstream.
+ *
+ * Exposes the two fabric AXI slaves the demo needs to Linux userspace as
+ * generic-uio devices. Apply EVERY BOOT (overlays don't persist):
+ *   dtc -@ -O dtb -o seed7_vbx_pid.dtbo seed7_vbx_pid.dtso \
+ *       -Wno-reg_format -Wno-avoid_default_addr_size
+ *   mkdir -p /sys/kernel/config/device-tree/overlays/seed7
+ *   cat seed7_vbx_pid.dtbo > /sys/kernel/config/device-tree/overlays/seed7/dtbo
+ *   # -> /dev/uioN appears; the VBX runtime finds "vbx" by /sys/class/uio/uioN/name
+ *
+ * Derived from the SDK's example/soc-c/dts/mpfs_vbx.dtso, slimmed to OUR design:
+ * dropped the Video-Kit-only nodes (scale/warp/draw/apb image IPs and the
+ * fabric@30_00000000 fabric-DDR memory node — we use MSS DDR via udmabuf-ddr-nc0).
+ *
+ * Addresses (docs/fic_0_address_map_2026-05-18.md):
+ *   V250 control slave  = FIC_0 SLAVE2  0x60030000  IRQ 124
+ *   Hybrid PID slave    = FIC_0 SLAVE0  0x60001000  (nv_pid_top_top.axi4target)
+ *
+ * [NC] IRQ 124 is the reference-design value; the seed_7 closure may leave the
+ * V250 interrupt disconnected (the SDK Icicle build polls — USE_INTERRUPTS=0 —
+ * so the interrupts property is informational and the runtime does not rely on it).
+ */
+
+/ {
+	fragment@0 {
+		target-path = "/";
+		__overlay__ {
+			/* CoreVectorBlox V250 control slave */
+			vbx@60030000 {
+				compatible = "generic-uio";
+				reg = <0x0 0x60030000 0x0 0x1000>;
+				interrupt-parent = <&plic>;
+				interrupts = <124>;
+				status = "okay";
+			};
+
+			/* Hybrid PID fabric slave (nv_pid_top_top.axi4target) */
+			pid@60001000 {
+				compatible = "generic-uio";
+				reg = <0x0 0x60001000 0x0 0x1000>;
+				status = "okay";
+			};
+		};
+	};
+};
