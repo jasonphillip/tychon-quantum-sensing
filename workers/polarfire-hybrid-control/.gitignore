@@ -35,3 +35,12 @@ __pycache__/
 !libero/reports/*.log
 !libero/reports/**/*.log
 .build/
+
+# Tool scratch / regenerable build outputs (not source)
+hls/hls_output/
+sim/output/
+transcript
+libero/reports/**/fpexpress_job_project/
+
+# Editor/plugin scratch
+docs/superpowers/
