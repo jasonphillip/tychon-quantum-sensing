@@ -1,27 +1,26 @@
 #---------------------------------------------------------------------------
 # program_kit.tcl  —  FPExpress headless programming script for rung A
 #
-# Programs the MPFS_ICICLE_Vectorblox seed_7 bitstream onto the Icicle Kit
-# via the on-board FlashPro6 (J11). PROGRAM action only — does NOT touch
-# eMMC, sNVM PROGRAM_INFLASH, or any other destructive action.
+# Programs the MPFS_ICICLE_Vectorblox seed_7 bitstream onto the Production
+# MPFS250T Icicle Kit via the on-board FlashPro6 (J11). PROGRAM action only
+# — does NOT touch eMMC, sNVM PROGRAM_INFLASH, or any other destructive action.
 #
-# Silicon-identity correction 2026-05-18: kit silicon is MPFS250T_ES (engineering
-# sample) populated on a Production-SKU Icicle Kit board. The April-2 Beelink
-# session log + today's FPExpress class-level match (Found: MPFS250(T_ES|TS_ES))
-# are the corroborating evidence. The .ppd targets MPFS250T Production; the
-# bitstream is electrically compatible (same fabric die) but FPExpress's
-# chain check rejects the silicon-class mismatch. Override path: switch to
-# developer_mode + rename device to MPFS250T_ES.
+# Production silicon (2026-06-02): the new kit carries Production MPFS250T
+# (IDCODE 1F81A1CF, no _ES). The seed_7 .ppd targets Production MPFS250T;
+# read-only scan_chain.tcl confirmed Scan-and-Check-Chain PASSED. No device
+# rename / developer-mode override (the ES-board workaround) is needed.
+# Operator mode (default) + PROGRAM action on MPFS250T.
 #
-# Tcl reference: Libero SoC v2025.2 FlashPro Express Tcl Commands (corpus).
+# Tcl reference: Libero SoC v2025.2 FlashPro Express Tcl Commands (corpus,
+# DS50003101V §11.6 create_job_project / §11.24 set_programming_action /
+# §11.16 run_selected_actions).
 #
-# Invocation (on bee, MSYS Git Bash):
+# Invocation (on bee, MSYS Git Bash; pre-create the LOGFILE dir first):
 #   /c/Microchip/Libero_SoC_2025.2/Libero_SoC/Designer/bin/fpexpress.exe \
 #       SCRIPT:"~/dev/projects/polarfire-hybrid-control/libero/scripts/program_kit.tcl" \
-#       LOGFILE:"~/dev/projects/polarfire-hybrid-control/libero/reports/<YYYY-MM-DD>-program/program.log"
+#       LOGFILE:"~/dev/projects/polarfire-hybrid-control/libero/reports/2026-06-15-program/program.log"
 #---------------------------------------------------------------------------
 
-# Absolute paths (Windows-style, FPExpress is a native Windows tool)
 set REPO_ROOT       "~/dev/projects/polarfire-hybrid-control"
 set JOB_FILE        "$REPO_ROOT/libero/reports/2026-05-04-bringup/polarfire_hybrid_control.job"
 set RUN_DATE        [clock format [clock seconds] -format "%Y-%m-%d"]
@@ -33,7 +32,7 @@ file mkdir $REPORT_DIR
 file mkdir $JOB_WRAPPER_DIR
 
 puts "==========================================================="
-puts "FPExpress headless programming — rung A (ES-override attempt)"
+puts "FPExpress headless programming — rung A (Production MPFS250T)"
 puts "Job file        : $JOB_FILE"
 puts "Wrapper project : $JOB_WRAPPER_DIR"
 puts "Report dir      : $REPORT_DIR"
@@ -41,19 +40,9 @@ puts "Date            : $RUN_DATE"
 puts "==========================================================="
 flush stdout
 
-# --- STEP 0: switch to FPExpress Developer mode BEFORE create_job_project ---
-# Operator mode is default; Developer mode "allows to update jobs before
-# running programming" — required for set_device_name to take effect.
-# Corpus: libero-soc-tcl-cmd-ref-ug-2025-2pd.md §11.x set_fpexpress_mode.
-if {[catch {set_fpexpress_mode -mode {developer}} err]} {
-    puts "WARNING: set_fpexpress_mode developer failed (continuing): $err"
-    flush stdout
-} else {
-    puts "STEP 0 OK: switched to FPExpress developer mode"
-    flush stdout
-}
-
-# --- STEP 1: create job project from .job ---
+# --- STEP 1: create job project from .job (operator mode is the default) ---
+# create_job_project auto-loads the device list + default action from the .job
+# and auto-detects the attached FlashPro6.
 if {[catch {
     create_job_project \
         -job_project_location $JOB_WRAPPER_DIR \
@@ -64,49 +53,33 @@ if {[catch {
     flush stdout
     exit 91
 }
-puts "STEP 1 OK: job project created"
+puts "STEP 1 OK: job project created (FlashPro6 auto-detected, operator mode)"
 flush stdout
 
-# --- STEP 2: try to rename the chain device to MPFS250T_ES (ES silicon) ---
-# If set_device_name accepts this, the subsequent chain check should accept
-# the ES silicon-class IDCODE match.
-if {[catch {set_device_name -name {MPFS250T} -new_name {MPFS250T_ES}} err_rename]} {
-    puts "WARNING: set_device_name MPFS250T->MPFS250T_ES failed: $err_rename"
-    puts "  (will try set_programming_action with both ES and Production names)"
-    set RENAMED 0
+# --- STEP 2: select the PROGRAM action (non-destructive to eMMC/sNVM) ---
+# Try chain form first (-name MPFS250T, evidence-grounded); fall back to the
+# single-device form (no -name) if FPExpress is in single mode. NO rename.
+if {[catch {set_programming_action -name {MPFS250T} -action {PROGRAM}} err_chain]} {
+    puts "NOTE: set_programming_action -name {MPFS250T} failed ($err_chain)"
+    puts "  retrying without -name (single-device mode)"
     flush stdout
-} else {
-    puts "STEP 2 OK: chain device renamed MPFS250T -> MPFS250T_ES"
-    set RENAMED 1
-    flush stdout
-}
-
-# --- STEP 3: select PROGRAM action (try ES name first, fall back) ---
-set ACTION_NAME ""
-if {$RENAMED == 1} {
-    if {[catch {set_programming_action -name {MPFS250T_ES} -action {PROGRAM}} err]} {
-        puts "WARNING: set_programming_action MPFS250T_ES failed: $err"
-        flush stdout
-    } else {
-        set ACTION_NAME "MPFS250T_ES"
-    }
-}
-if {$ACTION_NAME eq ""} {
-    if {[catch {set_programming_action -name {MPFS250T} -action {PROGRAM}} err]} {
-        puts "FATAL: set_programming_action MPFS250T failed: $err"
+    if {[catch {set_programming_action -action {PROGRAM}} err_single]} {
+        puts "FATAL: set_programming_action PROGRAM failed: $err_single"
         flush stdout
         exit 93
     }
-    set ACTION_NAME "MPFS250T"
+    puts "STEP 2 OK: PROGRAM action selected (single-device mode)"
+} else {
+    puts "STEP 2 OK: PROGRAM action selected (chain mode, device MPFS250T)"
 }
-puts "STEP 3 OK: PROGRAM action selected for device $ACTION_NAME"
 flush stdout
 
-# --- STEP 4: run the action ---
+# --- STEP 3: run the PROGRAM action ---
 if {[catch {run_selected_actions} err]} {
     puts "FATAL: run_selected_actions failed: $err"
-    puts "PROGRAM FAILED after ES-override attempt — STOP per rollback rule."
-    puts "Do NOT retry. Do NOT power-cycle. Surface log to operator."
+    puts "PROGRAM FAILED — STOP per rung-A rollback rule."
+    puts "Do NOT retry. Do NOT power-cycle. Preserve forensic state."
+    puts "Surface full log ($REPORT_DIR) to operator."
     flush stdout
     exit 99
 }
@@ -116,6 +89,6 @@ puts "PROGRAM PASS"
 puts "==========================================================="
 puts "Reports in : $REPORT_DIR"
 puts "Job wrapper: $JOB_WRAPPER_DIR"
-puts "Device     : $ACTION_NAME"
+puts "Device     : MPFS250T (Production, IDCODE 1F81A1CF)"
 flush stdout
 exit 0
