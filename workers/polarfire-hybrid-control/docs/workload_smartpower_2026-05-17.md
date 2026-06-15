@@ -151,3 +151,39 @@ tool output you verified in this session, or mark it explicitly as
 'unverified.'" The workload-driven SmartPower number does not exist
 yet, so the brief cannot claim it. The infrastructure progress is real
 and worth recording; the closure number must wait for the steps above.
+
+## 2026-06-15 update — the hang is FIXED; one real gap remains (annotation)
+
+A clean headless run finally completed end-to-end (exit 0, ~11 min):
+`shls hw` (regenerate the missing `hls_output/rtl/`) → `vsim -c -do
+sim/modelsim_pid_workload.do` (1.6 MB VCD, 1000 rows, 0 errors) →
+`libero SCRIPT:05_smartpower_workload.tcl` (VERIFYPOWER). **The prior
+4-attempt project-open hang did NOT recur** — starting from a
+freshly-killed Libero process with no stale `.spw` was the fix (the
+leading hypothesis). The SmartPower VCD Tcl form
+(`smartpower_import_vcd -opmode {Active}` + `smartpower_report_power`)
+is corpus-confirmed correct for 2025.2 and ran unmodified.
+
+**But the number is NOT workload-annotated — proof obligation still
+Partial.** `verifypower.log` reports **Annotated Pins 0.00% /
+Unannotated 100.00%**: none of the 10,220 VCD signals matched a placed
+netlist pin, so SmartPower discarded the activity and used its default
+vectorless model. The tell: static power **445.612 mW is bit-identical
+to the default-toggle baseline**; dynamic 2177.243 mW is within ~3% of
+default. The reported totals (Total 2622.855 / Static 445.612 / Dynamic
+2177.243 mW, `libero/reports/2026-05-18-workload-power/smartpower_workload.rpt`)
+are therefore the **default-toggle estimate, not a workload number** —
+do not quote them as workload-driven.
+
+**New Gap 4 (the real remaining work):** the `.do` dumps the VCD at top
+scope `nv_pid_top_top` (the standalone SmartHLS module), but the netlist
+instantiates the PID deep inside
+`FIC_0_PERIPHERALS_1/.../pid_io_block` with Synplify/P&R-renamed nets —
+the names cannot match. To get a real workload number: dump the VCD from
+a full-design-scope simulation with post-synthesis net names, OR use
+`smartpower_import_vcd`'s instance-path / hierarchy-prefix option to map
+`nv_pid_top_top` onto the PID's instance path inside
+`MPFS_ICICLE_KIT_BASE_DESIGN`. Closeable headless (one more iteration);
+a GUI SmartPower session that browses netlist hierarchy vs VCD scope
+side-by-side would close it fastest. Evidence:
+`libero/reports/2026-06-15-workload-power/verifypower.log`.
