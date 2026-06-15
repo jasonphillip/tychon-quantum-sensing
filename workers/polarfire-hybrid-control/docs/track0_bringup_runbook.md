@@ -14,9 +14,9 @@ This runbook drives the four hardware-bring-up items (HW-01..HW-04) that gate th
 | HW-04c — pinout.pdc populated from reference | **RESOLVED 2026-05-04** (Path IV ship-it: reused audit-006 seed_7 closure which has pinout via `MPFS_ICICLE_KIT_BASE_DESIGN`) | n/a |
 | HW-04d — explicit bitstream artifact persistence | **RESOLVED 2026-05-04** (`.job` + `.sha256` + `_job.digest` landed in `libero/reports/2026-05-04-bringup/` via `04b_export_only.tcl`) | n/a |
 | Seed sweep + timing closure (V250 incl.) | **RESOLVED 2026-05-03** (3 seeds — 7, 13, 23 — of `MPFS_ICICLE_Vectorblox.prjx` ran on bee; seed 7 won at +0.274 ns worst slack, 25.88% 4LUT) | n/a |
-| FPExpress GUI launch with kit attached | **STAGED 2026-05-04 20:13** (`~/AppData/Roaming/Actel/flashpro.def` created — proves launch; Construct Chain / Program click NOT evidenced) | covered by demo-bringup plan Part 2 |
-| Track 0 closure (PROGRAM PASS captured) | **OPEN** | covered by demo-bringup plan Part 2 |
-| Demo firmware (Options A→C) | **OPEN** (`firmware/` empty; SoftConsole 2022.2 build 747 installed and verified) | covered by demo-bringup plan Parts 3–5 |
+| FPExpress GUI launch with kit attached | **SUPERSEDED** by headless `program_kit.tcl` (rung A done) | n/a |
+| Track 0 closure (PROGRAM PASS captured) | **RESOLVED 2026-06-15** (PROGRAM PASS on Production MPFS250T; commit `0c2bcaf`; on-silicon digests match seed_7 closure) | n/a |
+| MSS software (rungs C–G) | **OPEN — Linux/Yocto path (decision 2026-06-15 below)** (`firmware/` empty; SoftConsole dropped off critical path) | reshaped C–G plan |
 | RPO-4 derivative filter | **INFRA LANDED 2026-05-04 → 2026-05-17** (`Kd·s/(1+s·Tf)` form via commits `6a0002f`/`8dc37aa`/`4065f7f`; DLOG-046) | follow-on closure |
 | RPO-6 workload SmartPower | **INFRA PREP 2026-05-17** (3 gaps documented in `docs/workload_smartpower_2026-05-17.md`; ~half-day to close on next Beelink session) | follow-on closure |
 | Real ODMR sensor data | **OPEN** (separate hardware track — DIY benchtop or consultant; not gated by FPGA bring-up) | future |
@@ -24,6 +24,48 @@ This runbook drives the four hardware-bring-up items (HW-01..HW-04) that gate th
 **Hardware connectivity verified 2026-05-04:** Both Icicle Kit USB headers (J11 and J33) plugged into Beelink. `Get-PnpDevice` enumerates **both** the FlashPro embedded programmer (`VID_1514 PID_200B`, status OK, HID class) **and** the Silicon Labs CP2108 quad UART bridge (`VID_10C4 PID_EA71`, 4 interfaces visible as COM3 / COM4 / COM5 / COM6). Per-port mapping (which physical header carries which chip) is NOT yet verified — selectively unplug one in Part 2 and re-enumerate to disambiguate. Note: an earlier draft of HW-03 below states "J11 connector is a Silicon Labs CP2108"; this is unverified in either direction at the time of this refresh.
 
 **Bitstream architecture confirmed 2026-05-18 (audit re-assessment):** The seed_7 closure is `MPFS_ICICLE_Vectorblox.prjx` — the Microchip MPFS_ICICLE_KIT_BASE_DESIGN base design **including CoreVectorBlox V250 NPU by construction**. The exported `polarfire_hybrid_control.job` (11.5 MB, sha256 `d5f3eb4e…`) contains the full hybrid PID + V250 stack, not PID-only. The 12.5 KB `models/fcnn_v2_residual_dataset_a.vnnx` model has a real execution target on the synthesized fabric; what remains is loading and exercising it via firmware. See TVW memory `fpga_bringup_state_2026-05-18.md` for the full corrected inventory.
+
+## 2026-06-15 — Rung A PROGRAM PASS + Linux/Yocto decision (current state)
+
+**Rung A is CLOSED.** First captured PROGRAM PASS on the Production MPFS250T silicon.
+FPExpress `run_selected_actions` → `device 'MPFS250T' : PROGRAM PASSED` / `Chain
+programming PASSED`; FPGA Array programmed+enabled, `ISC_ENABLE_RESULT 00000000`,
+`CRCERR 00`, Device Rev 01, 57 s. The on-silicon **fabric digest `0769…C03DF8` and
+sNVM digest `EBF8…D32507` match the seed_7 r6_s25 closure byte-for-byte**, proving the
+exact V250-in-fabric hybrid-PID bitstream is loaded. `libero/scripts/program_kit.tcl`
+was reworked from the ES-override variant to the production operator-mode flow
+(`create_job_project` → `set_programming_action -name {MPFS250T} -action {PROGRAM}` →
+`run_selected_actions`; no developer mode, no `_ES` rename) — commit `e83cf9d`. PASS log
++ read-only pre-flight scan (`libero/reports/2026-06-15-program/`) committed `0c2bcaf`.
+Closed `.job` (only copy, gitignored) backed up to
+`/mnt/nas/backups/bee-polarfire-hybrid-control/`. **The board now holds the verified
+seed_7 bitstream — do not regress it; any new bitstream goes on a branch and is logged.**
+MMUART0→COM mapping is best-effort, deferred to rung D.
+
+### DECISION 2026-06-15 — Adopt Linux/Yocto for the MSS V250 inference path (rungs C–G)
+
+**Decision:** the MSS-software side of the demo (rungs C–G: PID register poke, V250
+`.vnnx` inference, ODMR replay) runs on **Linux on the U54 cores**, NOT bare-metal. Made
+under the operator autonomy grant; recorded here so it can be overridden.
+
+**Rationale** (from `docs/whole_process_strategy_audit_2026-06-02.md` +
+`docs/rung_f_vectorblox_inference_research_2026-06-02.md`):
+1. The **only Microchip-supported** VectorBlox-on-Icicle runtime is Linux/Yocto (in-tree
+   `generic-uio` + non-cached `udmabuf`); Microchip support #000017296 validates VBX 2.0.3
+   on the production Icicle Kit via a Yocto `.wic` only.
+2. Bare-metal would require hand-rolling DDR bring-up + a 2 MB firmware-staging allocator +
+   fabric-master↔L2 **cache coherency that Microchip does not document** — the
+   byte-deterministic failure class this project's debugging rules dread.
+3. The **safety/real-time story is unaffected**: the bounded-safe PID, the 200 MHz watchdog,
+   and the clamps all live in FABRIC (HLS datapath). The MSS is supervisory only — the
+   README's "Linux jitter violates <150 µs" rationale was incoherent.
+4. **Cost drops:** SD-card boot is non-destructive (no eMMC write needed to iterate),
+   SoftConsole leaves the critical path, and the toolchain becomes the SmartHLS-bundled
+   `riscv64-*-linux-gnu-gcc` (glibc) — no new install.
+
+**Override window:** if you prefer bare-metal (or a different image), say so before the SD
+card is flashed and booted; nothing downstream of this decision is irreversible until then.
+The reshaped C–G plan (Linux-based) is authored separately for review.
 
 ## HW-01 — Silkscreen package verification (RESOLVED 2026-05-03)
 
