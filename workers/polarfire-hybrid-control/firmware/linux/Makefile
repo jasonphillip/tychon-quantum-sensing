@@ -4,11 +4,17 @@
 # side runs Linux, so these are glibc RISC-V userspace binaries, NOT bare-metal.
 #
 # Toolchain: SmartHLS-bundled glibc RISC-V GCC (present on bee at
-#   /c/Microchip/Libero_SoC_2025.2/SmartHLS/SmartHLS/swtools/binutils/riscv-gnu-toolchain/bin/).
-# Put that bin on PATH, or pass CROSS=<prefix>.
+#   $SHLS/swtools/binutils/riscv-gnu-toolchain/bin/, SHLS=/c/Microchip/Libero_SoC_2025.2/SmartHLS/SmartHLS).
 #
-# Build on bee (source of truth is spark1; copy/pull then build):
+# GOTCHA (verified 2026-06-15): that GCC is a CYGWIN build. Run standalone it
+# silently fails to start with exit 127 unless cygwin1.dll is on PATH. Set PATH
+# before invoking make (toolchain bin FIRST, then the cygwin runtime dir):
+#   SHLS=/c/Microchip/Libero_SoC_2025.2/SmartHLS/SmartHLS
+#   export PATH="$SHLS/swtools/binutils/riscv-gnu-toolchain/bin:$SHLS/dependencies/lib/cygwin:$PATH"
 #   make CROSS=riscv64-unknown-linux-gnu- VBX_SDK=/c/Microchip/VectorBlox-SDK
+#
+# Verified output: pid_poke = static RISC-V ELF; vnnx_smoke = dynamic RISC-V ELF
+# (interp /lib/ld-linux-riscv64-lp64d.so.1), both "for GNU/Linux".
 #
 # Targets:
 #   pid_poke    — /dev/mem MMIO poke of the FIC_0 PID slot (no SDK deps; static).

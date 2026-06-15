@@ -14,12 +14,9 @@
 //     for "vbx" (the seed7_vbx_pid.dtso overlay must be applied first), mmaps its
 //     control page, and mmaps the non-cached DMA pool /dev/udmabuf-ddr-nc0.
 //
-// Build (on bee): make vnnx_smoke   (see firmware/linux/Makefile)
-//   riscv64-unknown-linux-gnu-gcc -O2 -Wall -DVBX_SOC_DRIVER -DMSS_DDR -DUSE_INTERRUPTS=0 \
-//     -I$VBX/drivers/vectorblox vnnx_smoke.c \
-//     $VBX/drivers/vectorblox/vbx_cnn_api.c $VBX/drivers/vectorblox/vbx_cnn_model.c \
-//     -o vnnx_smoke -lm -lpthread
-// Run (on target):  ./vnnx_smoke fcnn_v2_residual_dataset_a.vnnx
+// Build (on bee): make vnnx_smoke  (see firmware/linux/Makefile for the exact
+//   flags + the required toolchain PATH, which must include dependencies/lib/cygwin).
+// Run (on target): ./vnnx_smoke fcnn_v2_residual_dataset_a.vnnx
 
 #include <stdio.h>
 #include <stdlib.h>

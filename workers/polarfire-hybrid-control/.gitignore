@@ -23,6 +23,10 @@ hls/include/hls/
 # Compiled test binaries
 hls/tb_bumpless
 
+# Cross-compiled Linux userspace tools (build artifacts; rebuild via firmware/linux/Makefile)
+firmware/linux/pid_poke
+firmware/linux/vnnx_smoke
+
 # Python
 __pycache__/
 *.pyc
