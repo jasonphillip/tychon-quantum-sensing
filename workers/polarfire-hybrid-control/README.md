@@ -17,20 +17,23 @@ Hybrid PID + neural network control system for RT PolarFire SoC. SmartHLS C++ im
 |                    MPFS250T Fabric                           |
 |                                                             |
 |  MSS (RISC-V)                                               |
-|  +-- FIC0 (64-bit AXI4) --> CoreVectorBlox V250             |
-|  |                          (AI inference DMA)              |
+|  +-- FIC0 fabric address space                              |
+|  |   +-- 0x60030000 --> CoreVectorBlox V250 control UIO     |
+|  |   +-- 0x60001000 --> seed_7 PID AXI target               |
 |  |                                                          |
-|  +-- FIC1 (64-bit AXI4) --> SmartHLS PID Controller         |
-|  |                          (nv_pid_top, AXI target)        |
-|  |                                                          |
-|  +-- FIC2 (32-bit APB3) --> [Reserved: control regs]        |
+|  +-- FIC2 AXI4 target --> MSS DDR non-cached path           |
+|  |                         (V250 model / IO DMA buffers)    |
 |                                                             |
 |  PF_CCC_0 --> 200 MHz fabric clock to all fabric IPs        |
 |  PF_INIT_MONITOR_0 --> Reset sequencing                     |
 +-------------------------------------------------------------+
 ```
 
-Physical separation of VectorBlox and PID on different FIC ports prevents AXI bus contention between AI inference DMA and real-time PID updates.
+Current hardware bring-up uses the Linux/Yocto userspace path on the U54 cores:
+`generic-uio` exposes the V250 control page, and `/dev/udmabuf-ddr-nc0`
+provides non-cached DDR buffers for the V250 data path. The fabric PID remains
+the real-time/safety path; Linux is supervisory and used for bring-up/runtime
+orchestration.
 
 ## Directory Structure
 
@@ -73,7 +76,28 @@ source libero/scripts/04_synth_pnr.tcl
 - SmartHLS type: `hls::ap_fixpt<W,I>` (NOT `ap_fixed` -- that's Xilinx)
 - VectorBlox SDK **v2.0.3** (NOT v3.0) -- matches CoreVectorBlox IP v2.0.1
 - `.vnnx` compiled with `-c V250` flag; not committed to git
-- Bare-metal C on RISC-V MSS -- no Linux (jitter violates <150 us guarantee)
+- Linux/Yocto on the U54 cores for the supported CoreVectorBlox Icicle runtime;
+  the <150 us safety-critical loop lives in fabric, not Linux userspace.
+
+## Current Hardware State
+
+As of 2026-06-16, the CoreVectorBlox **2.0.1/V250** rebuild bitstream is programmed and
+**V250 inference runs to completion on Production MPFS250T silicon** (`vbx_probe` →
+INFERENCE COMPLETED, `vnnx_smoke` → `out[0]=-2.9506`; VERSION `0x60030028`=`0x20000000`).
+See `docs/rung_f_v250_on_silicon_results_2026-06-16.md`, `docs/track0_bringup_runbook.md`,
+and `docs/fpga_reproducibility_inventory_2026-06-16.md`.
+
+Known open hardware blockers:
+
+- **Fabric PCIe @ `0x3000000000` is broken in the 2.0.1/V250 rebuild** — the Linux
+  `microchip-pcie` probe hangs on it (the V250/FIC path is fine). This *was* a boot-loop; it is now
+  **persistently worked around** — the PCIe device-tree node is disabled at boot via a reversible
+  U-Boot env `fdt set`, so a normal reboot recovers autonomously to an inference-ready kit (see
+  `docs/rung_f_v250_on_silicon_results_2026-06-16.md` §6 and `/root/PCIE-DISABLED-README.md` on the kit).
+  The only remaining work is the *optional* long-term fix (re-synth with the fabric PCIe intact) **if
+  PCIe is ever needed**. The trusted rung-A seed_7 (1.1.12/V500) `.job` remains the bitstream rollback.
+- PID slave reads at `0x60001000` wedge a U54 core; do not run `pid_poke` against that address
+  (not retested on the rebuild — assume still severed) until the clean two-slot integration lands.
 
 ## Safety Architecture
 

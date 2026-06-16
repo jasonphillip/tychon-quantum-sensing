@@ -116,16 +116,21 @@ cat /sys/class/uio/uio*/name             # one should read "vbx"
 
 ## 6. Rung E — poke the PID over AXI
 
+**Current seed_7 status after 2026-06-15:** do **not** run `pid_poke` against
+`0x60001000`. A read of the PID slave issued a non-completing AXI transaction
+and wedged one U54 core. A UIO fallback does not help because it reaches the
+same physical slave. See
+`reports/2026-06-15-bringup/rung_cdef_results_2026-06-15.md`.
+
+The intended post-fix smoke test, after the clean two-slot bitstream is
+programmed, is:
+
 ```bash
-./pid_poke w   0x14 0.0625    # Kd <- 0x00001000  (CLEAN loopback addr)
-./pid_poke r   0x14           # expect 0x00001000 (0.062500)  -> AXI path alive
-./pid_poke w   0x18 1.0       # out_min <- 0x00010000 (CLEAN)
-./pid_poke r   0x18           # expect 0x00010000 (1.000000)
-./pid_poke wraw 0x08 0x1      # acc_start = 1; then `r 0x08` to watch idle->running
+./pid_poke w   0x14 0.0625
+./pid_poke r   0x14
+./pid_poke w   0x18 1.0
+./pid_poke r   0x18
 ```
-Use **0x14 / 0x18 / 0x1C** for clean write→read (the eavesdropper aliases 0x08/0x0C/0x10).
-If `/dev/mem` is blocked (CONFIG_STRICT_DEVMEM), the overlay's `pid@60001000` UIO node is
-the fallback — point `pid_poke` at `/dev/uioN` instead (small edit).
 
 ---
 
@@ -133,16 +138,25 @@ the fallback — point `pid_poke` at `/dev/uioN` instead (small edit).
 
 ```bash
 ./vnnx_smoke fcnn_v2_residual_dataset_a.vnnx
-# expect: "V250 control plane alive" -> "inference complete" -> dequantized outputs
+# 2.0.1/V250 rebuild (2026-06-16): "inference complete." -> out[0]=-2.9506 (scale 0.022873, zp 1)
 ```
 Needs `/dev/udmabuf-ddr-nc0` (non-cached DMA pool). **[NC]** if the 2026.04 base image
 doesn't ship it: `ls /dev/udmabuf-ddr-nc0`; if missing, add a `udmabuf-ddr-nc0`
 (`compatible="ikwzm,u-dma-buf"`, non-cached, `sync-mode=<1>`) reserved-memory node to the
 **base** DTS (not the runtime overlay — reserved memory must be reserved at boot).
 
-> **[NC] — V250 clock / latency.** Microchip de-rated the Icicle V250 to 75/150 MHz; the
-> seed_7 closure runs a 125 MHz FIC user clock. **Do not quote inference latency** until
-> measured on-silicon (read the V250 1×/2× rate from the seed_7 CCC config first).
+> **Rung F status — PASS on silicon 2026-06-16.** After the CoreVectorBlox **2.0.1/V250**
+> rebuild was programmed, `vbx_probe` → `RESULT: INFERENCE COMPLETED` (3/3; CTRL advances
+> `0x00`→`0x04`→done, ERR=0, VERSION `0x60030028`=`0x20000000`=V250/major2, latency <5 ms) and
+> `vnnx_smoke` → `inference complete` / `out[0]=-2.9506`. The old `1.1.12/V500` STUCK-at-`0x02`
+> is fixed. **Caveat:** the rebuild's bitstream broke the **fabric PCIe @ `0x3000000000`** — the
+> Linux `microchip-pcie` probe hangs (silent boot → 28 s watchdog loop). This is now **persistently
+> worked around**: the PCIe DT node is disabled at boot via the U-Boot env (`design_overlays` boot-time
+> `fdt set … status disabled`, reversible) and the `vbx` overlay auto-applies via `vbx-overlay.service`,
+> so a normal `reboot` recovers **autonomously** to an inference-ready kit (verified). V250 needs no PCIe;
+> the PCIe defect is independent of rung F (long-term fix only if PCIe is needed = re-synth with PCIe
+> intact). Full results + persistence/rollback: `docs/rung_f_v250_on_silicon_results_2026-06-16.md` (§6);
+> on the kit see `/root/PCIE-DISABLED-README.md`.
 
 ---
 
@@ -156,8 +170,8 @@ the reshaped C–G plan (`docs/cg_linux_bringup_plan_2026-06-15.md`).
 ---
 
 ## Open [NC] / decisions (see also the batched checklist in the session summary)
-- **HSS version match** → may need an eNVM HSS reflash (ASK-FIRST, §3).
-- **`/dev/udmabuf-ddr-nc0` presence** in the 2026.04 image → may need a base-DTS node (§7).
-- **`/dev/mem` strict** → may need the PID UIO node instead (§6).
-- **V250 clock** → measure before quoting latency (§7).
-- **MMUART0↔COM** → resolved by watching COM7–10 at first boot (§3) — closes rung D.
+- **HSS version match** → retired 2026-06-15; factory HSS boots the 2026.04 SD image.
+- **`/dev/udmabuf-ddr-nc0` presence** → retired 2026-06-15; present at `0xc8000000`.
+- **`/dev/mem` strict** → fabric addresses are readable/writable; PID failure is AXI non-response.
+- **V250 inference completion** → ✅ RESOLVED 2026-06-16 (2.0.1/V250 rebuild; `vbx_probe` INFERENCE COMPLETED, <5 ms). New open item: **fabric PCIe @ `0x3000000000` broken in the rebuild** → Linux `microchip-pcie` probe hangs (boot-loop); workaround = disable the PCIe DT node. See `docs/rung_f_v250_on_silicon_results_2026-06-16.md`.
+- **MMUART0↔COM** → MMUART0/HSS = COM8, MMUART1/Linux = COM10.

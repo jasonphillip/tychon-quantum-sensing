@@ -81,9 +81,12 @@ the WSL python path is wired through it.
 
 ## Follow-On Hardware Handoff
 
-For follow-on HIL bring-up, .vnnx artifacts get loaded onto the Icicle
-Kit via the MSS bare-metal firmware. The firmware locates the .vnnx in
-the on-board flash partition reserved for AI models (memory map TBD —
-see `docs/seed_7_register_map_2026-05-04.md` and the empty `firmware/`
-placeholder; per CLAUDE.md, do NOT write `firmware/main.c` until the
-SmartDesign memory map is locked).
+For current Icicle HIL bring-up, `.vnnx` artifacts are copied to Linux userspace
+on the SD-booted U54 system and run through the VectorBlox SoC runtime using
+`/dev/uioN` for V250 control plus `/dev/udmabuf-ddr-nc0` for non-cached DDR
+buffers. See `firmware/linux/README.md` and
+`docs/fpga_reproducibility_inventory_2026-06-16.md`.
+
+The older bare-metal staging idea is superseded for Icicle unless explicitly
+revived; DLOG-053 reversed the bare-metal MSS runtime decision in favor of the
+Microchip-supported Linux/Yocto VectorBlox path.
