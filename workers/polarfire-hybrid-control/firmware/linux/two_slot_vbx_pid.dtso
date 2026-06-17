@@ -1,0 +1,48 @@
+/dts-v1/;
+/plugin/;
+
+/*
+ * two_slot_vbx_pid.dtso — runtime device-tree overlay for the CLEAN TWO-SLOT
+ * bitstream (branch bringup/2026-06-17-two-slot-pid). Supersedes
+ * seed7_vbx_pid.dtso (which targets the eavesdropper seed_7/V250-rebuild image).
+ *
+ * Apply EVERY BOOT (overlays don't persist):
+ *   dtc -@ -O dtb -o two_slot_vbx_pid.dtbo two_slot_vbx_pid.dtso \
+ *       -Wno-reg_format -Wno-avoid_default_addr_size
+ *   mkdir -p /sys/kernel/config/device-tree/overlays/two_slot
+ *   cat two_slot_vbx_pid.dtbo > /sys/kernel/config/device-tree/overlays/two_slot/dtbo
+ *   # -> /dev/uioN appears; the VBX runtime finds "vbx" by /sys/class/uio/uioN/name
+ *
+ * Slaves on FIC_0 (two-slot integration, docs/two_slot_register_map_2026-06-17.md):
+ *   V250 control slave = FIC_0 SLAVE2 0x60030000 IRQ 124 (unchanged)
+ *   PID subsystem      = FIC_0 SLAVE3 0x60040000 (4 KiB) pid_subsystem, split by
+ *                        axi4_demux2 into two cleanly-decoded sub-slaves:
+ *                          0x60040000 nv_pid_top.axi4target (gains)
+ *                          0x60040800 pid_csr (liveness/version, error/u_ai
+ *                                     injection, actuator + watchdog readback)
+ *                        Both sub-slaves respond cleanly (rung-E wedge fixed).
+ * NOTE: 0x60001000 is the DMA-controller CTRL slave (NOT the PID) — do not poke it.
+ */
+
+/ {
+	fragment@0 {
+		target-path = "/";
+		__overlay__ {
+			/* CoreVectorBlox V250 control slave */
+			vbx@60030000 {
+				compatible = "generic-uio";
+				reg = <0x0 0x60030000 0x0 0x1000>;
+				interrupt-parent = <&plic>;
+				interrupts = <124>;
+				status = "okay";
+			};
+
+			/* PID subsystem (gains @ +0x000, pid_csr @ +0x800) */
+			pidsub@60040000 {
+				compatible = "generic-uio";
+				reg = <0x0 0x60040000 0x0 0x1000>;
+				status = "okay";
+			};
+		};
+	};
+};
