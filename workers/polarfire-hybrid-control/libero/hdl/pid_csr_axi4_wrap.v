@@ -158,7 +158,9 @@ module pid_csr_axi4_wrap #(
         .S_AXI_ACLK    (s_axi_aclk),
         .S_AXI_ARESETN (s_axi_aresetn),
 
-        .S_AXI_AWADDR  (s_axi_awaddr[13:0]),
+        // [10:0] = offset within the 2 KiB SLAVE3 sub-window (demux select bit
+        // [11]=1 routes here); high bits zeroed so regs sit at the sub-window base.
+        .S_AXI_AWADDR  ({3'b0, s_axi_awaddr[10:0]}),
         .S_AXI_AWPROT  (s_axi_awprot),
         .S_AXI_AWVALID (s_axi_awvalid),
         .S_AXI_AWREADY (l_awready),
@@ -172,7 +174,7 @@ module pid_csr_axi4_wrap #(
         .S_AXI_BVALID  (l_bvalid),
         .S_AXI_BREADY  (s_axi_bready),
 
-        .S_AXI_ARADDR  (s_axi_araddr[13:0]),
+        .S_AXI_ARADDR  ({3'b0, s_axi_araddr[10:0]}),
         .S_AXI_ARPROT  (s_axi_arprot),
         .S_AXI_ARVALID (s_axi_arvalid),
         .S_AXI_ARREADY (l_arready),
