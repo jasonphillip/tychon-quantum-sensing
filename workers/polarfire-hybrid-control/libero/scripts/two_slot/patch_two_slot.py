@@ -47,10 +47,18 @@ import sys
 from pathlib import Path
 
 MARKER = "// two_slot PID integration"
-WATCHDOG_TIMEOUT_CYCLES = 5_000_000  # demo-tuned (~50 ms @100 MHz fabric clk);
-# production safety spec is 200_000 = 1 ms @ 200 MHz. Relaxed here so a
-# software/host-paced replay does not spuriously trip the watchdog between rows;
-# the safety stunt deliberately stalls inference longer than this to trip it.
+
+# Fabric clock (FIC_0 / ACLK / watchdog) = 125 MHz (8 ns), CONFIRMED from the
+# seed_7 PF_CCC_C0 OUT0 = REF_CLK(50 MHz) x 5/2 (constraint/...derived_constraints.sdc).
+# Watchdog timeout is a PARAMETER (watchdog_timer.v WATCHDOG_TIMEOUT_CYCLES) so we
+# build two clearly-labeled bitstreams from the same netlist:
+#   --watchdog-cycles 125000     => SAFETY-SPEC build:  1 ms @ 125 MHz (the real bound)
+#   --watchdog-cycles 62500000   => DASHBOARD-DEMO build: 500 ms @ 125 MHz (host-paced;
+#                                   stops a software/host-paced replay from spuriously
+#                                   tripping between rows). NOT the 1 ms safety bound.
+DEMO_WATCHDOG_CYCLES   = 62_500_000   # 500 ms @ 125 MHz  (host-paced demo timeout)
+SAFETY_WATCHDOG_CYCLES = 125_000      # 1 ms   @ 125 MHz  (safety-spec bound)
+WDOG_PLACEHOLDER = "__WATCHDOG_TIMEOUT_CYCLES__"
 
 
 class PatchError(RuntimeError):
@@ -201,7 +209,7 @@ vbx_pulse_gen u_vbx_pulse_gen (
         );
 
 watchdog_timer #(
-        .WATCHDOG_TIMEOUT_CYCLES(""" + str(WATCHDOG_TIMEOUT_CYCLES) + """)
+        .WATCHDOG_TIMEOUT_CYCLES(""" + WDOG_PLACEHOLDER + """)
 ) u_watchdog_timer (
         .clk          ( ACLK ),
         .resetn       ( ARESETN ),
@@ -231,7 +239,7 @@ FIC_SLAVE3_TIE_REPL = [
 ]
 
 
-def patch_fic(text: str) -> str:
+def patch_fic(text: str, watchdog_cycles: int) -> str:
     if MARKER in text:
         raise PatchError("FIC_0_PERIPHERALS.v already patched (marker present)")
     # 2a. port name list
@@ -259,6 +267,10 @@ def patch_fic(text: str) -> str:
     )
     # 2f. instantiate wrap + watchdog + pulse_gen, drive new ports (before endmodule)
     text = _sub_once(text, r"\nendmodule\n?$", FIC_INSTANCES + "\n", "fic endmodule", re.MULTILINE)
+    # 2g. bake the watchdog timeout (parameterized: safety-spec vs dashboard-demo)
+    if WDOG_PLACEHOLDER not in text:
+        raise PatchError("watchdog placeholder missing after instance insert")
+    text = text.replace(WDOG_PLACEHOLDER, str(watchdog_cycles))
     return text
 
 
@@ -391,9 +403,23 @@ def main() -> int:
     ap.add_argument("--fic", type=Path, required=True)
     ap.add_argument("--vbx", type=Path, required=True)
     ap.add_argument("--check", action="store_true", help="dry run; write nothing")
+    ap.add_argument(
+        "--watchdog-cycles", type=int, default=DEMO_WATCHDOG_CYCLES,
+        help=f"watchdog timeout in fabric (125 MHz) cycles. "
+             f"default {DEMO_WATCHDOG_CYCLES} (500 ms, dashboard-demo); "
+             f"use {SAFETY_WATCHDOG_CYCLES} for the 1 ms safety-spec build.",
+    )
     args = ap.parse_args()
 
-    jobs = [(args.vbx, patch_vbx), (args.fic, patch_fic), (args.top, patch_top)]
+    wc = args.watchdog_cycles
+    label = "SAFETY-SPEC 1 ms" if wc == SAFETY_WATCHDOG_CYCLES else "host-paced DEMO"
+    print(f"watchdog: {wc} cycles @ 125 MHz = {wc / 125e6 * 1e3:.3f} ms  [{label}]")
+
+    jobs = [
+        (args.vbx, lambda t: patch_vbx(t)),
+        (args.fic, lambda t: patch_fic(t, wc)),
+        (args.top, lambda t: patch_top(t)),
+    ]
     results = []
     for path, fn in jobs:
         if not path.is_file():
