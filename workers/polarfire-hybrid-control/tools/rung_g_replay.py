@@ -8,10 +8,11 @@ reads the REAL hardware actuator output twice — once with the NN feedforward o
 silicon-vs-silicon, not silicon-vs-simulation.
 
 Hardware interface (one persistent ssh session running `pid_ctl repl`):
-  - inject error (Q34.30) -> pid_csr 0x60040010/0x14
-  - inject u_ai  (Q16.16) -> pid_csr 0x60040018
-  - read actuator (Q16.16) <- pid_csr 0x60040044  (post-clamp tap)
-  - read watchdog_csr      <- pid_csr 0x60040054  (bit0 = timeout)
+  - inject error (Q34.30) -> pid_csr 0x60040810/0x814
+  - inject u_ai  (Q16.16) -> pid_csr 0x60040818
+  - read actuator (Q16.16) <- pid_csr 0x60040844  (post-clamp tap)
+  - read watchdog_csr      <- pid_csr 0x60040854  (bit0 = timeout)
+  (pid_csr is at the 0x60040800 sub-window of the SLAVE3 page; gains at 0x60040000.)
 
 Telemetry schema (one CSV row / one JSONL object per sample):
   t_host, sample_idx, error_in, nn_u_ai, pid_only_out, pidnn_out, actuator_out,
@@ -95,7 +96,7 @@ class KitLink:
 
     def rraw(self, addr: int) -> int:
         out = self._cmd(f"r 0x{addr:08x}")
-        # "0x60040044 = 0x0000abcd  (..)"
+        # "0x60040844 = 0x0000abcd  (..)"
         try:
             return int(out.split("=")[1].split("(")[0].strip(), 16)
         except (IndexError, ValueError):
