@@ -132,3 +132,28 @@ select.sel { background: var(--panel-2); border: 1px solid var(--border); color:
   border-radius: 8px; padding: 10px; text-align: center; }
 .tile .big { font-family: var(--mono); font-size: 22px; font-weight: 700; color: var(--accent); }
 .tile .cap { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .4px; margin-top: 2px; }
+
+/* system-flow diagram */
+.flow { width: 100%; height: auto; display: block; }
+.flow-box { fill: var(--panel-2); stroke: var(--border); stroke-width: 1.5; transition: all .25s; }
+.flow-box.live { stroke: var(--accent); }
+.flow-box.nn.on { stroke: var(--green); filter: drop-shadow(0 0 4px rgba(52, 211, 153, .7)); }
+.flow-box.nn.off { fill: #10151c; stroke: #2a3744; stroke-dasharray: 5 3; }
+.flow-label { fill: var(--text); font: 600 13px var(--mono); text-anchor: middle; }
+.flow-sub { fill: var(--muted); font: 10px var(--mono); text-anchor: middle; }
+.arrow { stroke: var(--muted); stroke-width: 1.6; fill: none; transition: stroke .25s; }
+.arrow.live { stroke: var(--accent); }
+.arrow.nn.on { stroke: var(--green); }
+.arrow.nn.off { stroke: #33414f; stroke-dasharray: 5 3; }
+.arrowhead { fill: var(--muted); }
+.wd-box.ar { fill: rgba(52, 211, 153, .12); stroke: var(--green); stroke-width: 1.5; }
+.wd-box.tr { fill: rgba(248, 113, 113, .14); stroke: var(--red); stroke-width: 1.5; }
+.wdmon.ar { stroke: var(--green); }
+.wdmon.tr { stroke: var(--red); }
+.wd-t { fill: var(--text); font: 600 12px var(--mono); text-anchor: middle; }
+.wd-s { fill: var(--muted); font: 10px var(--mono); text-anchor: middle; }
+.flow-legend { display: flex; align-items: center; gap: 10px; margin-top: 8px; font-family: var(--mono); font-size: 12px; }
+.wd-hist { display: inline-flex; gap: 2px; margin-left: auto; }
+.wd-hist .tick { width: 5px; height: 14px; border-radius: 1px; background: var(--border); }
+.wd-hist .tick.g { background: var(--green); opacity: .85; }
+.wd-hist .tick.r { background: var(--red); }

@@ -7,6 +7,7 @@ import { V250Panel } from './components/V250Panel'
 import { CsrPanel } from './components/CsrPanel'
 import { WatchdogPanel } from './components/WatchdogPanel'
 import { TelemetryPlot } from './components/TelemetryPlot'
+import { SystemFlow } from './components/SystemFlow'
 import { ModelCard } from './components/ModelCard'
 import { MetricsTiles } from './components/MetricsTiles'
 import { SpectrumViewer } from './components/SpectrumViewer'
@@ -14,6 +15,7 @@ import { SpectrumViewer } from './components/SpectrumViewer'
 export default function App() {
   const [status, setStatus] = useState<api.Status | null>(null)
   const [evidence, setEvidence] = useState<api.EvidenceItem[]>([])
+  const [streamSample, setStreamSample] = useState<api.Sample | null>(null)
 
   const refresh = useCallback(async () => {
     try { setStatus(await api.getStatus()) }
@@ -33,6 +35,9 @@ export default function App() {
   }
 
   const mode = status?.mode ?? '…'
+  const flowTripped = streamSample ? streamSample.watchdog_timeout === 1 : !!status?.watchdog_timeout
+  const flowMode = streamSample ? streamSample.mode
+    : (status?.online ? (status?.watchdog_timeout ? 'PID_ONLY_FALLBACK' : 'PID_NN') : '—')
 
   return (
     <div className="app">
@@ -57,7 +62,8 @@ export default function App() {
         </div>
       </div>
 
-      <TelemetryPlot mode={mode} />
+      <SystemFlow mode={flowMode} tripped={flowTripped} />
+      <TelemetryPlot mode={mode} onSample={setStreamSample} onEnd={() => setStreamSample(null)} />
       <div className="grid" style={{ marginTop: 14 }}>
         <ModelCard />
         <MetricsTiles />

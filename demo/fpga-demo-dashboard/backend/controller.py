@@ -178,18 +178,24 @@ class Controller:
             # NN off -> hardware PID-only
             self.link.wraw(R_U_AI, f_to_q16(0.0))
             pid_only = q16_to_f(self.link.rraw(R_POST_CLAMP))
-            # NN output
+            # NN feedforward
             u_ai = nn_surrogate(error, idx) if nn_mode == "surrogate" else config.DEFAULT_NN_CONST
             if stunt == "clamp" and 20 <= idx < 40:
                 u_ai = 0.25  # >> +-4.5% sector bound; clamp must bound it
+            # watchdog stunt: simulate the V250 stalling (software/replay only) so the
+            # NN feedforward drops out and the loop reverts to pure PID (bumpless).
+            wd_stunt = stunt == "watchdog" and 50 <= idx < 80 and self.mode != "LIVE"
+            if wd_stunt:
+                u_ai = 0.0
             self.link.wraw(R_U_AI, f_to_q16(u_ai))
             pidnn = q16_to_f(self.link.rraw(R_POST_CLAMP))
-            wd = self.link.rraw(R_WATCHDOG) & 0x1
+            wd = 1 if wd_stunt else (self.link.rraw(R_WATCHDOG) & 0x1)
+            actuator = pid_only if wd else pidnn  # fallback -> pure PID
             yield asdict(Sample(
                 t_host=round(time.time() - t0, 6), sample_idx=idx,
                 error_in=round(error, 6), nn_u_ai=round(u_ai, 6),
                 pid_only_out=round(pid_only, 6), pidnn_out=round(pidnn, 6),
-                actuator_out=round(pidnn, 6),
+                actuator_out=round(actuator, 6),
                 unclamped_calc=round(pid_only + u_ai, 6),
                 clamp_active=int(abs(u_ai) > OUTER_SECTOR_CLAMP_FRACTION),
                 watchdog_timeout=wd,

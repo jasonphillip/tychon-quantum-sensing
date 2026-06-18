@@ -31,7 +31,7 @@ function makeOpts(width: number): uPlot.Options {
   }
 }
 
-export function TelemetryPlot({ mode }: { mode: string }) {
+export function TelemetryPlot({ mode, onSample, onEnd }: { mode: string; onSample?: (s: Sample) => void; onEnd?: () => void }) {
   const elRef = useRef<HTMLDivElement>(null)
   const plotRef = useRef<uPlot | null>(null)
   const dataRef = useRef<Cols>(Array.from({ length: COLS }, () => []))
@@ -50,7 +50,7 @@ export function TelemetryPlot({ mode }: { mode: string }) {
     return () => { window.removeEventListener('resize', onResize); u.destroy(); plotRef.current = null }
   }, [])
 
-  const stop = () => { esRef.current?.close(); esRef.current = null; setRunning(false) }
+  const stop = () => { esRef.current?.close(); esRef.current = null; setRunning(false); onEnd?.() }
 
   const start = () => {
     stop()
@@ -65,9 +65,10 @@ export function TelemetryPlot({ mode }: { mode: string }) {
         d[3].push(s.pidnn_out); d[4].push(s.nn_u_ai); d[5].push(s.clamp_active); d[6].push(s.watchdog_timeout)
         plotRef.current?.setData(d as unknown as uPlot.AlignedData)
         setCount(d[0].length)
+        onSample?.(s)
       },
-      () => setRunning(false),
-      () => setRunning(false),
+      () => { setRunning(false); onEnd?.() },
+      () => { setRunning(false); onEnd?.() },
     )
   }
 
@@ -85,6 +86,7 @@ export function TelemetryPlot({ mode }: { mode: string }) {
         <select className="sel" value={stunt} onChange={(e) => setStunt(e.target.value)} disabled={running}>
           <option value="none">stunt: none</option>
           <option value="clamp">stunt: clamp trip</option>
+          <option value="watchdog">stunt: watchdog trip</option>
         </select>
         <span style={{ color: 'var(--muted)', fontFamily: 'var(--mono)', fontSize: 12 }}>{count} samples</span>
       </div>
