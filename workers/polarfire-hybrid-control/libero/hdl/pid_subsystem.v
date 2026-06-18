@@ -77,7 +77,9 @@ module pid_subsystem #(
     // ---- datapath + safety nets ----
     wire [63:0] pid_error;
     wire [31:0] pid_u_ai;
-    wire [31:0] pid_actuator;
+    wire [31:0] pid_actuator_raw;    // nv_pid_top.actuator_out_write_data (1-cycle transient)
+    wire        pid_actuator_we;     // nv_pid_top.actuator_out_write_en (output-valid pulse)
+    reg  [31:0] pid_actuator_latch;  // FIX(2026-06-18): hold last actuator output for CSR readback
     wire        wd_timeout;
     wire        vbx_pulse;
     wire        nvpid_bid, nvpid_rid;  // nv_pid_top 1-bit ID -> 9-bit pad
@@ -129,7 +131,7 @@ module pid_subsystem #(
 
     nv_pid_top_top u_nv_pid_top (
         .clk                     (clk),
-        .reset                   (1'b0),
+        .reset                   (~resetn),  // FIX(2026-06-18): active-high reset; was 1'b0 -> axi4target FSM never initialized (M0 wedge)
         .axi4target_awvalid      (m0_awvalid), .axi4target_awready (m0_awready),
         .axi4target_awaddr       (m0_awaddr[5:0]), .axi4target_awid (m0_awid[0]),
         .axi4target_awlen        (m0_awlen), .axi4target_awsize (m0_awsize),
@@ -156,9 +158,17 @@ module pid_subsystem #(
         .error                   (pid_error),
         .u_AI_in                 (pid_u_ai),
         .ai_watchdog_timeout     (wd_timeout),
-        .actuator_out_write_en   (),
-        .actuator_out_write_data (pid_actuator)
+        .actuator_out_write_en   (pid_actuator_we),
+        .actuator_out_write_data (pid_actuator_raw)
     );
+
+    // FIX(2026-06-18): the SmartHLS actuator output is a 1-cycle combinational
+    // pulse gated by write_en, NOT a held register. Latch it so the CSR tap
+    // (0x60040844) returns the last actuator value to software.
+    always @(posedge clk) begin
+        if (!resetn)              pid_actuator_latch <= 32'd0;
+        else if (pid_actuator_we) pid_actuator_latch <= pid_actuator_raw;
+    end
 
     // ---- M1 -> pid_csr (clean CSR slave; bridges AXI4-64 to AXI4-Lite-32) ----
     pid_csr_axi4_wrap u_pid_csr (
@@ -179,7 +189,7 @@ module pid_subsystem #(
         .s_axi_rresp(m1_rresp), .s_axi_rlast(m1_rlast), .s_axi_ruser(m1_ruser),
         .s_axi_rvalid(m1_rvalid), .s_axi_rready(m1_rready),
         .error_shadow_out(pid_error), .u_ai_shadow_out(pid_u_ai),
-        .tap_post_clamp_in(pid_actuator), .tap_watchdog_in(wd_timeout)
+        .tap_post_clamp_in(pid_actuator_latch), .tap_watchdog_in(wd_timeout)
     );
 
     // ---- safety: V250 output_valid -> pulse -> watchdog ----

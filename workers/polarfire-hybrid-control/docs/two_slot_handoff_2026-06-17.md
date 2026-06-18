@@ -93,6 +93,40 @@ Options in the 2026-06-18 session summary.
 (read or write); the M0 fix is deferred.** Demo scope (exact honest wording), evidence, and the
 M0 deferred-RTL follow-up path are captured in **`docs/two_slot_demo_scope_2026-06-18.md`**.
 
+### 2026-06-18 (later) — REVERSED: M0 fixed + LIVE ACTUATOR working on silicon (idfix2)
+
+Jason then chose to pursue the live actuator. Root-caused, fixed, sim-verified, and **CONFIRMED on
+silicon**:
+
+**Two RTL bugs (latent — the PID datapath was never exercised before, M0 blocked it):**
+1. **M0 AXI completion** (`pid_subsystem.v`/`axi4_demux2.v`): `nv_pid_top.reset` was tied `1'b0`
+   (never reset → AXI FSM emits X in sim); and the demux truncated the 9-bit master ID to the
+   1-bit slave and padded the reply → response ID never matched. **Fix:** `nv_pid_top.reset←~resetn`
+   + demux **latches/replays the master AW/AR ID** on B/R. (Diagnosed via ModelSim `tb_m0.v`:
+   M0 read/write went X/HANG → clean completion with correct ID.)
+2. **Actuator output not latched** (`pid_subsystem.v`): `nv_pid_top.actuator_out_write_data` is a
+   1-cycle combinational pulse gated by `actuator_out_write_en` (NOT held); `pid_subsystem` tapped
+   the raw (mostly-0) data with `write_en` unconnected → software always read 0. **Fix:** latch
+   `actuator_out_write_data` on `actuator_out_write_en`, feed the latch to the CSR tap. (Verified
+   via ModelSim `tb_actuator.v`: actuator = Kp·error, clamp saturates.)
+
+**Rebuilds:** `idfix` (job `7907a83f`, M0 fix, +0.825 ns) then `idfix2` (job
+**`39c8bcf2665ce8b79bcc2abb552ddd2b7b703729d50876744c2cb63c82ca230b`**, fabric digest
+`3243db5f…`, M0 fix + latch, **+0.789 ns, timing met**). Both PROGRAM PASS, digest-matched.
+
+**On-silicon result (idfix2, after cold-cycle):**
+- **M0 read/write bit-exact, no wedge** (`pid_ctl r 0x6004000C` completes — the read that wedged the
+  kit all session). Gains/limits settable via M0.
+- **LIVE actuator** (`0x60040844`): err +0.50→**+0.3999**, −0.50→**−0.4000**, +0.25→**+0.2000**,
+  +2.00→**+1.0000 (clamp)**. PID tracks error; sector clamp saturates. Control: set gains (M0) →
+  inject error (M1 `0x810/814`) → pulse start (M0 `0x08` = START_STATUS_ADDR) → read latched
+  actuator (M1 `0x844`).
+- **Rung F still PASSES** (`vbx_probe` INFERENCE COMPLETED, `vnnx_smoke` out −2.9506).
+
+**Net: the two-slot bitstream is fully functional on silicon — V250 inference + clean M0/M1 CSR +
+live PID actuator with working clamp.** Sim TBs: `tests/two_slot_sim/{tb_m0,tb_actuator}.v`.
+Rollbacks preserved: idfix `7907a83f`, demo `a5550f9e`, V250 `4e3323e8`.
+
 ---
 
 ## Where things stand

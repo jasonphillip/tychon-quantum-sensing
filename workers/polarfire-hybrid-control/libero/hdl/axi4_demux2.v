@@ -100,7 +100,7 @@ module axi4_demux2 #(
          = {s_arid,s_araddr,s_arlen,s_arsize,s_arburst,s_arlock,s_arcache,s_arprot,s_arqos,s_arregion,s_aruser};
 
     // ===== Write path (single-outstanding) =====
-    reg w_busy, w_sel;
+    reg w_busy, w_sel; reg [8:0] w_id_q;  // FIX(2026-06-18): latch master AWID for B-response replay
     wire aw_sel = w_busy ? w_sel : s_awaddr[SEL_BIT];
     assign m0_awvalid = s_awvalid & ~w_busy & ~aw_sel;
     assign m1_awvalid = s_awvalid & ~w_busy &  aw_sel;
@@ -112,7 +112,7 @@ module axi4_demux2 #(
     assign s_wready  = w_busy & (w_sel ? m1_wready : m0_wready);
 
     assign s_bvalid  = w_busy & (w_sel ? m1_bvalid : m0_bvalid);
-    assign s_bid     = w_sel ? m1_bid   : m0_bid;
+    assign s_bid     = w_id_q;  // FIX(2026-06-18): replay latched AWID (M0 slave echoes only 1-bit ID)
     assign s_bresp   = w_sel ? m1_bresp : m0_bresp;
     assign s_buser   = w_sel ? m1_buser : m0_buser;
     assign m0_bready = s_bready & w_busy & ~w_sel;
@@ -121,12 +121,12 @@ module axi4_demux2 #(
 
     always @(posedge clk) begin
         if (!resetn) begin w_busy <= 1'b0; w_sel <= 1'b0; end
-        else if (aw_fire) begin w_busy <= 1'b1; w_sel <= s_awaddr[SEL_BIT]; end
+        else if (aw_fire) begin w_busy <= 1'b1; w_sel <= s_awaddr[SEL_BIT]; w_id_q <= s_awid; end
         else if (b_fire)  begin w_busy <= 1'b0; end
     end
 
     // ===== Read path (single-outstanding) =====
-    reg r_busy, r_sel;
+    reg r_busy, r_sel; reg [8:0] r_id_q;  // FIX(2026-06-18): latch master ARID for R-response replay
     wire ar_sel = r_busy ? r_sel : s_araddr[SEL_BIT];
     assign m0_arvalid = s_arvalid & ~r_busy & ~ar_sel;
     assign m1_arvalid = s_arvalid & ~r_busy &  ar_sel;
@@ -134,7 +134,7 @@ module axi4_demux2 #(
     wire ar_fire = s_arvalid & s_arready;
 
     assign s_rvalid  = r_busy & (r_sel ? m1_rvalid : m0_rvalid);
-    assign s_rid     = r_sel ? m1_rid   : m0_rid;
+    assign s_rid     = r_id_q;  // FIX(2026-06-18): replay latched ARID
     assign s_rdata   = r_sel ? m1_rdata : m0_rdata;
     assign s_rresp   = r_sel ? m1_rresp : m0_rresp;
     assign s_rlast   = r_busy & (r_sel ? m1_rlast : m0_rlast);
@@ -145,7 +145,7 @@ module axi4_demux2 #(
 
     always @(posedge clk) begin
         if (!resetn) begin r_busy <= 1'b0; r_sel <= 1'b0; end
-        else if (ar_fire) begin r_busy <= 1'b1; r_sel <= s_araddr[SEL_BIT]; end
+        else if (ar_fire) begin r_busy <= 1'b1; r_sel <= s_araddr[SEL_BIT]; r_id_q <= s_arid; end
         else if (r_fire)  begin r_busy <= 1'b0; end
     end
 
