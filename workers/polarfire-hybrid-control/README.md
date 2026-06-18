@@ -87,6 +87,16 @@ INFERENCE COMPLETED, `vnnx_smoke` → `out[0]=-2.9506`; VERSION `0x60030028`=`0x
 See `docs/rung_f_v250_on_silicon_results_2026-06-16.md`, `docs/track0_bringup_runbook.md`,
 and `docs/fpga_reproducibility_inventory_2026-06-16.md`.
 
+**As of 2026-06-18, the clean two-slot PID + V250 demo bitstream** (`.job` `a5550f9e…`) is
+programmed and current on the kit. On silicon it proves: **V250 inference** (after a cold
+power-cycle — required for V250 init), a **clean two-slot PID/control telemetry plane** (`pid_csr`
+"M1" sub-slave: versioned, monotonic write-counter + shadow-gain readback, live watchdog/bumpless
+safety), and **dashboard telemetry**. The **live closed-loop actuator through the M0 gains
+sub-slave is deferred** — the M0 gains slave has a silicon-observed AXI completion defect (reads to
+`0x60040000` do not complete), and `out_min/out_max` (which gate the actuator output) are M0-only.
+Scope + honest claims + fix path: `docs/two_slot_demo_scope_2026-06-18.md`; engineering log:
+`docs/two_slot_handoff_2026-06-17.md`.
+
 Known open hardware blockers:
 
 - **Fabric PCIe @ `0x3000000000` is broken in the 2.0.1/V250 rebuild** — the Linux
@@ -96,8 +106,11 @@ Known open hardware blockers:
   `docs/rung_f_v250_on_silicon_results_2026-06-16.md` §6 and `/root/PCIE-DISABLED-README.md` on the kit).
   The only remaining work is the *optional* long-term fix (re-synth with the fabric PCIe intact) **if
   PCIe is ever needed**. The trusted rung-A seed_7 (1.1.12/V500) `.job` remains the bitstream rollback.
-- PID slave reads at `0x60001000` wedge a U54 core; do not run `pid_poke` against that address
-  (not retested on the rebuild — assume still severed) until the clean two-slot integration lands.
+- **`0x60001000` is the DMA controller, not the PID — never poke it.** On the two-slot bitstream
+  the PID lives on SLAVE3 `0x60040000`: the **M1 `pid_csr` (`0x60040800`) is clean and validated**,
+  but the **M0 gains slave (`0x60040000`) read path wedges a U54 core** (silicon-observed AXI
+  completion defect, 2026-06-18) — avoid M0 (read or write) until the `axi4_demux2` M0 fix lands.
+  See `docs/two_slot_demo_scope_2026-06-18.md`.
 
 ## Safety Architecture
 

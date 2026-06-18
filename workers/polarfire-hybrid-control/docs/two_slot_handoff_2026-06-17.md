@@ -5,6 +5,96 @@ fully powered off (a **cold power-cycle**, which is the intended next-session
 discriminator — NOT a failure/rollback). Evidence labels per
 `docs/agent_ground_truth_contract.md`.
 
+---
+
+## UPDATE 2026-06-18 — cold-cycle results: Gate F PASS; Rung E M0 defect; kit needs power-cycle
+
+**Goal #1 ANSWERED — YES.** After the overnight cold power-cycle, Rung F V250 inference is
+**RESTORED** on the two-slot bitstream. Cold-init hypothesis **CONFIRMED**; the warm-after-program
+`INVALID_FIRMWARE_ADDRESS` was a V250 POR artifact, **NOT a two-slot regression**. No rebuild,
+no reprogram performed.
+
+### Gate F — PASS (CONFIRMED, live silicon ~12:15)
+`ssh icicle /root/bringup/vbx_probe fcnn_v2_residual_dataset_a.vnnx`:
+- after_start `CTRL=0x04` (RUNNING), `MODEL=0xc8000400`, `IO=0xc8000000`; poll done; `error_val=0`;
+  `RESULT: INFERENCE COMPLETED`. `VER=0x20000000`.
+- `vnnx_smoke` → `inference complete. / out[0]=-2.9506` (scale 0.022873, zp 1) — exact match to the
+  2026-06-16 known-good V250 baseline.
+- Pre-checks green: uptime 29 min (fresh cold boot), PCIe `disabled` / 0 microchip-pcie probes,
+  `vbx-overlay.service active`, `uio2=vbx@60030000`, udmabuf `0xc8000000`/32 MiB.
+
+### Rung E — M1 (pid_csr) CLEAN; M0 (gains) read-path DEFECT (CONFIRMED)
+Built + deployed `pid_ctl` (kit sha256 `161211c1…`, from spark1 `pid_ctl.c` `fdabd192…` via bee
+cross-gcc; controlled per-file copy, no bee branch switch/pull).
+- **M1 `pid_csr` @ 0x60040800: reads COMPLETE cleanly.** `pid_ctl r 0x60040804` → `0x00010000`
+  (csr_version). The SLAVE3 crossbar slot decodes + completes — the clean two-slot integration is
+  alive on the M1 sub-slave.
+- **M0 `nv_pid_top.axi4target` gains @ 0x60040000: read does NOT complete.** `pid_ctl r 0x6004000C`
+  (Kp) hung (host `timeout` 124) → non-completing AXI read on the M0 branch of `axi4_demux2` →
+  wedged a U54 hart → **kit went fully off the LAN** (ARP `FAILED`, MAC absent from a full /24
+  sweep; did NOT auto-recover via watchdog reset in ~6 min). **Kit now requires a physical
+  power-cycle.**
+- **HYPOTHESIS (most likely):** a defect on the **M0 read path** of the hand-written `axi4_demux2`
+  — R-channel / RID handshake (nv_pid_top 1-bit ID padded to the 9-bit demux side) or SmartHLS
+  `ap_ctrl` gating. M0 was never read-tested on silicon before today; the 2026-06-17 "both decoded
+  clean" was an expectation — now **FALSIFIED for M0 reads** (M1 reads stand confirmed clean).
+- **Blast radius is bounded:** Rung G (`tools/rung_g_replay.py`) and the "clean PID CSR" demo use
+  **only M1** (0x60040800+); they never touch M0. The demo path is intact once the kit is back.
+
+### RESUME STEPS (after the kit is power-cycled — a COLD off/on, same as this morning)
+1. Power-cycle restores the healthy two-slot state (bitstream/U-Boot/SD untouched; Rung F was
+   confirmed working). Wait ~60–90 s for autonomous boot; reconnect `ssh icicle`.
+2. Re-verify Rung F (`vbx_probe`) still `INFERENCE COMPLETED`.
+3. **Rung E on M1 ONLY — NEVER touch M0 (0x60040000–0x600407ff, incl. `acc_start` 0x60040008).**
+   All timeout-wrapped: `axi_write_count` (0x60040800), shadow-gain write/readback (0x60040820+),
+   inject error (0x60040810/814) + u_ai (0x60040818), read `post_clamp_out` (0x60040844)
+   before/after to test datapath liveness, `watchdog_csr` (0x60040854).
+4. Rung G: dry-run, then on-silicon (M1 only). Label **"silicon PID + host-provided NN feedforward
+   telemetry"** (NN is a host surrogate, not live per-row V250).
+5. **M0 fix is a deferred RTL/demux item (requires a rebuild)** — out of scope until explicitly
+   chosen; not needed for the M1-based demo.
+
+### 2026-06-18 (cont.) — kit power-cycled & recovered; Rung E (M1) + Rung G COMPLETE; M0 root-caused
+
+Jason cold power-cycled the kit; it recovered autonomously (uptime 0, **4 CPUs** — wedged hart
+cleared, PCIe disabled, vbx-overlay active, udmabuf `0xc8000000`). **Rung F re-verified PASS**
+(2nd cold boot: `INFERENCE COMPLETED`, `out[0]=-2.9506`).
+
+**Rung E — M1 (`pid_csr`) FULLY VALIDATED on silicon (CONFIRMED):** `csr_version=0x00010000`;
+`axi_write_count` monotonic (0→9, exactly the 9 M1 writes issued); shadow-gain write/readback
+bit-exact (0.5→`0x8000`, 0.25→`0x4000`); `watchdog_csr=0x07` (bit0 timeout + trip count 3 —
+watchdog LIVE). The clean-two-slot host-control-plane survival proof, on a real decoded crossbar slave.
+
+**M0 live-actuator gating — ROOT-CAUSED (CONFIRMED, source):** `post_clamp_out` stays 0 for any
+injected `error`/`u_ai`. Cause: `hls/src/nv_pid.hpp:21` constructs `NVPID` with `out_min(0),
+out_max(0)`, and `compute()` clamps the final output to `[out_min,out_max]` → `[0,0] ≡ 0` until
+those limits are set. `out_min/out_max` are written via the **M0 gains slave** (0x60040018/
+0x6004001C) — the wedging slave. So a nonzero **live** actuator cannot be shown on this bitstream
+without writing M0 (which wedges). (Compounded by the watchdog being timed-out → u_AI disabled by
+the bumpless fallback.)
+
+**Rung G — telemetry produced (HONEST LABELS):**
+- DRY-RUN (software FakeKit): `sim/rung_g/rung_g_dryrun_2026-06-18.{csv,jsonl,png}` — 120 samples,
+  16 clamp-active; the dashboard shape (PID-only vs PID+NN, clamp/watchdog flags).
+- ON-SILICON (M1-only, 30 rows): `sim/rung_g/rung_g_silicon_2026-06-18.{csv,jsonl,png}` — REAL
+  per-row hardware liveness: `axi_write_count` +4/row (13→129), `csr_version=0x00010000` every row,
+  watchdog read live (timeout=1, `PID_ONLY_FALLBACK` all rows). `actuator_out=0` (M0-gated). i.e.
+  **"silicon PID-subsystem CSR liveness + host-provided NN feedforward telemetry"** — NOT a live
+  silicon closed-loop actuator (needs the M0 fix).
+
+**Net:** Rung F ✅ (cold-init). Rung E M1 ✅; live actuator ⛔ M0-gated. Rung G dashboard ✅ (software)
++ silicon CSR-liveness ✅. Two-slot fabric is sound **except the M0 (gains) read path**.
+
+**DECISION FOR JASON (product/strategy):** a live silicon closed-loop actuator needs either an
+**M0 fix** (RTL/demux respin → rebuild) or a **write-only M0 attempt** (risky — may wedge again).
+Options in the 2026-06-18 session summary.
+
+→ **CHOSEN (Jason, 2026-06-18): Option 1 — accept the proven scope; NO M0 access this session
+(read or write); the M0 fix is deferred.** Demo scope (exact honest wording), evidence, and the
+M0 deferred-RTL follow-up path are captured in **`docs/two_slot_demo_scope_2026-06-18.md`**.
+
+---
+
 ## Where things stand
 
 The clean two-slot PID integration is **built, timing-closed, and programmed onto
