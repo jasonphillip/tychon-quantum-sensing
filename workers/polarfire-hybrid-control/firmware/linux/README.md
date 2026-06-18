@@ -1,5 +1,13 @@
 # Icicle Kit — Linux bring-up runbook (rungs C–G)
 
+> **STATUS 2026-06-18 — this runbook describes the original seed_7 path; the kit now runs the clean
+> two-slot `idfix2` bitstream where ALL rungs work on silicon** (V250 inference, clean M0/M1 CSR,
+> and a **live PID actuator** tracking Kp·error with the sector clamp saturating). The `0x60001000`
+> warnings below stay valid — that is the DMA controller, never poke it — but the PID now lives on
+> `0x60040000` (M0 gains) + `0x60040800` (M1 `pid_csr`), driven via `pid_ctl` /
+> `tools/rung_g_replay.py`. Current truth: `docs/two_slot_handoff_2026-06-17.md` (2026-06-18
+> sections) + `docs/two_slot_demo_scope_2026-06-18.md`.
+
 Copy-paste guide to take the **already-programmed** seed_7 bitstream (rung A, PROGRAM
 PASS 2026-06-15) to a Linux userspace that pokes the fabric PID and runs V250 inference.
 Per the **2026-06-15 Linux/Yocto decision** (`docs/track0_bringup_runbook.md`).
