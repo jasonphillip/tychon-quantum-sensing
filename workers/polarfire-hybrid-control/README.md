@@ -87,15 +87,21 @@ INFERENCE COMPLETED, `vnnx_smoke` → `out[0]=-2.9506`; VERSION `0x60030028`=`0x
 See `docs/rung_f_v250_on_silicon_results_2026-06-16.md`, `docs/track0_bringup_runbook.md`,
 and `docs/fpga_reproducibility_inventory_2026-06-16.md`.
 
-**As of 2026-06-18, the clean two-slot PID + V250 demo bitstream** (`.job` `a5550f9e…`) is
-programmed and current on the kit. On silicon it proves: **V250 inference** (after a cold
-power-cycle — required for V250 init), a **clean two-slot PID/control telemetry plane** (`pid_csr`
-"M1" sub-slave: versioned, monotonic write-counter + shadow-gain readback, live watchdog/bumpless
-safety), and **dashboard telemetry**. The **live closed-loop actuator through the M0 gains
-sub-slave is deferred** — the M0 gains slave has a silicon-observed AXI completion defect (reads to
-`0x60040000` do not complete), and `out_min/out_max` (which gate the actuator output) are M0-only.
-Scope + honest claims + fix path: `docs/two_slot_demo_scope_2026-06-18.md`; engineering log:
-`docs/two_slot_handoff_2026-06-17.md`.
+**As of 2026-06-18 the clean two-slot bitstream `idfix2` is programmed and FULLY FUNCTIONAL on
+Production MPFS250T silicon** (job `39c8bcf2…`, timing met +0.789 ns). All three rungs work:
+- **V250 inference** — `vbx_probe` INFERENCE COMPLETED, `vnnx_smoke` `out[0]=-2.9506` (a cold
+  power-cycle is required after any fabric program for V250 init).
+- **Clean M0/M1 CSR plane** — gains slave (M0 `0x60040000`) and `pid_csr` (M1 `0x60040800`) both
+  read/write bit-exact, no wedge.
+- **LIVE PID actuator** — set gains via M0, inject error via M1 (`0x810/0x814`), pulse start
+  (`0x60040008`), read the latched actuator (`0x60040844`): it tracks `error` at Kp and the sector
+  clamp saturates (err 2.0 → +1.0). `tools/rung_g_replay.py --host icicle` streams the ODMR trace
+  through it; `tools/rung_g_animate.py` renders the moving dashboard.
+
+Two latent RTL bugs were fixed to get here (verified in ModelSim *and* on silicon): the M0
+`nv_pid_top.reset` tie-off + demux 9→1-bit ID truncation (bus wedge), and the un-latched 1-cycle
+actuator output. Engineering log: `docs/two_slot_handoff_2026-06-17.md` (2026-06-18 sections) +
+`docs/two_slot_demo_scope_2026-06-18.md`. Rollbacks: idfix `7907a83f`, demo `a5550f9e`, V250 `4e3323e8`.
 
 Known open hardware blockers:
 
@@ -108,8 +114,9 @@ Known open hardware blockers:
   PCIe is ever needed**. The trusted rung-A seed_7 (1.1.12/V500) `.job` remains the bitstream rollback.
 - **`0x60001000` is the DMA controller, not the PID — never poke it.** On the two-slot bitstream
   the PID lives on SLAVE3 `0x60040000`: the **M1 `pid_csr` (`0x60040800`) is clean and validated**,
-  but the **M0 gains slave (`0x60040000`) read path wedges a U54 core** (silicon-observed AXI
-  completion defect, 2026-06-18) — avoid M0 (read or write) until the `axi4_demux2` M0 fix lands.
+  the **M0 AXI-completion defect that wedged a U54 was FIXED 2026-06-18 (`idfix2`)** — M0 now
+  reads/writes cleanly and the live PID actuator works. (Historical: on the older `idfix`/demo/
+  seed_7 bitstreams an M0 read wedged the kit — never run M0 accesses against those.)
   See `docs/two_slot_demo_scope_2026-06-18.md`.
 
 ## Safety Architecture

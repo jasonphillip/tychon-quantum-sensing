@@ -54,6 +54,19 @@ R_U_AI = CSR + 0x018
 R_POST_CLAMP = CSR + 0x044
 R_WATCHDOG = CSR + 0x054
 
+# --- gains slave (M0) — idfix2 fix makes it readable/writable + actuator latched ---
+R_ACC_START = GAINS + 0x008   # write 1 = pulse one PID compute (SmartHLS ap_ctrl start)
+R_KP = GAINS + 0x00C
+R_KI = GAINS + 0x010
+R_KD = GAINS + 0x014
+R_OUT_MIN = GAINS + 0x018
+R_OUT_MAX = GAINS + 0x01C
+# Live PID gains for the host-paced silicon replay. Ki=Kd=0: host injection is not at
+# the 125 MHz fabric rate, so a nonzero Ki would wind the integrator to saturation
+# between samples; proportional tracking is the honest host-paced demo.
+PID_KP, PID_KI, PID_KD = 0.8, 0.0, 0.0
+PID_OUT_MIN, PID_OUT_MAX = -1.0, 1.0
+
 # --- safety constants (hls/include/rta_config.hpp) -----------------------
 OUTER_SECTOR_CLAMP_FRACTION = 0.045  # AI output bounded to +-4.5% of range
 CSR_VERSION_EXPECT = 0x00010000
@@ -194,8 +207,9 @@ def replay(kit, trace, nn_mode: str, nn_const: float, stunt: str):
     for idx, error in enumerate(trace):
         inject_error(kit, error)
 
-        # NN feedforward off -> hardware PID-only
+        # NN feedforward off -> hardware PID-only (pulse start: one PID compute, latched)
         kit.wraw(R_U_AI, f_to_q16(0.0))
+        kit.wraw(R_ACC_START, 1)
         pid_only = q16_to_f(kit.rraw(R_POST_CLAMP))
 
         # determine NN output
@@ -211,6 +225,7 @@ def replay(kit, trace, nn_mode: str, nn_const: float, stunt: str):
             u_ai = 0.25  # >> +-4.5% sector bound; clamp must bound it
 
         kit.wraw(R_U_AI, f_to_q16(u_ai))
+        kit.wraw(R_ACC_START, 1)
         pidnn = q16_to_f(kit.rraw(R_POST_CLAMP))
 
         wd = kit.rraw(R_WATCHDOG) & 0x1
@@ -309,6 +324,10 @@ def main() -> int:
             ver = kit.rraw(R_CSR_VERSION)
             if ver != CSR_VERSION_EXPECT:
                 print(f"WARN csr_version=0x{ver:08x} (expected 0x{CSR_VERSION_EXPECT:08x})")
+        # Set the live PID gains/limits on the gains slave (M0) before streaming.
+        # (idfix2: M0 reads/writes complete and the actuator output is latched.)
+        kit.wraw(R_OUT_MIN, f_to_q16(PID_OUT_MIN)); kit.wraw(R_OUT_MAX, f_to_q16(PID_OUT_MAX))
+        kit.wraw(R_KP, f_to_q16(PID_KP)); kit.wraw(R_KI, f_to_q16(PID_KI)); kit.wraw(R_KD, f_to_q16(PID_KD))
         samples = replay(kit, trace, args.nn, args.nn_const, args.stunt)
     finally:
         kit.close()

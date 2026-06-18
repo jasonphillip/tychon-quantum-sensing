@@ -5,6 +5,15 @@ Icicle Kit (branch `bringup/2026-06-17-two-slot-pid`, demo `.job` sha256 `a5550f
 labels per `docs/agent_ground_truth_contract.md`. Full engineering log:
 `docs/two_slot_handoff_2026-06-17.md` (2026-06-18 sections).
 
+> **✅ SUPERSEDED 2026-06-18 (same day) — the deferral below was RESOLVED.** The M0 gains-slave
+> defect was root-caused (`nv_pid_top.reset` tied off + demux 9→1-bit ID truncation) and fixed,
+> and a second latent bug (the actuator output is a 1-cycle pulse that `pid_subsystem` never
+> latched) was fixed — both verified in ModelSim and **on Production silicon** (bitstream
+> `idfix2`, job `39c8bcf2…`, +0.789 ns). The two-slot bitstream now has a **LIVE PID actuator**
+> (tracks `error` at Kp, sector clamp saturates) alongside V250 inference and the clean M0/M1
+> CSR. The "DEFERRED / do not claim a live actuator" language below is **historical** — current
+> truth is in `docs/two_slot_handoff_2026-06-17.md`, "2026-06-18 (later)".
+
 ## Demo claim — exact wording (use this; do not overstate)
 
 > On Production silicon this bitstream proves: **CoreVectorBlox V250 inference**, a **clean
