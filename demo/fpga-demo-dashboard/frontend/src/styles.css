@@ -117,3 +117,11 @@ select.sel { background: var(--panel-2); border: 1px solid var(--border); color:
   padding: 18px; color: var(--muted); text-align: center; font-size: 13px;
 }
 .footnote { color: var(--muted); font-size: 11px; margin-top: 10px; line-height: 1.5; }
+
+/* uPlot dark theme */
+.uplot { font-family: var(--mono); }
+.u-title { color: var(--text); }
+.u-legend { color: var(--muted); font-size: 11px; margin-top: 8px; }
+.u-legend th { color: var(--text); font-weight: 500; }
+.u-legend .u-value { color: var(--text); }
+.u-select { background: rgba(56, 189, 248, 0.12); }

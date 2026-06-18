@@ -6,6 +6,7 @@ import { EvidenceStrip } from './components/EvidenceStrip'
 import { V250Panel } from './components/V250Panel'
 import { CsrPanel } from './components/CsrPanel'
 import { WatchdogPanel } from './components/WatchdogPanel'
+import { TelemetryPlot } from './components/TelemetryPlot'
 
 export default function App() {
   const [status, setStatus] = useState<api.Status | null>(null)
@@ -53,7 +54,7 @@ export default function App() {
         </div>
       </div>
 
-      <section className="placeholder">Tier 2 — closed-loop telemetry plot (Phase 3)</section>
+      <TelemetryPlot mode={mode} />
       <section className="placeholder">Tier 3 — model card · ODMR spectrum · metrics (Phase 4)</section>
 
       <div className="footnote">
