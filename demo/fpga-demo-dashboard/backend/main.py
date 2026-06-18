@@ -12,7 +12,7 @@ import json
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from pydantic import BaseModel
 
 from . import config
@@ -135,23 +135,47 @@ def telemetry_stream(rows: int = config.DEFAULT_ROWS, nn: str = "surrogate",
                                       "X-Accel-Buffering": "no"})
 
 
-# --- Tier-3 context (snapshots wired in Phase 4) --------------------------
+# --- Tier-3 context (real snapshots from odmr-edge-ml + nv-sensor-sim) -----
 @app.get("/api/model-card")
 def model_card():
-    return {"phase4": True, "name": "FCNN v2 (residual)", "params": 3300,
-            "quant": "INT8", "tflite_kb": 7.5, "vnnx_kb": 12.5,
-            "task": "100-pt ODMR window -> scalar dB residual correction",
-            "note": "placeholder; full card snapshot wired in Phase 4"}
+    return {
+        "name": "FCNN v2 (residual)",
+        "arch": "fully-convolutional (no Linear layers)",
+        "params": 3300,
+        "quant": "symmetric INT8 (per-channel weights)",
+        "tflite_kb": 7.5,
+        "vnnx_kb": 12.5,
+        "input": "100-pt ODMR window + PID-anchor channel (1,1,100,2)",
+        "output": "scalar ΔB residual correction (µT)",
+        "target": "CoreVectorBlox V250 NPU",
+        "deployed_out0": -2.9506,
+    }
+
+
+def _load_json(name: str):
+    p = config.DATA_DIR / name
+    if not p.is_file():
+        return {"error": f"{name} missing — run extract_context.py"}
+    return json.loads(p.read_text())
 
 
 @app.get("/api/metrics")
 def metrics():
-    return {"phase4": True, "note": "metrics snapshot (MAE, +8.71%, Allan-dev) wired in Phase 4"}
+    return _load_json("metrics.json")
 
 
 @app.get("/api/spectrum")
 def spectrum():
-    return {"phase4": True, "note": "ODMR spectrum + pred-vs-truth wired in Phase 4"}
+    return _load_json("spectra.json")
+
+
+@app.get("/api/figures/{name}")
+def figure(name: str):
+    figdir = (config.DATA_DIR / "figures").resolve()
+    p = (figdir / name).resolve()
+    if figdir not in p.parents or not p.is_file():
+        raise HTTPException(status_code=404, detail="no such figure")
+    return FileResponse(p)
 
 
 # --- static UI (Phase 5: built frontend served same-origin) ---------------

@@ -7,6 +7,9 @@ import { V250Panel } from './components/V250Panel'
 import { CsrPanel } from './components/CsrPanel'
 import { WatchdogPanel } from './components/WatchdogPanel'
 import { TelemetryPlot } from './components/TelemetryPlot'
+import { ModelCard } from './components/ModelCard'
+import { MetricsTiles } from './components/MetricsTiles'
+import { SpectrumViewer } from './components/SpectrumViewer'
 
 export default function App() {
   const [status, setStatus] = useState<api.Status | null>(null)
@@ -55,7 +58,11 @@ export default function App() {
       </div>
 
       <TelemetryPlot mode={mode} />
-      <section className="placeholder">Tier 3 — model card · ODMR spectrum · metrics (Phase 4)</section>
+      <div className="grid" style={{ marginTop: 14 }}>
+        <ModelCard />
+        <MetricsTiles />
+      </div>
+      <SpectrumViewer />
 
       <div className="footnote">
         Modes: <b>LIVE</b> reads the kit over ssh (M1-only; the actuator value is M0-gated → 0 on

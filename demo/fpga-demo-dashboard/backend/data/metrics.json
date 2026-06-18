@@ -1,0 +1,18 @@
+{
+  "scalar_residual": {
+    "deployed_mae_uT": 21.68,
+    "pid_baseline_mae_uT": 23.75,
+    "reduction_pct": 8.71,
+    "coarse_stage_mae_uT": 0.746,
+    "fine_stage_mae_uT": 0.809,
+    "bit_exact": true,
+    "rounding": "round_half_to_even",
+    "epochs": 100
+  },
+  "figures": [
+    {
+      "name": "adev.png",
+      "caption": "Allan deviation over a 2700 s simulated LEO orbit"
+    }
+  ]
+}

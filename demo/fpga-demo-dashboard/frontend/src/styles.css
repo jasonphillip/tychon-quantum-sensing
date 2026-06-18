@@ -125,3 +125,10 @@ select.sel { background: var(--panel-2); border: 1px solid var(--border); color:
 .u-legend th { color: var(--text); font-weight: 500; }
 .u-legend .u-value { color: var(--text); }
 .u-select { background: rgba(56, 189, 248, 0.12); }
+
+/* metric tiles */
+.tiles { display: flex; gap: 10px; margin-bottom: 6px; }
+.tile { flex: 1; background: var(--panel-2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px; text-align: center; }
+.tile .big { font-family: var(--mono); font-size: 22px; font-weight: 700; color: var(--accent); }
+.tile .cap { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .4px; margin-top: 2px; }
