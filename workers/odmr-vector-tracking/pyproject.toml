@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "odmr-vector-tracking"
+version = "0.0.1"
+description = "Learned tracking of NV-diamond ODMR resonances through frequency-space crossings for vector-magnetometer dynamic-range extension"
+requires-python = ">=3.11"
+dependencies = [
+    "torch>=2.2",
+    "numpy>=1.26",
+    "h5py>=3.10",
+    "pyyaml>=6.0",
+]
+
+# nv_sensor_sim provides the physics (resonance frequencies, 8x3 geometry, spectra,
+# field-trajectory + collision generator). It is a sibling repo, not a PyPI package:
+# install it editable from ../nv-sensor-sim, e.g. `pip install -e ../nv-sensor-sim`,
+# or expose it on PYTHONPATH (the pattern odmr-edge-ml uses).
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
