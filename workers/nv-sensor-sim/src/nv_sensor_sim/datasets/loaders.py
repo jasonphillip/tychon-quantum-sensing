@@ -87,3 +87,53 @@ class DatasetLoader:
             data["corruption_params"],
             data["seeds"],
         )
+
+    _SEQUENCE_KEYS = (
+        "spectra",
+        "frequencies",
+        "B_true",
+        "resonance_freqs",
+        "line_axis",
+        "line_transition",
+        "collision_mask",
+        "line_collision",
+        "seeds",
+    )
+
+    def load_sequence_split(self, split: str) -> dict[str, np.ndarray]:
+        """Load a time-series (sequence) split.
+
+        Parameters
+        ----------
+        split : str
+            Split name: "train", "val", or "test".
+
+        Returns
+        -------
+        dict[str, np.ndarray]
+            The sequence datasets (``spectra``, ``frequencies``, ``B_true``,
+            ``resonance_freqs``, ``line_axis``, ``line_transition``,
+            ``collision_mask``, ``line_collision``, ``seeds``) plus the top-level
+            ``bias`` (3,) vector.
+        """
+        h5_path = self.dataset_path / "dataset.h5"
+        npz_path = self.dataset_path / f"{split}.npz"
+
+        if h5_path.exists():
+            import h5py
+
+            out: dict[str, np.ndarray] = {}
+            with h5py.File(h5_path, "r") as f:
+                grp = f[split]
+                for key in self._SEQUENCE_KEYS:
+                    out[key] = grp[key][:]
+                out["bias"] = f["bias"][:]
+            return out
+        elif npz_path.exists():
+            data = np.load(npz_path)
+            return {key: data[key] for key in (*self._SEQUENCE_KEYS, "bias")}
+        else:
+            raise FileNotFoundError(
+                f"No dataset file found for split '{split}' in {self.dataset_path}. "
+                f"Expected either {h5_path} or {npz_path}."
+            )

@@ -79,6 +79,33 @@ diamond crystal lattice — see `nv_geometry_matrix()` in `src/nv_sensor_sim/phy
 ### Units
 - `units` — Dictionary mapping quantity names to SI unit strings
 
+### Time-Series (Sequence) Datasets
+
+A time-series ("dynamic") dataset is produced by `scripts/generate_sequence_dataset.py`
+(`pipelines/sequence_generate.py`). The magnetic field sweeps over `n_timesteps` frames so the
+NV-axis resonances move and cross in frequency space, with per-frame collision labels. Frames
+are rendered by the 4-axis lineshape path reused from the static vector pipeline.
+
+- `sequence_mode` — `true` for a time-series dataset; default `false` (static single-frame), so
+  existing static manifests load unchanged. This is the flag downstream consumers branch on:
+  static `/{split}/spectra` is `(N, F)`, sequence is `(N, T, F)`.
+- `n_timesteps` — number of frames T per sequence.
+- `dt_s` — time between frames in seconds (sets the per-line df/dB slope and the loss-of-lock
+  Γ/2-per-cycle comparison).
+- `n_lines` — number of resonances L: 8 electronic (4 axes × 2 transitions), or 24 with the
+  ¹⁴N hyperfine triplet.
+- `hyperfine` — whether the ¹⁴N hyperfine triplet is modeled. Default `false` (L=8). **L=24 is
+  not yet produced** (see the forward note in the HDF5 layout below).
+- `linewidth_Hz` — Γ (FWHM in Hz) from `compute_linewidth(p1)`, used for collision labelling.
+- `collision_threshold_linewidths` — k in the `|f_i − f_j| < k·Γ` collision rule.
+- `bias_B0_T`, `bias_direction_uvw` — the static bias (reused from the vector config). The
+  lab-frame bias vector is `bias_B0_T · normalize(bias_direction_uvw)`; the repo convention
+  aligns the crystal [uvw] axes with lab xyz, so the `_uvw` direction is also the lab direction.
+- `sweep_description` — free-text description of the field sweep.
+
+All sequence quantities are SI: frequencies in Hz, fields in Tesla, time in seconds. The
+`resonance_frequency` and `linewidth` unit strings are added to `units`.
+
 ## Train/Test Data Separation Protocol
 
 **Two-layer separation:**
@@ -110,6 +137,50 @@ only seeds differ.
 /{split}/seeds            — shape (N,)    [per-spectrum seeds]
 ```
 
+### HDF5 Layout — Time-Series (Sequence) Datasets
+
+When `sequence_mode` is `true` each split group holds the per-frame time-series instead of the
+static arrays above (N = sequences, T = `n_timesteps`, F = `n_freq_points`, L = `n_lines`):
+
+```
+/{split}/spectra          — float32 (N, T, F)   normalized PL time-series (≈1 off-resonance)
+/{split}/frequencies      — float32 (F,)        MW frequency axis (Hz)
+/{split}/B_true           — float32 (N, T, 3)   ground-truth lab-frame B (Tesla) per frame
+/{split}/resonance_freqs  — float32 (N, T, L)   center frequency (Hz) of each line per frame
+/{split}/line_axis        — int8    (N, T, L)   NV axis id 0–3 (association ground truth)
+/{split}/line_transition  — int8    (N, T, L)   transition id (0 = ms0→−1, 1 = ms0→+1)
+/{split}/collision_mask   — bool    (N, T)      True where any two lines are within k·Γ
+/{split}/line_collision   — bool    (N, T, L)   True for each line within k·Γ of another
+/{split}/seeds            — int64   (N,)        per-sequence seed
+/bias                     — float32 (3,)        static bias vector (Tesla), top-level
+```
+
+**Line ordering and identity.** Resonance index ℓ matches `nv_geometry_matrix()` row ℓ:
+`axis_id = ℓ // 2`; even ℓ is the `+n_i` row (s = +1, ms0→+1, `line_transition = 1`), odd ℓ is
+`−n_i` (s = −1, ms0→−1, `line_transition = 0`). `resonance_freqs` are the **diagonalized** line
+centers — the true dip positions — so each label sits on its dip in `spectra`. First-order
+analytic centers (`D + s·γ·(B·n_i)`) are **deliberately NOT used**: a transverse field adds a
+second-order common-mode shift to both transitions of an axis (≈6.8 MHz at 5 mT‖z, up to ≈24 MHz
+off-axis — **3–16·Γ even in the few-mT regime**), so first-order labels would sit many
+linewidths off the real dips.
+
+**Consumer guidance.** Recover each axis projection `B·n_i` from the **splitting**
+`(f₊ − f₋)/2 = γ·(B·n_i)` — exact and unaffected by the common-mode shift — **not** from an
+absolute center (`f − D`), which carries the second-order shift; the splitting is what the
+downstream BLUE A-matrix (`nv_geometry_matrix()`) inverts. Any synthetic fixtures used to develop
+a tracker or classical baseline must include the second-order common-mode center shift, so the
+model trains against realistic centers rather than first-order ones.
+
+**`line_collision` and `seeds`** extend the orchestrator's initial contract (the shared
+time-series contract is **v1**): the per-frame `collision_mask` alone cannot tell the association
+head *which* lines are crossing, and the per-sequence `seeds` preserve this repo's
+reproducibility / seed-separation discipline.
+
+> **Hyperfine (L=24) forward note.** With `hyperfine=true` the 24 lines are 8 electronic × 3
+> ¹⁴N components, but `line_axis` (0–3) × `line_transition` (0/1) yields only 8 unique keys. A
+> per-component `line_mI` (N, T, L) field is needed to uniquely key the 24 lines; this is
+> deferred (v0 ships L=8). Coordinate with `odmr-vector-tracking` before enabling hyperfine.
+
 ## Schema Implementation
 
 See `src/nv_sensor_sim/datasets/schema.py` for the `DatasetManifest` dataclass and validation logic.
@@ -120,14 +191,24 @@ See `src/nv_sensor_sim/datasets/schema.py` for the `DatasetManifest` dataclass a
 |---|---|---|---|---|---|
 | `production_50k_v3_vector` | Vector (multi-axis, 4 NV axes resolved) | 40k / 5k / 5k | 0.5–5.0 mT (bias-amplified) | `configs/production_50k_v3_vector.yaml` | Available 2026-05-17 |
 | `production_50k_v3_vector_sanity1k` | Vector (sanity slice) | 700 / 150 / 150 | 0.5–5.0 mT | `configs/production_50k_v3_vector_sanity1k.yaml` | Available 2026-05-17 |
+| `sequence_sanity_v0` | Time-series (dynamic, 4 NV axes, inter-axis crossings) | 64 / 16 / 16 seq × T=128 | ~5 mT bias + ≲±2 mT sweep | `configs/sequence_sanity_v0.yaml` | Generator added 2026-06-29 |
 
 Datasets live under `artifacts/datasets/<lineage>/` (gitignored). The HDF5 + JSON
-manifest bundle is consumed by the downstream `odmr-edge-ml` training pipeline.
+manifest bundle is consumed by the downstream `odmr-edge-ml` (static) and
+`odmr-vector-tracking` (time-series) training pipelines.
 
-To regenerate a lineage from scratch:
+To regenerate a static lineage from scratch:
 
 ```bash
 python scripts/generate_vector_dataset.py \
   --config configs/<lineage>.yaml \
   --output-dir artifacts/datasets/<lineage>/
+```
+
+To regenerate a time-series (sequence) lineage:
+
+```bash
+python scripts/generate_sequence_dataset.py \
+  --config configs/sequence_sanity_v0.yaml \
+  --output-dir artifacts/datasets/sequence_sanity_v0/
 ```

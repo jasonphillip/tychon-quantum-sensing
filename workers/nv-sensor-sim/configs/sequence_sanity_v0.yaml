@@ -1,0 +1,46 @@
+# Time-series ("dynamic") ODMR sanity dataset — v0
+#
+# A static ~5 mT off-axis bias plus a swept external field that drags the
+# NV-axis resonances across each other in frequency space, with per-frame
+# collision labels. Compact few-mT regime: all 8 electronic lines stay inside a
+# ~2.6-3.15 GHz window (derived automatically from the field extent + linewidth).
+#
+# Consumed by odmr-vector-tracking (per-axis-identity tracking through crossings).
+# Regenerate:
+#   python scripts/generate_sequence_dataset.py \
+#     --config configs/sequence_sanity_v0.yaml \
+#     --output-dir artifacts/datasets/sequence_sanity_v0/
+
+# Splits (sequences, not frames) + seed
+n_train: 64
+n_val: 16
+n_test: 16
+master_seed: 20260629
+
+# Time axis
+n_timesteps: 128          # T frames per sequence
+dt_s: 1.0e-3              # 1 kHz notional CW frame rate
+
+# Sample / linewidth (fixed across the dataset; sets Gamma and the window)
+p1_ppm: 40.0             # Gamma ~ 1.5 MHz FWHM
+temperature_K: 300.0
+
+# Static bias (path-agnostic; lab frame = bias_B0_T * normalize(uvw))
+bias_B0_T: 5.0e-3
+bias_direction_uvw: [0.2, 0.1, 1.0]
+
+# Swept external field: linear ramp start -> end (Tesla). The x-sweep drives
+# axes with +x vs -x projection in opposite directions so their lines cross.
+ramp_start_T: [-2.0e-3, 0.0, 0.0]
+ramp_end_T: [2.0e-3, 0.0, 0.0]
+jitter_frac: 0.05        # per-sequence endpoint jitter for variety
+
+# Labelling
+collision_threshold_linewidths: 1.0   # k in |f_i - f_j| < k * Gamma
+extra_b_perp_T: 0.0
+hyperfine: false         # L = 8 electronic lines (24 with 14N — not yet supported)
+
+# Window / resolution (n_freq_points null => derived from window span and Gamma)
+n_freq_points: null
+freq_margin_factor: 1.15
+aliasing_safety: 3.5

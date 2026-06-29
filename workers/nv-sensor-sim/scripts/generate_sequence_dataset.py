@@ -1,0 +1,92 @@
+#!/usr/bin/env python3
+"""Run the time-series ("dynamic") ODMR sequence generator from a YAML config.
+
+Usage
+-----
+    python scripts/generate_sequence_dataset.py \
+        --config configs/sequence_sanity_v0.yaml \
+        --output-dir artifacts/datasets/sequence_sanity_v0/
+
+Produces a time-series dataset (HDF5 + manifest) where the magnetic field sweeps
+and the NV-axis resonances move and cross, with per-frame collision labels. See
+docs/dataset-contract.md (time-series layout).
+"""
+
+from __future__ import annotations
+
+import argparse
+from pathlib import Path
+
+import yaml
+
+from nv_sensor_sim.pipelines.sequence_generate import generate_sequence_dataset
+
+# Length-3 field vectors coerced from YAML lists to float tuples.
+_FLOAT_VECTOR_KEYS: tuple[str, ...] = (
+    "bias_direction_uvw",
+    "ramp_start_T",
+    "ramp_end_T",
+)
+
+
+def load_yaml_config(config_path: Path) -> dict:
+    """Load YAML, coercing field 3-vectors to float tuples."""
+    with open(config_path) as f:
+        cfg = yaml.safe_load(f)
+
+    for key in _FLOAT_VECTOR_KEYS:
+        if key in cfg and isinstance(cfg[key], list):
+            cfg[key] = tuple(float(v) for v in cfg[key])
+    return cfg
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="Generate a time-series ODMR sequence dataset from a YAML config."
+    )
+    parser.add_argument(
+        "--config",
+        type=Path,
+        required=True,
+        help="Path to sequence dataset YAML config.",
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        required=True,
+        help="Output directory for HDF5 + manifest.",
+    )
+    args = parser.parse_args()
+
+    cfg = load_yaml_config(args.config)
+    output_dir = str(args.output_dir.resolve())
+
+    # Pass only the keys generate_sequence_dataset knows about; ignore metadata keys.
+    accepted = {
+        "n_train",
+        "n_val",
+        "n_test",
+        "master_seed",
+        "n_timesteps",
+        "dt_s",
+        "p1_ppm",
+        "temperature_K",
+        "bias_B0_T",
+        "bias_direction_uvw",
+        "ramp_start_T",
+        "ramp_end_T",
+        "jitter_frac",
+        "collision_threshold_linewidths",
+        "extra_b_perp_T",
+        "hyperfine",
+        "n_freq_points",
+        "freq_margin_factor",
+        "aliasing_safety",
+        "sweep_description",
+    }
+    kwargs = {k: v for k, v in cfg.items() if k in accepted}
+    generate_sequence_dataset(output_dir=output_dir, **kwargs)
+
+
+if __name__ == "__main__":
+    main()

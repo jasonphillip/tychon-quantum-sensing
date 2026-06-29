@@ -122,6 +122,18 @@ class DatasetManifest:
     bias_B0_range_T: tuple[float, float] | None = None
     multi_axis_mode: bool = False
 
+    # Time-series (sequence) mode: per-frame ODMR over a swept field where the
+    # resonances move and cross. sequence_mode=False (default) is the static
+    # single-frame regime, so existing static manifests load unchanged.
+    sequence_mode: bool = False
+    n_timesteps: int = 0  # T frames per sequence
+    dt_s: float = 0.0  # time between frames (seconds)
+    n_lines: int = 8  # L resonances (8 electronic; 24 with 14N hyperfine)
+    hyperfine: bool = False  # 14N hyperfine triplet on each electronic line
+    linewidth_Hz: float = 0.0  # Gamma (FWHM) used for collision labelling
+    collision_threshold_linewidths: float = 1.0  # k in the |f_i - f_j| < k*Gamma rule
+    sweep_description: str = ""  # free-text description of the field sweep
+
     # Noise mode and OU parameters
     noise_mode: str = "deterministic"
     ou_params: dict | None = None  # OUNoiseConfig as dict, None for deterministic
@@ -141,6 +153,8 @@ class DatasetManifest:
             "bias_direction": "unit_vector",
             "concentrator_amplification": "dimensionless",
             "magnet_drift": "ppm/K",
+            "resonance_frequency": "Hz",
+            "linewidth": "Hz",
         }
     )
 
@@ -253,6 +267,16 @@ class DatasetManifest:
         if d.get("bias_B0_range_T") is not None:
             d["bias_B0_range_T"] = tuple(d["bias_B0_range_T"])
 
+        # Backward compat: time-series (sequence) fields (static default = previous behavior)
+        d.setdefault("sequence_mode", False)
+        d.setdefault("n_timesteps", 0)
+        d.setdefault("dt_s", 0.0)
+        d.setdefault("n_lines", 8)
+        d.setdefault("hyperfine", False)
+        d.setdefault("linewidth_Hz", 0.0)
+        d.setdefault("collision_threshold_linewidths", 1.0)
+        d.setdefault("sweep_description", "")
+
         return cls(**d)
 
     def validate(self) -> None:
@@ -363,4 +387,28 @@ class DatasetManifest:
             if lo < 0.0:
                 raise ValueError(
                     f"bias_B0_range_T lower bound must be non-negative, got {lo}"
+                )
+
+        # Validate time-series (sequence) configuration
+        if self.sequence_mode:
+            if self.n_timesteps <= 0:
+                raise ValueError(
+                    f"sequence_mode requires n_timesteps > 0, got {self.n_timesteps}"
+                )
+            if self.dt_s <= 0.0:
+                raise ValueError(f"sequence_mode requires dt_s > 0, got {self.dt_s}")
+            if self.linewidth_Hz <= 0.0:
+                raise ValueError(
+                    f"sequence_mode requires linewidth_Hz > 0, got {self.linewidth_Hz}"
+                )
+            if self.collision_threshold_linewidths <= 0.0:
+                raise ValueError(
+                    "sequence_mode requires collision_threshold_linewidths > 0, got "
+                    f"{self.collision_threshold_linewidths}"
+                )
+            expected_lines = 24 if self.hyperfine else 8
+            if self.n_lines != expected_lines:
+                raise ValueError(
+                    f"n_lines ({self.n_lines}) inconsistent with hyperfine="
+                    f"{self.hyperfine} (expected {expected_lines})"
                 )

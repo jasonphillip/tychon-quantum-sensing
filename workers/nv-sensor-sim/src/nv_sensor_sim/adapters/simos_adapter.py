@@ -14,7 +14,7 @@ SimOS: https://www.sciencedirect.com/science/article/pii/S0010465525004205
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Literal, overload
 
 import numpy as np
 
@@ -143,6 +143,31 @@ class SimOSAdapter:
 
         return nv.transition_operators(T=temperature_K, beta=beta, Bvec=B_field)
 
+    @overload
+    def generate_odmr_spectrum(
+        self,
+        B_field: np.ndarray | None = ...,
+        freq_range: tuple[float, float] | None = ...,
+        n_points: int | None = ...,
+        temperature_K: float | None = ...,
+        p1_ppm: float | None = ...,
+        mw_scale: float = ...,
+        *,
+        return_line_centers: Literal[True],
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray]: ...
+
+    @overload
+    def generate_odmr_spectrum(
+        self,
+        B_field: np.ndarray | None = ...,
+        freq_range: tuple[float, float] | None = ...,
+        n_points: int | None = ...,
+        temperature_K: float | None = ...,
+        p1_ppm: float | None = ...,
+        mw_scale: float = ...,
+        return_line_centers: Literal[False] = ...,
+    ) -> tuple[np.ndarray, np.ndarray]: ...
+
     def generate_odmr_spectrum(
         self,
         B_field: np.ndarray | None = None,
@@ -151,7 +176,8 @@ class SimOSAdapter:
         temperature_K: float | None = None,
         p1_ppm: float | None = None,
         mw_scale: float = 1.0,
-    ) -> tuple[np.ndarray, np.ndarray]:
+        return_line_centers: bool = False,
+    ) -> tuple[np.ndarray, np.ndarray] | tuple[np.ndarray, np.ndarray, np.ndarray]:
         """Generate a CW ODMR spectrum via eigenvalue analysis + Lorentzian lineshape.
 
         For CW ODMR, the spectrum is determined by:
@@ -179,12 +205,19 @@ class SimOSAdapter:
         mw_scale : float
             MW drive amplitude scaling factor (1.0 = nominal). Controls
             power broadening and saturation contrast.
+        return_line_centers : bool
+            When True, also return the allowed transition center frequencies (Hz)
+            from the diagonalization, ascending. These are the true dip positions
+            (they include second-order transverse-field shifts), used as resonance
+            ground truth by the time-series generator. Default False.
 
         Returns
         -------
         tuple[np.ndarray, np.ndarray]
             (frequencies, pl_signal) where frequencies is in Hz and
             pl_signal is the normalized photoluminescence (1 = off-resonance).
+            When ``return_line_centers`` is True, a third element ``line_centers``
+            (ascending allowed transition frequencies in Hz) is appended.
         """
         from nv_sensor_sim.physics.parameters import compute_linewidth
 
@@ -279,4 +312,7 @@ class SimOSAdapter:
             # Weight by transition dipole moment and contrast
             pl_signal -= contrast * dipole * lorentz
 
+        if return_line_centers:
+            line_centers = np.array(sorted(t[0] for t in transitions))
+            return frequencies, pl_signal, line_centers
         return frequencies, pl_signal
