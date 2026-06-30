@@ -2,23 +2,45 @@
 
 ## Recommended ML approach
 
-A **physics-informed sequential tracker with explicit data association**:
+A **physics-informed sequential tracker with explicit data association**, designed
+**deployable-first on an explicit V250/MSS execution partition** (this is the canonical design;
+it supersedes the earlier "KalmanNet + attention, all on the NPU" reading, which predated mirroring
+the V250 ops-guard — the guard bans `matmul`/`softmax` (attention) and `sigmoid`/`tanh` (GRU/LSTM
+gates), so those cannot live on the NPU):
 
-- **Backbone — KalmanNet-style recurrent filter** (arXiv:2107.10043). The NV measurement model is
-  *known* (Zeeman/Hamiltonian, γ ≈ 28 kHz/µT, the 8×3 geometry); keep that physics in the
-  state/measurement model and **learn only the gain and the association where the analytics break
-  — the collision.** A black box would waste the known structure.
-- **Association head — attention/transformer** over the per-frame peak candidates (MT3 /
-  DeepDA-style soft association), trained to preserve line→axis identity through a crossing.
+- **Recurrent core — KalmanNet-style.** The NV measurement model is *known* (Zeeman/Hamiltonian,
+  γ ≈ 28 kHz/µT, the 8×3 geometry); keep that physics in the state/measurement model and **learn
+  only the gain and the association where the analytics break — the collision.** Two variants
+  share one interface: a **deployable-first ReLU-recurrent cell** (first-class; linear+relu+add)
+  and a **research gated cell** (GRU-style, flagged off-NPU). Increment 2 trains both to measure
+  what gating buys.
+- **Association head — two variants, one interface.** A **deployable-first linear-score head**
+  (linear+relu cost, hard assignment computed off-graph) is first-class; an **attention/transformer
+  head** (MT3 / DeepDA-style soft association) is the research variant (softmax/matmul → flagged
+  off-NPU). Both preserve line→axis identity through a crossing.
 - **The fingerprint** that resolves "which line is which" on the far side of a crossing: each
   axis's **¹⁴N hyperfine triplet, contrast, and known Zeeman slope** (sign + magnitude of
   df/dB). Direct analogue: speaker-specific spectral signature in multi-pitch tracking through
   crossings (Liu & Wang 2017; US6453284).
 - **Output:** the 4 axis-projections (Σ Bᵢ = 0) → closed-form **BLUE A-matrix** → 3D vector +
-  covariance. Keep the geometry exact and analytic; let the net handle only tracking/association.
-- **Deployability:** the model must stay V250-compatible (Conv2d (1,k), no BatchNorm, static
-  shapes, INT8) so it can hand off to `polarfire-hybrid-control` as TFLite. Favor a *small*
-  recurrent core — capacity was never the static-regime bottleneck.
+  covariance. Geometry stays exact/analytic (a fixed, non-learned linear map); the net only
+  tracks/associates.
+
+### Execution partition (V250 / MSS) — the resolution of the ops-guard tension
+
+The PolarFire SoC splits work between the V250 NPU (strict INT8, op-whitelisted) and the MSS
+RISC-V host (full float, no whitelist) — the same split `polarfire-hybrid-control` already uses.
+Tag every block accordingly:
+
+- **V250-targeted (ops-guarded):** *only* the per-frame feedforward **feature/peak extractor**
+  (Conv2d (1,k) + ReLU + Linear, INT8). It must pass the ops-guard before training at scale.
+- **host/MSS (unconstrained):** the **recurrence**, the **association/assignment**, and the
+  **BLUE decode** (a fixed Linear). `softmax`/`matmul`/`sigmoid`/`tanh` are a non-issue here
+  because they never reach the NPU graph.
+
+The ops-guard test is the deployability contract: the V250 extractor (and the deployable-first
+core/association) must pass; the research attention/gated variants are *expected* to be flagged
+(they are host blocks). Favor a *small* recurrent core — capacity was never the bottleneck.
 
 ## Testbed spec (what to build, and where)
 
@@ -35,7 +57,9 @@ noise; `orbits/` emits B(t) columns but never renders spectra). Add a `tracking/
 2. `resonances.py` — compute the 8 line positions fᵢ(B(t)); **label collisions** when
    |fᵢ − fⱼ| < k·Γ.
 3. `render.py` — per-timestep multi-axis ODMR spectra → (T × n_freq) series + ground-truth B(t) +
-   resonance positions + collision labels (HDF5; extend the dataset contract with a time axis).
+   resonance positions + collision labels (HDF5). The dataset contract with the time axis +
+   collision/association labels is now formalized as **v1** in `03_data_contract.md` (the consumer
+   side — validator, loader, synthetic fixtures — is built here against that spec).
 
 **Build in THIS repo:**
 4. `tracking/classical.py` — lock-in + per-line PID with nearest-peak association (the

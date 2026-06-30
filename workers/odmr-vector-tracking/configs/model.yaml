@@ -1,0 +1,17 @@
+# Learned-tracker architecture (LearnedTrackerConfig).
+#
+# Shapes only — the skeleton is not trained yet (Increment 2). The execution partition is fixed
+# in code: the feedforward extractor targets the V250 NPU (ops-guarded); the recurrent core,
+# association head, and BLUE decode run on the MSS host. Pick deployable-first vs research
+# variants via build_tracker(core=..., association=...).
+
+n_lines: 8
+n_axes: 4
+n_freq: 400
+n_candidates: 16        # K per-frame peak candidates from the V250 extractor
+feat_dim: 32
+assoc_dim: 16
+state_dim: 64
+conv_channels: 8        # V250 Conv2d (1,k) channels
+conv_kernel: 5
+dt_s: 1.0e-3

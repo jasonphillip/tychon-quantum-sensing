@@ -1,0 +1,15 @@
+# Scenario / dataset parameters (ScenarioConfig).
+#
+# Mirrors the v1 data-contract knobs. For the synthetic fixture these match the tuned
+# defaults in tests/fixtures/synthetic.py (clean, localized inter-axis crossing); when the
+# real nv-sensor-sim dataset lands, point dataset_dir at it — the same loader reads both.
+
+dataset_dir: ./data/fixture
+n_timesteps: 200
+n_freq: 400
+n_lines: 8                       # 8 electronic (24 if 14N hyperfine on, manifest flag)
+linewidth_Hz: 4.0e+6           # Gamma (FWHM) — note: PyYAML needs the +; bare 4.0e6 parses as str
+collision_threshold_linewidths: 1.5   # k: lines within k*Gamma are "colliding"
+bias_B0_T: 8.0e-3              # off-axis bias magnitude (resolves the 8 lines)
+bias_direction_uvw: [0.2, 0.3, 0.93]
+dt_s: 1.0e-3
