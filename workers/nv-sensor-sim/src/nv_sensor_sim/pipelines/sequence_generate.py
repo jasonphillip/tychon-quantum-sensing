@@ -269,6 +269,7 @@ def generate_sequence_dataset(
         qutip_version=qutip_ver,
         backend="qutip",
         generated_at=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        contract_version="v1",
         master_seed=master_seed,
         train_seeds=train_seeds,
         val_seeds=val_seeds,

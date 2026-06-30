@@ -86,6 +86,8 @@ A time-series ("dynamic") dataset is produced by `scripts/generate_sequence_data
 NV-axis resonances move and cross in frequency space, with per-frame collision labels. Frames
 are rendered by the 4-axis lineshape path reused from the static vector pipeline.
 
+- `contract_version` — shared data-contract version tag; `"v1"` for these time-series datasets
+  (empty on legacy/static manifests). Additive: consumers accept it when present.
 - `sequence_mode` — `true` for a time-series dataset; default `false` (static single-frame), so
   existing static manifests load unchanged. This is the flag downstream consumers branch on:
   static `/{split}/spectra` is `(N, F)`, sequence is `(N, T, F)`.
@@ -164,12 +166,20 @@ second-order common-mode shift to both transitions of an axis (≈6.8 MHz at 5 m
 off-axis — **3–16·Γ even in the few-mT regime**), so first-order labels would sit many
 linewidths off the real dips.
 
-**Consumer guidance.** Recover each axis projection `B·n_i` from the **splitting**
-`(f₊ − f₋)/2 = γ·(B·n_i)` — exact and unaffected by the common-mode shift — **not** from an
-absolute center (`f − D`), which carries the second-order shift; the splitting is what the
-downstream BLUE A-matrix (`nv_geometry_matrix()`) inverts. Any synthetic fixtures used to develop
-a tracker or classical baseline must include the second-order common-mode center shift, so the
-model trains against realistic centers rather than first-order ones.
+**Consumer guidance.**
+
+- *Reconstruction from observed lines* (what a tracker/baseline does from `spectra`): recover each
+  axis projection `B·n_i` from the **splitting** `(f₊ − f₋)/2 ≈ γ·(B·n_i)`, **not** from an
+  absolute center (`f − D`). The large common-mode shift (up to ≈9·Γ here) cancels **exactly** in
+  the splitting; a smaller second-order **asymmetric** residual remains (**≲ 0.4·Γ, a few hundred
+  kHz** at the few-mT extremes — measured 0.35·Γ max on `sequence_sanity_v0`). So the splitting is
+  **first-order accurate, not exact** — but it is ~25× closer than an absolute center, and is what
+  feeds the BLUE A-matrix (`nv_geometry_matrix()`).
+- *Exact ground-truth projection* (for labels / metrics, not from the spectrum): use `B_true·n_i`
+  directly — `B_true` is the stored lab-frame field, so the exact per-axis projection needs no
+  spectral reconstruction. Use this for scoring; use the splitting only for what the model observes.
+- *Fixtures*: any synthetic fixtures must include the second-order common-mode center shift, so a
+  tracker/baseline develops against realistic centers rather than first-order ones.
 
 **`line_collision` and `seeds`** extend the orchestrator's initial contract (the shared
 time-series contract is **v1**): the per-frame `collision_mask` alone cannot tell the association

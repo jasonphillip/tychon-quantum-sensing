@@ -75,6 +75,9 @@ class DatasetManifest:
     qutip_version: str = ""
     backend: str = "qutip"
     generated_at: str = ""
+    # Shared data-contract version tag. Empty for legacy/static datasets; the
+    # time-series generator writes "v1". Additive — consumers accept it if present.
+    contract_version: str = ""
 
     # Random seeds
     master_seed: int = 0
@@ -268,6 +271,7 @@ class DatasetManifest:
             d["bias_B0_range_T"] = tuple(d["bias_B0_range_T"])
 
         # Backward compat: time-series (sequence) fields (static default = previous behavior)
+        d.setdefault("contract_version", "")
         d.setdefault("sequence_mode", False)
         d.setdefault("n_timesteps", 0)
         d.setdefault("dt_s", 0.0)

@@ -19,6 +19,7 @@ def _make_sequence_manifest(**overrides) -> DatasetManifest:
         simos_version="0.2.3",
         qutip_version="5.2.3",
         generated_at="2026-06-29T00:00:00Z",
+        contract_version="v1",
         master_seed=42,
         train_seeds=[100, 101],
         val_seeds=[200],
@@ -58,6 +59,7 @@ def test_sequence_manifest_json_roundtrip():
         manifest.to_json(path)
         loaded = DatasetManifest.from_json(path)
 
+    assert loaded.contract_version == "v1"
     assert loaded.sequence_mode is True
     assert loaded.n_timesteps == 128
     assert loaded.dt_s == 1.0e-3
@@ -127,5 +129,6 @@ def test_static_manifest_backward_compat():
         loaded = DatasetManifest.from_json(path)
 
     assert loaded.sequence_mode is False
+    assert loaded.contract_version == ""  # additive default on legacy manifests
     assert loaded.n_lines == 8
     loaded.validate()  # static path: sequence checks skipped

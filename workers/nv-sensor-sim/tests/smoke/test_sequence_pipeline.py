@@ -35,6 +35,7 @@ def test_tiny_sequence_generation():
         loader = DatasetLoader(output)
         manifest = loader.load_manifest()
         assert manifest.sequence_mode is True
+        assert manifest.contract_version == "v1"
         assert manifest.n_timesteps == 6
         assert manifest.n_lines == 8
         assert manifest.linewidth_Hz > 0.0
