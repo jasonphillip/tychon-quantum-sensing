@@ -169,7 +169,9 @@ def resonance_frequencies_diagonalized(
     """8-line centers with the second-order common-mode shift (matches upstream diagonalization).
 
     ``f[r] = D + sign[r]·γ_e·(B·n_i) + Δf_common(i)``. The synthetic fixtures use this so their
-    line centers are realistic; the splitting still equals ``γ_e·(B·n_i)`` exactly.
+    line centers are realistic; for this analytic model the per-axis splitting equals
+    ``γ_e·(B·n_i)`` exactly (the symmetric common-mode cancels). Real upstream diagonalization
+    additionally carries a small 2nd-order asymmetric residual (≲ 0.4·Γ) not modeled here.
     """
     B_par, B_perp = project_field_onto_axes(B_lab_T)
     first_order = gamma_hz_per_t * LINE_SIGN_8.astype(np.float64) * B_par[LINE_AXIS_8]
@@ -183,9 +185,11 @@ def axis_projections_from_resonances(
 ) -> np.ndarray:
     """Recover the 4 signed axis projections ``B·n_i`` from 8 canonical-order centers.
 
-    Uses the **splitting** ``(f_{2i} − f_{2i+1}) / 2 = γ_e·(B·n_i)`` — exact and unaffected by the
-    common-mode shift, so it works on both first-order and diagonalized centers. This is the
-    common-mode-robust input to the BLUE inversion (do **not** use ``f − D`` of single lines).
+    Uses the **splitting** ``(f_{2i} − f_{2i+1}) / 2 = γ_e·(B·n_i)``: the common-mode shift cancels
+    exactly, so this works on both first-order and diagonalized centers. First-order accurate — on
+    real diagonalized data a small 2nd-order asymmetric residual (≲ 0.4·Γ) remains. This is the
+    common-mode-robust input to the BLUE inversion (do **not** use ``f − D`` of single lines); for
+    exact ground-truth projections use ``B_true·n_i`` instead.
 
     Parameters
     ----------

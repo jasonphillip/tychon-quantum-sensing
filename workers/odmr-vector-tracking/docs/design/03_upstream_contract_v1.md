@@ -25,23 +25,29 @@ off-axis — i.e. **3–16 linewidths** (Γ ≈ 1.5 MHz). First-order centers wo
 the real dips. Consequences for this repo:
 
 - **Recover each axis projection `B·nᵢ` from the SPLITTING, not the absolute center.** The
-  half-difference of an axis's two lines is exact and common-mode-invariant:
+  half-difference of an axis's two lines cancels the common-mode shift:
 
   ```
-  (f₊ − f₋) / 2 = γ · (B·nᵢ)          # exact; the common-mode shift cancels
+  (f₊ − f₋) / 2 ≈ γ · (B·nᵢ)
+  # common-mode cancels EXACTLY; a smaller 2nd-order ASYMMETRIC residual remains:
+  # ≲ 0.4·Γ (a few hundred kHz) at the few-mT extremes — measured 0.35·Γ max on sequence_sanity_v0
   ```
 
-  Do **not** form `B·nᵢ` from `(f − D)` of a single line, and do **not** feed absolute centers
-  into the BLUE A-matrix as if they were pure first-order Zeeman shifts. Build the residual
-  vector for `nv_geometry_matrix()` (8×3) from the per-axis splittings.
+  So the splitting is **first-order accurate, not exact**, but ~25× closer than an absolute
+  center. Do **not** form `B·nᵢ` from `(f − D)` of a single line, and do **not** feed absolute
+  centers into the BLUE A-matrix as pure first-order Zeeman shifts. Build the residual vector for
+  `nv_geometry_matrix()` (8×3) from the per-axis splittings.
+- **For exact ground-truth projections (labels / metrics), use `B_true·nᵢ`.** `B_true` is stored,
+  so the exact per-axis projection needs no spectral reconstruction — score against `B_true·nᵢ`,
+  and use the splitting only for what the model observes from `spectra`.
 - **Synthetic fixtures MUST include the second-order common-mode center shift.** If a fixture
   places lines at first-order positions, the tracker/baseline trains against unrealistic centers
   and will mismatch real generated data. Either render via the upstream path, or add the
   `Δf_common` term per axis from `B⊥ = |B − (B·nᵢ)·nᵢ|`.
 
-The per-line **association** (`line_axis`, `line_transition`) survives crossings precisely
-because the splitting is exact: the higher line is the `+γ(B·nᵢ)` transition, which is ms0→+1
-iff `B·nᵢ ≥ 0`.
+The per-line **association** (`line_axis`, `line_transition`) survives crossings because the
+splitting's *sign and order* are first-order robust: the higher line is the `+γ(B·nᵢ)` transition,
+which is ms0→+1 iff `B·nᵢ ≥ 0` (the small asymmetric residual never reorders the pair).
 
 ## 2. Units are SI
 
@@ -79,9 +85,10 @@ seeds            int64   (N,)        per-sequence seed                       [v1
 /bias            float32 (3,)        static bias vector (Tesla), top-level
 ```
 
-Manifest sidecar (`manifest.json`) adds: `sequence_mode`, `n_timesteps` T, `dt_s`, `n_lines` L,
-`hyperfine`, `linewidth_Hz` Γ, `collision_threshold_linewidths` k, `bias_B0_T`,
-`bias_direction_uvw`, `sweep_description`. Line index ℓ matches `nv_geometry_matrix()` row ℓ.
+Manifest sidecar (`manifest.json`) adds: `contract_version` (`"v1"`), `sequence_mode`,
+`n_timesteps` T, `dt_s`, `n_lines` L, `hyperfine`, `linewidth_Hz` Γ,
+`collision_threshold_linewidths` k, `bias_B0_T`, `bias_direction_uvw`, `sweep_description`. Line
+index ℓ matches `nv_geometry_matrix()` row ℓ.
 
 `line_collision` and `seeds` are the **v1** additions beyond the initial contract: per-frame
 `collision_mask` alone cannot tell the association head *which* lines are crossing, and the

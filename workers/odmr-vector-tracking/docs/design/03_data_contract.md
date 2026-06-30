@@ -57,11 +57,16 @@ must be `"v1"`).
 - **Diagonalized centers — invert the splitting, not `f − D`.** `resonance_freqs` are the true
   dip positions from SimOS diagonalization, carrying a second-order common-mode shift
   `Δf ≈ 1.5·(γ·B⊥)²/D` (3–16·Γ even in the few-mT regime — verified to ~0.1% against the real
-  data). Recover each axis projection from the **splitting** `(f₊ − f₋)/2 = γ·(B·n_i)` (exact,
-  common-mode-invariant) → 4 projections → BLUE. Implemented in
+  data). Recover each axis projection from the **splitting** `(f₊ − f₋)/2 = γ·(B·n_i)`: the
+  common-mode cancels exactly, and it is **first-order accurate** — a small 2nd-order *asymmetric*
+  residual (≲ 0.4·Γ, measured ~0.35·Γ on `sequence_sanity_v0`) remains, the source of the ~0.08%
+  per-axis γ scatter. Then 4 projections → BLUE. Implemented in
   `vector.geometry.axis_projections_from_resonances` + `vector.blue.blue_invert_field`. (The full
   8-line `(f − D)` lstsq is also robust — the symmetric common-mode cancels in the antisymmetric
   ± pairing — but a single-transition `f − D` is biased.)
+- **For exact ground-truth projection labels (metrics/training), use `B_true·n_i`** — `B_true` is
+  stored, so exact per-axis projections need no spectral reconstruction. Use the splitting only for
+  what the model *observes* from `spectra`.
 - **Association ground truth** is `line_axis` / `line_transition`. Score association accuracy and
   ID-switch rate on `line_collision`-flagged lines (the hard regime).
 - **First-order labels caveat:** valid in the compact few-mT regime; do not assume validity toward

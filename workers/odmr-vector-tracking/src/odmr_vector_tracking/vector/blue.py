@@ -108,9 +108,11 @@ def blue_invert_field(
     Convenience wrapper for the classical 8-line path. The upstream ``resonance_freqs`` are
     *diagonalized* centers carrying a second-order common-mode shift (3–16·Γ in the few-mT
     regime), so this recovers each axis projection from the **splitting**
-    ``(f_+ − f_-)/2 = γ_e·(B·n_i)`` — exact and common-mode-invariant — then inverts the 4
+    ``(f_+ − f_-)/2 = γ_e·(B·n_i)`` — common-mode cancels exactly; first-order accurate (a small
+    2nd-order asymmetric residual ≲ 0.4·Γ remains on real diagonalized data) — then inverts the 4
     projections against the 4×3 NV-axis matrix, yielding ``B`` in Tesla. It deliberately does
-    **not** use ``f − D`` of single lines (which carries the common-mode shift).
+    **not** use ``f − D`` of single lines (which carries the full common-mode shift). For exact
+    ground-truth projection labels (metrics/training) use ``B_true·n_i`` directly, not the splitting.
 
     The caller must have placed the frequencies in canonical ``(axis, sign)`` row order — i.e.
     done the data association. A mis-association (a swapped line landing in the wrong axis pair)
