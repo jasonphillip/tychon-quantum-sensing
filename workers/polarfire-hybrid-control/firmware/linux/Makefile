@@ -17,8 +17,11 @@
 # (interp /lib/ld-linux-riscv64-lp64d.so.1), both "for GNU/Linux".
 #
 # Targets:
-#   pid_poke    — /dev/mem MMIO poke of the FIC_0 PID slot (no SDK deps; static).
-#   vnnx_smoke  — V250 inference smoke test against the VBX 2.0.3 SoC runtime.
+#   pid_poke      — /dev/mem MMIO poke of the FIC_0 PID slot (no SDK deps; static).
+#   pid_latency   — idfix2 PID M0 start -> M1 post_clamp timing probe (static).
+#   vnnx_smoke    — V250 inference smoke test against the VBX 2.0.3 SoC runtime.
+#   vnnx_latency  — V250 start/poll latency probe with rdcycle + monotonic timing.
+#   v250_pid_loop — on-kit V250 output -> M1 u_ai -> M0 PID pulse loop.
 
 CROSS   ?= riscv64-unknown-linux-gnu-
 CC      := $(CROSS)gcc
@@ -28,22 +31,31 @@ VBX_SDK ?= /c/Microchip/VectorBlox-SDK
 VBX_DRV := $(VBX_SDK)/drivers/vectorblox
 VBX_FIX := $(VBX_SDK)/example/postprocess/libfixmath
 
-all: pid_poke vnnx_smoke
+all: pid_poke pid_latency vnnx_smoke vnnx_latency v250_pid_loop
 
 # Standalone; static so it does not depend on the target rootfs glibc version.
 pid_poke: pid_poke.c
+	$(CC) $(CFLAGS) -static $< -o $@ -lm
+
+pid_latency: pid_latency.c
 	$(CC) $(CFLAGS) -static $< -o $@ -lm
 
 # Icicle runtime = poll mode (USE_INTERRUPTS=0) + MSS-DDR udmabuf (MSS_DDR).
 # Pulls the VBX runtime + model parser from the SDK tree on bee.
 VNNX_DEFS := -DVBX_SOC_DRIVER -DMSS_DDR -DUSE_INTERRUPTS=0
 VNNX_INC  := -I$(VBX_DRV) -I$(VBX_FIX)
-VNNX_SRC  := vnnx_smoke.c $(VBX_DRV)/vbx_cnn_api.c $(VBX_DRV)/vbx_cnn_model.c
+VNNX_RT   := $(VBX_DRV)/vbx_cnn_api.c $(VBX_DRV)/vbx_cnn_model.c
 
 vnnx_smoke: vnnx_smoke.c
-	$(CC) $(CFLAGS) $(VNNX_DEFS) $(VNNX_INC) $(VNNX_SRC) -o $@ -lm -lpthread
+	$(CC) $(CFLAGS) $(VNNX_DEFS) $(VNNX_INC) $< $(VNNX_RT) -o $@ -lm -lpthread
+
+vnnx_latency: vnnx_latency.c
+	$(CC) $(CFLAGS) $(VNNX_DEFS) $(VNNX_INC) $< $(VNNX_RT) -o $@ -lm -lpthread
+
+v250_pid_loop: v250_pid_loop.c
+	$(CC) $(CFLAGS) $(VNNX_DEFS) $(VNNX_INC) $< $(VNNX_RT) -o $@ -lm -lpthread
 
 clean:
-	rm -f pid_poke vnnx_smoke
+	rm -f pid_poke pid_latency vnnx_smoke vnnx_latency v250_pid_loop
 
 .PHONY: all clean

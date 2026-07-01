@@ -51,6 +51,52 @@ riscv64-unknown-linux-gnu-gcc -O2 -Wall -DVBX_SOC_DRIVER -DMSS_DDR -DUSE_INTERRU
   -o vnnx_smoke -lm -lpthread
 ```
 
+### 2026-06-21 helper additions
+
+Two timing probes and one on-kit loop helper were added for idfix2 evidence capture:
+
+```bash
+make CROSS=riscv64-unknown-linux-gnu- VBX_SDK=/c/Microchip/VectorBlox-SDK \
+  pid_latency vnnx_latency v250_pid_loop
+```
+
+- `pid_latency` maps only the idfix2 PID page at `0x60040000`, uses bounded M0 writes
+  for gains/limits/start, reads actuator from M1 `post_clamp_out`, and never touches
+  `0x60001000`.
+- `vnnx_latency` times the already-loaded V250 model start/poll path around
+  `vbx_cnn_model_start`.
+- `v250_pid_loop` runs the V250 model repeatedly on the kit, dequantizes `out[0]`,
+  scales it into M1 `u_ai`, initializes M0 `inner_clamp_setpoint` to `0.045`,
+  pulses M0 `acc_start`, and reads the M1 actuator tap:
+
+```bash
+./v250_pid_loop fcnn_v2_residual_dataset_a.vnnx 50 2
+./v250_pid_loop fcnn_v2_residual_dataset_a.vnnx 50 2 odmr_v250_rows.csv
+./v250_pid_loop fcnn_v2_residual_dataset_a.vnnx 120 2 odmr_v250_rows.csv \
+  0.001 0.015625 5000 \
+  --daemon --state /tmp/v250_pid_loop_state.json \
+  --pid-file /tmp/v250_pid_loop.pid
+```
+
+  With no CSV argument it copies the model's embedded test input into the DMA
+  input buffer for smoke testing. With a CSV argument it expects rows of
+  `error_in,spectrum_0..spectrum_99,anchor_0..anchor_99`, quantizes each row
+  into the V250 input buffer, and uses the per-row model output as PID feedforward.
+  The current dashboard deploys `/root/bringup/odmr_v250_rows.csv`, generated from
+  held-out `production_50k_v2_aic` rows with the exported model's learned anchor
+  sigma. With `--daemon`, the helper loops continuously and atomically refreshes
+  the JSON state file after each emitted row; the dashboard start/stop/status
+  controls wrap this mode.
+
+  Gotcha: without the M0 inner-clamp setup write at `0x60040020`, the HLS safety
+  clamp accepts a zero-width inner sector and the AI term is safely clamped to
+  zero even when the watchdog is clear.
+
+On the current Linux image both helpers report `rdcycle=0`, `rdtime=1`, and a
+1 MHz timebase, so their output is an on-kit API/MMIO bound rather than pure
+core/fabric cycle timing. Current results are archived in
+`libero/reports/2026-06-21-latency/`.
+
 ---
 
 ## 2. Flash the SD card  ⚠️ HANDS-ON

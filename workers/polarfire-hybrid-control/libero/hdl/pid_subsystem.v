@@ -24,8 +24,7 @@
 // collisions, no U54 read-wedge).
 
 module pid_subsystem #(
-    parameter integer WATCHDOG_TIMEOUT_CYCLES = 62_500_000  // 500 ms @125 MHz (host-paced demo);
-                                                            // 125_000 = 1 ms safety-spec build
+    parameter integer WATCHDOG_TIMEOUT_CYCLES = 250_000  // 2 ms @125 MHz near-term hardware target
 ) (
     input  wire        clk,
     input  wire        resetn,

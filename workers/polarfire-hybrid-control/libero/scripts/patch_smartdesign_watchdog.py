@@ -53,7 +53,7 @@ WATCHDOG_INSTANCE = """\
 //        with CoreVectorBlox output_valid (HB0919 Table 5-4) once the
 //        Vectorblox_ss / FIC_0_PERIPHERALS canvas wiring exposes it.)
 watchdog_timer #(
-    .WATCHDOG_TIMEOUT_CYCLES(200000)
+    .WATCHDOG_TIMEOUT_CYCLES(250000)
 ) watchdog_timer_0 (
         .clk          ( CLOCKS_AND_RESETS_FIC_0_CLK ),
         .resetn       ( CLOCKS_AND_RESETS_RESETN_FIC_0_CLK ),

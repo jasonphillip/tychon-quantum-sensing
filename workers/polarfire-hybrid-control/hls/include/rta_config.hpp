@@ -23,9 +23,9 @@ constexpr double OUTER_SECTOR_CLAMP_FRACTION = 0.045;
 // Prevents abrupt AI output changes from destabilizing the control loop
 constexpr double MAX_SLEW_PER_CYCLE = 0.001;
 
-// Watchdog timeout: 200,000 cycles at 200 MHz = 1.0 ms
+// Watchdog timeout: 250,000 cycles at 125 MHz = 2.0 ms
 // Triggers AI isolation and bumpless transfer to pure PID on timeout
-constexpr unsigned int WATCHDOG_TIMEOUT_CYCLES = 200000;
+constexpr unsigned int WATCHDOG_TIMEOUT_CYCLES = 250000;
 
 // Watchdog cooldown: minimum cycles in PID-only mode after a timeout
 // before AI is allowed to re-enter. Prevents high-frequency limit-cycling

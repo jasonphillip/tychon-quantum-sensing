@@ -47,8 +47,9 @@ if {[catch {report -type {status} -format {text} \
 
 stage GENERATEPROGRAMMINGDATA
 
-# Demo-watchdog build (62.5e6 cycles = 500 ms @125 MHz). The safety-spec build
-# (125000 cycles = 1 ms) is exported separately as ..._two_slot_safety.job.
+# Demo-watchdog build (62.5e6 cycles = 500 ms @125 MHz). The revised
+# near-term hardware target is exported separately with
+# WATCHDOG_TIMEOUT_CYCLES=250000 (2 ms @125 MHz).
 puts "==> export_prog_job polarfire_hybrid_control_two_slot_demo"
 flush stdout
 export_prog_job -job_file_name {polarfire_hybrid_control_two_slot_demo} -export_dir $EXPORT

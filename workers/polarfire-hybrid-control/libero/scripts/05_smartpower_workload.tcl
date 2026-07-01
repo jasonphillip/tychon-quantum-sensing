@@ -42,20 +42,32 @@
 # Configuration
 # ---------------------------------------------------------------------------
 
-# Date-stamped report tag.
-set REPORT_TAG [clock format [clock seconds] -format "%Y-%m-%d-workload-power"]
+# Date-stamped report tag. Allow callers to pin a dated/probe tag so reruns
+# preserve their evidence directories.
+if {[info exists ::env(SMARTPOWER_REPORT_TAG)] && $::env(SMARTPOWER_REPORT_TAG) ne ""} {
+    set REPORT_TAG $::env(SMARTPOWER_REPORT_TAG)
+} else {
+    set REPORT_TAG [clock format [clock seconds] -format "%Y-%m-%d-workload-power"]
+}
 
 set REPO_ROOT  [pwd]
 set PROJECT    "polarfire_hybrid_control"
 set REPORT_DIR [file join $REPO_ROOT libero reports $REPORT_TAG]
 set WORKLOAD_VCD [file join $REPO_ROOT sim output pid_workload.vcd]
 
-# Gap 2 closure (2026-05-18): point at the Microchip reference design where
-# the canonical r6_s25 placed netlist actually lives. The local
-# libero/work/polarfire_hybrid_control.prjx has an empty designer/ — no
-# placed netlist exists there. See closure_pipeline.tcl line 14-15 for the
-# canonical path.
+# Gap 2 closure (2026-05-18): the old local libero/work project has an empty
+# designer/ directory, so it cannot be used for SmartPower. Prefer the active
+# seed7 two-slot clone when present; otherwise fall back to the Microchip
+# reference design. Callers can force a project with SMARTPOWER_PRJX.
+set SEED7_PRJX "~/libero_seedsweep/seed7_vbx201_v250/MPFS_ICICLE_Vectorblox.prjx"
 set REF_PRJX "C:/Microchip/Libero_SoC_2025.2/SmartHLS/SmartHLS/reference_designs/Icicle_SoC/ref_design/MPFS_ICICLE_Vectorblox/MPFS_ICICLE_Vectorblox.prjx"
+if {[info exists ::env(SMARTPOWER_PRJX)] && $::env(SMARTPOWER_PRJX) ne ""} {
+    set TARGET_PRJX $::env(SMARTPOWER_PRJX)
+} elseif {[file exists $SEED7_PRJX]} {
+    set TARGET_PRJX $SEED7_PRJX
+} else {
+    set TARGET_PRJX $REF_PRJX
+}
 
 file mkdir $REPORT_DIR
 
@@ -65,8 +77,8 @@ file mkdir $REPORT_DIR
 # Re-running synth/P&R is NOT required — SmartPower runs against the
 # already-placed netlist.
 # ---------------------------------------------------------------------------
-puts "INFO: opening Libero reference-design project: $REF_PRJX"
-open_project -file $REF_PRJX
+puts "INFO: opening Libero project: $TARGET_PRJX"
+open_project -file $TARGET_PRJX
 
 # ---------------------------------------------------------------------------
 # Sanity: workload VCD must exist.
@@ -89,6 +101,9 @@ puts "INFO: workload VCD: $WORKLOAD_VCD"
 # Inner script handles: smartpower_import_vcd + smartpower_report_power.
 # ---------------------------------------------------------------------------
 set INNER_SCRIPT "$REPO_ROOT/libero/scripts/05_smartpower_workload_inner.tcl"
+set ::env(SMARTPOWER_REPORT_TAG) $REPORT_TAG
+set ::env(SMARTPOWER_REPO_ROOT) $REPO_ROOT
+set ::env(SMARTPOWER_WORKLOAD_VCD) $WORKLOAD_VCD
 puts "INFO: invoking VERIFYPOWER with SmartPower inner script: $INNER_SCRIPT"
 if {[catch {
     run_tool -name {VERIFYPOWER} -script $INNER_SCRIPT

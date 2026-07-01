@@ -1,6 +1,8 @@
 // watchdog_timer.v
 //
-// 200 MHz x 200,000-cycle (1 ms) AI-inference watchdog.
+// Fabric-domain AI-inference watchdog.
+//
+// Current near-term hardware-demo target: 125 MHz x 250,000 cycles = 2 ms.
 //
 // Counter free-runs and saturates at WATCHDOG_TIMEOUT_CYCLES. Any rising
 // edge on `ai_heartbeat` resets the counter and clears the timeout flag.
@@ -20,7 +22,7 @@
 // MSS firmware writing 1 to it before the next inference.
 
 module watchdog_timer #(
-    parameter integer WATCHDOG_TIMEOUT_CYCLES = 200_000
+    parameter integer WATCHDOG_TIMEOUT_CYCLES = 250_000
 ) (
     input  wire clk,
     input  wire resetn,         // active-low fabric reset (FIC_0 domain)

@@ -40,10 +40,12 @@ MARKER = "// two_slot PID integration"
 
 # Fabric clock (FIC_0 / ACLK / watchdog) = 125 MHz (8 ns), CONFIRMED from the
 # seed_7 PF_CCC_C0 OUT0 = REF_CLK(50 MHz) x 5/2.
-#   --watchdog-cycles 125000     => SAFETY-SPEC build:  1 ms @ 125 MHz
+#   --watchdog-cycles 250000     => near-term hardware target: 2 ms @ 125 MHz
+#   --watchdog-cycles 125000     => nice-to-have stricter build: 1 ms @ 125 MHz
 #   --watchdog-cycles 62500000   => DASHBOARD-DEMO build: 500 ms (host-paced; NOT the 1 ms bound)
 DEMO_WATCHDOG_CYCLES   = 62_500_000
-SAFETY_WATCHDOG_CYCLES = 125_000
+TARGET_WATCHDOG_CYCLES = 250_000
+STRICT_WATCHDOG_CYCLES = 125_000
 WDOG_PLACEHOLDER = "__WATCHDOG_TIMEOUT_CYCLES__"
 
 
@@ -217,11 +219,19 @@ def main() -> int:
     ap.add_argument("--check", action="store_true", help="dry run; write nothing")
     ap.add_argument("--watchdog-cycles", type=int, default=DEMO_WATCHDOG_CYCLES,
                     help=f"watchdog timeout in 125 MHz cycles (default {DEMO_WATCHDOG_CYCLES} "
-                         f"= 500 ms demo; {SAFETY_WATCHDOG_CYCLES} = 1 ms safety-spec)")
+                         f"= 500 ms demo; {TARGET_WATCHDOG_CYCLES} = 2 ms target; "
+                         f"{STRICT_WATCHDOG_CYCLES} = 1 ms stricter target)")
     args = ap.parse_args()
 
     wc = args.watchdog_cycles
-    label = "SAFETY-SPEC 1 ms" if wc == SAFETY_WATCHDOG_CYCLES else "host-paced DEMO"
+    if wc == TARGET_WATCHDOG_CYCLES:
+        label = "near-term target 2 ms"
+    elif wc == STRICT_WATCHDOG_CYCLES:
+        label = "strict 1 ms"
+    elif wc == DEMO_WATCHDOG_CYCLES:
+        label = "host-paced DEMO"
+    else:
+        label = "custom"
     print(f"watchdog: {wc} cycles @ 125 MHz = {wc / 125e6 * 1e3:.3f} ms  [{label}]")
 
     jobs = [
