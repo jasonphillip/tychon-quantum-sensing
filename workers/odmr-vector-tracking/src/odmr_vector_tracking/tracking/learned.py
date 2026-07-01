@@ -1,8 +1,9 @@
-"""Learned through-crossing tracker — SKELETON / INTERFACE ONLY (no training).
+"""Learned through-crossing tracker — anchored detector + recurrent association (Increment 2).
 
-This module defines the *shapes and APIs* of the learned tracker; it does not train it and the
-learnable internals are intentionally minimal (shape-correct, not fitted). Training, losses, and
-real evaluation wait for the real upstream dataset (Increment 2).
+This module defines the trainable tracker. Increment 1 shipped it as a shape-only skeleton;
+Increment 2a grounds the per-frame candidates on a fixed frequency-anchor grid so the
+association head has stable supervision targets, and extends the outputs with everything the
+training losses and the Increment-1 metrics consume.
 
 Design (canonical, supersedes the pre-ops-guard reading of docs/design/02): **deployable-first
 with an explicit V250/MSS graph partition.** The PolarFire SoC splits work between the V250 NPU
@@ -10,7 +11,8 @@ with an explicit V250/MSS graph partition.** The PolarFire SoC splits work betwe
 split ``polarfire-hybrid-control`` already uses. So:
 
 - **V250-targeted (ops-guarded):** only the per-frame feedforward :class:`FrameFeatureExtractor`
-  (Conv2d (1,k) + ReLU + Linear). It must pass :func:`...validation.ops_guard.check_model_ops`.
+  (stride-2 Conv2d (1,k) + ReLU stages + 1x1-conv heads). It must pass
+  :func:`...validation.ops_guard.check_model_ops`.
 - **host/MSS (unconstrained):** the recurrence, the association/assignment, and the BLUE decode.
   ``softmax``/``matmul``/``sigmoid``/``tanh`` are fine here because they never reach the NPU graph.
 
@@ -21,6 +23,20 @@ can train both and measure what the research variant buys:
   (research; gated, off-NPU).
 - association head: :class:`LinearScoreAssociation` (deployable-first; assignment off-graph) /
   :class:`AttentionAssociation` (research; softmax/matmul, off-NPU).
+
+Anchor grounding (the Increment-2a upgrade): the extractor is fully convolutional. After
+``n_downsample`` stride-2 stages, output position ``k`` corresponds to input frequency bin
+``k * 2**n_downsample`` (stride-2, ``k//2``-padded convs keep centers aligned), so each of the
+``K = ceil(n_freq / 2**n_downsample)`` candidates carries a **fixed anchor frequency** plus a
+learned scalar offset. Anchors are exact receptive-field centers — the offset head has shared
+weights and no positional input, so it could not correct a per-anchor bias; it only refines
+within an anchor cell. All positions are in normalized window units (bin / (n_freq - 1) in
+[0, 1]); Hz conversion happens outside the model.
+
+Units convention: spectra enter as contract-normalized PL (~1 off-resonance); the tracker feeds
+``1 - PL`` to the extractor (host-side preprocessing — dips become positive peaks). Frequencies
+are normalized window units; axis projections are regressed in units of ``proj_scale_T`` Tesla
+(the scale is folded into the frozen BLUE decode so ``b_est`` is Tesla).
 
 Each block carries an :data:`ExecutionTarget` tag; :func:`v250_targeted_modules` lists the blocks
 the ops-guard test treats as the deployability contract.
@@ -48,18 +64,28 @@ class ExecutionTarget(enum.Enum):
 
 @dataclass
 class LearnedTrackerConfig:
-    """Architecture hyperparameters (shapes only; not tuned)."""
+    """Architecture hyperparameters.
+
+    ``n_candidates`` (K) is derived: ``ceil(n_freq / 2**n_downsample)`` anchor positions from
+    the extractor's stride-2 stages — one candidate per output position of the conv stack.
+    """
 
     n_lines: int = N_LINES_ELECTRONIC   # L resonances tracked
     n_axes: int = N_AXES                 # 4 NV axes (BLUE projections)
     n_freq: int = 400                    # F MW-frequency points per frame
-    n_candidates: int = 16               # K per-frame peak candidates from the extractor
+    n_downsample: int = 4                # stride-2 conv stages; K = ceil(F / 2**n_downsample)
     feat_dim: int = 32                   # per-candidate feature width
     assoc_dim: int = 16                  # association scoring width
     state_dim: int = 64                  # recurrent state width
-    conv_channels: int = 8               # V250 extractor channels
+    conv_channels: int = 8               # first-stage channels (doubled per stage, capped at 4x)
     conv_kernel: int = 5                 # Conv2d (1, k) kernel width
     dt_s: float = 1.0e-3                 # frame interval (for downstream dynamics)
+    proj_scale_T: float = 1.0e-2         # Tesla per unit of the regressed axis projections
+
+    @property
+    def n_candidates(self) -> int:
+        """K per-frame anchor candidates (one per extractor output position)."""
+        return math.ceil(self.n_freq / 2**self.n_downsample)
 
 
 @dataclass
@@ -74,19 +100,33 @@ class LearnedTrackerOutput:
         ``(B, T, L)`` candidate index each line-lock attends to (the data-association result).
     covariance
         ``(B, T, 3, 3)`` posterior covariance of ``b_est``.
+    scores
+        ``(B, T, L, K)`` raw association-head output (logits for the linear head, soft
+        probabilities for the attention head) — the training target for the association CE.
+    projections
+        ``(B, T, 4)`` regressed axis projections in units of ``cfg.proj_scale_T`` Tesla.
+    cand_pos
+        ``(B, T, K)`` candidate positions in normalized window units (anchor + learned offset).
+    tracked_freqs
+        ``(B, T, L)`` position of each lock's assigned candidate (normalized window units) —
+        the claimed-identity line centers the Increment-1 metrics consume.
     """
 
     b_est: torch.Tensor
     assignment: torch.Tensor
     covariance: torch.Tensor
+    scores: torch.Tensor
+    projections: torch.Tensor
+    cand_pos: torch.Tensor
+    tracked_freqs: torch.Tensor
 
 
 # --- protocols (the one signature each variant pair shares) ------------------------------
 
 class RecurrentCore(Protocol):
-    """``(state, features) -> new_state``; both ``(B, state_dim)`` / ``(B, feat_dim)``."""
+    """``(state, obs) -> new_state``; ``(B, state_dim)`` / ``(B, state_dim)``."""
 
-    def __call__(self, state: torch.Tensor, features: torch.Tensor) -> torch.Tensor: ...
+    def __call__(self, state: torch.Tensor, obs: torch.Tensor) -> torch.Tensor: ...
 
 
 class AssociationHead(Protocol):
@@ -100,11 +140,23 @@ class AssociationHead(Protocol):
 # --- V250-targeted block (ops-guarded) --------------------------------------------------
 
 class FrameFeatureExtractor(nn.Module):
-    """Per-frame feedforward peak/feature extractor — the ONLY V250-targeted block.
+    """Per-frame anchored peak/feature extractor — the ONLY V250-targeted block.
 
-    Input one spectrum frame ``(B, F)`` → reshape to ``(B, 1, 1, F)`` → Conv2d (1,k) + ReLU
-    stack → Linear → ``(B, K, feat_dim)`` candidate features. Uses only V250-allowed ops
-    (conv2d, relu, linear, layout ops), so it passes :func:`check_model_ops`.
+    Fully convolutional: one spectrum frame ``(B, F)`` → ``(B, 1, 1, F)`` → ``n_downsample``
+    stride-2 Conv2d (1,k) + ReLU stages → two 1x1-conv heads:
+
+    - feature head → ``(B, K, feat_dim)`` per-anchor candidate features;
+    - offset head (zero-init) → scalar position refinement per anchor; candidate position =
+      fixed anchor + offset, in normalized window units.
+
+    Anchors are the exact conv receptive-field centers ``k * 2**n_downsample / (n_freq - 1)``
+    (stride-2, ``k//2``-padded stages keep output k centered on input bin ``2k``). Weight
+    sharing makes the extractor translation-equivariant — a resonance dip looks the same to
+    the heads wherever it sits on the grid.
+
+    Uses only V250-allowed ops (conv2d, relu, add, layout ops), so it passes
+    :func:`check_model_ops`. No ``mul`` reaches the graph: any offset scaling lives inside the
+    learned head weights.
     """
 
     EXECUTION_TARGET = ExecutionTarget.V250
@@ -114,21 +166,38 @@ class FrameFeatureExtractor(nn.Module):
         self.cfg = cfg
         c, k = cfg.conv_channels, cfg.conv_kernel
         pad = k // 2
-        self.conv1 = nn.Conv2d(1, c, (1, k), stride=(1, 2), padding=(0, pad))
-        self.conv2 = nn.Conv2d(c, c, (1, k), stride=(1, 2), padding=(0, pad))
+        convs: list[nn.Conv2d] = []
+        in_ch = 1
+        for i in range(cfg.n_downsample):
+            out_ch = min(c * 2**i, 4 * c)
+            convs.append(nn.Conv2d(in_ch, out_ch, (1, k), stride=(1, 2), padding=(0, pad)))
+            in_ch = out_ch
+        self.convs = nn.ModuleList(convs)
         self.act = nn.ReLU()
-        # Two stride-2 convs downsample F by ~4.
-        reduced = math.ceil(math.ceil(cfg.n_freq / 2) / 2)
-        self.proj = nn.Linear(c * reduced, cfg.n_candidates * cfg.feat_dim)
+        self.feat_head = nn.Conv2d(in_ch, cfg.feat_dim, (1, 1))
+        self.offset_head = nn.Conv2d(in_ch, 1, (1, 1))
+        # Zero-init offsets: candidate positions start exactly on the anchors.
+        nn.init.zeros_(self.offset_head.weight)
+        nn.init.zeros_(self.offset_head.bias)  # type: ignore[arg-type]
 
-    def forward(self, frame: torch.Tensor) -> torch.Tensor:
+        anchors = (
+            torch.arange(cfg.n_candidates, dtype=torch.float32)
+            * float(2**cfg.n_downsample)
+            / float(cfg.n_freq - 1)
+        )
+        self.register_buffer("anchors", anchors)  # (K,) normalized window units
+
+    def forward(self, frame: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+        """``frame (B, F)`` → ``(cand_feats (B, K, feat_dim), cand_pos (B, K))``."""
         b = frame.shape[0]
         x = frame.reshape(b, 1, 1, self.cfg.n_freq)
-        x = self.act(self.conv1(x))
-        x = self.act(self.conv2(x))
-        x = x.reshape(b, -1)
-        x = self.proj(x)
-        return x.reshape(b, self.cfg.n_candidates, self.cfg.feat_dim)
+        for conv in self.convs:
+            x = self.act(conv(x))
+        feat = self.feat_head(x)                                   # (B, D, 1, K)
+        offset = self.offset_head(x)                               # (B, 1, 1, K)
+        cand_feats = feat.reshape(b, self.cfg.feat_dim, -1).permute(0, 2, 1)  # (B, K, D)
+        cand_pos = offset.reshape(b, -1) + self.get_buffer("anchors")         # (B, K)
+        return cand_feats, cand_pos
 
 
 # --- host/MSS recurrent cores (two-impl / one-signature) --------------------------------
@@ -137,21 +206,22 @@ class ReLURecurrentCell(nn.Module):
     """Deployable-first KalmanNet-style cell: ReLU MLP gain, residual state update.
 
     Ops-clean (linear + relu + add) — it would also pass the V250 guard, but it runs on the
-    host per the partition. ``forward(state, features) -> new_state``.
+    host per the partition. ``forward(state, obs) -> new_state``; ``obs`` is the per-frame
+    observation embedding ``(B, state_dim)``.
     """
 
     EXECUTION_TARGET = ExecutionTarget.HOST_MSS
 
     def __init__(self, cfg: LearnedTrackerConfig) -> None:
         super().__init__()
-        s, d = cfg.state_dim, cfg.feat_dim
+        s = cfg.state_dim
         self.in_state = nn.Linear(s, s)
-        self.in_feat = nn.Linear(d, s)
+        self.in_obs = nn.Linear(s, s)
         self.act = nn.ReLU()
         self.update = nn.Linear(s, s)
 
-    def forward(self, state: torch.Tensor, features: torch.Tensor) -> torch.Tensor:
-        h = self.act(self.in_state(state) + self.in_feat(features))
+    def forward(self, state: torch.Tensor, obs: torch.Tensor) -> torch.Tensor:
+        h = self.act(self.in_state(state) + self.in_obs(obs))
         return state + self.update(h)  # residual (learned-gain) update
 
 
@@ -166,16 +236,16 @@ class GatedKalmanNetCore(nn.Module):
 
     def __init__(self, cfg: LearnedTrackerConfig) -> None:
         super().__init__()
-        s, d = cfg.state_dim, cfg.feat_dim
-        self.w_z = nn.Linear(s + d, s)  # update gate
-        self.w_r = nn.Linear(s + d, s)  # reset gate
-        self.w_h = nn.Linear(s + d, s)  # candidate
+        s = cfg.state_dim
+        self.w_z = nn.Linear(2 * s, s)  # update gate
+        self.w_r = nn.Linear(2 * s, s)  # reset gate
+        self.w_h = nn.Linear(2 * s, s)  # candidate
 
-    def forward(self, state: torch.Tensor, features: torch.Tensor) -> torch.Tensor:
-        xh = torch.cat([state, features], dim=-1)
+    def forward(self, state: torch.Tensor, obs: torch.Tensor) -> torch.Tensor:
+        xh = torch.cat([state, obs], dim=-1)
         z = torch.sigmoid(self.w_z(xh))
         r = torch.sigmoid(self.w_r(xh))
-        h_tilde = torch.tanh(self.w_h(torch.cat([r * state, features], dim=-1)))
+        h_tilde = torch.tanh(self.w_h(torch.cat([r * state, obs], dim=-1)))
         return (1.0 - z) * state + z * h_tilde
 
 
@@ -184,10 +254,11 @@ class GatedKalmanNetCore(nn.Module):
 class LinearScoreAssociation(nn.Module):
     """Deployable-first association: additive-MLP cost (no matmul/softmax on the graph).
 
-    ``forward(track_feats (B,L,D), cand_feats (B,K,D)) -> cost (B,L,K)`` via projected
+    ``forward(track_feats (B,L,D), cand_feats (B,K,D)) -> logits (B,L,K)`` via projected
     track/candidate features combined by a broadcast **add** + ReLU + Linear — all V250-allowed.
-    The hard assignment is computed **off-graph** by :meth:`assign` (greedy argmax; scipy
-    Hungarian is the Increment-2 upgrade), so no banned op ever reaches the NPU.
+    The hard assignment is computed **off-graph** by :meth:`assign` (greedy argmax), so no
+    banned op ever reaches the NPU. Training applies ``log_softmax`` to these logits inside the
+    loss only — loss machinery never ships.
     """
 
     EXECUTION_TARGET = ExecutionTarget.HOST_MSS
@@ -246,7 +317,9 @@ class GeometryDecoder(nn.Module):
     """Fixed BLUE decode: 4 axis-projections (Σ=0) → 3D vector + covariance.
 
     The projection→vector map is the analytic pseudo-inverse of the 4×3 NV-axis matrix, held as
-    a frozen ``Linear`` (no learnable parameters) — geometry stays exact. Runs on the host.
+    a frozen ``Linear`` (no learnable parameters) — geometry stays exact. The model regresses
+    projections in units of ``cfg.proj_scale_T`` Tesla; that scale is folded into the frozen
+    weights so ``b_est`` comes out in Tesla. Runs on the host.
     """
 
     EXECUTION_TARGET = ExecutionTarget.HOST_MSS
@@ -257,14 +330,15 @@ class GeometryDecoder(nn.Module):
         pinv = torch.linalg.pinv(torch.from_numpy(N))    # (3, 4): B = pinv @ projections
         self.decode = nn.Linear(cfg.n_axes, 3, bias=False)
         with torch.no_grad():
-            self.decode.weight.copy_(pinv)
+            self.decode.weight.copy_(pinv * cfg.proj_scale_T)
         self.decode.weight.requires_grad_(False)
-        # Fixed posterior covariance (AᵀA)⁻¹ for unit measurement noise; broadcast per frame.
+        # Fixed posterior covariance (AᵀA)⁻¹ for unit measurement noise in projection units,
+        # scaled to Tesla²; broadcast per frame.
         cov = torch.linalg.pinv(torch.from_numpy(N).T @ torch.from_numpy(N))  # (3, 3)
-        self.register_buffer("_cov", cov)
+        self.register_buffer("_cov", cov * cfg.proj_scale_T**2)
 
     def forward(self, projections: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
-        b_vec = self.decode(projections)                 # (B, 3)
+        b_vec = self.decode(projections)                 # (B, 3) Tesla
         cov = self.get_buffer("_cov").expand(projections.shape[0], 3, 3)
         return b_vec, cov
 
@@ -274,8 +348,9 @@ class GeometryDecoder(nn.Module):
 class LearnedTracker(nn.Module):
     """Wires extractor (V250) → recurrent core (host) → association (host) → BLUE (host).
 
-    SKELETON: ``forward`` is shape-correct over a random init (no training). Swap the core /
-    association variant via :func:`build_tracker`.
+    A pure observation-driven filter: the state consumes only the current frame's candidate
+    features (never the model's own outputs), so full-BPTT training has no exposure bias and
+    needs no teacher forcing. Swap the core / association variant via :func:`build_tracker`.
     """
 
     def __init__(
@@ -291,35 +366,52 @@ class LearnedTracker(nn.Module):
         self.association = association                # host
         self.decoder = GeometryDecoder(cfg)           # host
         # Host glue (small linears; unconstrained).
-        self.feat_pool = nn.Linear(cfg.feat_dim, cfg.feat_dim)
+        self.obs_embed = nn.Linear(cfg.n_candidates * cfg.feat_dim, cfg.state_dim)
         self.state_to_proj = nn.Linear(cfg.state_dim, cfg.n_axes)
         self.state_to_tracks = nn.Linear(cfg.state_dim, cfg.n_lines * cfg.feat_dim)
 
     def forward(self, spectra: torch.Tensor) -> LearnedTrackerOutput:
-        """``spectra (B, T, F)`` → :class:`LearnedTrackerOutput` (all shape-correct)."""
+        """``spectra (B, T, F)`` (contract-normalized PL) → :class:`LearnedTrackerOutput`."""
         b, T, _ = spectra.shape
         cfg = self.cfg
+        x = 1.0 - spectra  # host-side preprocessing: dips → positive peaks
         state = spectra.new_zeros(b, cfg.state_dim)
 
-        b_est = spectra.new_zeros(b, T, 3)
-        cov = spectra.new_zeros(b, T, 3, 3)
-        assignment = spectra.new_zeros(b, T, cfg.n_lines, dtype=torch.long)
+        outs: dict[str, list[torch.Tensor]] = {
+            k: [] for k in
+            ("b_est", "cov", "scores", "proj", "cand_pos", "assignment", "tracked")
+        }
 
         for t in range(T):
-            cand = self.extractor(spectra[:, t, :])            # (B, K, feat_dim)  [V250]
-            feat = self.feat_pool(cand.mean(dim=1))            # (B, feat_dim)     [host]
-            state = self.core(state, feat)                     # (B, state_dim)    [host]
+            feat, pos = self.extractor(x[:, t, :])             # (B,K,D), (B,K)   [V250]
+            obs = self.obs_embed(feat.reshape(b, -1))          # (B, state_dim)   [host]
+            state = self.core(state, obs)                      # (B, state_dim)   [host]
 
-            proj = self.state_to_proj(state)                   # (B, 4)
-            b_vec, c = self.decoder(proj)                      # (B, 3), (B, 3, 3) [host BLUE]
-            b_est[:, t] = b_vec
-            cov[:, t] = c
+            p = self.state_to_proj(state)                      # (B, 4) proj_scale_T units
+            b_vec, c = self.decoder(p)                         # (B, 3) T, (B,3,3) [host BLUE]
 
             track_feats = self.state_to_tracks(state).reshape(b, cfg.n_lines, cfg.feat_dim)
-            scores = self.association(track_feats, cand)       # (B, L, K)         [host]
-            assignment[:, t] = torch.argmax(scores, dim=-1)    # hard assign (off-NPU)
+            sc = self.association(track_feats, feat)           # (B, L, K)        [host]
+            assign = torch.argmax(sc, dim=-1)                  # hard assign (off-NPU)
 
-        return LearnedTrackerOutput(b_est=b_est, assignment=assignment, covariance=cov)
+            outs["b_est"].append(b_vec)
+            outs["cov"].append(c)
+            outs["scores"].append(sc)
+            outs["proj"].append(p)
+            outs["cand_pos"].append(pos)
+            outs["assignment"].append(assign)
+            outs["tracked"].append(torch.gather(pos, 1, assign))  # (B, L) claimed positions
+
+        stacked = {k: torch.stack(v, dim=1) for k, v in outs.items()}
+        return LearnedTrackerOutput(
+            b_est=stacked["b_est"],
+            assignment=stacked["assignment"],
+            covariance=stacked["cov"],
+            scores=stacked["scores"],
+            projections=stacked["proj"],
+            cand_pos=stacked["cand_pos"],
+            tracked_freqs=stacked["tracked"],
+        )
 
 
 def build_tracker(
@@ -338,6 +430,10 @@ def build_tracker(
     association
         ``"linear"`` (deployable-first) or ``"attention"`` (research, off-NPU).
     """
+    if core not in ("relu", "gated"):
+        raise ValueError(f"core must be 'relu' or 'gated', got {core!r}")
+    if association not in ("linear", "attention"):
+        raise ValueError(f"association must be 'linear' or 'attention', got {association!r}")
     cfg = cfg or LearnedTrackerConfig()
     core_mod: nn.Module = (
         ReLURecurrentCell(cfg) if core == "relu" else GatedKalmanNetCore(cfg)
@@ -345,10 +441,6 @@ def build_tracker(
     assoc_mod: nn.Module = (
         LinearScoreAssociation(cfg) if association == "linear" else AttentionAssociation(cfg)
     )
-    if core not in ("relu", "gated"):
-        raise ValueError(f"core must be 'relu' or 'gated', got {core!r}")
-    if association not in ("linear", "attention"):
-        raise ValueError(f"association must be 'linear' or 'attention', got {association!r}")
     return LearnedTracker(cfg, core_mod, assoc_mod)
 
 
