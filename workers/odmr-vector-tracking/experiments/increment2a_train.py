@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import argparse
 import dataclasses
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -69,6 +70,32 @@ def preflight_device(requested: str) -> torch.device:
     else:
         print(f"[preflight] device: {requested} (explicit non-CUDA request)")
     return torch.device(requested)
+
+
+def nominal_contrast(spectra: np.ndarray) -> float:
+    """Median per-frame max dip depth of ``(N, T, F)`` contract-normalized PL.
+
+    On the real sequence_sanity_v0 this is ~0.004 (dips are only ~0.4% of the PL baseline);
+    ``input_gain = 1 / contrast`` rescales ``1 - PL`` so dips enter the extractor O(1). At
+    INT8 deployment this gain must fold into the input quantization scale (Increment 3).
+    """
+    return float(np.median(1.0 - spectra.min(axis=-1)))
+
+
+def run_key(model_cfg: LearnedTrackerConfig, settings: TrainSettings, meta: dict) -> str:
+    """Config-addressable run identity: hash of everything that determines the result.
+
+    Covers model config, training settings (minus non-semantic ``device``/``log_every``),
+    variant choice, dataset identity, and mode — so (config, seed) fully determines a run and
+    variant x seed sweeps can dispatch across machines without collisions.
+    """
+    s = dataclasses.asdict(settings)
+    s.pop("device", None)
+    s.pop("log_every", None)
+    payload = {"model_cfg": dataclasses.asdict(model_cfg), "settings": s, **meta}
+    return hashlib.sha256(
+        json.dumps(payload, sort_keys=True, default=str).encode()
+    ).hexdigest()[:16]
 
 
 def _subset(ds: SequenceDataset, n: int) -> SequenceDataset:
@@ -131,12 +158,18 @@ def main() -> int:
           f"T={m['n_timesteps']} F={model_cfg.n_freq} L={model_cfg.n_lines} | "
           f"K={model_cfg.n_candidates} anchors")
 
+    train_ds = loader.load_split("train")
+    # Input normalization from the data itself (deterministic given the dataset): dips are
+    # ~0.4% of baseline on the real data, so rescale them to O(1) for the extractor.
+    contrast = nominal_contrast(train_ds.spectra)
+    model_cfg.input_gain = 1.0 / contrast
+    print(f"[data] nominal contrast {contrast:.5f} -> input_gain {model_cfg.input_gain:.1f}")
+
     set_seed(settings.seed)
     tracker = build_tracker(model_cfg, core=args.core, association=args.assoc).to(device)
     n_params = sum(p.numel() for p in tracker.parameters() if p.requires_grad)
     print(f"[model] core={args.core} assoc={args.assoc} | {n_params:,} trainable params")
 
-    train_ds = loader.load_split("train")
     if args.overfit_one:
         train_ds = _subset(train_ds, 1)
         val_ds = train_ds
@@ -150,6 +183,17 @@ def main() -> int:
 
     run_name = args.run_name or f"{args.core}_{args.assoc}{'_overfit1' if args.overfit_one else ''}"
     out_dir = args.out / run_name
+    meta = {
+        "core": args.core,
+        "association": args.assoc,
+        "dataset": str(args.dataset),
+        "dataset_config_hash": m.get("config_hash"),
+        "freq_range_Hz": list(freq_range),
+        "overfit_one": bool(args.overfit_one),
+    }
+    key = run_key(model_cfg, settings, meta)
+    meta["run_key"] = key
+    print(f"[run] {run_name} | run_key {key} (config+seed fully determine this run)")
     result = train(
         tracker,
         train_t,
@@ -157,14 +201,7 @@ def main() -> int:
         settings,
         scores_are_probs=(args.assoc == "attention"),
         out_dir=out_dir,
-        ckpt_meta={
-            "core": args.core,
-            "association": args.assoc,
-            "dataset": str(args.dataset),
-            "dataset_config_hash": m.get("config_hash"),
-            "freq_range_Hz": list(freq_range),
-            "overfit_one": bool(args.overfit_one),
-        },
+        ckpt_meta=meta,
     )
 
     # Final numbers on the (best-weights) tracker: anchor-level proxy + physical association
@@ -204,6 +241,9 @@ def main() -> int:
         json.dump(
             {
                 "run_name": run_name,
+                "run_key": key,
+                "device": str(device),
+                "device_name": torch.cuda.get_device_name(0) if device.type == "cuda" else "cpu",
                 "settings": dataclasses.asdict(settings),
                 "model_cfg": dataclasses.asdict(model_cfg),
                 "core": args.core,
@@ -214,6 +254,7 @@ def main() -> int:
                 "epochs_run": result.epochs_run,
                 "wall_s": result.wall_s,
                 "final_anchor_acc": acc,
+                "final_physical_assoc_median": phys_med,
                 "n_trainable_params": n_params,
                 "dataset_config_hash": m.get("config_hash"),
             },

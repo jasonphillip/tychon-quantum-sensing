@@ -40,11 +40,13 @@ class ScenarioConfig:
 
 
 def load_config(path: Path | str | None, cls: type[T]) -> T:
-    """Load ``path`` (YAML) into dataclass ``cls``, ignoring unknown keys.
+    """Load ``path`` (YAML) into dataclass ``cls``; **unknown keys are an error**.
 
-    Returns ``cls()`` defaults when ``path`` is ``None`` or missing — same forgiving behavior
-    as the sibling, so a config file is optional. ``int``/``float`` fields are coerced from
-    strings, which also neutralizes PyYAML's YAML-1.1 gotcha (bare ``4.0e6`` parses as a str).
+    Strict validation catches silent config drift (a renamed/removed field left behind in a
+    YAML would otherwise be dropped without a trace). Returns ``cls()`` defaults when ``path``
+    is ``None`` or missing, so a config file stays optional. ``int``/``float`` fields are
+    coerced from strings, which also neutralizes PyYAML's YAML-1.1 gotcha (bare ``4.0e6``
+    parses as a str).
     """
     field_types = {f.name: f.type for f in fields(cls)}  # type: ignore[arg-type]
     if path is None or not Path(path).exists():
@@ -52,10 +54,15 @@ def load_config(path: Path | str | None, cls: type[T]) -> T:
     with open(path) as fh:
         raw = yaml.safe_load(fh) or {}
 
+    unknown = sorted(set(raw) - set(field_types))
+    if unknown:
+        raise ValueError(
+            f"{path}: unknown key(s) {unknown} for {cls.__name__} "
+            f"(valid: {sorted(field_types)})"
+        )
+
     coerced: dict[str, object] = {}
     for key, value in raw.items():
-        if key not in field_types:
-            continue
         # Annotations are strings here (`from __future__ import annotations`).
         ann = field_types[key]
         if ann == "float" and isinstance(value, str):

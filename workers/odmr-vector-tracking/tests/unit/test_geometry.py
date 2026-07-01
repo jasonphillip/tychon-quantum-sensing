@@ -100,6 +100,30 @@ def test_axis_projections_recovered_from_splitting() -> None:
     assert np.allclose(proj, B_par, atol=1e-9)  # splitting recovers projections exactly
 
 
+def test_vendored_geometry_hash_pinned() -> None:
+    """Drift guard for the vendored constants that runs on EVERY machine.
+
+    The upstream-parity test below skips wherever ``nv_sensor_sim`` is not importable, so on
+    those machines an accidental edit of the vendored geometry/constants would go unnoticed.
+    This pin fails on any byte-level change; if a change is *intentional*, re-derive the digest
+    and update it together with the upstream parity check.
+    """
+    import hashlib
+
+    from odmr_vector_tracking.vector.geometry import (
+        DD_DT_HZ_PER_K,
+        LINE_TRANSITION_8,
+    )
+
+    payload = (
+        NV_AXES_UNIT.tobytes() + nv_geometry_matrix().tobytes()
+        + LINE_AXIS_8.tobytes() + LINE_SIGN_8.tobytes() + LINE_TRANSITION_8.tobytes()
+        + np.array([GAMMA_E_HZ_PER_T, ZFS_D_HZ, DD_DT_HZ_PER_K], dtype=np.float64).tobytes()
+    )
+    digest = hashlib.sha256(payload).hexdigest()
+    assert digest == "d9c77b7650ddbd68d6be5bc2d38b69a31caef3f25537a8975963f451d600284d"
+
+
 def test_geometry_matches_nv_sensor_sim() -> None:
     """Parity guard against the upstream source of truth (skips if not importable)."""
     import sys

@@ -18,3 +18,5 @@ conv_channels: 8        # first-stage V250 Conv2d (1,k) channels (doubled per st
 conv_kernel: 5
 dt_s: 1.0e-3
 proj_scale_T: 1.0e-2    # Tesla per unit of the regressed axis projections
+input_gain: 1.0         # scale on (1 - PL); training scripts set ~1/nominal_contrast from the
+                        # data (real dips are ~0.4% of baseline) - INT8 input scale in Incr. 3

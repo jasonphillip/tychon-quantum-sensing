@@ -34,9 +34,14 @@ within an anchor cell. All positions are in normalized window units (bin / (n_fr
 [0, 1]); Hz conversion happens outside the model.
 
 Units convention: spectra enter as contract-normalized PL (~1 off-resonance); the tracker feeds
-``1 - PL`` to the extractor (host-side preprocessing — dips become positive peaks). Frequencies
-are normalized window units; axis projections are regressed in units of ``proj_scale_T`` Tesla
-(the scale is folded into the frozen BLUE decode so ``b_est`` is Tesla).
+``(1 - PL) * input_gain`` to the extractor (host-side preprocessing — dips become positive
+peaks of order 1). ``input_gain`` matters because the real ODMR dips are only ~0.4% of the PL
+baseline (measured 0.37–0.77% max depth per frame on ``sequence_sanity_v0``): float32 training
+merely absorbs the scale into the first conv, but INT8 deployment (Increment 3) must fold this
+gain into the input quantization scale — quantizing raw ``1 - PL`` over a [0, 1] range would
+leave the entire signal ~1 LSB deep. Frequencies are normalized window units; axis projections
+are regressed in units of ``proj_scale_T`` Tesla (the scale is folded into the frozen BLUE
+decode so ``b_est`` is Tesla).
 
 Each block carries an :data:`ExecutionTarget` tag; :func:`v250_targeted_modules` lists the blocks
 the ops-guard test treats as the deployability contract.
@@ -81,6 +86,8 @@ class LearnedTrackerConfig:
     conv_kernel: int = 5                 # Conv2d (1, k) kernel width
     dt_s: float = 1.0e-3                 # frame interval (for downstream dynamics)
     proj_scale_T: float = 1.0e-2         # Tesla per unit of the regressed axis projections
+    input_gain: float = 1.0              # scale on (1 - PL); set ~1/nominal_contrast so dips
+                                         # enter O(1) (INT8 input-quantization scale, Incr. 3)
 
     @property
     def n_candidates(self) -> int:
@@ -425,7 +432,9 @@ class LearnedTracker(nn.Module):
         """``spectra (B, T, F)`` (contract-normalized PL) → :class:`LearnedTrackerOutput`."""
         b, T, _ = spectra.shape
         cfg = self.cfg
-        x = 1.0 - spectra  # host-side preprocessing: dips → positive peaks
+        # Host-side preprocessing: dips → positive peaks of order 1 (see module docstring;
+        # input_gain becomes the INT8 input quantization scale at deployment).
+        x = (1.0 - spectra) * cfg.input_gain
         state = spectra.new_zeros(b, cfg.state_dim)
 
         outs: dict[str, list[torch.Tensor]] = {
