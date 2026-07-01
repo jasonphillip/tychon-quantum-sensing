@@ -20,7 +20,10 @@
 #
 # Physical separation of VectorBlox and PID on different FIC ports
 # prevents AXI bus contention between AI inference DMA and real-time
-# PID updates. This is critical for the <150 µs PID latency guarantee.
+# PID updates, supporting the <150 µs PID latency DESIGN BUDGET (a
+# target, never measured on hardware — see docs/latency_measured_2026-06-21.md).
+# NOTE: this script is an early scaffold; the shipped two-slot design was
+# built via libero/scripts/two_slot/, not this file.
 #
 # Prerequisites:
 #   - 02_import_ip.tcl has been sourced (all IPs imported)

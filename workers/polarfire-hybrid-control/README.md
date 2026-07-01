@@ -79,7 +79,10 @@ source libero/scripts/04_synth_pnr.tcl
 - VectorBlox SDK **v2.0.3** (NOT v3.0) -- matches CoreVectorBlox IP v2.0.1
 - `.vnnx` compiled with `-c V250` flag; not committed to git
 - Linux/Yocto on the U54 cores for the supported CoreVectorBlox Icicle runtime;
-  the <150 us safety-critical loop lives in fabric, not Linux userspace.
+  the safety-critical loop lives in fabric, not Linux userspace. (The <150 us
+  loop-latency figure is a design budget, never measured on hardware; on-kit
+  API-level bounds are in `docs/latency_measured_2026-06-21.md` — a fabric-
+  internal latency measurement is still open.)
 
 ## Current Hardware State
 
@@ -185,12 +188,12 @@ These mechanisms make the AI feedforward path **sector-bounded by design within 
 
 SmartPower synthesis reports are generated on the Beelink build host and archived on the NAS (`/mnt/nas/projects/polarfire-hybrid-control/reports/`). The numbers below are **default-toggle estimates** (activity-factor heuristic, no VCD): preliminary until workload-driven SmartPower is run with a representative input trace.
 
-| Component | Power (default-toggle estimate) |
+| Component | Power (vectorless SmartPower) |
 |-----------|-------|
-| FPGA fabric (PID + VBX + interconnect) | 2,664 mW |
-| Total system (MPFS250T + DDR + I/O) | ~5.2 W |
+| FPGA fabric (PID + VBX + interconnect) | 2,622.9 mW (2026-06-21 run: Total 2622.855 / Static 445.612 / Dynamic 2177.243) |
+| Total system (MPFS250T + DDR + I/O) | ~5.2 W (fabric + MSS estimate) |
 | **SWaP budget** | **12 W** |
-| **Margin** | **~57%** (preliminary) |
+| **Margin** | **~57%** (preliminary — vectorless; workload-driven SmartPower (RPO-6) still open) |
 
 Static power is derived from SmartPower estimation. The `smartpower_report.rpt` artifact is not committed to this repo — it is regenerated on each synthesis run via `libero/scripts/04_synth_pnr.tcl`. Workload-driven SmartPower is one of the Residual Proof Obligations (closable under follow-on path) in `docs/safety_architecture.md`.
 
