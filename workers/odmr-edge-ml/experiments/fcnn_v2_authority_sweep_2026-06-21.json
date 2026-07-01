@@ -1,0 +1,117 @@
+{
+  "ckpt": "~/projects/odmr-edge-ml/experiments/scalar_residual_v2_dataset_a/checkpoints/best_model_dataset_a.pt",
+  "dataset": "~/projects/tychon-shared-data/production_50k_v2_aic",
+  "date": "2026-06-21",
+  "deploy_range_uT": 50.0,
+  "kind": "post_clamp_authority_sweep_no_retrain",
+  "n": 5000,
+  "quantization": {
+    "input_scale": 0.007843137718737125,
+    "input_values_at_max": 0,
+    "input_values_at_min": 5501,
+    "input_zero_point": -1,
+    "output_at_max": 6,
+    "output_at_min": 0,
+    "output_saturation_fraction": 0.0012,
+    "output_scale": 0.022874947637319565,
+    "output_zero_point": 1
+  },
+  "rows": [
+    {
+      "authority_fraction_pct": 4.5,
+      "clamp_uT": 2.25,
+      "float": {
+        "mae_uT": 22.36606216430664,
+        "raw_exceeds_clamp_fraction": 0.0798,
+        "reduction_pct": 4.969734191894531
+      },
+      "int8": {
+        "mae_uT": 22.381698608398438,
+        "raw_exceeds_clamp_fraction": 0.0738,
+        "reduction_pct": 4.903292655944824
+      }
+    },
+    {
+      "authority_fraction_pct": 5.0,
+      "clamp_uT": 2.5,
+      "float": {
+        "mae_uT": 22.353891372680664,
+        "raw_exceeds_clamp_fraction": 0.0186,
+        "reduction_pct": 5.02144718170166
+      },
+      "int8": {
+        "mae_uT": 22.371049880981445,
+        "raw_exceeds_clamp_fraction": 0.0102,
+        "reduction_pct": 4.948538780212402
+      }
+    },
+    {
+      "authority_fraction_pct": 10.0,
+      "clamp_uT": 5.0,
+      "float": {
+        "mae_uT": 22.35257339477539,
+        "raw_exceeds_clamp_fraction": 0.0,
+        "reduction_pct": 5.02704381942749
+      },
+      "int8": {
+        "mae_uT": 22.37001609802246,
+        "raw_exceeds_clamp_fraction": 0.0,
+        "reduction_pct": 4.9529314041137695
+      }
+    },
+    {
+      "authority_fraction_pct": 15.0,
+      "clamp_uT": 7.5,
+      "float": {
+        "mae_uT": 22.35257339477539,
+        "raw_exceeds_clamp_fraction": 0.0,
+        "reduction_pct": 5.02704381942749
+      },
+      "int8": {
+        "mae_uT": 22.37001609802246,
+        "raw_exceeds_clamp_fraction": 0.0,
+        "reduction_pct": 4.9529314041137695
+      }
+    },
+    {
+      "authority_fraction_pct": 20.0,
+      "clamp_uT": 10.0,
+      "float": {
+        "mae_uT": 22.35257339477539,
+        "raw_exceeds_clamp_fraction": 0.0,
+        "reduction_pct": 5.02704381942749
+      },
+      "int8": {
+        "mae_uT": 22.37001609802246,
+        "raw_exceeds_clamp_fraction": 0.0,
+        "reduction_pct": 4.9529314041137695
+      }
+    },
+    {
+      "authority_fraction_pct": 25.0,
+      "clamp_uT": 12.5,
+      "float": {
+        "mae_uT": 22.35257339477539,
+        "raw_exceeds_clamp_fraction": 0.0,
+        "reduction_pct": 5.02704381942749
+      },
+      "int8": {
+        "mae_uT": 22.37001609802246,
+        "raw_exceeds_clamp_fraction": 0.0,
+        "reduction_pct": 4.9529314041137695
+      }
+    }
+  ],
+  "split": "test",
+  "tflite": "~/projects/odmr-edge-ml/exports/fcnn_v2_residual_dataset_a_int8.tflite",
+  "unclamped_reference": {
+    "float": {
+      "mae_uT": 22.35257339477539,
+      "reduction_pct": 5.02704381942749
+    },
+    "int8": {
+      "mae_uT": 22.37001609802246,
+      "reduction_pct": 4.9529314041137695
+    }
+  }
+}

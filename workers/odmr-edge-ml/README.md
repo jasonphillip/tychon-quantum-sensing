@@ -68,6 +68,10 @@ src/odmr_edge_ml/
 
 The `experiments/` directory contains standalone scripts for:
 
+- `fcnn_v2_int8_float_equivalence.py` — deployed `fcnn_v2_residual_dataset_a` float-vs-INT8
+  equivalence/accuracy harness on `production_50k_v2_aic`; 2026-06-21 test split result:
+  INT8-vs-float MAE `0.0346 uT`, RMSE `0.0452 uT`, max abs `0.7033 uT`, saturation fraction
+  `0.0012`, deployed INT8 clamped reduction vs PID `4.90%`
 - `architecture_comparison.py` — MLP vs FCNN head-to-head evaluation
 - `scalar_residual_comparison.py` — Scalar residual correction pipeline
 - `heading_sweep.py` — 360-degree heading error characterization
