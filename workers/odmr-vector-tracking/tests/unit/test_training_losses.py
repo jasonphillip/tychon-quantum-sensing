@@ -10,6 +10,7 @@ from odmr_vector_tracking.training.losses import (
     compute_losses,
     position_loss,
     projection_loss,
+    track_position_loss,
 )
 from odmr_vector_tracking.training.targets import association_targets
 
@@ -68,6 +69,14 @@ def test_position_loss_zero_when_exact() -> None:
     assert float(position_loss(cand_pos, targets, res, anchor_spacing=0.5)) == 0.0
 
 
+def test_track_position_loss_known_value() -> None:
+    """Same scaling as the candidate-position loss: half-cell error → Huber 0.125."""
+    track_pos = torch.tensor([[0.20]])
+    res = torch.tensor([[0.15]])
+    loss = track_position_loss(track_pos, res, anchor_spacing=0.1)
+    assert abs(float(loss) - 0.125) < 1e-6
+
+
 def test_projection_loss_is_mse() -> None:
     p = torch.tensor([[1.0, 0.0, -1.0, 0.0]])
     lab = torch.tensor([[0.0, 0.0, -1.0, 0.0]])
@@ -88,9 +97,12 @@ def test_compute_losses_total_is_weighted_sum() -> None:
 
     d = compute_losses(
         out, targets, res_norm, labels, coll,
-        anchor_spacing=spacing, w_assoc=2.0, w_pos=3.0, w_proj=0.5,
+        anchor_spacing=spacing, w_assoc=2.0, w_pos=3.0, w_track=1.5, w_proj=0.5,
     )
-    expected = 2.0 * d["association"] + 3.0 * d["position"] + 0.5 * d["projection"]
+    expected = (
+        2.0 * d["association"] + 3.0 * d["position"]
+        + 1.5 * d["track_position"] + 0.5 * d["projection"]
+    )
     assert torch.allclose(d["total"], expected)
 
 
@@ -122,9 +134,11 @@ def test_gradients_reach_every_trainable_block() -> None:
     assert grad_ok(trk.extractor.offset_head)   # via the position loss
     assert grad_ok(trk.core)
     assert grad_ok(trk.association)
+    assert grad_ok(trk.association.dist_proj)   # the relational (distance) branch
     assert grad_ok(trk.obs_embed)
     assert grad_ok(trk.state_to_proj)
     assert grad_ok(trk.state_to_tracks)
+    assert grad_ok(trk.state_to_track_pos)      # via the track-position loss
     # The BLUE decode stays frozen — geometry is not learned.
     assert trk.decoder.decode.weight.grad is None
     assert not trk.decoder.decode.weight.requires_grad

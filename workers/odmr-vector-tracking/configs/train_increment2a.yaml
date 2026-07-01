@@ -1,0 +1,20 @@
+# Increment-2a training hyperparameters (TrainSettings) — sanity scale, sequence_sanity_v0.
+#
+# The whole train split (64 x 128 x 951 float32 ~= 31 MB) lives on-GPU; batches are full-length
+# sequences trained with full BPTT. Early stopping monitors validation total loss; the logged
+# association accuracies are anchor-level monitoring proxies, not the reportable metrics.
+
+lr: 1.0e-3
+weight_decay: 1.0e-4
+epochs: 2000
+batch_size: 16
+patience: 200
+grad_clip: 1.0
+collision_weight: 5.0   # in-collision CE upweight (the hard regime the thesis targets)
+w_assoc: 1.0
+w_pos: 1.0
+w_track: 1.0            # per-slot predicted-position Huber (supervises the recurrent state)
+w_proj: 1.0
+seed: 20260701
+device: cuda
+log_every: 25

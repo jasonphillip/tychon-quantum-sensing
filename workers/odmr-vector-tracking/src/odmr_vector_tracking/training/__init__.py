@@ -19,6 +19,7 @@ from odmr_vector_tracking.training.losses import (
     compute_losses,
     position_loss,
     projection_loss,
+    track_position_loss,
 )
 from odmr_vector_tracking.training.targets import (
     association_targets,
@@ -40,5 +41,6 @@ __all__ = [
     "projection_labels",
     "projection_loss",
     "set_seed",
+    "track_position_loss",
     "train",
 ]

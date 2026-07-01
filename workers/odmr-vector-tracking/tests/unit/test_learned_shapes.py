@@ -38,15 +38,16 @@ def test_forward_output_shapes() -> None:
     assert out.scores.shape == (B, T, L, K)
     assert out.projections.shape == (B, T, CFG.n_axes)
     assert out.cand_pos.shape == (B, T, K)
+    assert out.track_pos.shape == (B, T, L)
     assert out.tracked_freqs.shape == (B, T, L)
     assert out.assignment.dtype == torch.long
 
 
-def test_tracked_freqs_are_assigned_candidate_positions() -> None:
+def test_tracked_freqs_are_the_state_posterior() -> None:
+    """Claimed line centers = the state readout (MOT scores tracks, not raw detections)."""
     trk = build_tracker(CFG)
     out = trk(torch.rand(1, 3, CFG.n_freq))
-    gathered = torch.gather(out.cand_pos, 2, out.assignment)
-    assert torch.allclose(out.tracked_freqs, gathered)
+    assert torch.allclose(out.tracked_freqs, out.track_pos)
 
 
 def test_extractor_anchor_grid() -> None:
@@ -104,7 +105,11 @@ def test_deployable_host_blocks_are_ops_clean() -> None:
 
     track = torch.randn(1, CFG.n_lines, CFG.feat_dim)
     cand = torch.randn(1, CFG.n_candidates, CFG.feat_dim)
-    la = check_model_ops(LinearScoreAssociation(CFG), example_inputs=(track, cand))
+    tpos = torch.rand(1, CFG.n_lines)
+    cpos = torch.rand(1, CFG.n_candidates)
+    la = check_model_ops(
+        LinearScoreAssociation(CFG), example_inputs=(track, cand, tpos, cpos)
+    )
     assert la.is_compatible
 
 
@@ -118,6 +123,8 @@ def test_research_blocks_are_flagged_off_npu() -> None:
 
     track = torch.randn(1, CFG.n_lines, CFG.feat_dim)
     cand = torch.randn(1, CFG.n_candidates, CFG.feat_dim)
-    at = check_model_ops(AttentionAssociation(CFG), example_inputs=(track, cand))
+    tpos = torch.rand(1, CFG.n_lines)
+    cpos = torch.rand(1, CFG.n_candidates)
+    at = check_model_ops(AttentionAssociation(CFG), example_inputs=(track, cand, tpos, cpos))
     assert not at.is_compatible
     assert "aten.matmul" in at.disallowed and "aten.softmax" in at.disallowed

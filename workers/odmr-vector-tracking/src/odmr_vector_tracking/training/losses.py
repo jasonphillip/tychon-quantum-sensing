@@ -84,6 +84,20 @@ def position_loss(
     return F.smooth_l1_loss(residual, torch.zeros_like(residual))
 
 
+def track_position_loss(
+    track_pos: torch.Tensor, res_norm: torch.Tensor, anchor_spacing: float
+) -> torch.Tensor:
+    """Huber on the state's per-slot predicted line positions vs the true centers.
+
+    This is the direct per-slot supervision of the recurrent state (KalmanNet flavor: the
+    state predicts where each identity's line sits); the association's distance branch then
+    scores candidates against these predictions. Same anchor-cell scaling as
+    :func:`position_loss`.
+    """
+    residual = (track_pos - res_norm) / float(anchor_spacing)
+    return F.smooth_l1_loss(residual, torch.zeros_like(residual))
+
+
 def projection_loss(projections: torch.Tensor, labels: torch.Tensor) -> torch.Tensor:
     """MSE between regressed projections and exact ``B_true · n_i`` labels (scaled units)."""
     return F.mse_loss(projections, labels)
@@ -100,12 +114,14 @@ def compute_losses(
     collision_weight: float = 5.0,
     w_assoc: float = 1.0,
     w_pos: float = 1.0,
+    w_track: float = 1.0,
     w_proj: float = 1.0,
     scores_are_probs: bool = False,
 ) -> dict[str, torch.Tensor]:
-    """All three losses + weighted total for one forward pass over ``(B, T, ...)`` batches.
+    """All four losses + weighted total for one forward pass over ``(B, T, ...)`` batches.
 
-    Returns ``{"association", "position", "projection", "total"}`` scalar tensors.
+    Returns ``{"association", "position", "track_position", "projection", "total"}`` scalar
+    tensors.
     """
     assoc = association_loss(
         output.scores,
@@ -115,6 +131,13 @@ def compute_losses(
         scores_are_probs=scores_are_probs,
     )
     pos = position_loss(output.cand_pos, assoc_targets, res_norm, anchor_spacing)
+    track = track_position_loss(output.track_pos, res_norm, anchor_spacing)
     proj = projection_loss(output.projections, proj_labels)
-    total = w_assoc * assoc + w_pos * pos + w_proj * proj
-    return {"association": assoc, "position": pos, "projection": proj, "total": total}
+    total = w_assoc * assoc + w_pos * pos + w_track * track + w_proj * proj
+    return {
+        "association": assoc,
+        "position": pos,
+        "track_position": track,
+        "projection": proj,
+        "total": total,
+    }

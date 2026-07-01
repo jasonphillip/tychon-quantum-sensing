@@ -48,6 +48,7 @@ class TrainSettings:
     collision_weight: float = 5.0
     w_assoc: float = 1.0
     w_pos: float = 1.0
+    w_track: float = 1.0
     w_proj: float = 1.0
     seed: int = 20260701
     device: str = "cuda"
@@ -146,6 +147,7 @@ def _split_losses(
         collision_weight=settings.collision_weight,
         w_assoc=settings.w_assoc,
         w_pos=settings.w_pos,
+        w_track=settings.w_track,
         w_proj=settings.w_proj,
         scores_are_probs=scores_are_probs,
     )
@@ -205,7 +207,10 @@ def train(
     for epoch in range(1, settings.epochs + 1):
         tracker.train()
         perm = torch.randperm(n, device=device)
-        train_sums = {"association": 0.0, "position": 0.0, "projection": 0.0, "total": 0.0}
+        train_sums = {
+            "association": 0.0, "position": 0.0, "track_position": 0.0,
+            "projection": 0.0, "total": 0.0,
+        }
         n_batches = 0
         for start in range(0, n, settings.batch_size):
             idx = perm[start : start + settings.batch_size]
@@ -217,7 +222,7 @@ def train(
             torch.nn.utils.clip_grad_norm_(params, settings.grad_clip)
             opt.step()
             for k in train_sums:
-                train_sums[k] += float(losses[k])
+                train_sums[k] += float(losses[k].detach())
             n_batches += 1
         sched.step()
 

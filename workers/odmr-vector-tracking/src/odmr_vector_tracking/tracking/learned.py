@@ -107,9 +107,17 @@ class LearnedTrackerOutput:
         ``(B, T, 4)`` regressed axis projections in units of ``cfg.proj_scale_T`` Tesla.
     cand_pos
         ``(B, T, K)`` candidate positions in normalized window units (anchor + learned offset).
+    track_pos
+        ``(B, T, L)`` per-slot line positions predicted from the recurrent state (normalized
+        window units) — the KalmanNet-style state readout that drives the association's
+        distance branch; directly supervised against the true line centers.
     tracked_freqs
-        ``(B, T, L)`` position of each lock's assigned candidate (normalized window units) —
-        the claimed-identity line centers the Increment-1 metrics consume.
+        ``(B, T, L)`` claimed-identity line centers the Increment-1 metrics consume
+        (normalized window units). This is the **state posterior** ``track_pos`` — the MOT
+        convention scores track estimates, not raw detections, and the anchored candidates
+        are quantized to the conv grid (sub-stride offset regression is aliasing-limited).
+        The assigned candidate's position is recoverable as
+        ``gather(cand_pos, assignment)`` for diagnostics.
     """
 
     b_est: torch.Tensor
@@ -118,6 +126,7 @@ class LearnedTrackerOutput:
     scores: torch.Tensor
     projections: torch.Tensor
     cand_pos: torch.Tensor
+    track_pos: torch.Tensor
     tracked_freqs: torch.Tensor
 
 
@@ -130,10 +139,21 @@ class RecurrentCore(Protocol):
 
 
 class AssociationHead(Protocol):
-    """``(track_feats (B,L,D), cand_feats (B,K,D)) -> scores (B,L,K)``."""
+    """``(track_feats (B,L,D), cand_feats (B,K,D), track_pos (B,L), cand_pos (B,K)) ->
+    scores (B,L,K)``.
+
+    Positions are in normalized window units. They matter: a purely additive feature score
+    ``f(track) + g(cand)`` is separable — its argmax over candidates is the same for every
+    slot — so the head needs an explicit track↔candidate *relational* input (position
+    differences) to express "the candidate nearest MY predicted position".
+    """
 
     def __call__(
-        self, track_feats: torch.Tensor, cand_feats: torch.Tensor
+        self,
+        track_feats: torch.Tensor,
+        cand_feats: torch.Tensor,
+        track_pos: torch.Tensor,
+        cand_pos: torch.Tensor,
     ) -> torch.Tensor: ...
 
 
@@ -219,6 +239,14 @@ class ReLURecurrentCell(nn.Module):
         self.in_obs = nn.Linear(s, s)
         self.act = nn.ReLU()
         self.update = nn.Linear(s, s)
+        # Small-gain init of the residual branch: default init compounds over T recurrent
+        # steps and explodes the state (observed ~1e8 at T=128), saturating every downstream
+        # head. Scaling the update weights down keeps the state O(1) across the sequence at
+        # init while (unlike an exact zero init) every path still carries gradient from the
+        # first step; training grows the gain only as far as the loss pushes it.
+        with torch.no_grad():
+            self.update.weight.mul_(0.05)
+        nn.init.zeros_(self.update.bias)  # type: ignore[arg-type]
 
     def forward(self, state: torch.Tensor, obs: torch.Tensor) -> torch.Tensor:
         h = self.act(self.in_state(state) + self.in_obs(obs))
@@ -252,10 +280,15 @@ class GatedKalmanNetCore(nn.Module):
 # --- host/MSS association heads (two-impl / one-signature) -------------------------------
 
 class LinearScoreAssociation(nn.Module):
-    """Deployable-first association: additive-MLP cost (no matmul/softmax on the graph).
+    """Deployable-first association: additive-MLP cost with a relational distance branch.
 
-    ``forward(track_feats (B,L,D), cand_feats (B,K,D)) -> logits (B,L,K)`` via projected
-    track/candidate features combined by a broadcast **add** + ReLU + Linear — all V250-allowed.
+    ``forward(track_feats, cand_feats, track_pos, cand_pos) -> logits (B,L,K)``. Projected
+    track/candidate features combine by broadcast **add**, plus a geometric branch built from
+    the rectified signed position differences ``relu(p_l - x_k)`` / ``relu(x_k - p_l)`` — the
+    ReLU pair encodes |distance| without ``mul``/``abs`` and is what breaks additive
+    separability: without it the score is ``f(track) + g(cand)`` and every slot argmaxes the
+    same candidate. Compute stays linear + relu + add.
+
     The hard assignment is computed **off-graph** by :meth:`assign` (greedy argmax), so no
     banned op ever reaches the NPU. Training applies ``log_softmax`` to these logits inside the
     loss only — loss machinery never ships.
@@ -268,13 +301,23 @@ class LinearScoreAssociation(nn.Module):
         d, a = cfg.feat_dim, cfg.assoc_dim
         self.track_proj = nn.Linear(d, a)
         self.cand_proj = nn.Linear(d, a)
+        self.dist_proj = nn.Linear(2, a)
         self.act = nn.ReLU()
         self.score = nn.Linear(a, 1)
 
-    def forward(self, track_feats: torch.Tensor, cand_feats: torch.Tensor) -> torch.Tensor:
+    def forward(
+        self,
+        track_feats: torch.Tensor,
+        cand_feats: torch.Tensor,
+        track_pos: torch.Tensor,
+        cand_pos: torch.Tensor,
+    ) -> torch.Tensor:
         t = self.track_proj(track_feats)[:, :, None, :]   # (B, L, 1, A)
         c = self.cand_proj(cand_feats)[:, None, :, :]     # (B, 1, K, A)
-        h = self.act(t + c)                               # (B, L, K, A) broadcast add
+        dpos = track_pos[:, :, None] - cand_pos[:, None, :]           # (B, L, K)
+        rel = torch.stack([self.act(dpos), self.act(-dpos)], dim=-1)  # (B, L, K, 2)
+        g = self.dist_proj(rel)                           # (B, L, K, A)
+        h = self.act(t + c + g)                           # (B, L, K, A)
         return self.score(h).squeeze(-1)                  # (B, L, K)
 
     @staticmethod
@@ -295,13 +338,20 @@ class AttentionAssociation(nn.Module):
     def __init__(self, cfg: LearnedTrackerConfig) -> None:
         super().__init__()
         d, a = cfg.feat_dim, cfg.assoc_dim
-        self.q = nn.Linear(d, a)
-        self.k = nn.Linear(d, a)
+        # +1 input: the track/candidate position joins the feature vector before projection.
+        self.q = nn.Linear(d + 1, a)
+        self.k = nn.Linear(d + 1, a)
         self._scale = 1.0 / math.sqrt(a)
 
-    def forward(self, track_feats: torch.Tensor, cand_feats: torch.Tensor) -> torch.Tensor:
-        q = self.q(track_feats)                       # (B, L, A)
-        k = self.k(cand_feats)                        # (B, K, A)
+    def forward(
+        self,
+        track_feats: torch.Tensor,
+        cand_feats: torch.Tensor,
+        track_pos: torch.Tensor,
+        cand_pos: torch.Tensor,
+    ) -> torch.Tensor:
+        q = self.q(torch.cat([track_feats, track_pos.unsqueeze(-1)], dim=-1))  # (B, L, A)
+        k = self.k(torch.cat([cand_feats, cand_pos.unsqueeze(-1)], dim=-1))    # (B, K, A)
         logits = torch.matmul(q, k.transpose(1, 2)) * self._scale  # (B, L, K)
         return torch.softmax(logits, dim=-1)
 
@@ -369,6 +419,7 @@ class LearnedTracker(nn.Module):
         self.obs_embed = nn.Linear(cfg.n_candidates * cfg.feat_dim, cfg.state_dim)
         self.state_to_proj = nn.Linear(cfg.state_dim, cfg.n_axes)
         self.state_to_tracks = nn.Linear(cfg.state_dim, cfg.n_lines * cfg.feat_dim)
+        self.state_to_track_pos = nn.Linear(cfg.state_dim, cfg.n_lines)
 
     def forward(self, spectra: torch.Tensor) -> LearnedTrackerOutput:
         """``spectra (B, T, F)`` (contract-normalized PL) → :class:`LearnedTrackerOutput`."""
@@ -379,7 +430,7 @@ class LearnedTracker(nn.Module):
 
         outs: dict[str, list[torch.Tensor]] = {
             k: [] for k in
-            ("b_est", "cov", "scores", "proj", "cand_pos", "assignment", "tracked")
+            ("b_est", "cov", "scores", "proj", "cand_pos", "track_pos", "assignment")
         }
 
         for t in range(T):
@@ -391,7 +442,8 @@ class LearnedTracker(nn.Module):
             b_vec, c = self.decoder(p)                         # (B, 3) T, (B,3,3) [host BLUE]
 
             track_feats = self.state_to_tracks(state).reshape(b, cfg.n_lines, cfg.feat_dim)
-            sc = self.association(track_feats, feat)           # (B, L, K)        [host]
+            tpos = self.state_to_track_pos(state)              # (B, L) predicted line pos
+            sc = self.association(track_feats, feat, tpos, pos)  # (B, L, K)      [host]
             assign = torch.argmax(sc, dim=-1)                  # hard assign (off-NPU)
 
             outs["b_est"].append(b_vec)
@@ -399,8 +451,8 @@ class LearnedTracker(nn.Module):
             outs["scores"].append(sc)
             outs["proj"].append(p)
             outs["cand_pos"].append(pos)
+            outs["track_pos"].append(tpos)
             outs["assignment"].append(assign)
-            outs["tracked"].append(torch.gather(pos, 1, assign))  # (B, L) claimed positions
 
         stacked = {k: torch.stack(v, dim=1) for k, v in outs.items()}
         return LearnedTrackerOutput(
@@ -410,7 +462,8 @@ class LearnedTracker(nn.Module):
             scores=stacked["scores"],
             projections=stacked["proj"],
             cand_pos=stacked["cand_pos"],
-            tracked_freqs=stacked["tracked"],
+            track_pos=stacked["track_pos"],
+            tracked_freqs=stacked["track_pos"],  # posterior state readout (see dataclass doc)
         )
 
 
