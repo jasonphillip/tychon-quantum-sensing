@@ -56,40 +56,15 @@ if {[catch {
 puts "INFO (sp inner): VCD imported"
 flush stdout
 
-# Emit an activity map directly from the same VCD/top selection. This gives a
-# durable diagnostic for whether SmartPower saw real toggling even if the final
-# power number remains default-equivalent.
-set activity_file "$REPORT_DIR/smartpower_activity_map.csv"
-puts "INFO (sp inner): writing activity map -> $activity_file"
-if {[catch {
-    smartpower_report_power_activity_map \
-        -vcd_file $WORKLOAD_VCD \
-        -style {CSV} \
-        -auto_detect_top_level_name {FALSE} \
-        -top_level_name $VCD_TOP_LEVEL_NAME \
-        -glitch_filtering {auto} \
-        -opmode {Active} \
-        -report_query {Report by Net - summary} \
-        -report_type {activity and power} \
-        -sortby {functional transitions} \
-        -sortorder {descending} \
-        -max_net {500} \
-        -clock_period {8000.0} \
-        -clock_offset {0.0} \
-        -file $activity_file
-} err]} {
-    puts "WARN (sp inner): smartpower_report_power_activity_map failed: $err"
-} else {
-    puts "INFO (sp inner): activity map written"
-}
-flush stdout
-
 # Make sure Active mode is the analysis mode (the imported VCD lives there)
 if {[catch {smartpower_set_mode_for_analysis -mode {Active}} err]} {
     puts "WARN (sp inner): smartpower_set_mode_for_analysis failed (continuing): $err"
 }
 
-# Emit text-format power report
+# Emit the ESSENTIAL artifact FIRST: the text power report. (Ordering matters:
+# the 2026-07-01 run showed smartpower_report_power_activity_map can take down
+# the whole SmartPower session — it re-imports the VCD — so it must never run
+# before the power report is safely on disk.)
 set rpt_file "$REPORT_DIR/smartpower_workload.rpt"
 puts "INFO (sp inner): writing text power report -> $rpt_file"
 if {[catch {
@@ -104,4 +79,35 @@ if {[catch {
 }
 puts "INFO (sp inner): power report written"
 flush stdout
+
+# OPTIONAL activity map (secondary diagnostic; opt-in via env because it
+# performs a second full VCD import and crashed the 2026-07-01 session).
+if {[info exists ::env(SMARTPOWER_ACTIVITY_MAP)] && $::env(SMARTPOWER_ACTIVITY_MAP) eq "1"} {
+    set activity_file "$REPORT_DIR/smartpower_activity_map.csv"
+    puts "INFO (sp inner): writing activity map -> $activity_file"
+    if {[catch {
+        smartpower_report_power_activity_map \
+            -vcd_file $WORKLOAD_VCD \
+            -style {CSV} \
+            -auto_detect_top_level_name {FALSE} \
+            -top_level_name $VCD_TOP_LEVEL_NAME \
+            -glitch_filtering {auto} \
+            -opmode {Active} \
+            -report_query {Report by Net - summary} \
+            -report_type {activity and power} \
+            -sortby {functional transitions} \
+            -sortorder {descending} \
+            -max_net {500} \
+            -clock_period {8000.0} \
+            -clock_offset {0.0} \
+            -file $activity_file
+    } err]} {
+        puts "WARN (sp inner): smartpower_report_power_activity_map failed: $err"
+    } else {
+        puts "INFO (sp inner): activity map written"
+    }
+    flush stdout
+} else {
+    puts "INFO (sp inner): activity map skipped (set SMARTPOWER_ACTIVITY_MAP=1 to enable)"
+}
 exit 0
