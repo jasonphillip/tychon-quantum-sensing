@@ -1,0 +1,10 @@
+MANIFEST.txt	0 bytes
+MPFS_ICICLE_KIT_BASE_DESIGN.srm	61161 bytes
+MPFS_ICICLE_KIT_BASE_DESIGN.srr	3499459 bytes
+MPFS_ICICLE_KIT_BASE_DESIGN_fpga_mapper.srr	2045822 bytes
+README.md	1679 bytes
+build_two_slot_pnr_cleanhandoff.tcl	1963 bytes
+final_capture.txt	6466 bytes
+libero_cleanhandoff.log	123515 bytes
+synplify.log	4619 bytes
+synplify_job.log	3450 bytes

@@ -1,0 +1,15 @@
+MANIFEST.txt	0 bytes
+MPFS_ICICLE_KIT_BASE_DESIGN.srr	3484543 bytes
+MPFS_ICICLE_KIT_BASE_DESIGN_cck.rpt	35429 bytes
+MPFS_ICICLE_KIT_BASE_DESIGN_compile_netlist_resources.rpt	21281 bytes
+MPFS_ICICLE_KIT_BASE_DESIGN_compile_netlist_resources.xml	20974 bytes
+MPFS_ICICLE_KIT_BASE_DESIGN_fpga_mapper.srr	2043056 bytes
+README.md	1896 bytes
+final_capture.txt	18609 bytes
+libero_pnr.log	66316793 bytes
+libero_synth.log	238846 bytes
+synbatch_direct_stdout.log	0 bytes
+synplify.log	4571 bytes
+synplify_direct.log	75 bytes
+synplify_job.log	3420 bytes
+timing_analysis_jitter_report.txt	3347 bytes

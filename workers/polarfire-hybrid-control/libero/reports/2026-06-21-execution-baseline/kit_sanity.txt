@@ -1,0 +1,8 @@
+mpfs-icicle-kit
+2026-06-21T14:11:17+00:00
+0x60040804 = 0x00010000  (1.000000)
+0x60040854 = 0x00000091  (0.002213)
+V250 control plane alive (vbx_cnn initialized).
+model: 1 input(s), 1 output(s)
+inference complete.
+out[0] len=1 scale=0.022873 zp=1: -2.9506

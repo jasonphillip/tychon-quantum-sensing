@@ -1,0 +1,34 @@
+Console Mode = ===========================================================
+READ-ONLY JTAG chain scan before 2 ms watchdog programming
+Job file        : ~/libero_seedsweep/seed7_vbx201_v250_2ms_20260621_160037/export/polarfire_hybrid_control_two_slot_2ms.job
+Wrapper project : ~/dev/projects/polarfire-hybrid-control/libero/reports/2026-06-21-watchdog-2ms/fpexpress_scan_2ms_preprogram
+===========================================================
+Software Version: 2025.2.0.14
+creating folder: ~\dev\projects\polarfire-hybrid-control\libero\reports\2026-06-21-watchdog-2ms\fpexpress_scan_2ms_preprogram\polarfire_hybrid_control_two_slot_2ms
+===============================================================
+Programmer: Embedded FP6 'F31E000A' : Version = EF9B
+===============================================================
+programmer 'F31E000A' : Embedded FlashPro6
+Created new project '~\dev\projects\polarfire-hybrid-control\libero\reports\2026-06-21-watchdog-2ms\fpexpress_scan_2ms_preprogram\polarfire_hybrid_control_two_slot_2ms\polarfire_hybrid_control_two_slot_2ms.pro'
+PPD file '~\dev\projects\polarfire-hybrid-control\libero\reports\2026-06-21-watchdog-2ms\fpexpress_scan_2ms_preprogram\polarfire_hybrid_control_two_slot_2ms\polarfire_hybrid_control_two_slot_2ms.ppd' has been loaded successfully.
+DESIGN : MPFS_ICICLE_KIT_BASE_DESIGN;  CHECKSUM : E6A6;  PDB_VERSION : 1.0
+creating folder: ~\dev\projects\polarfire-hybrid-control\libero\reports\2026-06-21-watchdog-2ms\fpexpress_scan_2ms_preprogram\polarfire_hybrid_control_two_slot_2ms\projectData
+Software Version: 2025.2.0.14
+PPD file '~\dev\projects\polarfire-hybrid-control\libero\reports\2026-06-21-watchdog-2ms\fpexpress_scan_2ms_preprogram\polarfire_hybrid_control_two_slot_2ms\polarfire_hybrid_control_two_slot_2ms.ppd' has been loaded successfully.
+DESIGN : MPFS_ICICLE_KIT_BASE_DESIGN;  CHECKSUM : E6A6;  PDB_VERSION : 1.0
+===============================================================
+Programmer: Embedded FP6 'F31E000A' : Version = EF9B
+===============================================================
+programmer 'F31E000A' : Embedded FlashPro6
+The 'create_job_project' command succeeded.
+STEP 1 OK: job project created (programmer auto-detected)
+programmer 'F31E000A' : Scan Chain...
+programmer 'F31E000A' : Found 8 instruction register bits.
+programmer 'F31E000A' : Checking IDCODEs...
+programmer 'F31E000A' : Device 1: 1F81A1CF Mfr: Microsemi Part: MPFS250(T|TS|TL|TLS|TC)
+programmer 'F31E000A' : Check Chain...
+programmer 'F31E000A' : Scan and Check Chain PASSED.
+The 'scan_chain_prg' command succeeded.
+STEP 2 OK: scan_chain_prg completed; no programming action was run
+The Execute Script command succeeded.
+Exported log file ~/dev/projects/polarfire-hybrid-control/libero/reports/2026-06-21-watchdog-2ms/scan_preprogram_2ms.log.

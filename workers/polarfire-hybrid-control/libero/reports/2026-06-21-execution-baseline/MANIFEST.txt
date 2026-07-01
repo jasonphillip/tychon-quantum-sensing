@@ -1,0 +1,40 @@
+Execution baseline manifest - 2026-06-21
+
+Purpose:
+Baseline evidence before continuing the everything-else execution plan.
+
+Status:
+CONFIRMED read-only baseline. No programming performed. No writes to 0x60001000.
+
+Kit sanity:
+ssh icicle 'cd /root/bringup && hostname && date -Is && /root/bringup/pid_ctl r 0x60040804 && /root/bringup/pid_ctl r 0x60040854 && timeout 15 ./vnnx_smoke fcnn_v2_residual_dataset_a.vnnx'
+
+Key kit result:
+csr_version 0x00010000
+watchdog_raw 0x00000091
+V250 vnnx_smoke inference complete, out[0] -2.9506
+
+Bee baseline:
+ssh bee 'date -Is; git -C ~/dev/projects/polarfire-hybrid-control status --short; ps -ef | grep -E "libero|synplify|synbatch|smartpower|modelsim|vsim" | grep -v grep || true'
+
+Key bee result:
+No running Libero/Synplify/SmartPower/ModelSim processes.
+Expected dirty files: SmartPower Tcl edits and generated report directories.
+
+FlashPro scan:
+ssh bee '/c/Microchip/Libero_SoC_2025.2/Libero_SoC/Designer/bin/fpExpress SCRIPT:"~/dev/projects/polarfire-hybrid-control/libero/scripts/scan_chain.tcl" LOGFILE:"~/dev/projects/polarfire-hybrid-control/libero/reports/2026-06-21-execution-baseline/scan.log"'
+
+Key scan result:
+Embedded FP6 F31E000A version EF9B.
+Device IDCODE 1F81A1CF, MPFS250(T|TS|TL|TLS|TC).
+Scan and Check Chain PASSED.
+
+Rollback/job hashes:
+See job_hashes.txt in this directory.
+
+Files:
+kit_sanity.txt
+bee_status.txt
+job_hashes.txt
+scan.log
+SHA256SUMS

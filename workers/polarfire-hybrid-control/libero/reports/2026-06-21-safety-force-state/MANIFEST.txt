@@ -1,0 +1,5 @@
+MANIFEST.txt	0 bytes
+README.md	1071 bytes
+build_two_slot_force_state_pnr.tcl	1831 bytes
+final_capture.txt	2208 bytes
+libero_force_state.log	124359 bytes

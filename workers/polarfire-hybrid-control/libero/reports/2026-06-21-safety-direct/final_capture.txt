@@ -1,0 +1,133 @@
+SAFETY_DIRECT_CAPTURE 2026-06-21T10:48:48-04:00
+REMOTE_CLONE ~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025
+REMOTE_LOGDIR /tmp/codex_safety_direct_20260621_1025
+PROCESS_CHECK
+PATCH_PROOF_LINES
+~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/hdl/pid_subsystem.v:27:    parameter integer WATCHDOG_TIMEOUT_CYCLES = 125_000  // 1 ms at 125 MHz safety-spec
+~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/hdl/pid_subsystem.v:200:    watchdog_timer #(.WATCHDOG_TIMEOUT_CYCLES(WATCHDOG_TIMEOUT_CYCLES)) u_wdog (
+~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/hdl_two_slot/pid_subsystem.v:27:    parameter integer WATCHDOG_TIMEOUT_CYCLES = 125_000  // 1 ms at 125 MHz safety-spec
+~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/hdl_two_slot/pid_subsystem.v:200:    watchdog_timer #(.WATCHDOG_TIMEOUT_CYCLES(WATCHDOG_TIMEOUT_CYCLES)) u_wdog (
+~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/component/work/FIC_0_PERIPHERALS/FIC_0_PERIPHERALS.v:1503:        .WATCHDOG_TIMEOUT_CYCLES(125000)
+52:puts "==> export_prog_job polarfire_hybrid_control_two_slot_safety"
+54:export_prog_job -job_file_name {polarfire_hybrid_control_two_slot_safety} -export_dir $EXPORT
+PATCHED_FILE_HASHES
+2bcb87fd4d49e09f7986546664e22e5d0ac68afd5b42c0ee80785d55ff08a22e *~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/MPFS_ICICLE_Vectorblox.prjx
+742e21bc693794c70e58e684f812073b5f414cc8bae8127511101b7a565963d3 *~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/build_two_slot_synth.tcl
+212c30cf0240fff438f1ce185fe56088330fc11aa7a27fd260506fc20b240bcf *~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/build_two_slot_pnr.tcl
+fdbb1b0e4decff687eb4b1244677683a17414d6d1b2c209a5a47a918828669c2 *~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/hdl/pid_subsystem.v
+fdbb1b0e4decff687eb4b1244677683a17414d6d1b2c209a5a47a918828669c2 *~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/hdl_two_slot/pid_subsystem.v
+c1b5e6927b60c9fc04e9f14b34c6f3f3fab4ae22d8556d836dfe6849f11bde8c *~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/component/work/FIC_0_PERIPHERALS/FIC_0_PERIPHERALS.v
+c8205bfefcd8eecad79155549edac1930de1a179efc4284c8d6deb6c2f77dcfa *~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/synthesis/MPFS_ICICLE_KIT_BASE_DESIGN_syn.prj
+dfeee9da11de790a9e12ff0d0bcd01c6ce36ba6194ac26fe0e89d782ddf1eb23 *~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/synthesis/project_rtls.txt
+SYNTH_MARKERS
+42:TCL script complete: "~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/synthesis/MPFS_ICICLE_KIT_BASE_DESIGN_user.tcl"
+99:Complete: Logic Synthesis on MPFS_ICICLE_KIT_BASE_DESIGN_syn|synthesis
+100:TCL script complete: "MPFS_ICICLE_KIT_BASE_DESIGN_syn.tcl"
+101:exit status=0
+102:exit status=0
+103:License checkin: synplifypro_actel
+12433:Total LUTs:    54638
+12445:Mapper successful!
+PNR_MARKERS
+653:Error: SYNTHESIZE Tool inputs are out of date
+689:==> STAGE_OK PLACEROUTE
+694:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/timnet/hardwiredtimnetmodel.cxx  at line: 137
+699:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+700:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_11/MSC_i_28/MSC_net_2508
+704:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+705:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_11/MSC_i_22/MSC_net_1003
+709:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+710:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_119/MSC_i_120/MSC_i_123/MSC_net_674
+714:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+715:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_net_1437
+719:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+720:error: Error: not ROUTED_CONNECT for net FIC_1_PERIPHERALS_1/FIC_1_INITIATOR_0_AXI4mslave0_WSTRB[3]
+724:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+725:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_net_940
+729:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+730:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/DMA_INITIATOR_inst_0/DMA_INITIATOR_0/MstConvertor_loop[0].mstrconv/mstrDWC/genblk1.MstUpConv/DWC_WChan/wr_sys_ctrl/un1_fifo_empty
+734:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+735:error: Error: not ROUTED_CONNECT for net FIC_3_PERIPHERALS_1/IHC_SUBSYSTEM_0/IHC_APB_0/IHC_APB_0/u_mux_p_to_b3/PRDATA_15_1_0_y7[3]
+739:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+740:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/u_pid_subsystem/u_pid_csr/u_pid_csr_block/N_1081
+744:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+745:error: Error: not ROUTED_CONNECT for net FIC_3_PERIPHERALS_1/PWM/corepwm_C0_0/genblk3.corepwm_reg_if/sync_update_0_sqmuxa_Z
+749:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+750:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_32/MSC_net_1202
+754:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+755:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_32/MSC_i_33/MSC_i_36/MSC_net_1069
+759:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+760:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/MSC_net_10766
+764:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+765:error: Error: not ROUTED_CONNECT for net FIC_1_PERIPHERALS_1/FIC_1_INITIATOR_0/FIC_1_INITIATOR_0/MstConvertor_loop[0].mstrconv/rgsl/genblk4.wrs/sDat_10_Z[39]
+769:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+770:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_11/MSC_i_12/MSC_net_2317
+774:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+775:error: Error: not ROUTED_CONNECT for net FIC_3_PERIPHERALS_1/CORE_I2C_C0_0_WRAPPER_1/COREI2C_C0_0/COREI2C_C0_0/I2C_NUM_GENERATION[0].ui2c/N_88
+779:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+780:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_355/MSC_i_399/MSC_i_400/MSC_net_1095
+784:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+785:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_296/MSC_i_300/MSC_net_948
+789:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+790:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/DMA_INITIATOR_inst_0/DMA_INITIATOR_0/SlvConvertor_loop[0].slvcnv/slvProtConv/genblk1.u_SlvAxi4ReadID/genblk1.rdata_interleave_fifo/fifo_ctrl_inst/N_13_i
+794:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+795:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/FIC0_INITIATOR_inst_0/FIC0_INITIATOR_0/SlvConvertor_loop[2].slvcnv/slvdwc/genblk1.DownConverter_inst/writeWidthConv/wrCmdFifoWriteCtrl/un1_length_1_v_1_Z[2]
+799:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+800:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_347/MSC_i_348/MSC_net_977
+804:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+805:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/MSC_net_14588
+809:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+810:error: Error: not ROUTED_CONNECT for net FIC_3_PERIPHERALS_1/IHC_SUBSYSTEM_0/CHANNEL_E51_TO_U54_1/amp_miv_ihcc_ctrl/u_b_to_a_mem/register_3_[18]
+813:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/timnet/hardwiredtimnetmodel.cxx  at line: 137
+818:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+819:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_296/MSC_net_848
+823:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+824:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/MSC_net_7875
+828:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+829:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/MSC_i_285/MSC_i_286/MSC_net_66
+832:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/timnet/hardwiredtimnetmodel.cxx  at line: 137
+837:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+838:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1_VBX_AXIM_ARADDR[37]
+842:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+843:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_355/MSC_i_399/MSC_i_408/MSC_net_521
+847:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+848:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/MSC_net_5075
+852:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+853:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/MSC_i_140/data_ram_data_ram_0_8/R_ADDR_3_inst_Q
+856:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/timnet/hardwiredtimnetmodel.cxx  at line: 137
+861:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+862:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_296/MSC_i_299/data_ram_data_ram_0_2/R_ADDR_3_inst_Q
+866:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+867:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_11/MSC_i_22/MSC_i_24/data_ram_data_ram_0_9/RAM64x12_PHYS_0/W_DATA_net[5]
+871:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+872:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_11/MSC_i_22/MSC_i_24/data_ram_data_ram_0_9/RAM64x12_PHYS_0/W_DATA_net[11]
+876:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+877:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_11/MSC_i_22/MSC_i_24/data_ram_data_ram_0_9/RAM64x12_PHYS_0/R_ADDR_net[0]
+881:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+882:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1_VBX_AXIM_AWADDR[13]
+886:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+887:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_355/MSC_i_399/MSC_i_400/MSC_i_401/MSC_net_312
+891:PTOLEMI EXCEPTION: in file: C:/pre_capture_jenkins/sn/manu_sjo-sv-winteg08_pre_capture_sn/hld/lib/ptolemi5/src/extractor/pafivegdevextractor.cxx  at line: 94
+892:error: Error: not ROUTED_CONNECT for net FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/MSC_net_5710
+EXPORT_JOBS
+~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/export/polarfire_hybrid_control_two_slot_demo.job
+a5550f9e486e19f127aad78e97e06e0839d359c91028d4bcd21bb32b98f5b367 *~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/export/polarfire_hybrid_control_two_slot_demo.job
+~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/export/polarfire_hybrid_control_two_slot_idfix.job
+7907a83f9fc6e99ca25ebc3c389c802d6d07e42b71403767ee644103783dff6e *~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/export/polarfire_hybrid_control_two_slot_idfix.job
+~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/export/polarfire_hybrid_control_two_slot_idfix2.job
+39c8bcf2665ce8b79bcc2abb552ddd2b7b703729d50876744c2cb63c82ca230b *~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/export/polarfire_hybrid_control_two_slot_idfix2.job
+~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/export/polarfire_hybrid_control_vbx201_v250.job
+4e3323e8590e0e87aeae2874ff363ed8843966fd4123d502b280ad0ccfb4af8e *~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/export/polarfire_hybrid_control_vbx201_v250.job
+SAFETY_JOB_SEARCH
+KEY_FILE_STATS
+-rw-r--r-- 1 jason 197121    21281 Jun 21 10:41 ~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/designer/MPFS_ICICLE_KIT_BASE_DESIGN/MPFS_ICICLE_KIT_BASE_DESIGN_compile_netlist_resources.rpt
+-rw-r--r-- 1 jason 197121     3347 Jun 21 10:42 ~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/designer/MPFS_ICICLE_KIT_BASE_DESIGN/timing_analysis_jitter_report.txt
+-rw-r--r-- 1 jason 197121    61161 Jun 21 10:36 ~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/synthesis/MPFS_ICICLE_KIT_BASE_DESIGN.srm
+-rw-r--r-- 1 jason 197121  3484543 Jun 21 10:37 ~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/synthesis/MPFS_ICICLE_KIT_BASE_DESIGN.srr
+-rw-r--r-- 1 jason 197121 40799241 Jun 21 10:37 ~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/synthesis/MPFS_ICICLE_KIT_BASE_DESIGN.vm
+-rw-r--r-- 1 jason 197121     4571 Jun 21 10:37 ~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/synthesis/synplify.log
+-rw-r--r-- 1 jason 197121     3420 Jun 21 10:37 ~/libero_seedsweep/seed7_vbx201_v250_safety_direct_20260621_1025/synthesis/synplify_job.log
+-rw-r--r-- 1 jason 197121 66316793 Jun 21 10:43 /tmp/codex_safety_direct_20260621_1025/libero_pnr.log
+-rw-r--r-- 1 jason 197121   238846 Jun 21 10:27 /tmp/codex_safety_direct_20260621_1025/libero_synth.log
+DIRECT_SYNPLIFY_LOG
+Option definition override for: enable_hydra_infer_clocks_from_latch_data

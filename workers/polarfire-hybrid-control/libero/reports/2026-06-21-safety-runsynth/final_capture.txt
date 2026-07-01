@@ -1,0 +1,19 @@
+Key log lines:
+libero/reports/2026-06-21-safety-runsynth/run_synthesis.log:46:@E: CD255 :"~\libero_seedsweep\seed7_vbx201_v250_safety_runsynth_20260621_1118\component\Microchip\SolutionCore\core_vectorblox\2.0.1\rtl\vhdl\encrypted.vhd":9376:50:9376:50|No identifier "width_a" in scope
+libero/reports/2026-06-21-safety-runsynth/run_synthesis.log:47:@E: CD255 :"~\libero_seedsweep\seed7_vbx201_v250_safety_runsynth_20260621_1118\component\Microchip\SolutionCore\core_vectorblox\2.0.1\rtl\vhdl\encrypted.vhd":9390:33:9390:33|No identifier "width_a" in scope
+libero/reports/2026-06-21-safety-runsynth/run_synthesis.log:48:@E: CD255 :"~\libero_seedsweep\seed7_vbx201_v250_safety_runsynth_20260621_1118\component\Microchip\SolutionCore\core_vectorblox\2.0.1\rtl\vhdl\encrypted.vhd":9391:33:9391:33|No identifier "width_b" in scope
+libero/reports/2026-06-21-safety-runsynth/run_synthesis.log:49:@E: CD255 :"~\libero_seedsweep\seed7_vbx201_v250_safety_runsynth_20260621_1118\component\Microchip\SolutionCore\core_vectorblox\2.0.1\rtl\vhdl\encrypted.vhd":9393:33:9393:33|No identifier "width_a" in scope
+libero/reports/2026-06-21-safety-runsynth/run_synthesis.log:50:@E: CD255 :"~\libero_seedsweep\seed7_vbx201_v250_safety_runsynth_20260621_1118\component\Microchip\SolutionCore\core_vectorblox\2.0.1\rtl\vhdl\encrypted.vhd":9394:33:9394:33|No identifier "width_b" in scope
+libero/reports/2026-06-21-safety-runsynth/run_synthesis.log:51:@E: CD255 :"~\libero_seedsweep\seed7_vbx201_v250_safety_runsynth_20260621_1118\component\Microchip\SolutionCore\core_vectorblox\2.0.1\rtl\vhdl\encrypted.vhd":9396:33:9396:33|No identifier "width_a" in scope
+libero/reports/2026-06-21-safety-runsynth/run_synthesis.log:52:@E: CD255 :"~\libero_seedsweep\seed7_vbx201_v250_safety_runsynth_20260621_1118\component\Microchip\SolutionCore\core_vectorblox\2.0.1\rtl\vhdl\encrypted.vhd":9397:33:9397:33|No identifier "width_b" in scope
+libero/reports/2026-06-21-safety-runsynth/run_synthesis.log:53:@E: CD255 :"~\libero_seedsweep\seed7_vbx201_v250_safety_runsynth_20260621_1118\component\Microchip\SolutionCore\core_vectorblox\2.0.1\rtl\vhdl\encrypted.vhd":9399:33:9399:33|No identifier "width_a" in scope
+libero/reports/2026-06-21-safety-runsynth/run_synthesis.log:54:@E: CD255 :"~\libero_seedsweep\seed7_vbx201_v250_safety_runsynth_20260621_1118\component\Microchip\SolutionCore\core_vectorblox\2.0.1\rtl\vhdl\encrypted.vhd":9400:33:9400:33|No identifier "width_b" in scope
+libero/reports/2026-06-21-safety-runsynth/run_synthesis.log:55:@E: CD255 :"~\libero_seedsweep\seed7_vbx201_v250_safety_runsynth_20260621_1118\component\Microchip\SolutionCore\core_vectorblox\2.0.1\rtl\vhdl\encrypted.vhd":9402:35:9402:35|No identifier "width_p" in scope
+libero/reports/2026-06-21-safety-runsynth/run_synthesis.log:56:@E: CD255 :"~\libero_seedsweep\seed7_vbx201_v250_safety_runsynth_20260621_1118\component\Microchip\SolutionCore\core_vectorblox\2.0.1\rtl\vhdl\encrypted.vhd":9406:16:9406:16|No identifier "clk" in scope
+libero/reports/2026-06-21-safety-runsynth/run_synthesis.log:61:@E::VHDL compiler failed
+libero/reports/2026-06-21-safety-runsynth/libero_runsynth_pnr.log:1:Console Mode = ==> RUNSYNTH_PNR_START 2026-06-21T11:18:45-0400
+libero/reports/2026-06-21-safety-runsynth/libero_runsynth_pnr.log:641:==> state SYNTHESIZE = Tool inputs are out of date
+libero/reports/2026-06-21-safety-runsynth/libero_runsynth_pnr.log:646:==> run_synthesis target=~/libero_seedsweep/seed7_vbx201_v250_safety_runsynth_20260621_1118/synthesis/MPFS_ICICLE_KIT_BASE_DESIGN.vm
+libero/reports/2026-06-21-safety-runsynth/libero_runsynth_pnr.log:649:Error:  Synthesis failed.
+libero/reports/2026-06-21-safety-runsynth/libero_runsynth_pnr.log:650:Error:  The command 'run_synthesis' failed.
+libero/reports/2026-06-21-safety-runsynth/libero_runsynth_pnr.log:653:Error:  The Execute Script command failed.

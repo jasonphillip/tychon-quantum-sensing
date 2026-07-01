@@ -1,0 +1,29 @@
+2026-06-21T11:32:15-04:00
+--- bee process check ---
+--- VM import log key lines ---
+Console Mode = ==> VM_IMPORT_PROBE_START 2026-06-21T11:28:57-0400
+==> STATES before
+==> state SYNTHESIZE = Tool inputs are out of date
+==> state PLACEROUTE = Tool inputs are out of date
+==> state VERIFYTIMING = Tool inputs are out of date
+==> state GENERATEPROGRAMMINGDATA = Tool inputs are out of date
+==> state EXPORTPROGRAMMINGJOB = Tool inputs are out of date
+==> IMPORT_VM_OK
+==> ORGANIZE_PLACEROUTE_OK
+==> ORGANIZE_VERIFYTIMING_OK
+==> BUILD_HIERARCHY_OK
+==> STATES after
+==> state SYNTHESIZE = Tool inputs are out of date
+==> state PLACEROUTE = Tool inputs are out of date
+==> state VERIFYTIMING = Tool inputs are out of date
+==> state GENERATEPROGRAMMINGDATA = Tool inputs are out of date
+==> state EXPORTPROGRAMMINGJOB = Tool inputs are out of date
+==> VM_IMPORT_PROBE_DONE 2026-06-21T11:29:37-0400
+--- VM hash/proof lines from remote clone ---
+c53c14125134a9b9a2c1c230b82542eaba9a58e160f6fc81fbfae5cd7eb7e664 *~/libero_seedsweep/seed7_vbx201_v250_safety_vmimport_20260621_1128/synthesis/MPFS_ICICLE_KIT_BASE_DESIGN.vm
+~/libero_seedsweep/seed7_vbx201_v250_safety_vmimport_20260621_1128/hdl/pid_subsystem.v:    parameter integer WATCHDOG_TIMEOUT_CYCLES = 125_000  // 1 ms at 125 MHz safety-spec
+~/libero_seedsweep/seed7_vbx201_v250_safety_vmimport_20260621_1128/hdl/pid_subsystem.v:    watchdog_timer #(.WATCHDOG_TIMEOUT_CYCLES(WATCHDOG_TIMEOUT_CYCLES)) u_wdog (
+~/libero_seedsweep/seed7_vbx201_v250_safety_vmimport_20260621_1128/hdl_two_slot/pid_subsystem.v:    parameter integer WATCHDOG_TIMEOUT_CYCLES = 125_000  // 1 ms at 125 MHz safety-spec
+~/libero_seedsweep/seed7_vbx201_v250_safety_vmimport_20260621_1128/hdl_two_slot/pid_subsystem.v:    watchdog_timer #(.WATCHDOG_TIMEOUT_CYCLES(WATCHDOG_TIMEOUT_CYCLES)) u_wdog (
+~/libero_seedsweep/seed7_vbx201_v250_safety_vmimport_20260621_1128/component/work/FIC_0_PERIPHERALS/FIC_0_PERIPHERALS.v:        .WATCHDOG_TIMEOUT_CYCLES(125000)
+--- safety job search ---

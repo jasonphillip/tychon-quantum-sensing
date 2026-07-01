@@ -48,3 +48,11 @@ libero/reports/**/fpexpress_job_project/
 
 # Editor/plugin scratch
 docs/superpowers/
+
+# 2026-06-21 evidence curation: raw synthesis/P&R dumps stay out of history
+# (working copies remain on disk and on the Beelink; the per-bundle READMEs
+# summarize their outcomes). Committed per bundle: READMEs, program/timing/
+# power reports, job digests, dashboard captures, curated logs.
+libero/reports/2026-06-21-safety-direct/libero_pnr.log
+libero/reports/2026-06-21-*/*.srr
+libero/reports/2026-06-21-*/*.srm

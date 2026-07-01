@@ -1,0 +1,7 @@
+pid_latency samples=5000 warmup=100 rdcycle=0 rdtime=1 timebase_hz=1000000
+csr_version=0x00010000 watchdog_raw=0x00000081
+post_clamp_raw=0x00003439 post_clamp=0.203995 axi_write_count=0x0000401a sink=0x00007f32
+pulse_read_ns min=3000 median=4000 p95=4000 p99=4000 max=50000
+sample_ns min=4000 median=4000 p95=5000 p99=5000 max=45000
+pulse_read_ticks min=3 median=4 p95=4 p99=4 max=58
+sample_ticks min=4 median=4 p95=5 p99=5 max=194

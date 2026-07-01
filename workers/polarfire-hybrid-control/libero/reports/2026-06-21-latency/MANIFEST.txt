@@ -1,0 +1,15 @@
+Latency bundle manifest - 2026-06-21
+
+Status: CONFIRMED on-kit API/MMIO timing bounds.
+
+Commands:
+ssh icicle 'cd /root/bringup; timeout 30 ./vnnx_latency fcnn_v2_residual_dataset_a.vnnx 1000 20'
+ssh icicle 'cd /root/bringup; timeout 30 ./pid_latency 5000 100'
+
+Key results:
+vnnx_latency total_ns median=32000 p99=33000 max=58000, out0=-2.950607
+pid_latency pulse_read_ns median=4000 p99=4000 max=50000, csr_version=0x00010000
+
+Caveat:
+Both helpers report rdcycle=0 and rdtime=1 with timebase_hz=1000000.
+These are not pure fabric/V250 cycle counts.

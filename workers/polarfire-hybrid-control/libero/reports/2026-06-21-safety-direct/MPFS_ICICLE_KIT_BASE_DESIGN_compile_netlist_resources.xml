@@ -1,0 +1,962 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<?xml-stylesheet href="rptstyle.xsl" type="text/xsl" ?>
+<doc>
+<title>Compile Report</title>
+<text>Microchip Technology Inc. - Microchip Libero Software Release 2025.2 (Version 2025.2.0.14)</text>
+<text>Date: Sun Jun 21 10:41:10 2026
+</text>
+<section><name>Device Selection</name></section>
+<table>
+<header>
+</header>
+<row>
+ <cell>Family</cell>
+ <cell>PolarFireSoC</cell>
+</row>
+<row>
+ <cell>Device</cell>
+ <cell>MPFS250T</cell>
+</row>
+<row>
+ <cell>Package</cell>
+ <cell>FCVG484</cell>
+</row>
+<row>
+ <cell>Speed Grade</cell>
+ <cell>STD</cell>
+</row>
+<row>
+ <cell>Core Voltage</cell>
+ <cell>1.05V</cell>
+</row>
+<row>
+ <cell>Part Range</cell>
+ <cell>EXT</cell>
+</row>
+<row>
+ <cell>Default I/O technology</cell>
+ <cell>LVCMOS 1.8V</cell>
+</row>
+</table>
+<section><name>Source Files</name></section>
+<table>
+<header>
+</header>
+<row>
+ <cell>Topcell</cell>
+ <cell>MPFS_ICICLE_KIT_BASE_DESIGN</cell>
+</row>
+<row>
+ <cell>Format</cell>
+ <cell>Verilog</cell>
+</row>
+<row>
+ <cell>Source</cell>
+ <cell>~\libero_seedsweep\seed7_vbx201_v250_safety_direct_20260621_1025\synthesis\MPFS_ICICLE_KIT_BASE_DESIGN.vm</cell>
+</row>
+</table>
+<section><name>Options</name></section>
+<table>
+<header>
+</header>
+<row>
+ <cell>Limit the number of high fanout nets to display to</cell>
+ <cell>10</cell>
+</row>
+</table>
+<section><name>Resource Usage</name></section>
+<table>
+<header>
+ <cell>Type</cell>
+ <cell>Used</cell>
+ <cell>Total</cell>
+ <cell>Percentage</cell>
+</header>
+<row>
+ <cell>4LUT</cell>
+ <cell>67837</cell>
+ <cell>254196</cell>
+ <cell>26.69</cell>
+</row>
+<row>
+ <cell>DFF</cell>
+ <cell>66969</cell>
+ <cell>254196</cell>
+ <cell>26.35</cell>
+</row>
+<row>
+ <cell>User I/O</cell>
+ <cell>65</cell>
+ <cell>144</cell>
+ <cell>45.14</cell>
+</row>
+<row>
+ <cell>-- Single-ended I/O</cell>
+ <cell>65</cell>
+ <cell>144</cell>
+ <cell>45.14</cell>
+</row>
+<row>
+ <cell>-- Differential I/O Pairs</cell>
+ <cell>0</cell>
+ <cell>72</cell>
+ <cell>0.00</cell>
+</row>
+<row>
+ <cell>-- I/Os using I/O Registers</cell>
+ <cell>0</cell>
+ <cell>144</cell>
+ <cell>0.00</cell>
+</row>
+<row>
+ <cell>I/O Register Flip-Flops </cell>
+ <cell>0</cell>
+ <cell>432</cell>
+ <cell>0.00</cell>
+</row>
+<row>
+ <cell>-- Input  I/O Flip-Flops </cell>
+ <cell>0</cell>
+ <cell>144</cell>
+ <cell>0.00</cell>
+</row>
+<row>
+ <cell>-- Output I/O Flip-Flops </cell>
+ <cell>0</cell>
+ <cell>144</cell>
+ <cell>0.00</cell>
+</row>
+<row>
+ <cell>-- Enable I/O Flip-Flops </cell>
+ <cell>0</cell>
+ <cell>144</cell>
+ <cell>0.00</cell>
+</row>
+<row>
+ <cell>uSRAM</cell>
+ <cell>419</cell>
+ <cell>2352</cell>
+ <cell>17.81</cell>
+</row>
+<row>
+ <cell>LSRAM</cell>
+ <cell>113</cell>
+ <cell>812</cell>
+ <cell>13.92</cell>
+</row>
+<row>
+ <cell>Math</cell>
+ <cell>109</cell>
+ <cell>784</cell>
+ <cell>13.90</cell>
+</row>
+<row>
+ <cell>H-Chip Global</cell>
+ <cell>13</cell>
+ <cell>48</cell>
+ <cell>27.08</cell>
+</row>
+<row>
+ <cell>PLL</cell>
+ <cell>2</cell>
+ <cell>8</cell>
+ <cell>25.00</cell>
+</row>
+<row>
+ <cell>DLL</cell>
+ <cell>0</cell>
+ <cell>8</cell>
+ <cell>0.00</cell>
+</row>
+<row>
+ <cell>CRN_INT</cell>
+ <cell>2</cell>
+ <cell>24</cell>
+ <cell>8.33</cell>
+</row>
+<row>
+ <cell>INIT</cell>
+ <cell>1</cell>
+ <cell>1</cell>
+ <cell>100.00</cell>
+</row>
+<row>
+ <cell>OSC_RC160MHZ</cell>
+ <cell>1</cell>
+ <cell>1</cell>
+ <cell>100.00</cell>
+</row>
+<row>
+ <cell>DRI</cell>
+ <cell>1</cell>
+ <cell>1</cell>
+ <cell>100.00</cell>
+</row>
+<row>
+ <cell>Transceiver Lanes</cell>
+ <cell>4</cell>
+ <cell>4</cell>
+ <cell>100.00</cell>
+</row>
+<row>
+ <cell>Transceiver PCIe</cell>
+ <cell>1</cell>
+ <cell>2</cell>
+ <cell>50.00</cell>
+</row>
+<row>
+ <cell>TX_PLL</cell>
+ <cell>1</cell>
+ <cell>11</cell>
+ <cell>9.09</cell>
+</row>
+<row>
+ <cell>LINK</cell>
+ <cell>1</cell>
+ <cell>10</cell>
+ <cell>10.00</cell>
+</row>
+<row>
+ <cell>XCVR_REF_CLK</cell>
+ <cell>1</cell>
+ <cell>3</cell>
+ <cell>33.33</cell>
+</row>
+<row>
+ <cell>PCIE_COMMON</cell>
+ <cell>1</cell>
+ <cell>1</cell>
+ <cell>100.00</cell>
+</row>
+<row>
+ <cell>ICB_CLKDIV</cell>
+ <cell>1</cell>
+ <cell>24</cell>
+ <cell>4.17</cell>
+</row>
+<row>
+ <cell>ICB_CLKINT</cell>
+ <cell>6</cell>
+ <cell>72</cell>
+ <cell>8.33</cell>
+</row>
+<row>
+ <cell>NGMUX</cell>
+ <cell>1</cell>
+ <cell>12</cell>
+ <cell>8.33</cell>
+</row>
+<row>
+ <cell>ICB_INT</cell>
+ <cell>1</cell>
+ <cell>12</cell>
+ <cell>8.33</cell>
+</row>
+<row>
+ <cell>MSS</cell>
+ <cell>1</cell>
+ <cell>1</cell>
+ <cell>100.00</cell>
+</row>
+<row>
+ <cell>MSS I/O</cell>
+ <cell>103</cell>
+ <cell>136</cell>
+ <cell>75.74</cell>
+</row>
+</table>
+<section><name>Detailed Logic Resource Usage</name></section>
+<table>
+<header>
+ <cell>Type</cell>
+ <cell>4LUT</cell>
+ <cell>DFF</cell>
+</header>
+<row>
+ <cell>Fabric Logic</cell>
+ <cell>54817</cell>
+ <cell>53949</cell>
+</row>
+<row>
+ <cell>uSRAM Interface Logic</cell>
+ <cell>5028</cell>
+ <cell>5028</cell>
+</row>
+<row>
+ <cell>LSRAM Interface Logic</cell>
+ <cell>4068</cell>
+ <cell>4068</cell>
+</row>
+<row>
+ <cell>Math Interface Logic</cell>
+ <cell>3924</cell>
+ <cell>3924</cell>
+</row>
+<row>
+ <cell>Total Used</cell>
+ <cell>67837</cell>
+ <cell>66969</cell>
+</row>
+</table>
+<section><name>Detailed Carry Chains Resource Usage</name></section>
+<table>
+<header>
+</header>
+<row>
+ <cell>Length</cell>
+ <cell>Used</cell>
+</row>
+<row>
+ <cell>3</cell>
+ <cell>5</cell>
+</row>
+<row>
+ <cell>4</cell>
+ <cell>4</cell>
+</row>
+<row>
+ <cell>5</cell>
+ <cell>6</cell>
+</row>
+<row>
+ <cell>6</cell>
+ <cell>22</cell>
+</row>
+<row>
+ <cell>7</cell>
+ <cell>35</cell>
+</row>
+<row>
+ <cell>8</cell>
+ <cell>50</cell>
+</row>
+<row>
+ <cell>9</cell>
+ <cell>33</cell>
+</row>
+<row>
+ <cell>10</cell>
+ <cell>17</cell>
+</row>
+<row>
+ <cell>11</cell>
+ <cell>25</cell>
+</row>
+<row>
+ <cell>12</cell>
+ <cell>20</cell>
+</row>
+<row>
+ <cell>13</cell>
+ <cell>24</cell>
+</row>
+<row>
+ <cell>14</cell>
+ <cell>19</cell>
+</row>
+<row>
+ <cell>15</cell>
+ <cell>26</cell>
+</row>
+<row>
+ <cell>16</cell>
+ <cell>37</cell>
+</row>
+<row>
+ <cell>17</cell>
+ <cell>17</cell>
+</row>
+<row>
+ <cell>18</cell>
+ <cell>70</cell>
+</row>
+<row>
+ <cell>19</cell>
+ <cell>1</cell>
+</row>
+<row>
+ <cell>20</cell>
+ <cell>8</cell>
+</row>
+<row>
+ <cell>21</cell>
+ <cell>9</cell>
+</row>
+<row>
+ <cell>23</cell>
+ <cell>2</cell>
+</row>
+<row>
+ <cell>24</cell>
+ <cell>2</cell>
+</row>
+<row>
+ <cell>25</cell>
+ <cell>5</cell>
+</row>
+<row>
+ <cell>28</cell>
+ <cell>19</cell>
+</row>
+<row>
+ <cell>29</cell>
+ <cell>18</cell>
+</row>
+<row>
+ <cell>30</cell>
+ <cell>2</cell>
+</row>
+<row>
+ <cell>31</cell>
+ <cell>1</cell>
+</row>
+<row>
+ <cell>32</cell>
+ <cell>55</cell>
+</row>
+<row>
+ <cell>33</cell>
+ <cell>26</cell>
+</row>
+<row>
+ <cell>35</cell>
+ <cell>3</cell>
+</row>
+<row>
+ <cell>40</cell>
+ <cell>1</cell>
+</row>
+<row>
+ <cell>45</cell>
+ <cell>4</cell>
+</row>
+<row>
+ <cell>62</cell>
+ <cell>1</cell>
+</row>
+<row>
+ <cell>63</cell>
+ <cell>1</cell>
+</row>
+<row>
+ <cell>Total</cell>
+ <cell>568</cell>
+</row>
+</table>
+<section><name>Detailed 4LUT Groups Resource Usage</name></section>
+<table>
+<header>
+</header>
+<row>
+ <cell>Length</cell>
+ <cell>Used</cell>
+</row>
+<row>
+ <cell>2</cell>
+ <cell>829</cell>
+</row>
+<row>
+ <cell>5</cell>
+ <cell>31</cell>
+</row>
+<row>
+ <cell>10</cell>
+ <cell>8</cell>
+</row>
+<row>
+ <cell>Total</cell>
+ <cell>868</cell>
+</row>
+</table>
+<section><name>Detailed Math Chains Resource Usage</name></section>
+<table>
+<header>
+</header>
+<row>
+ <cell>Length</cell>
+ <cell>Used</cell>
+</row>
+<row>
+ <cell>1</cell>
+ <cell>25</cell>
+</row>
+<row>
+ <cell>2</cell>
+ <cell>32</cell>
+</row>
+<row>
+ <cell>4</cell>
+ <cell>5</cell>
+</row>
+<row>
+ <cell>Total</cell>
+ <cell>62</cell>
+</row>
+</table>
+<section><name>I/O Function</name></section>
+<table>
+<header>
+ <cell>Type</cell>
+ <cell>w/o register</cell>
+ <cell>w/ register</cell>
+ <cell>w/ DDR register</cell>
+</header>
+<row>
+ <cell>Input I/O</cell>
+ <cell>13</cell>
+ <cell>0</cell>
+ <cell>0</cell>
+</row>
+<row>
+ <cell>Output I/O</cell>
+ <cell>27</cell>
+ <cell>0</cell>
+ <cell>0</cell>
+</row>
+<row>
+ <cell>Bidirectional I/O</cell>
+ <cell>25</cell>
+ <cell>0</cell>
+ <cell>0</cell>
+</row>
+<row>
+ <cell>Differential Input I/O Pairs</cell>
+ <cell>0</cell>
+ <cell>0</cell>
+ <cell>0</cell>
+</row>
+<row>
+ <cell>Differential Output I/O Pairs</cell>
+ <cell>0</cell>
+ <cell>0</cell>
+ <cell>0</cell>
+</row>
+</table>
+<section><name>Nets assigned to chip global resources</name></section>
+<table>
+<header>
+ <cell>Fanout</cell>
+ <cell>Type</cell>
+ <cell>Name</cell>
+</header>
+<row>
+ <cell>30886</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1_VBX_ACLK</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/clkint_4/U0_RGB1</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Source: NETLIST</cell>
+</row>
+<row>
+ <cell>10992</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1/Vectorblox_ss_0_aclk_control</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/clkint_0/U0_RGB1</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Source: NETLIST</cell>
+</row>
+<row>
+ <cell>9719</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : CLOCKS_AND_RESETS_FIC_0_CLK</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/clkint_0/U0_RGB1</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Source: NETLIST</cell>
+</row>
+<row>
+ <cell>3717</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1/FIC0_INITIATOR_inst_0/FIC0_INITIATOR_0/sysReset</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/FIC0_INITIATOR_inst_0/FIC0_INITIATOR_0/arst_aclk_sync/sysReset_RNISJ6L2/U0_RGB1</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Source: NETLIST</cell>
+</row>
+<row>
+ <cell>3482</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : CLOCKS_AND_RESETS_FIC_3_CLK</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/clkint_12/U0_RGB1</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Source: NETLIST</cell>
+</row>
+<row>
+ <cell>2274</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : CLOCKS_AND_RESETS_FIC_1_CLK</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/clkint_4/U0_RGB1</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Source: NETLIST</cell>
+</row>
+<row>
+ <cell>2115</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : dff_arst_0</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: CLOCKS_AND_RESETS_inst_0/RESET_FIC_0_CLK/CORERESET_0/dff_15_rep_RNIM0V24[0]/U0_RGB1</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Source: NETLIST</cell>
+</row>
+<row>
+ <cell>1984</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/sysReset</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/arst_aclk_sync/sysReset_RNILUTV1/U0_RGB1</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Source: NETLIST</cell>
+</row>
+<row>
+ <cell>1488</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1/DMA_INITIATOR_inst_0/DMA_INITIATOR_0/sysReset</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/DMA_INITIATOR_inst_0/DMA_INITIATOR_0/arst_aclk_sync/sysReset_RNISKAM4/U0_RGB1</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Source: NETLIST</cell>
+</row>
+<row>
+ <cell>1128</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_1_PERIPHERALS_1/FIC_1_INITIATOR_0/FIC_1_INITIATOR_0/sysReset</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_1_PERIPHERALS_1/FIC_1_INITIATOR_0/FIC_1_INITIATOR_0/arst_aclk_sync/sysReset_RNI06ON6/U0_RGB1</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Source: NETLIST</cell>
+</row>
+<row>
+ <cell>1050</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_1_PERIPHERALS_1/PCIE_INITIATOR_inst_0/PCIE_INITIATOR_0/sysReset</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_1_PERIPHERALS_1/PCIE_INITIATOR_inst_0/PCIE_INITIATOR_0/arst_aclk_sync/sysReset_RNIRK8T2/U0_RGB1</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Source: NETLIST</cell>
+</row>
+<row>
+ <cell>2</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : CLOCKS_AND_RESETS_CLKINT_REF_CLK_50MHz_Y</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: CLOCKS_AND_RESETS_inst_0/CLKINT_REF_CLK_50MHz/U0_RGB1</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Source: NETLIST</cell>
+</row>
+<row>
+ <cell>1</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : CLOCKS_AND_RESETS_PCIe_CLK_125MHz</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: CLOCKS_AND_RESETS_inst_0/GLITCHLESS_MUX_inst_0/GLITCHLESS_MUX_0/I_CLKINT/U0_RGB1</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Source: NETLIST</cell>
+</row>
+</table>
+<section><name>Nets assigned to row global resources</name></section>
+<table>
+<header>
+ <cell>Fanout</cell>
+ <cell>Type</cell>
+ <cell>Name</cell>
+</header>
+</table>
+<section><name>High fanout nets</name></section>
+<table>
+<header>
+ <cell>Fanout</cell>
+ <cell>Type</cell>
+ <cell>Name</cell>
+</header>
+<row>
+ <cell>1286</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : CLOCKS_AND_RESETS_inst_0_RESET_FIC_3_CLK_CORERESET_0_dff</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: CLOCKS_AND_RESETS_inst_0/RESET_FIC_3_CLK/CORERESET_0/dff_15[0]</cell>
+</row>
+<row>
+ <cell>1045</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : CLOCKS_AND_RESETS_inst_0_RESET_FIC_0_CLK_CORERESET_0_dff</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: CLOCKS_AND_RESETS_inst_0/RESET_FIC_0_CLK/CORERESET_0/dff_15[0]</cell>
+</row>
+<row>
+ <cell>732</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_net_1740</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/fia_resetn</cell>
+</row>
+<row>
+ <cell>592</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_net_1742</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/resetn_on_clk_2x_n_fanned_out[6]</cell>
+</row>
+<row>
+ <cell>555</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/output_shifter_last_d_6_Z[0]</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/output_shifter_last_d_6[0]</cell>
+</row>
+<row>
+ <cell>552</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/output_shifter_last_d_1[1]</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/parallel_kernel_gen.7.output_shifter_last_d_1[1]</cell>
+</row>
+<row>
+ <cell>551</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/output_shifter_last_d_3[1]</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/parallel_kernel_gen.7.output_shifter_last_d_3[1]</cell>
+</row>
+<row>
+ <cell>551</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/MSC_net_16323</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/un40_i_a2[4]</cell>
+</row>
+<row>
+ <cell>544</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1/Vectorblox_ss_0/slow_reset_FABRIC_RESET_N</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/slow_reset/CORERESET_PF_C0_0/dff_15[0]</cell>
+</row>
+<row>
+ <cell>537</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/MSC_net_16246</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/MSC_i_141/MSC_i_142/un2_target_valid</cell>
+</row>
+</table>
+<section><name>High fanout nets (through buffer trees)</name></section>
+<table>
+<header>
+ <cell>Fanout</cell>
+ <cell>Type</cell>
+ <cell>Name</cell>
+</header>
+<row>
+ <cell>1286</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : CLOCKS_AND_RESETS_inst_0_RESET_FIC_3_CLK_CORERESET_0_dff</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: CLOCKS_AND_RESETS_inst_0/RESET_FIC_3_CLK/CORERESET_0/dff_15[0]</cell>
+</row>
+<row>
+ <cell>1045</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : CLOCKS_AND_RESETS_inst_0_RESET_FIC_0_CLK_CORERESET_0_dff</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: CLOCKS_AND_RESETS_inst_0/RESET_FIC_0_CLK/CORERESET_0/dff_15[0]</cell>
+</row>
+<row>
+ <cell>732</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_net_1740</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/fia_resetn</cell>
+</row>
+<row>
+ <cell>592</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_net_1742</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/resetn_on_clk_2x_n_fanned_out[6]</cell>
+</row>
+<row>
+ <cell>555</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/output_shifter_last_d_6_Z[0]</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/output_shifter_last_d_6[0]</cell>
+</row>
+<row>
+ <cell>552</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/output_shifter_last_d_1[1]</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/parallel_kernel_gen.7.output_shifter_last_d_1[1]</cell>
+</row>
+<row>
+ <cell>551</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/output_shifter_last_d_3[1]</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/parallel_kernel_gen.7.output_shifter_last_d_3[1]</cell>
+</row>
+<row>
+ <cell>551</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/MSC_net_16323</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/un40_i_a2[4]</cell>
+</row>
+<row>
+ <cell>544</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1/Vectorblox_ss_0/slow_reset_FABRIC_RESET_N</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/slow_reset/CORERESET_PF_C0_0/dff_15[0]</cell>
+</row>
+<row>
+ <cell>537</cell>
+ <cell>INT_NET</cell>
+ <cell>Net   : FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/MSC_net_16246</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell></cell>
+ <cell>Driver: FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/MSC_i_141/MSC_i_142/un2_target_valid</cell>
+</row>
+</table>
+</doc>

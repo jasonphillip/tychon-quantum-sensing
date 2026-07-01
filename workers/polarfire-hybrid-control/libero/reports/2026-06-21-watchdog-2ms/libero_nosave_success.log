@@ -1,0 +1,978 @@
+Console Mode = ==> WATCHDOG_2MS_NOSAVE_START 2026-06-21T16:34:38-0400
+==> open_project ~/libero_seedsweep/seed7_vbx201_v250_2ms_20260621_160037/MPFS_ICICLE_Vectorblox.prjx
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CLK_DIV\CLK_DIV.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CLK_DIV\CLK_DIV_0\CLK_DIV_CLK_DIV_0_PF_CLK_DIV.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\COREI2C_C0\COREI2C_C0.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREI2C\7.2.101\rtl\vlog\core\corei2creal.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREI2C\7.2.101\rtl\vlog\test\user\i2c_spk.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\COREI2C_C0\COREI2C_C0_0\rtl\vlog\core\corei2c.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREI2C\7.2.101\rtl\vlog\test\user\i2c_spk.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\COREI2C_C0\COREI2C_C0_0\rtl\vlog\test\user\tb_user_corei2c.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\COREI2C_C0\COREI2C_C0_0\coreparameters.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\corepwm_C0\corepwm_C0.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\corepwm\4.5.100\rtl\vlog\core\reg_if.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\corepwm\4.5.100\rtl\vlog\core\tach_if.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\corepwm\4.5.100\rtl\vlog\core\pwm_gen.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\corepwm\4.5.100\rtl\vlog\core\timebase.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\corepwm\4.5.100\rtl\vlog\core\corepwm.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\corepwm\4.5.100\coreparameters.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\corepwm\4.5.100\rtl\vlog\test\user\tb_user_corepwm.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CORERESET\CORERESET.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CORERESET\CORERESET_0\core\corereset_pf.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CORERESET\CORERESET_0\test\corereset_pf_tb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CORERESET_PF_C0\CORERESET_PF_C0.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CORERESET_PF_C0\CORERESET_PF_C0_0\core\corereset_pf.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CORERESET_PF_C0\CORERESET_PF_C0_0\test\corereset_pf_tb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CoreUARTapb_C0\CoreUARTapb_C0.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CoreUARTapb_C0\CoreUARTapb_C0_0\rtl\vlog\core\Clock_gen.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CoreUARTapb_C0\CoreUARTapb_C0_0\rtl\vlog\core\Rx_async.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CoreUARTapb_C0\CoreUARTapb_C0_0\rtl\vlog\core\Tx_async.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CoreUARTapb_C0\CoreUARTapb_C0_0\rtl\vlog\core\CoreUART.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CoreUARTapb_C0\CoreUARTapb_C0_0\rtl\vlog\core\CoreUARTapb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CoreUARTapb_C0\CoreUARTapb_C0_0\rtl\vlog\core\fifo_256x8_g5.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CoreUARTapb_C0\CoreUARTapb_C0_0\coreparameters.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CoreUARTapb_C0\CoreUARTapb_C0_0\rtl\vlog\amba_bfm\bfm_ahbl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CoreUARTapb_C0\CoreUARTapb_C0_0\rtl\vlog\amba_bfm\bfm_ahblapb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CoreUARTapb_C0\CoreUARTapb_C0_0\rtl\vlog\amba_bfm\bfm_ahbslave.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CoreUARTapb_C0\CoreUARTapb_C0_0\rtl\vlog\amba_bfm\bfm_ahbslaveext.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CoreUARTapb_C0\CoreUARTapb_C0_0\rtl\vlog\amba_bfm\bfm_ahbtoapb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CoreUARTapb_C0\CoreUARTapb_C0_0\rtl\vlog\amba_bfm\bfm_apb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CoreUARTapb_C0\CoreUARTapb_C0_0\rtl\vlog\amba_bfm\bfm_apbslave.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CoreUARTapb_C0\CoreUARTapb_C0_0\rtl\vlog\amba_bfm\bfm_apbslaveext.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CoreUARTapb_C0\CoreUARTapb_C0_0\rtl\vlog\amba_bfm\bfm_apbtoapb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CoreUARTapb_C0\CoreUARTapb_C0_0\rtl\vlog\amba_bfm\bfm_main.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CoreUARTapb_C0\CoreUARTapb_C0_0\rtl\vlog\test\user\testbench.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\core_vectorblox_C0\core_vectorblox_C0.vhd'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Microchip\SolutionCore\core_vectorblox\2.0.1\rtl\vhdl\encrypted.vhd'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\DMA_CONTROLLER\DMA_CONTROLLER.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_axi4_lite_slave_ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_axi4_master_ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_axi4_stream_slave_ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_buffer_descriptors.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_cache.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_control_registers.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_ctrl_if_mux_cdc.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_dma_controller.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_dma_start_ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_dma_tran_ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_dscrptr_src_mux.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_ext_dscrptr_fetch_fsm.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_fixed_priority_arbiter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_int_controller_fifo.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_int_error_ctrl_fsm.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_int_ext_dscrptr_cache.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_int_status_mux.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_int_x_ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_ram_1k20_wrapper.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_rd_tran_ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_rd_tran_queue.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_round_robin_arbiter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_round_robin_arbiter_w_ack.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_trans_ack.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_wr_tran_ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_wr_tran_queue.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\coreaxi4dmacontroller_firmware_driver_model.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\coreaxi4dmacontroller_application.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_master.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_stream_master.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_stream_master_application.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_slave_ram.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_to_axi4_lite_bridge.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_interconnect_readAddressChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_interconnect_readDataChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_interconnect_writeAddressChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_interconnect_writeDataChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_interconnect_writeResponseChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_interconnect.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\DMA_CONTROLLER\DMA_CONTROLLER_0\rtl\vlog\core_obfuscated\coreaxi4dmacontroller.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\DMA_CONTROLLER\DMA_CONTROLLER_0\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_dma_arbiter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\DMA_CONTROLLER\DMA_CONTROLLER_0\rtl\vlog\core_obfuscated\coreaxi4dmacontroller_int_controller.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\DMA_CONTROLLER\DMA_CONTROLLER_0\coreparameters.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\coreaxi4dmacontroller_firmware_driver_model.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\coreaxi4dmacontroller_application.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_master.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_stream_master.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_stream_master_application.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_slave_ram.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_to_axi4_lite_bridge.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_interconnect_readAddressChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_interconnect_readDataChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_interconnect_writeAddressChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_interconnect_writeDataChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_interconnect_writeResponseChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4DMACONTROLLER\2.0.100\rtl\vlog\test\axi4_interconnect.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\DMA_CONTROLLER\DMA_CONTROLLER_0\rtl\vlog\test\coreaxi4dmacontroller_testbench.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\DMA_INITIATOR\DMA_INITIATOR.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MasterConvertor.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MstrProtocolConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\RegisterSlice.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\RegSliceFull.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlaveConvertor.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvAxi4ProtConvRead.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvAxi4ProtConvWrite.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvAxi4ProtocolConv.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvDataWidthConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvProtocolConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\AddressController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\Axi4CrossBar.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\BitScan0.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\DependenceChecker.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\DERR_Slave.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\DualPort_FF_SyncWr_SyncRd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\DualPort_Ram_SyncWr_SyncRd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\FifoDualPort.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\MasterControl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RDataController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RdFifoDualPort.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\ReadDataController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\ReadDataMux.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RequestQual.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\ResetSycnc.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RespController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RoundRobinArb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\SlaveDataMuxController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\TargetMuxController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\TransactionController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\WDataController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\WriteDataMux.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\CoreAxi4Interconnect.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MstrDataWidthConv.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\Revision.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\AHB_SM_Undefburst.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MstrAHBtoAXI4Converter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\FIFO.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\FIFO_CTRL.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\RAM_BLOCK.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\UpConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DownConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_CmdFifoWriteCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_readWidthConv.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_widthConvrd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_widthConvwr.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_writeWidthConv.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_AChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_BChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_RChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_RChan_Ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_WChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_WChan_ReadDataFifoCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_Wchan_WriteDataFifoCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\FIFO_downsizing.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\FIFO_upsizing.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_Hold_Reg_Rd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_Hold_Reg_Wr.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\Hold_Reg_Ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\MasterAddressDecoder.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\Bin2Gray.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\CDC_FIFO.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\CDC_grayCodeCounter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\CDC_rdCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\CDC_wrCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MstrClockDomainCrossing.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvClockDomainCrossing.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\byte2bit.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_preCalcCmdFifoWrCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_preCalcAChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_preCalcRChan_Ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_WChan_Hold_Reg.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvAxi4ProtConvAXI4ID.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_brespCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_RChannel_SlvRid_Arb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AHBModel\AHBL_Master.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AXI4Models\Axi4MasterGen.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AXI4Models\Axi4SlaveGen.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AXI4Models\AxiMaster.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\testbench.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AXI4Models\DualPort_Ram_SyncWr_ASyncRd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\FIC0_INITIATOR\FIC0_INITIATOR.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MasterConvertor.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MstrProtocolConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\RegisterSlice.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\RegSliceFull.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlaveConvertor.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvAxi4ProtConvRead.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvAxi4ProtConvWrite.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvAxi4ProtocolConv.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvDataWidthConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvProtocolConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\AddressController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\Axi4CrossBar.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\BitScan0.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\DependenceChecker.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\DERR_Slave.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\DualPort_FF_SyncWr_SyncRd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\DualPort_Ram_SyncWr_SyncRd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\FifoDualPort.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\MasterControl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RDataController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RdFifoDualPort.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\ReadDataController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\ReadDataMux.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RequestQual.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\ResetSycnc.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RespController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RoundRobinArb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\SlaveDataMuxController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\TargetMuxController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\TransactionController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\WDataController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\WriteDataMux.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\CoreAxi4Interconnect.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MstrDataWidthConv.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\Revision.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\AHB_SM_Undefburst.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MstrAHBtoAXI4Converter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\FIFO.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\FIFO_CTRL.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\RAM_BLOCK.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\UpConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DownConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_CmdFifoWriteCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_readWidthConv.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_widthConvrd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_widthConvwr.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_writeWidthConv.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_AChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_BChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_RChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_RChan_Ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_WChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_WChan_ReadDataFifoCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_Wchan_WriteDataFifoCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\FIFO_downsizing.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\FIFO_upsizing.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_Hold_Reg_Rd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_Hold_Reg_Wr.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\Hold_Reg_Ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\MasterAddressDecoder.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\Bin2Gray.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\CDC_FIFO.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\CDC_grayCodeCounter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\CDC_rdCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\CDC_wrCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MstrClockDomainCrossing.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvClockDomainCrossing.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\byte2bit.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_preCalcCmdFifoWrCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_preCalcAChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_preCalcRChan_Ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_WChan_Hold_Reg.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvAxi4ProtConvAXI4ID.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_brespCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_RChannel_SlvRid_Arb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AHBModel\AHBL_Master.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AXI4Models\Axi4MasterGen.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AXI4Models\Axi4SlaveGen.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AXI4Models\AxiMaster.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\testbench.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AXI4Models\DualPort_Ram_SyncWr_ASyncRd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\FIC_1_INITIATOR\FIC_1_INITIATOR.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MasterConvertor.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MstrProtocolConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\RegisterSlice.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\RegSliceFull.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlaveConvertor.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvAxi4ProtConvRead.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvAxi4ProtConvWrite.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvAxi4ProtocolConv.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvDataWidthConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvProtocolConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\AddressController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\Axi4CrossBar.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\BitScan0.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\DependenceChecker.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\DERR_Slave.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\DualPort_FF_SyncWr_SyncRd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\DualPort_Ram_SyncWr_SyncRd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\FifoDualPort.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\MasterControl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RDataController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RdFifoDualPort.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\ReadDataController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\ReadDataMux.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RequestQual.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\ResetSycnc.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RespController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RoundRobinArb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\SlaveDataMuxController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\TargetMuxController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\TransactionController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\WDataController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\WriteDataMux.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\CoreAxi4Interconnect.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MstrDataWidthConv.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\Revision.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\AHB_SM_Undefburst.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MstrAHBtoAXI4Converter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\FIFO.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\FIFO_CTRL.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\RAM_BLOCK.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\UpConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DownConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_CmdFifoWriteCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_readWidthConv.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_widthConvrd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_widthConvwr.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_writeWidthConv.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_AChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_BChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_RChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_RChan_Ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_WChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_WChan_ReadDataFifoCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_Wchan_WriteDataFifoCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\FIFO_downsizing.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\FIFO_upsizing.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_Hold_Reg_Rd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_Hold_Reg_Wr.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\Hold_Reg_Ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\MasterAddressDecoder.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\Bin2Gray.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\CDC_FIFO.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\CDC_grayCodeCounter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\CDC_rdCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\CDC_wrCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MstrClockDomainCrossing.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvClockDomainCrossing.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\byte2bit.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_preCalcCmdFifoWrCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_preCalcAChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_preCalcRChan_Ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_WChan_Hold_Reg.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvAxi4ProtConvAXI4ID.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_brespCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_RChannel_SlvRid_Arb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AHBModel\AHBL_Master.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AXI4Models\Axi4MasterGen.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AXI4Models\Axi4SlaveGen.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AXI4Models\AxiMaster.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\testbench.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AXI4Models\DualPort_Ram_SyncWr_ASyncRd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\FIC_3_0x4000_0xxx\FIC_3_0x4000_0xxx.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\core\coreapb3.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\core\coreapb3_muxptob3.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\core\coreapb3_iaddr_reg.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\coreparameters.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\amba_bfm\bfm_main.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\amba_bfm\bfm_ahbtoapb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\amba_bfm\bfm_apb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\amba_bfm\bfm_apbslaveext.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\amba_bfm\bfm_apbslave.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\test\user\testbench.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\FIC_3_0x4FFF_Fxxx\FIC_3_0x4FFF_Fxxx.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\core\coreapb3.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\core\coreapb3_muxptob3.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\core\coreapb3_iaddr_reg.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\coreparameters.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\amba_bfm\bfm_main.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\amba_bfm\bfm_ahbtoapb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\amba_bfm\bfm_apb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\amba_bfm\bfm_apbslaveext.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\amba_bfm\bfm_apbslave.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\test\user\testbench.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\FIC_3_0x4xxx_xxxx\FIC_3_0x4xxx_xxxx.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\core\coreapb3.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\core\coreapb3_muxptob3.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\core\coreapb3_iaddr_reg.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\coreparameters.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\amba_bfm\bfm_main.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\amba_bfm\bfm_ahbtoapb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\amba_bfm\bfm_apb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\amba_bfm\bfm_apbslaveext.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\amba_bfm\bfm_apbslave.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\test\user\testbench.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\GLITCHLESS_MUX\GLITCHLESS_MUX.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\GLITCHLESS_MUX\GLITCHLESS_MUX_0\GLITCHLESS_MUX_GLITCHLESS_MUX_0_PF_NGMUX.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\SgCore\PF_NGMUX\1.0.101\ICB_NGMUX_syn_comps.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\GPIO\GPIO.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\GPIO\GPIO_0\rtl\vlog\core\coregpio.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\GPIO\GPIO_0\rtl\vlog\amba_bfm\bfm_ahbl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\GPIO\GPIO_0\rtl\vlog\amba_bfm\bfm_ahblapb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\GPIO\GPIO_0\rtl\vlog\amba_bfm\bfm_ahbslave.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\GPIO\GPIO_0\rtl\vlog\amba_bfm\bfm_ahbslaveext.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\GPIO\GPIO_0\rtl\vlog\amba_bfm\bfm_ahbtoapb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\GPIO\GPIO_0\rtl\vlog\amba_bfm\bfm_apb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\GPIO\GPIO_0\rtl\vlog\amba_bfm\bfm_apbslave.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\GPIO\GPIO_0\rtl\vlog\amba_bfm\bfm_apbslaveext.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\GPIO\GPIO_0\rtl\vlog\amba_bfm\bfm_apbtoapb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\GPIO\GPIO_0\rtl\vlog\amba_bfm\bfm_main.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\GPIO\GPIO_0\coreparameters.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\GPIO\GPIO_0\rtl\vlog\test\user\testbench.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\ICICLE_MSS\ICICLE_MSS.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\ICICLE_MSS\MSS_NOBYP_NOBYP_NOBYP_BYP_BYP_syn_comps.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\IHC_APB\IHC_APB.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\core\coreapb3.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\core\coreapb3_muxptob3.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\core\coreapb3_iaddr_reg.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\coreparameters.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\amba_bfm\bfm_main.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\amba_bfm\bfm_ahbtoapb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\amba_bfm\bfm_apb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\amba_bfm\bfm_apbslaveext.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\amba_bfm\bfm_apbslave.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\CoreAPB3\4.2.100\rtl\vlog\test\user\testbench.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\INIT_MONITOR\INIT_MONITOR.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\INIT_MONITOR\INIT_MONITOR_0\INIT_MONITOR_INIT_MONITOR_0_PFSOC_INIT_MONITOR.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\MSS_LSRAM\MSS_LSRAM.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\MSS_LSRAM\COREAXI4SRAM_0\rtl\vlog\core\CoreAXI4SRAM.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\MSS_LSRAM\COREAXI4SRAM_0\rtl\vlog\core\CoreAXI4SRAM_MAINCTRL.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\MSS_LSRAM\COREAXI4SRAM_0\rtl\vlog\core\CoreAXI4SRAM_MAINCTRL_RT.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\MSS_LSRAM\COREAXI4SRAM_0\rtl\vlog\core\CoreAXI4SRAM_MAINCTRL_ECC.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\MSS_LSRAM\COREAXI4SRAM_0\rtl\vlog\core\CoreAXI4SRAM_MAINCTRL_ECC_RT.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\MSS_LSRAM\COREAXI4SRAM_0\rtl\vlog\core\CoreAXI4SRAM_SLVIF.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\MSS_LSRAM\PF_TPSRAM_AHB_AXI_0\MSS_LSRAM_PF_TPSRAM_AHB_AXI_0_PF_TPSRAM.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\OSCILLATOR_160MHz\OSCILLATOR_160MHz.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\OSCILLATOR_160MHz\OSCILLATOR_160MHz_0\OSCILLATOR_160MHz_OSCILLATOR_160MHz_0_PF_OSC.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\PCIE_INITIATOR\PCIE_INITIATOR.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MasterConvertor.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MstrProtocolConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\RegisterSlice.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\RegSliceFull.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlaveConvertor.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvAxi4ProtConvRead.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvAxi4ProtConvWrite.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvAxi4ProtocolConv.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvDataWidthConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvProtocolConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\AddressController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\Axi4CrossBar.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\BitScan0.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\DependenceChecker.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\DERR_Slave.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\DualPort_FF_SyncWr_SyncRd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\DualPort_Ram_SyncWr_SyncRd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\FifoDualPort.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\MasterControl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RDataController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RdFifoDualPort.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\ReadDataController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\ReadDataMux.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RequestQual.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\ResetSycnc.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RespController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RoundRobinArb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\SlaveDataMuxController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\TargetMuxController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\TransactionController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\WDataController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\WriteDataMux.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\CoreAxi4Interconnect.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MstrDataWidthConv.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\Revision.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\AHB_SM_Undefburst.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MstrAHBtoAXI4Converter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\FIFO.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\FIFO_CTRL.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\RAM_BLOCK.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\UpConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DownConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_CmdFifoWriteCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_readWidthConv.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_widthConvrd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_widthConvwr.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_writeWidthConv.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_AChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_BChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_RChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_RChan_Ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_WChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_WChan_ReadDataFifoCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_Wchan_WriteDataFifoCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\FIFO_downsizing.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\FIFO_upsizing.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_Hold_Reg_Rd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_Hold_Reg_Wr.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\Hold_Reg_Ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\MasterAddressDecoder.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\Bin2Gray.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\CDC_FIFO.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\CDC_grayCodeCounter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\CDC_rdCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\CDC_wrCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MstrClockDomainCrossing.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvClockDomainCrossing.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\byte2bit.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_preCalcCmdFifoWrCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_preCalcAChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_preCalcRChan_Ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_WChan_Hold_Reg.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvAxi4ProtConvAXI4ID.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_brespCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_RChannel_SlvRid_Arb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AHBModel\AHBL_Master.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AXI4Models\Axi4MasterGen.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AXI4Models\Axi4SlaveGen.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AXI4Models\AxiMaster.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\testbench.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AXI4Models\DualPort_Ram_SyncWr_ASyncRd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\PCIE_REF_CLK\PCIE_REF_CLK.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\PCIE_REF_CLK\PCIE_REF_CLK_0\PCIE_REF_CLK_PCIE_REF_CLK_0_PF_XCVR_REF_CLK.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\PF_CCC_C0\PF_CCC_C0.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\PF_CCC_C0\PF_CCC_C0_0\PF_CCC_C0_PF_CCC_C0_0_PF_CCC.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\PF_CCC_C1\PF_CCC_C1.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\PF_CCC_C1\PF_CCC_C1_0\PF_CCC_C1_PF_CCC_C1_0_PF_CCC.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\PF_PCIE_C0\PF_PCIE_C0.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\PF_PCIE_C0\PF_PCIE_C0_0\PF_PCIE_C0_PF_PCIE_C0_0_PF_PCIE.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\SgCore\PF_PCIE\2.0.121\g5_apblink_master.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\RECONFIGURATION_INTERFACE\RECONFIGURATION_INTERFACE.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\RECONFIGURATION_INTERFACE\RECONFIGURATION_INTERFACE_0\RECONFIGURATION_INTERFACE_RECONFIGURATION_INTERFACE_0_PF_DRI.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\TRANSMIT_PLL\TRANSMIT_PLL.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\TRANSMIT_PLL\TRANSMIT_PLL_0\TRANSMIT_PLL_TRANSMIT_PLL_0_PF_TX_PLL.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\vectorblox_axi_resize\vectorblox_axi_resize.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MasterConvertor.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MstrProtocolConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\RegisterSlice.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\RegSliceFull.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlaveConvertor.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvAxi4ProtConvRead.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvAxi4ProtConvWrite.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvAxi4ProtocolConv.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvDataWidthConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvProtocolConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\AddressController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\Axi4CrossBar.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\BitScan0.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\DependenceChecker.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\DERR_Slave.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\DualPort_FF_SyncWr_SyncRd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\DualPort_Ram_SyncWr_SyncRd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\FifoDualPort.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\MasterControl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RDataController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RdFifoDualPort.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\ReadDataController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\ReadDataMux.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RequestQual.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\ResetSycnc.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RespController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\RoundRobinArb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\SlaveDataMuxController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\TargetMuxController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\TransactionController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\WDataController.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\WriteDataMux.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\CoreAxi4Interconnect.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MstrDataWidthConv.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\Revision.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\AHB_SM_Undefburst.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MstrAHBtoAXI4Converter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\FIFO.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\FIFO_CTRL.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\RAM_BLOCK.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\UpConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DownConverter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_CmdFifoWriteCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_readWidthConv.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_widthConvrd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_widthConvwr.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_writeWidthConv.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_AChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_BChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_RChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_RChan_Ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_WChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_WChan_ReadDataFifoCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_Wchan_WriteDataFifoCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\FIFO_downsizing.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\FIFO_upsizing.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_Hold_Reg_Rd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_Hold_Reg_Wr.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\Hold_Reg_Ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4CrossBar\MasterAddressDecoder.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\Bin2Gray.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\CDC_FIFO.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\CDC_grayCodeCounter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\CDC_rdCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\CDC_wrCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\MstrClockDomainCrossing.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvClockDomainCrossing.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\byte2bit.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_DownConv_preCalcCmdFifoWrCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_preCalcAChannel.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_preCalcRChan_Ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_WChan_Hold_Reg.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\SlvAxi4ProtConvAXI4ID.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_brespCtrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\core\Axi4Convertors\DWC_UpConv_RChannel_SlvRid_Arb.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AHBModel\AHBL_Master.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AXI4Models\Axi4MasterGen.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AXI4Models\Axi4SlaveGen.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AXI4Models\AxiMaster.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\testbench.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\Actel\DirectCore\COREAXI4INTERCONNECT\2.9.100\rtl\vlog\test\user\AXI4Models\DualPort_Ram_SyncWr_ASyncRd.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CLOCKS_AND_RESETS\CLOCKS_AND_RESETS.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CORE_I2C_C0_0_WRAPPER\CORE_I2C_C0_0_WRAPPER.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\FIC_0_PERIPHERALS\FIC_0_PERIPHERALS.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\FIC_1_PERIPHERALS\FIC_1_PERIPHERALS.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\FIC_3_ADDRESS_GENERATION\FIC_3_ADDRESS_GENERATION.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\FIC_3_PERIPHERALS\FIC_3_PERIPHERALS.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\IHC_SUBSYSTEM\IHC_SUBSYSTEM.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\MSS_WRAPPER\MSS_WRAPPER.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\Vectorblox_ss\Vectorblox_ss.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CLOCKS_AND_RESETS\CLOCKS_AND_RESETS.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\CORE_I2C_C0_0_WRAPPER\CORE_I2C_C0_0_WRAPPER.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\FIC_0_PERIPHERALS\FIC_0_PERIPHERALS.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\FIC_1_PERIPHERALS\FIC_1_PERIPHERALS.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\FIC_3_ADDRESS_GENERATION\FIC_3_ADDRESS_GENERATION.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\FIC_3_PERIPHERALS\FIC_3_PERIPHERALS.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\IHC_SUBSYSTEM\IHC_SUBSYSTEM.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\MSS_WRAPPER\MSS_WRAPPER.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\component\work\Vectorblox_ss\Vectorblox_ss.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\hdl\apb_arbiter.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\hdl\APB_PASS_THROUGH.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\hdl\AXI4_address_shim.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\hdl\axi4_demux2.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\hdl\fabric_sd_emmc_demux_select.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\hdl\miv_ihcc.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\hdl\miv_ihcc_ctrl.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\hdl\miv_ihcc_irqs.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\hdl\miv_ihcc_mem.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\hdl\miv_ihcia.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\hdl\pid_csr_axi4_wrap.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\hdl\pid_csr_block.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\hdl\pid_io_block.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\hdl\pid_subsystem.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\hdl\vbx_pulse_gen.v'.
+Reading file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\hdl\watchdog_timer.v'.
+Reading file '~\dev\projects\tychon-polarfire-control\hls\hls_output\rtl\nv_pid_top_nv_pid_top.v'.
+Warning:  The synthesis profile 'Synplify Pro ME' has been activated; the attributes for this Profile have changed since you last opened this project.
+The MPFS_ICICLE_Vectorblox project was opened.
+==> state SYNTHESIZE = Tool inputs are out of date
+==> state PLACEROUTE = Tool has not run yet
+==> state VERIFYTIMING = Tool has not run yet
+==> state GENERATEPROGRAMMINGDATA = Tool has not run yet
+==> state EXPORTPROGRAMMINGJOB = Tool has not run yet
+==> run_tool SYNTHESIZE 2026-06-21T16:34:58-0400
+
+Info: Active implementation is 'synthesis'
+Starting Synplify Pro ME...
+Info: [127205813]:  CMPPF_149: Added 'ADLIB:ICB_CLKINT' instance type before pin 'CLOCKS_AND_RESETS_inst_0/GLITCHLESS_MUX_inst_0/GLITCHLESS_MUX_0/I_CLKINT:A'.
+Info: [127205813]:  CMPPF_149: Added 'ADLIB:ICB_INT' instance type before pin 'CLOCKS_AND_RESETS_inst_0/GLITCHLESS_MUX_inst_0/GLITCHLESS_MUX_0/I_NGMUX:CLK1'.
+Info: [127205813]:  CMPPF_149: Added 'ADLIB:ICB_CLKINT' instance type before pin 'FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/clkint_0:A'.
+Info: [127205813]:  CMPPF_149: Added 'ADLIB:ICB_CLKINT' instance type before pin 'FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/clkint_4:A'.
+Info: [127205813]:  CMPPF_149: Added 'ADLIB:CRN_INT' instance type before pin 'FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/pll_inst_0:REF_CLK_0'.
+Info: [127205813]:  CMPPF_149: Added 'ADLIB:ICB_CLKINT' instance type before pin 'CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/clkint_0:A'.
+Info: [127205813]:  CMPPF_149: Added 'ADLIB:ICB_CLKINT' instance type before pin 'CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/clkint_4:A'.
+Info: [127205813]:  CMPPF_149: Added 'ADLIB:ICB_CLKINT' instance type before pin 'CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/clkint_12:A'.
+Info: [127205813]:  CMPPF_149: Added 'ADLIB:CRN_INT' instance type before pin 'CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0:REF_CLK_0'.
+
+===============================================================================.
+
+Info: Global design data: 
+      Total globals:                       13 
+      Globals that cannot be demoted:      6 
+      Globals considered for demotion:     7 
+
+
+Info: List of globals that cannot be demoted: 
+    CLK    ASYN   DATA   Instance Name 
+    ---    ----   ----   ------------- 
+    30886  0      0      'FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/clkint_4' 
+    10992  0      0      'FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/clkint_0' 
+    9720   0      0      'CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/clkint_0' 
+    3482   0      0      'CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/clkint_12' 
+    2274   0      0      'CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/clkint_4' 
+    1      0      0      'CLOCKS_AND_RESETS_inst_0/GLITCHLESS_MUX_inst_0/GLITCHLESS_MUX_0/I_CLKINT' 
+
+Info: List of globals considered for demotion: 
+    CLK    ASYN   DATA   Instance Name 
+    ---    ----   ----   ------------- 
+    0      3717   0      'FIC_0_PERIPHERALS_1/FIC0_INITIATOR_inst_0/FIC0_INITIATOR_0/arst_aclk_sync/sysReset_RNISJ6L2' 
+    0      2115   0      'CLOCKS_AND_RESETS_inst_0/RESET_FIC_0_CLK/CORERESET_0/dff_15_rep_RNIM0V24[0]' 
+    0      1984   0      'FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/arst_aclk_sync/sysReset_RNILUTV1' 
+    0      1488   0      'FIC_0_PERIPHERALS_1/DMA_INITIATOR_inst_0/DMA_INITIATOR_0/arst_aclk_sync/sysReset_RNISKAM4' 
+    0      1128   0      'FIC_1_PERIPHERALS_1/FIC_1_INITIATOR_0/FIC_1_INITIATOR_0/arst_aclk_sync/sysReset_RNI06ON6' 
+    0      1050   0      'FIC_1_PERIPHERALS_1/PCIE_INITIATOR_inst_0/PCIE_INITIATOR_0/arst_aclk_sync/sysReset_RNIRK8T2' 
+    0      0      2      'CLOCKS_AND_RESETS_inst_0/CLKINT_REF_CLK_50MHz' 
+
+Info: Demotion information: 
+Info: [127205381]:  CMPPF_302: Added 0 row global instances.
+Info: [127205382]:  CMPPF_303: Deleted 0 global instances.
+
+===============================================================================.
+
+Synthesis completed.
+==> STAGE_OK SYNTHESIZE 2026-06-21T16:47:43-0400
+==> run_tool PLACEROUTE 2026-06-21T16:47:43-0400
+----- Evaluating Initial State -------
+Info: Repair min-delay = ON
+
+----- Iteration 1 of 20 -----
+Info: Multi-Pass: Seed:   31
+
+INFO: Reading User SDC file ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\constraint\MPFS_ICICLE_KIT_BASE_DESIGN_derived_constraints.sdc.
+INFO: Reading User SDC file ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\constraint\fic_clocks.sdc.
+
+No errors or warnings found.
+INFO: The option "Abort flow if errors are found in PDC" is turned ON in Project Settings> Design flow page. The Place & Route tool will fail if errors are found in associated PDC files. Please uncheck the option to ignore the errors and continue running the tool
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+***** Place and Route Configurations *****
+Timing-driven            : ON
+Power-driven             : OFF
+I/O Register Combining   : OFF
+Global Pins Demotion     : ON
+Driver Replication       : ON
+High-effort              : ON
+Repair min-delay         : OFF
+Incremental              : OFF
+Inter-clock optimization : ON
+
+INFO: Reading User PDC file ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\constraint\io\ICICLE.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\constraint\io\ICICLE_CAN0.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\constraint\io\ICICLE_MAC.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\constraint\io\ICICLE_MIKROBUS.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\constraint\io\ICICLE_MMUART0.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\constraint\io\ICICLE_MMUART1.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\constraint\io\ICICLE_MMUART2.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\constraint\io\ICICLE_MMUART3.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\constraint\io\ICICLE_PCIE.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\constraint\io\ICICLE_USB.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\constraint\io\ICICLE_SDIO.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\constraint\io\ICICLE_RPi.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\constraint\fp\NW_PLL.pdc. 0 error(s) and 0 warning(s)
+
+ Running Timing based Global Demotion. 
+        Moved all 1984 async pins from global to its source 'FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/arst_aclk_sync/sysReset'.
+
+ Timing based Global Demotion completed successfully. 
+
+Running the I/O Bank and Globals Assigner.
+Info:  I/O Bank and Globals Assigner identified 75 fixed I/O macros, 0 unfixed I/O macros
+Info:  I/O Bank and Globals Assigner identified bank 'Bank0' as being fixed at VCCI:1.80V VCCR:n/a
+Info:  I/O Bank and Globals Assigner identified bank 'Bank1' as being fixed at VCCI:3.30V VCCR:n/a
+Info:  I/O Bank and Globals Assigner detected (2) out of (5) I/O Bank(s) with locked I/O technologies.
+
+I/O Bank and Globals Assigner completed successfully.
+Total time spent in I/O Bank and Globals Assigner: 5 seconds
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+
+Placer V5.0 - 2025.2.0 
+Design: MPFS_ICICLE_KIT_BASE_DESIGN     Started: Sun Jun 21 16:49:43 2026
+
+Initializing High-Effort Timing-Driven Placement ...
+Logic optimization identified and removed 405 redundant LUTs
+Clustering ...
+Placing ...
+Improving placement ...
+==== Registers Duplicated ====
+1  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_32/MSC_i_33/to_memory_read_address_target_address[7] duplicated 1 time. NumSink = 5
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_32/MSC_i_33/to_memory_read_address_target_address[7]__DUP6121978 . NumSink = 6
+2  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_32/shaping_address_d_1_ret_31 duplicated 1 time. NumSink = 1
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_32/shaping_address_d_1_ret_31__DUP6122414 . NumSink = 15
+3  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/MSC_i_141/MSC_i_142/initiator_valid duplicated 1 time. NumSink = 3
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_137/MSC_i_141/MSC_i_142/initiator_valid__DUP6121891 . NumSink = 2
+4  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_67/MSC_i_68/MSC_i_69/shifter_valid[0] duplicated 1 time. NumSink = 1
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_67/MSC_i_68/MSC_i_69/shifter_valid[0]__DUP6121878 . NumSink = 4
+5  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_119/MSC_i_120/MSC_i_123/read_initiator_valid duplicated 2 times. NumSink = 33
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_119/MSC_i_120/MSC_i_123/read_initiator_valid__DUP6122013 . NumSink = 19
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_119/MSC_i_120/MSC_i_123/read_initiator_valid__DUP6122772 . NumSink = 42
+6  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_32/MSC_i_33/to_memory_read_address_target_address[6] duplicated 1 time. NumSink = 6
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_32/MSC_i_33/to_memory_read_address_target_address[6]__DUP6121909 . NumSink = 5
+7  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_32/shaping_address_d_1_ret_15 duplicated 1 time. NumSink = 2
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_10/MSC_i_32/shaping_address_d_1_ret_15__DUP6122261 . NumSink = 1
+End of placement.
+
+Placer Runtime Summary   :
+Logic Optimization       : 36 seconds
+Clustering (1 pass)      : 51 seconds
+Placement                : 101 seconds
+Improvement              : 253 seconds
+Physical Optimization    : 83 seconds
+
+Placer completed successfully.
+
+Design: MPFS_ICICLE_KIT_BASE_DESIGN     
+Finished: Sun Jun 21 16:59:41 2026
+Total CPU Time:     00:12:54            Total Elapsed Time: 00:09:58
+Total Memory Usage: 4214.0 Mbytes
+                        o - o - o - o - o - o
+
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+
+Router 
+Design: ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGNStarted: Sun Jun 21 17:00:21 2026
+
+@
+
+Router completed successfully.
+
+Design: ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN
+Finished: Sun Jun 21 17:02:13 2026
+Total CPU Time:     00:02:27            Total Elapsed Time: 00:01:52
+Total Memory Usage: 4813.0 Mbytes
+                        o - o - o - o - o - o
+
+Resource Usage
++---------------------------+-------+--------+------------+
+| Type                      | Used  | Total  | Percentage |
++---------------------------+-------+--------+------------+
+| 4LUT                      | 67449 | 254196 | 26.53      |
+| DFF                       | 66978 | 254196 | 26.35      |
+| Logic Element             | 85495 | 254196 | 33.63      |
+| I/Os using I/O Registers  | 0     | 144    | 0.00       |
+| I/O Register Flip-Flops   | 0     | 432    | 0.00       |
+| -- Input  I/O Flip-Flops  | 0     | 144    | 0.00       |
+| -- Output I/O Flip-Flops  | 0     | 144    | 0.00       |
+| -- Enable I/O Flip-Flops  | 0     | 144    | 0.00       |
++---------------------------+-------+--------+------------+
+
+I/O Placement
++--------+-------+------------+
+| Type   | Count | Percentage |
++--------+-------+------------+
+| Locked |  65   | 100.00%    |
+| Placed |  0    | 0.00%      |
++--------+-------+------------+
+
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+Completed writing pin report files.
+Place and Route Elapsed Time: 14.92 minutes.
+No errors or warnings found.
+Verify Timing Elapsed Time: 172.8758 seconds.
+Info: Timing constraints have been met.
+
+Info: Multi-Pass: Iteration 1, Seed Index 32,  Worst Slack = 1.006
+
+
+Info: Multi-Pass: Have met stopping criterion (all timing constraints have been met), so ceasing iterations.
+
+Cleaning tool 'Place and Route'...
+Deleting '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN_layout_combinational_loops.xml'
+Deleting '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN_place_and_route_constraint_coverage.xml'
+Deleting '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN_pinrpt_name.rpt'
+Deleting '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN_pinrpt_number.rpt'
+Deleting '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN_pinrpt_boardlayout.csv'
+Deleting '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN_pinrpt_boardlayout.xml'
+Deleting '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN_bankrpt.rpt'
+Deleting '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN_delayinstance.rpt'
+Deleting '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN_layout_ioff.xml'
+INFO: Reading User SDC file ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\constraint\MPFS_ICICLE_KIT_BASE_DESIGN_derived_constraints.sdc.
+INFO: Reading User SDC file ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\constraint\fic_clocks.sdc.
+
+No errors or warnings found.
+INFO: The option "Abort flow if errors are found in PDC" is turned ON in Project Settings> Design flow page. The Place & Route tool will fail if errors are found in associated PDC files. Please uncheck the option to ignore the errors and continue running the tool
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+***** Place and Route Configurations *****
+Timing-driven            : ON
+Power-driven             : OFF
+I/O Register Combining   : OFF
+Global Pins Demotion     : ON
+Driver Replication       : ON
+High-effort              : ON
+Repair min-delay         : ON
+Incremental              : ON
+Inter-clock optimization : ON
+
+INFO: Skipping Placer...
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+Info: Iteration 1:
+  Worst minimum delay slack: 
+  Total violating paths eligible for improvement: 0
+  Total violating paths improved: 0
+Resource Usage
++---------------------------+-------+--------+------------+
+| Type                      | Used  | Total  | Percentage |
++---------------------------+-------+--------+------------+
+| 4LUT                      | 67449 | 254196 | 26.53      |
+| DFF                       | 66978 | 254196 | 26.35      |
+| Logic Element             | 85495 | 254196 | 33.63      |
+| I/Os using I/O Registers  | 0     | 144    | 0.00       |
+| I/O Register Flip-Flops   | 0     | 432    | 0.00       |
+| -- Input  I/O Flip-Flops  | 0     | 144    | 0.00       |
+| -- Output I/O Flip-Flops  | 0     | 144    | 0.00       |
+| -- Enable I/O Flip-Flops  | 0     | 144    | 0.00       |
++---------------------------+-------+--------+------------+
+
+I/O Placement
++--------+-------+------------+
+| Type   | Count | Percentage |
++--------+-------+------------+
+| Locked |  65   | 100.00%    |
+| Placed |  0    | 0.00%      |
++--------+-------+------------+
+
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+Completed writing pin report files.
+Place and Route Elapsed Time: 4.50 minutes.
+Cleaning tool 'Verify Timing'...
+Deleting '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\timing_analysis_jitter_report.txt'
+Cleaning tool 'Verify Timing'...
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+# RUN NUMBER: 13   DATE: 16:47:43 21-Jun-2026
+# INVOKED AS: C:/Microchip/Libero_SoC_2025.2/Libero_SoC/Designer/bin/libero.exe extended_run_lib.tcl -skip_open_project -root {~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN} -n 20 -starting_seed_index 32 -compare_criteria violations -analysis max -slack_criteria worst -stop_on_success
+#------------------------------------------------------------------------------------------------------------------------------------------
+# Seed Index  Seed      Maximum Delay        Worst Slack  Report Analyzed                                Saved Design
+# ==========  ========  ===============  ===============  =============================================  ===================================
+          32        31    N/A                        1.006  MPFS_ICICLE_KIT_BASE_DESIGN_timing_violations_max_r13_s32.rpt  MPFS_ICICLE_KIT_BASE_DESIGN_r13_s32
+
+Info: Multi-Pass: The best result MPFS_ICICLE_KIT_BASE_DESIGN_r13_s32 has been saved into the project:
+    ~/libero_seedsweep/seed7_vbx201_v250_2ms_20260621_160037/MPFS_ICICLE_Vectorblox.prjx
+
+The Execute Script command succeeded.
+==> STAGE_OK PLACEROUTE 2026-06-21T17:10:01-0400
+==> state SYNTHESIZE = Tool successfully run
+==> state PLACEROUTE = Tool successfully run
+==> state VERIFYTIMING = Tool has not run yet
+==> state GENERATEPROGRAMMINGDATA = Tool has not run yet
+==> state EXPORTPROGRAMMINGJOB = Tool has not run yet
+==> run_tool VERIFYTIMING 2026-06-21T17:10:01-0400
+No errors or warnings found.
+Verify Timing Elapsed Time: 229.7794 seconds.
+Info: Timing constraints have been met.
+==> STAGE_OK VERIFYTIMING 2026-06-21T17:13:51-0400
+==> timing report WARN: invalid command name "report"
+==> status report WARN: invalid command name "report"
+==> run_tool GENERATEPROGRAMMINGDATA 2026-06-21T17:13:51-0400
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+Generating FPGA array data. 
+INFO: Writing PCBIT information for Lock Bits in file: ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN_init_config_lock_bits.txt ...
+INFO: PCBIT information used for generating Design_Initialization_Data_Report file.
+Info: Generated map file ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN.map
+FPGA array data completed successfully. 
+==> STAGE_OK GENERATEPROGRAMMINGDATA 2026-06-21T17:15:53-0400
+==> export_prog_job polarfire_hybrid_control_two_slot_2ms
+Warning:  Back Level protection is disabled in the Configure Security tool. Back Level version will not be programmed. To enable Back Level protection go to the Configure Security tool, Update policy
+Info:  Memory files have been generated successfully
+Info:  'Generate design initialization data' has completed successfully.
+Info:  Stage 1 initialization client has been added to sNVM.
+Info:  Stage 2 initialization client has been added to sNVM.
+Exporting FlashPro Express Job...
+
+Info:  Bitstream not generated for uPROM. The configuration file:  is either absent, unreadable, or empty. Use the Design and Memory Initialization tool in the design flow to configure uPROM if needed.
+Info:  Found sNVM configuration file: ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\SNVM.cfg
+Warning:  Bitstream not generated for eNVM. The configuration file:  is either absent, unreadable, or empty. Use the Design and Memory Initialization tool in the design flow to configure eNVM if needed.
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+Info: Generated dca file ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN.dca
+Exporting Bitstream File(s)...
+Software Version: 2025.2.0.14
+Opened '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN_fp\MPFS_ICICLE_KIT_BASE_DESIGN.pro'
+PDB file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN.pdb' has been loaded successfully.
+DESIGN : MPFS_ICICLE_KIT_BASE_DESIGN;  CHECKSUM : E6A6;  PDB_VERSION : 1.9
+Load Programming Data(s) Finished : Sun Jun 21 17:16:32 2026 (Elapsed time 00:00:01)
+Info:  Programming Interface selected is JTAG.
+Info:  Design version: 0
+Successfully generated bitstream file and it has been added to the job container; file programs Fabric and sNVM.
+Fabric component bitstream digest: fdb9ca8fe9ce93a8fa5858e45513eca9a56c4cd362adbded87432086b83b0f02
+sNVM component bitstream digest: c011b109e3879c06a0abcd593ac8b9ef014b1f12a5d99e91780d834b2e12349c
+Entire bitstream digest: fc91c13f145e39a16016bc8f50e5508f86869a9c6276ffb00401b9a2f78ca0d5
+Finished: Sun Jun 21 17:17:14 2026 (Elapsed time 00:00:42)
+
+Project saved.
+Project closed.
+Info:  Exported log file: ~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN_fp\MPFS_ICICLE_KIT_BASE_DESIGN_exportJob.log
+Exporting Bitstream File(s) Finished: Sun Jun 21 17:17:27 2026 (Elapsed time 00:01:08)
+
+
+==> EXPORT_OK polarfire_hybrid_control_two_slot_2ms
+==> state SYNTHESIZE = Tool successfully run
+==> state PLACEROUTE = Tool successfully run
+==> state VERIFYTIMING = Tool successfully run
+==> state GENERATEPROGRAMMINGDATA = Tool successfully run
+==> state EXPORTPROGRAMMINGJOB = Tool executed
+The MPFS_ICICLE_Vectorblox project was closed.
+==> WATCHDOG_2MS_NOSAVE_DONE 2026-06-21T17:17:29-0400
+The Execute Script command succeeded.
