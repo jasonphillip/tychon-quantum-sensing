@@ -22,6 +22,7 @@
 #   vnnx_smoke    — V250 inference smoke test against the VBX 2.0.3 SoC runtime.
 #   vnnx_latency  — V250 start/poll latency probe with rdcycle + monotonic timing.
 #   v250_pid_loop — on-kit V250 output -> M1 u_ai -> M0 PID pulse loop.
+#   watchdog_trip — fabric watchdog clear->trip time (passive 0x60040854 poll; no SDK deps; static).
 
 CROSS   ?= riscv64-unknown-linux-gnu-
 CC      := $(CROSS)gcc
@@ -31,13 +32,16 @@ VBX_SDK ?= /c/Microchip/VectorBlox-SDK
 VBX_DRV := $(VBX_SDK)/drivers/vectorblox
 VBX_FIX := $(VBX_SDK)/example/postprocess/libfixmath
 
-all: pid_poke pid_latency vnnx_smoke vnnx_latency v250_pid_loop
+all: pid_poke pid_latency watchdog_trip vnnx_smoke vnnx_latency v250_pid_loop
 
 # Standalone; static so it does not depend on the target rootfs glibc version.
 pid_poke: pid_poke.c
 	$(CC) $(CFLAGS) -static $< -o $@ -lm
 
 pid_latency: pid_latency.c
+	$(CC) $(CFLAGS) -static $< -o $@ -lm
+
+watchdog_trip: watchdog_trip.c
 	$(CC) $(CFLAGS) -static $< -o $@ -lm
 
 # Icicle runtime = poll mode (USE_INTERRUPTS=0) + MSS-DDR udmabuf (MSS_DDR).
@@ -56,6 +60,6 @@ v250_pid_loop: v250_pid_loop.c
 	$(CC) $(CFLAGS) $(VNNX_DEFS) $(VNNX_INC) $< $(VNNX_RT) -o $@ -lm -lpthread
 
 clean:
-	rm -f pid_poke pid_latency vnnx_smoke vnnx_latency v250_pid_loop
+	rm -f pid_poke pid_latency watchdog_trip vnnx_smoke vnnx_latency v250_pid_loop
 
 .PHONY: all clean

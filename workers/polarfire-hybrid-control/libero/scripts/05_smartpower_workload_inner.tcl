@@ -16,12 +16,15 @@ if {[info exists ::env(SMARTPOWER_REPO_ROOT)] && $::env(SMARTPOWER_REPO_ROOT) ne
 if {[info exists ::env(SMARTPOWER_WORKLOAD_VCD)] && $::env(SMARTPOWER_WORKLOAD_VCD) ne ""} {
     set WORKLOAD_VCD $::env(SMARTPOWER_WORKLOAD_VCD)
 } else {
-    set WORKLOAD_VCD "$REPO_ROOT/sim/output/pid_workload.vcd"
+    # Default = the subsystem-level netlist-mirroring VCD (tb_power_wrap.v via
+    # sim/modelsim_pid_workload_subsystem.do). The old standalone
+    # pid_workload.vcd annotates 0.00% (scope mismatch) — do not use it.
+    set WORKLOAD_VCD "$REPO_ROOT/sim/output/pid_workload_subsystem.vcd"
 }
 if {[info exists ::env(SMARTPOWER_VCD_TOP_LEVEL_NAME)] && $::env(SMARTPOWER_VCD_TOP_LEVEL_NAME) ne ""} {
     set VCD_TOP_LEVEL_NAME $::env(SMARTPOWER_VCD_TOP_LEVEL_NAME)
 } else {
-    set VCD_TOP_LEVEL_NAME "nv_pid_top_top"
+    set VCD_TOP_LEVEL_NAME "tb_power"
 }
 
 # SmartPower's restricted Tcl namespace may not expose ::tcl::clock::format.
@@ -71,7 +74,7 @@ if {[catch {
         -sortby {functional transitions} \
         -sortorder {descending} \
         -max_net {500} \
-        -clock_period {5000.0} \
+        -clock_period {8000.0} \
         -clock_offset {0.0} \
         -file $activity_file
 } err]} {
