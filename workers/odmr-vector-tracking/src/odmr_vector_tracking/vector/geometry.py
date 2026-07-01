@@ -111,6 +111,8 @@ def project_field_onto_axes(
 # real generator's *effective* splitting slope is ≈28.03 GHz/T with ~0.08% per-axis scatter —
 # higher-order diagonalization residual a linear BLUE cannot capture (it is part of the honest
 # physics that motivates the learned tracker), negligible vs. loss-of-lock error at a crossing.
+# (The 28.03 GHz/T and 0.08% figures are generator-characterization values from upstream
+# nv-sensor-sim analysis; no test in this repo asserts them.)
 GAMMA_E_HZ_PER_T: float = 2.8035e10
 
 # Zero-field splitting D, Hz (SimOS value; used by the common-mode shift below). Note: D and the
