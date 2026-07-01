@@ -6,7 +6,7 @@ Hybrid PID + neural network control system for RT PolarFire SoC. SmartHLS C++ im
 
 - SmartHLS C++ PID controller with bumpless AI-to-PID transfer
 - Sector saturation clamps (+/-5%) and slew-rate limiting on AI feedforward
-- Hardware watchdog infrastructure with automatic fallback to pure PID; the current demo image is a verified 2 ms fabric watchdog build
+- Hardware watchdog infrastructure with automatic fallback to pure PID; the current demo image is a verified 2 ms fabric watchdog build — trip time **measured on silicon 2026-07-01: median 2.000 ms over 120 trips** (`docs/watchdog_trip_measured_2026-07-01.md`)
 - Libero SoC project targeting MPFS250T with CoreVectorBlox V250
 - Static timing (SmartTime) and power estimation (SmartPower)
 
@@ -136,6 +136,9 @@ Current measured bounds from 2026-06-21: V250 `vbx_cnn_model_start`+poll via `vn
 median `32 us` and p99 `33 us` for the already-loaded model path; idfix2 M0 start pulse plus M1
 `post_clamp_out` read via `pid_latency` has median `4 us` and p99 `4 us`; the host-paced
 `tools/rung_g_replay.py --rows 120` loop has median inter-sample period `10122 us`.
+Added 2026-07-01: fabric watchdog clear→trip time via `watchdog_trip` is median `2.000 ms`,
+min `1.978` / max `2.032 ms` over 120 trips (tails bounded by observer poll jitter) — equal to
+the 250,000-cycle @ 125 MHz design value; evidence `libero/reports/2026-07-01-watchdog-trip/`.
 
 As of 2026-06-16, the CoreVectorBlox **2.0.1/V250** rebuild bitstream is programmed and
 **V250 inference runs to completion on Production MPFS250T silicon** (`vbx_probe` →

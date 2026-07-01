@@ -137,9 +137,9 @@ PID controller itself runs at 125 MHz.** The `idfix2` "+0.789 ns" is **prose-onl
 **Good news:** the **75/150 MHz Icicle de-rate concern is falsified** — the V250 closed at
 full 100/200 MHz with positive slack. Side effect of the 125 MHz fabric: timeout counts
 must be stated against the 125 MHz PID clock. A legacy 200k-cycle watchdog would be
-**1.6 ms, not 1 ms**; the revised near-term hardware target is `250000` cycles, or
-**2 ms**, while the demonstrated demo build still ships a **500 ms host-paced** watchdog
-(see Q8).
+**1.6 ms, not 1 ms**; the deployed two-slot image implements `250000` cycles = **2 ms**,
+and the clear→trip time is now **measured on silicon: median 2.000 ms, N=120**
+(2026-07-01; see Q8). The 500 ms host-paced watchdog is r6_s25-era history.
 
 **Defensible claim:** *"PID control fabric closed at 125 MHz (+0.977 ns); CoreVectorBlox
 V250 core closed at 200 MHz (+0.950 ns) on Production silicon."*
@@ -167,10 +167,13 @@ the shipped bitstream is open work."*
 **formal absolute stability is NOT proven.**
 
 - **Practical guards (on silicon):** sector clamp ±4.5%, slew limiter (0.001/cycle),
-  watchdog → bumpless transfer. **[CONFIRMED implemented]** — but the **demonstrated**
-  bitstream ships a **500 ms host-paced watchdog**, not the revised sub-2 ms hardware target
-  (`250000` cycles at 125 MHz). `libero/reports/2026-06-17-two-slot/README.md:17`.
-  **[OVERCLAIM-RISK on "1 ms" or "sub-2 ms" until a new image is verified]**
+  watchdog → bumpless transfer. **[CONFIRMED implemented]** — the resident two-slot image
+  ships the **2 ms fabric watchdog** (`250000` cycles at 125 MHz), and its clear→trip time
+  is **measured on silicon: median 2.000 ms, min 1.978 / max 2.032 ms over N=120 trips**
+  (2026-07-01; `docs/watchdog_trip_measured_2026-07-01.md`,
+  `libero/reports/2026-07-01-watchdog-trip/`). **[MEASURED — HW]** The earlier
+  **500 ms host-paced** watchdog (`libero/reports/2026-06-17-two-slot/README.md:17`) is
+  superseded history; quote it only as the pre-2026-06-21 demo state.
 - **Formal Lur'e/Circle-Criterion absolute stability is the *framework*, NOT proven.** The
   README itself: these mechanisms *"do not constitute a proof that the AI cannot destabilize
   the loop"* (`README.md:130`). It rests on **six Residual Proof Obligations, ALL OPEN**
@@ -207,7 +210,7 @@ flight testing — Phase II work."*
 - Real Production silicon; CoreVectorBlox V250 NN inference completing in fabric (`out=-2.9506`).
 - Clean decoded two-slot control plane + live PID actuator tracking `Kp·error` with a
   saturating sector clamp, on silicon.
-- Working watchdog → bumpless fallback on silicon.
+- Working watchdog → bumpless fallback on silicon; trip time measured (median 2.000 ms, N=120, 2026-07-01).
 - Timing closed with positive slack (PID 125 MHz +0.977 ns; V250 200 MHz +0.950 ns).
 - ~5% offline MAE/Allan-deviation reduction vs a PID baseline (simulated data).
 - Honestly documented inverse-crime handling in the dataset contract.
@@ -225,6 +228,6 @@ flight testing — Phase II work."*
 - "8.71% vs PID" → use **~5%** for the deployed model (8.71% is the failed cascade).
 - "bit-exact INT8" → "INT8 deployment; bit-exact runner reproducibility" (not INT8≈float).
 - "200 MHz" → "PID 125 MHz / V250 200 MHz".
-- "1 ms watchdog" → "500 ms host-paced (demo); sub-2 ms hardware target pending".
+- "1 ms watchdog" → "2 ms fabric watchdog, trip time measured on silicon: median 2.000 ms (N=120, 2026-07-01)".
 - "closed-loop" → "host-paced datapath with injected error".
 - Any "real NV data" / "sim-to-real validated" / "verified safety" wording → remove or qualify.
