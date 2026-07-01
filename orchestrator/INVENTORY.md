@@ -304,3 +304,24 @@ A three-agent TVW design review (generator physics audit, tracker/metrics code a
 - "In-collision ID-switch error 0.811" was additionally a metric mislabel: it is the in-collision misassociation fraction, not an ID-switch statistic.
 - **Consequence for §6.10:** direction unchanged (the learned tracker remains aspirational), but the supporting sentence must now read: *the published classical-failure bar was a detector-threshold artifact; re-baselining (threshold fix + competent classical comparator) is dispatched before any learned-vs-classical claim.* Neither §5 headline number should be quoted anywhere until re-derived.
 - Re-baseline + eval-correctness injections dispatched to the active odmr-vector-tracking session and dataset-redesign injections to the active nv-sensor-sim session, 2026-07-01; full 30+-finding list (generator, tracker, literature/IP) in the design-review doc.
+
+---
+
+## Addendum 3 — 2026-07-01 (late evening): EV-WDT-TRIP CLOSED — watchdog trip-time measured [HW]
+
+The kit was re-plugged (read-only inventory: polarfire `docs/kit_replug_inventory_2026-07-01.md`,
+`84b3f6c` — connectivity/COM mapping unchanged, 2 ms image confirmed resident by CSR signature,
+no reprogram) and the staged `389699f` tooling executed per the runbook:
+
+- **Watchdog clear→trip time [DESIGN] → [HW]:** median **2.000 ms** over **N=120** events
+  (min 1.978 / p95 2.003 / p99 2.026 / max 2.032 ms), every `trip_count_delta=1`; equals the
+  250,000-cycle @ 125 MHz design value at the 1 µs rdtime resolution; distribution tails match
+  recorded observer poll gaps (4–39 µs Linux preemption, both directions). Stimulus one-shots
+  reproduced the 2026-06-21 smoke bit-identically (`nn_out0=-2.538894653`, ~33 µs V250).
+  Evidence: `libero/reports/2026-07-01-watchdog-trip/` + `docs/watchdog_trip_measured_2026-07-01.md`
+  (polarfire commit `7661322`); README + skeptic Q&A upgraded off the stale 500 ms host-paced
+  framing; fix-list row `EV-WDT-TRIP` → **closed**.
+- The Addendum-1 "Still open" list shrinks accordingly: measured watchdog trip-time is no longer
+  open. On-board power was probed the same evening and is a hardware no-go on this kit
+  (PAC1934 electrically absent on all I²C buses — see the re-plug inventory doc); it stays on
+  the open list as a board-level item, now with a concrete root-cause note.
