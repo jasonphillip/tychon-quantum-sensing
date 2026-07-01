@@ -1,0 +1,746 @@
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.264 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.265 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.266 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.284 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.285 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.286 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.287 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.288 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.289 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.290 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.291 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.292 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.293 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.294 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.295 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.274 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.275 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.276 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.272 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.273 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.277 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.278 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.279 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.262 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.263 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.267 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.268 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.269 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.270 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.271 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.283 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.281 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.282 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.296 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.297 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.298 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.299 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.300 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.261 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.280 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.258 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.259 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.260 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.257 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+Generating 40000 spectra for train split (multi-axis)...
+  train: 100/40000
+  train: 200/40000
+  train: 300/40000
+  train: 400/40000
+  train: 500/40000
+  train: 600/40000
+  train: 700/40000
+  train: 800/40000
+  train: 900/40000
+  train: 1000/40000
+  train: 1100/40000
+  train: 1200/40000
+  train: 1300/40000
+  train: 1400/40000
+  train: 1500/40000
+  train: 1600/40000
+  train: 1700/40000
+  train: 1800/40000
+  train: 1900/40000
+  train: 2000/40000
+  train: 2100/40000
+  train: 2200/40000
+  train: 2300/40000
+  train: 2400/40000
+  train: 2500/40000
+  train: 2600/40000
+  train: 2700/40000
+  train: 2800/40000
+  train: 2900/40000
+  train: 3000/40000
+  train: 3100/40000
+  train: 3200/40000
+  train: 3300/40000
+  train: 3400/40000
+  train: 3500/40000
+  train: 3600/40000
+  train: 3700/40000
+  train: 3800/40000
+  train: 3900/40000
+  train: 4000/40000
+  train: 4100/40000
+  train: 4200/40000
+  train: 4300/40000
+  train: 4400/40000
+  train: 4500/40000
+  train: 4600/40000
+  train: 4700/40000
+  train: 4800/40000
+  train: 4900/40000
+  train: 5000/40000
+  train: 5100/40000
+  train: 5200/40000
+  train: 5300/40000
+  train: 5400/40000
+  train: 5500/40000
+  train: 5600/40000
+  train: 5700/40000
+  train: 5800/40000
+  train: 5900/40000
+  train: 6000/40000
+  train: 6100/40000
+  train: 6200/40000
+  train: 6300/40000
+  train: 6400/40000
+  train: 6500/40000
+  train: 6600/40000
+  train: 6700/40000
+  train: 6800/40000
+  train: 6900/40000
+  train: 7000/40000
+  train: 7100/40000
+  train: 7200/40000
+  train: 7300/40000
+  train: 7400/40000
+  train: 7500/40000
+  train: 7600/40000
+  train: 7700/40000
+  train: 7800/40000
+  train: 7900/40000
+  train: 8000/40000
+  train: 8100/40000
+  train: 8200/40000
+  train: 8300/40000
+  train: 8400/40000
+  train: 8500/40000
+  train: 8600/40000
+  train: 8700/40000
+  train: 8800/40000
+  train: 8900/40000
+  train: 9000/40000
+  train: 9100/40000
+  train: 9200/40000
+  train: 9300/40000
+  train: 9400/40000
+  train: 9500/40000
+  train: 9600/40000
+  train: 9700/40000
+  train: 9800/40000
+  train: 9900/40000
+  train: 10000/40000
+  train: 10100/40000
+  train: 10200/40000
+  train: 10300/40000
+  train: 10400/40000
+  train: 10500/40000
+  train: 10600/40000
+  train: 10700/40000
+  train: 10800/40000
+  train: 10900/40000
+  train: 11000/40000
+  train: 11100/40000
+  train: 11200/40000
+  train: 11300/40000
+  train: 11400/40000
+  train: 11500/40000
+  train: 11600/40000
+  train: 11700/40000
+  train: 11800/40000
+  train: 11900/40000
+  train: 12000/40000
+  train: 12100/40000
+  train: 12200/40000
+  train: 12300/40000
+  train: 12400/40000
+  train: 12500/40000
+  train: 12600/40000
+  train: 12700/40000
+  train: 12800/40000
+  train: 12900/40000
+  train: 13000/40000
+  train: 13100/40000
+  train: 13200/40000
+  train: 13300/40000
+  train: 13400/40000
+  train: 13500/40000
+  train: 13600/40000
+  train: 13700/40000
+  train: 13800/40000
+  train: 13900/40000
+  train: 14000/40000
+  train: 14100/40000
+  train: 14200/40000
+  train: 14300/40000
+  train: 14400/40000
+  train: 14500/40000
+  train: 14600/40000
+  train: 14700/40000
+  train: 14800/40000
+  train: 14900/40000
+  train: 15000/40000
+  train: 15100/40000
+  train: 15200/40000
+  train: 15300/40000
+  train: 15400/40000
+  train: 15500/40000
+  train: 15600/40000
+  train: 15700/40000
+  train: 15800/40000
+  train: 15900/40000
+  train: 16000/40000
+  train: 16100/40000
+  train: 16200/40000
+  train: 16300/40000
+  train: 16400/40000
+  train: 16500/40000
+  train: 16600/40000
+  train: 16700/40000
+  train: 16800/40000
+  train: 16900/40000
+  train: 17000/40000
+  train: 17100/40000
+  train: 17200/40000
+  train: 17300/40000
+  train: 17400/40000
+  train: 17500/40000
+  train: 17600/40000
+  train: 17700/40000
+  train: 17800/40000
+  train: 17900/40000
+  train: 18000/40000
+  train: 18100/40000
+  train: 18200/40000
+  train: 18300/40000
+  train: 18400/40000
+  train: 18500/40000
+  train: 18600/40000
+  train: 18700/40000
+  train: 18800/40000
+  train: 18900/40000
+  train: 19000/40000
+  train: 19100/40000
+  train: 19200/40000
+  train: 19300/40000
+  train: 19400/40000
+  train: 19500/40000
+  train: 19600/40000
+  train: 19700/40000
+  train: 19800/40000
+  train: 19900/40000
+  train: 20000/40000
+  train: 20100/40000
+  train: 20200/40000
+  train: 20300/40000
+  train: 20400/40000
+  train: 20500/40000
+  train: 20600/40000
+  train: 20700/40000
+  train: 20800/40000
+  train: 20900/40000
+  train: 21000/40000
+  train: 21100/40000
+  train: 21200/40000
+  train: 21300/40000
+  train: 21400/40000
+  train: 21500/40000
+  train: 21600/40000
+  train: 21700/40000
+  train: 21800/40000
+  train: 21900/40000
+  train: 22000/40000
+  train: 22100/40000
+  train: 22200/40000
+  train: 22300/40000
+  train: 22400/40000
+  train: 22500/40000
+  train: 22600/40000
+  train: 22700/40000
+  train: 22800/40000
+  train: 22900/40000
+  train: 23000/40000
+  train: 23100/40000
+  train: 23200/40000
+  train: 23300/40000
+  train: 23400/40000
+  train: 23500/40000
+  train: 23600/40000
+  train: 23700/40000
+  train: 23800/40000
+  train: 23900/40000
+  train: 24000/40000
+  train: 24100/40000
+  train: 24200/40000
+  train: 24300/40000
+  train: 24400/40000
+  train: 24500/40000
+  train: 24600/40000
+  train: 24700/40000
+  train: 24800/40000
+  train: 24900/40000
+  train: 25000/40000
+  train: 25100/40000
+  train: 25200/40000
+  train: 25300/40000
+  train: 25400/40000
+  train: 25500/40000
+  train: 25600/40000
+  train: 25700/40000
+  train: 25800/40000
+  train: 25900/40000
+  train: 26000/40000
+  train: 26100/40000
+  train: 26200/40000
+  train: 26300/40000
+  train: 26400/40000
+  train: 26500/40000
+  train: 26600/40000
+  train: 26700/40000
+  train: 26800/40000
+  train: 26900/40000
+  train: 27000/40000
+  train: 27100/40000
+  train: 27200/40000
+  train: 27300/40000
+  train: 27400/40000
+  train: 27500/40000
+  train: 27600/40000
+  train: 27700/40000
+  train: 27800/40000
+  train: 27900/40000
+  train: 28000/40000
+  train: 28100/40000
+  train: 28200/40000
+  train: 28300/40000
+  train: 28400/40000
+  train: 28500/40000
+  train: 28600/40000
+  train: 28700/40000
+  train: 28800/40000
+  train: 28900/40000
+  train: 29000/40000
+  train: 29100/40000
+  train: 29200/40000
+  train: 29300/40000
+  train: 29400/40000
+  train: 29500/40000
+  train: 29600/40000
+  train: 29700/40000
+  train: 29800/40000
+  train: 29900/40000
+  train: 30000/40000
+  train: 30100/40000
+  train: 30200/40000
+  train: 30300/40000
+  train: 30400/40000
+  train: 30500/40000
+  train: 30600/40000
+  train: 30700/40000
+  train: 30800/40000
+  train: 30900/40000
+  train: 31000/40000
+  train: 31100/40000
+  train: 31200/40000
+  train: 31300/40000
+  train: 31400/40000
+  train: 31500/40000
+  train: 31600/40000
+  train: 31700/40000
+  train: 31800/40000
+  train: 31900/40000
+  train: 32000/40000
+  train: 32100/40000
+  train: 32200/40000
+  train: 32300/40000
+  train: 32400/40000
+  train: 32500/40000
+  train: 32600/40000
+  train: 32700/40000
+  train: 32800/40000
+  train: 32900/40000
+  train: 33000/40000
+  train: 33100/40000
+  train: 33200/40000
+  train: 33300/40000
+  train: 33400/40000
+  train: 33500/40000
+  train: 33600/40000
+  train: 33700/40000
+  train: 33800/40000
+  train: 33900/40000
+  train: 34000/40000
+  train: 34100/40000
+  train: 34200/40000
+  train: 34300/40000
+  train: 34400/40000
+  train: 34500/40000
+  train: 34600/40000
+  train: 34700/40000
+  train: 34800/40000
+  train: 34900/40000
+  train: 35000/40000
+  train: 35100/40000
+  train: 35200/40000
+  train: 35300/40000
+  train: 35400/40000
+  train: 35500/40000
+  train: 35600/40000
+  train: 35700/40000
+  train: 35800/40000
+  train: 35900/40000
+  train: 36000/40000
+  train: 36100/40000
+  train: 36200/40000
+  train: 36300/40000
+  train: 36400/40000
+  train: 36500/40000
+  train: 36600/40000
+  train: 36700/40000
+  train: 36800/40000
+  train: 36900/40000
+  train: 37000/40000
+  train: 37100/40000
+  train: 37200/40000
+  train: 37300/40000
+  train: 37400/40000
+  train: 37500/40000
+  train: 37600/40000
+  train: 37700/40000
+  train: 37800/40000
+  train: 37900/40000
+  train: 38000/40000
+  train: 38100/40000
+  train: 38200/40000
+  train: 38300/40000
+  train: 38400/40000
+  train: 38500/40000
+  train: 38600/40000
+  train: 38700/40000
+  train: 38800/40000
+  train: 38900/40000
+  train: 39000/40000
+  train: 39100/40000
+  train: 39200/40000
+  train: 39300/40000~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.267 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.268 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.269 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.270 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.271 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.281 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.282 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.283 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.272 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.289 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.290 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.291 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.292 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.293 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.274 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.275 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.276 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.277 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.278 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.279 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.280 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.284 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.285 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.286 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.287 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.257 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.258 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.259 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.260 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.261 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.262 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.263 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.265 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.266 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.288 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.273 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.296 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.297 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.298 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.299 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.300 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.294 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.295 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.251 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.252 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.253 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.228 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.229 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.230 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.231 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.232 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.233 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.255 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.256 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.244 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.245 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.246 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.247 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.248 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.249 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.250 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.254 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.226 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.227 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.242 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.243 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.234 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.235 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.236 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.237 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.238 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.239 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.240 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.241 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.224 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.225 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:260: UserWarning: Grid aliasing risk: Frequency step (0.100 MHz) is too coarse to resolve the 0.264 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+
+  train: 39400/40000
+  train: 39500/40000
+  train: 39600/40000
+  train: 39700/40000
+  train: 39800/40000
+  train: 39900/40000
+  train: 40000/40000
+Generating 5000 spectra for val split (multi-axis)...
+  val: 100/5000
+  val: 200/5000
+  val: 300/5000
+  val: 400/5000
+  val: 500/5000
+  val: 600/5000
+  val: 700/5000
+  val: 800/5000
+  val: 900/5000
+  val: 1000/5000
+  val: 1100/5000
+  val: 1200/5000
+  val: 1300/5000
+  val: 1400/5000
+  val: 1500/5000
+  val: 1600/5000
+  val: 1700/5000
+  val: 1800/5000
+  val: 1900/5000
+  val: 2000/5000
+  val: 2100/5000
+  val: 2200/5000
+  val: 2300/5000
+  val: 2400/5000
+  val: 2500/5000
+  val: 2600/5000
+  val: 2700/5000
+  val: 2800/5000
+  val: 2900/5000
+  val: 3000/5000
+  val: 3100/5000
+  val: 3200/5000
+  val: 3300/5000
+  val: 3400/5000
+  val: 3500/5000
+  val: 3600/5000
+  val: 3700/5000
+  val: 3800/5000
+  val: 3900/5000
+  val: 4000/5000
+  val: 4100/5000
+  val: 4200/5000
+  val: 4300/5000
+  val: 4400/5000
+  val: 4500/5000
+  val: 4600/5000
+  val: 4700/5000
+  val: 4800/5000
+  val: 4900/5000
+  val: 5000/5000
+Generating 5000 spectra for test split (multi-axis)...
+  test: 100/5000
+  test: 200/5000
+  test: 300/5000
+  test: 400/5000
+  test: 500/5000
+  test: 600/5000
+  test: 700/5000
+  test: 800/5000
+  test: 900/5000
+  test: 1000/5000
+  test: 1100/5000
+  test: 1200/5000
+  test: 1300/5000
+  test: 1400/5000
+  test: 1500/5000
+  test: 1600/5000
+  test: 1700/5000
+  test: 1800/5000
+  test: 1900/5000
+  test: 2000/5000
+  test: 2100/5000
+  test: 2200/5000
+  test: 2300/5000
+  test: 2400/5000
+  test: 2500/5000
+  test: 2600/5000
+  test: 2700/5000
+  test: 2800/5000
+  test: 2900/5000
+  test: 3000/5000
+  test: 3100/5000
+  test: 3200/5000
+  test: 3300/5000
+  test: 3400/5000
+  test: 3500/5000
+  test: 3600/5000
+  test: 3700/5000
+  test: 3800/5000
+  test: 3900/5000
+  test: 4000/5000
+  test: 4100/5000
+  test: 4200/5000
+  test: 4300/5000
+  test: 4400/5000
+  test: 4500/5000
+  test: 4600/5000
+  test: 4700/5000
+  test: 4800/5000
+  test: 4900/5000
+  test: 5000/5000
+Dataset written to ~/projects/nv-sensor-sim/artifacts/datasets/production_50k_v3_vector
