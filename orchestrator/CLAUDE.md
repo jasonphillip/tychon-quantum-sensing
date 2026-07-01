@@ -109,6 +109,6 @@ Failure means abort — silent fallback to 768-d Ollama corrupts the sqlite-vec 
 
 ## Fix-list orchestration constraints (Stage 5+)
 When TVW is used to drive fixes against the report or the four code repos:
-- The report `.docx` is rendered from `~/Desktop/Shared/Tychon_Phase_I_Final_Report_v3.1_*.md` via `tvw/scripts/render_report.sh`. Edit the `.md`, never the `.docx` directly.
+- The authoritative report is **v3.4** at `~/Desktop/Shared/tychon/nv-sim-repos/01_deliverables/final_report/Tychon_Phase_I_Final_Report_v3.4_2026-05-03.md` (v3.1 and earlier are archived under `final_report/archive/`); the `.docx` is rendered from it via `tvw/scripts/render_report.sh`. Edit the `.md`, never the `.docx` directly.
 - Code-repo edits happen **in the user's actual repo working copies** (`~/projects/{polarfire-hybrid-control,odmr-edge-ml,nv-sensor-sim,tychon-sbir/shared-data}`), not via the TVW symlinks. TVW emits proposed diffs / planned changes; the user (or a separate session in the repo) applies and commits them.
 - External-knowledge tasks (DOI / page / volume lookups, BoM pricing, Letters of Support outreach) are **out of scope for TVW** under the air-gap rule. Hand those to a non-TVW Claude session that has web access; ingest the verified output back into `tychon-docs` so retrieval can ground subsequent fixes.

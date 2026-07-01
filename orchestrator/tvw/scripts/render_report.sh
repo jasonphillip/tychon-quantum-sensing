@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
-SRC="${1:-$HOME/.corpus/tychon-docs/raw/report/Tychon_Phase_I_Final_Report_v3.1_2026-05-01.md}"
-OUT_DIR="${2:-$HOME/projects/tychon-sbir/docs/01_deliverables/final_report}"
-REFERENCE="${3:-$OUT_DIR/Tychon_Phase_I_Final_Report_2026-04-30.docx}"
+# Default SRC = the authoritative report .md (v3.4 as of 2026-05-03; v3.1
+# and earlier are archived under final_report/archive/).
+SRC="${1:-$HOME/Desktop/Shared/tychon/nv-sim-repos/01_deliverables/final_report/Tychon_Phase_I_Final_Report_v3.4_2026-05-03.md}"
+OUT_DIR="${2:-$HOME/Desktop/Shared/tychon/nv-sim-repos/01_deliverables/final_report}"
+# Style reference: the current v3.4 .docx (the original 2026-04-30 template
+# now lives only under final_report/archive/).
+REFERENCE="${3:-$OUT_DIR/Tychon_Phase_I_Final_Report_v3.4_2026-05-03.docx}"
 BASE=$(basename "$SRC" .md)
 
 REF_ARG=()
