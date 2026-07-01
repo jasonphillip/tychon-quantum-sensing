@@ -190,12 +190,20 @@ These mechanisms make the AI feedforward path **sector-bounded by design within 
 
 SmartPower synthesis reports are generated on the Beelink build host and archived on the NAS (`/mnt/nas/projects/polarfire-hybrid-control/reports/`). The numbers below are **default-toggle estimates** (activity-factor heuristic, no VCD): preliminary until workload-driven SmartPower is run with a representative input trace.
 
-| Component | Power (vectorless SmartPower) |
+| Component | Power (SmartPower, two-slot r12_s31 netlist, 2026-07-01) |
 |-----------|-------|
-| FPGA fabric (PID + VBX + interconnect) | 2,622.9 mW (2026-06-21 run: Total 2622.855 / Static 445.612 / Dynamic 2177.243) |
+| FPGA fabric — PID-workload-annotated (1.28% pins; V250/MSS vectorless) | **2,550.0 mW** (Static 445.842 / Dynamic 2104.200) |
+| FPGA fabric — pure vectorless baseline, same netlist | 2,562.2 mW (Static 445.842 / Dynamic 2116.373) |
 | Total system (MPFS250T + DDR + I/O) | ~5.2 W (fabric + MSS estimate) |
 | **SWaP budget** | **12 W** |
-| **Margin** | **~57%** (preliminary — vectorless; workload-driven SmartPower (RPO-6) still open) |
+| **Margin** | **~57%** (preliminary — PID-subsystem-annotated only; full-design workload SmartPower (RPO-6) and board measurement still open) |
+
+Provenance note: earlier README revisions cited 2,664 mW (an acceptance
+target in an unexecuted plan) and then 2,622.9 mW — the latter turns out to
+be the 2026-06-21 rerun against the Microchip REFERENCE-design project, not
+this design. The 2026-07-01 numbers above are the first SmartPower results
+from the actual seed7 two-slot project; see
+`libero/reports/2026-07-01-workload-power-subsystem/README.md`.
 
 Static power is derived from SmartPower estimation. The `smartpower_report.rpt` artifact is not committed to this repo — it is regenerated on each synthesis run via `libero/scripts/04_synth_pnr.tcl`. Workload-driven SmartPower is one of the Residual Proof Obligations (closable under follow-on path) in `docs/safety_architecture.md`.
 

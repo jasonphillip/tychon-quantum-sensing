@@ -42,16 +42,36 @@ file mkdir $REPORT_DIR
 puts "INFO (sp inner): importing workload VCD = $WORKLOAD_VCD"
 flush stdout
 
-if {[catch {
-    smartpower_import_vcd \
-        -file $WORKLOAD_VCD \
-        -opmode {Active} \
-        -auto_detect_top_level_name {FALSE} \
-        -top_level_name $VCD_TOP_LEVEL_NAME \
-        -glitch_filtering {auto}
-} err]} {
-    puts "FATAL (sp inner): smartpower_import_vcd failed: $err"
-    exit 11
+# Top-level selection: env value "AUTO" -> let SmartPower auto-detect the
+# design instance scope in the VCD (the documented default; matches the
+# design-named scope tb_power/MPFS_ICICLE_KIT_BASE_DESIGN). Any other value
+# is passed through as -top_level_name ("full hierarchical name of the
+# instance of the design in the VCD", per Libero 2025.2 Tcl ref 9.16 --
+# note the 2026-07-01 attempts: bare TB root name imports but annotates
+# 0.00%; a slash-separated path is rejected as nonexistent scope).
+if {$VCD_TOP_LEVEL_NAME eq "AUTO"} {
+    if {[catch {
+        smartpower_import_vcd \
+            -file $WORKLOAD_VCD \
+            -opmode {Active} \
+            -auto_detect_top_level_name {TRUE} \
+            -glitch_filtering {auto}
+    } err]} {
+        puts "FATAL (sp inner): smartpower_import_vcd (auto-detect) failed: $err"
+        exit 11
+    }
+} else {
+    if {[catch {
+        smartpower_import_vcd \
+            -file $WORKLOAD_VCD \
+            -opmode {Active} \
+            -auto_detect_top_level_name {FALSE} \
+            -top_level_name $VCD_TOP_LEVEL_NAME \
+            -glitch_filtering {auto}
+    } err]} {
+        puts "FATAL (sp inner): smartpower_import_vcd failed: $err"
+        exit 11
+    }
 }
 puts "INFO (sp inner): VCD imported"
 flush stdout

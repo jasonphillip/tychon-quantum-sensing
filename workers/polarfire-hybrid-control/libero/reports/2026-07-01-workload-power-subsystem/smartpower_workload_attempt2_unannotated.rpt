@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<?xml-stylesheet href="rptstyle.xsl" type="text/xsl" ?>
+<doc>
+<text></text>
+<title>Power Report for design MPFS_ICICLE_KIT_BASE_DESIGN with the following settings:</title>
+<text></text>
+<table>
+<header>
+</header>
+<row>
+ <cell>Vendor:</cell>
+ <cell>Microchip Technology Inc.</cell>
+</row>
+<row>
+ <cell>Program:</cell>
+ <cell>Microchip Libero Software, Release 2025.2 (Version 2025.2.0.14)</cell>
+</row>
+<row>
+ <cell></cell>
+ <cell>Copyright (C) 1989-</cell>
+</row>
+<row>
+ <cell>Date:</cell>
+ <cell>Wed Jul  1 17:29:21 2026</cell>
+</row>
+<row>
+ <cell>Version:</cell>
+ <cell>3.0</cell>
+</row>
+</table>
+<text></text>
+<table>
+<header>
+</header>
+<row>
+ <cell>Design:</cell>
+ <cell>MPFS_ICICLE_KIT_BASE_DESIGN</cell>
+</row>
+<row>
+ <cell>Family:</cell>
+ <cell>PolarFireSoC</cell>
+</row>
+<row>
+ <cell>Die:</cell>
+ <cell>MPFS250T</cell>
+</row>
+<row>
+ <cell>Package:</cell>
+ <cell>FCVG484</cell>
+</row>
+<row>
+ <cell>Temperature Range:</cell>
+ <cell>EXT</cell>
+</row>
+<row>
+ <cell>Voltage Range:</cell>
+ <cell>EXT</cell>
+</row>
+<row>
+ <cell>Operating Conditions:</cell>
+ <cell>Typical</cell>
+</row>
+<row>
+ <cell>Operating Mode:</cell>
+ <cell>Active</cell>
+</row>
+<row>
+ <cell>Process:</cell>
+ <cell>Typical</cell>
+</row>
+<row>
+ <cell>Data Source:</cell>
+ <cell>Production</cell>
+</row>
+</table>
+<text></text>
+<section><name>Power Summary</name></section>
+<table>
+<header>
+ <cell/>
+ <cell>Power (mW)</cell>
+ <cell>Percentage</cell>
+</header>
+<row>
+ <cell>Total Power</cell>
+ <cell>  2562.215</cell>
+ <cell>    100.0%</cell>
+</row>
+<row>
+ <cell>Static Power</cell>
+ <cell>   445.842</cell>
+ <cell>     17.4%</cell>
+</row>
+<row>
+ <cell>Dynamic Power</cell>
+ <cell>  2116.373</cell>
+ <cell>     82.6%</cell>
+</row>
+</table>
+<text></text>
+</doc>

@@ -223,3 +223,39 @@ next discriminator should either map the standalone `nv_pid_top_top` VCD to the
 placed instance hierarchy from a GUI SmartPower session, or switch to a
 full-design/post-synthesis VCD whose signal names already match the placed
 netlist.
+
+## 2026-07-01 — ANNOTATION CLOSED (PID-subsystem scope) on the seed7 two-slot netlist
+
+**Result: 1.28% of design pins annotated from a real PID workload; Total
+`2550.042 mW` / Static `445.842` / Dynamic `2104.200` (Typical/Active).**
+Companion pure-vectorless baseline on the SAME two-slot r12_s31 netlist:
+`2562.215 / 445.842 / 2116.373 mW`. Dynamic moved (−12.2 mW), static
+identical — the annotation demonstrably took.
+
+What fixed the 0.00% problem, in order:
+1. **Netlist-mirroring VCD scope.** New `tests/two_slot_sim/tb_power_wrap.v`
+   instantiates shims named `MPFS_ICICLE_KIT_BASE_DESIGN` /
+   `FIC_0_PERIPHERALS_1` around `u_pid_subsystem`, driven by real AXI
+   transactions (gains via M0; the 1000-row chirped ODMR trace via M1 error
+   + u_ai and M0 start pulses; `vbx_output_valid` pulsed at the measured
+   ~32 µs V250 cadence) at the correct 125 MHz. SmartHLS's `*_inferred_reg`
+   names survive Synplify into the placed netlist, so RTL-VCD names match
+   once scopes align.
+2. **`-top_level_name {MPFS_ICICLE_KIT_BASE_DESIGN}`** — the bare
+   design-instance scope name. The TB-root name imports but annotates 0.00%;
+   a slash path is rejected; auto-detect also annotated 0.00% here.
+3. **Report-before-activity-map ordering** in the inner Tcl:
+   `smartpower_report_power_activity_map` re-imports the VCD and killed the
+   session on attempt 1; it is now opt-in (`SMARTPOWER_ACTIVITY_MAP=1`).
+
+**Provenance correction:** the 2026-06-21 "topname" rerun (2622.855 mW)
+opened the Microchip REFERENCE-design project per its own log header — that
+figure belongs to the reference netlist. The two-slot design's numbers are
+the 2026-07-01 ones above. This was also the first VERIFYPOWER ever executed
+against the seed7 two-slot project.
+
+**Honest scope:** PID-subsystem-annotated only (V250/MSS stay vectorless);
+netlist = saved r12_s31 (identical to the programmed r13_s32 image except
+the watchdog constant); no board-measured power. RPO-6 full-design workload
+closure stays open at reduced scope. Artifacts + 5-attempt forensic trail:
+`libero/reports/2026-07-01-workload-power-subsystem/`.
