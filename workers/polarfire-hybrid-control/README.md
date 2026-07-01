@@ -80,9 +80,11 @@ source libero/scripts/04_synth_pnr.tcl
 - `.vnnx` compiled with `-c V250` flag; not committed to git
 - Linux/Yocto on the U54 cores for the supported CoreVectorBlox Icicle runtime;
   the safety-critical loop lives in fabric, not Linux userspace. (The <150 us
-  loop-latency figure is a design budget, never measured on hardware; on-kit
-  API-level bounds are in `docs/latency_measured_2026-06-21.md` — a fabric-
-  internal latency measurement is still open.)
+  loop-latency figure is a design budget. RTL-sim bound [TB]: 6 cycles = 48 ns
+  start-accept -> actuator-we, constant over 128 iterations on the real
+  two-slot RTL — `docs/fabric_latency_sim_2026-07-01.md`. On-kit API-level
+  bounds: `docs/latency_measured_2026-06-21.md`. An on-SILICON fabric-internal
+  measurement is still open.)
 
 ## Current Hardware State
 
