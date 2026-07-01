@@ -135,9 +135,11 @@ PID controller itself runs at 125 MHz.** The `idfix2` "+0.789 ns" is **prose-onl
 (`docs/two_slot_handoff_2026-06-17.md:113-115`); no idfix2 timing `.rpt` is committed.
 
 **Good news:** the **75/150 MHz Icicle de-rate concern is falsified** — the V250 closed at
-full 100/200 MHz with positive slack. Side effect of the 125 MHz fabric: the 200k-cycle
-watchdog = **1.6 ms, not 1 ms** (and the demo build ships a **500 ms host-paced** watchdog;
-see Q8).
+full 100/200 MHz with positive slack. Side effect of the 125 MHz fabric: timeout counts
+must be stated against the 125 MHz PID clock. A legacy 200k-cycle watchdog would be
+**1.6 ms, not 1 ms**; the revised near-term hardware target is `250000` cycles, or
+**2 ms**, while the demonstrated demo build still ships a **500 ms host-paced** watchdog
+(see Q8).
 
 **Defensible claim:** *"PID control fabric closed at 125 MHz (+0.977 ns); CoreVectorBlox
 V250 core closed at 200 MHz (+0.950 ns) on Production silicon."*
@@ -166,8 +168,9 @@ the shipped bitstream is open work."*
 
 - **Practical guards (on silicon):** sector clamp ±4.5%, slew limiter (0.001/cycle),
   watchdog → bumpless transfer. **[CONFIRMED implemented]** — but the **demonstrated**
-  bitstream ships a **500 ms host-paced watchdog**, not the 1 ms safety bound (the 1 ms /
-  125k-cycle build is unbuilt). `libero/reports/2026-06-17-two-slot/README.md:17`. **[OVERCLAIM-RISK on "1 ms"]**
+  bitstream ships a **500 ms host-paced watchdog**, not the revised sub-2 ms hardware target
+  (`250000` cycles at 125 MHz). `libero/reports/2026-06-17-two-slot/README.md:17`.
+  **[OVERCLAIM-RISK on "1 ms" or "sub-2 ms" until a new image is verified]**
 - **Formal Lur'e/Circle-Criterion absolute stability is the *framework*, NOT proven.** The
   README itself: these mechanisms *"do not constitute a proof that the AI cannot destabilize
   the loop"* (`README.md:130`). It rests on **six Residual Proof Obligations, ALL OPEN**
@@ -222,6 +225,6 @@ flight testing — Phase II work."*
 - "8.71% vs PID" → use **~5%** for the deployed model (8.71% is the failed cascade).
 - "bit-exact INT8" → "INT8 deployment; bit-exact runner reproducibility" (not INT8≈float).
 - "200 MHz" → "PID 125 MHz / V250 200 MHz".
-- "1 ms watchdog" → "500 ms host-paced (demo); 1 ms safety build pending".
+- "1 ms watchdog" → "500 ms host-paced (demo); sub-2 ms hardware target pending".
 - "closed-loop" → "host-paced datapath with injected error".
 - Any "real NV data" / "sim-to-real validated" / "verified safety" wording → remove or qualify.

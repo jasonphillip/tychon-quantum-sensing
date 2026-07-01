@@ -187,3 +187,39 @@ a full-design-scope simulation with post-synthesis net names, OR use
 a GUI SmartPower session that browses netlist hierarchy vs VCD scope
 side-by-side would close it fastest. Evidence:
 `libero/reports/2026-06-15-workload-power/verifypower.log`.
+
+## 2026-06-21 update — explicit VCD top attempted, no closure
+
+The SmartPower Tcl flow was patched to make the VCD import less ambiguous:
+
+```tcl
+smartpower_import_vcd \
+    -file $WORKLOAD_VCD \
+    -opmode {Active} \
+    -auto_detect_top_level_name {FALSE} \
+    -top_level_name {nv_pid_top_top} \
+    -glitch_filtering {auto}
+```
+
+The wrapper also now propagates a dated `SMARTPOWER_REPORT_TAG` so reruns do
+not overwrite earlier evidence bundles.
+
+Result: **ATTEMPTED, NOT CLOSURE.** A headless rerun on bee launched against
+the reference-design project. The streamed outer log stopped growing during
+project source loading, but SmartPower later left a small
+`2026-06-21-workload-power` report directory containing `smartpower_workload.rpt`
+and `rptstyle.xsl`. The report summary is bit-identical to the 2026-06-15
+default/vectorless result: Total `2622.855 mW`, Static `445.612 mW`, Dynamic
+`2177.243 mW`. No `verifypower.log` or `Annotated Pins` result was produced
+for this attempt, so no nonzero VCD annotation evidence exists. The stuck
+wrapper/streaming state was stopped after preserving the log and report.
+Artifacts are archived under
+`libero/reports/2026-06-21-workload-power-topname/`.
+
+This means the 2026-06-15 finding remains the current truth: the latest
+completed annotation check had **0.00% annotated pins**, and the 2026-06-21
+report did not prove otherwise. Treat both as default/vectorless estimates. The
+next discriminator should either map the standalone `nv_pid_top_top` VCD to the
+placed instance hierarchy from a GUI SmartPower session, or switch to a
+full-design/post-synthesis VCD whose signal names already match the placed
+netlist.

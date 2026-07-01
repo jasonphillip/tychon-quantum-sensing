@@ -108,7 +108,7 @@ pointer to this list. For Phase II planning, these are the six items:
 2. **Quantitative phase margin under ZOH** — Khalil §11; Astrom-
    Hagglund Ch.6. Sampled-data closure changes the Nyquist contour.
 3. **Bounded transport delay verification** — ODMR closed-loop FPGA-
-   PID architecture references. The 1 ms watchdog is the worst case;
+   PID architecture references. The revised sub-2 ms watchdog target is the near-term worst case;
    nominal delay must be measured.
 4. **Derivative filter system identification** — Astrom-Hagglund Ch.4.
    Unfiltered first-difference amplifies high-frequency noise at the

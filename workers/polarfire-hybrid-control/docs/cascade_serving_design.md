@@ -42,7 +42,7 @@ Composition is upstream of the safety pipeline. The existing `nv_pid_top` (`hls/
                                               │  - sector clamp ±4.5%      │
                                               │  - slew limiter 0.001 V/cyc│
                                               │  - bumpless transfer       │
-                                              │  - watchdog (1 ms, 200 MHz)│
+                                              │  - watchdog (2 ms target, 125 MHz)│
                                               │  → actuator_out (Q16.16)   │
                                               └────────────────────────────┘
 ```
@@ -75,7 +75,7 @@ The cascade composition happens **upstream** of all safety mechanisms. Concretel
 - The sector clamp (`hls/src/safety_clamps.cpp::apply_sector_clamp_gated`) bounds the actuator output to ±OUTER_SECTOR_CLAMP_FRACTION (4.5%) of the actuator range, regardless of how `u_AI_in` was computed. A composition that misbehaves (e.g. fine model emits out-of-distribution residuals) cannot exceed this bound.
 - The slew limiter (`apply_slew_limit`) bounds per-cycle changes by `MAX_SLEW_PER_CYCLE` (0.001 V/cycle).
 - Bumpless transfer (`NVPID::bumpless_transfer` in `nv_pid.hpp`) absorbs any current `u_AI_old` into the integrator on watchdog trip, so a stuck/slow cascade evaluation simply triggers timeout and graceful PID-only operation.
-- The watchdog (`watchdog.cpp::watchdog_check`) timeouts at 200,000 cycles (1 ms) without a fresh AI heartbeat. Sequential cascade serving roughly doubles inference latency vs. single-model — this must remain comfortably under 1 ms.
+- The near-term hardware watchdog target is 250,000 cycles at 125 MHz (2 ms) without a fresh AI heartbeat. Sequential cascade serving roughly doubles inference latency vs. single-model, so a cascade would need to remain comfortably under that watchdog window or be treated as a separate follow-on design.
 
 The Lur'e/Circle-Criterion sector-bounded NN claim in `docs/safety_architecture.md` is unaffected: it argues the AI output is sector-bounded, and `u_AI_in` is exactly that output regardless of how many models contributed to it.
 

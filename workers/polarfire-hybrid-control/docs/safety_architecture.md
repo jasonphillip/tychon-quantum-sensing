@@ -22,11 +22,12 @@ The ±5% Phase I bound was chosen conservatively for initial deployment. The Lur
 
 ## Watchdog and Bumpless Transfer
 
-A hardware watchdog (200 MHz counter, 1 ms timeout) monitors AI inference latency. On timeout:
+A hardware watchdog monitors AI inference latency. The near-term hardware target is
+250,000 cycles at the 125 MHz fabric clock, or 2 ms. On timeout:
 - The system transfers from AI+PID mode to pure PID mode
 - Bumpless transfer absorbs the last AI output into the PID integrator: `I_new = I_old + u_AI_old`
 - This prevents voltage discontinuities at the actuator output during mode transitions
-- A cooldown period (`WATCHDOG_COOLDOWN_CYCLES = 1000`, 5 µs at 200 MHz) holds the system in PID-only mode after timeout, preventing high-frequency limit-cycling (chattering) between AI+PID and PID-only modes
+- A cooldown period holds the system in PID-only mode after timeout, preventing high-frequency limit-cycling (chattering) between AI+PID and PID-only modes
 
 ## Signal Path Assumptions
 
@@ -38,7 +39,7 @@ The following items extend the Phase I Lur'e/Circle Criterion proof to cover dis
 
 ### (a) ZOH & Digital Transport Delay Characterization
 
-The Phase I proof assumes continuous-time feedback. In practice, the PID operates on a sampled signal (zero-order hold at the DAC output), and the AI inference path introduces a variable transport delay (bounded by the 1 ms watchdog). The ZOH and transport delay must be characterized to confirm that phase margin is preserved at the expanded ±30% authority. Specifically, the Nyquist plot of the loop transfer function including ZOH must remain outside the critical circle defined by the sector bounds.
+The Phase I proof assumes continuous-time feedback. In practice, the PID operates on a sampled signal (zero-order hold at the DAC output), and the AI inference path introduces a variable transport delay (near-term bounded by the revised sub-2 ms watchdog target once built and verified). The ZOH and transport delay must be characterized to confirm that phase margin is preserved at the expanded ±30% authority. Specifically, the Nyquist plot of the loop transfer function including ZOH must remain outside the critical circle defined by the sector bounds.
 
 ### (b) Derivative Filter System Identification
 
@@ -59,7 +60,7 @@ admissible:
 |---|---|---|
 | Plant model identification | Circle Criterion needs a sector-bounded plant; Phase I assumes "any positive gain" | Khalil 3rd ed. §7 (corpus `Lur'e/Circle Criterion` bundle) |
 | Quantitative phase margin under ZOH | Sampled-data closure changes Nyquist contour | Khalil §11 (digital control); Astrom-Hagglund Ch.6 |
-| Bounded transport delay verification | 1 ms watchdog is the worst case; nominal delay bound must be measured | corpus ODMR closed-loop bundle (FPGA-PID architectures) |
+| Bounded transport delay verification | revised sub-2 ms watchdog target is the near-term worst case; nominal delay bound must be measured | corpus ODMR closed-loop bundle (FPGA-PID architectures) |
 | Derivative filter SI | Unfiltered first-difference amplifies HF noise at expanded authority | Astrom-Hagglund Ch.4 |
 | ReLU sector verification (NN-in-loop) | The AI block is a sector-bounded nonlinearity only if the trained weights satisfy a sector bound | Recent arxiv 2025 on sector-bounded NN feedback (corpus) |
 | Workload-driven SmartPower | Default-toggle estimate is an upper bound, not an operational measurement | Microchip SmartPower UG 2025.2 |
