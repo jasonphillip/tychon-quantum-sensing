@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PolarFire Hybrid Control — Rung G live dashboard</title>
+<style>
+  :root{--bg:#0e1116;--panel:#161b22;--edge:#30363d;--ink:#e6edf3;--mut:#8b949e;
+        --ok:#3fb950;--warn:#d29922;--accent:#58a6ff;--red:#f85149;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Roboto,sans-serif}
+  header{padding:22px 26px;border-bottom:1px solid var(--edge);background:linear-gradient(180deg,#11161d,#0e1116)}
+  h1{margin:0 0 4px;font-size:21px;letter-spacing:.2px}
+  h1 .sub{color:var(--mut);font-weight:400;font-size:14px}
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font:600 12px var(--mono);vertical-align:middle}
+  .pill.ok{background:rgba(63,185,80,.15);color:var(--ok);border:1px solid rgba(63,185,80,.4)}
+  .pill.warn{background:rgba(210,153,34,.15);color:var(--warn);border:1px solid rgba(210,153,34,.4)}
+  main{max-width:1080px;margin:0 auto;padding:24px 26px 64px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:18px 0 26px}
+  .card{background:var(--panel);border:1px solid var(--edge);border-radius:10px;padding:14px 16px}
+  .card .k{color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.6px}
+  .card .v{font:600 19px var(--mono);margin-top:5px}
+  .card .v small{font-size:12px;color:var(--mut);font-weight:400}
+  section{margin:30px 0}
+  section h2{font-size:16px;border-left:3px solid var(--accent);padding-left:10px;margin:0 0 4px}
+  section p.cap{color:var(--mut);font-size:13px;margin:4px 0 14px}
+  figure{margin:0;background:var(--panel);border:1px solid var(--edge);border-radius:10px;padding:12px;text-align:center}
+  figure img{max-width:100%;height:auto;border-radius:6px}
+  table{border-collapse:collapse;width:100%;font:13px var(--mono)}
+  td,th{border:1px solid var(--edge);padding:7px 10px;text-align:left}
+  th{background:#1b222b;color:var(--mut);font-weight:600}
+  td.ok{color:var(--ok)} td.warn{color:var(--warn)}
+  a{color:var(--accent)}
+  .note{background:rgba(210,153,34,.08);border:1px solid rgba(210,153,34,.35);border-radius:8px;padding:12px 14px;color:#e6d6a8;font-size:13.5px}
+  footer{color:var(--mut);font-size:12px;border-top:1px solid var(--edge);padding:16px 26px;text-align:center}
+  code{font-family:var(--mono);background:#1b222b;padding:1px 5px;border-radius:4px;font-size:12.5px}
+</style>
+</head>
+<body>
+<header>
+  <h1>PolarFire Hybrid Control &nbsp;<span class="pill ok">KIT LIVE</span>
+    <br><span class="sub">Rung G — closed-loop ODMR replay on Production MPFS250T (Icicle Kit) · bitstream <code>idfix2</code></span></h1>
+</header>
+
+<main>
+  <div class="grid">
+    <div class="card"><div class="k">Target</div><div class="v">MPFS250T <small>Production · IDCODE 1F81A1CF</small></div></div>
+    <div class="card"><div class="k">V250 inference</div><div class="v" style="color:var(--ok)">COMPLETED <small>out[0] = −2.9506</small></div></div>
+    <div class="card"><div class="k">Bitstream</div><div class="v">idfix2 <small>job 39c8bcf2… · +0.789 ns</small></div></div>
+    <div class="card"><div class="k">PID CSR (M1)</div><div class="v">0x00010000 <small>version · clean two-slot</small></div></div>
+    <div class="card"><div class="k">Live actuator (M0)</div><div class="v" style="color:var(--ok)">TRACKING <small>u = Kp·err, Kp=0.8</small></div></div>
+    <div class="card"><div class="k">Watchdog / safety</div><div class="v" style="color:var(--warn)">BUMPLESS <small>120/120 → pure-PID fallback</small></div></div>
+    <div class="card"><div class="k">Sector clamp</div><div class="v">16 / 120 <small>samples clamp-active</small></div></div>
+    <div class="card"><div class="k">Samples</div><div class="v">120 <small>silicon-direct telemetry</small></div></div>
+  </div>
+
+  <section>
+    <h2>On-silicon replay — live (animated)</h2>
+    <p class="cap">Each ODMR error sample is injected into the fabric PID over AXI; the actuator output
+      (<code>0x60040844</code>, post-clamp tap) is read back from real silicon. Top: error in vs. PID-only /
+      PID+NN actuator. Bottom: NN <code>u_ai</code> with sector-clamp and watchdog flags.</p>
+    <figure><img src="silicon_anim.gif" alt="Animated on-silicon Rung G replay"></figure>
+  </section>
+
+  <section>
+    <h2>On-silicon replay — full trace</h2>
+    <p class="cap">Static render of the same 120-sample run. PID-only and PID+NN overlap because the
+      watchdog is in bumpless pure-PID fallback the whole run (host-paced replay → no per-row V250
+      <code>output_valid</code> pulse). This is the safety path working, not a fault.</p>
+    <figure><img src="silicon.png" alt="On-silicon Rung G full trace"></figure>
+  </section>
+
+  <section>
+    <h2>Software model — full PID + NN closed-loop dynamics</h2>
+    <p class="cap"><strong>Software model</strong> (not silicon): the fabric PID + sector clamp + watchdog
+      simulated in the dry-run harness so the NN feedforward influence and a forced over-range clamp
+      event (rows 20–40) are visible. Honest companion to the silicon trace above.</p>
+    <figure><img src="dryrun.png" alt="Software-model PID+NN dynamics"></figure>
+  </section>
+
+  <section>
+    <h2>What is proven on silicon — and what isn't</h2>
+    <table>
+      <tr><th>Claim</th><th>Status</th><th>Evidence</th></tr>
+      <tr><td>CoreVectorBlox V250 inference (Rung F)</td><td class="ok">SILICON ✓</td><td>vbx_probe INFERENCE COMPLETED, error_val=0; vnnx_smoke out=−2.9506</td></tr>
+      <tr><td>Clean two-slot PID/control telemetry (M1)</td><td class="ok">SILICON ✓</td><td>csr_version 0x00010000; write-counter monotonic; bit-exact gain readback</td></tr>
+      <tr><td>Live PID actuator tracking Kp·error (M0)</td><td class="ok">SILICON ✓</td><td>err 0.50→0.3999, 0.25→0.2000, 2.0→1.0 (clamp); idfix2 fix</td></tr>
+      <tr><td>Watchdog → bumpless pure-PID fallback</td><td class="ok">SILICON ✓</td><td>watchdog_csr bit0 + trip count live; mode=PID_ONLY_FALLBACK</td></tr>
+      <tr><td>Sector clamp bounds AI output to ±4.5%</td><td class="ok">SILICON ✓</td><td>clamp_active flag asserts when |u_ai| &gt; 0.045</td></tr>
+      <tr><td>NN-driven closed-loop actuator dynamics</td><td class="warn">SOFTWARE MODEL</td><td>shown in dry-run panel; on silicon the loop is host-paced, not real-time</td></tr>
+    </table>
+    <p class="cap" style="margin-top:14px">Provenance per <code>docs/two_slot_demo_scope_2026-06-18.md</code> and
+      <code>docs/agent_ground_truth_contract.md</code>. Raw telemetry:
+      <a href="silicon_telemetry.csv">silicon_telemetry.csv</a> ·
+      <a href="silicon_telemetry.jsonl">silicon_telemetry.jsonl</a>.</p>
+  </section>
+</main>
+
+<footer>
+  PolarFire Hybrid Control · Rung G dashboard · snapshot 2026-06-19 ·
+  data: on-silicon replay through <code>icicle</code> (mpfs-icicle-kit.local)
+</footer>
+</body>
+</html>
