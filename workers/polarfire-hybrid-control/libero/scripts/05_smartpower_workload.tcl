@@ -53,7 +53,14 @@ if {[info exists ::env(SMARTPOWER_REPORT_TAG)] && $::env(SMARTPOWER_REPORT_TAG) 
 set REPO_ROOT  [pwd]
 set PROJECT    "polarfire_hybrid_control"
 set REPORT_DIR [file join $REPO_ROOT libero reports $REPORT_TAG]
-set WORKLOAD_VCD [file join $REPO_ROOT sim output pid_workload.vcd]
+# Workload VCD: caller override wins; default = the subsystem-level
+# netlist-mirroring VCD (tb_power_wrap.v). The old standalone
+# pid_workload.vcd annotates 0.00% (scope mismatch) — never fall back to it.
+if {[info exists ::env(SMARTPOWER_WORKLOAD_VCD)] && $::env(SMARTPOWER_WORKLOAD_VCD) ne ""} {
+    set WORKLOAD_VCD $::env(SMARTPOWER_WORKLOAD_VCD)
+} else {
+    set WORKLOAD_VCD [file join $REPO_ROOT sim output pid_workload_subsystem.vcd]
+}
 
 # Gap 2 closure (2026-05-18): the old local libero/work project has an empty
 # designer/ directory, so it cannot be used for SmartPower. Prefer the active
@@ -86,8 +93,7 @@ open_project -file $TARGET_PRJX
 if {![file exists $WORKLOAD_VCD]} {
     puts "FATAL: workload VCD not found at $WORKLOAD_VCD"
     puts "  Generate it on the Beelink with:"
-    puts "    shls hw"
-    puts "    vsim -c -do sim/modelsim_pid_workload.do"
+    puts "    vsim -c -do sim/modelsim_pid_workload_subsystem.do"
     exit 1
 }
 puts "INFO: workload VCD: $WORKLOAD_VCD"
