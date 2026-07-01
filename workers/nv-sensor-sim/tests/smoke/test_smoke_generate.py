@@ -9,14 +9,13 @@ These tests verify the core simulation pipeline works end-to-end on CPU:
 
 from __future__ import annotations
 
+import tempfile
+
+import numpy as np
 import pytest
 
 # Suppress grid aliasing warnings from low-resolution test grids
 pytestmark = pytest.mark.filterwarnings("ignore:Grid aliasing risk:UserWarning")
-
-import tempfile
-
-import numpy as np
 
 
 @pytest.mark.smoke

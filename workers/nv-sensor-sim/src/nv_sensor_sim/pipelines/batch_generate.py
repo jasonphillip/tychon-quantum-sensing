@@ -66,13 +66,27 @@ def _shift_range(
 
 
 def _get_git_sha() -> str:
-    """Get current git SHA, or 'unknown' if not in a git repo."""
+    """Get current git SHA ("-dirty" suffixed on uncommitted tracked changes).
+
+    Untracked files (e.g. the generation log being written) do not count as
+    dirty, matching ``git describe --dirty`` semantics. Returns 'unknown' if
+    not in a git repo.
+    """
     try:
         result = subprocess.run(
             ["git", "rev-parse", "HEAD"],
             capture_output=True, text=True, timeout=5,
         )
-        return result.stdout.strip() if result.returncode == 0 else "unknown"
+        if result.returncode != 0:
+            return "unknown"
+        sha = result.stdout.strip()
+        status = subprocess.run(
+            ["git", "status", "--porcelain", "--untracked-files=no"],
+            capture_output=True, text=True, timeout=5,
+        )
+        if status.returncode == 0 and status.stdout.strip():
+            sha += "-dirty"
+        return sha
     except Exception:
         return "unknown"
 

@@ -99,11 +99,54 @@ are rendered by the 4-axis lineshape path reused from the static vector pipeline
 - `hyperfine` — whether the ¹⁴N hyperfine triplet is modeled. Default `false` (L=8). **L=24 is
   not yet produced** (see the forward note in the HDF5 layout below).
 - `linewidth_Hz` — Γ (FWHM in Hz) from `compute_linewidth(p1)`, used for collision labelling.
-- `collision_threshold_linewidths` — k in the `|f_i − f_j| < k·Γ` collision rule.
+- `linewidth_rendered_Hz`, `mw_saturation_s0` — the *rendered* lines are power-broadened:
+  Γ_rendered = Γ · √(1 + s0·mw_scale²) (≈4.9% wider at s0 = 0.1, mw_scale = 1). Collision
+  labels deliberately keep the intrinsic `linewidth_Hz` (v0 convention).
+- `collision_threshold_linewidths` — k in the `|f_i − f_j| < k·Γ` collision rule. The rule
+  runs over **all** line pairs, including the two transitions of the same axis (an axis'
+  own ± pair collides when its splitting drops below k·Γ).
 - `bias_B0_T`, `bias_direction_uvw` — the static bias (reused from the vector config). The
   lab-frame bias vector is `bias_B0_T · normalize(bias_direction_uvw)`; the repo convention
   aligns the crystal [uvw] axes with lab xyz, so the `_uvw` direction is also the lab direction.
 - `sweep_description` — free-text description of the field sweep.
+- Structured sweep geometry (additive; prose stays in `sweep_description`): `sweep_mode`
+  (`"fixed"` = one configured ramp for every sequence; `"isotropic"` = per-sequence held
+  ramp with direction uniform on the sphere), `sweep_scalar_range_T` /
+  `min_sweep_delta_T` / `min_ramp_window_frac` / `min_axis_projection_T` (isotropic
+  parameters: independent endpoint scalars, minimum motion, minimum ramp sub-interval,
+  projection-zero rejection floor), `ramp_start_T` / `ramp_end_T` (fixed-mode endpoints),
+  `jitter_frac`, and `n_ramp_resamples` (geometries rejected by the projection guard).
+- `sequence_stats` — per-split label statistics computed at generation time: crossing
+  counts per sequence (a *crossing* = two lines swapping frequency order, vs a *collision*
+  = within k·Γ), no-crossing fraction, crossing-frame spread, collision-frame fraction,
+  collision dwell-length distribution, min same-axis splitting + near-merge fraction
+  (splitting < 2Γ), min per-axis |B·n|, max line speed, and the split's ramp-resample count.
+- Per-axis contrast asymmetry: `axis_contrast_scale` — per-axis MW Rabi-amplitude factors
+  (the MW polarization projects differently onto each NV axis; contrast follows via
+  saturation C ∝ s/(1+s), and weaker-driven axes render slightly narrower). This is a
+  **deployment prior** — fixed MW antenna geometry → fixed axis ordering — with the same
+  status as the fixed bias direction. Identical contrast is the maximally-ambiguous
+  association case; per-axis contrast is a real, usable identity cue (arXiv:2507.00215)
+  available to trackers and classical baselines alike. `axis_contrast_drift_std` /
+  `axis_contrast_drift_tau_frames` describe the optional slow per-sequence AR(1) drift of
+  those factors (None = static). `line_depths` records the reference per-line dip depths
+  (geometry-matrix order, averaged-spectrum units) at the bias-only field with nominal
+  scales.
+- Trajectory-family mixture (isotropic sweeps): `trajectory_family_weights` — normalized
+  per-sequence mixture over `held` (hold–ramp–hold), `reversal` (ramp out, turn around at
+  a uniform-random frame in `reversal_turn_frac_range`, ramp back at a generally
+  different rate — field velocity crosses zero, the velocity-ambiguous tracking case),
+  and `ou` (held ramp plus a seeded OU field perturbation with std `field_ou_sigma_T`
+  and correlation time `field_ou_tau_frames`). Per-sequence family assignments, reversal
+  turn frames, reversals-inside-collision-dwell counts, per-family stratified summaries,
+  and achieved OU wander live in `sequence_stats`. The min-projection guard and the
+  window-containment asserts apply to every family.
+- `numpy_version` — recorded alongside `simos_version`/`qutip_version`: per-sequence seed
+  streams depend on numpy's `Generator` implementation.
+- `freq_range_Hz` may be **pinned** in the generator config to hold the grid fixed across
+  lineages (v1 pins v0's exact window/F). Generation fails fast if the derived worst-case
+  window does not fit inside the pin, and asserts post-render that every stored label lies
+  within the window.
 
 All sequence quantities are SI: frequencies in Hz, fields in Tesla, time in seconds. The
 `resonance_frequency` and `linewidth` unit strings are added to `units`.

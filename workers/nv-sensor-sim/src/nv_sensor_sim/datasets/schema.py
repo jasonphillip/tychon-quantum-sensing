@@ -73,6 +73,10 @@ class DatasetManifest:
     config_hash: str = ""
     simos_version: str = ""
     qutip_version: str = ""
+    # numpy version ("" on older manifests): the per-sequence seed streams
+    # depend on numpy's Generator implementation, so bit-exact reproduction
+    # needs the same numpy.
+    numpy_version: str = ""
     backend: str = "qutip"
     generated_at: str = ""
     # Shared data-contract version tag. Empty for legacy/static datasets; the
@@ -136,6 +140,44 @@ class DatasetManifest:
     linewidth_Hz: float = 0.0  # Gamma (FWHM) used for collision labelling
     collision_threshold_linewidths: float = 1.0  # k in the |f_i - f_j| < k*Gamma rule
     sweep_description: str = ""  # free-text description of the field sweep
+    # Per-split label statistics (crossing counts, collision dwell, near-merge
+    # margins) computed from the rendered labels at generation time. Additive:
+    # None for static datasets and older sequence manifests.
+    sequence_stats: dict | None = None
+    # Structured sweep-geometry fields (sequence datasets). Additive: empty/None
+    # on static datasets and older sequence manifests; sweep_description keeps
+    # the human-readable prose.
+    sweep_mode: str = ""  # "fixed" | "isotropic" ("" for static datasets)
+    sweep_scalar_range_T: tuple[float, float] | None = None  # isotropic endpoint scalars
+    min_sweep_delta_T: float | None = None  # isotropic minimum |s_end - s_start|
+    min_ramp_window_frac: float | None = None  # isotropic minimum ramp-window fraction
+    min_axis_projection_T: float | None = None  # reject ramps below this |B . n_i|
+    n_ramp_resamples: int = 0  # total geometries rejected by the projection guard
+    ramp_start_T: tuple[float, float, float] | None = None  # fixed-mode endpoints
+    ramp_end_T: tuple[float, float, float] | None = None
+    jitter_frac: float | None = None  # per-sequence endpoint jitter fraction
+    # Rendered (power-broadened) linewidth alongside the labeling linewidth:
+    # Gamma_rendered = linewidth_Hz * sqrt(1 + s0 * mw_scale^2) at mw_scale=1.
+    # Collision labels use the intrinsic linewidth_Hz (includes intra-axis pairs).
+    linewidth_rendered_Hz: float | None = None
+    mw_saturation_s0: float | None = None
+    # Per-axis MW polarization projection: Rabi-amplitude factors per NV axis
+    # (contrast follows via saturation; identical contrast is the maximally
+    # ambiguous case). Optional slow per-sequence drift (stationary AR(1) with
+    # fractional std / correlation time in frames), seeded per sequence.
+    axis_contrast_scale: tuple[float, ...] | None = None
+    axis_contrast_drift_std: float | None = None
+    axis_contrast_drift_tau_frames: float | None = None
+    # Reference per-line dip depths (geometry-matrix order, averaged-spectrum
+    # units) measured at the bias-only field with nominal scales, no drift.
+    line_depths: list[float] | None = None
+    # Per-sequence trajectory-family mixture (isotropic sweeps): normalized
+    # weights keyed "held" / "reversal" / "ou". Per-sequence assignments and
+    # stratified summaries live in sequence_stats; None = 100% held ramps.
+    trajectory_family_weights: dict | None = None
+    reversal_turn_frac_range: tuple[float, float] | None = None
+    field_ou_sigma_T: float | None = None  # OU field perturbation std (Tesla)
+    field_ou_tau_frames: float | None = None  # OU correlation time (frames)
 
     # Noise mode and OU parameters
     noise_mode: str = "deterministic"
@@ -188,6 +230,16 @@ class DatasetManifest:
         d["bias_direction_uvw"] = list(d["bias_direction_uvw"])
         if d.get("bias_B0_range_T") is not None:
             d["bias_B0_range_T"] = list(d["bias_B0_range_T"])
+        # Sweep-geometry / contrast / family tuples (None when not applicable)
+        for key in (
+            "sweep_scalar_range_T",
+            "ramp_start_T",
+            "ramp_end_T",
+            "axis_contrast_scale",
+            "reversal_turn_frac_range",
+        ):
+            if d.get(key) is not None:
+                d[key] = list(d[key])
         return d
 
     def to_json(self, path: str | Path) -> None:
@@ -280,6 +332,38 @@ class DatasetManifest:
         d.setdefault("linewidth_Hz", 0.0)
         d.setdefault("collision_threshold_linewidths", 1.0)
         d.setdefault("sweep_description", "")
+        d.setdefault("sequence_stats", None)
+
+        # Backward compat: structured sweep-geometry / linewidth / provenance fields
+        d.setdefault("numpy_version", "")
+        d.setdefault("sweep_mode", "")
+        d.setdefault("sweep_scalar_range_T", None)
+        d.setdefault("min_sweep_delta_T", None)
+        d.setdefault("min_ramp_window_frac", None)
+        d.setdefault("min_axis_projection_T", None)
+        d.setdefault("n_ramp_resamples", 0)
+        d.setdefault("ramp_start_T", None)
+        d.setdefault("ramp_end_T", None)
+        d.setdefault("jitter_frac", None)
+        d.setdefault("linewidth_rendered_Hz", None)
+        d.setdefault("mw_saturation_s0", None)
+        d.setdefault("axis_contrast_scale", None)
+        d.setdefault("axis_contrast_drift_std", None)
+        d.setdefault("axis_contrast_drift_tau_frames", None)
+        d.setdefault("line_depths", None)
+        d.setdefault("trajectory_family_weights", None)
+        d.setdefault("reversal_turn_frac_range", None)
+        d.setdefault("field_ou_sigma_T", None)
+        d.setdefault("field_ou_tau_frames", None)
+        for key in (
+            "sweep_scalar_range_T",
+            "ramp_start_T",
+            "ramp_end_T",
+            "axis_contrast_scale",
+            "reversal_turn_frac_range",
+        ):
+            if d.get(key) is not None:
+                d[key] = tuple(d[key])
 
         return cls(**d)
 
@@ -381,24 +465,19 @@ class DatasetManifest:
             )
         if len(self.bias_direction_uvw) != 3:
             raise ValueError(
-                f"bias_direction_uvw must be a 3-vector, got length "
-                f"{len(self.bias_direction_uvw)}"
+                f"bias_direction_uvw must be a 3-vector, got length {len(self.bias_direction_uvw)}"
             )
         if self.bias_B0_range_T is not None:
             lo, hi = self.bias_B0_range_T
             if lo > hi:
                 raise ValueError(f"bias_B0_range_T: min ({lo}) > max ({hi})")
             if lo < 0.0:
-                raise ValueError(
-                    f"bias_B0_range_T lower bound must be non-negative, got {lo}"
-                )
+                raise ValueError(f"bias_B0_range_T lower bound must be non-negative, got {lo}")
 
         # Validate time-series (sequence) configuration
         if self.sequence_mode:
             if self.n_timesteps <= 0:
-                raise ValueError(
-                    f"sequence_mode requires n_timesteps > 0, got {self.n_timesteps}"
-                )
+                raise ValueError(f"sequence_mode requires n_timesteps > 0, got {self.n_timesteps}")
             if self.dt_s <= 0.0:
                 raise ValueError(f"sequence_mode requires dt_s > 0, got {self.dt_s}")
             if self.linewidth_Hz <= 0.0:
@@ -415,4 +494,12 @@ class DatasetManifest:
                 raise ValueError(
                     f"n_lines ({self.n_lines}) inconsistent with hyperfine="
                     f"{self.hyperfine} (expected {expected_lines})"
+                )
+            if self.sweep_scalar_range_T is not None:
+                lo, hi = self.sweep_scalar_range_T
+                if lo >= hi:
+                    raise ValueError(f"sweep_scalar_range_T: min ({lo}) >= max ({hi})")
+            if self.n_ramp_resamples < 0:
+                raise ValueError(
+                    f"n_ramp_resamples must be non-negative, got {self.n_ramp_resamples}"
                 )

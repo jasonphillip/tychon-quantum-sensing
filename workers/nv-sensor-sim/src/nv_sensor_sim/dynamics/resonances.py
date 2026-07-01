@@ -21,8 +21,10 @@ Why the centers are diagonalized, not analytic: a transverse field B_perp shifts
 both transitions of an axis up by ~``1.5 (gamma B_perp)^2 / D`` (common mode),
 which in the few-mT regime is several linewidths. The first-order projection
 ``D +/- gamma (B . n_i)`` would therefore miss the real dip by many Gamma. The
-*split* ``(f+ - f-)/2 = gamma |B . n_i|`` is, however, exact to second order, so
-the +/- transition identity is still resolved by the projection sign.
+*split* ``(f+ - f-)/2 ~ gamma |B . n_i|`` cancels the common-mode shift exactly
+but is first-order accurate, not exact — a second-order *asymmetric* residual
+remains (~0.4 Gamma at the few-mT extremes; see docs/dataset-contract.md). The
++/- transition identity is still resolved by the projection sign.
 """
 
 from __future__ import annotations

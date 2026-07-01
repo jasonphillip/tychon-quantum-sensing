@@ -21,20 +21,24 @@ import yaml
 
 from nv_sensor_sim.pipelines.sequence_generate import generate_sequence_dataset
 
-# Length-3 field vectors coerced from YAML lists to float tuples.
-_FLOAT_VECTOR_KEYS: tuple[str, ...] = (
+# Numeric YAML lists (field 3-vectors, scalar/frequency ranges) coerced to float tuples.
+_FLOAT_TUPLE_KEYS: tuple[str, ...] = (
     "bias_direction_uvw",
     "ramp_start_T",
     "ramp_end_T",
+    "sweep_scalar_range_T",
+    "freq_range_Hz",
+    "axis_contrast_scale",
+    "reversal_turn_frac_range",
 )
 
 
 def load_yaml_config(config_path: Path) -> dict:
-    """Load YAML, coercing field 3-vectors to float tuples."""
+    """Load YAML, coercing numeric list values to float tuples."""
     with open(config_path) as f:
         cfg = yaml.safe_load(f)
 
-    for key in _FLOAT_VECTOR_KEYS:
+    for key in _FLOAT_TUPLE_KEYS:
         if key in cfg and isinstance(cfg[key], list):
             cfg[key] = tuple(float(v) for v in cfg[key])
     return cfg
@@ -75,10 +79,23 @@ def main() -> None:
         "bias_direction_uvw",
         "ramp_start_T",
         "ramp_end_T",
+        "sweep_mode",
+        "sweep_scalar_range_T",
+        "min_sweep_delta_T",
+        "min_ramp_window_frac",
+        "min_axis_projection_T",
         "jitter_frac",
+        "axis_contrast_scale",
+        "axis_contrast_drift_std",
+        "axis_contrast_drift_tau_frames",
+        "trajectory_family_weights",
+        "reversal_turn_frac_range",
+        "field_ou_sigma_T",
+        "field_ou_tau_frames",
         "collision_threshold_linewidths",
         "extra_b_perp_T",
         "hyperfine",
+        "freq_range_Hz",
         "n_freq_points",
         "freq_margin_factor",
         "aliasing_safety",

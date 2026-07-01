@@ -33,6 +33,7 @@ def render_multi_axis_frame(
     nv_axes: np.ndarray = NV_AXES_UNIT,
     freq_range: tuple[float, float] | None = None,
     n_points: int | None = None,
+    axis_mw_scales: np.ndarray | None = None,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Render one multi-axis ODMR frame and its associated line centers.
 
@@ -58,6 +59,11 @@ def render_multi_axis_frame(
         MW sweep range (start, stop) in Hz. Defaults to adapter config value.
     n_points : int, optional
         Number of frequency points. Defaults to adapter config value.
+    axis_mw_scales : np.ndarray, optional
+        Per-axis MW Rabi-amplitude factors (length ``n_axes``), multiplied onto
+        ``mw_scale``. Models the MW polarization projecting differently onto
+        each NV axis, so per-axis contrast (via saturation) and rendered
+        broadening differ. None (default) drives all axes uniformly.
 
     Returns
     -------
@@ -66,6 +72,8 @@ def render_multi_axis_frame(
         has length ``L = 2 * n_axes`` in geometry-matrix order (Hz).
     """
     B_par, B_perp_mag = project_field_onto_axes(B_lab_T, nv_axes=nv_axes)
+    if axis_mw_scales is not None:
+        axis_mw_scales = np.asarray(axis_mw_scales, dtype=float).reshape(len(nv_axes))
 
     spectra: list[np.ndarray] = []
     per_axis_centers: list[np.ndarray] = []
@@ -76,12 +84,13 @@ def render_multi_axis_frame(
         for i in range(len(nv_axes)):
             B_eff = np.array([0.0, 0.0, abs(float(B_par[i]))])
             adapter.config.b_perp_T = float(B_perp_mag[i]) + extra_b_perp_T
+            scale_i = mw_scale if axis_mw_scales is None else mw_scale * float(axis_mw_scales[i])
             freqs_i, signal_i, centers_i = adapter.generate_odmr_spectrum(
                 B_field=B_eff,
                 freq_range=freq_range,
                 n_points=n_points,
                 p1_ppm=p1_ppm,
-                mw_scale=mw_scale,
+                mw_scale=scale_i,
                 return_line_centers=True,
             )
             if frequencies is None:
@@ -108,6 +117,7 @@ def render_sequence(
     nv_axes: np.ndarray = NV_AXES_UNIT,
     freq_range: tuple[float, float] | None = None,
     n_points: int | None = None,
+    axis_mw_scales: np.ndarray | None = None,
 ) -> dict[str, np.ndarray]:
     """Render a full time-series for one field trajectory.
 
@@ -131,6 +141,10 @@ def render_sequence(
         MW sweep range (start, stop) in Hz. Defaults to adapter config value.
     n_points : int, optional
         Number of frequency points. Defaults to adapter config value.
+    axis_mw_scales : np.ndarray, optional
+        Per-axis MW Rabi-amplitude factors: shape (n_axes,) applied to every
+        frame, or (T, n_axes) per frame (e.g. slow contrast drift). None
+        (default) drives all axes uniformly.
 
     Returns
     -------
@@ -145,6 +159,19 @@ def render_sequence(
     line_axis_1d, line_transition_1d = axis_transition_labels(nv_axes)
     n_lines = line_axis_1d.shape[0]
 
+    scales_per_frame: np.ndarray | None = None
+    if axis_mw_scales is not None:
+        scales = np.asarray(axis_mw_scales, dtype=float)
+        if scales.ndim == 1:
+            scales_per_frame = np.broadcast_to(scales, (n_steps, len(nv_axes)))
+        elif scales.shape == (n_steps, len(nv_axes)):
+            scales_per_frame = scales
+        else:
+            raise ValueError(
+                f"axis_mw_scales must have shape ({len(nv_axes)},) or "
+                f"({n_steps}, {len(nv_axes)}), got {scales.shape}"
+            )
+
     spectra: np.ndarray | None = None
     frequencies: np.ndarray | None = None
     resonance = np.empty((n_steps, n_lines), dtype=float)
@@ -158,6 +185,7 @@ def render_sequence(
             nv_axes=nv_axes,
             freq_range=freq_range,
             n_points=n_points,
+            axis_mw_scales=None if scales_per_frame is None else scales_per_frame[t],
         )
         if spectra is None:
             frequencies = freqs
