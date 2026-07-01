@@ -1,4 +1,8 @@
-"""B2.2 — Forward-reconstruction metric (NVRNet Component 6 pattern).
+"""B2.2 — Forward-reconstruction metric.
+
+Pattern follows "Component 6" of the NVRNet paper (Cornell Shang & Fuchs,
+arXiv:2603.14144). NVRNet's code is NOT public and no NVRNet class exists
+in this repo — only this metric pattern is reproduced from the paper.
 
 For each held-out test spectrum, runs three SimOS forward passes:
 
@@ -13,7 +17,9 @@ For each reconstruction, reports the normalized FFT error
 sixth eval metric; PID and oracle are reported as the lower and upper
 bounds of "achievable" by this pipeline.
 
-NVRNet headline target for the FCNN row: 0.10 – 0.19.
+Reference target for the FCNN row: 0.10 – 0.19 (the range the NVRNet
+paper reports for its own system — an external benchmark figure, not a
+measurement of this repo's models).
 
 Run::
 
@@ -176,7 +182,7 @@ def normalized_fft_error(orig: np.ndarray, recon: np.ndarray) -> float:
     Both spectra are mean-centred before FFT so the DC bin (which equals
     sum(s) ≈ N for baseline-near-1 spectra) does not dominate the ratio.
     Equivalent to dropping FFT bin 0; this is the meaningful "AC content"
-    fidelity that the NVRNet-style metric is trying to capture.
+    fidelity that the NVRNet-paper-style metric is trying to capture.
     """
     o_ac = orig - orig.mean()
     r_ac = recon - recon.mean()
