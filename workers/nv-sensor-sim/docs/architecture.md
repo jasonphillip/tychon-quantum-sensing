@@ -27,7 +27,7 @@ SimOS NVSystem provides the 7-level photophysics model (GS triplet + ES triplet 
 ### Layer 2 — Coupled Noise Injection
 `physics/noise_injection.py`
 
-Ornstein-Uhlenbeck stochastic processes for T(t) and B1(t) injected at the Hamiltonian level via SimOS StochasticLiouvilleParameters. Not post-processing — the Lindblad master equation captures state-mixing inherently.
+Ornstein-Uhlenbeck stochastic processes for T(t) and B1(t) injected at the Hamiltonian level via SimOS StochasticLiouvilleParameters — parameter perturbation upstream of the spectrum computation, not output post-processing. NOTE: the production spectrum path computes spectra by Hamiltonian eigenvalue diagonalization + phenomenological Lorentzian lineshape (see `simos_adapter.generate_odmr_spectrum`); it does not solve the Lindblad master equation, so state-mixing enters only through the perturbed Hamiltonian eigenstructure.
 
 ### Layer 3 — Published Parameters
 `physics/parameters.py`

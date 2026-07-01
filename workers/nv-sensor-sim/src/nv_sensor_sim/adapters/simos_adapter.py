@@ -3,9 +3,13 @@
 Wraps SimOS v0.2.3 (ETH Zürich Degen group) to provide:
 - NV system construction with 7-level photophysics
 - Ground/excited state Hamiltonians with Zeeman, ZFS, hyperfine
-- Lindblad master equation evolution with collapse operators
-- Steady-state CW ODMR spectrum generation
-- Stochastic Liouville evolution for coupled noise injection
+- CW-ODMR spectrum generation via Hamiltonian EIGENVALUE diagonalization
+  plus a phenomenological Lorentzian lineshape (base_contrast=0.03) — this
+  is the PRODUCTION spectrum path (``generate_odmr_spectrum``); it does NOT
+  solve the Lindblad master equation or a steady-state optical-pumping model
+- A time-domain Lindblad collapse-operator path (``get_collapse_operators``)
+  that exists but is NOT used by the production spectrum path
+- Stochastic-Liouville parameter plumbing for coupled noise injection
 
 References
 ----------

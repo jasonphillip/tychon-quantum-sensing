@@ -12,6 +12,13 @@
 #   reproduction is captured in configs/orbit_benchmark_v2.yaml (7-day
 #   traces yielding ~225 windows per orbit_id).
 #
+# STATUS (2026-07-01): "96.1%" above is the Final Technical Report's claim
+#   (computed in odmr-edge-ml's adev_simulation.py from the v1 unclamped
+#   model), cited here only as the reproduction TARGET. No ADEV benchmark
+#   has ever been run in THIS repo: the orbit deps (sgp4/ppigrf) are
+#   uninstalled (all 4 orbit tests skip), there is no Allan-deviation code
+#   here, and v2 is a stub.
+#
 # TLE provenance: bodies are baked inline below WITH valid checksums so the
 # benchmark is bit-reproducible on an air-gapped Spark with zero network.
 # Source attribution lives next to each TLE pair as a comment. The loader
