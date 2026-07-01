@@ -11,9 +11,10 @@ preserved D.1/D.2/D.3), and synthesizes cleanly via `shls hw` on Beelink
 RTL into the Microchip reference design (`MPFS_ICICLE_Vectorblox`)
 requires the follow-on canvas refresh per
 `docs/smartdesign_two_slot_canvas_runbook.md`, which is GUI-driven and
-not autonomous-CLI feasible. The r6_s25 closure (+0.728 ns slack at
-200 MHz) remains the canonical Phase I integrated evidence; the
-filter-design integrated number is gated on canvas refresh.
+not autonomous-CLI feasible. The r6_s25 closure (+0.728 ns slack on the
+125 MHz FIC_0 PID domain — historical figure; current two-slot closures:
++0.977 ns r10_s29, +1.006 ns r13_s32) is the Phase I integrated evidence;
+the filter-design integrated number is gated on canvas refresh.
 
 ## Continuous-time form
 
@@ -112,7 +113,8 @@ At the control bandwidth (3 kHz, ω = 18.8 krad/s), BE phase error is
 ~0.05° — negligible. The choice of BE over Tustin trades ~5° of phase
 accuracy at the corner for one fewer multiplication per cycle (Tustin
 requires 2 multiplies + 1 add in the numerator), which preserves the
-+0.728 ns timing slack budget for when integrated closure is done.
+positive timing-slack budget (historical r6_s25 +0.728 ns; current
+two-slot +0.977…+1.006 ns) for when integrated closure is done.
 
 ## HLS synthesis evidence (2026-05-17)
 
@@ -126,7 +128,7 @@ From `hls/hls_output/reports/summary.hls.nv_pid_top.rpt`:
   12 ns to meet II = 1 — this is the scheduler's view, not the final
   P&R timing. Final flop-to-flop delay through Synplify Pro logic
   optimization is typically much shorter and is the metric for the
-  200 MHz (5 ns) Libero closure constraint.
+  125 MHz (8 ns) Libero closure constraint on the PID fabric domain.
 
 ## Verification status
 
@@ -137,7 +139,7 @@ From `hls/hls_output/reports/summary.hls.nv_pid_top.rpt`:
 | Filter unit tests E.1/E.2 pass | verified | hls/tb/tb_bumpless.cpp + make hls-test-local |
 | make verify-local green | verified | tools/audit_libero_reports.py + audit_corpus_citations.py |
 | HLS synthesis II=1 | verified | hls/hls_output/reports/summary.hls.nv_pid_top.rpt |
-| Integrated P&R timing closure ≥ 0 ns at 200 MHz | **deferred** | requires follow-on canvas refresh runbook |
+| Integrated P&R timing closure ≥ 0 ns at 125 MHz (PID fabric domain) | **deferred** | requires follow-on canvas refresh runbook |
 
 ## Path to integrated closure (Follow-On)
 
@@ -148,7 +150,7 @@ From `hls/hls_output/reports/summary.hls.nv_pid_top.rpt`:
    - Wire interconnect master to FIC_0_PERIPHERALS_1.
    - Connect observability taps; regenerate component.
 2. `libero SCRIPT:libero/scripts/closure_pipeline.tcl` to re-synth + P&R.
-3. Inspect timing report for worst slack at 200 MHz; document new value.
+3. Inspect timing report for worst slack at 125 MHz (PID fabric domain); document new value.
 4. Append closure evidence to `libero/reports/<date>-deriv-filter/`.
 5. Update the integrated-closure row in the verification status table
    above and append a follow-up DLOG.

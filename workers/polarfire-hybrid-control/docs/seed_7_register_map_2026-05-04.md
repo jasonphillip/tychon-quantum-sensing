@@ -23,7 +23,7 @@ register references against this document. Don't fork the plan.
 | sNVM component digest | `ebf80ede6776e1b3c053fa31a33f8414e61e9f4d01778bebbc2bd8f363d32507` |
 | Entire bitstream digest | `cf719213dda68a3887e0cc8e28b451a213becccd7a32cde847f2f1452cf46460` |
 | Source project | `~\libero_seedsweep\seed_7\MPFS_ICICLE_Vectorblox.prjx` |
-| Closure lineage | audit-006 r6_s25 P&R, +0.728 ns slack on 125 MHz FIC CCC PLL OUT0 user clock at slow_lv_ht; FCVG484 STD-grade Production silicon |
+| Closure lineage | audit-006 r6_s25 P&R, +0.728 ns slack on 125 MHz FIC CCC PLL OUT0 user clock at slow_lv_ht; FCVG484 STD-grade Production silicon. (Historical lineage of THIS seed_7 bitstream; later two-slot closures: r10_s29 +0.977 ns, r13_s32 +1.006 ns.) |
 | Target device | MPFS250T-FCVG484E |
 | Export script | `libero/scripts/04b_export_only.tcl` (commit on `bringup/part-1-bitstream`) |
 

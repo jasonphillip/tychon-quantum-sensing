@@ -6,7 +6,7 @@ The AI feedforward path is treated as a sector-bounded nonlinearity within a Lur
 
 1. **Sector saturation clamps (±5% Phase I bound)** — AI output bounded to a fraction of the actuator range. Implemented in `hls/src/safety_clamps.cpp` with a 4.5% hardware limit to guarantee ±5.0% compliance after worst-case fixed-point rounding. Analytical re-derivation (expanded-authority analysis) confirms the Circle Criterion holds up to ±50% authority for any positive plant gain, with ±30% proposed as the expanded operational bound for the follow-on deployment path.
 
-2. **Bounded slew rate** — Per-cycle change in AI feedforward output is clamped (`MAX_SLEW_PER_CYCLE = 0.001`, i.e. 200 V/ms at 200 MHz). Prevents abrupt AI corrections from exciting plant resonances or violating du/dt assumptions in the stability proof.
+2. **Bounded slew rate** — Per-cycle change in AI feedforward output is clamped (`MAX_SLEW_PER_CYCLE = 0.001`, i.e. 125 V/ms at the 125 MHz PID fabric clock). Prevents abrupt AI corrections from exciting plant resonances or violating du/dt assumptions in the stability proof.
 
 3. **Asymptotically stable classical PID** — The baseline controller (without AI) must be stable on its own. The AI component adds feedforward corrections but cannot override the PID's stabilizing action.
 

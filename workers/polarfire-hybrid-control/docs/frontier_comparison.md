@@ -1,5 +1,11 @@
 # Frontier Comparison — With vs Without Domain Corpus
 
+> **Note (2026-07-01):** the timing-slack figures in this document (+0.728 ns
+> etc.) describe the historical r6_s25 / 2026-04-29 closure lineage the audit
+> rounds compared — accurate for that baseline, superseded since. Current
+> two-slot closures: r10_s29 +0.977 ns (PID) / +0.950 ns (V250), r13_s32
+> +1.006 ns / +1.050 ns (programmed 2 ms image).
+
 The user's experiment: how does a frontier model's work change when the
 same project is approached **without** a domain corpus vs **with** one?
 

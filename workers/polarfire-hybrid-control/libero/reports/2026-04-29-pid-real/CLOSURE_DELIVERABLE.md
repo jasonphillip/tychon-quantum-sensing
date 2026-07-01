@@ -5,6 +5,13 @@
 **Run**: r6_s25 (Run 6, Seed 24, single-seed closure)
 **Status**: Full closure SUCCEEDED — SYNTHESIZE → PLACEROUTE → VERIFYTIMING → VERIFYPOWER
 
+> **Historical record.** These are the r6_s25 numbers as closed on 2026-04-29;
+> audit-006 characterized the +0.728 ns figure as a single-seed sample
+> (same-RTL fresh-synth range +0.634…+0.906 ns, Synplify cross-day
+> non-determinism). Current two-slot closures: r10_s29 +0.977 ns (PID) /
+> +0.950 ns (V250); r13_s32 +1.006 ns / +1.050 ns (programmed 2 ms image).
+> Cite those, not this, for current-design claims.
+
 This is the first time this design has produced post-P&R numbers that
 reflect the actual integrated PID compute datapath rather than a
 constant-folded paper-shell.

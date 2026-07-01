@@ -71,13 +71,16 @@ V250 output_valid -> vbx_pulse_gen -> watchdog_timer -> nv_pid_top.ai_watchdog_t
 
 | Build | `WATCHDOG_TIMEOUT_CYCLES` | Time @125 MHz | Use |
 |---|---|---|---|
-| **dashboard-demo** | `62_500_000` | **500 ms** (host-paced; NOT the 1 ms safety bound) | Rung G stable telemetry, plumbing/bumpless-transfer proof |
-| **safety-spec** | `125_000` | **1 ms** (the real bound) | exact-1 ms safety stunt + safety claim |
+| **dashboard-demo** | `62_500_000` | **500 ms** (host-paced; NOT the safety bound) | Rung G stable telemetry, plumbing/bumpless-transfer proof |
+| **watchdog-2ms (current hardware image, r13_s32)** | `250_000` | **2 ms** (the current real bound; programmed 2026-06-21) | safety-bound demo + trip-time measurement target |
+| ~~safety-spec 1 ms~~ (superseded 2026-06-21) | `125_000` | 1 ms | the 1 ms safety-clone builds failed (see `libero/reports/2026-06-21-safety-*/`); 2 ms adopted as the near-term bound |
 
-Both from the same netlist via `patch_two_slot.py --watchdog-cycles`. Artifacts
+All from the same netlist via `patch_two_slot.py --watchdog-cycles`. Artifacts
 are kept separate by filename + sha256 + program log (see release checklist).
-NOTE: the HLS `rta_config` 200 MHz assumption is stale; `200_000` cycles = 1.6 ms
-at the real 125 MHz fabric clock, so the safety-spec uses `125_000`, not `200_000`.
+NOTE (updated 2026-07-01): the HLS `rta_config` 200 MHz clock assumption was
+stale and has been corrected to 125 MHz; `rta_config.hpp` now carries
+`WATCHDOG_TIMEOUT_CYCLES = 250_000` (2 ms @125 MHz), matching the programmed
+r13_s32 image.
 
 ## GATE 1a synthesis evidence (demo build, 2026-06-17)
 

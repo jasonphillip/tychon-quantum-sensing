@@ -114,7 +114,7 @@ The FPGA needs to emit its INT8 output (composite-into-clamps, post-clamp, integ
 
 ### Primary — MSS UART0 console (post-HW-03)
 
-Firmware reads `pid_csr_block` taps over AXI4-Lite (slot 1 at `0x4001_0040`..`0x4001_005C` per the existing CSR map), formats as ASCII (`hex` for compactness), and prints over MSS UART0. Bandwidth ~115200 baud is tiny relative to a 200 MHz fabric clock, so high-rate activity capture is impossible — but exact for fixed-input-set `verify_bit_exact` comparisons:
+Firmware reads `pid_csr_block` taps over AXI4-Lite (slot 1 at `0x4001_0040`..`0x4001_005C` per the existing CSR map), formats as ASCII (`hex` for compactness), and prints over MSS UART0. Bandwidth ~115200 baud is tiny relative to the 125 MHz PID fabric clock, so high-rate activity capture is impossible — but exact for fixed-input-set `verify_bit_exact` comparisons:
 
 1. Host pushes a known input set (N samples of `coarse_int8`, `fine_int8`) over the same UART (or via a pre-flashed firmware blob).
 2. Firmware loops: write composite → read post-clamp output → emit on UART.

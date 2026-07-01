@@ -56,9 +56,10 @@ under the operator autonomy grant; recorded here so it can be overridden.
 2. Bare-metal would require hand-rolling DDR bring-up + a 2 MB firmware-staging allocator +
    fabric-master↔L2 **cache coherency that Microchip does not document** — the
    byte-deterministic failure class this project's debugging rules dread.
-3. The **safety/real-time story is unaffected**: the bounded-safe PID, the 200 MHz watchdog,
-   and the clamps all live in FABRIC (HLS datapath). The MSS is supervisory only — the
-   README's "Linux jitter violates <150 µs" rationale was incoherent.
+3. The **safety/real-time story is unaffected**: the bounded-safe PID, the fabric watchdog
+   (125 MHz PID domain, 250,000 cycles = 2 ms in the current two-slot image; 200 MHz counter
+   in the r6_s25-era overlay), and the clamps all live in FABRIC (HLS datapath). The MSS is
+   supervisory only — the README's "Linux jitter violates <150 µs" rationale was incoherent.
 4. **Cost drops:** SD-card boot is non-destructive (no eMMC write needed to iterate),
    SoftConsole leaves the critical path, and the toolchain becomes the SmartHLS-bundled
    `riscv64-*-linux-gnu-gcc` (glibc) — no new install.
@@ -99,7 +100,7 @@ Initial reading was `MPFS250T-FCSG536e` (engineering-sample marker). Re-reading 
 
 Resolution applied:
 - `libero/scripts/01_scaffold_proj.tcl:27` updated from `FCSG536` to `FCVG484` in commit `8d794e5` ("Fix FPGA package designator: FCSG536 → FCVG484 (silkscreen-confirmed)").
-- TVW audit-006 (commit `0a33ac4`) re-validated that the r6_s25 timing closure (+0.728 ns slack on the 125 MHz FIC CCC PLL OUT0 user clock at slow_lv_ht) was actually generated against FCVG484 STD-grade Production silicon — SmartTime report header confirms `Package: FCVG484 / Speed Grade: STD / Data source: Production`.
+- TVW audit-006 (commit `0a33ac4`) re-validated that the r6_s25 timing closure (+0.728 ns slack on the 125 MHz FIC CCC PLL OUT0 user clock at slow_lv_ht — historical r6_s25 figure; the current builds close at +0.977 ns PID / +0.950 ns V250 (r10_s29) and +1.006 ns PID / +1.050 ns V250 (r13_s32, programmed 2 ms image)) was actually generated against FCVG484 STD-grade Production silicon — SmartTime report header confirms `Package: FCVG484 / Speed Grade: STD / Data source: Production`.
 - The reference PDC bundle staged at `libero/constraints/icicle_reference/` is FCVG484-keyed (sourced from `polarfire-soc/icicle-kit-reference-design@fd0aebb`); pin mapping is therefore **MAP_OK** with no cross-package remap needed (see HW-04b OBSOLETED note below).
 
 ## HW-02 — License.dat line 269 split (RESOLVED 2026-05-02 evening)

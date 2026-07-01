@@ -98,7 +98,12 @@ Evidence captured in this pass:
 - `docs/latency_measured_2026-06-21.md` — on-kit V250/PID helper bounds plus host-paced rung-G
   timing. Linux userspace traps `rdcycle`, so pure V250/fabric cycle timing is still pending.
 - `libero/reports/2026-06-21-idfix2-resource/` — idfix2 resource bundle; device/package source is
-  MPFS250T FCVG484 from the compile report.
+  MPFS250T FCVG484 from the compile report. **Package-label note for all committed reports:**
+  Synplify mapper outputs (`*_fpga_mapper*.rpt`, `*.srr`) print Synplify's internal device-DB
+  name `mpfs250tfcg1152std`, which maps every MPFS250T package onto one mapper part — it is not
+  the board package. The Libero project targets `FCVG484` (`libero/scripts/01_scaffold_proj.tcl`),
+  every Libero-proper report says `Package: FCVG484`, and die resources are identical across
+  MPFS250T packages, so utilization percentages are unaffected.
 - `libero/reports/2026-06-21-scan/` — read-only FlashPro scan-chain evidence; no programming action.
 - `libero/reports/2026-06-21-latency/` — raw on-kit `vnnx_latency` and `pid_latency` logs.
 - `libero/reports/2026-06-21-safety-build/` — cloned 1 ms watchdog safety-build attempt. The clone

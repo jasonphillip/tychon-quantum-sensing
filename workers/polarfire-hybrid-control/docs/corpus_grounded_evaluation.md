@@ -60,7 +60,7 @@ Remote (Beelink):
 | SmartHLS type | correct (`hls::ap_fixpt`) | unchanged | `hls/include/fp_types.hpp` |
 | Constant-folding diagnosis | `patch_smartdesign_axi_target_experiment.py` correctly identified gain-fold | unchanged; corpus confirms diagnosis | `preventing:60-61` |
 | WSTRB enforcement | not addressed | AXI4-Lite-spec compliant; correct citation pinned | `libero/hdl/pid_csr_block.v`, `preserving-real-smarthls-pid-datapath.md` line 27-46 |
-| Real PID closure evidence | `2026-04-29-pid-real`: 45 hier rows, 2390 LUT / 1728 DFF / 25 MATH, slack +0.728 ns | preserved as historical baseline; new closure pending Beelink | `libero/reports/2026-04-29-pid-real/` |
+| Real PID closure evidence | `2026-04-29-pid-real`: 45 hier rows, 2390 LUT / 1728 DFF / 25 MATH, slack +0.728 ns | preserved as historical baseline; superseded by two-slot closures r10_s29 (+0.977 ns) and r13_s32 (+1.006 ns, programmed 2 ms image) | `libero/reports/2026-04-29-pid-real/` |
 | Production AXI integration | experimental tap only | Phase I patch + follow-on canvas runbook; readback contract gated by audit | `docs/smartdesign_two_slot_canvas_runbook.md` |
 | Watchdog source | MSS GPIO heartbeat (test stimulus) | `vbx_pulse_gen.v` 2-FF sync + edge detect; HB0919-cited | `libero/hdl/vbx_pulse_gen.v` |
 | Synplify pruning audit | not gated | corpus-calibrated strict gate (CL189/CL260/CL279/BN362; BN115/MO129 demoted) | `tools/audit_libero_reports.py` |
