@@ -245,6 +245,7 @@ See `src/nv_sensor_sim/datasets/schema.py` for the `DatasetManifest` dataclass a
 | `production_50k_v3_vector` | Vector (multi-axis, 4 NV axes resolved) | 40k / 5k / 5k | 0.5–5.0 mT (bias-amplified) | `configs/production_50k_v3_vector.yaml` | Available 2026-05-17 |
 | `production_50k_v3_vector_sanity1k` | Vector (sanity slice) | 700 / 150 / 150 | 0.5–5.0 mT | `configs/production_50k_v3_vector_sanity1k.yaml` | Available 2026-05-17 |
 | `sequence_sanity_v0` | Time-series (dynamic, 4 NV axes, inter-axis crossings) | 64 / 16 / 16 seq × T=128 | ~5 mT bias + ≲±2 mT sweep | `configs/sequence_sanity_v0.yaml` | Generator added 2026-06-29 |
+| `sequence_train_v1` | Time-series (trainable scale: family-mixed isotropic sweeps — held/reversal/OU, per-axis contrast asymmetry + drift, grid pinned to v0) | 512 / 128 / 128 seq × T=256 | ~5 mT bias + ≤±1.4 mT sweep | `configs/sequence_train_v1.yaml` | Available 2026-07-01 |
 
 Datasets live under `artifacts/datasets/<lineage>/` (gitignored). The HDF5 + JSON
 manifest bundle is consumed by the downstream `odmr-edge-ml` (static) and
@@ -262,6 +263,6 @@ To regenerate a time-series (sequence) lineage:
 
 ```bash
 python scripts/generate_sequence_dataset.py \
-  --config configs/sequence_sanity_v0.yaml \
-  --output-dir artifacts/datasets/sequence_sanity_v0/
+  --config configs/<lineage>.yaml \
+  --output-dir artifacts/datasets/<lineage>/
 ```
