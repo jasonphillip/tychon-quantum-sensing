@@ -56,6 +56,87 @@ def test_motion_prior_scaffold_is_bounded() -> None:
     assert float(out.track_pos.abs().max()) < 2.0  # window units; generous bound
 
 
+def test_scheduled_sampling_shapes_and_head() -> None:
+    """Lever 3: scheduled_sampling adds an ss_delta head and preserves all output shapes."""
+    cfg = LearnedTrackerConfig(n_freq=128, n_lines=8, scheduled_sampling=True)
+    trk = build_tracker(cfg)
+    assert hasattr(trk, "ss_delta")
+    out = trk(torch.rand(2, 10, cfg.n_freq))  # free-running (teacher_pos=None)
+    assert out.track_pos.shape == (2, 10, cfg.n_lines)
+    assert out.scores.shape == (2, 10, cfg.n_lines, cfg.n_candidates)
+    assert torch.isfinite(out.track_pos).all()
+
+
+def test_scheduled_sampling_free_running_is_deterministic() -> None:
+    """teacher_pos=None takes the no-RNG free-running branch → repeatable eval output."""
+    cfg = LearnedTrackerConfig(n_freq=128, scheduled_sampling=True)
+    trk = build_tracker(cfg).eval()
+    x = torch.rand(2, 8, cfg.n_freq)
+    with torch.no_grad():
+        a, b = trk(x), trk(x)
+    assert torch.allclose(a.track_pos, b.track_pos)
+    assert torch.allclose(a.scores, b.scores)
+
+
+def test_scheduled_sampling_zero_init_is_constant_position() -> None:
+    """ss_delta zero-init → free-running query is a constant-position prior: with no motion
+    delta, every frame's track_pos equals the t=0 acquisition readout."""
+    cfg = LearnedTrackerConfig(n_freq=128, scheduled_sampling=True)
+    trk = build_tracker(cfg).eval()
+    with torch.no_grad():
+        out = trk(torch.rand(1, 6, cfg.n_freq))
+    first = out.track_pos[:, :1, :]
+    assert torch.allclose(out.track_pos, first.expand_as(out.track_pos), atol=1e-6)
+
+
+def test_scheduled_sampling_teacher_forcing_runs() -> None:
+    """Teacher-forced forward (ss_prob=0 → always GT prev) produces valid finite output."""
+    cfg = LearnedTrackerConfig(n_freq=128, n_lines=8, scheduled_sampling=True)
+    trk = build_tracker(cfg)
+    teacher = torch.rand(2, 9, cfg.n_lines)
+    out = trk(torch.rand(2, 9, cfg.n_freq), teacher_pos=teacher, ss_prob=0.0)
+    assert out.track_pos.shape == (2, 9, cfg.n_lines)
+    assert torch.isfinite(out.track_pos).all()
+
+
+def test_scheduled_sampling_gradients_reach_ss_delta() -> None:
+    from odmr_vector_tracking.training.losses import compute_losses
+    from odmr_vector_tracking.training.targets import association_targets
+
+    cfg = LearnedTrackerConfig(n_freq=64, scheduled_sampling=True)
+    trk = build_tracker(cfg)
+    teacher = torch.rand(2, 6, cfg.n_lines)
+    out = trk(torch.rand(2, 6, cfg.n_freq), teacher_pos=teacher, ss_prob=0.3)
+    anchors = trk.extractor.get_buffer("anchors")
+    res = torch.rand(2, 6, cfg.n_lines)
+    tgt = association_targets(res, anchors)
+    labels = torch.randn(2, 6, cfg.n_axes) * 0.3
+    coll = torch.zeros(2, 6, cfg.n_lines, dtype=torch.bool)
+    spacing = float(2**cfg.n_downsample) / float(cfg.n_freq - 1)
+    compute_losses(out, tgt, res, labels, coll, anchor_spacing=spacing)["total"].backward()
+    assert trk.ss_delta.weight.grad is not None
+    assert float(trk.ss_delta.weight.grad.abs().sum()) > 0
+
+
+def test_scheduled_sampling_and_motion_prior_are_mutually_exclusive() -> None:
+    with pytest.raises(ValueError):
+        build_tracker(
+            LearnedTrackerConfig(n_freq=128, motion_prior=True, scheduled_sampling=True)
+        )
+
+
+def test_plain_model_ignores_teacher_pos() -> None:
+    """Without scheduled_sampling the teacher_pos/ss_prob args are inert (baseline unchanged)."""
+    cfg = LearnedTrackerConfig(n_freq=128, scheduled_sampling=False)
+    trk = build_tracker(cfg).eval()
+    assert not hasattr(trk, "ss_delta")
+    x = torch.rand(1, 5, cfg.n_freq)
+    with torch.no_grad():
+        base = trk(x)
+        with_teacher = trk(x, teacher_pos=torch.rand(1, 5, cfg.n_lines), ss_prob=0.0)
+    assert torch.allclose(base.track_pos, with_teacher.track_pos)
+
+
 def test_tracked_freqs_are_the_state_posterior() -> None:
     """Claimed line centers = the state readout (MOT scores tracks, not raw detections)."""
     trk = build_tracker(CFG)

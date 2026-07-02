@@ -91,6 +91,12 @@ class LearnedTrackerConfig:
     motion_prior: bool = False           # explicit per-slot CV kinematics: track_pos =
                                          # (pos + vel) + learned delta; association gates on
                                          # the CV prediction (the KF's inductive bias)
+    scheduled_sampling: bool = False     # 2c lever 3: position-recurrence query
+                                         # (pred_t = prev_pos + learned delta) whose prev_pos
+                                         # is teacher-forced (GT) or model-own per a training
+                                         # schedule; prev_pos is a SOFT query prior only — the
+                                         # assignment stays unmasked greedy on scores (no
+                                         # self-referential hard gate, unlike B3 motion_prior)
     gate_cells: float = 2.0              # assignment gate around the CV prediction, in
                                          # anchor cells (~9 linewidths on the real grid);
                                          # inference-only masking, CE scores stay unmasked
@@ -463,6 +469,20 @@ class LearnedTracker(nn.Module):
         self.state_to_proj = nn.Linear(cfg.state_dim, cfg.n_axes)
         self.state_to_tracks = nn.Linear(cfg.state_dim, cfg.n_lines * cfg.feat_dim)
         self.state_to_track_pos = nn.Linear(cfg.state_dim, cfg.n_lines)
+        if cfg.motion_prior and cfg.scheduled_sampling:
+            raise ValueError(
+                "motion_prior and scheduled_sampling are mutually exclusive query paths; "
+                "enable at most one"
+            )
+        if cfg.scheduled_sampling:
+            # Position-recurrence delta head (2c lever 3). Zero-init → at start the query is a
+            # constant-position prior (pred_t = prev_pos), a sane tracker prior the loss grows
+            # into a learned motion delta. The recurrence carries DETACHED (see forward) so
+            # BPTT stays truncated — the O(T)-leverage explosion the motion_prior comment
+            # describes does not arise.
+            self.ss_delta = nn.Linear(cfg.state_dim, cfg.n_lines)
+            nn.init.zeros_(self.ss_delta.weight)
+            nn.init.zeros_(self.ss_delta.bias)  # type: ignore[arg-type]
         if cfg.motion_prior:
             # CV kinematic scaffold (2c identity fix): a learned-gain alpha-beta tracker on
             # MEASUREMENTS, with the network refining the output. Per slot and frame:
@@ -485,8 +505,22 @@ class LearnedTracker(nn.Module):
             self.gain_head = nn.Linear(cfg.state_dim, cfg.n_lines)
             self._gate_n = cfg.gate_cells * float(2**cfg.n_downsample) / float(cfg.n_freq - 1)
 
-    def forward(self, spectra: torch.Tensor) -> LearnedTrackerOutput:
-        """``spectra (B, T, F)`` (contract-normalized PL) → :class:`LearnedTrackerOutput`."""
+    def forward(
+        self,
+        spectra: torch.Tensor,
+        teacher_pos: torch.Tensor | None = None,
+        ss_prob: float = 1.0,
+    ) -> LearnedTrackerOutput:
+        """``spectra (B, T, F)`` (contract-normalized PL) → :class:`LearnedTrackerOutput`.
+
+        ``teacher_pos`` / ``ss_prob`` drive scheduled sampling (2c lever 3) and are ignored
+        unless ``cfg.scheduled_sampling``. ``teacher_pos`` is the ``(B, T, L)`` ground-truth
+        line centers (normalized window units); at frame ``t`` each slot's previous-position
+        query prior is the model's own previous ``track_pos`` with probability ``ss_prob`` and
+        the teacher center ``teacher_pos[:, t-1]`` otherwise. ``teacher_pos=None`` (the default,
+        and every inference/eval call) forces fully free-running: the query prior is always the
+        model's own previous estimate — the exact test-time condition the schedule ramps toward.
+        """
         b, T, _ = spectra.shape
         cfg = self.cfg
         # Host-side preprocessing: dips → positive peaks of order 1 (see module docstring;
@@ -500,6 +534,7 @@ class LearnedTracker(nn.Module):
         }
 
         kin_pos = kin_vel = None  # CV kinematic scaffold (motion_prior only)
+        prev_track: torch.Tensor | None = None  # previous track_pos carry (scheduled_sampling)
         for t in range(T):
             feat, pos = self.extractor(x[:, t, :])             # (B,K,D), (B,K)   [V250]
             obs = self.obs_embed(feat.reshape(b, -1))          # (B, state_dim)   [host]
@@ -512,6 +547,18 @@ class LearnedTracker(nn.Module):
             if cfg.motion_prior and kin_pos is not None:
                 assert kin_vel is not None
                 pred = kin_pos + kin_vel                       # CV prediction (detached carry)
+            elif cfg.scheduled_sampling and prev_track is not None:
+                # Position recurrence: query prior = previous position + learned motion delta.
+                # The previous position is teacher-forced (GT) or model-own per the schedule;
+                # it is a SOFT query prior only (assignment below stays unmasked on scores).
+                if teacher_pos is not None:
+                    use_model = torch.rand(
+                        b, cfg.n_lines, device=spectra.device
+                    ) < float(ss_prob)
+                    prev_used = torch.where(use_model, prev_track, teacher_pos[:, t - 1, :])
+                else:
+                    prev_used = prev_track                     # free-running (inference/eval)
+                pred = prev_used + self.ss_delta(state)
             else:
                 pred = self.state_to_track_pos(state)          # absolute readout (t=0 / plain)
             # Association gates against the (CV-predicted) slot positions.
@@ -536,6 +583,11 @@ class LearnedTracker(nn.Module):
             else:
                 tpos = pred
                 assign = exclusive_greedy_assign(sc)           # one-to-one assign (off-NPU)
+
+            if cfg.scheduled_sampling:
+                # Carry the estimate DETACHED so the position recurrence is truncated-BPTT
+                # (bounds the O(T) leverage of early innovations; see __init__).
+                prev_track = tpos.detach()
 
             outs["b_est"].append(b_vec)
             outs["cov"].append(c)

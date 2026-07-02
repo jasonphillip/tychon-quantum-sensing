@@ -143,6 +143,18 @@ def main() -> int:
                     help="enable the explicit CV kinematic scaffold in the tracker "
                          "(track_pos = CV prediction + learned innovation; motion-gated "
                          "assignment)")
+    # 2c association levers (cumulative; all training-only, inference assignment unchanged).
+    ap.add_argument("--soft-targets", action="store_true",
+                    help="lever 1: soft/merged CE targets inside the ambiguity radius")
+    ap.add_argument("--soft-radius-lw", type=float, default=None,
+                    help="ambiguity radius in linewidths for --soft-targets "
+                         "(default: the dataset's collision_threshold_linewidths)")
+    ap.add_argument("--sinkhorn", action="store_true",
+                    help="lever 2: log-Sinkhorn one-to-one assignment loss (Hungarian at "
+                         "inference is unchanged)")
+    ap.add_argument("--scheduled-sampling", action="store_true",
+                    help="lever 3: ramp model-own previous-position feedback into the "
+                         "association query (soft prior; assignment stays unmasked)")
     args = ap.parse_args()
 
     settings = load_config(args.train_config, TrainSettings)
@@ -150,6 +162,12 @@ def main() -> int:
         val = getattr(args, name)
         if val is not None:
             setattr(settings, name, val)
+    # 2c levers: CLI flags flip the TrainSettings toggles (cumulative across runs).
+    settings.soft_targets = settings.soft_targets or bool(args.soft_targets)
+    settings.sinkhorn = settings.sinkhorn or bool(args.sinkhorn)
+    settings.scheduled_sampling = settings.scheduled_sampling or bool(args.scheduled_sampling)
+    if args.soft_radius_lw is not None:
+        settings.soft_radius_linewidths = args.soft_radius_lw
     if args.overfit_one and args.epochs is None:
         settings.epochs = 800  # the gate converges fast; keep the loop short by default
 
@@ -164,9 +182,26 @@ def main() -> int:
     model_cfg.n_lines = int(m["n_lines"])
     model_cfg.dt_s = float(m["dt_s"])
     model_cfg.motion_prior = bool(args.motion_prior)
+    model_cfg.scheduled_sampling = bool(settings.scheduled_sampling)  # 2c lever 3
     print(f"[data] {args.dataset} | config_hash {m.get('config_hash')} | "
           f"T={m['n_timesteps']} F={model_cfg.n_freq} L={model_cfg.n_lines} | "
           f"K={model_cfg.n_candidates} anchors")
+
+    # 2c lever 1: ambiguity radius (normalized window units) for the soft/merged CE targets.
+    soft_radius_norm: float | None = None
+    if settings.soft_targets:
+        if args.soft_radius_lw is None:
+            settings.soft_radius_linewidths = float(m.get("collision_threshold_linewidths", 1.0))
+        soft_radius_norm = (
+            settings.soft_radius_linewidths * float(m["linewidth_Hz"])
+            / (freq_range[1] - freq_range[0])
+        )
+    levers = [n for n, on in (("soft_targets", settings.soft_targets),
+                              ("sinkhorn", settings.sinkhorn),
+                              ("scheduled_sampling", settings.scheduled_sampling)) if on]
+    print(f"[levers] {'none' if not levers else ', '.join(levers)}"
+          + (f" | soft radius {settings.soft_radius_linewidths:g} lw = {soft_radius_norm:.5f} norm"
+             if settings.soft_targets else ""))
 
     train_ds = loader.load_split("train")
     # Input normalization from the data itself (deterministic given the dataset): dips are
@@ -223,6 +258,7 @@ def main() -> int:
         "freq_range_Hz": list(freq_range),
         "overfit_one": bool(args.overfit_one),
         "noise_photons": noise_photons,  # None = trained noiseless
+        "levers": levers,  # 2c: which association levers are active (cumulative)
     }
     key = run_key(model_cfg, settings, meta)
     meta["run_key"] = key
@@ -233,6 +269,7 @@ def main() -> int:
         val_t,
         settings,
         scores_are_probs=(args.assoc == "attention"),
+        soft_radius_norm=soft_radius_norm,
         out_dir=out_dir,
         ckpt_meta=meta,
     )

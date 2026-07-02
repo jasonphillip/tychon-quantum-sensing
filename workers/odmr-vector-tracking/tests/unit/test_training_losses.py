@@ -3,16 +3,23 @@
 from __future__ import annotations
 
 import torch
+import torch.nn.functional as F
 
 from odmr_vector_tracking.tracking.learned import LearnedTrackerConfig, build_tracker
 from odmr_vector_tracking.training.losses import (
     association_loss,
     compute_losses,
+    log_sinkhorn,
     position_loss,
     projection_loss,
+    sinkhorn_assignment_loss,
+    soft_association_loss,
     track_position_loss,
 )
-from odmr_vector_tracking.training.targets import association_targets
+from odmr_vector_tracking.training.targets import (
+    association_targets,
+    soft_association_targets,
+)
 
 
 def test_association_loss_zero_when_confident_and_correct() -> None:
@@ -50,6 +57,157 @@ def test_association_loss_probs_path() -> None:
     targets = torch.tensor([[0, 1]])
     loss = association_loss(probs, targets, scores_are_probs=True)
     assert float(loss) < 0.03
+
+
+def test_soft_association_loss_matches_hard_on_one_hot() -> None:
+    """Soft CE on a one-hot target is bit-for-bit the hard cross-entropy (2c lever 1)."""
+    scores = torch.randn(2, 4, 5)
+    targets = torch.randint(0, 5, (2, 4))
+    onehot = F.one_hot(targets, 5).float()
+    assert torch.allclose(
+        soft_association_loss(scores, onehot), association_loss(scores, targets), atol=1e-6
+    )
+
+
+def test_soft_association_loss_split_target_known_value() -> None:
+    """Uniform 3-way logits, target mass split 0.5/0.5 → soft CE = −log(1/3) = log 3."""
+    scores = torch.zeros(1, 1, 3)  # log_softmax → log(1/3) each
+    target = torch.tensor([[[0.5, 0.5, 0.0]]])
+    loss = soft_association_loss(scores, target)
+    assert abs(float(loss) - torch.log(torch.tensor(3.0)).item()) < 1e-6
+
+
+def test_soft_association_loss_collision_upweighting() -> None:
+    """Split (unearned-confidence) target on the in-collision slot → weighting raises loss."""
+    scores = torch.full((1, 2, 3), -50.0)
+    scores[0, 0, 0] = 50.0            # slot 0 confident + correct (out of collision)
+    scores[0, 1, 0] = 50.0            # slot 1 confident on anchor 0 (in collision)
+    target = torch.tensor([[[1.0, 0.0, 0.0], [0.5, 0.5, 0.0]]])  # slot 1 should be split
+    coll = torch.tensor([[False, True]])
+    base = soft_association_loss(scores, target, line_collision=coll, collision_weight=1.0)
+    up = soft_association_loss(scores, target, line_collision=coll, collision_weight=5.0)
+    assert float(up) > float(base) * 1.5
+
+
+def test_soft_association_loss_probs_path() -> None:
+    """Attention-head variant: probabilities in, one-hot target → matches hard probs path."""
+    probs = torch.tensor([[[0.98, 0.01, 0.01], [0.01, 0.98, 0.01]]])
+    targets = torch.tensor([[0, 1]])
+    onehot = F.one_hot(targets, 3).float()
+    assert torch.allclose(
+        soft_association_loss(probs, onehot, scores_are_probs=True),
+        association_loss(probs, targets, scores_are_probs=True),
+        atol=1e-6,
+    )
+
+
+def test_soft_association_loss_gradients_flow() -> None:
+    scores = torch.randn(2, 4, 6, requires_grad=True)
+    res = torch.rand(2, 4)
+    anchors = torch.linspace(0, 1, 6)
+    soft = soft_association_targets(res, anchors, radius=0.1)
+    soft_association_loss(scores, soft).backward()
+    assert scores.grad is not None and float(scores.grad.abs().sum()) > 0
+
+
+def test_compute_losses_routes_soft_targets() -> None:
+    """compute_losses with assoc_soft_targets uses the soft CE; one-hot soft == hard total."""
+    cfg = LearnedTrackerConfig(n_freq=64)
+    trk = build_tracker(cfg)
+    spectra = torch.rand(2, 5, cfg.n_freq)
+    out = trk(spectra)
+    anchors = trk.extractor.get_buffer("anchors")
+    res_norm = torch.rand(2, 5, cfg.n_lines)
+    targets = association_targets(res_norm, anchors)
+    labels = torch.randn(2, 5, cfg.n_axes) * 0.3
+    coll = torch.zeros(2, 5, cfg.n_lines, dtype=torch.bool)
+    spacing = float(2**cfg.n_downsample) / float(cfg.n_freq - 1)
+    onehot = F.one_hot(targets, cfg.n_candidates).float()
+    hard = compute_losses(out, targets, res_norm, labels, coll, anchor_spacing=spacing)
+    soft = compute_losses(
+        out, targets, res_norm, labels, coll,
+        anchor_spacing=spacing, assoc_soft_targets=onehot,
+    )
+    assert torch.allclose(hard["association"], soft["association"], atol=1e-6)
+    assert torch.allclose(hard["total"], soft["total"], atol=1e-6)
+
+
+def test_log_sinkhorn_recovers_transport_marginals() -> None:
+    """Log-Sinkhorn converges to the SuperGlue marginals μ=[1]*L⊕K, ν=[1]*K⊕L (total L+K)."""
+    scores = torch.randn(2, 3, 5)
+    p = log_sinkhorn(scores, n_iters=150).exp()
+    assert p.shape == (2, 4, 6)
+    assert torch.allclose(p.sum(dim=(1, 2)), torch.ones(2), atol=1e-4)  # total mass 1
+    L, K = 3, 5
+    mu = torch.tensor([1.0, 1.0, 1.0, K]) / (L + K)
+    nu = torch.tensor([1.0, 1.0, 1.0, 1.0, 1.0, L]) / (L + K)
+    assert torch.allclose(p.sum(dim=2), mu.expand(2, -1), atol=1e-3)  # row marginals
+    assert torch.allclose(p.sum(dim=1), nu.expand(2, -1), atol=1e-3)  # col marginals
+
+
+def test_sinkhorn_loss_small_when_confident_and_distinct() -> None:
+    """Scores confident on distinct GT anchors → one-to-one transport matches → low loss."""
+    scores = torch.full((1, 3, 6), -20.0)
+    for li, k in enumerate([0, 2, 4]):
+        scores[0, li, k] = 20.0
+    targets = torch.tensor([[0, 2, 4]])
+    loss = sinkhorn_assignment_loss(scores, targets=targets, n_iters=50)
+    assert float(loss) < 0.05
+
+
+def test_sinkhorn_penalizes_two_lines_on_one_candidate() -> None:
+    """Exclusivity: piling both lines on candidate 0 costs more than distinct correct scores —
+    the transport cannot give one candidate column to two line rows."""
+    targets = torch.tensor([[0, 1]])
+    distinct = torch.full((1, 2, 4), -20.0)
+    distinct[0, 0, 0] = 20.0
+    distinct[0, 1, 1] = 20.0
+    collide = torch.full((1, 2, 4), -20.0)
+    collide[0, 0, 0] = 20.0
+    collide[0, 1, 0] = 20.0  # both want candidate 0 — one-to-one impossible
+    lo = sinkhorn_assignment_loss(distinct, targets=targets, n_iters=50)
+    hi = sinkhorn_assignment_loss(collide, targets=targets, n_iters=50)
+    assert float(hi) > float(lo) + 1.0
+
+
+def test_sinkhorn_loss_accepts_soft_targets() -> None:
+    """Composes with lever 1: a soft target_dist is matched against the transport conditional."""
+    scores = torch.randn(2, 4, 6, requires_grad=True)
+    dist = torch.full((2, 4, 6), 0.0)
+    dist[:, :, 0] = 1.0  # one-hot on candidate 0 (valid distribution)
+    loss = sinkhorn_assignment_loss(scores, target_dist=dist, n_iters=20)
+    loss.backward()
+    assert scores.grad is not None and float(scores.grad.abs().sum()) > 0
+
+
+def test_sinkhorn_requires_exactly_one_target() -> None:
+    scores = torch.randn(1, 2, 3)
+    try:
+        sinkhorn_assignment_loss(scores)  # neither targets nor target_dist
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("expected ValueError when no target is supplied")
+
+
+def test_compute_losses_routes_sinkhorn() -> None:
+    """compute_losses(sinkhorn=True) uses the transport loss and backprops through the tracker."""
+    cfg = LearnedTrackerConfig(n_freq=64)
+    trk = build_tracker(cfg)
+    spectra = torch.rand(2, 5, cfg.n_freq)
+    out = trk(spectra)
+    anchors = trk.extractor.get_buffer("anchors")
+    res_norm = torch.rand(2, 5, cfg.n_lines)
+    targets = association_targets(res_norm, anchors)
+    labels = torch.randn(2, 5, cfg.n_axes) * 0.3
+    coll = torch.zeros(2, 5, cfg.n_lines, dtype=torch.bool)
+    spacing = float(2**cfg.n_downsample) / float(cfg.n_freq - 1)
+    d = compute_losses(
+        out, targets, res_norm, labels, coll, anchor_spacing=spacing, sinkhorn=True,
+    )
+    assert torch.isfinite(d["total"])
+    d["total"].backward()
+    assert trk.association.score.weight.grad is not None
 
 
 def test_position_loss_known_value() -> None:

@@ -32,6 +32,7 @@ from odmr_vector_tracking.training.targets import (
     association_targets,
     normalize_freqs,
     projection_labels,
+    soft_association_targets,
 )
 
 
@@ -55,6 +56,16 @@ class TrainSettings:
     log_every: int = 25
     val_every: int = 1           # evaluate val split every N epochs (early-stop bookkeeping
                                  # happens only on evaluated epochs; >1 for large val splits)
+    # --- 2c association levers (all training-only; inference assignment unchanged) ---
+    soft_targets: bool = False          # lever 1: soft/merged CE targets in the ambiguity
+                                        # radius (soft_radius_linewidths · Γ)
+    soft_radius_linewidths: float = 1.0  # ambiguity radius in linewidths (matches k=1 collision)
+    sinkhorn: bool = False              # lever 2: log-Sinkhorn one-to-one assignment loss
+    sinkhorn_iters: int = 20
+    sinkhorn_dustbin: float = 1.0
+    scheduled_sampling: bool = False    # lever 3: ramp model-own previous-position feedback
+    ss_final_prob: float = 0.5          # peak P(use model-own prev) at the end of the ramp
+    ss_ramp_frac: float = 1.0           # ramp reaches ss_final_prob at this fraction of epochs
     noise_photons: float | None = None
     # Photon budget (photons/point) for per-epoch shot-noise augmentation of the TRAIN split:
     # a fresh Gaussian realization each epoch with sigma from the upstream physics model
@@ -136,19 +147,42 @@ def _split_losses(
     anchor_spacing: float,
     scores_are_probs: bool,
     indices: torch.Tensor | None = None,
+    *,
+    soft_radius_norm: float | None = None,
+    ss_prob: float = 1.0,
+    teacher_force: bool = False,
 ) -> tuple[dict[str, torch.Tensor], LearnedTrackerOutput]:
-    """Forward one batch (or the whole split) and compute the loss dict."""
+    """Forward one batch (or the whole split) and compute the loss dict.
+
+    ``teacher_force`` (with a scheduled-sampling model) feeds the split's ground-truth centers
+    as the teacher signal at probability ``1 − ss_prob``; ``teacher_force=False`` runs
+    free-running (the honest val / inference condition). ``soft_radius_norm`` (lever 1) enables
+    the soft/merged CE targets, built per batch from the ground-truth centers.
+    """
     if indices is None:
         sl = slice(None)
         spectra = tensors.spectra
     else:
         sl = indices
         spectra = tensors.spectra[indices]
-    out = tracker(spectra)
+
+    res_norm = tensors.res_norm[sl]
+    teacher_pos = (
+        res_norm if (teacher_force and tracker.cfg.scheduled_sampling) else None
+    )
+    out = tracker(spectra, teacher_pos=teacher_pos, ss_prob=ss_prob)
+
+    assoc_soft = None
+    if settings.soft_targets and soft_radius_norm is not None:
+        anchors = tracker.extractor.get_buffer("anchors")
+        assoc_soft = soft_association_targets(
+            res_norm, anchors, radius=soft_radius_norm, hard_targets=tensors.assoc_targets[sl]
+        )
+
     losses = compute_losses(
         out,
         tensors.assoc_targets[sl],
-        tensors.res_norm[sl],
+        res_norm,
         tensors.proj_labels[sl],
         tensors.line_collision[sl],
         anchor_spacing=anchor_spacing,
@@ -158,6 +192,10 @@ def _split_losses(
         w_track=settings.w_track,
         w_proj=settings.w_proj,
         scores_are_probs=scores_are_probs,
+        assoc_soft_targets=assoc_soft,
+        sinkhorn=settings.sinkhorn,
+        sinkhorn_iters=settings.sinkhorn_iters,
+        sinkhorn_dustbin=settings.sinkhorn_dustbin,
     )
     return losses, out
 
@@ -181,6 +219,7 @@ def train(
     settings: TrainSettings,
     *,
     scores_are_probs: bool = False,
+    soft_radius_norm: float | None = None,
     out_dir: Path | str | None = None,
     ckpt_meta: dict | None = None,
     log: Callable[[str], None] = print,
@@ -189,11 +228,22 @@ def train(
 
     ``ckpt_meta`` (e.g. ``{"core": "relu", "association": "linear"}``) is embedded in the
     checkpoint alongside the model config so evaluation can rebuild the exact variant.
+
+    ``soft_radius_norm`` (lever 1) is the ambiguity radius in normalized window units; required
+    when ``settings.soft_targets``. Scheduled sampling (lever 3) is driven from
+    ``settings.ss_*``: the train split is teacher-forced at a schedule that ramps
+    ``P(use model-own previous position)`` from 0 to ``ss_final_prob`` over ``ss_ramp_frac`` of
+    the epochs, while the **val split is always evaluated free-running** so early stopping
+    tracks the deployed (free-running) behavior — not a teacher-forced objective that the
+    tracker never sees at inference (the B3 val/test dissonance this lever targets).
     """
     device = torch.device(settings.device)
     tracker = tracker.to(device)
     cfg = tracker.cfg
     anchor_spacing = float(2**cfg.n_downsample) / float(cfg.n_freq - 1)
+    if settings.soft_targets and soft_radius_norm is None:
+        raise ValueError("settings.soft_targets requires soft_radius_norm to be provided")
+    ss_ramp_epochs = max(1.0, settings.ss_ramp_frac * settings.epochs)
 
     params = [p for p in tracker.parameters() if p.requires_grad]
     opt = torch.optim.AdamW(params, lr=settings.lr, weight_decay=settings.weight_decay)
@@ -231,6 +281,11 @@ def train(
                 clean_spectra
             )
         perm = torch.randperm(n, device=device)
+        # Scheduled sampling (lever 3): ramp P(use model-own previous position) 0 → ss_final_prob.
+        ss_prob = (
+            settings.ss_final_prob * min(1.0, epoch / ss_ramp_epochs)
+            if settings.scheduled_sampling else 1.0
+        )
         train_sums = {
             "association": 0.0, "position": 0.0, "track_position": 0.0,
             "projection": 0.0, "total": 0.0,
@@ -239,7 +294,8 @@ def train(
         for start in range(0, n, settings.batch_size):
             idx = perm[start : start + settings.batch_size]
             losses, _ = _split_losses(
-                tracker, train_tensors, settings, anchor_spacing, scores_are_probs, idx
+                tracker, train_tensors, settings, anchor_spacing, scores_are_probs, idx,
+                soft_radius_norm=soft_radius_norm, ss_prob=ss_prob, teacher_force=True,
             )
             opt.zero_grad(set_to_none=True)
             losses["total"].backward()
@@ -260,8 +316,10 @@ def train(
         if evaluate_val:
             tracker.eval()
             with torch.no_grad():
+                # Val is always free-running (teacher_force=False) — the honest deployed metric.
                 val_losses, val_out = _split_losses(
-                    tracker, val_tensors, settings, anchor_spacing, scores_are_probs
+                    tracker, val_tensors, settings, anchor_spacing, scores_are_probs,
+                    soft_radius_norm=soft_radius_norm,
                 )
                 acc = anchor_assoc_accuracy(
                     val_out.scores, val_tensors.assoc_targets, val_tensors.line_collision

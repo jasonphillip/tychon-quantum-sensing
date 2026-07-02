@@ -9,6 +9,7 @@ from odmr_vector_tracking.training.targets import (
     association_targets,
     normalize_freqs,
     projection_labels,
+    soft_association_targets,
 )
 from odmr_vector_tracking.vector.geometry import NV_AXES_UNIT
 
@@ -42,6 +43,65 @@ def test_association_targets_batch_shapes() -> None:
     tgt = association_targets(res, anchors)
     assert tgt.shape == (3, 7, 8)
     assert int(tgt.max()) < 16
+
+
+def test_soft_targets_isolated_lines_are_one_hot() -> None:
+    """Lines far apart (no cluster neighbours) → soft target == the hard one-hot."""
+    anchors = torch.tensor([0.0, 0.25, 0.5, 0.75])
+    res = torch.tensor([[0.02, 0.30, 0.49, 0.74]])  # spaced >> radius
+    soft = soft_association_targets(res, anchors, radius=0.05)
+    hard = association_targets(res, anchors)
+    assert soft.shape == (1, 4, 4)
+    assert torch.allclose(soft, torch.nn.functional.one_hot(hard, 4).float())
+    assert torch.allclose(soft.sum(-1), torch.ones(1, 4))
+
+
+def test_soft_targets_merged_pair_splits_mass() -> None:
+    """Two lines within radius but on distinct anchors → 0.5/0.5 for BOTH slots."""
+    anchors = torch.tensor([0.0, 0.25, 0.5, 0.75])
+    # 0.36 → nearest 0.25 (anchor 1); 0.39 → nearest 0.5 (anchor 2); |Δ| = 0.03 < radius.
+    res = torch.tensor([[0.36, 0.39]])
+    soft = soft_association_targets(res, anchors, radius=0.05)
+    expected = torch.tensor([[[0.0, 0.5, 0.5, 0.0], [0.0, 0.5, 0.5, 0.0]]])
+    assert torch.allclose(soft, expected)
+
+
+def test_soft_targets_fully_merged_cell_is_one_hot() -> None:
+    """Clustered lines that share a single nearest anchor → mass 1 on that anchor."""
+    anchors = torch.tensor([0.0, 0.5, 1.0])
+    res = torch.tensor([[0.49, 0.51]])  # both nearest anchor 1, and within radius
+    soft = soft_association_targets(res, anchors, radius=0.05)
+    expected = torch.tensor([[[0.0, 1.0, 0.0], [0.0, 1.0, 0.0]]])
+    assert torch.allclose(soft, expected)
+
+
+def test_soft_targets_radius_zero_is_pure_one_hot() -> None:
+    """radius=0: no line has a neighbour (strict <), self-membership rescues the diagonal."""
+    anchors = torch.tensor([0.0, 0.5, 1.0])
+    res = torch.tensor([[0.49, 0.51]])
+    soft = soft_association_targets(res, anchors, radius=0.0)
+    hard = association_targets(res, anchors)
+    assert torch.allclose(soft, torch.nn.functional.one_hot(hard, 3).float())
+    assert torch.allclose(soft.sum(-1), torch.ones(1, 2))
+
+
+def test_soft_targets_always_sum_to_one() -> None:
+    anchors = torch.linspace(0, 1, 16)
+    res = torch.rand(3, 7, 8)
+    soft = soft_association_targets(res, anchors, radius=0.1)
+    assert soft.shape == (3, 7, 8, 16)
+    assert torch.allclose(soft.sum(-1), torch.ones(3, 7, 8), atol=1e-6)
+
+
+def test_soft_targets_triple_cluster_splits_thirds() -> None:
+    """Three mutually-close lines on distinct anchors → 1/3 mass each."""
+    anchors = torch.tensor([0.0, 0.1, 0.2, 0.3, 0.9])
+    res = torch.tensor([[0.10, 0.12, 0.19]])  # nearest anchors 1,1,2 ... check split
+    # nearest: 0.10→1, 0.12→1, 0.19→2. pairwise all within 0.1 → one cluster of 3.
+    # anchors hit: {1,1,2} → mass 2/3 on anchor 1, 1/3 on anchor 2 for every slot.
+    soft = soft_association_targets(res, anchors, radius=0.1)
+    expected_row = torch.tensor([0.0, 2.0 / 3.0, 1.0 / 3.0, 0.0, 0.0])
+    assert torch.allclose(soft[0], expected_row.expand(3, 5), atol=1e-6)
 
 
 def test_projection_labels_along_axis0() -> None:
