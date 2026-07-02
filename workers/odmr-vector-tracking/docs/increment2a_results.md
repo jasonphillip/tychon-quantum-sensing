@@ -189,6 +189,53 @@ half on the NPU. Deployability favors the learned pipeline independent of accura
 
 v0 remains the frozen sanity lineage. Reproduce: `experiments/increment2b_report.py`.
 
+## Increment 2b — B3: CV motion prior (negative result)
+
+The B4 diagnosis (the posterior sits on the wrong line — an association failure, not a
+detection artifact) motivated giving the learned head the CV-KF's inductive bias directly:
+a **learned-gain α-β kinematic scaffold** (predict = pos + vel; innovation = gain·(z − pred)
+with z the association-softmax-weighted candidate position; velocity update β = 0.25) plus
+**motion-gated exclusive assignment** (candidates outside 2 anchor cells ≈ 9Γ of the
+kinematic prediction are excluded from the one-to-one assignment; the CE still trains on
+unmasked scores). `LearnedTrackerConfig.motion_prior`; two failed scaffold designs
+(full-BPTT through the recurrences, detached free-delta) are documented in code. All four
++aug variants retrained with the flag on, same protocol.
+
+**The motion prior improves the supervised objective and worsens the tracker.** Best val
+total: gated 0.151 → 0.124 (−18%), relu 0.227 → 0.135 (−40%). But on the standing eval
+(cold-acquisition closed loop, per-family, full ladder) it does not close the identity gap
+and it regresses the field rows:
+
+| v1, gated +aug (held/rev/OU) | misassoc clean | sw/opp clean | losses clean | ae post clean | losses SNR 3 | ae post SNR 3 |
+|---|---|---|---|---|---|---|
+| non-MP (reference) | 0.469 · 0.445 · 0.571 | 0.362 · 0.300 · 0.229 | 2/37 · 0/23 · 1/30 | 0.8° · 0.7° · 1.0° | 3/37 · 0/23 · 2/30 | 1.4° · 1.3° · 1.5° |
+| motion prior | 0.526 · 0.504 · 0.589 | 0.367 · 0.357 · 0.243 | 4/37 · 1/23 · 3/30 | 1.7° · 1.6° · 2.0° | 6/37 · 1/23 · 5/30 | 2.6° · 2.7° · 2.9° |
+
+Misassociation is worse in every family (non-overlapping CIs on held/reversal), switch rate
+is flat-to-worse, lock losses roughly double, and post-crossing error doubles at every rung.
+The relu variant is worse still (SNR-3 losses 17/37 · 9/23 · 16/30 vs 8 · 1 · 7 non-MP).
+CV-KF's clean identity crown (sw/opp 0.016 / 0.053 / 0.217) is untouched. The non-MP
+reference rows reproduced exactly — the standing eval is unchanged.
+
+**Diagnosis — the hard motion gate is self-confirming in closed loop.** The val/test
+dissonance is the tell: with GT-supervised targets the scaffold helps (val ↓), but in
+rollout, once the kinematic prediction locks onto the wrong line the gate *excludes the
+correct candidate from assignment*, converting recoverable switching errors into sustained
+wrong-line locks (misassociation up while sw/opp stays flat). The KF gets away with the
+same gate because its innovation is anchored to calibrated detections; the learned
+scaffold's measurement z is the association's own softmax — gating on it feeds the error
+back. Verdict: **rejected as default; flag retained in the codebase as a documented
+negative result.** Deployable default remains non-MP gated+aug.
+
+Per the standing decision rule (identity fixes must not regress the field rows; data-scale
+request only if the gap persists after the motion prior): the gap persists →
+**recommend requesting `sequence_train_v2` (~4× scale) from the nv-sensor-sim lane.** The
+one untried architecture-side lever — soft/merged CE targets for attribution-ambiguous
+in-collision frames — can ride along with the v2 retrain rather than gate it.
+
+Reproduce: `python experiments/noise_matrix_report.py` (runs `*_mp_snr10` checkpoints
+automatically; run keys f4481d29bb48b21b / 4baf786804a470a5).
+
 ## Architecture (unchanged by the re-baseline)
 
 Deployable-first on the V250/MSS partition (docs/design/02): V250-targeted anchored
@@ -218,12 +265,11 @@ logged).
    fraction is 0.127, so ~85% of the errors are wrong-line attributions of the posterior.
    Both conventions reported here for the record.
 1. **Close the identity gap on v1**: the learned association loses to CV-KF everywhere at
-   512-sequence scale. Candidates: more data / longer training (val gap says underfit-ish
-   generalization, not saturation), a KF-style motion prior inside the association (the KF's
-   whole advantage is CV coasting — give the learned head the same inductive bias), hybrid
-   gating (learned features + Hungarian one-to-one with motion-gated costs), and revisiting
-   the collision-weighted CE (in-collision targets are attribution-ambiguous — a soft/merged
-   target may train better than nearest-anchor hard labels).
+   512-sequence scale. ~~KF-style motion prior / motion-gated assignment~~ **tried in B3 —
+   negative result** (improves val, regresses the closed-loop matrix; see the B3 section).
+   Remaining candidates, in order: more data (`sequence_train_v2`, ~4× — the B3-triggered
+   recommendation per the standing decision rule) and soft/merged CE targets for
+   attribution-ambiguous in-collision frames (rides along with the v2 retrain).
 2. Estimation-head question is now resolved in the other direction on v1: keep the
    projection head (it is what wins lock-loss); on v0 the splitting→BLUE decode of gated
    centers was better (0.4° vs 1.5° peak) — carry both outputs.
