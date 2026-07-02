@@ -67,22 +67,49 @@ v0 alone is unsupported.
 
 768 sequences × T=256 (512/128/128), three trajectory families (held-ramp-hold ≈ 50%,
 reversal ≈ 25%, OU ≈ 25%), per-axis contrast ladder [1.0, 0.85, 0.7, 0.55] with AR(1) drift,
-pinned v0 frequency grid. The classical baselines on the v1 **test** split (128 seqs; 95%
-Wilson CIs, pooled counts):
+pinned v0 frequency grid. Full per-family results on the v1 **test** split (128 seqs; 95%
+Wilson CIs, pooled counts; classical trackers GT-init, learned cold-acquire; learned trained
+on v1-train, seed 20260701, early-stopped on v1-val — relu+linear best val 0.269 @ 545,
+gated+linear 0.148 @ 395):
 
 | family | tracker | in-coll misassoc | ID-sw / opportunity | lock-loss |
 |---|---|---|---|---|
-| held | CV-KF | 0.099 (0.091–0.107) | 0.016 (0.007–0.034) | 3/37 |
-| reversal | CV-KF | 0.281 (0.265–0.297) | 0.053 (0.035–0.081) | 3/23 |
-| OU | CV-KF | 0.532 (0.521–0.542) | 0.217 (0.194–0.242) | 19/30 |
+| held | honest PID | 0.198 (0.187–0.209) | 0.245 (0.205–0.291) | 13/37 |
+| held | CV-KF | **0.099** (0.091–0.107) | **0.016** (0.007–0.034) | 3/37 |
+| held | learned gated+linear | 0.510 (0.496–0.523) | 0.321 (0.276–0.370) | 3/37 |
+| held | learned relu+linear | 0.697 (0.684–0.709) | 0.375 (0.325–0.427) | 6/37 |
 | reversal | honest PID | 0.465 (0.448–0.483) | 0.261 (0.219–0.308) | 11/23 |
+| reversal | CV-KF | **0.281** (0.265–0.297) | **0.053** (0.035–0.081) | 3/23 |
+| reversal | learned gated+linear | 0.457 (0.439–0.475) | 0.324 (0.279–0.374) | **0/23** |
+| reversal | learned relu+linear | 0.542 (0.524–0.560) | 0.326 (0.279–0.376) | **0/23** |
 | OU | honest PID | 0.666 (0.656–0.676) | 0.341 (0.313–0.371) | 25/30 |
+| OU | CV-KF | **0.532** (0.521–0.542) | **0.217** (0.194–0.242) | 19/30 |
+| OU | learned gated+linear | 0.591 (0.581–0.602) | 0.269 (0.243–0.296) | **2/30** |
+| OU | learned relu+linear | 0.633 (0.622–0.643) | 0.265 (0.239–0.292) | **0/30** |
 
-The KF that solved v0 degrades exactly where its constant-velocity coast assumption breaks:
-reversals inside/near collision dwells and OU (stochastic) trajectories. This is the regime
-the learned tracker exists for. **Learned-on-v1 results: pending (training in progress);
-this table will be completed from `experiments/increment2b_report.py` when the v1
-checkpoints land.** v0 remains the frozen sanity lineage.
+### v1 verdict (honest, both directions)
+
+1. **Identity: CV-KF wins every family, including the adversarial ones.** Its
+   switches-per-opportunity (0.016/0.053/0.217) beat both learned variants (~0.27–0.38)
+   with non-overlapping CIs even on OU. At this training scale (512 sequences) the learned
+   association does not transfer well enough to claim the through-crossing *identity*
+   problem — the train→val loss gap (gated 0.04 → 0.15) says capacity/data, not physics.
+2. **Vector estimate: the learned tracker wins decisively where trajectories are hard.**
+   Lock-loss on reversal 0/23 (KF 3/23, PID 11/23) and OU 2/30 gated / 0/30 relu vs KF
+   **19/30** (CIs cleanly separated: 0.02–0.21 vs 0.46–0.78) — from cold acquisition. The
+   state-regressed B̂ (the magnetometer's actual output) does not route through per-line
+   identity, so identity scrambles degrade it gracefully instead of catastrophically;
+   the classical splitting→BLUE decode has no such path.
+3. Honest PID is the weakest tracker on every family and metric.
+
+**Corrected bottom line across v0+v1:** the learned tracker ties competent classical
+post-crossing on the trivial lineage, *loses* the identity race on v1 at current training
+scale, and *wins* vector-estimate robustness on exactly the adversarial families the thesis
+targets (reversal/OU) by a wide, CI-solid margin. The claim that survives is about the
+**field estimate through kinematically adversarial crossings**, not about association purity
+— and the identity gap is the concrete 2c work item.
+
+v0 remains the frozen sanity lineage. Reproduce: `experiments/increment2b_report.py`.
 
 ## Architecture (unchanged by the re-baseline)
 
@@ -102,13 +129,17 @@ observation-driven filter — no teacher forcing needed), AdamW + cosine, early 
 total. Runs are config-addressable (`run_key`; config+seed fully determine a run; device
 logged).
 
-## Next
+## Next (2c work items)
 
-1. Complete the v1 table (learned variants, per family, same conventions) — the decisive
-   numbers are reversal-family in-collision association and ID-switches-per-opportunity,
-   learned vs CV-KF vs honest PID.
-2. Estimation-head open question: for the gated variant the splitting→BLUE decode of tracked
-   centers beats its own projection head (0.4° vs 1.5° peak) — consider dropping the
-   regression head.
-3. GitHub push held until this corrected doc + v1 results land (per TVW dispatch); nas
-   pushes fine. Amplitude-ladder lineage needed before any dynamic-range claim.
+1. **Close the identity gap on v1**: the learned association loses to CV-KF everywhere at
+   512-sequence scale. Candidates: more data / longer training (val gap says underfit-ish
+   generalization, not saturation), a KF-style motion prior inside the association (the KF's
+   whole advantage is CV coasting — give the learned head the same inductive bias), hybrid
+   gating (learned features + Hungarian one-to-one with motion-gated costs), and revisiting
+   the collision-weighted CE (in-collision targets are attribution-ambiguous — a soft/merged
+   target may train better than nearest-anchor hard labels).
+2. Estimation-head question is now resolved in the other direction on v1: keep the
+   projection head (it is what wins lock-loss); on v0 the splitting→BLUE decode of gated
+   centers was better (0.4° vs 1.5° peak) — carry both outputs.
+3. GitHub push held until Jason reviews this corrected doc (per TVW dispatch); nas pushes
+   fine. Amplitude-ladder lineage needed before any dynamic-range claim.
