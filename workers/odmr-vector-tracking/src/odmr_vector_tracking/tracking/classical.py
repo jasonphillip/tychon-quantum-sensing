@@ -31,6 +31,36 @@ from odmr_vector_tracking.vector.geometry import (
 )
 
 
+def auto_peak_min_depth(
+    spectra: np.ndarray,
+    fraction: float = 0.35,
+    line_depths: np.ndarray | list[float] | None = None,
+) -> float:
+    """Detection threshold scaled from the data's own dip contrast.
+
+    ``fraction`` x a reference dip depth: the **shallowest nominal line depth** when the
+    dataset manifest provides ``line_depths`` (v1+ carries per-line depths; per-axis contrast
+    scaling makes the weakest line ~4x shallower than the deepest, and a max-depth-derived
+    threshold silently drops it), else the median per-frame maximum depth
+    (``1 - min(PL)`` over the frequency axis; ``spectra`` may be ``(T, F)`` or ``(N, T, F)``).
+
+    Why this exists: the default absolute ``peak_min_depth=0.03`` exceeds the real
+    ``sequence_sanity_v0`` dip depth (~0.4% of baseline, measured 0.0037-0.0077 per-frame max),
+    so the detector returned **zero peaks on every real frame** and the tracker never left its
+    initialization — the originally published Increment-1 numbers scored that frozen tracker
+    and were retracted (2026-07-01). Every evaluation must scale the threshold from the data.
+
+    ``fraction`` must sit below the reference line's residual depth under contrast drift
+    (v1 AR(1) drift plus overlap can halve the shallowest dip) and above overlap ripple
+    between neighboring Lorentzians; 0.35 satisfies both on v0 and v1.
+    """
+    if line_depths is not None and len(line_depths):
+        return float(fraction * float(np.min(np.asarray(line_depths, dtype=np.float64))))
+    s = np.asarray(spectra, dtype=np.float64)
+    depth = 1.0 - s.min(axis=-1)
+    return float(fraction * np.median(depth))
+
+
 @dataclass(frozen=True)
 class ClassicalTrackResult:
     """Output of :meth:`ClassicalTracker.run` over one (T, F) sequence.

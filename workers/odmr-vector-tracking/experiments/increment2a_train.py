@@ -134,10 +134,11 @@ def main() -> int:
     ap.add_argument("--patience", type=int, default=None)
     ap.add_argument("--seed", type=int, default=None)
     ap.add_argument("--device", type=str, default=None)
+    ap.add_argument("--val-every", type=int, default=None)
     args = ap.parse_args()
 
     settings = load_config(args.train_config, TrainSettings)
-    for name in ("epochs", "batch_size", "lr", "patience", "seed", "device"):
+    for name in ("epochs", "batch_size", "lr", "patience", "seed", "device", "val_every"):
         val = getattr(args, name)
         if val is not None:
             setattr(settings, name, val)

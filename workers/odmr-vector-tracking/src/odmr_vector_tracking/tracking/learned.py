@@ -284,6 +284,29 @@ class GatedKalmanNetCore(nn.Module):
         return (1.0 - z) * state + z * h_tilde
 
 
+def exclusive_greedy_assign(scores: torch.Tensor) -> torch.Tensor:
+    """One-to-one greedy assignment by descending score. ``(B, L, K) -> (B, L)`` long.
+
+    Iteratively claims the best remaining (slot, candidate) pair per batch element, masking
+    the claimed slot row and candidate column — mutual exclusion so two locks can never claim
+    the same candidate (a per-line independent argmax can). Greedy-on-scores is the
+    lightweight alternative to Hungarian; L is tiny (8) and K ≥ L, so every slot gets a
+    distinct candidate. Off-graph (inference bookkeeping only — never on the NPU).
+    """
+    b, n_slots, n_cand = scores.shape
+    s = scores.detach().clone()
+    out = torch.zeros(b, n_slots, dtype=torch.long, device=scores.device)
+    neg = torch.finfo(s.dtype).min
+    rows = torch.arange(b, device=scores.device)
+    for _ in range(min(n_slots, n_cand)):
+        flat = s.reshape(b, n_slots * n_cand).argmax(dim=-1)
+        li, ki = flat // n_cand, flat % n_cand
+        out[rows, li] = ki
+        s[rows, li, :] = neg
+        s[rows, :, ki] = neg
+    return out
+
+
 # --- host/MSS association heads (two-impl / one-signature) -------------------------------
 
 class LinearScoreAssociation(nn.Module):
@@ -329,8 +352,8 @@ class LinearScoreAssociation(nn.Module):
 
     @staticmethod
     def assign(cost: torch.Tensor) -> torch.Tensor:
-        """Greedy off-graph assignment: best candidate per line-lock. ``(B,L,K) -> (B,L)``."""
-        return torch.argmax(cost, dim=-1)
+        """Mutually exclusive off-graph assignment. ``(B,L,K) -> (B,L)``."""
+        return exclusive_greedy_assign(cost)
 
 
 class AttentionAssociation(nn.Module):
@@ -364,8 +387,8 @@ class AttentionAssociation(nn.Module):
 
     @staticmethod
     def assign(attn: torch.Tensor) -> torch.Tensor:
-        """Hard assignment from the soft attention. ``(B,L,K) -> (B,L)``."""
-        return torch.argmax(attn, dim=-1)
+        """Mutually exclusive hard assignment from the soft attention. ``(B,L,K) -> (B,L)``."""
+        return exclusive_greedy_assign(attn)
 
 
 # --- host/MSS geometry decode (fixed BLUE) ----------------------------------------------
@@ -453,7 +476,7 @@ class LearnedTracker(nn.Module):
             track_feats = self.state_to_tracks(state).reshape(b, cfg.n_lines, cfg.feat_dim)
             tpos = self.state_to_track_pos(state)              # (B, L) predicted line pos
             sc = self.association(track_feats, feat, tpos, pos)  # (B, L, K)      [host]
-            assign = torch.argmax(sc, dim=-1)                  # hard assign (off-NPU)
+            assign = exclusive_greedy_assign(sc)               # one-to-one assign (off-NPU)
 
             outs["b_est"].append(b_vec)
             outs["cov"].append(c)

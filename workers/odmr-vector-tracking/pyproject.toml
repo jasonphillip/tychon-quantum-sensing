@@ -12,6 +12,7 @@ dependencies = [
     "numpy>=1.26",
     "h5py>=3.10",
     "pyyaml>=6.0",
+    "scipy>=1.11",  # Hungarian assignment (tracking.kf_baseline); eval-side, never on the NPU
 ]
 
 # nv_sensor_sim provides the physics (resonance frequencies, 8x3 geometry, spectra,

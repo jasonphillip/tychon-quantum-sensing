@@ -1,20 +1,23 @@
-"""Increment-2a headline report: learned tracker vs the classical bar on sequence_sanity_v0.
+"""Increment-2a corrected report: learned tracker vs HONEST classical baselines (v0).
 
-Evaluates every trained checkpoint under ``artifacts/increment2a/`` (skipping ``*_overfit1``
-gate runs) on the REAL test split with the *same* ``evaluation/metrics.py`` pipeline as
-``increment1_report.py``, and re-runs the classical lock-in+PID baseline inline for a
-side-by-side. Nothing here trains; run ``experiments/increment2a_train.py`` first.
+RE-BASELINE (2026-07-01): the originally published Increment-1 bar was retracted — the
+classical detector's default absolute threshold (0.03) exceeded the real data's ~0.4% dip
+depth, so it returned zero peaks on every frame and the "baseline" being beaten had never
+received a measurement. This report scores every tracker with a data-scaled detection
+threshold (:func:`auto_peak_min_depth`) and shared conventions
+(:mod:`odmr_vector_tracking.evaluation.rows`): nan-aware angular error (undefined = lost),
+capture-radius identity attribution, per-opportunity ID switches, no dynamic-range row.
+
+Trackers compared on the real test split:
+- **honest PID** — the Increment-1 lock-in+PID with the fixed detector (GT t=0 init).
+- **CV-KF + Hungarian** — the competent classical baseline (GT t=0 init).
+- **oracle association** — true-label assignment of detected peaks + splitting→BLUE
+  (estimation floor; GT everywhere by construction).
+- **learned variants** — every checkpoint under ``artifacts/increment2a/`` (cold spectra
+  acquisition — NO ground-truth initialization; a strictly harder condition, stated in each
+  caption).
 
 Run from the repo root:  ``python experiments/increment2a_report.py``
-
-Scoring parity notes:
-- Learned claimed centers = the state-posterior ``tracked_freqs``; claimed identities are the
-  canonical slot axes (``LINE_AXIS_8``), fixed from t=0 — same convention as the classical
-  tracker's locks (which additionally get ground-truth initial centers; the learned tracker
-  acquires from the spectra alone, a strictly harder condition).
-- Primary vector estimate = the model's BLUE-decoded projection regression (``b_est``). A
-  secondary cross-check row decodes the learned tracked centers through the *classical*
-  splitting→BLUE path, isolating association quality from the regression head.
 """
 
 from __future__ import annotations
@@ -33,97 +36,77 @@ if str(_REPO_ROOT) not in sys.path:
 from odmr_vector_tracking.data import SequenceDatasetLoader
 from odmr_vector_tracking.data.contract import validate_dataset_dir
 from odmr_vector_tracking.data.loaders import SequenceDataset
-from odmr_vector_tracking.evaluation.metrics import (
-    association_accuracy,
-    dynamic_range,
-    id_switch_rate,
-    physical_line_index,
-    recovery_time,
-    resolve_true_axis,
-    vector_angular_error,
-)
-from odmr_vector_tracking.tracking.classical import ClassicalTracker
+from odmr_vector_tracking.evaluation.rows import sequence_metrics_row, summarize_rows
+from odmr_vector_tracking.tracking.classical import ClassicalTracker, auto_peak_min_depth
+from odmr_vector_tracking.tracking.kf_baseline import KFHungarianTracker
 from odmr_vector_tracking.tracking.learned import LearnedTrackerConfig, build_tracker
 from odmr_vector_tracking.vector.blue import blue_invert_field
 from odmr_vector_tracking.vector.geometry import LINE_AXIS_8
 
-LOSS_DEG = 5.0  # vector lock deemed "lost" above this angular error (same as Increment 1)
+CAPTURE_RADIUS_LW = 3.0  # identity attribution radius, in linewidths
+
+GT_INIT_CAPTION = "GT t=0 initialization (well-resolved acquisition assumption)"
+COLD_CAPTION = "cold spectra acquisition - NO ground-truth initialization (harder condition)"
 
 
-def _row(
-    tracked_hz: np.ndarray,
-    pred_axis: np.ndarray,
-    B_est: np.ndarray,
-    ds: SequenceDataset,
-    n: int,
-    dt: float,
-) -> dict | None:
-    """One sequence's metric row — identical logic to increment1_report.analyze."""
-    ta = resolve_true_axis(tracked_hz, ds.resonance_freqs[n], ds.line_axis[n])
-    ae = np.nan_to_num(vector_angular_error(ds.B_true[n], B_est), nan=0.0)
-    cf = np.where(ds.collision_mask[n])[0]
-    if cf.size == 0:
-        return None
-    first, last = int(cf.min()), int(cf.max())
-    acc = association_accuracy(pred_axis, ta, line_collision=ds.line_collision[n])
-    lc = ds.line_collision[n].astype(bool)
-    dr = dynamic_range(ds.B_true[n], ae, threshold=LOSS_DEG)
-    return dict(
-        bmin=float(np.linalg.norm(ds.B_true[n], axis=1).min()),
-        bmax=float(np.linalg.norm(ds.B_true[n], axis=1).max()),
-        pre=association_accuracy(pred_axis[:first], ta[:first])["overall"],
-        post=association_accuracy(pred_axis[last + 1:], ta[last + 1:])["overall"],
-        in_coll=acc["in_collision"], out_coll=acc["out_collision"],
-        dr=dr["dynamic_range_T"],
-        lost=dr["never_lost"] == 0.0,
-        rt=recovery_time(ae, dt_s=dt, threshold=LOSS_DEG, onset_index=first),
-        idsw=id_switch_rate(physical_line_index(tracked_hz, ds.resonance_freqs[n]))["count"],
-        ae_pre=float(ae[:first].mean()), ae_peak=float(ae.max()),
-        ae_post=float(ae[last + 1:].mean()),
-        incoll_err=float((pred_axis != ta)[lc].mean()) if lc.any() else float("nan"),
+def _seq_row(tracked_hz, pred_axis, B_est, ds: SequenceDataset, n: int, m: dict):
+    return sequence_metrics_row(
+        tracked_hz, pred_axis, B_est,
+        resonance_freqs=ds.resonance_freqs[n],
+        line_axis=ds.line_axis[n],
+        line_collision=ds.line_collision[n],
+        collision_mask=ds.collision_mask[n],
+        B_true=ds.B_true[n],
+        dt_s=float(m["dt_s"]),
+        capture_radius_hz=CAPTURE_RADIUS_LW * float(m["linewidth_Hz"]),
     )
 
 
-def summarize(rows: list[dict], label: str, bias_mag: float) -> None:
-    """Increment-1-style metric block over per-sequence rows."""
-    N = len(rows)
-    lost = sum(r["lost"] for r in rows)
-    never_recover = sum(1 for r in rows if r["rt"] == float("inf"))
-    med = lambda k: float(np.nanmedian([r[k] for r in rows]))  # noqa: E731
-    print(f"\n===== {label}  ({N} sequences w/ crossing) =====")
-    print(f"  |B| range         : {med('bmin')*1e3:.2f}..{med('bmax')*1e3:.2f} mT (median)")
-    print(f"  assoc accuracy    : pre {med('pre'):.3f} -> post {med('post'):.3f} (median)")
-    print(f"  in-collision assoc: {med('in_coll'):.3f}   (out-of-collision {med('out_coll'):.3f})")
-    print(f"  ID-switches/seq   : {med('idsw'):.0f} (median) | in-collision ID-switch err {med('incoll_err'):.3f}")
-    print(f"  LOSES LOCK        : {lost}/{N} ({100*lost//N if N else 0}%)")
-    print(f"  dynamic range     : median {med('dr')*1e3:.2f} mT before irrecoverable loss (at {bias_mag*1e3:.1f} mT bias)")
-    print(f"  vector ang err    : pre {med('ae_pre'):.2f} -> peak {med('ae_peak'):.1f} -> post {med('ae_post'):.1f} deg (median)")
-    print(f"  recovery time     : never recovers in {never_recover}/{N}")
+def analyze_pid(ds: SequenceDataset, m: dict) -> tuple[list[dict], float]:
+    """Honest PID rows + mean pre-crossing locked fraction (must be ~1 or the run is void)."""
+    rows, locked_pre = [], []
+    for n in range(ds.spectra.shape[0]):
+        depth = auto_peak_min_depth(ds.spectra[n], line_depths=m.get("line_depths"))
+        trk = ClassicalTracker(
+            ds.frequencies, linewidth_Hz=m["linewidth_Hz"], peak_min_depth=depth
+        )
+        res = trk.run(ds.spectra[n], init_freqs=ds.resonance_freqs[n, 0])
+        cf = np.where(ds.collision_mask[n])[0]
+        if cf.size:
+            locked_pre.append(float(res.locked[: cf.min()].mean()) if cf.min() > 0 else 1.0)
+        r = _seq_row(res.tracked_freqs, res.pred_axis, res.B_est, ds, n, m)
+        if r is not None:
+            rows.append(r)
+    return rows, float(np.mean(locked_pre)) if locked_pre else float("nan")
 
 
-def analyze_classical(ds: SequenceDataset, m: dict) -> list[dict]:
-    trk = ClassicalTracker(ds.frequencies, linewidth_Hz=m["linewidth_Hz"])
+def analyze_kf(ds: SequenceDataset, m: dict) -> list[dict]:
     rows = []
     for n in range(ds.spectra.shape[0]):
+        depth = auto_peak_min_depth(ds.spectra[n], line_depths=m.get("line_depths"))
+        trk = KFHungarianTracker(
+            ds.frequencies, linewidth_Hz=m["linewidth_Hz"], peak_min_depth=depth
+        )
         res = trk.run(ds.spectra[n], init_freqs=ds.resonance_freqs[n, 0])
-        r = _row(res.tracked_freqs, res.pred_axis, res.B_est, ds, n, m["dt_s"])
+        r = _seq_row(res.tracked_freqs, res.pred_axis, res.B_est, ds, n, m)
         if r is not None:
             rows.append(r)
     return rows
 
 
 def analyze_oracle_association(ds: SequenceDataset, m: dict) -> list[dict]:
-    """Ablation: TRUE-label association + classical estimation — the estimation floor.
+    """Ablation: TRUE-label association of detected peaks + splitting→BLUE (estimation floor).
 
-    Uses the classical detector's peaks but assigns each line-slot the detected peak nearest
-    its ground-truth center (falling back to the true center when no peak is in capture
-    range), then decodes via splitting→BLUE. Association error is zero by construction, so
-    whatever error remains is measurement/estimation error — comparing the trackers against
-    this row decomposes association failure from estimation quality.
+    With the fixed detector this is meaningful: real peaks, perfect association. Whatever
+    error remains is measurement/estimation error — comparing trackers against this row
+    decomposes association failure from estimation quality.
     """
-    trk = ClassicalTracker(ds.frequencies, linewidth_Hz=m["linewidth_Hz"])
     rows = []
     for n in range(ds.spectra.shape[0]):
+        depth = auto_peak_min_depth(ds.spectra[n], line_depths=m.get("line_depths"))
+        trk = ClassicalTracker(
+            ds.frequencies, linewidth_Hz=m["linewidth_Hz"], peak_min_depth=depth
+        )
         T, L = ds.resonance_freqs[n].shape
         tracked = np.empty((T, L), dtype=np.float64)
         for t in range(T):
@@ -138,7 +121,7 @@ def analyze_oracle_association(ds: SequenceDataset, m: dict) -> list[dict]:
                     tracked[t, line] = gt
         B_est = np.stack([blue_invert_field(tracked[t]).b_hat for t in range(T)])
         pred_axis = np.broadcast_to(LINE_AXIS_8, tracked.shape)
-        r = _row(tracked, pred_axis, B_est, ds, n, m["dt_s"])
+        r = _seq_row(tracked, pred_axis, B_est, ds, n, m)
         if r is not None:
             rows.append(r)
     return rows
@@ -164,21 +147,23 @@ def analyze_learned(
     rows, xrows = [], []
     for n in range(ds.spectra.shape[0]):
         pred_axis = np.broadcast_to(LINE_AXIS_8, tracked_hz[n].shape)
-        r = _row(tracked_hz[n], pred_axis, b_est[n], ds, n, m["dt_s"])
+        r = _seq_row(tracked_hz[n], pred_axis, b_est[n], ds, n, m)
         if r is not None:
             rows.append(r)
         # Cross-check: classical splitting->BLUE decode of the learned tracked centers.
         B_x = np.stack(
             [blue_invert_field(tracked_hz[n, t]).b_hat for t in range(tracked_hz.shape[1])]
         )
-        rx = _row(tracked_hz[n], pred_axis, B_x, ds, n, m["dt_s"])
+        rx = _seq_row(tracked_hz[n], pred_axis, B_x, ds, n, m)
         if rx is not None:
             xrows.append(rx)
     return rows, xrows, meta
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Increment-2a report: learned vs classical bar")
+    ap = argparse.ArgumentParser(
+        description="Increment-2a corrected report: learned vs honest classical baselines"
+    )
     ap.add_argument("--dataset", type=Path,
                     default=_REPO_ROOT / "data" / "sequence_sanity_v0")
     ap.add_argument("--runs", type=Path, default=_REPO_ROOT / "artifacts" / "increment2a")
@@ -199,14 +184,23 @@ def main() -> int:
     print(f"[data] {args.dataset.name} split='{args.split}' | bias |B| = {bias_mag*1e3:.2f} mT, "
           f"Gamma = {m['linewidth_Hz']/1e6:.2f} MHz, k = {m['collision_threshold_linewidths']}, "
           f"T = {m['n_timesteps']}, F = {m['n_freq_points']}")
+    print(f"[conventions] data-scaled detector (auto_peak_min_depth), capture radius "
+          f"{CAPTURE_RADIUS_LW:.0f}*Gamma, nan-aware error, per-opportunity ID switches. "
+          f"The pre-2026-07-01 published bar is RETRACTED (detector artifact).")
 
-    summarize(analyze_classical(ds, m), "CLASSICAL lock-in+PID baseline (Increment-1 bar)",
-              bias_mag)
-    summarize(
-        analyze_oracle_association(ds, m),
-        "ORACLE association ablation (true-label assignment + splitting→BLUE) — estimation floor",
-        bias_mag,
+    pid_rows, locked_pre = analyze_pid(ds, m)
+    print(f"[detector check] honest-PID mean pre-crossing locked fraction: {locked_pre:.4f}")
+    assert locked_pre > 0.9, (
+        f"pre-crossing locked fraction {locked_pre:.3f} <= 0.9 — the detector is not seeing "
+        f"the data's peaks; results would be the retracted-bar artifact all over again"
     )
+    summarize_rows(pid_rows, "HONEST PID (fixed detector) — corrected Increment-1 baseline",
+                   GT_INIT_CAPTION)
+    summarize_rows(analyze_kf(ds, m), "CV-KF + HUNGARIAN (competent classical baseline)",
+                   GT_INIT_CAPTION)
+    summarize_rows(analyze_oracle_association(ds, m),
+                   "ORACLE association (true-label assignment of detected peaks) — estimation floor",
+                   "ground truth by construction")
 
     ckpts = sorted(
         p / "best.pt"
@@ -219,9 +213,9 @@ def main() -> int:
     for ck in ckpts:
         rows, xrows, meta = analyze_learned(ds, m, ck, device)
         label = f"LEARNED tracker [core={meta['core']}, assoc={meta['association']}]"
-        summarize(rows, label, bias_mag)
-        summarize(xrows, label + " — splitting→BLUE decode of tracked centers (cross-check)",
-                  bias_mag)
+        summarize_rows(rows, label, COLD_CAPTION)
+        summarize_rows(xrows, label + " — splitting→BLUE decode of tracked centers (cross-check)",
+                       COLD_CAPTION)
     return 0
 
 

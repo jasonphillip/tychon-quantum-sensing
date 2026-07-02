@@ -53,6 +53,8 @@ class TrainSettings:
     seed: int = 20260701
     device: str = "cuda"
     log_every: int = 25
+    val_every: int = 1           # evaluate val split every N epochs (early-stop bookkeeping
+                                 # happens only on evaluated epochs; >1 for large val splits)
 
 
 @dataclass
@@ -226,35 +228,43 @@ def train(
             n_batches += 1
         sched.step()
 
-        tracker.eval()
-        with torch.no_grad():
-            val_losses, val_out = _split_losses(
-                tracker, val_tensors, settings, anchor_spacing, scores_are_probs
-            )
-            acc = anchor_assoc_accuracy(
-                val_out.scores, val_tensors.assoc_targets, val_tensors.line_collision
-            )
-
+        evaluate_val = (epoch % settings.val_every == 0) or (epoch == settings.epochs)
         row = {
             "epoch": epoch,
             "lr": float(sched.get_last_lr()[0]),
+            "val_evaluated": evaluate_val,
             **{f"train_{k}": v / n_batches for k, v in train_sums.items()},
-            **{f"val_{k}": float(v) for k, v in val_losses.items()},
-            **acc,
         }
+        if evaluate_val:
+            tracker.eval()
+            with torch.no_grad():
+                val_losses, val_out = _split_losses(
+                    tracker, val_tensors, settings, anchor_spacing, scores_are_probs
+                )
+                acc = anchor_assoc_accuracy(
+                    val_out.scores, val_tensors.assoc_targets, val_tensors.line_collision
+                )
+            row.update({f"val_{k}": float(v) for k, v in val_losses.items()})
+            row.update(acc)
+
+            val_total = float(val_losses["total"])
+            if val_total < best_val:
+                best_val = val_total
+                best_epoch = epoch
+                best_state = {
+                    k: v.detach().cpu().clone() for k, v in tracker.state_dict().items()
+                }
         history.append(row)
 
-        val_total = float(val_losses["total"])
-        if val_total < best_val:
-            best_val = val_total
-            best_epoch = epoch
-            best_state = {k: v.detach().cpu().clone() for k, v in tracker.state_dict().items()}
-
         if epoch % settings.log_every == 0 or epoch == 1:
+            val_str = (
+                f"val total {row['val_total']:.4f} | "
+                f"val assoc in-coll {row['assoc_acc_in_coll']:.3f}"
+                if evaluate_val else "val (skipped this epoch)"
+            )
             log(
                 f"epoch {epoch:5d} | train total {row['train_total']:.4f} | "
-                f"val total {val_total:.4f} (best {best_val:.4f} @ {best_epoch}) | "
-                f"val assoc in-coll {acc['assoc_acc_in_coll']:.3f} | lr {row['lr']:.2e}"
+                f"{val_str} (best {best_val:.4f} @ {best_epoch}) | lr {row['lr']:.2e}"
             )
 
         if epoch - best_epoch >= settings.patience:

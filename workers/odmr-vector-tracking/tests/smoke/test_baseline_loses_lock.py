@@ -44,7 +44,10 @@ def records(tmp_path_factory):
     for n in range(ds.spectra.shape[0]):
         res = tracker.run(ds.spectra[n], init_freqs=ds.resonance_freqs[n, 0])
         true_axis = resolve_true_axis(res.tracked_freqs, ds.resonance_freqs[n], ds.line_axis[n])
-        ang = np.nan_to_num(vector_angular_error(ds.B_true[n], res.B_est), nan=0.0)
+        # nan-aware: undefined angular error counts as LOST, never as perfect (the retracted
+        # pipeline's nan_to_num(..., 0.0) flattered undefined frames).
+        ang = vector_angular_error(ds.B_true[n], res.B_est)
+        ang = np.where(np.isnan(ang), np.inf, ang)
         cf = np.where(ds.collision_mask[n])[0]
         pre, post = int(cf.min()), int(cf.max())
         out_records.append(
