@@ -178,22 +178,30 @@ def print_cells(ds_name: str, rung: str, tracker: str, agg: dict[str, dict]) -> 
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Shot-noise ladder matrix (Increment 2b)")
+    ap = argparse.ArgumentParser(description="Shot-noise ladder matrix (Increment 2b/2c)")
     ap.add_argument("--split", type=str, default="test")
     ap.add_argument("--out", type=Path,
                     default=_REPO_ROOT / "artifacts" / "noise_matrix" / "matrix.json")
+    # Checkpoint-discovery overrides (eval semantics — dataset, split, ladder, seeds, metrics —
+    # are unchanged; only WHICH trained checkpoints are scored moves). 2c trains on v2 but the
+    # standing eval stays on the v1 test set: `--only v1 --v1-runs artifacts/increment2c`.
+    ap.add_argument("--only", choices=("v0", "v1", "both"), default="both",
+                    help="restrict the eval to one dataset (default both)")
+    ap.add_argument("--v0-runs", type=Path, default=_REPO_ROOT / "artifacts" / "increment2a",
+                    help="checkpoint dir discovered for the v0 eval")
+    ap.add_argument("--v1-runs", type=Path, default=_REPO_ROOT / "artifacts" / "increment2b",
+                    help="checkpoint dir discovered for the v1 eval (2c: artifacts/increment2c)")
     args = ap.parse_args()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"[env] torch {torch.__version__} | eval device: {device}"
           + (f" ({torch.cuda.get_device_name(0)})" if device.type == "cuda" else ""))
 
-    datasets = [
-        ("v0", _REPO_ROOT / "data" / "sequence_sanity_v0",
-         _REPO_ROOT / "artifacts" / "increment2a"),
-        ("v1", _REPO_ROOT / "data" / "sequence_train_v1",
-         _REPO_ROOT / "artifacts" / "increment2b"),
+    all_datasets = [
+        ("v0", _REPO_ROOT / "data" / "sequence_sanity_v0", args.v0_runs),
+        ("v1", _REPO_ROOT / "data" / "sequence_train_v1", args.v1_runs),
     ]
+    datasets = [d for d in all_datasets if args.only in ("both", d[0])]
     results: dict = {"noise_master_seed": NOISE_MASTER_SEED, "capture_radius_lw":
                      CAPTURE_RADIUS_LW, "datasets": {}}
 
