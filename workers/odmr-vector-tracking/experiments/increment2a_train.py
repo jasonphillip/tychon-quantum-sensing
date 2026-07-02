@@ -135,6 +135,10 @@ def main() -> int:
     ap.add_argument("--seed", type=int, default=None)
     ap.add_argument("--device", type=str, default=None)
     ap.add_argument("--val-every", type=int, default=None)
+    ap.add_argument("--noise-snr", type=float, default=None,
+                    help="shot-noise augmentation: photon budget sized so the FAINTEST line "
+                         "(manifest line_depths) has this dip SNR; train gets fresh "
+                         "realizations per epoch, val a fixed realization (seeded)")
     args = ap.parse_args()
 
     settings = load_config(args.train_config, TrainSettings)
@@ -166,6 +170,16 @@ def main() -> int:
     model_cfg.input_gain = 1.0 / contrast
     print(f"[data] nominal contrast {contrast:.5f} -> input_gain {model_cfg.input_gain:.1f}")
 
+    noise_photons: float | None = None
+    if args.noise_snr is not None:
+        from nv_sensor_sim.physics.shot_noise import photons_for_dip_snr
+
+        faintest = float(np.min(np.asarray(m["line_depths"])))
+        noise_photons = float(photons_for_dip_snr(faintest, args.noise_snr))
+        settings.noise_photons = noise_photons
+        print(f"[noise] augmentation: SNR_faintest={args.noise_snr:g} on depth {faintest:.5f} "
+              f"-> {noise_photons:.3e} photons/point")
+
     set_seed(settings.seed)
     tracker = build_tracker(model_cfg, core=args.core, association=args.assoc).to(device)
     n_params = sum(p.numel() for p in tracker.parameters() if p.requires_grad)
@@ -177,6 +191,18 @@ def main() -> int:
         print("[mode] overfit-one sanity gate: 1 training sequence, val = same sequence")
     else:
         val_ds = loader.load_split("val")
+    if noise_photons is not None:
+        # Fixed noisy realization for the val split (stable early stopping); train-side
+        # noise is drawn fresh per epoch inside the loop.
+        from nv_sensor_sim.physics.shot_noise import apply_shot_noise
+
+        val_ds = dataclasses.replace(
+            val_ds,
+            spectra=apply_shot_noise(
+                val_ds.spectra, noise_photons, seed=settings.seed + 1
+            ).astype(np.float32),
+        )
+        print("[noise] val split: fixed shot-noise realization (seed = train seed + 1)")
     anchors = tracker.extractor.get_buffer("anchors").cpu()
     train_t = build_split_tensors(train_ds, anchors, freq_range, model_cfg.proj_scale_T, device)
     val_t = build_split_tensors(val_ds, anchors, freq_range, model_cfg.proj_scale_T, device)
@@ -191,6 +217,7 @@ def main() -> int:
         "dataset_config_hash": m.get("config_hash"),
         "freq_range_Hz": list(freq_range),
         "overfit_one": bool(args.overfit_one),
+        "noise_photons": noise_photons,  # None = trained noiseless
     }
     key = run_key(model_cfg, settings, meta)
     meta["run_key"] = key

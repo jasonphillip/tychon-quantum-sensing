@@ -55,6 +55,12 @@ class TrainSettings:
     log_every: int = 25
     val_every: int = 1           # evaluate val split every N epochs (early-stop bookkeeping
                                  # happens only on evaluated epochs; >1 for large val splits)
+    noise_photons: float | None = None
+    # Photon budget (photons/point) for per-epoch shot-noise augmentation of the TRAIN split:
+    # a fresh Gaussian realization each epoch with sigma from the upstream physics model
+    # (nv_sensor_sim.physics.shot_noise.shot_noise_sigma; sigma computed once on the clean
+    # spectra, noise drawn on-device). None = no augmentation. The VAL split is NOT noised
+    # here - the caller supplies a fixed noisy realization so early stopping is stable.
 
 
 @dataclass
@@ -205,9 +211,25 @@ def train(
     history: list[dict] = []
     t0 = time.perf_counter()
 
+    clean_spectra = train_tensors.spectra
+    noise_sigma: torch.Tensor | None = None
+    if settings.noise_photons is not None:
+        # Physics stays upstream: sigma comes from the nv-sensor-sim shot-noise model,
+        # computed once on the clean spectra; fresh realizations are drawn per epoch.
+        from nv_sensor_sim.physics.shot_noise import shot_noise_sigma
+
+        sig = shot_noise_sigma(clean_spectra.cpu().numpy(), float(settings.noise_photons))
+        noise_sigma = torch.from_numpy(np.ascontiguousarray(sig)).float().to(device)
+        log(f"shot-noise augmentation ON: {settings.noise_photons:.3e} photons/point "
+            f"(baseline sigma {float(noise_sigma.max()):.2e}), fresh realization per epoch")
+
     epoch = 0
     for epoch in range(1, settings.epochs + 1):
         tracker.train()
+        if noise_sigma is not None:
+            train_tensors.spectra = clean_spectra + noise_sigma * torch.randn_like(
+                clean_spectra
+            )
         perm = torch.randperm(n, device=device)
         train_sums = {
             "association": 0.0, "position": 0.0, "track_position": 0.0,
@@ -272,6 +294,7 @@ def train(
             break
 
     wall = time.perf_counter() - t0
+    train_tensors.spectra = clean_spectra  # restore caller's tensors after augmentation
     if best_state is not None:
         tracker.load_state_dict(best_state)
     if ckpt_path is not None and best_state is not None:
