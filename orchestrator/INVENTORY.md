@@ -348,5 +348,9 @@ was measured as a standalone closed loop and then left running as the item-3 soa
   *host-paced over SSH* to *kit-resident MSS-paced standalone*, nothing more.
 - Evidence: polarfire `libero/reports/2026-07-02-mss-paced/` + `docs/mss_paced_loop_measured_2026-07-02.md`;
   tools `firmware/linux/mss_paced_heartbeat.sh` + `mss_paced_soak_summary.sh`; fix-list row
-  `EV-MSS-PACED` → **closed**. The identical daemon config is now the item-3 daytime soak
-  (start 11:14:16Z, target ≥ 8 h).
+  `EV-MSS-PACED` → **closed**. The identical daemon config then ran as the item-3 daytime soak
+  and **PASSED at 8.01 h (harvested 19:15Z): 95,681,736 steps monotonic, 3318.9 Hz sustained,
+  5 transient trips / 95.7 M steps (0.05 ppm) all recovered by the 2 ms fabric watchdog,
+  memory flat, Δaxi = 3×steps exact** — against criteria pre-registered in the log header
+  (polarfire `libero/reports/2026-07-02-mss-paced/heartbeat_8h.log` + `soak_summary_8h.txt`,
+  commit `311263a`).
