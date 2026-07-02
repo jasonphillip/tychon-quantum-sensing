@@ -88,6 +88,15 @@ class LearnedTrackerConfig:
     proj_scale_T: float = 1.0e-2         # Tesla per unit of the regressed axis projections
     input_gain: float = 1.0              # scale on (1 - PL); set ~1/nominal_contrast so dips
                                          # enter O(1) (INT8 input-quantization scale, Incr. 3)
+    motion_prior: bool = False           # explicit per-slot CV kinematics: track_pos =
+                                         # (pos + vel) + learned delta; association gates on
+                                         # the CV prediction (the KF's inductive bias)
+    gate_cells: float = 2.0              # assignment gate around the CV prediction, in
+                                         # anchor cells (~9 linewidths on the real grid);
+                                         # inference-only masking, CE scores stay unmasked
+    vel_beta: float = 0.25               # fixed velocity-EMA gain of the CV scaffold (the
+                                         # scaffold carries detached — see LearnedTracker —
+                                         # so the gain is a constant, not a parameter)
 
     @property
     def n_candidates(self) -> int:
@@ -450,6 +459,27 @@ class LearnedTracker(nn.Module):
         self.state_to_proj = nn.Linear(cfg.state_dim, cfg.n_axes)
         self.state_to_tracks = nn.Linear(cfg.state_dim, cfg.n_lines * cfg.feat_dim)
         self.state_to_track_pos = nn.Linear(cfg.state_dim, cfg.n_lines)
+        if cfg.motion_prior:
+            # CV kinematic scaffold (2c identity fix): a learned-gain alpha-beta tracker on
+            # MEASUREMENTS, with the network refining the output. Per slot and frame:
+            #   pred = pos + vel                                  (CV prediction)
+            #   z    = association-softmax-weighted candidate position  (the measurement)
+            #   kin  = pred + g * (z - pred),  g = sigmoid(gain_head(state))
+            #   vel += vel_beta * g * (z - pred)
+            #   track_pos = kin + delta(state)   (zero-init free refinement, NOT carried)
+            # The scaffold carries DETACHED across steps and is anchored to data through z,
+            # so it is stable by construction (convex combination of prediction and
+            # measurement) — two failure modes this replaces: full BPTT through the coupled
+            # pos/vel recurrences explodes (O(T) leverage of early innovations; training
+            # stalls under clipping), and a detached scaffold driven by the free delta head
+            # runs away (nothing anchors it to data). Association gates on pred, so
+            # merge-exit identity comes from CV coasting exactly as it does for the KF;
+            # sigmoid/softmax here are host-side glue (MSS runs float), not NPU ops.
+            self.state_to_track_delta = nn.Linear(cfg.state_dim, cfg.n_lines)
+            nn.init.zeros_(self.state_to_track_delta.weight)
+            nn.init.zeros_(self.state_to_track_delta.bias)  # type: ignore[arg-type]
+            self.gain_head = nn.Linear(cfg.state_dim, cfg.n_lines)
+            self._gate_n = cfg.gate_cells * float(2**cfg.n_downsample) / float(cfg.n_freq - 1)
 
     def forward(self, spectra: torch.Tensor) -> LearnedTrackerOutput:
         """``spectra (B, T, F)`` (contract-normalized PL) → :class:`LearnedTrackerOutput`."""
@@ -465,6 +495,7 @@ class LearnedTracker(nn.Module):
             ("b_est", "cov", "scores", "proj", "cand_pos", "track_pos", "assignment")
         }
 
+        kin_pos = kin_vel = None  # CV kinematic scaffold (motion_prior only)
         for t in range(T):
             feat, pos = self.extractor(x[:, t, :])             # (B,K,D), (B,K)   [V250]
             obs = self.obs_embed(feat.reshape(b, -1))          # (B, state_dim)   [host]
@@ -474,9 +505,33 @@ class LearnedTracker(nn.Module):
             b_vec, c = self.decoder(p)                         # (B, 3) T, (B,3,3) [host BLUE]
 
             track_feats = self.state_to_tracks(state).reshape(b, cfg.n_lines, cfg.feat_dim)
-            tpos = self.state_to_track_pos(state)              # (B, L) predicted line pos
-            sc = self.association(track_feats, feat, tpos, pos)  # (B, L, K)      [host]
-            assign = exclusive_greedy_assign(sc)               # one-to-one assign (off-NPU)
+            if cfg.motion_prior and kin_pos is not None:
+                assert kin_vel is not None
+                pred = kin_pos + kin_vel                       # CV prediction (detached carry)
+            else:
+                pred = self.state_to_track_pos(state)          # absolute readout (t=0 / plain)
+            # Association gates against the (CV-predicted) slot positions.
+            sc = self.association(track_feats, feat, pred, pos)  # (B, L, K)      [host]
+            if cfg.motion_prior:
+                # Measurement = association-weighted candidate position (soft, differentiable).
+                z = torch.softmax(sc, dim=-1) @ pos.unsqueeze(-1)   # (B, L, 1)
+                z = z.squeeze(-1)                                    # (B, L)
+                if kin_vel is None:
+                    kin_vel = torch.zeros_like(pred)
+                g = torch.sigmoid(self.gain_head(state))             # (B, L) learned gain
+                innov = g * (z - pred)
+                kin = pred + innov                                   # alpha-beta update
+                tpos = kin + self.state_to_track_delta(state)        # free refinement
+                kin_vel = (kin_vel + cfg.vel_beta * innov).detach()
+                kin_pos = kin.detach()  # scaffold carries without BPTT (see __init__)
+                # Motion-gated one-to-one assignment (inference bookkeeping only — the CE
+                # trains on the raw scores; masking them would blow up when the target sits
+                # outside an early-training garbage gate).
+                far = (pred[:, :, None] - pos[:, None, :]).abs() > self._gate_n
+                assign = exclusive_greedy_assign(sc.masked_fill(far, -1e9))
+            else:
+                tpos = pred
+                assign = exclusive_greedy_assign(sc)           # one-to-one assign (off-NPU)
 
             outs["b_est"].append(b_vec)
             outs["cov"].append(c)

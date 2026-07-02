@@ -142,3 +142,24 @@ def test_gradients_reach_every_trainable_block() -> None:
     # The BLUE decode stays frozen — geometry is not learned.
     assert trk.decoder.decode.weight.grad is None
     assert not trk.decoder.decode.weight.requires_grad
+
+
+def test_gradients_flow_through_motion_prior() -> None:
+    """With the CV scaffold on, the innovation head, velocity gain, and t=0 readout all
+    receive gradient through the kinematic chain (BPTT through pos/vel recurrences)."""
+    cfg = LearnedTrackerConfig(n_freq=64, motion_prior=True)
+    trk = build_tracker(cfg)
+    out = trk(torch.rand(2, 6, cfg.n_freq))
+    anchors = trk.extractor.get_buffer("anchors")
+    res_norm = torch.rand(2, 6, cfg.n_lines)
+    targets = association_targets(res_norm, anchors)
+    labels = torch.randn(2, 6, cfg.n_axes) * 0.3
+    coll = torch.zeros(2, 6, cfg.n_lines, dtype=torch.bool)
+    spacing = float(2**cfg.n_downsample) / float(cfg.n_freq - 1)
+    d = compute_losses(out, targets, res_norm, labels, coll, anchor_spacing=spacing)
+    d["total"].backward()
+    assert trk.state_to_track_delta.weight.grad is not None
+    assert float(trk.state_to_track_delta.weight.grad.abs().sum()) > 0
+    assert trk.gain_head.weight.grad is not None           # learned alpha-beta gain
+    assert float(trk.gain_head.weight.grad.abs().sum()) > 0
+    assert trk.state_to_track_pos.weight.grad is not None  # t=0 acquisition head

@@ -139,6 +139,10 @@ def main() -> int:
                     help="shot-noise augmentation: photon budget sized so the FAINTEST line "
                          "(manifest line_depths) has this dip SNR; train gets fresh "
                          "realizations per epoch, val a fixed realization (seeded)")
+    ap.add_argument("--motion-prior", action="store_true",
+                    help="enable the explicit CV kinematic scaffold in the tracker "
+                         "(track_pos = CV prediction + learned innovation; motion-gated "
+                         "assignment)")
     args = ap.parse_args()
 
     settings = load_config(args.train_config, TrainSettings)
@@ -159,6 +163,7 @@ def main() -> int:
     model_cfg.n_freq = int(m["n_freq_points"])
     model_cfg.n_lines = int(m["n_lines"])
     model_cfg.dt_s = float(m["dt_s"])
+    model_cfg.motion_prior = bool(args.motion_prior)
     print(f"[data] {args.dataset} | config_hash {m.get('config_hash')} | "
           f"T={m['n_timesteps']} F={model_cfg.n_freq} L={model_cfg.n_lines} | "
           f"K={model_cfg.n_candidates} anchors")

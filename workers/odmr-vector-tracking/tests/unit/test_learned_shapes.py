@@ -28,19 +28,32 @@ def test_candidate_count_derived_from_downsampling() -> None:
     assert LearnedTrackerConfig(n_freq=400).n_candidates == 25
 
 
-def test_forward_output_shapes() -> None:
-    trk = build_tracker(CFG, core="relu", association="linear")
-    B, T, L, K = 2, 12, CFG.n_lines, CFG.n_candidates
-    out = trk(torch.rand(B, T, CFG.n_freq))
+@pytest.mark.parametrize("motion_prior", [False, True], ids=["plain", "motion-prior"])
+def test_forward_output_shapes(motion_prior: bool) -> None:
+    cfg = LearnedTrackerConfig(n_freq=128, n_lines=8, motion_prior=motion_prior)
+    trk = build_tracker(cfg, core="relu", association="linear")
+    B, T, L, K = 2, 12, cfg.n_lines, cfg.n_candidates
+    out = trk(torch.rand(B, T, cfg.n_freq))
     assert out.b_est.shape == (B, T, 3)
     assert out.assignment.shape == (B, T, L)
     assert out.covariance.shape == (B, T, 3, 3)
     assert out.scores.shape == (B, T, L, K)
-    assert out.projections.shape == (B, T, CFG.n_axes)
+    assert out.projections.shape == (B, T, cfg.n_axes)
     assert out.cand_pos.shape == (B, T, K)
     assert out.track_pos.shape == (B, T, L)
     assert out.tracked_freqs.shape == (B, T, L)
     assert out.assignment.dtype == torch.long
+
+
+def test_motion_prior_scaffold_is_bounded() -> None:
+    """The alpha-beta scaffold is anchored to measurements: positions stay bounded (convex
+    combinations of predictions and in-window candidate positions), never running away —
+    the failure mode of a free-delta-driven detached scaffold."""
+    cfg = LearnedTrackerConfig(n_freq=128, n_lines=8, motion_prior=True)
+    trk = build_tracker(cfg)
+    out = trk(torch.rand(1, 32, cfg.n_freq))
+    assert torch.isfinite(out.track_pos).all()
+    assert float(out.track_pos.abs().max()) < 2.0  # window units; generous bound
 
 
 def test_tracked_freqs_are_the_state_posterior() -> None:
