@@ -67,7 +67,10 @@ v0 alone is unsupported.
 
 768 sequences × T=256 (512/128/128), three trajectory families (held-ramp-hold ≈ 50%,
 reversal ≈ 25%, OU ≈ 25%), per-axis contrast ladder [1.0, 0.85, 0.7, 0.55] with AR(1) drift,
-pinned v0 frequency grid. Full per-family results on the v1 **test** split (128 seqs; 95%
+pinned v0 frequency grid. **Caveat: v1 is noiseless** (`noise_mode: deterministic` — no
+photon shot noise); every number in this section is a noiseless-sim result, and the
+shot-noise-ladder re-evaluation (Increment 2b, upstream `physics.shot_noise`) is the
+hardening step. Full per-family results on the v1 **test** split (128 seqs; 95%
 Wilson CIs, pooled counts; classical trackers GT-init, learned cold-acquire; learned trained
 on v1-train, seed 20260701, early-stopped on v1-val — relu+linear best val 0.269 @ 545,
 gated+linear 0.148 @ 395):
@@ -100,14 +103,24 @@ gated+linear 0.148 @ 395):
    state-regressed B̂ (the magnetometer's actual output) does not route through per-line
    identity, so identity scrambles degrade it gracefully instead of catastrophically;
    the classical splitting→BLUE decode has no such path.
-3. Honest PID is the weakest tracker on every family and metric.
+3. Honest PID is the weakest tracker on lock-loss and vector metrics in every family — but
+   NOT on identity attribution: on `held` it beats both learned variants (in-collision
+   misassociation 0.198 vs 0.510/0.697; switches/opportunity 0.245 vs 0.321/0.375), and on
+   `reversal` its in-collision misassociation (0.465) is at parity with the gated variant
+   (0.457). Why the learned posterior scores so poorly on held-family in-collision
+   attribution is a diagnostic worth answering — possibly a capture-radius artifact for
+   posterior-style trackers whose claimed centers sit *between* merged lines (scored
+   unassigned → misassociated) rather than genuine mis-association; see the 2c list.
 
 **Corrected bottom line across v0+v1:** the learned tracker ties competent classical
 post-crossing on the trivial lineage, *loses* the identity race on v1 at current training
 scale, and *wins* vector-estimate robustness on exactly the adversarial families the thesis
 targets (reversal/OU) by a wide, CI-solid margin. The claim that survives is about the
 **field estimate through kinematically adversarial crossings**, not about association purity
-— and the identity gap is the concrete 2c work item.
+— and the identity gap is the concrete 2c work item. **Two provisos on that surviving
+claim:** it is a **noiseless-sim** result (shot-noise ladder re-evaluation pending), and the
+strongest classical estimator — per-frame warm-started NLS on the raw spectrum — is not yet
+in the matrix; until both land, treat the vector-estimate claim as provisional.
 
 v0 remains the frozen sanity lineage. Reproduce: `experiments/increment2b_report.py`.
 
@@ -131,6 +144,13 @@ logged).
 
 ## Next (2c work items)
 
+0. **The strongest classical baseline is missing from the matrix**: per-frame nonlinear
+   least-squares on the raw spectrum against the known forward model, warm-started from the
+   previous frame (continuity = association, no detection stage, merged blobs handled
+   natively) — the classical tracker most likely to survive reversal/OU. Until it is
+   evaluated (with the shot-noise ladder), **the vector-estimate claim is provisional**. If
+   NLS survives the adversarial families at realistic noise, the learned claim narrows to
+   deployability/compute (per-1-ms-frame NLS on an MSS core vs the learned pipeline).
 1. **Close the identity gap on v1**: the learned association loses to CV-KF everywhere at
    512-sequence scale. Candidates: more data / longer training (val gap says underfit-ish
    generalization, not saturation), a KF-style motion prior inside the association (the KF's
