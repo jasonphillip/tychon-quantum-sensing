@@ -223,6 +223,12 @@ linewidths off the real dips.
   spectral reconstruction. Use this for scoring; use the splitting only for what the model observes.
 - *Fixtures*: any synthetic fixtures must include the second-order common-mode center shift, so a
   tracker/baseline develops against realistic centers rather than first-order ones.
+- *Measurement noise*: stored spectra are deliberately **noiseless** (deterministic renders).
+  Apply photon shot noise consumer-side with `nv_sensor_sim.physics.shot_noise` —
+  `apply_shot_noise(spectrum, photons_per_point, seed)` for train-time augmentation
+  (per-epoch seeds) and fixed-seed evaluation realizations; `photons_for_dip_snr` sizes the
+  photon budget against the faintest line (`min(manifest["line_depths"])`). The model is
+  Poisson counting on the normalized PL: `sigma(f) = sqrt(S(f) / N)`.
 
 **`line_collision` and `seeds`** extend the orchestrator's initial contract (the shared
 time-series contract is **v1**): the per-frame `collision_mask` alone cannot tell the association
