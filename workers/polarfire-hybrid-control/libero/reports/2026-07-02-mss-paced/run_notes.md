@@ -136,3 +136,23 @@ Summarizer over the item-2 window (`mss_paced_soak_summary.sh heartbeat.log`):
 Kit-resident MSS-paced V250→PID loop, sustained ~3.3 kHz standalone (laptop-disconnected):
 **[HW]**. Boundary unchanged: the loop is MSS software (not fabric-resident) and the
 error/spectrum input is a replayed vector (not a live sensor).
+
+## Item 3 — daytime soak harvest (2026-07-02T19:15:19Z)
+
+Same daemon (pid 516, never restarted) left running from item 2 per the dispatch. Harvest via
+the pre-staged one-liner (`mss_paced_soak_summary.sh heartbeat.log`, exit 0):
+
+    samples=957 na_samples=0
+    window: first=2026-07-02T11:14:34Z last=2026-07-02T19:15:03Z
+    daemon_uptime=28829.3 s (8.01 h)
+    row: first=57386 last=95739122 steps=95681736 monotonic=yes
+    axi_write_count: delta=287045208 (3x_steps=287045208 agree=yes)
+    sustained_rate_hz: overall=3318.9 per_sample min=3295.9 mean=3318.9 max=3338.1
+    watchdog: trip 184->189 (5 transient, all recovered, last_bit0=0)
+    MemFree_kb: min=1436336 max=1448620 delta=12284
+    loop_pid_alive: dead_samples=0 last_alive=1 last_running=true
+    VERDICT=PASS
+
+All four criteria pre-registered in `soak_header.txt` PASS. Full log: `heartbeat_8h.log`
+(this directory; the 30-sample `heartbeat.log` is the item-2 window snapshot). Daemon left
+RUNNING after harvest — a later re-harvest with the same one-liner banks a longer figure.

@@ -71,8 +71,31 @@ window (`heartbeat.log`, 30 samples, 30 s cadence):
 - **1 transient watchdog trip** in 2.91 M steps (recovered, `bit0`→0, row kept advancing);
   MemFree flat (Δ 2372 kB); no daemon exit. Summarizer VERDICT=PASS.
 
-Evidence: `libero/reports/2026-07-02-mss-paced/{heartbeat.log, soak_summary_at_item2.txt,
-run_notes.md, burst_freerun_excerpt.txt, daemon_burst_excerpt.txt, soak_header.txt}`.
+### Daytime soak — 8 h, PASS (item 3; harvested 2026-07-02T19:15Z)
+
+The identical daemon (same pid 516, never restarted) ran on as the daytime soak against
+criteria **pre-registered in the log header before the run** (`soak_header.txt`). Harvest at
+8.01 h (957 heartbeat samples, 30 s cadence, zero missed):
+
+| pre-registered criterion | result |
+|---|---|
+| duration ≥ 8 h | **8.01 h** (28,829 s) |
+| no permanent stall; row strictly increasing | **95,681,736 steps**, monotonic, 957/957 samples alive |
+| sustained rate within ±10 % of ~3345 Hz | **3318.9 Hz** overall (−0.8 %); per-sample 3295.9–3338.1 |
+| watchdog trips transient-only | **5 trips / 95.7 M steps (0.05 ppm)**, every one recovered (`bit0`→0, row advancing) |
+| memory stable | MemFree Δ 12.3 MB over 8 h, non-monotonic — no leak |
+| **VERDICT** | **PASS** |
+
+Counter integrity end-to-end: `Δaxi_write_count = 287,045,208 = 3 × steps` **exactly** over
+the full 8 h. Claim this licenses:
+
+> "Kit-resident MSS-paced V250→PID loop soak: **95.7 M steps over 8.01 h at 3319 Hz sustained,
+> zero stalls, 5 transient >2 ms scheduling stalls all caught and recovered by the 2 ms fabric
+> watchdog, memory flat**. **[HW]**"
+
+Evidence: `libero/reports/2026-07-02-mss-paced/{heartbeat_8h.log, soak_summary_8h.txt,
+heartbeat.log (item-2 30-sample window), soak_summary_at_item2.txt, run_notes.md,
+burst_freerun_excerpt.txt, daemon_burst_excerpt.txt, soak_header.txt}`.
 
 ## Honest caveats
 
