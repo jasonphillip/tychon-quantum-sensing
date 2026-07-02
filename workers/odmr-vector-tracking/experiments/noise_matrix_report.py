@@ -161,6 +161,12 @@ def aggregate(rows: list[dict | None], families: list[str]) -> dict[str, dict]:
             "lock_loss": [lost, len(fr), *wilson_ci(lost, len(fr))],
             "ae_peak_med": float(np.nanmedian([r["ae_peak"] for r in fr])),
             "ae_post_med": float(np.nanmedian([r["ae_post"] for r in fr])),
+            # Per-sequence values (additive; same order for every tracker since all score
+            # the same sequences under identical fixed-seed noise) — enables PAIRED
+            # tracker-vs-tracker comparisons of the angular-error rows downstream.
+            "ae_peak_all": [float(r["ae_peak"]) for r in fr],
+            "ae_post_all": [float(r["ae_post"]) for r in fr],
+            "lost_all": [int(r["lost"]) for r in fr],
         }
     return out
 
