@@ -111,10 +111,13 @@ def test_extractor_passes_ops_guard(cfg: LearnedTrackerConfig) -> None:
 
 
 def test_deployable_host_blocks_are_ops_clean() -> None:
+    """Host blocks carry no banned COMPUTE ops; their multi-input signatures are (correctly)
+    flagged by the measured 2026-07-02 topology gate — they cannot be promoted to the V250
+    as-is, which is exactly why they run on the host."""
     state = torch.randn(1, CFG.state_dim)
     obs = torch.randn(1, CFG.state_dim)
     rc = check_model_ops(ReLURecurrentCell(CFG), example_inputs=(state, obs))
-    assert rc.is_compatible
+    assert all("multi_graph_input" in d for d in rc.disallowed), rc.summary()
 
     track = torch.randn(1, CFG.n_lines, CFG.feat_dim)
     cand = torch.randn(1, CFG.n_candidates, CFG.feat_dim)
@@ -123,16 +126,22 @@ def test_deployable_host_blocks_are_ops_clean() -> None:
     la = check_model_ops(
         LinearScoreAssociation(CFG), example_inputs=(track, cand, tpos, cpos)
     )
-    assert la.is_compatible
+    assert all("multi_graph_input" in d for d in la.disallowed), la.summary()
 
 
 def test_research_blocks_are_flagged_off_npu() -> None:
-    """Gated core + attention head must be flagged — they run on the host, not the V250."""
+    """Gated core + attention head must be flagged — they run on the host, not the V250.
+
+    Measured rebaseline 2026-07-02: the gated core is flagged for its multi-input topology
+    and internal mul (NOT sigmoid/tanh, which are supported); the attention head for matmul
+    (softmax itself is supported)."""
     state = torch.randn(1, CFG.state_dim)
     obs = torch.randn(1, CFG.state_dim)
     gk = check_model_ops(GatedKalmanNetCore(CFG), example_inputs=(state, obs))
     assert not gk.is_compatible
-    assert "aten.sigmoid" in gk.disallowed and "aten.tanh" in gk.disallowed
+    assert any("multi_graph_input" in d for d in gk.disallowed)
+    assert "aten.mul" in gk.disallowed
+    assert "aten.sigmoid" in gk.allowed and "aten.tanh" in gk.allowed
 
     track = torch.randn(1, CFG.n_lines, CFG.feat_dim)
     cand = torch.randn(1, CFG.n_candidates, CFG.feat_dim)
@@ -140,4 +149,5 @@ def test_research_blocks_are_flagged_off_npu() -> None:
     cpos = torch.rand(1, CFG.n_candidates)
     at = check_model_ops(AttentionAssociation(CFG), example_inputs=(track, cand, tpos, cpos))
     assert not at.is_compatible
-    assert "aten.matmul" in at.disallowed and "aten.softmax" in at.disallowed
+    assert "aten.matmul" in at.disallowed
+    assert "aten.softmax" in at.allowed

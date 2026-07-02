@@ -272,8 +272,12 @@ class ReLURecurrentCell(nn.Module):
 class GatedKalmanNetCore(nn.Module):
     """Research variant: GRU-style gated recurrent core (explicit sigmoid/tanh gates).
 
-    FLAGGED off-NPU — the gates use ``sigmoid``/``tanh`` (V250-banned), so this runs only on the
-    host. Same signature as :class:`ReLURecurrentCell`.
+    FLAGGED off-NPU — measured 2026-07-02: ``sigmoid``/``tanh`` themselves are V250-supported
+    (ban falsified), but a recurrent cell needs its state as a second graph input, and
+    multi-graph-input models are broken in the SDK 2.0.x flow (sim corruption; the one-step
+    cell composition also crashes ``vnnx_compile``). So this still runs only on the host.
+    Same signature as :class:`ReLURecurrentCell`. See polarfire
+    ``docs/vnnx_ops_support_probe_2026-07-02.md``.
     """
 
     EXECUTION_TARGET = ExecutionTarget.HOST_MSS

@@ -54,7 +54,9 @@ def test_batchnorm_module_is_flagged() -> None:
     assert any("BatchNorm1d" in d for d in report.disallowed)
 
 
-def test_softmax_and_matmul_are_flagged() -> None:
+def test_matmul_flagged_softmax_allowed() -> None:
+    """Measured rebaseline 2026-07-02: softmax is supported; attention matmul stays banned."""
+
     class Attn(nn.Module):
         def forward(self, x: torch.Tensor) -> torch.Tensor:
             s = torch.softmax(x @ x.transpose(-1, -2), dim=-1)
@@ -62,17 +64,48 @@ def test_softmax_and_matmul_are_flagged() -> None:
 
     report = check_model_ops(Attn(), input_shape=(1, 8, 16))
     assert not report.is_compatible
-    assert "aten.softmax" in report.disallowed
+    assert "aten.softmax" in report.allowed
     assert "aten.matmul" in report.disallowed
 
 
+def test_sigmoid_tanh_single_input_now_compatible() -> None:
+    """Measured 2026-07-02: gate activations compile + simulate in single-input graphs."""
+    gates = nn.Sequential(nn.Linear(16, 16), nn.Sigmoid(), nn.Linear(16, 16), nn.Tanh())
+    report = check_model_ops(gates, input_shape=(1, 16))
+    assert report.is_compatible
+    assert "aten.sigmoid" in report.allowed
+    assert "aten.tanh" in report.allowed
+
+
+def test_multi_graph_input_is_flagged() -> None:
+    """Measured 2026-07-02: >1 graph input breaks the SDK 2.0.x flow (sim corruption /
+    compiler crash) — the topology gate, not the op list, keeps recurrence off the NPU."""
+
+    class TwoInput(nn.Module):
+        def forward(self, x: torch.Tensor, h: torch.Tensor) -> torch.Tensor:
+            return x + h
+
+    report = check_model_ops(
+        TwoInput(), example_inputs=(torch.randn(1, 16), torch.randn(1, 16))
+    )
+    assert not report.is_compatible
+    assert any("multi_graph_input" in d for d in report.disallowed)
+
+
 def test_assert_raises_on_incompatible() -> None:
-    bad = nn.Sequential(nn.Linear(16, 16), nn.Tanh())
+    class Bad(nn.Module):
+        def __init__(self) -> None:
+            super().__init__()
+            self.c = nn.Conv1d(1, 4, 5)
+
+        def forward(self, x: torch.Tensor) -> torch.Tensor:
+            return self.c(x)
+
     try:
-        assert_v250_compatible(bad, input_shape=(1, 16))
+        assert_v250_compatible(Bad(), input_shape=(1, 1, 16))
     except OpsGuardError:
         return
-    raise AssertionError("expected OpsGuardError for a tanh model")
+    raise AssertionError("expected OpsGuardError for a Conv1d model")
 
 
 def test_assert_returns_report_on_compatible() -> None:

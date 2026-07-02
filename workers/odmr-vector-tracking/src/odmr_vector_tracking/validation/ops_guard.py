@@ -8,11 +8,27 @@ Mirrors ``odmr_edge_ml.validation.ops_guard`` (the canonical whitelist reference
 project CLAUDE.md). The complementary post-conversion flatbuffer stage lives in
 ``tflite_ops.py``.
 
-Critical for this repo's learned tracker: ``aten.matmul`` / ``aten.softmax`` (attention) and
-``aten.sigmoid`` / ``aten.tanh`` (GRU/LSTM gates) are **banned**. That is the technical reason
-the learned tracker partitions execution — only the per-frame feedforward feature extractor
-targets the V250 (and must pass this guard); the recurrence, association/assignment, and BLUE
-decode run on the MSS RISC-V host, which has no op whitelist.
+MEASURED REBASELINE (2026-07-02, vnnx_compile -c V250 + VNNX simulator on the SDK host;
+evidence: polarfire-hybrid-control ``docs/vnnx_ops_support_probe_2026-07-02.md`` +
+``libero/reports/2026-07-02-vnnx-ops-probe/``):
+
+- ``aten.sigmoid`` / ``aten.tanh`` / ``aten.softmax`` are **ALLOWED** — they compile and
+  simulate correctly in single-graph-input feedforward graphs (LOGISTIC/TANH LUT-grade,
+  <=11 int8 LSB vs TFLite; an 8x60 SOFTMAX head matched float to 0.029 max abs err).
+  The old ban on these ops was launch-collateral folklore, falsified by measurement.
+- The **real, measured constraint is topology: exactly ONE graph input.** Two-graph-input
+  models compile but the VNNX simulator returns garbage on distinct inputs (input order and
+  operand broadcast ruled out), and the one-step GRU-style cell (state as a second graph
+  input) additionally CRASHES vnnx_compile in both rank-2 and rank-4 forms. This — not the
+  gate activations — is why recurrence stays on the MSS host: state-as-graph-input cells
+  cannot target the V250 on SDK 2.0.x.
+- ``aten.mul`` stays banned with measured provenance: the two-input MUL probe compiled but
+  sim-corrupted, and internal-mul compositions crashed the compiler. ``aten.matmul`` stays
+  banned as UNTESTED (attention-style MATMUL is not FULLY_CONNECTED; no measurement yet).
+
+Execution partition consequence: single-input feedforward blocks (feature extractors AND
+softmax association heads) may target the V250; recurrence and anything needing a second
+graph input runs on the MSS RISC-V host, which has no op whitelist.
 """
 
 from __future__ import annotations
@@ -34,6 +50,12 @@ VECTORBLOX_ALLOWED_OPS: set[str] = {
     "aten.add",
     "aten.mean",
     "aten.adaptive_avg_pool2d",
+    # Gate/head activations — MEASURED SUPPORTED 2026-07-02 (vnnx_compile + VNNX sim,
+    # single-graph-input graphs; see module docstring). SOFTMAX per OPS.md needs dim in
+    # {-3,-2,-1}; sigmoid/tanh are int8 LUTs (<=11 LSB vs TFLite) — budget for that in eval.
+    "aten.sigmoid",
+    "aten.tanh",
+    "aten.softmax",
     # Layout ops (no compute, free in TFLite)
     "aten.reshape",
     "aten.view",
@@ -52,18 +74,23 @@ VECTORBLOX_BANNED_OPS: set[str] = {
     "aten.layer_norm",
     "aten.instance_norm",
     "aten.group_norm",
-    "aten.sigmoid",
-    "aten.tanh",
     "aten.gelu",
     "aten.silu",
-    "aten.softmax",
-    "aten.log_softmax",
+    "aten.log_softmax",  # untested (only plain softmax measured)
     "aten.max_pool1d",
     "aten.max_pool2d",
     "aten.dropout",
+    # MEASURED 2026-07-02: two-input MUL compiles but the VNNX sim corrupts it; internal-mul
+    # compositions (GRU cell) crash vnnx_compile. Keep banned until the SDK flow is fixed.
     "aten.mul",
+    # UNTESTED: attention-style MATMUL is not FULLY_CONNECTED; no measurement yet.
     "aten.matmul",
 }
+
+# MEASURED 2026-07-02: multi-graph-input models are broken in the SDK 2.0.x flow (sim
+# corruption when they compile; compiler crash for state-as-graph-input cells). The V250
+# target therefore accepts exactly one graph input.
+MAX_GRAPH_INPUTS: int = 1
 
 # Module types banned at the PyTorch module level. Conv1d/Conv2d can both lower to
 # aten.conv2d in some export paths, so we check module types directly as a safety net.
@@ -78,9 +105,7 @@ VECTORBLOX_BANNED_MODULES: set[type] = {
     nn.Dropout,
     nn.GELU,
     nn.SiLU,
-    nn.Sigmoid,
-    nn.Tanh,
-    nn.Softmax,
+    # nn.Sigmoid / nn.Tanh / nn.Softmax removed 2026-07-02 — measured supported (see docstring).
     nn.MaxPool1d,
     nn.MaxPool2d,
 }
@@ -152,9 +177,18 @@ def check_model_ops(
         if type(module) in VECTORBLOX_BANNED_MODULES:
             report.disallowed.append(f"{type(module).__name__} at {name}")
 
-    # Phase 2: torch.export graph op-level check.
+    # Phase 2: topology gate — MEASURED 2026-07-02: the V250 flow only works with exactly
+    # one graph input (multi-input graphs sim-corrupt; state-as-graph-input cells crash
+    # vnnx_compile). See module docstring for evidence pointers.
     if example_inputs is None:
         example_inputs = (torch.randn(*input_shape),)
+    if len(example_inputs) > MAX_GRAPH_INPUTS:
+        report.disallowed.append(
+            f"multi_graph_input({len(example_inputs)} inputs; max {MAX_GRAPH_INPUTS} — "
+            f"measured broken on SDK 2.0.x, 2026-07-02)"
+        )
+
+    # Phase 3: torch.export graph op-level check.
     exported = torch.export.export(model, example_inputs)
 
     op_names: set[str] = set()
