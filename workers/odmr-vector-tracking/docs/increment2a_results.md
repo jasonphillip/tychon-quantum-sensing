@@ -1,131 +1,114 @@
-# Increment 2a — learned through-crossing tracker vs the classical bar (sanity scale)
+# Increment 2a/2b results — learned tracker vs honest classical baselines (CORRECTED)
 
-**Status:** results on `sequence_sanity_v0` (real `nv-sensor-sim` data), test split, 16 sequences.
-**Scope of claim (honest framing):** *the learned tracker beats the classical bar on
-`sequence_sanity_v0`* — nothing more. 64 training sequences from a single scenario family
-(fixed 5 mT bias, ±2 mT x-ramp, one crossing episode per sequence) is a sanity-scale
-demonstration that the architecture, losses, and harness work end-to-end. The generalization
-claim waits for Increment 2b on the larger upstream dataset (see "Next" below).
+**This document supersedes the 2026-07-01 first version titled "learned tracker beats the
+classical bar."** That version compared against a retracted baseline (below) and its headline
+is withdrawn. The corrected claim:
 
-Reproduce: `python experiments/increment2a_train.py --core {relu,gated} --assoc
-{linear,attention}` then `python experiments/increment2a_report.py`. Runs are
-config-addressable — `(config, seed)` fully determines a run; each `summary.json` carries the
-`run_key` hash and CUDA device (all runs here: NVIDIA GB10, torch 2.11.0+cu130, seed 20260701).
+> **The learned tracker, acquiring from spectra alone (no ground-truth initialization) on a
+> V250-clean deployable partition, ties the competent classical baseline (CV-KF + Hungarian)
+> post-crossing on the v0 sanity set; v0 cannot discriminate the two. Discrimination happens
+> on the v1 adversarial families (reversal / OU), where the CV-coast assumption breaks.**
 
-## Task and metrics
+## Retraction: the original Increment-1 bar was a detector artifact
 
-All numbers come from `evaluation/metrics.py` — the exact pipeline that set the Increment-1
-bar — on the same 16 test sequences (T=128, F=951, L=8, Γ=1.50 MHz, k=1). Association is
-scored physically: each lock's *claimed* axis (canonical slot identity, fixed from t=0)
-against the axis of the ground-truth line its tracked center actually sits on. Vector error
-is the angle between the estimated and true lab-frame B; loss-of-lock threshold 5°.
+The classical detector's default absolute threshold (`peak_min_depth = 0.03`) exceeds the
+real data's dip depth (~0.4% of the PL baseline; measured per-frame max 0.0037–0.0077). On
+every real frame `_find_peaks` returned **zero peaks**; the PID tracker never left its
+ground-truth t=0 initialization; the published numbers (16/16 lock loss, association
+1.0→0.0, "ID-switch 0.811", 43° peak error, DR ≈ 5 mT — all now banned outside this
+paragraph) scored a **frozen tracker against moving lines**. Fingerprint: in-collision
+accuracy == out-of-collision accuracy (an association-blind failure). Verified here directly:
+`locked.mean() == 0.0000` and constant tracked centers on the real test split. Fixes now in
+place: detection thresholds scale from the data (`auto_peak_min_depth`, using the manifest's
+shallowest `line_depths` when present), reports assert pre-crossing locked fraction > 0.9,
+and `tests/contract` enforces the same guard on every real dataset present.
 
-Scoring-parity note: the classical baseline is *acquired on ground truth* (locks initialized
-at the true t=0 line centers); the learned tracker receives spectra only — a strictly harder
-condition.
+Two further evaluation defects were fixed at the same time (they flattered whichever tracker
+was under test): undefined angular error was graded as perfect (now nan-aware — undefined
+counts as *lost*), and the printed "ID-switch err" was actually the in-collision
+misassociation fraction (renamed; ID switches are now also reported **per crossing
+opportunity** with pre/post windows, since the raw frame count saturates with benign
+in-merge flicker). Identity attribution now uses a 3Γ capture radius (beyond it a lock is
+unassigned = misassociated). **Dynamic range is deleted from all tables**: |B| spans only
+~4.7–5.8 mT on v0/v1, so a never-losing tracker saturates at the dataset bound — DR claims
+wait for a dedicated amplitude-ladder lineage.
 
-## Results (median over 16 test sequences)
+## Corrected v0 results (sequence_sanity_v0, real test split, 16 sequences)
 
-| metric | classical (Incr-1 bar) | oracle assoc + BLUE (floor) | learned (relu+linear, deployable-first) | learned (gated+linear) | learned (relu+attention) |
-|---|---|---|---|---|---|
-| assoc accuracy pre → post crossing | 1.000 → 0.000 | 1.000 → 1.000 | 0.993 → 1.000 | **1.000 → 1.000** | 0.991 → 1.000 |
-| in-collision assoc | 0.189 | 1.000 | 0.631 | **0.781** | 0.604 |
-| out-of-collision assoc | 0.189 | 1.000 | 0.993 | **1.000** | 0.987 |
-| ID switches / seq | 20 | 0 | 26 (in-merge flicker; see note) | 20 | 28 |
-| in-collision ID-switch error | 0.811 | 0.000 | 0.369 | **0.219** | 0.396 |
-| loses lock (>5° irrecoverable) | 16/16 | 0/16 | 0/16 | 0/16 | 0/16 |
-| dynamic range @ 5 mT bias | 5.01 mT | 5.74 mT (= max \|B\| swept) | 5.74 mT (never lost) | 5.74 mT (never lost) | 5.74 mT (never lost) |
-| vector ang err pre → peak → post | 2.48° → 43.1° → 31.3° | 0.01° → 0.1° → 0.0° | 0.57° → 1.0° → 0.5° | 0.81° → 1.5° → 0.5° | 0.48° → 1.1° → 0.6° |
-| — same, splitting→BLUE decode of tracked centers | — | — | 0.52° → 0.9° → 0.5° | **0.23° → 0.4° → 0.1°** | 0.55° → 1.1° → 0.7° |
-| never recovers | 11/16 | 0/16 | 0/16 | 0/16 | 0/16 |
-| best val loss / epochs | — | — | 0.0436 / 2000 | 0.0105 / 2000 | 0.0838 / 1673 (early stop) |
+Conventions: data-scaled detector; classical trackers get GT t=0 initialization (stated per
+column); the learned trackers cold-acquire from spectra (strictly harder). Median per
+sequence unless noted; ID-sw/opp is pooled switches/opportunities.
 
-**Variant reading (what the research blocks buy):** the gated core buys real in-collision
-robustness — 0.781 vs 0.631 in-collision association, switch error 0.219 vs 0.369, perfect
-out-of-collision association, and tracked centers accurate enough that the classical
-splitting→BLUE decode of them reaches 0.4° peak error (3–4× better than any other tracker
-row, approaching the 0.1° oracle floor). Attention buys nothing over the linear-score head at
-this scale (marginally worse on every association metric). The **deployable-first
-relu+linear stack — the one that fits the V250/MSS partition — clears the classical bar on
-every metric by itself**, which is the deployment-relevant conclusion; the gated comparison
-quantifies headroom that a future host-side (MSS) core could claim, since the recurrence
-runs on the host either way.
+| metric | honest PID (GT init) | CV-KF+Hungarian (GT init) | oracle assoc (floor) | learned relu+linear (cold) | learned gated+linear (cold) | learned relu+attention (cold) |
+|---|---|---|---|---|---|---|
+| assoc pre → post crossing | 1.000 → 0.750 | 1.000 → 1.000 | 1.000 → 1.000 | 0.989 → 1.000 | 1.000 → 1.000 | 0.983 → 0.998 |
+| in-collision assoc | 0.633 | **0.978** | 0.543* | 0.619 | 0.781 | 0.604 |
+| out-of-collision assoc | 0.843 | 1.000 | 1.000 | 0.993 | 1.000 | 0.986 |
+| ID-sw / opportunity | 0.062 (24/384) | **0.000** (0/384) | 0.000 | 0.077 (29/378) | **0.000** (0/384) | 0.073 (28/382) |
+| loses lock (>5° irrecov., nan=lost) | 11/16 | 0/16 | 0/16 | 0/16 | 0/16 | 0/16 |
+| vector err pre → peak → post | 0.09° → 15.8° → 8.8° | 0.03° → 0.1° → 0.0° | 0.01° → 0.4° → 0.0° | 0.57° → 1.0° → 0.5° | 0.81° → 1.5° → 0.5° | 0.48° → 1.1° → 0.6° |
+| — same, splitting→BLUE decode of centers | — | — | — | 0.52° → 0.9° → 0.5° | 0.23° → 0.4° → 0.1° | 0.55° → 1.1° → 0.7° |
 
-**Estimation-head note:** for the gated variant the splitting→BLUE decode of tracked centers
-(0.4° peak) beats the projection-regression head (1.5° peak) — at 2b scale, consider decoding
-the vector from tracked centers (classical BLUE path) rather than a separate regression head,
-or weighting the projection loss higher.
+\* The oracle row (true-label assignment of *detected peaks* + splitting→BLUE) is the
+**estimation floor**, not an in-collision attribution ceiling: merged peaks pin both
+colliding lines to one detection (~0.5 attribution by construction), which trackers that
+coast (KF) or carry a state posterior (learned) legitimately exceed.
 
-**Cross-check (decode-path parity):** feeding the learned tracker's claimed centers through the
-*classical* splitting→BLUE decode reproduces the same numbers (0.52° → 0.9° → 0.5° angular
-error, same association row) — the association/tracking itself is physically accurate; the
-result is not an artifact of the projection-regression head.
+**Reading:** honest PID genuinely degrades at crossings (post 0.750, 11/16 losses) — the
+Increment-1 *story* survives in weakened form, its published numbers do not. CV-KF solves v0
+(it is kinematically trivial: linear ramps, distinct slopes, ~3-frame merges, no noise). The
+gated learned variant matches the KF post-crossing — 1.000 association, 0 switches per
+opportunity, 0 losses — **from cold acquisition**, and both relu variants come within 0.077
+switches/opportunity of it; no learned variant matches the KF's in-collision 0.978. v0
+therefore cannot rank learned vs competent classical, and any "beats classical" claim from
+v0 alone is unsupported.
 
-**ID-switch note:** the learned tracker's 26 median switches are frame-to-frame flicker while
-two lines sit within k·Γ of each other, where nearest-line attribution is genuinely ambiguous
-(both locks near both lines); identity resolves correctly on exit (post-crossing 1.000). The
-classical 20 switches are one *permanent* swap per crossing — association never recovers
-(post 0.000). The decomposition that matters is the in-collision switch error (0.369 vs 0.811)
-plus the post-crossing hold.
+## v1 (sequence_train_v1): where the discrimination lives
 
-**The oracle row decomposes the failure:** with association solved by construction (each lock
-assigned the detected peak nearest its true line), the whole classical estimation chain is
-essentially exact — ≤0.1° peak angular error, zero ID switches, never loses lock across the
-full swept range. The classical baseline's collapse is therefore *pure association failure*,
-and association is exactly what the learned tracker learns. Note the dynamic-range ceiling of
-5.74 mT is the largest field the scenario ever reaches — "never lost" saturates the metric,
-so learned/oracle DR values are lower bounds set by the dataset, not tracker limits.
+768 sequences × T=256 (512/128/128), three trajectory families (held-ramp-hold ≈ 50%,
+reversal ≈ 25%, OU ≈ 25%), per-axis contrast ladder [1.0, 0.85, 0.7, 0.55] with AR(1) drift,
+pinned v0 frequency grid. The classical baselines on the v1 **test** split (128 seqs; 95%
+Wilson CIs, pooled counts):
 
-## What the learned tracker is (as built in 2a)
+| family | tracker | in-coll misassoc | ID-sw / opportunity | lock-loss |
+|---|---|---|---|---|
+| held | CV-KF | 0.099 (0.091–0.107) | 0.016 (0.007–0.034) | 3/37 |
+| reversal | CV-KF | 0.281 (0.265–0.297) | 0.053 (0.035–0.081) | 3/23 |
+| OU | CV-KF | 0.532 (0.521–0.542) | 0.217 (0.194–0.242) | 19/30 |
+| reversal | honest PID | 0.465 (0.448–0.483) | 0.261 (0.219–0.308) | 11/23 |
+| OU | honest PID | 0.666 (0.656–0.676) | 0.341 (0.313–0.371) | 25/30 |
 
-Deployable-first on the V250/MSS partition of `docs/design/02_approach_and_testbed.md`:
+The KF that solved v0 degrades exactly where its constant-velocity coast assumption breaks:
+reversals inside/near collision dwells and OU (stochastic) trajectories. This is the regime
+the learned tracker exists for. **Learned-on-v1 results: pending (training in progress);
+this table will be completed from `experiments/increment2b_report.py` when the v1
+checkpoints land.** v0 remains the frozen sanity lineage.
 
-- **V250 (ops-guarded, passes `check_model_ops`):** anchored fully-convolutional per-frame
-  extractor — 4 stride-2 Conv2d(1,5)+ReLU stages map F=951 → K=60 fixed anchors (6.79 MHz ≈
-  4.5 Γ pitch, anchors = exact receptive-field centers), 1×1-conv heads emit per-anchor
-  features + a position offset. ~20k shared-weight params (the skeleton's dense projection
-  was ~1.9M).
-- **Host/MSS:** ReLU recurrent cell (KalmanNet-style residual update, small-gain init) /
-  research GRU-gated variant; linear-score association with a rectified signed-distance
-  relational branch / research attention variant; frozen analytic BLUE decode (geometry is
-  not learned).
-- **Input normalization:** dips on the real data are only ~0.4% of the PL baseline; the model
-  consumes `(1 − PL) × input_gain` with `input_gain = 1/nominal_contrast` estimated from the
-  train split (252.1 here). **Increment-3 note:** this gain must fold into the INT8 input
-  quantization scale — quantizing raw `1 − PL` over [0, 1] leaves the entire signal ~1 LSB.
+## Architecture (unchanged by the re-baseline)
 
-Losses: per-slot association cross-entropy over anchors (in-collision entries ×5),
-track-position Huber (the state's per-slot predicted line centers vs truth — the KalmanNet
-reading: the state predicts, the association head matches candidates against the
-prediction), candidate-offset Huber, and projection MSE against exact `B_true·n_i` labels
-(contract rule: labels from `B_true`; the splitting is only what the model observes). Pure
-observation-driven filter → full-BPTT training, no teacher forcing (no output feedback, so no
-exposure bias), no curriculum at sanity scale.
+Deployable-first on the V250/MSS partition (docs/design/02): V250-targeted anchored
+fully-conv extractor (F=951 → K=60 anchors, ~20k params, ops-guard green at real shape);
+host-side recurrent core (ReLU-residual with small-gain init / gated research variant),
+association head with rectified signed-distance relational branch and a directly supervised
+per-slot position readout, frozen analytic BLUE. Claimed centers = the state posterior (MOT
+convention). Assignment output is mutually exclusive (greedy one-to-one on scores; a
+per-line argmax could double-claim a candidate). Input `(1−PL)×input_gain` with the gain
+estimated from the train split (~0.4% dips → gain ≈ 250–290); **Increment-3 note: this gain
+must fold into the INT8 input quantization scale, else the signal sits ~1 LSB deep.**
 
-Claimed line centers for the metrics are the **state posterior** (`track_pos`) — MOT scores
-track estimates, not raw detections; the anchored candidates stay quantized to the conv grid
-(sub-stride offset regression through 4 stride-2 stages is aliasing-limited; kept as a
-diagnostic output).
+Training: association CE over anchors (in-collision ×5), track-position Huber, candidate
+offset Huber, projection MSE against exact `B_true·n_i` labels; full-BPTT (pure
+observation-driven filter — no teacher forcing needed), AdamW + cosine, early stop on val
+total. Runs are config-addressable (`run_key`; config+seed fully determine a run; device
+logged).
 
-## Deviations from the approved plan (and why)
+## Next
 
-1. **Association head gained a relational (distance) branch + supervised per-slot position
-   readout.** The approved additive head `w·relu(t_ℓ + c_k)` degenerates to a separable
-   `f(ℓ) + g(k)` whenever the ReLU sits mostly linear-active — every slot argmaxes the same
-   candidate (observed: identical accuracy across independent runs). Rectified signed
-   differences `relu(p_ℓ − x_k)`, `relu(x_k − p_ℓ)` restore slot-dependence with
-   linear+relu+add only. The overfit gate caught this.
-2. **Recurrent cell init:** default residual-cell init compounds over T=128 steps (state
-   ~1e8; projection MSE started at ~3e16). Small-gain (0.05×) init of the update branch.
-3. **Gate metric:** the plan's overfit gate ("association accuracy ≈ 1.0") is evaluated with
-   the physical pipeline (≥0.95 overall, ≥0.98 out-of-collision) rather than the anchor-index
-   proxy: a line near an anchor-cell boundary makes the proxy label knife-edged while the
-   physical association is unambiguous. Anchor-level accuracy stays logged as a diagnostic.
-
-## Next (Increment 2b gating dependency)
-
-When the upstream `sequence_train_v1` (512/128/128 × T=256) lands from `nv-sensor-sim`:
-re-derive **both** baselines (classical + oracle floor) on its 128-sequence test split,
-report per-scenario-family results with binomial confidence intervals, train on its train
-split, and keep `sequence_sanity_v0` as the frozen sanity lineage. Variant × seed sweeps
-dispatch across spark1/spark2 via the `run_key` scheme.
+1. Complete the v1 table (learned variants, per family, same conventions) — the decisive
+   numbers are reversal-family in-collision association and ID-switches-per-opportunity,
+   learned vs CV-KF vs honest PID.
+2. Estimation-head open question: for the gated variant the splitting→BLUE decode of tracked
+   centers beats its own projection head (0.4° vs 1.5° peak) — consider dropping the
+   regression head.
+3. GitHub push held until this corrected doc + v1 results land (per TVW dispatch); nas
+   pushes fine. Amplitude-ladder lineage needed before any dynamic-range claim.
