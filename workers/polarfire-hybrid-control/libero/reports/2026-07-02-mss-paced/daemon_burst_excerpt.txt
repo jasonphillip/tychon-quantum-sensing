@@ -1,0 +1,11 @@
+## 60s daemon burst (tmpfs JSON + stdout->file proxy for soak-config period)
+v250_pid_loop model=fcnn_v2_residual_dataset_a.vnnx rows=10000 warmup=2 u_scale=0.015625000 daemon=1 csr_version=0x00010000 watchdog_before=0x00000163 model_inputs=1 model_outputs=1 input_len=200 input_dtype=1 input_scale=0.007843018 input_zp=-1 input_source=odmr_v250_rows.csv input_rows=120 state=/tmp/v250_state.json
+row,t_ns,v250_ns,polls,input_row,error_in,nn_out0,nn_q,u_ai,post_clamp,watchdog_raw,watchdog_timeout,axi_write_count
+...first 2 / last 2 data rows...
+0,275000,32000,96,0,-0.570812842,-2.538894653,-110,-0.039670229,-0.495819092,0x00000162,0,0x000300d2
+1,960000,32000,96,1,-0.546584810,-2.401657104,-104,-0.037525892,-0.475433350,0x00000162,0,0x000300d5
+181637,61163875000,32000,95,77,0.064853633,-2.401657104,-104,-0.037525892,0.014358521,0x0000016e,0,0x000b5161
+181638,61164249000,34000,99,78,0.069143303,-2.310165405,-100,-0.036096334,0.018783569,0x0000016e,0,0x000b5164
+## period (t_ns delta, ns):
+count=181638 min=319000 median=328000 p90=368000 p95=394000 p99=472000 p999=626000 max=3213000 mean=336736 rate_hz=2969.7
+## 6 periods >2ms -> 6 watchdog trips (177->183); rows_with_bit0_set=0 (all recovered on next cycle)

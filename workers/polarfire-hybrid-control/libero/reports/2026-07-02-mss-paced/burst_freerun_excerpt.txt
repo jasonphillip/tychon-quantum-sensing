@@ -1,0 +1,13 @@
+## finite free-run burst (no daemon, N=10000, ceiling + period distribution)
+v250_pid_loop model=fcnn_v2_residual_dataset_a.vnnx rows=10000 warmup=2 u_scale=0.015625000 daemon=0 csr_version=0x00010000 watchdog_before=0x00000007 model_inputs=1 model_outputs=1 input_len=200 input_dtype=1 input_scale=0.007843018 input_zp=-1 input_source=odmr_v250_rows.csv input_rows=120 state=
+row,t_ns,v250_ns,polls,input_row,error_in,nn_out0,nn_q,u_ai,post_clamp,watchdog_raw,watchdog_timeout,axi_write_count
+...first 3 data rows...
+0,271000,31000,97,0,-0.570812842,-2.538894653,-110,-0.039670229,-0.496337891,0x00000006,0,0x00000087
+1,547000,33000,98,1,-0.546584810,-2.401657104,-104,-0.037525892,-0.475952148,0x00000006,0,0x0000008a
+2,672000,32000,96,2,-0.527557395,-2.516021729,-109,-0.039312840,-0.461364746,0x00000006,0,0x0000008d
+...last 2 data rows...
+9998,1102156000,31000,96,38,-0.196093361,-2.676132202,-116,-0.041814566,-0.195755005,0x00000006,0,0x000075b1
+9999,1102262000,32000,96,39,-0.188304089,-2.401657104,-104,-0.037525892,-0.188537598,0x00000006,0,0x000075b4
+## period (t_ns delta, ns):
+count=9999 min=104000 median=107000 p95=139000 p99=163000 max=324000 mean=110210 rate_hz=9073.6
+## axi agreement: 0x87->0x75b4 delta=29997 = 3*9999 (exact); watchdog all 0x6 bit0=0 trip_count=3 timeout=0

@@ -7,6 +7,7 @@ Hybrid PID + neural network control system for RT PolarFire SoC. SmartHLS C++ im
 - SmartHLS C++ PID controller with bumpless AI-to-PID transfer
 - Sector saturation clamps (+/-5%) and slew-rate limiting on AI feedforward
 - Hardware watchdog infrastructure with automatic fallback to pure PID; the current demo image is a verified 2 ms fabric watchdog build — trip time **measured on silicon 2026-07-01: median 2.000 ms over 120 trips** (`docs/watchdog_trip_measured_2026-07-01.md`)
+- Kit-resident **MSS-paced closed loop measured on silicon 2026-07-02**: the on-kit V250→PID daemon sustains **~3.3 kHz standalone** (proven laptop-disconnected, ≥14 min, from distinct hardware `axi_write_count` + software step counters; watchdog held cleared, 1 transient trip / 2.9 M steps recovered) (`docs/mss_paced_loop_measured_2026-07-02.md`) — the loop is MSS software (not fabric-resident) with a replayed input (not a live sensor)
 - Libero SoC project targeting MPFS250T with CoreVectorBlox V250
 - Static timing (SmartTime) and power estimation (SmartPower)
 

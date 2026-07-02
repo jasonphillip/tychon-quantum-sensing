@@ -1,0 +1,10 @@
+samples=32 na_samples=0
+window: first=2026-07-02T11:14:34Z last=2026-07-02T11:30:09Z
+daemon_uptime=934.8 s (0.26 h)
+row: first=57386 last=3169869 steps=3112483 monotonic=yes
+axi_write_count: first=0xdf1eb last=0x9c6c54 delta=9337449 (3x_steps=9337449 agree=yes)
+sustained_rate_hz: overall=3329.5 per_sample_min=3321.4 mean=3329.5 max=3338.1
+watchdog: trip_first=184 trip_last=185 trip_delta=1 last_bit0=0 (trips are >2ms sched stalls; recovery proven by row monotonic)
+MemFree_kb: min=1446248 max=1448620 delta=2372
+loop_pid_alive: dead_samples=0 last_alive=1 last_running=true
+VERDICT=PASS
