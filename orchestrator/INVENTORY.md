@@ -325,3 +325,28 @@ no reprogram) and the staged `389699f` tooling executed per the runbook:
   open. On-board power was probed the same evening and is a hardware no-go on this kit
   (PAC1934 electrically absent on all I²C buses — see the re-plug inventory doc); it stays on
   the open list as a board-level item, now with a concrete root-cause note.
+
+## Addendum 4 — 2026-07-02: EV-MSS-PACED CLOSED — kit-resident MSS-paced loop measured [HW]
+
+On the same resident 2 ms golden image (no reprogram; `csr_version=0x00010000`; stimulus
+one-shot reproduced `nn_out0=-2.538894653` bit-identically), the on-kit `v250_pid_loop --daemon`
+was measured as a standalone closed loop and then left running as the item-3 soak:
+
+- **Sustained MSS-paced rate [HW]:** **3329.8 Hz** (per-sample 3321.4–3338.1 Hz, ±0.5 %) over
+  **14.6 min / 2 911 944 steps**, proven by distinct monotonic counters — the fabric
+  `axi_write_count` CSR advanced `8 735 832 = 3 × steps` **exactly** (not wall-clock division).
+  Free-running ceiling ≈ 9.07 kHz; the soak config keeps the live-state JSON on tmpfs because
+  an eMMC live-state throttles the loop to ~536 Hz and straddles the 2 ms watchdog (~165 trips /
+  12 s), whereas tmpfs runs ~3.3 kHz with the watchdog held cleared.
+- **Laptop-disconnected continuity [HW]:** across a 13.4-min window in which the host issued
+  zero ssh/scp, the loop advanced ~2.75 M iterations standalone and an on-kit heartbeat logged
+  ~26 autonomous, wall-clock-stamped samples to eMMC (`/root/bringup/mss_paced/heartbeat.log`);
+  both processes were alive on reconnect; counters monotonic. Watchdog: 1 transient trip in
+  2.91 M steps (recovered), MemFree flat, summarizer VERDICT=PASS.
+- **Boundary UNCHANGED:** the loop is MSS software (not fabric-resident) and the input is a
+  replayed vector (not a live sensor) — both remain NOT-YET-SHOWN. This upgrades the demo from
+  *host-paced over SSH* to *kit-resident MSS-paced standalone*, nothing more.
+- Evidence: polarfire `libero/reports/2026-07-02-mss-paced/` + `docs/mss_paced_loop_measured_2026-07-02.md`;
+  tools `firmware/linux/mss_paced_heartbeat.sh` + `mss_paced_soak_summary.sh`; fix-list row
+  `EV-MSS-PACED` → **closed**. The identical daemon config is now the item-3 daytime soak
+  (start 11:14:16Z, target ≥ 8 h).
