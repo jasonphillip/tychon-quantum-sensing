@@ -1,0 +1,16 @@
+2026-07-02 13:34:58.734193: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-07-02 13:34:58.753997: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+Traceback (most recent call last):
+  File "~/vbx-env/bin/vnnx_compile", line 6, in <module>
+    sys.exit(main())
+  File "~/VectorBlox-SDK/python/vbx/vbx/generate/lite_flow.py", line 155, in main
+    tflite_to_vnnx(optimized_tflite, #args.tflite
+  File "~/VectorBlox-SDK/python/vbx/vbx/generate/lite_flow.py", line 88, in tflite_to_vnnx
+    vnnx_graph_binary = generate_vnnx_from_json_subgraphs(json_graph, size_config, inputs, outputs, include_io_data, tmp_dir, engine_graphs_nx)
+  File "~/VectorBlox-SDK/python/vbx/vbx/generate/vnnx_tflite.py", line 1095, in generate_vnnx_from_json_subgraphs
+    Nodes = populate_nodes(json_subgraphs, preset, graph_activations, weights, aliased_ids, ids_with_dummies, tmp_dir,\
+  File "~/VectorBlox-SDK/python/vbx/vbx/generate/vnnx_tflite.py", line 3036, in populate_nodes
+    node.m, node.n = max(node.m, shape[-2]), max(node.n, shape[-1]) #increase size (to handle channelwise broadcast) 
+IndexError: tuple index out of range
