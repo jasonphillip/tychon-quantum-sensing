@@ -179,7 +179,8 @@ adversarial families stands. Under realistic shot noise the ordering becomes sta
 detection-based classical collapses (detector physics), NLS degrades gracefully in identity
 but catastrophically in the decoded vector, and **the learned tracker is the only tracker in
 the matrix still delivering the field at every rung** — ≤5/90 v1 lock losses at
-SNR_faintest=3 vs ≥72/90 for every classical alternative, from cold acquisition. The
+SNR_faintest=3 vs ≥70/90 for every classical alternative (CV-KF 70, NLS 83, PID 90), from
+cold acquisition. The
 surviving claim is now noise-hardened and NLS-challenged. Compute footnote (rough
 estimates): NLS ≈ 6 MFLOP/frame ⇒ ~6 GFLOP/s sustained at the 1 kHz frame rate — several ×
 over an MSS-class RISC-V budget; the learned pipeline ≈ 1.7 MFLOP/frame on the V250 (INT8)
