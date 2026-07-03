@@ -49,7 +49,7 @@ from odmr_vector_tracking.tracking.learned import (  # noqa: E402
 from odmr_vector_tracking.vector.geometry import LINE_AXIS_8  # noqa: E402
 
 V1_DIR = _REPO_ROOT / "data" / "sequence_train_v1"
-RUNS_DIR = _REPO_ROOT / "artifacts" / "increment2c"
+DEFAULT_RUNS_DIR = _REPO_ROOT / "artifacts" / "increment2c"
 BASELINE_SEEDS = ("v2_gated_linear_snr10", "v2_gated_linear_snr10_s20260711",
                   "v2_gated_linear_snr10_s20260721")
 LAT5, LAT15 = 5, 15
@@ -107,8 +107,12 @@ def main() -> int:
                     default=_REPO_ROOT / "artifacts" / "noise_matrix" / "matrix_2c_redecode.json")
     ap.add_argument("--limit", type=int, default=0, help="cap sequences (dry-run)")
     ap.add_argument("--rungs", nargs="*", default=None, help="subset of rung tags (dry-run)")
-    ap.add_argument("--seeds", nargs="*", default=None, help="subset of run-dir names (dry-run)")
+    ap.add_argument("--runs-dir", type=Path, default=DEFAULT_RUNS_DIR,
+                    help="checkpoint dir (default artifacts/increment2c)")
+    ap.add_argument("--seeds", nargs="*", default=None,
+                    help="run-dir names to score (default: the wave-2 baselines)")
     args = ap.parse_args()
+    runs_dir = args.runs_dir
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"[env] torch {torch.__version__} | device {device}"
@@ -127,7 +131,7 @@ def main() -> int:
         fams = fams[:args.limit]
 
     rungs = [(t, s) for t, s in nmr.SNR_RUNGS if args.rungs is None or t in args.rungs]
-    seeds = [s for s in BASELINE_SEEDS if args.seeds is None or s in args.seeds]
+    seeds = list(args.seeds) if args.seeds else list(BASELINE_SEEDS)
     budgets = {t: (None if snr is None else float(nmr.photons_for_dip_snr(faintest, snr)))
                for t, snr in rungs}
 
@@ -145,7 +149,7 @@ def main() -> int:
         # KF identity crown is pulled from the final matrix when reporting.
         # learned decode variants, per seed
         for seed in seeds:
-            seqs, _ = run_ckpt_outputs(RUNS_DIR / seed / "best.pt", ds, device)
+            seqs, _ = run_ckpt_outputs(runs_dir / seed / "best.pt", ds, device)
             field_ref = None
             for kind in DECODES:
                 rows = []
