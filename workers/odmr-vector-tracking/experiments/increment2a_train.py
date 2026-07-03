@@ -143,6 +143,11 @@ def main() -> int:
                     help="enable the explicit CV kinematic scaffold in the tracker "
                          "(track_pos = CV prediction + learned innovation; motion-gated "
                          "assignment)")
+    ap.add_argument("--appearance-branch", action="store_true",
+                    help="increment-3 lever B: add the rectified-difference appearance branch "
+                         "to the linear association head (per-line Zeeman fingerprint). DEFAULT "
+                         "OFF — trained ON it FAILED the survival rule (seed-unstable held "
+                         "misassoc; SNR3 field lock-loss ~2x); see docs/increment3_results.md")
     # 2c association levers (cumulative; all training-only, inference assignment unchanged).
     ap.add_argument("--soft-targets", action="store_true",
                     help="lever 1: soft/merged CE targets inside the ambiguity radius")
@@ -190,6 +195,7 @@ def main() -> int:
     model_cfg.dt_s = float(m["dt_s"])
     model_cfg.motion_prior = bool(args.motion_prior)
     model_cfg.scheduled_sampling = bool(settings.scheduled_sampling)  # 2c lever 3
+    model_cfg.appearance_branch = bool(args.appearance_branch)        # incr-3 lever B (opt-in)
     print(f"[data] {args.dataset} | config_hash {m.get('config_hash')} | "
           f"T={m['n_timesteps']} F={model_cfg.n_freq} L={model_cfg.n_lines} | "
           f"K={model_cfg.n_candidates} anchors")
@@ -230,7 +236,9 @@ def main() -> int:
     set_seed(settings.seed)
     tracker = build_tracker(model_cfg, core=args.core, association=args.assoc).to(device)
     n_params = sum(p.numel() for p in tracker.parameters() if p.requires_grad)
-    print(f"[model] core={args.core} assoc={args.assoc} | {n_params:,} trainable params")
+    print(f"[model] core={args.core} assoc={args.assoc}"
+          + (" +appearance" if model_cfg.appearance_branch else "")
+          + f" | {n_params:,} trainable params")
 
     if args.overfit_one:
         train_ds = _subset(train_ds, 1)

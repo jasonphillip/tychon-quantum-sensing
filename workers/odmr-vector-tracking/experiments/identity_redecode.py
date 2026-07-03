@@ -44,7 +44,7 @@ from odmr_vector_tracking.data import SequenceDatasetLoader  # noqa: E402
 from odmr_vector_tracking.data.contract import validate_dataset_dir  # noqa: E402
 from odmr_vector_tracking.tracking import redecode as rd  # noqa: E402
 from odmr_vector_tracking.tracking.learned import (  # noqa: E402
-    LearnedTrackerConfig, build_tracker, load_tracker_state,
+    build_tracker, config_from_checkpoint, load_tracker_state,
 )
 from odmr_vector_tracking.vector.geometry import LINE_AXIS_8  # noqa: E402
 
@@ -58,7 +58,7 @@ LAT5, LAT15 = 5, 15
 def run_ckpt_outputs(ckpt: Path, ds, device: torch.device) -> tuple[list[dict], dict]:
     """Run a learned checkpoint over every sequence; return per-seq numpy outputs (Hz) + meta."""
     ck = torch.load(ckpt, map_location=device, weights_only=False)
-    cfg = LearnedTrackerConfig(**ck["model_cfg"])
+    cfg = config_from_checkpoint(ck["model_cfg"], ck["model_state"])
     meta = ck["meta"]
     trk = build_tracker(cfg, core=meta["core"], association=meta["association"]).to(device)
     load_tracker_state(trk, ck["model_state"])

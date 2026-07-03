@@ -77,3 +77,17 @@ switches off when a line vanishes into noise. The per-slot appearance-memory lev
 C) builds *on top of* this branch and additionally introduces output feedback (exposure-bias
 risk) — it should not be attempted until the branch itself is stabilized, and needs a fresh,
 explicit go-ahead.
+
+## Disposition (2026-07-03)
+
+The appearance branch is **retained in the code but gated OFF by default** behind
+`LearnedTrackerConfig.appearance_branch` (train CLI: `--appearance-branch`). With the flag unset —
+the deployable default — `LinearScoreAssociation` builds without the `app_*` projections and its
+parameters and forward pass are byte-identical to the pre-lever `gated+linear+aug` head, so the
+shipped tracker is exactly the wave-2 reference. The branch and its dated commit history are kept
+so the mechanism can be revisited (after a stability fix + SNR-graceful gate) without
+re-deriving it; the failed-run checkpoints (`artifacts/increment3/appfp_snr10_s*`) remain
+reproducible because `config_from_checkpoint` infers the branch from the saved weights when the
+serialized config predates the flag. No new seeds and no lever C were run. Per the standing IP
+flag, the appearance-fingerprint / A3-redundancy mechanism stays out of outward-facing material
+pending the US11346904B2 read (TVW lane owns outward material).

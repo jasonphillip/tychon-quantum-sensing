@@ -20,6 +20,7 @@ from odmr_vector_tracking.validation.ops_guard import check_model_ops
 
 CFG = LearnedTrackerConfig(n_freq=128, n_lines=8)
 REAL_CFG = LearnedTrackerConfig(n_freq=951, n_lines=8)  # sequence_sanity_v0 shape
+APP_CFG = LearnedTrackerConfig(n_freq=128, n_lines=8, appearance_branch=True)  # lever B (opt-in)
 
 
 def test_candidate_count_derived_from_downsampling() -> None:
@@ -204,20 +205,42 @@ def test_deployable_host_blocks_are_ops_clean() -> None:
     cand = torch.randn(1, CFG.n_candidates, CFG.feat_dim)
     tpos = torch.rand(1, CFG.n_lines)
     cpos = torch.rand(1, CFG.n_candidates)
-    la = check_model_ops(
-        LinearScoreAssociation(CFG), example_inputs=(track, cand, tpos, cpos)
-    )
-    assert all("multi_graph_input" in d for d in la.disallowed), la.summary()
+    # Both the deployable (branch-off) head and the opt-in appearance-branch head must be
+    # flagged ONLY for their multi-input topology — the branch introduces no banned COMPUTE op.
+    for c in (CFG, APP_CFG):
+        la = check_model_ops(
+            LinearScoreAssociation(c), example_inputs=(track, cand, tpos, cpos)
+        )
+        assert all("multi_graph_input" in d for d in la.disallowed), la.summary()
+
+
+def test_appearance_branch_gated_off_by_default() -> None:
+    """The appearance branch is OPT-IN: the default config omits it entirely (the deployable
+    wave-2 path), so no ``app_*`` parameters exist and the head is the pre-lever additive +
+    position cost. Enabling the flag adds the branch."""
+    assert LearnedTrackerConfig().appearance_branch is False
+    off = LinearScoreAssociation(CFG)
+    assert off.appearance_branch is False
+    assert not hasattr(off, "app_proj")
+    on = LinearScoreAssociation(APP_CFG)
+    assert on.appearance_branch is True
+    assert hasattr(on, "app_proj")
+    assert sum(p.numel() for p in on.parameters()) > sum(p.numel() for p in off.parameters())
+    B, L, K = 2, CFG.n_lines, CFG.n_candidates
+    track, cand = torch.randn(B, L, CFG.feat_dim), torch.randn(B, K, CFG.feat_dim)
+    tpos, cpos = torch.rand(B, L), torch.rand(B, K)
+    out = off(track, cand, tpos, cpos)
+    assert out.shape == (B, L, K) and torch.isfinite(out).all()  # branch-off head still valid
 
 
 def test_appearance_branch_zero_init_is_inert() -> None:
     """Lever B starts exactly at baseline: the zero-init appearance output projection kills the
     branch, so perturbing its feature projections cannot change the score at init."""
     torch.manual_seed(0)
-    head = LinearScoreAssociation(CFG)
-    B, L, K = 2, CFG.n_lines, CFG.n_candidates
-    track = torch.randn(B, L, CFG.feat_dim)
-    cand = torch.randn(B, K, CFG.feat_dim)
+    head = LinearScoreAssociation(APP_CFG)
+    B, L, K = 2, APP_CFG.n_lines, APP_CFG.n_candidates
+    track = torch.randn(B, L, APP_CFG.feat_dim)
+    cand = torch.randn(B, K, APP_CFG.feat_dim)
     tpos, cpos = torch.rand(B, L), torch.rand(B, K)
     out = head(track, cand, tpos, cpos)
     with torch.no_grad():
@@ -232,8 +255,8 @@ def test_appearance_branch_enables_slot_dependent_preference() -> None:
     """Engaged, the appearance branch lets two slots at the SAME position prefer DIFFERENT
     candidates by fingerprint match — the slot×candidate coupling an additive f(track)+g(cand)
     head cannot express (analogue of the position branch's separability-breaking role)."""
-    head = LinearScoreAssociation(CFG)
-    d, a = CFG.feat_dim, CFG.assoc_dim
+    head = LinearScoreAssociation(APP_CFG)
+    d, a = APP_CFG.feat_dim, APP_CFG.assoc_dim
     with torch.no_grad():
         for lin in (head.track_proj, head.cand_proj, head.dist_proj):
             lin.weight.zero_()
@@ -248,13 +271,13 @@ def test_appearance_branch_enables_slot_dependent_preference() -> None:
         head.app_proj.bias.fill_(1.0)                     # match → 1, mismatch → penalized
         head.score.weight.fill_(1.0)
         head.score.bias.zero_()
-    track = torch.zeros(1, CFG.n_lines, d)
-    cand = torch.zeros(1, CFG.n_candidates, d)
+    track = torch.zeros(1, APP_CFG.n_lines, d)
+    cand = torch.zeros(1, APP_CFG.n_candidates, d)
     fp0, fp1 = torch.zeros(d), torch.zeros(d)
     fp0[0], fp1[1] = 5.0, 5.0
     track[0, 0], track[0, 1] = fp0, fp1
     cand[0, 0], cand[0, 1] = fp0, fp1
-    pos, cpos = torch.zeros(1, CFG.n_lines), torch.zeros(1, CFG.n_candidates)
+    pos, cpos = torch.zeros(1, APP_CFG.n_lines), torch.zeros(1, APP_CFG.n_candidates)
     s = head(track, cand, pos, cpos)[0]                   # (L, K), all positions equal
     assert s[0, 0] > s[0, 1]      # slot 0 prefers its fingerprint match
     assert s[1, 1] > s[1, 0]      # slot 1 prefers a DIFFERENT candidate → non-separable

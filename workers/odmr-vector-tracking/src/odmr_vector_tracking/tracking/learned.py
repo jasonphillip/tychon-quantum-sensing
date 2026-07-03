@@ -103,6 +103,15 @@ class LearnedTrackerConfig:
     vel_beta: float = 0.25               # fixed velocity-EMA gain of the CV scaffold (the
                                          # scaffold carries detached — see LearnedTracker —
                                          # so the gain is a constant, not a parameter)
+    appearance_branch: bool = False      # increment-3 lever B: rectified-difference appearance
+                                         # branch in LinearScoreAssociation (per-line Zeeman
+                                         # depth/contrast fingerprint folded into the score).
+                                         # DEFAULT OFF — the deployable tracker is the wave-2
+                                         # gated+linear+aug path. Trained ON it FAILED the
+                                         # survival rule (seed-unstable held misassoc; SNR3
+                                         # field lock-loss ~2x); see docs/increment3_results.md.
+                                         # Kept as an opt-in gate, NOT the default — do not flip
+                                         # without a stability fix + fresh go-ahead (lever C).
 
     @property
     def n_candidates(self) -> int:
@@ -329,21 +338,27 @@ def exclusive_greedy_assign(scores: torch.Tensor) -> torch.Tensor:
 # --- host/MSS association heads (two-impl / one-signature) -------------------------------
 
 class LinearScoreAssociation(nn.Module):
-    """Deployable-first association: additive-MLP cost with relational distance + appearance branches.
+    """Deployable-first association: additive-MLP cost with a relational distance branch (and an
+    optional, default-OFF appearance branch).
 
     ``forward(track_feats, cand_feats, track_pos, cand_pos) -> logits (B,L,K)``. Projected
-    track/candidate features combine by broadcast **add**, plus two relational branches built
-    from rectified signed differences:
+    track/candidate features combine by broadcast **add**, plus a relational branch built from
+    rectified signed differences:
 
     - **position** ``relu(p_l - x_k)`` / ``relu(x_k - p_l)`` — the ReLU pair encodes |distance|
       without ``mul``/``abs`` and is what breaks additive separability: without it the score is
       ``f(track) + g(cand)`` and every slot argmaxes the same candidate.
-    - **appearance** (increment-3 lever B) ``relu(t_app - c_app)`` / ``relu(c_app - t_app)`` on
-      the projected per-line/per-candidate appearance vectors — a physically-meaningful
-      fingerprint (per-axis Zeeman depth/contrast; see ``docs/design/04…`` §Tier-1 #1) folded
-      into the score to break the identity tie at a crossing where positions coincide. Its
-      output projection is **zero-initialized** so the head starts *exactly* at the pre-lever
-      baseline and the fingerprint is learned in (repo idiom).
+    - **appearance** (increment-3 lever B, built only when ``cfg.appearance_branch`` is set —
+      **default OFF**) ``relu(t_app - c_app)`` / ``relu(c_app - t_app)`` on the projected
+      per-line/per-candidate appearance vectors — a physically-meaningful fingerprint (per-axis
+      Zeeman depth/contrast; see ``docs/design/04…`` §Tier-1 #1) folded into the score to break
+      the identity tie at a crossing where positions coincide. Its output projection is
+      **zero-initialized** so an enabled head starts *exactly* at the pre-lever baseline and the
+      fingerprint is learned in (repo idiom). This branch was trained and **FAILED the survival
+      rule** (seed-unstable ``held`` misassoc; SNR3 field lock-loss ~2×), so it is retained as an
+      opt-in gate only and the deployable default omits it entirely — with the flag unset the
+      head's parameters and forward pass are identical to the pre-lever baseline. See
+      ``docs/increment3_results.md``.
 
     Compute stays linear + relu + add (+ layout cat). The hard assignment is computed
     **off-graph** by :meth:`assign` (greedy argmax), so no banned op ever reaches the NPU.
@@ -359,13 +374,18 @@ class LinearScoreAssociation(nn.Module):
         self.track_proj = nn.Linear(d, a)
         self.cand_proj = nn.Linear(d, a)
         self.dist_proj = nn.Linear(2, a)
-        # Appearance relational branch (lever B): mirrors the position branch on projected
-        # appearance vectors. Zero-init the output projection so the branch is inert at start.
-        self.app_track_proj = nn.Linear(d, a)
-        self.app_cand_proj = nn.Linear(d, a)
-        self.app_proj = nn.Linear(2 * a, a)
-        nn.init.zeros_(self.app_proj.weight)
-        nn.init.zeros_(self.app_proj.bias)  # type: ignore[arg-type]
+        # Appearance relational branch (increment-3 lever B) — GATED, default OFF. When enabled
+        # it mirrors the position branch on projected appearance vectors, with a zero-init output
+        # projection so it is inert at start. Trained ON it FAILED the survival rule, so the
+        # deployable default builds WITHOUT it: params + forward are then identical to the
+        # pre-lever head (see LearnedTrackerConfig.appearance_branch / docs/increment3_results.md).
+        self.appearance_branch = cfg.appearance_branch
+        if self.appearance_branch:
+            self.app_track_proj = nn.Linear(d, a)
+            self.app_cand_proj = nn.Linear(d, a)
+            self.app_proj = nn.Linear(2 * a, a)
+            nn.init.zeros_(self.app_proj.weight)
+            nn.init.zeros_(self.app_proj.bias)  # type: ignore[arg-type]
         self.act = nn.ReLU()
         self.score = nn.Linear(a, 1)
 
@@ -381,14 +401,15 @@ class LinearScoreAssociation(nn.Module):
         dpos = track_pos[:, :, None] - cand_pos[:, None, :]           # (B, L, K)
         rel = torch.stack([self.act(dpos), self.act(-dpos)], dim=-1)  # (B, L, K, 2)
         g = self.dist_proj(rel)                           # (B, L, K, A)
-        # Appearance relational branch: rectified difference of projected appearance vectors.
-        ta = self.app_track_proj(track_feats)[:, :, None, :]         # (B, L, 1, A)
-        ca = self.app_cand_proj(cand_feats)[:, None, :, :]           # (B, 1, K, A)
-        dapp = ta - ca                                               # (B, L, K, A) broadcast
-        app_rel = torch.cat([self.act(dapp), self.act(-dapp)], dim=-1)  # (B, L, K, 2A)
-        app = self.app_proj(app_rel)                      # (B, L, K, A) — zero at init
-        h = self.act(t + c + g + app)                     # (B, L, K, A)
-        return self.score(h).squeeze(-1)                  # (B, L, K)
+        h = t + c + g                                     # additive cost + position relation
+        if self.appearance_branch:
+            # Rectified difference of projected appearance vectors (lever B, opt-in).
+            ta = self.app_track_proj(track_feats)[:, :, None, :]        # (B, L, 1, A)
+            ca = self.app_cand_proj(cand_feats)[:, None, :, :]          # (B, 1, K, A)
+            dapp = ta - ca                                              # (B, L, K, A) broadcast
+            app_rel = torch.cat([self.act(dapp), self.act(-dapp)], dim=-1)  # (B, L, K, 2A)
+            h = h + self.app_proj(app_rel)                # zero at init → inert until trained
+        return self.score(self.act(h)).squeeze(-1)        # (B, L, K)
 
     @staticmethod
     def assign(cost: torch.Tensor) -> torch.Tensor:
@@ -661,12 +682,30 @@ def build_tracker(
     return LearnedTracker(cfg, core_mod, assoc_mod)
 
 
-def load_tracker_state(tracker: LearnedTracker, state: dict) -> None:
-    """Load weights, tolerating a pre-lever-B checkpoint that lacks the appearance branch.
+def config_from_checkpoint(model_cfg: dict, model_state: dict) -> LearnedTrackerConfig:
+    """Rebuild a :class:`LearnedTrackerConfig` from a checkpoint, inferring ``appearance_branch``.
 
-    The appearance branch's output projection is zero-initialized, so a checkpoint without those
-    keys loads inert and reproduces the exact baseline behavior. Any missing key OUTSIDE that
-    branch, or any unexpected key, is still a hard error.
+    The ``appearance_branch`` gate was added after the increment-3 lever-B checkpoints were
+    trained, so their serialized ``model_cfg`` predates the field. Detect the branch from the
+    saved weights (``.app_proj.`` keys) and back-fill the flag, so a legacy lever-B checkpoint
+    reconstructs the branched architecture and loads exactly. Newer checkpoints carry the flag
+    explicitly and are respected as-is; a pre-lever checkpoint (no ``.app_proj.`` keys) resolves
+    to the default OFF.
+    """
+    cfg_dict = dict(model_cfg)
+    if "appearance_branch" not in cfg_dict:
+        cfg_dict["appearance_branch"] = any(".app_proj." in k for k in model_state)
+    return LearnedTrackerConfig(**cfg_dict)
+
+
+def load_tracker_state(tracker: LearnedTracker, state: dict) -> None:
+    """Load weights, tolerating an appearance-branch model warm-started from pre-lever weights.
+
+    When the tracker is built with ``appearance_branch=True`` but the checkpoint predates the
+    branch, its zero-initialized output projection means the missing ``.app_*`` keys load inert
+    and reproduce the exact baseline behavior. Any missing key OUTSIDE that branch, or any
+    unexpected key (e.g. loading a lever-B checkpoint into a default/branch-OFF tracker — build
+    the config with :func:`config_from_checkpoint` to avoid this), is still a hard error.
     """
     result = tracker.load_state_dict(state, strict=False)
     app_branch = (".app_track_proj.", ".app_cand_proj.", ".app_proj.")
