@@ -52,7 +52,9 @@ from odmr_vector_tracking.evaluation.metrics import wilson_ci
 from odmr_vector_tracking.evaluation.rows import sequence_metrics_row
 from odmr_vector_tracking.tracking.classical import ClassicalTracker, auto_peak_min_depth
 from odmr_vector_tracking.tracking.kf_baseline import KFHungarianTracker
-from odmr_vector_tracking.tracking.learned import LearnedTrackerConfig, build_tracker
+from odmr_vector_tracking.tracking.learned import (
+    LearnedTrackerConfig, build_tracker, load_tracker_state,
+)
 from odmr_vector_tracking.tracking.nls_baseline import NLSTracker
 from odmr_vector_tracking.vector.geometry import LINE_AXIS_8
 
@@ -126,7 +128,7 @@ def rows_for_ckpt(ckpt: Path, ds: SequenceDataset, m: dict,
     cfg = LearnedTrackerConfig(**ck["model_cfg"])
     meta = ck["meta"]
     trk = build_tracker(cfg, core=meta["core"], association=meta["association"]).to(device)
-    trk.load_state_dict(ck["model_state"])
+    load_tracker_state(trk, ck["model_state"])
     trk.eval()
     f0, f1 = meta["freq_range_Hz"]
     outs = []

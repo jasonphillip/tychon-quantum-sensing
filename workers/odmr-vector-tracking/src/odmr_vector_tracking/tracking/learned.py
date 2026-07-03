@@ -329,18 +329,26 @@ def exclusive_greedy_assign(scores: torch.Tensor) -> torch.Tensor:
 # --- host/MSS association heads (two-impl / one-signature) -------------------------------
 
 class LinearScoreAssociation(nn.Module):
-    """Deployable-first association: additive-MLP cost with a relational distance branch.
+    """Deployable-first association: additive-MLP cost with relational distance + appearance branches.
 
     ``forward(track_feats, cand_feats, track_pos, cand_pos) -> logits (B,L,K)``. Projected
-    track/candidate features combine by broadcast **add**, plus a geometric branch built from
-    the rectified signed position differences ``relu(p_l - x_k)`` / ``relu(x_k - p_l)`` — the
-    ReLU pair encodes |distance| without ``mul``/``abs`` and is what breaks additive
-    separability: without it the score is ``f(track) + g(cand)`` and every slot argmaxes the
-    same candidate. Compute stays linear + relu + add.
+    track/candidate features combine by broadcast **add**, plus two relational branches built
+    from rectified signed differences:
 
-    The hard assignment is computed **off-graph** by :meth:`assign` (greedy argmax), so no
-    banned op ever reaches the NPU. Training applies ``log_softmax`` to these logits inside the
-    loss only — loss machinery never ships.
+    - **position** ``relu(p_l - x_k)`` / ``relu(x_k - p_l)`` — the ReLU pair encodes |distance|
+      without ``mul``/``abs`` and is what breaks additive separability: without it the score is
+      ``f(track) + g(cand)`` and every slot argmaxes the same candidate.
+    - **appearance** (increment-3 lever B) ``relu(t_app - c_app)`` / ``relu(c_app - t_app)`` on
+      the projected per-line/per-candidate appearance vectors — a physically-meaningful
+      fingerprint (per-axis Zeeman depth/contrast; see ``docs/design/04…`` §Tier-1 #1) folded
+      into the score to break the identity tie at a crossing where positions coincide. Its
+      output projection is **zero-initialized** so the head starts *exactly* at the pre-lever
+      baseline and the fingerprint is learned in (repo idiom).
+
+    Compute stays linear + relu + add (+ layout cat). The hard assignment is computed
+    **off-graph** by :meth:`assign` (greedy argmax), so no banned op ever reaches the NPU.
+    Training applies ``log_softmax`` to these logits inside the loss only — loss machinery
+    never ships.
     """
 
     EXECUTION_TARGET = ExecutionTarget.HOST_MSS
@@ -351,6 +359,13 @@ class LinearScoreAssociation(nn.Module):
         self.track_proj = nn.Linear(d, a)
         self.cand_proj = nn.Linear(d, a)
         self.dist_proj = nn.Linear(2, a)
+        # Appearance relational branch (lever B): mirrors the position branch on projected
+        # appearance vectors. Zero-init the output projection so the branch is inert at start.
+        self.app_track_proj = nn.Linear(d, a)
+        self.app_cand_proj = nn.Linear(d, a)
+        self.app_proj = nn.Linear(2 * a, a)
+        nn.init.zeros_(self.app_proj.weight)
+        nn.init.zeros_(self.app_proj.bias)  # type: ignore[arg-type]
         self.act = nn.ReLU()
         self.score = nn.Linear(a, 1)
 
@@ -366,7 +381,13 @@ class LinearScoreAssociation(nn.Module):
         dpos = track_pos[:, :, None] - cand_pos[:, None, :]           # (B, L, K)
         rel = torch.stack([self.act(dpos), self.act(-dpos)], dim=-1)  # (B, L, K, 2)
         g = self.dist_proj(rel)                           # (B, L, K, A)
-        h = self.act(t + c + g)                           # (B, L, K, A)
+        # Appearance relational branch: rectified difference of projected appearance vectors.
+        ta = self.app_track_proj(track_feats)[:, :, None, :]         # (B, L, 1, A)
+        ca = self.app_cand_proj(cand_feats)[:, None, :, :]           # (B, 1, K, A)
+        dapp = ta - ca                                               # (B, L, K, A) broadcast
+        app_rel = torch.cat([self.act(dapp), self.act(-dapp)], dim=-1)  # (B, L, K, 2A)
+        app = self.app_proj(app_rel)                      # (B, L, K, A) — zero at init
+        h = self.act(t + c + g + app)                     # (B, L, K, A)
         return self.score(h).squeeze(-1)                  # (B, L, K)
 
     @staticmethod
@@ -638,6 +659,22 @@ def build_tracker(
         LinearScoreAssociation(cfg) if association == "linear" else AttentionAssociation(cfg)
     )
     return LearnedTracker(cfg, core_mod, assoc_mod)
+
+
+def load_tracker_state(tracker: LearnedTracker, state: dict) -> None:
+    """Load weights, tolerating a pre-lever-B checkpoint that lacks the appearance branch.
+
+    The appearance branch's output projection is zero-initialized, so a checkpoint without those
+    keys loads inert and reproduces the exact baseline behavior. Any missing key OUTSIDE that
+    branch, or any unexpected key, is still a hard error.
+    """
+    result = tracker.load_state_dict(state, strict=False)
+    app_branch = (".app_track_proj.", ".app_cand_proj.", ".app_proj.")
+    stray = [k for k in result.missing_keys if not any(s in k for s in app_branch)]
+    if stray or result.unexpected_keys:
+        raise RuntimeError(
+            f"checkpoint mismatch: missing={stray} unexpected={list(result.unexpected_keys)}"
+        )
 
 
 def v250_targeted_modules(tracker: LearnedTracker) -> list[nn.Module]:

@@ -43,7 +43,9 @@ import noise_matrix_report as nmr  # noqa: E402  (shared harness: noisy_copy, ag
 from odmr_vector_tracking.data import SequenceDatasetLoader  # noqa: E402
 from odmr_vector_tracking.data.contract import validate_dataset_dir  # noqa: E402
 from odmr_vector_tracking.tracking import redecode as rd  # noqa: E402
-from odmr_vector_tracking.tracking.learned import LearnedTrackerConfig, build_tracker  # noqa: E402
+from odmr_vector_tracking.tracking.learned import (  # noqa: E402
+    LearnedTrackerConfig, build_tracker, load_tracker_state,
+)
 from odmr_vector_tracking.vector.geometry import LINE_AXIS_8  # noqa: E402
 
 V1_DIR = _REPO_ROOT / "data" / "sequence_train_v1"
@@ -59,7 +61,7 @@ def run_ckpt_outputs(ckpt: Path, ds, device: torch.device) -> tuple[list[dict], 
     cfg = LearnedTrackerConfig(**ck["model_cfg"])
     meta = ck["meta"]
     trk = build_tracker(cfg, core=meta["core"], association=meta["association"]).to(device)
-    trk.load_state_dict(ck["model_state"])
+    load_tracker_state(trk, ck["model_state"])
     trk.eval()
     f0, f1 = meta["freq_range_Hz"]
     span = f1 - f0
