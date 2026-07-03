@@ -334,6 +334,22 @@ def train(
                 best_state = {
                     k: v.detach().cpu().clone() for k, v in tracker.state_dict().items()
                 }
+                # Persist on every improvement (not only at run end): a run killed
+                # mid-training (crash, power loss) then still leaves its best-so-far
+                # checkpoint on disk. Same payload as the final save; ~1 MB, and
+                # improvements are sparse after warmup, so the IO is negligible.
+                if ckpt_path is not None:
+                    torch.save(
+                        {
+                            "model_state": best_state,
+                            "model_cfg": asdict(cfg),
+                            "settings": asdict(settings),
+                            "meta": ckpt_meta or {},
+                            "best_epoch": best_epoch,
+                            "best_val_total": best_val,
+                        },
+                        ckpt_path,
+                    )
         history.append(row)
 
         if epoch % settings.log_every == 0 or epoch == 1:
