@@ -70,4 +70,73 @@ identity superiority.
 A **zero-retrain identity re-decode** (survey lever A) is the immediate next probe: the field
 estimate `b_est` never consumes the assignment (`learned.py:543`, `585`), and the model emits
 the full `(B,T,L,K)` score tensor, so identity can be re-decoded post-hoc against the existing
-v2 checkpoints without touching the field claim. Results in the dated section below when run.
+v2 checkpoints without touching the field claim. Results in the dated section below.
+
+---
+
+## Zero-retrain identity re-decode (2026-07-03)
+
+*Eval-side only — no training, no model edits. Six per-slot identity decoders applied to the
+three baseline-seed v2 checkpoints through the same noise-matrix harness (4 families × 4 SNR
+rungs, 3 seeds), scored by the shared `sequence_metrics_row`. Code: `tracking/redecode.py`
+(+ `tests/unit/test_redecode.py`), `experiments/identity_redecode.py`,
+`experiments/redecode_verdict.py`. Artifacts: `artifacts/noise_matrix/matrix_2c_redecode.json`,
+`redecode_verdict.json`, and `artifacts/increment2c/redecode_report.md`.*
+
+**Field claim is untouched — verified, not asserted.** The decoders rewrite only the per-slot
+claimed line center `tracked_hz`; `b_est` is never modified. The matrix builder ASSERTS that
+lock-loss and per-sequence angular error are byte-identical across all six decodes, and the
+`decode:baseline` column reproduces `matrix_2c_final.json`'s learned-baseline misassoc exactly
+(parity-checked, all seeds/rungs/families). So any identity change here is a pure re-decode, and
+the vector/lock claim carries over unchanged.
+
+**Decoders.** `greedy` (instantaneous exclusive assignment on raw scores); `smooth5`/`smooth15`
+(A2 — fixed-lag smoothed exclusive decode, latency 5 / 15 frames); `physics` (A1 — assign
+candidates to the 8 Zeeman-forward-map positions predicted from `b_est`, physics fallback when
+no candidate is in the capture radius); `stack5` (A3 — smoothed scores biased by the physics
+prior + physics fallback, latency 5). Baseline = the deployed `track_pos` readout.
+
+**Headline: the physics-anchored + smoothed decode (A3) is a real but partial, family-specific
+win.** In-collision misassoc, pooled over 3 seeds (✅ = CI-disjoint improvement *and* every seed
+improves — clears the 0.072 seed spread; ✗ = CI-disjoint regression):
+
+| rung | family | baseline | stack5 (A3) | CV-KF | verdict |
+|---|---|---|---|---|---|
+| clean | held | 0.311 | 0.391 | 0.099 | ✗ regress |
+| clean | ou | 0.505 | **0.476** | 0.532 | ✅ (beats KF) |
+| clean | reversal | 0.424 | **0.379** | 0.281 | ✅ |
+| snr30 | ou | 0.505 | **0.476** | 0.544 | ✅ (beats KF) |
+| snr30 | reversal | 0.424 | **0.381** | 0.302 | ✅ |
+| snr10 | ou | 0.503 | **0.478** | 0.564 | ✅ (beats KF) |
+| snr10 | reversal | 0.425 | **0.385** | 0.487 | ✅ (beats KF) |
+| snr10 | held | 0.309 | 0.390 | 0.375 | ✗ regress |
+
+A3 improves in-collision misassociation on **OU and reversal at every SNR rung**, CI-disjoint and
+consistent across all three seeds — and on **OU it overtakes CV-KF at every rung** (0.476–0.478
+vs 0.532–0.564). On reversal it closes ~40–50 % of the baseline→KF gap and beats KF at snr10.
+This is the first identity gain in this lineage that costs **zero retraining**.
+
+**But it does not fix `held`** — the family where KF's crown is strongest (misassoc 0.099 clean).
+Every decode variant *regresses* held at clean/snr30/snr10. The gap is narrowed on two families,
+untouched on the hardest.
+
+**Informative negatives (they point at the next lever):**
+- **Pure score decodes regress in the target regime.** `greedy` and `smooth5/15` are worse than
+  baseline at clean/snr30/snr10 (held 0.50 vs 0.31) and only help at SNR3. The raw association
+  scores carry *worse* identity than the recurrent position readout — the identity signal is not
+  in the association head.
+- **Physics-alone (A1) also regresses** (over-snaps candidates); it only wins *combined* with the
+  smoothed scores (A3), where the physics prior breaks ties the scores leave ambiguous.
+- **Temporal smoothing (A2) helps only at SNR3**, where per-frame scores are noisy — latency
+  5–15 frames. Not the target regime.
+- KF's SNR3 misassoc (0.223 held) is a **lost-lock artifact** (KF lost lock on 28/37 held at
+  SNR3) and is not a fair identity comparison there; the learned decodes' SNR3 gains
+  (`smooth15` held 0.697→0.550) are over a tracker that still holds lock.
+
+**Implication.** The win mechanism is *folding the physics prediction from the good, non-circular
+field estimate into the association* — exactly survey lever #1 (a fingerprint/physics term
+multiplied into the position score). The zero-retrain form already banks OU + reversal for free
+and should be adopted as the default identity decode on those families. It also sharpens the
+next retrain: **lever B (a trained physics-fingerprint relational branch), targeted specifically
+at `held`**, where a learned appearance descriptor (Zeeman slope sign, contrast, ¹⁴N hyperfine)
+has the most to add and a zero-retrain prior cannot reach.
