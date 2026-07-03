@@ -155,6 +155,11 @@ def main() -> int:
     ap.add_argument("--scheduled-sampling", action="store_true",
                     help="lever 3: ramp model-own previous-position feedback into the "
                          "association query (soft prior; assignment stays unmasked)")
+    ap.add_argument("--ss-ramp-frac", type=float, default=None,
+                    help="fraction of --epochs over which the scheduled-sampling ramp "
+                         "reaches ss_final_prob (default 1.0 = full training). Must "
+                         "complete well inside the early-stop horizon or free-running "
+                         "val judges a mostly-teacher-forced model")
     args = ap.parse_args()
 
     settings = load_config(args.train_config, TrainSettings)
@@ -168,6 +173,8 @@ def main() -> int:
     settings.scheduled_sampling = settings.scheduled_sampling or bool(args.scheduled_sampling)
     if args.soft_radius_lw is not None:
         settings.soft_radius_linewidths = args.soft_radius_lw
+    if args.ss_ramp_frac is not None:
+        settings.ss_ramp_frac = args.ss_ramp_frac
     if args.overfit_one and args.epochs is None:
         settings.epochs = 800  # the gate converges fast; keep the loop short by default
 
