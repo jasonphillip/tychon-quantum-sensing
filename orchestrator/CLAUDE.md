@@ -25,7 +25,7 @@ Symlinked at `tvw/source/sbir/tychon-nv-sim-repos/` → `~/projects/tychon-sbir/
 
 ## Hard rules
 
-1. **LLM critic inference is air-gapped.** The audit pipeline's critics (Stage 3 NIM/Ollama ensemble, Stage 5 Llama-3.3-70B reviewer) MUST resolve to `localhost`, `127.0.0.1`, `spark1`, `spark2`, or `192.168.*`. Any cloud LLM (Anthropic API, OpenAI, Gemini, Perplexity, Scite, etc.) is forbidden **as an audit critic** under the project's CUI risk posture. The base Claude model running TVW is itself cloud-hosted — that's the harness, not a critic, and not a violation.
+1. **LLM critic inference is air-gapped.** The audit pipeline's critics (Stage 3 NIM/Ollama ensemble, Stage 5 Llama-3.3-70B reviewer) MUST resolve to `localhost`, `127.0.0.1`, `spark2`, or `192.168.*` (spark1 removed — decommissioned 2026-07-05; `192.168.*`/CX7 covers spark3 if used as a critic host). Any cloud LLM (Anthropic API, OpenAI, Gemini, Perplexity, Scite, etc.) is forbidden **as an audit critic** under the project's CUI risk posture. The base Claude model running TVW is itself cloud-hosted — that's the harness, not a critic, and not a violation.
 2. **NIM-first for critic inference.** Primary critics: `qwen/qwen3-32b-dgx-spark` and `nvidia/nvidia-nemotron-nano-9b-v2-dgx-spark`. Heavyweight reviewer (Stage 5): `meta/llama-3.3-70b-instruct` quantized Q4_K_M via llama.cpp built with `-DCMAKE_CUDA_ARCHITECTURES="121"`. NIM embedding containers fail on ARM64 Blackwell — keep the existing Qwen3-Embedding-4B service on Spark 2 as the embedder.
 3. **Symlinked sources are read-only.** `tvw/source/repos/*` and `tvw/source/sbir/*` are symlinks into the user's actual repos. Never `git add` to them via TVW; never modify their contents through the symlinks. (Editing the underlying canonical files at their real paths — e.g., `~/projects/tychon-sbir/docs/...` — is permitted and expected for fix-list orchestration.)
 4. **Never read or commit secrets.** `.env`, credentials, API keys are off-limits. Use `$VAR` references in commands.
@@ -48,7 +48,7 @@ Symlinked at `tvw/source/sbir/tychon-nv-sim-repos/` → `~/projects/tychon-sbir/
 - Anything else the user explicitly asks for that doesn't conflict with the rules above.
 
 **Out-of-scope (delegate elsewhere):**
-- **Heavy ML training / inference jobs** that belong on a dedicated Spark background runner (multi-hour fine-tunes, large sweeps, batch embedding of >GB-scale corpora). TVW prepares the job, dispatches it to spark1/spark2 via `nohup` + pidfile, and watches the heartbeats — but doesn't host the compute itself.
+- **Heavy ML training / inference jobs** that belong on a dedicated Spark background runner (multi-hour fine-tunes, large sweeps, batch embedding of >GB-scale corpora). TVW prepares the job, dispatches it to spark2 (or spark3) via `nohup` + pidfile, and watches the heartbeats — but doesn't host the compute itself.
 
 ## User-granted autonomous authorities
 
@@ -56,7 +56,7 @@ The user has explicitly authorized TVW Claude sessions to take the following act
 
 - **Commit to TVW's local git repo** (`~/projects/tychon-verification-workbench/`) when the changes are part of normal orchestration work — audit deliverables, fix-list updates, daily TVW logs (`01_deliverables/tvw_logs/`), decision-log appends, refactor commits for which the user has already approved the underlying edits, and routine staging of newly-written audit / dispatch / scope-check files in `tvw/audits/`. Use specific-path `git add <paths>` (never `git add .` or `-A`) per global CLAUDE.md security rules.
 - **Commit to the four implementation repos** (`~/projects/{polarfire-hybrid-control,odmr-edge-ml,nv-sensor-sim,tychon-sbir/shared-data}`) — granted 2026-05-04 to support multi-repo demo/bring-up work that would otherwise require constant context-switching to per-repo Claude sessions. Same rules apply: specific-path `git add`, repo-style commit messages, no force-push, no public GitHub push without approval. Land work on a clearly-named branch (`bringup/part-N-*`, `feat/<scope>`, etc.), not directly on long-lived branches like `main` unless the change is purely doc/cleanup.
-- **Push to internal-only git remotes** (e.g. spark1/spark2 mirrors at `spark*:projects/<repo>.git`, NAS bare repos at `nas:/volume*/git-mirrors/`, Tailscale-private hosts). These are reversible and not visible to external parties; pushing them does not constitute publication. Applies to TVW's own remotes and the implementation repos' internal mirrors equally.
+- **Push to internal-only git remotes** (e.g. spark2/spark3 mirrors at `spark*:projects/<repo>.git`, NAS bare repos at `nas:/volume*/git-mirrors/`, Tailscale-private hosts). These are reversible and not visible to external parties; pushing them does not constitute publication. Applies to TVW's own remotes and the implementation repos' internal mirrors equally.
 - **Edit and commit project-local config files** (`CLAUDE.md`, `STAGES.md`, `README.md`, `tvw/configs/*`, `tvw/scripts/*`) when the change is part of an approved refactor or audit-driven correction. Mention substantive policy changes to the user; mechanical fixes (typos, version bumps, log additions) can land silently.
 
 The user has NOT pre-authorized:
@@ -88,7 +88,7 @@ When in doubt, ask. When the action is clearly within the granted authorities ab
 ```
 
 ## End-of-day close
-When the user signals end-of-day wrap-up intent ("wrapping up", "done for the day", "closing out", "EOD", etc.), proactively ask whether to run `tvw/scripts/eod_close.sh`. The script sweeps all 5 Tychon repos (TVW + 4 implementation), auto-pushes internal mirrors (NAS, spark1, spark2), runs a secrets sweep, and gates the GitHub push behind a single yes/N approval. Don't run without explicit yes; don't re-ask in the same session if declined. See memory entry `feedback_eod_close_trigger.md` for the full behavioral rule.
+When the user signals end-of-day wrap-up intent ("wrapping up", "done for the day", "closing out", "EOD", etc.), proactively ask whether to run `tvw/scripts/eod_close.sh`. The script sweeps all 5 Tychon repos (TVW + 4 implementation), auto-pushes internal mirrors (NAS, spark2; ⚠️ spark1 target retired 2026-07-05 — verify `eod_close.sh` no longer pushes to spark1), runs a secrets sweep, and gates the GitHub push behind a single yes/N approval. Don't run without explicit yes; don't re-ask in the same session if declined. See memory entry `feedback_eod_close_trigger.md` for the full behavioral rule.
 
 ## Corpus locations
 - `~/.corpus/tychon-docs/` — prose corpus (built in Stage 1)
