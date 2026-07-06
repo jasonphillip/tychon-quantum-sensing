@@ -82,6 +82,13 @@ No decoder can inflate or damage the vector/lock claim.
 loses field lock on 28/37 held sequences at snr3 — the number covers only the frames where lock
 survives and is not a clean identity win.
 
+**IDSW/opportunity (report-only) shows no secondary gain either.** Held through-crossing switch
+rate (clean, pooled): baseline 0.171, D-OV eos 0.171, D-UM r2 0.177, D-BP 0.239, D-JV+um 0.306,
+versus CV-KF 0.016 — the overlay decoders are neutral-to-worse on switch stability too (unlike
+lever B, which at least halved IDSW). **Latency (report-only):** all menu variants are ≤15 frames
+except D-OV end-of-sequence, which is non-causal (a whole-sequence belief) and would not be
+deployable on a real-time magnetometer irrespective of accuracy.
+
 ## Step 0 — merge-dwell diagnostic (why the wall is where it is)
 
 De-pooling held in-collision misassoc by the per-slot `line_collision` run length (the survival
