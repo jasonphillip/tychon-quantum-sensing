@@ -169,6 +169,11 @@ def aggregate(rows: list[dict | None], families: list[str]) -> dict[str, dict]:
             "ae_peak_all": [float(r["ae_peak"]) for r in fr],
             "ae_post_all": [float(r["ae_post"]) for r in fr],
             "lost_all": [int(r["lost"]) for r in fr],
+            # Per-sequence in-collision misassoc counts (additive; same sequence order for every
+            # tracker/decode under identical fixed-seed noise) — lets a dwell-length or paired
+            # per-sequence analysis de-pool the in-collision binomial downstream.
+            "in_coll_wrong_all": [int(r["in_coll_wrong"]) for r in fr],
+            "in_coll_n_all": [int(r["in_coll_n"]) for r in fr],
         }
     return out
 
