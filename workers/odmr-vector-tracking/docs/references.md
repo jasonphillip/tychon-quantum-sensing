@@ -33,7 +33,9 @@ recent/press-reported (flagged). Intended to seed a local search corpus.
 - Haim, Martina, Howell, Bar-Gill, Caruso. "Machine-learning based high-bandwidth magnetic
   sensing." *Mach. Learn. Sci. Technol.* (2025). arXiv:2409.12820. — MLP predicts 8 peaks through
   overlapping Lorentzians; static/feed-forward. **Closest prior ML work.**
-- arXiv:2606.02749 (2026) — NN full vector at Earth field via broadband-MW dual polarization.
+- Rieckmann et al. arXiv:2606.02749 (2026) — NN vector magnetometry, full vector at Earth field
+  via broadband-MW dual polarization. **STATIC single-shot solver — no tracking / identity /
+  crossing dynamics; cited to distinguish from this work's dynamic through-crossing tracking.**
 - Yao et al. arXiv:2603.14728 (2026) — 1D-CNN vector+temp+stress (25 G bias).
 - Homrighausen et al. *Sensors* 23, 1119 (2023). doi:10.3390/s23031119 — edge-ANN scalar.
 
@@ -43,6 +45,26 @@ recent/press-reported (flagged). Intended to seed a local search corpus.
 - MT3: arXiv:2104.00734. DeepDA (LSTM association through crossings): arXiv:1907.09915.
 - "IF Estimation of Frequency-Crossing Signals." *Sensors* 25, 2030 (2025). doi:10.3390/s25072030.
 - Liu & Wang. *JASA* 141(2) (2017). doi:10.1121/1.4973687 — DNN+FHMM joint pitch estimation + speaker assignment through crossings.
+
+## Track coalescence + unresolved-measurement association (increment-4 overlay decoders)
+- Svensson, Svensson, Guerriero, Willett. "Set JPDA filter for multitarget tracking." *Proc. SPIE*
+  8050, 805010 (2011). — identity as a decode-side overlay decoupled from the label-free state
+  estimate (basis for D-OV).
+- Koch, van Keuk. "Multiple hypothesis track maintenance with possibly unresolved measurements."
+  *IEEE Trans. Aerosp. Electron. Syst.* 33(3), 883 (1997). — unresolved-measurement merged
+  hypotheses through a dwell (basis for D-UM).
+- Blom, Bloem. "Probabilistic data association avoiding track coalescence." *IEEE Trans. Autom.
+  Control* 45(2), 247 (2000). — the coalescence phenomenon of marginal-style association, and that
+  it is structural rather than a defect.
+- Kropfreiter, Meyer, et al. arXiv:2308.06326 (2023). — belief-propagation / marginal association
+  reduces coalescence (the JPDAwithLBP reference; basis for D-BP).
+- Saucan, Meyer, Willett. arXiv:2606.31716 (2026). — generalized loopy-BP with an
+  unresolved-measurement form. *(recent — verify)*
+- García-Fernández. arXiv:1604.00082 (2016). — labeled-RFS "mixed labelling": identity through
+  *long* merges may be only partially recoverable — the increment-4 graceful-degradation caveat.
+- Maggiolino, Ahmad, Cao, Kitani. "Deep OC-SORT." arXiv:2302.11813 (2023). — SNR-graceful
+  appearance gating; reference for a *future* appearance retry, NOT used in the zero-retrain
+  overlay decoders here.
 
 - **MIT US11346904B2** (2022) — 8-channel through-crossover tracking (prospective; no reduction to practice).
 - **Lockheed US11187765B2** — quadrature/SMAC dynamic-range extension.
