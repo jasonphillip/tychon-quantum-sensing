@@ -57,13 +57,24 @@ def test_v3_widened_pipeline_smoke(tmp_path):
     assert m.min_field_T == 3.0e-3
     assert m.directed_fraction == 0.5
     assert m.data_md5 is not None
+    # Amendment 1 condition (1): the stratification law is recorded in the manifest.
+    assert m.stratification_law is not None
+    assert m.stratification_law["method"] == "angle_stratified_option_A"
+    assert m.stratification_law["cold_start_fraction"] == 0.5
     cov = m.sequence_stats["train"]["coverage"]
     assert cov["n_directed"] + cov["n_isotropic"] == 6
     assert cov["field_magnitude_mT"]["min"] >= 3.0 - 1e-6  # floor honored
+    assert "cold_start_fraction_realized" in cov  # start-mode split recorded
 
     with h5py.File(f"{out}/dataset.h5", "r") as f:
         g = f["train"]
-        for key in ("sampling_family", "max_offbias_angle_deg", "min_B_T", "directed_template_idx"):
+        for key in (
+            "sampling_family",
+            "max_offbias_angle_deg",
+            "min_B_T",
+            "directed_template_idx",
+            "start_mode",
+        ):
             assert key in g, f"missing per-sequence array {key}"
             assert g[key].shape == (6,)
         assert g["sampling_family"].dtype == np.int8
@@ -71,9 +82,12 @@ def test_v3_widened_pipeline_smoke(tmp_path):
         min_b = g["min_B_T"][:]
         assert float(min_b.min()) >= 3.0e-3 - 1e-6
         dti = g["directed_template_idx"][:]
-        # directed_fraction=0.5 over 6 sequences → expect a mix (not proven exact,
-        # but at least one of each in practice for this seed).
+        # directed_fraction=0.5 over 6 sequences → expect a mix.
         assert (dti >= 0).any()
+        # Amendment 1 condition (2): start-mode recorded per sequence; angle-stratified
+        # sequences carry 0=acquire / 1=carry, directed carry -1.
+        sm = g["start_mode"][:]
+        assert set(np.unique(sm)).issubset({-1, 0, 1})
 
 
 def test_v3_widened_pipeline_is_deterministic(tmp_path):

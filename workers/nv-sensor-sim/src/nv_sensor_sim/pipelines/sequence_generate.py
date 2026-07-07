@@ -28,6 +28,7 @@ from nv_sensor_sim.config import SimulationConfig
 from nv_sensor_sim.datasets.hashing import content_md5
 from nv_sensor_sim.datasets.schema import DatasetManifest
 from nv_sensor_sim.datasets.writer import DatasetWriter
+from nv_sensor_sim.dynamics.angle_stratified import sample_angle_stratified_ramp
 from nv_sensor_sim.dynamics.coverage_geometry import (
     min_field_magnitude_T,
     offbias_angle_deg,
@@ -200,6 +201,11 @@ def _generate_sequence_split(
     D_hz: float = 0.0,
     gamma_hz_per_T: float = 0.0,
     window_margin_hz: float = 0.0,
+    angle_max_deg: float = 62.0,
+    field_range_T: tuple[float, float] = (3.0e-3, 6.0e-3),
+    cold_start_fraction: float = 0.5,
+    carry_start_max_deg: float = 15.0,
+    carry_field_range_T: tuple[float, float] = (4.0e-3, 5.6e-3),
 ) -> tuple[dict[str, np.ndarray], int, dict[str, list]]:
     """Render every sequence in a split and stack into (N, T, ...) arrays.
 
@@ -210,6 +216,7 @@ def _generate_sequence_split(
     template index).
     """
     is_isotropic = sweep_mode in ("isotropic", "isotropic_widened")
+    is_widened = sweep_mode == "isotropic_widened"
     guard_kw = dict(
         min_field_T=min_field_T,
         window_pin_Hz=window_pin_Hz,
@@ -236,6 +243,35 @@ def _generate_sequence_split(
                 return False
         return True
 
+    def _apply_ou(base_traj: np.ndarray, seed: int) -> tuple[np.ndarray, float, float, int]:
+        """Add the seeded OU perturbation to a held base, re-guarding the result.
+
+        Returns ``(perturbed_traj, wander_std_lw, wander_inc8_p95_lw, n_rejected)``.
+        Shared by the legacy-isotropic and angle-stratified ``ou`` families.
+        """
+        n_rej = 0
+        ou = None
+        for retry in range(500):
+            ou = ou_field_perturbation(
+                field_ou_sigma_T, field_ou_tau_frames, n_timesteps, seed=[int(seed), _OU_KEY, retry]
+            )
+            candidate = base_traj + ou
+            if _traj_guards_ok(candidate):
+                break
+            n_rej += 1
+        else:
+            raise RuntimeError(
+                "OU-perturbed trajectory failed the envelope guards 500 times; "
+                "check field_ou_sigma_T vs the guards"
+            )
+        ou_proj = ou @ np.asarray(nv_axes, dtype=float).T  # (T, A)
+        gamma_scale = GAMMA_HZ_PER_T / gamma_fwhm_hz
+        std_lw = float(np.std(ou_proj) * gamma_scale)
+        lag = min(8, n_timesteps - 1)
+        inc = np.abs(ou_proj[lag:] - ou_proj[:-lag])
+        inc8_lw = float(np.percentile(inc, 95) * gamma_scale)
+        return candidate, std_lw, inc8_lw, n_rej
+
     n_split = len(split_seeds)
     per_seq: list[dict[str, np.ndarray]] = []
     frequencies: np.ndarray | None = None
@@ -249,6 +285,7 @@ def _generate_sequence_split(
         "max_offbias_angle_deg": [],
         "min_B_T": [],
         "directed_template_idx": [],
+        "start_mode": [],
     }
 
     print(f"Generating {n_split} sequences for {split_name} split...")
@@ -257,12 +294,13 @@ def _generate_sequence_split(
         turn_frame = -1
         sampling_family = "held"
         directed_template_idx = -1
+        start_mode = -1  # -1 = not applicable (directed / legacy-isotropic / fixed)
         # Sub-population assignment (widened mode only): a seed-derived bit selects
         # the directed merge-crossing sub-population. Drawn on a dedicated spawn
         # key so it never perturbs the geometry stream; skipped when off, so the
         # legacy isotropic path is byte-identical.
         is_directed = False
-        if is_isotropic and directed_fraction > 0.0 and templates:
+        if is_widened and directed_fraction > 0.0 and templates:
             sub_rng = np.random.default_rng([int(seed), _SUBPOP_KEY])
             is_directed = bool(sub_rng.random() < directed_fraction)
 
@@ -284,8 +322,38 @@ def _generate_sequence_split(
             family = dmeta["family"]
             sampling_family = f"directed-{family}"
             directed_template_idx = int(dmeta["template_idx"])
-            if family == "reversal":
-                turn_frame = -1  # directed reversals record the template, not a turn frame
+        elif is_widened:
+            # Angle-stratified widened sub-population (Amendment 1 Option A). The
+            # v1-style family sets the ramp SHAPE; the geometry is drawn by
+            # off-bias angle so the wide cone (>=60 deg) is actually covered.
+            fam_rng = np.random.default_rng([int(seed), _FAMILY_KEY])
+            family = _TRAJECTORY_FAMILIES[int(fam_rng.choice(3, p=family_weights))]
+            sampling_family = family
+            shape = "reversal" if family == "reversal" else "held"
+            traj, smeta = sample_angle_stratified_ramp(
+                bias_T,
+                n_timesteps,
+                int(seed),
+                shape=shape,
+                angle_max_deg=angle_max_deg,
+                field_range_T=field_range_T,
+                cold_start_fraction=cold_start_fraction,
+                carry_start_max_deg=carry_start_max_deg,
+                carry_field_range_T=carry_field_range_T,
+                min_sweep_delta_T=min_sweep_delta_T,
+                min_window_frac=min_ramp_window_frac,
+                reversal_turn_frac_range=reversal_turn_frac_range,
+                jitter_frac=jitter_frac,
+                min_axis_projection_T=min_axis_projection_T,
+                nv_axes=nv_axes,
+                **guard_kw,
+            )
+            start_mode = int(smeta["start_mode"])
+            if family == "ou":
+                traj, std_lw, inc8_lw, n_rej = _apply_ou(traj, int(seed))
+                n_resamples += n_rej
+                meta["ou_std_lw"].append(std_lw)
+                meta["ou_inc8_lw"].append(inc8_lw)
         elif is_isotropic:
             assert sweep_scalar_range_T is not None  # validated by the caller
             fam_rng = np.random.default_rng([int(seed), _FAMILY_KEY])
@@ -325,35 +393,10 @@ def _generate_sequence_split(
                 traj = held_ramp_trajectory(bias_T, start, end, n_timesteps, t0, t1)
 
             if family == "ou":
-                # Add the seeded OU field perturbation; the envelope guards apply
-                # to the *perturbed* trajectory, retrying the OU draw (nominal
-                # geometry already accepted above).
-                for retry in range(500):
-                    ou = ou_field_perturbation(
-                        field_ou_sigma_T,
-                        field_ou_tau_frames,
-                        n_timesteps,
-                        seed=[int(seed), _OU_KEY, retry],
-                    )
-                    candidate = traj + ou
-                    if _traj_guards_ok(candidate):
-                        break
-                    n_resamples += 1
-                else:
-                    raise RuntimeError(
-                        "OU-perturbed trajectory failed the envelope guards 500 times; "
-                        "check field_ou_sigma_T vs the guards"
-                    )
-                traj = candidate
-                # Achieved resonance wander (linewidth units): stationary std
-                # of the per-axis OU projection, and its increment over an
-                # 8-frame (dwell-scale) lag.
-                ou_proj = ou @ np.asarray(nv_axes, dtype=float).T  # (T, A)
-                gamma_scale = GAMMA_HZ_PER_T / gamma_fwhm_hz
-                meta["ou_std_lw"].append(float(np.std(ou_proj) * gamma_scale))
-                lag = min(8, n_timesteps - 1)
-                inc = np.abs(ou_proj[lag:] - ou_proj[:-lag])
-                meta["ou_inc8_lw"].append(float(np.percentile(inc, 95) * gamma_scale))
+                traj, std_lw, inc8_lw, n_rej = _apply_ou(traj, int(seed))
+                n_resamples += n_rej
+                meta["ou_std_lw"].append(std_lw)
+                meta["ou_inc8_lw"].append(inc8_lw)
         else:
             traj = ramp_crossing_trajectory(
                 bias_T,
@@ -369,6 +412,7 @@ def _generate_sequence_split(
         meta["max_offbias_angle_deg"].append(float(offbias_angle_deg(traj, bias_T).max()))
         meta["min_B_T"].append(min_field_magnitude_T(traj))
         meta["directed_template_idx"].append(directed_template_idx)
+        meta["start_mode"].append(start_mode)
         axis_scales = _axis_scale_trajectory(
             axis_contrast_scale,
             axis_contrast_drift_std,
@@ -424,6 +468,10 @@ def generate_sequence_dataset(
     directed_approach_lw_range: tuple[float, float] = (3.0, 6.0),
     window_margin_frac: float = 0.0,
     offbias_angle_target_deg: float | None = None,
+    field_range_T: tuple[float, float] = (3.0e-3, 6.0e-3),
+    cold_start_fraction: float = 0.5,
+    carry_start_max_deg: float = 15.0,
+    carry_field_range_T: tuple[float, float] = (4.0e-3, 5.6e-3),
     jitter_frac: float = 0.05,
     axis_contrast_scale: tuple[float, ...] | None = None,
     axis_contrast_drift_std: float = 0.0,
@@ -561,6 +609,48 @@ def generate_sequence_dataset(
         )
     is_isotropic = sweep_mode in ("isotropic", "isotropic_widened")
     is_widened = sweep_mode == "isotropic_widened"
+    if not 0.0 < min_ramp_window_frac <= 1.0:
+        raise ValueError(f"min_ramp_window_frac must be in (0, 1], got {min_ramp_window_frac}")
+    if is_widened:
+        # Angle-stratified widening (Amendment 1 Option A): geometry is drawn by
+        # off-bias angle + |B| law, so sweep_scalar_range_T is not required (a
+        # nominal is derived for the window-derivation / dry-run only).
+        if not 0.0 <= directed_fraction <= 1.0:
+            raise ValueError(f"directed_fraction must be in [0, 1], got {directed_fraction}")
+        if min_field_T < 0.0:
+            raise ValueError(f"min_field_T must be >= 0, got {min_field_T}")
+        if min_sweep_delta_T <= 0.0:
+            raise ValueError(f"min_sweep_delta_T must be > 0, got {min_sweep_delta_T}")
+        d_lo, d_hi = float(directed_approach_lw_range[0]), float(directed_approach_lw_range[1])
+        if not 0.0 < d_lo <= d_hi:
+            raise ValueError(
+                f"directed_approach_lw_range must satisfy 0 < lo <= hi, got ({d_lo}, {d_hi})"
+            )
+        directed_approach_lw_range = (d_lo, d_hi)
+        if not 0.0 <= window_margin_frac < 1.0:
+            raise ValueError(f"window_margin_frac must be in [0, 1), got {window_margin_frac}")
+        fr_lo, fr_hi = float(field_range_T[0]), float(field_range_T[1])
+        if not 0.0 < fr_lo < fr_hi:
+            raise ValueError(f"field_range_T must satisfy 0 < lo < hi, got ({fr_lo}, {fr_hi})")
+        field_range_T = (fr_lo, fr_hi)
+        cr_lo, cr_hi = float(carry_field_range_T[0]), float(carry_field_range_T[1])
+        if not 0.0 < cr_lo < cr_hi:
+            raise ValueError(f"carry_field_range_T must satisfy 0 < lo < hi, got ({cr_lo}, {cr_hi})")
+        carry_field_range_T = (cr_lo, cr_hi)
+        if not 0.0 <= cold_start_fraction <= 1.0:
+            raise ValueError(f"cold_start_fraction must be in [0, 1], got {cold_start_fraction}")
+        if not 0.0 < carry_start_max_deg < 90.0:
+            raise ValueError(f"carry_start_max_deg must be in (0, 90), got {carry_start_max_deg}")
+        if offbias_angle_target_deg is None:
+            offbias_angle_target_deg = 62.0
+        if not 0.0 < offbias_angle_target_deg <= 90.0:
+            raise ValueError(
+                f"offbias_angle_target_deg must be in (0, 90], got {offbias_angle_target_deg}"
+            )
+        if sweep_scalar_range_T is None:
+            sweep_scalar_range_T = (-fr_hi, fr_hi)  # nominal (unused for geometry)
+    elif directed_fraction > 0.0:
+        raise ValueError("directed_fraction > 0 requires sweep_mode='isotropic_widened'")
     if is_isotropic:
         if sweep_scalar_range_T is None:
             raise ValueError(f"sweep_mode={sweep_mode!r} requires sweep_scalar_range_T=(lo, hi)")
@@ -572,24 +662,7 @@ def generate_sequence_dataset(
                 f"min_sweep_delta_T must satisfy 0 < delta <= hi - lo = {s_hi - s_lo}, "
                 f"got {min_sweep_delta_T}"
             )
-        if not 0.0 < min_ramp_window_frac <= 1.0:
-            raise ValueError(f"min_ramp_window_frac must be in (0, 1], got {min_ramp_window_frac}")
         sweep_scalar_range_T = (s_lo, s_hi)
-    if is_widened:
-        if not 0.0 <= directed_fraction <= 1.0:
-            raise ValueError(f"directed_fraction must be in [0, 1], got {directed_fraction}")
-        if min_field_T < 0.0:
-            raise ValueError(f"min_field_T must be >= 0, got {min_field_T}")
-        d_lo, d_hi = float(directed_approach_lw_range[0]), float(directed_approach_lw_range[1])
-        if not 0.0 < d_lo <= d_hi:
-            raise ValueError(
-                f"directed_approach_lw_range must satisfy 0 < lo <= hi, got ({d_lo}, {d_hi})"
-            )
-        directed_approach_lw_range = (d_lo, d_hi)
-        if not 0.0 <= window_margin_frac < 1.0:
-            raise ValueError(f"window_margin_frac must be in [0, 1), got {window_margin_frac}")
-    elif directed_fraction > 0.0:
-        raise ValueError("directed_fraction > 0 requires sweep_mode='isotropic_widened'")
     if axis_contrast_scale is not None:
         scale_tuple = tuple(float(v) for v in axis_contrast_scale)
         if len(scale_tuple) != len(NV_AXES_UNIT):
@@ -846,6 +919,28 @@ def generate_sequence_dataset(
                 f"{bias_direction_uvw}; jitter_frac={jitter_frac}"
             )
 
+    # Angle-stratified widening law (Amendment 1 Option A) — records the training
+    # DENSITY change vs v1/v2 isotropic sampling for increment-6 attribution.
+    stratification_law = None
+    if is_widened:
+        stratification_law = {
+            "method": "angle_stratified_option_A",
+            "offbias_angle_deg": f"U[0,{offbias_angle_target_deg}]",
+            "field_magnitude_T": f"U[{field_range_T[0]},{field_range_T[1]}]",
+            "cold_start_fraction": cold_start_fraction,
+            "carry_start_offbias_deg": f"U[0,{carry_start_max_deg}]",
+            "carry_field_magnitude_T": f"U[{carry_field_range_T[0]},{carry_field_range_T[1]}]",
+            "directed_fraction": directed_fraction,
+            "min_field_floor_T": min_field_T,
+            "note": (
+                "Density change vs v1/v2 isotropic sampling: off-bias ANGLE drawn "
+                "uniformly (not direction isotropic on the sphere). A cold_start_fraction "
+                "of sequences begins frame-0 at the drawn (possibly wide) stratum "
+                "(acquisition); the rest carry a lock outward from the near-bias cone. "
+                "Start mode recorded per sequence (0=acquire, 1=carry, -1=directed)."
+            ),
+        }
+
     # Rendered lines are power-broadened by the MW drive; labels keep the
     # intrinsic Gamma (v0 convention) but both are recorded. Mirrors the
     # adapter's saturation model: Gamma_rendered = Gamma * sqrt(1 + s0) at
@@ -904,6 +999,7 @@ def generate_sequence_dataset(
         directed_approach_lw_range=directed_approach_lw_range if is_widened else None,
         offbias_angle_target_deg=offbias_angle_target_deg if is_widened else None,
         window_margin_frac=window_margin_frac if is_widened else None,
+        stratification_law=stratification_law,
         axis_contrast_scale=axis_contrast_scale,
         axis_contrast_drift_std=(
             axis_contrast_drift_std if axis_contrast_drift_std > 0.0 else None
@@ -1012,6 +1108,11 @@ def generate_sequence_dataset(
             D_hz=D_hz,
             gamma_hz_per_T=GAMMA_HZ_PER_T,
             window_margin_hz=window_margin_hz,
+            angle_max_deg=(offbias_angle_target_deg or 62.0),
+            field_range_T=field_range_T,
+            cold_start_fraction=cold_start_fraction,
+            carry_start_max_deg=carry_start_max_deg,
+            carry_field_range_T=carry_field_range_T,
         )
         total_resamples += split_resamples
 
@@ -1082,11 +1183,13 @@ def generate_sequence_dataset(
             ang = np.asarray(seq_meta["max_offbias_angle_deg"], dtype=np.float32)
             min_b = np.asarray(seq_meta["min_B_T"], dtype=np.float32)
             dti = np.asarray(seq_meta["directed_template_idx"], dtype=np.int8)
+            sm = np.asarray(seq_meta["start_mode"], dtype=np.int8)
             per_sequence = {
                 "sampling_family": sf,
                 "max_offbias_angle_deg": ang,
                 "min_B_T": min_b,
                 "directed_template_idx": dti,
+                "start_mode": sm,
             }
             n_directed = int((dti >= 0).sum())
             stats["coverage"] = {
@@ -1106,6 +1209,11 @@ def generate_sequence_dataset(
                 "n_directed": n_directed,
                 "n_isotropic": int(len(sf) - n_directed),
                 "directed_fraction_realized": (float(n_directed / len(sf)) if len(sf) else 0.0),
+                "n_acquire": int((sm == 0).sum()),
+                "n_carry": int((sm == 1).sum()),
+                "cold_start_fraction_realized": (
+                    float((sm == 0).sum() / max(1, (sm >= 0).sum()))
+                ),
                 "sampling_family_counts": {
                     name: int((sf == code).sum()) for name, code in _SAMPLING_FAMILY_CODE.items()
                 },

@@ -192,6 +192,11 @@ class DatasetManifest:
     directed_approach_lw_range: tuple[float, float] | None = None
     offbias_angle_target_deg: float | None = None
     window_margin_frac: float | None = None
+    # Angle-stratified widening law (Amendment 1 Option A). Records the training
+    # DENSITY change vs v1/v2 isotropic sampling — the off-bias angle draw law, the
+    # |B| draw law, the cold-start fraction, and carry parameters — so increment-6
+    # coverage attribution is reproducible. None on all prior lineages.
+    stratification_law: dict | None = None
 
     # Optional physics-cue knobs (dwell lineage). Additive: None on all existing
     # lineages, which therefore load unchanged. axis_offsets_hz is a per-axis
@@ -390,6 +395,7 @@ class DatasetManifest:
         d.setdefault("directed_approach_lw_range", None)
         d.setdefault("offbias_angle_target_deg", None)
         d.setdefault("window_margin_frac", None)
+        d.setdefault("stratification_law", None)
         for key in (
             "sweep_scalar_range_T",
             "ramp_start_T",
