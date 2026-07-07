@@ -161,3 +161,23 @@ The odmr session executed dispatch-6 §1 (doc-only, main dde2a74 → ac65ddf, co
 
 §2 (increment-6 retrain) remains correctly blocked awaiting the nv-sim v3 handoff; the trigger
 condition is carried in the odmr session's memory and in `dispatch-6-coverage-retrain-2026-07-07.md`.
+
+---
+
+## Addendum B (2026-07-07) — Rieckmann arXiv:2606.02749 re-filed: acquisition-fallback candidate
+
+Jason's recall prompted a re-read of the 07-06 sweep's Q5 note. **Rieckmann et al.
+arXiv:2606.02749** (2026-06-01; already in odmr `references.md` per hygiene item H1) was logged
+solely as a NOVELTY footnote — "static single-shot NN vector solver, NOT a tracker, does not
+break our claim." That filing predates the increment-5 coverage discovery, and against the NEW
+top problem the paper reads differently: it demonstrates **NN vector solving over essentially
+unconstrained field directions (no bias beyond Earth's field)** — i.e., the wide-off-bias regime
+where our cold acquisition fails deterministically. It does NOT transplant directly (different
+modality: two broadband MW pulses vs our swept CW-ODMR), but it (a) independently validates
+v3's premise — NN field solvers handle wide envelopes when trained over them — and (b) suggests
+a concrete FALLBACK if the v3 retrain does not fully clear acquisition: a dedicated
+**static-frame wide-envelope acquisition head** (cheap to train — single frames, not sequences)
+used only to initialize the tracker. **No dispatch now** — v3 is the cheaper, direct attack and
+must be measured first (fieldcone eval). Recorded as a post-increment-6 candidate alongside the
+cue retrain. Wang/Wrachtrup APL 2026 (the other recent find) remains a classical comparator
+(lock+DDS-hop, identity assumed, ≲1 G excursions) — a citation, not a mechanism.
