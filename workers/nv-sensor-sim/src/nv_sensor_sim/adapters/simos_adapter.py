@@ -156,6 +156,7 @@ class SimOSAdapter:
         temperature_K: float | None = ...,
         p1_ppm: float | None = ...,
         mw_scale: float = ...,
+        center_offset_hz: float = ...,
         *,
         return_line_centers: Literal[True],
     ) -> tuple[np.ndarray, np.ndarray, np.ndarray]: ...
@@ -169,6 +170,7 @@ class SimOSAdapter:
         temperature_K: float | None = ...,
         p1_ppm: float | None = ...,
         mw_scale: float = ...,
+        center_offset_hz: float = ...,
         return_line_centers: Literal[False] = ...,
     ) -> tuple[np.ndarray, np.ndarray]: ...
 
@@ -180,6 +182,7 @@ class SimOSAdapter:
         temperature_K: float | None = None,
         p1_ppm: float | None = None,
         mw_scale: float = 1.0,
+        center_offset_hz: float = 0.0,
         return_line_centers: bool = False,
     ) -> tuple[np.ndarray, np.ndarray] | tuple[np.ndarray, np.ndarray, np.ndarray]:
         """Generate a CW ODMR spectrum via eigenvalue analysis + Lorentzian lineshape.
@@ -209,6 +212,12 @@ class SimOSAdapter:
         mw_scale : float
             MW drive amplitude scaling factor (1.0 = nominal). Controls
             power broadening and saturation contrast.
+        center_offset_hz : float
+            Static common-mode shift (Hz) added to every allowed transition
+            frequency, modelling a per-orientation axial strain / E-field
+            offset of the zero-field splitting D (both ms0->+/-1 transitions
+            move together, so the line center shifts but the split is
+            unchanged). Default 0.0 is a no-op (byte-identical output).
         return_line_centers : bool
             When True, also return the allowed transition center frequencies (Hz)
             from the diagonalization, ascending. These are the true dip positions
@@ -277,6 +286,12 @@ class SimOSAdapter:
             dipole = abs(np.conj(evec_j) @ Sx_data @ evec_0) ** 2
             if dipole > 1e-6:  # Only include allowed transitions
                 transitions.append((trans_freq_hz, dipole))
+
+        # Per-orientation static strain / E-field offset: a common-mode ZFS
+        # shift moving every allowed transition of this axis by center_offset_hz
+        # (shifts the line center, preserves the split). Off (0.0) is a no-op.
+        if center_offset_hz:
+            transitions = [(tf + center_offset_hz, dip) for tf, dip in transitions]
 
         # Compute physical linewidth from P1 concentration + inhomogeneous broadening
         inhomog_hz = getattr(self.config, "inhomogeneous_fwhm_hz", 0.0)
