@@ -130,3 +130,34 @@ required beyond adopting the formal dispatch.
 3. **Cue-retrain lineage: NOT dispatched.** It needs its own go-ahead after v3 lands — the CR
    dip must enter the training distribution to be exploitable, and that retrain should not be
    confounded with the coverage retrain. Recorded as the next candidate after increment-6.
+
+---
+
+## Addendum A (2026-07-07, later) — dispatch-6 §1 complete; conditioned KF numbers; cross edge RETRACTED
+
+The odmr session executed dispatch-6 §1 (doc-only, main dde2a74 → ac65ddf, commits
+0adcdc7/ac65ddf, pushed NAS + private GitHub; verified by TVW). Both §4 flags are resolved:
+
+1. **Conditioning (finding a):** the KF exit-identity figures were UNconditioned. Conditioned
+   on KF's own lock survival (2c house rule; recomputed with hard asserts reproducing
+   `coverage_split.json` byte-for-byte): cross 24/176 = **0.136** [0.093–0.195]; bounce
+   61/120 = **0.508** [0.420–0.596]; pooled **0.287** [0.239–0.341] vs learned A3 0.078
+   [0.070–0.088]. Survivor-bias caveat recorded: KF's lock survivors are exclusively the two
+   shortest dwells (D=8/16), i.e. the conditioned comparison favors KF's easiest sequences —
+   and the learned margins still hold.
+2. **Denominators:** now stated in-doc — learned 0/216 = per-topology cell (3 seeds × 72
+   seqs; 0/432 pooled); KF 107/144 = single deterministic run, both topologies; exit-identity
+   denominators count (crossing × lock) opportunities with valid capture-radius majorities.
+
+**Consequences for the admitted findings:**
+- **Finding (a) STRENGTHENS on bounce and pooled:** conditioned bounce 0.508 is an actual
+  coin flip on KF's easiest survivors — the gap vs A3 0.045 widens to ~11×, CI-disjoint;
+  pooled is CI-disjoint too. The ~9×/~11× figure is now quotable (conditioning check passed).
+- **The CROSS edge is RETRACTED from finding (b):** conditioned KF 0.136 overlaps A3 0.111 —
+  not separable. Finding (b) now reads: learned beats CV-KF on field lock and on **bounce and
+  pooled** exit identity (NOT "both topologies"). The claims table is amended accordingly;
+  the HELD-INTERNAL row's "both topologies" wording is superseded.
+- The lock-loss claim is unaffected (0 in-coverage learned losses: conditioned ≡ unconditioned).
+
+§2 (increment-6 retrain) remains correctly blocked awaiting the nv-sim v3 handoff; the trigger
+condition is carried in the odmr session's memory and in `dispatch-6-coverage-retrain-2026-07-07.md`.
