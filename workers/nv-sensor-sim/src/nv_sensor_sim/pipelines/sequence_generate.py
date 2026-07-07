@@ -332,6 +332,18 @@ def _generate_sequence_split(
             family = _TRAJECTORY_FAMILIES[int(fam_rng.choice(3, p=family_weights))]
             sampling_family = family
             shape = "reversal" if family == "reversal" else "held"
+            # The ou family perturbs the accepted base, which sits right at the
+            # widened guard boundary; give the base ~3.5 sigma of OU headroom on the
+            # |B| floor / projection / window so the perturbation stays in-grid.
+            base_guard = dict(guard_kw)
+            base_min_proj = min_axis_projection_T
+            if family == "ou":
+                ou_field_margin = 3.5 * field_ou_sigma_T
+                base_guard["min_field_T"] = min_field_T + ou_field_margin
+                base_guard["window_margin_hz"] = (
+                    window_margin_hz + GAMMA_HZ_PER_T * ou_field_margin
+                )
+                base_min_proj = min_axis_projection_T + ou_field_margin
             traj, smeta = sample_angle_stratified_ramp(
                 bias_T,
                 n_timesteps,
@@ -346,9 +358,9 @@ def _generate_sequence_split(
                 min_window_frac=min_ramp_window_frac,
                 reversal_turn_frac_range=reversal_turn_frac_range,
                 jitter_frac=jitter_frac,
-                min_axis_projection_T=min_axis_projection_T,
+                min_axis_projection_T=base_min_proj,
                 nv_axes=nv_axes,
-                **guard_kw,
+                **base_guard,
             )
             start_mode = int(smeta["start_mode"])
             if family == "ou":
