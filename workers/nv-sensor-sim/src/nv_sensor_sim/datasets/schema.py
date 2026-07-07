@@ -179,6 +179,20 @@ class DatasetManifest:
     field_ou_sigma_T: float | None = None  # OU field perturbation std (Tesla)
     field_ou_tau_frames: float | None = None  # OU correlation time (frames)
 
+    # v3 widened-envelope keys (sweep_mode="isotropic_widened"). Additive: None on
+    # all prior lineages. min_field_T is the hard per-frame |B| floor (Tesla);
+    # directed_fraction is the share of sequences drawn from the directed
+    # merge-crossing sub-population (aimed at the cross-axis failure geometries);
+    # directed_approach_lw_range is that sub-population's pre-merge separation
+    # range (linewidths); offbias_angle_target_deg records the widened cone target;
+    # window_margin_frac is the safety margin (fraction of the half-window) the
+    # window-containment guard keeps below the pinned grid edge.
+    min_field_T: float | None = None
+    directed_fraction: float | None = None
+    directed_approach_lw_range: tuple[float, float] | None = None
+    offbias_angle_target_deg: float | None = None
+    window_margin_frac: float | None = None
+
     # Optional physics-cue knobs (dwell lineage). Additive: None on all existing
     # lineages, which therefore load unchanged. axis_offsets_hz is a per-axis
     # static strain / E-field ZFS offset ladder (Hz, common-mode per axis, split
@@ -247,6 +261,7 @@ class DatasetManifest:
             "axis_contrast_scale",
             "reversal_turn_frac_range",
             "axis_offsets_hz",
+            "directed_approach_lw_range",
         ):
             if d.get(key) is not None:
                 d[key] = list(d[key])
@@ -369,6 +384,12 @@ class DatasetManifest:
         d.setdefault("axis_offsets_hz", None)
         d.setdefault("nv_density_ppm", None)
         d.setdefault("data_md5", None)
+        # v3 widened-envelope keys (None/absent on all prior lineages).
+        d.setdefault("min_field_T", None)
+        d.setdefault("directed_fraction", None)
+        d.setdefault("directed_approach_lw_range", None)
+        d.setdefault("offbias_angle_target_deg", None)
+        d.setdefault("window_margin_frac", None)
         for key in (
             "sweep_scalar_range_T",
             "ramp_start_T",
@@ -376,6 +397,7 @@ class DatasetManifest:
             "axis_contrast_scale",
             "reversal_turn_frac_range",
             "axis_offsets_hz",
+            "directed_approach_lw_range",
         ):
             if d.get(key) is not None:
                 d[key] = tuple(d[key])
