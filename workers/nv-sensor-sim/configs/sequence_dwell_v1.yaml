@@ -1,0 +1,51 @@
+# Dwell-sweep eval dataset — sequence_dwell_v1 (physics cues OFF)
+#
+# Identity-through-merge eval lineage (dispatch nvsim-identity-physics 2026-07-07).
+# Eval-only (all sequences in the `test` split), contract v1, stored NOISELESS
+# (measurement noise stays consumer-side per the standing rule).
+#
+# The v1-inherited pins — 951-point pinned frequency grid, fixed ~5 mT deployment
+# bias vector/magnitude, per-axis contrast ladder + AR(1) drift, p1_ppm (Gamma),
+# T=256 — are READ FROM THE ARCHIVED v1 MANIFEST below (not re-declared here), so
+# downstream sees identical input dimensionality and the same deployment prior.
+#
+# Trajectory: held template, one chosen cross-axis line pair (and, by NV C3v
+# symmetry, its mirror pair) driven together into a merged dwell of D frames
+# (|f_i - f_j| < Gamma), then either crossing or bouncing. Exit topology balanced
+# 50/50 cross vs bounce per D bucket (load-bearing: an all-cross set would let a
+# constant-velocity prior trivially decide identity). Four spectator lines
+# separation-protected; min-|proj| rejection as in v1.
+#
+# NOTE (design deviation, physics-forced): a single-pair cross-axis merge is
+# physically impossible in the noiseless L=8 model — the NV mirror pair always
+# coalesces simultaneously (same |B.n_i|=|B.n_j| condition as cross-relaxation).
+# So each sequence has one target coalescing pair + its mirror; FOUR spectator
+# lines are protected (not six). See logs/sequence_dwell_v1_generation.md.
+#
+# Regenerate:
+#   python scripts/generate_dwell_dataset.py \
+#     --config configs/sequence_dwell_v1.yaml \
+#     --output-dir artifacts/datasets/sequence_dwell_v1/
+
+# Read v1 pins from the immutable archived v1 manifest (read-only).
+v1_manifest: ~/archives/spark1-projects-2026-07-05/nv-sensor-sim/artifacts/datasets/sequence_train_v1/manifest.json
+
+# Fixed, recorded seed for deterministic regeneration (same seed -> identical
+# content md5). New seed for this lineage.
+master_seed: 20260707
+
+# Dwell sweep: 6 merged-dwell lengths x {cross, bounce} x 24 sequences = 288.
+dwell_frames_list: [8, 16, 32, 64, 128, 192]
+seqs_per_bucket: 24
+
+# Merge kinematics.
+approach_linewidths: 6.0     # pre-merge pair separation (linewidths) at ramp start
+ramp_frames: 4               # frames per ramp in/out (steep -> realized dwell ~ D)
+sep_min_linewidths: 1.5      # spectator lines held >= this many Gamma from everything
+min_axis_projection_T: 0.4e-3  # reject geometries entering the projection-zero regime
+jitter_frac: 0.05            # per-sequence ramp-endpoint jitter (of delta_a)
+position_jitter_frames: 8    # per-sequence merge-position jitter (frames)
+
+# Physics cues OFF (this is the baseline; sequence_dwell_v1_cues turns them on).
+axis_offsets_hz: null
+nv_density_ppm: 0.0

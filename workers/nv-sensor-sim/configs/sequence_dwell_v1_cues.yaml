@@ -1,0 +1,44 @@
+# Dwell-sweep eval dataset — sequence_dwell_v1_cues (physics cues ON)
+#
+# Seed-paired twin of sequence_dwell_v1: IDENTICAL kinematics and IDENTICAL seeds
+# (same master_seed; the trajectories, templates and jitter do not depend on the
+# cues), with the two default-OFF physics cues turned ON. Pairing by seed makes
+# any downstream identity-recoverability delta attributable to the cues alone.
+#
+# Cues:
+#   axis_offsets_hz — per-axis static strain / E-field ZFS offset ladder
+#     (Meneses real-device fit, kHz): a common-mode shift per orientation, so the
+#     line CENTER moves but the split is preserved -> a static, split-invisible
+#     identity fingerprint the long dwell can integrate down. Flows into the
+#     resonance_freqs ground truth. Sign convention: positive shifts the
+#     orientation's ZFS up (both ms0->+/-1 transitions together).
+#   nv_density_ppm — NV-NV cross-relaxation PL feature at inter-orientation
+#     degeneracy (Espinos/Budker analytic resonance model; Dhungel calibration).
+#     3.8 ppm is the Dhungel calibration point (0.78 mT FWHM, ~1.79% contrast).
+#     NOTE: deployment-relevant NV density depends on the diamond spec; 3.8 ppm
+#     is chosen to anchor exactly to the published calibration, not as a claim
+#     about any particular device.
+#
+# Regenerate:
+#   python scripts/generate_dwell_dataset.py \
+#     --config configs/sequence_dwell_v1_cues.yaml \
+#     --output-dir artifacts/datasets/sequence_dwell_v1_cues/
+
+v1_manifest: ~/archives/spark1-projects-2026-07-05/nv-sensor-sim/artifacts/datasets/sequence_train_v1/manifest.json
+
+# Same seed + same dwell config as sequence_dwell_v1 (seed-paired).
+master_seed: 20260707
+dwell_frames_list: [8, 16, 32, 64, 128, 192]
+seqs_per_bucket: 24
+approach_linewidths: 6.0
+ramp_frames: 4
+sep_min_linewidths: 1.5
+min_axis_projection_T: 0.4e-3
+jitter_frac: 0.05
+position_jitter_frames: 8
+
+# Physics cues ON.
+# Meneses et al. real-device per-axis strain fit (arXiv:2502.14683 as cited in
+# the dispatch; see docs/dataset-contract.md for the title-collision caveat).
+axis_offsets_hz: [19600.0, -4200.0, -3500.0, -11900.0]
+nv_density_ppm: 3.8

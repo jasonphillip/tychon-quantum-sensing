@@ -179,6 +179,15 @@ class DatasetManifest:
     field_ou_sigma_T: float | None = None  # OU field perturbation std (Tesla)
     field_ou_tau_frames: float | None = None  # OU correlation time (frames)
 
+    # Optional physics-cue knobs (dwell lineage). Additive: None on all existing
+    # lineages, which therefore load unchanged. axis_offsets_hz is a per-axis
+    # static strain / E-field ZFS offset ladder (Hz, common-mode per axis, split
+    # preserved); nv_density_ppm drives the NV-NV cross-relaxation PL feature.
+    axis_offsets_hz: tuple[float, ...] | None = None
+    nv_density_ppm: float | None = None
+    # md5 of the dataset HDF5 payload (set after the arrays are written).
+    data_md5: str | None = None
+
     # Noise mode and OU parameters
     noise_mode: str = "deterministic"
     ou_params: dict | None = None  # OUNoiseConfig as dict, None for deterministic
@@ -237,6 +246,7 @@ class DatasetManifest:
             "ramp_end_T",
             "axis_contrast_scale",
             "reversal_turn_frac_range",
+            "axis_offsets_hz",
         ):
             if d.get(key) is not None:
                 d[key] = list(d[key])
@@ -355,12 +365,17 @@ class DatasetManifest:
         d.setdefault("reversal_turn_frac_range", None)
         d.setdefault("field_ou_sigma_T", None)
         d.setdefault("field_ou_tau_frames", None)
+        # Dwell-lineage optional keys (None/absent on all prior lineages).
+        d.setdefault("axis_offsets_hz", None)
+        d.setdefault("nv_density_ppm", None)
+        d.setdefault("data_md5", None)
         for key in (
             "sweep_scalar_range_T",
             "ramp_start_T",
             "ramp_end_T",
             "axis_contrast_scale",
             "reversal_turn_frac_range",
+            "axis_offsets_hz",
         ):
             if d.get(key) is not None:
                 d[key] = tuple(d[key])

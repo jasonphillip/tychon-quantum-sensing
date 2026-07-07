@@ -130,11 +130,15 @@ class DatasetWriter:
         bias: np.ndarray,
         seeds: np.ndarray,
         split: str,
+        per_sequence: dict[str, np.ndarray] | None = None,
     ) -> None:
         """Write a time-series (sequence) split to disk.
 
         Arrays are cast to the dataset-contract dtypes (float32 / int8 / bool /
         int64) at write time. The static bias is written once at the top level.
+        ``per_sequence`` (optional) is a mapping of extra per-sequence label
+        arrays (shape ``(N,)``, e.g. ``exit_topology`` / ``dwell_frames`` for the
+        dwell lineage) written verbatim under the split group.
 
         Parameters
         ----------
@@ -165,11 +169,13 @@ class DatasetWriter:
             self._write_sequences_h5(
                 spectra, frequencies, B_true, resonance_freqs, line_axis,
                 line_transition, collision_mask, line_collision, bias, seeds, split,
+                per_sequence,
             )
         elif self.format == "npz":
             self._write_sequences_npz(
                 spectra, frequencies, B_true, resonance_freqs, line_axis,
                 line_transition, collision_mask, line_collision, bias, seeds, split,
+                per_sequence,
             )
         else:
             raise ValueError(f"Unknown format: {self.format}. Use 'h5' or 'npz'.")
@@ -177,6 +183,7 @@ class DatasetWriter:
     def _write_sequences_h5(
         self, spectra, frequencies, B_true, resonance_freqs, line_axis,
         line_transition, collision_mask, line_collision, bias, seeds, split,
+        per_sequence=None,
     ):
         """Write a sequence split to HDF5 format."""
         import h5py
@@ -188,7 +195,8 @@ class DatasetWriter:
                 "spectra", "frequencies", "B_true", "resonance_freqs", "line_axis",
                 "line_transition", "collision_mask", "line_collision", "seeds",
             )
-            for key in keys:
+            extra = tuple((per_sequence or {}).keys())
+            for key in keys + extra:
                 if key in grp:
                     del grp[key]
             grp.create_dataset("spectra", data=np.asarray(spectra, dtype=np.float32))
@@ -208,6 +216,8 @@ class DatasetWriter:
                 "line_collision", data=np.asarray(line_collision, dtype=bool)
             )
             grp.create_dataset("seeds", data=np.asarray(seeds, dtype=np.int64))
+            for key, arr in (per_sequence or {}).items():
+                grp.create_dataset(key, data=np.asarray(arr))
             # Static bias is shared across all splits — write once at top level.
             if "bias" in f:
                 del f["bias"]
@@ -216,6 +226,7 @@ class DatasetWriter:
     def _write_sequences_npz(
         self, spectra, frequencies, B_true, resonance_freqs, line_axis,
         line_transition, collision_mask, line_collision, bias, seeds, split,
+        per_sequence=None,
     ):
         """Write a sequence split to numpy compressed format."""
         npz_path = self.output_dir / f"{split}.npz"
@@ -231,6 +242,7 @@ class DatasetWriter:
             line_collision=np.asarray(line_collision, dtype=bool),
             bias=np.asarray(bias, dtype=np.float32),
             seeds=np.asarray(seeds, dtype=np.int64),
+            **{k: np.asarray(v) for k, v in (per_sequence or {}).items()},
         )
 
     def write_manifest(self, manifest: DatasetManifest) -> None:
