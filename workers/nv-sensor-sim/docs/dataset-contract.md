@@ -309,6 +309,67 @@ template_idx         int8   merge-template index within this dataset's enumerate
 > from the issuing dispatch's "one pair / six protected" is inherent to NV C3v symmetry, not a
 > generator choice.
 
+### Optional keys — widened-envelope lineage (v3, angle-stratified)
+
+The angular field-coverage training lineage (`sequence_train_v3`) and its field-cone eval
+(`sequence_eval_fieldcone_v1`) add **backward-compatible, optional** manifest keys and per-sequence
+HDF5 arrays. All are `null`/absent on every prior lineage, and the **L=8 line contract is unchanged**.
+
+**Why v3 exists.** `odmr-vector-tracking` increment-5 measured a deterministic field-acquisition
+failure: the learned tracker loses field lock **216/216** on cross-axis merge pairs **(0,2)/(4,6)**,
+which force **B to 41.5°/53.2° off-bias at 3.9/3.3 mT** — outside the v1/v2 training cone (≤ ~18°
+off-bias). v3 widens the trained off-bias cone to **≥ 60°** (so 53.2° sits in the interior) and lowers
+the **|B| floor to 3.0 mT**, on the same v1 contract (pinned 951-pt grid, same bias/contrast/Γ, T=256,
+noiseless).
+
+**Angle-stratified widening (`sweep_mode: "isotropic_widened"`).** Uniform isotropic sampling cannot
+reach the wide cone at the pinned grid: the reachable off-bias angle is bounded by
+`arcsin(|ext|/|bias|)` and the high-angle band is a measure-zero sliver near the floor (measured 0/1500
+≥ 53° at ±4.5 mT). v3 instead samples the **off-bias angle directly** — a **training density change**
+recorded in `stratification_law`. Two sub-populations:
+- **angle-stratified** (majority) — off-bias angle `~ U[0, offbias_angle_target_deg]`, magnitude drawn
+  from the `field_range_T` law, constructed at that stratum with random azimuth; the v1-style
+  `held`/`reversal`/`ou` families set the ramp shape.
+- **directed** (`directed_fraction`) — v1-style pass-through crossings aimed exactly at the cross-axis
+  merge degeneracies (reusing the dwell `merge_direction`/`a_merge` machinery), covering (0,2)/(4,6).
+
+**Cold-start diversity.** The failure is off-cone *acquisition*, not lock-carrying. A
+`cold_start_fraction` of the angle-stratified sequences **start frame-0 at their drawn (possibly wide)
+stratum** (cold acquisition); the rest carry a lock outward from the near-bias cone. Recorded per
+sequence in `start_mode`.
+
+**Three per-frame reject guards** keep every geometry physical and in-grid: the `min_field_T` |B|
+floor (interior min), window containment (`window_margin_frac` below the pinned half-window), and the
+existing `min_axis_projection_T`. In widened mode the config-time worst-case containment is skipped
+(the per-frame guard + post-render label-containment assert are the backstop).
+
+**Manifest keys (v3 train).** `sweep_mode: "isotropic_widened"`; `min_field_T`; `directed_fraction`;
+`directed_approach_lw_range`; `offbias_angle_target_deg`; `window_margin_frac`; `data_md5`; and
+`stratification_law` — a dict recording the off-bias-angle law, the |B| law, `cold_start_fraction`, the
+carry parameters, and `directed_fraction` (the exact draw distribution, so increment-6 coverage
+attribution is reproducible). `sequence_stats[split]["coverage"]` records realized off-bias-angle and
+|B| distributions, `frac_ge_53_2`/`frac_ge_60`, sub-population and start-mode counts, and per-template
+directed counts.
+
+**Per-sequence HDF5 arrays (v3 train)** (each `(N,)`, under the split group):
+```
+sampling_family        int8   0 held, 1 reversal, 2 ou, 3 directed-held, 4 directed-reversal
+max_offbias_angle_deg  float32 realized max off-bias angle over the trajectory (deg)
+min_B_T                float32 realized min |B| over the trajectory (Tesla)
+directed_template_idx  int8   merge-template index for directed sequences, -1 for angle-stratified
+start_mode             int8   0 = acquire (cold start at stratum), 1 = carry, -1 = directed
+```
+
+**Field-cone eval (`sequence_eval_fieldcone_v1`, `sweep_mode: "fieldcone"`).** A held-out
+(off-bias angle × |B|) ladder, eval-only (all `test`), that measures acquisition across and **beyond**
+the v3 envelope. Buckets are `failure` (exact (0,2)/(4,6) merges), `control` (in-envelope), and
+`beyond` (off-bias > the widened cone and/or |B| < 3.0 mT). The |B| floor and angle cap are **not**
+enforced (beyond probes must exceed them); the min-projection + window guards do apply, and a
+window-infeasible bucket is **stop-and-reported**. Per-sequence arrays: `bucket_class`
+(0 failure/1 control/2 beyond), `target_angle_deg`, `target_B_mT`, `realized_max_offbias_angle_deg`,
+`realized_min_B_T`, `merge_pair_p`/`merge_pair_q` (−1 off the failure buckets).
+`sequence_stats["test"]["fieldcone_buckets"]` records the ladder.
+
 ## Schema Implementation
 
 See `src/nv_sensor_sim/datasets/schema.py` for the `DatasetManifest` dataclass and validation logic.
