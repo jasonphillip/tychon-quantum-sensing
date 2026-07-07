@@ -284,3 +284,30 @@ and expect graceful degradation rather than a merge "solution."**
 
 *Full verified evidence, votes, and refutations: deep-research run `wf_737b6676-bb1`
 (`…/tasks/wi4lxir5p.output`). This deliverable is inventory + search only — no code was changed.*
+
+---
+
+## Outcome addendum (2026-07-07) — Dispatch 4 executed: items 1/2/4/5 TESTED, NO SURVIVOR
+
+Ranked items 1 (Set-JPDA overlay), 2 (unresolved-measurement decode), 4 (BP/EHM marginals) and
+5 (joint Viterbi) were executed as `dispatch-4-identity-overlay-2026-07-06.md` in the tracking
+repo (branch `increment-4-identity-overlay`, HEAD 9b82aa1; `docs/increment4_results.md`).
+**Verdict: none survives the survival rule on held** (best: D-UM r=2 at 0.298 vs baseline 0.311 —
+not CI-disjoint, one seed regresses, OU/reversal guards trip). Parity gate passed; field metrics
+byte-identical throughout; deployable default unchanged.
+
+**Root cause (measured, Step-0 dwell diagnostic):** held is a long-merge family (median merged
+run ≈ 132 frames); once two lines sit within a linewidth, both the association scores and the
+physics forward-map predictions are sub-linewidth-separated — the decode stage is
+**information-starved**, and no re-weighting of starved information recovers identity. The
+mixed-labelling caveat (§3 Q1, García-Fernández/Boers) is empirically confirmed on our data.
+CV-KF's long-dwell 0.022 misassoc reflects **prior-matching** (its CV coast matches the
+generator's crossing kinematics), not superior measurement use.
+
+**Standing consequence: the zero-retrain / decode-side tier is EXHAUSTED.** Do not re-propose
+read-out improvements of the existing signal (this now covers items 1, 2, 4, 5, 6 plus all 2c
+re-decodes). Items still live: **3** (SNR-graceful gating — as a component of any future
+appearance channel), **8** (seed-stability pass — still blocked on open Q3a), **9** (uncertainty
+loss-weighting — retrain-tier), **10** (physics identity cues in the simulator — **promoted to
+the active path**, together with the H3 boundary-claim measurement via a dwell-sweep dataset).
+Successor dispatch: `dispatch-nvsim-identity-physics-2026-07-07.md`.
