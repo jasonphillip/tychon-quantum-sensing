@@ -181,3 +181,34 @@ used only to initialize the tracker. **No dispatch now** — v3 is the cheaper, 
 must be measured first (fieldcone eval). Recorded as a post-increment-6 candidate alongside the
 cue retrain. Wang/Wrachtrup APL 2026 (the other recent find) remains a classical comparator
 (lock+DDS-hop, identity assumed, ≲1 G excursions) — a citation, not a mechanism.
+
+---
+
+## Addendum C (2026-07-07, evening) — v3 + fieldcone DELIVERED and VERIFIED; increment-6 GO
+
+nv-sim completed the v3 dispatch end-to-end (branch `feat/sequence-train-v3-coverage` @ 3231c1c,
+NAS + private GitHub; 215 tests green; one mid-run edge-case bug in the widened OU base at the
+guard boundary found and fixed by the session). TVW verification against the handoff
+(`odmr data/sequence_train_v3_HANDOFF.md`) — all PASS, checked on disk, not from the report:
+
+| check | result |
+|---|---|
+| raw md5s (v3 / fieldcone) | f32bcd72b7bf6f5eaf0125853b03fcb4 / b152cb6bd1b5090b54389f6404856c23 — MATCH |
+| content data_md5 (v3 / fieldcone) | be28fab5a129ff3b757ce77a92e60b47 / 92dc06692d1975f6fcd101e70cc02d99 — MATCH |
+| Amendment-1 cond. 1 (draw law in manifest) | `stratification_law` present (angle U[0,62°], |B| U[3,6] mT, cold_start_fraction, carry laws) |
+| Amendment-1 cond. 2 (cold-start diversity) | realized 0.531 (785 acquire / 694 carry), per-sequence `start_mode` |
+| envelope ≥60°, 53.2° interior | max 65.5°; frac ≥53.2° = 0.076; frac ≥41.5° = 0.285 |
+| |B| floor as constraint | min 3.008 mT (floor 3.0 honored); max 5.81 (window-contained) |
+| directed sub-pop | 0.278; templates ≈139/148/135/147 incl. hard (0,2)/(4,6) |
+| per-sequence fields | sampling_family, max_offbias_angle_deg, min_B_T, directed_template_idx, start_mode |
+| fieldcone buckets | failure (exact (0,2)/(4,6)) / control (10–52°, 3.6–5.0 mT) / beyond (66–70° or 2.0–2.5 mT); realized 10–70°, 1.98–5.0 mT; deterministic |
+| immutability | v1/v2/dwell/archive untouched (dwell md5s re-verified by producer); seeds disjoint from 20260701/02 |
+
+Observation for increment-6 reading: density at the extreme rim is thin by design (2.3% of train
+≥60°) — the fieldcone chart, not the training histogram, is the boundary statement.
+
+**Increment-6 §2 trigger SATISFIED → GO issued to the odmr lane** (per
+`dispatch-6-coverage-retrain-2026-07-07.md`; verdict rules pre-hoc; tri-eval; report finding-(b)
+re-measurement). Merge ruling for nv-sim: merge `feat/sequence-train-v3-coverage` into
+`feat/sequence-generator` directly (dwell precedent; private solo repo; no PR ceremony), keep the
+feature branch, push both remotes.
