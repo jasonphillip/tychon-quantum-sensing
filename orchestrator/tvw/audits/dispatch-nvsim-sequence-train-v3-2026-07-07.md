@@ -104,3 +104,33 @@ training envelope. Design intent (exact bucketing is the session's call):
 
 Cues-ON data generation (config only); dwell-hold training sequences; hyperfine L=24; DR /
 amplitude ladder; any training; outward-facing material.
+
+---
+
+## Amendment 1 (2026-07-07) — envelope mechanism ruling: angle-stratified widening (Option A)
+
+The session's stop-and-report fired correctly: grid-guarded **isotropic** widening cannot reach
+≥60° off-bias under the standing guards (±4.0 mT scalar, |B| floor 3.0 mT, window containment)
+— achievable isotropic ceiling ≈53°, which would leave the 53.2° failure geometry at the
+envelope rim. Three options were reported; **TVW rules Option A — angle-stratified widening**:
+draw target off-bias angle ~U[0, ~62°], construct the field at the drawn (angle, |B|), existing
+guards unchanged. Option B rejected (rim problem stands; it also silently redefines the
+fieldcone "beyond" threshold). Option C rejected (invalidates the <3.0 mT beyond-envelope
+probes, protected by design-review amendment 2).
+
+**Two conditions attach to A:**
+1. **Record the draw law.** Angle-stratified sampling changes the angular *density*, not just
+   the envelope, relative to v1/v2's draws. The manifest must state the stratification law
+   (U[0,62°] on off-bias angle, plus the |B| draw law) so increment-6 attribution honestly
+   reads "envelope + angular density," not envelope alone. Near-bias remains well-populated
+   under uniform-in-θ (it up-weights small angles vs the isotropic sin θ density) — state
+   this too.
+2. **Cold-start diversity is load-bearing.** The measured failure is cold acquisition on
+   sequences that sit off-cone; if every widened sequence *starts* near-bias and ramps outward,
+   acquisition itself is still only ever trained near-bias and the failure mode may survive
+   v3. A substantial fraction of the widened sub-population (~half; exact split the session's
+   call, recorded per-sequence in the manifest) must START at its drawn (angle, |B|) stratum —
+   not only near-bias→wide ramps.
+
+With A + both conditions, proceed straight through configs → generation → verification →
+handoff without further TVW review, unless another stop-and-report condition fires.
