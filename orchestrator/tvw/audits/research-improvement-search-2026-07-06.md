@@ -311,3 +311,28 @@ appearance channel), **8** (seed-stability pass — still blocked on open Q3a), 
 loss-weighting — retrain-tier), **10** (physics identity cues in the simulator — **promoted to
 the active path**, together with the H3 boundary-claim measurement via a dwell-sweep dataset).
 Successor dispatch: `dispatch-nvsim-identity-physics-2026-07-07.md`.
+
+---
+
+## Outcome addendum 2 (2026-07-07 evening) — item 10 executed; ranking superseded by a coverage finding
+
+The nv-sim dispatch delivered (`sequence_dwell_v1` / `_cues`, seed-paired, branch
+`feat/dwell-identity-lineage` cec6591; one accepted physics deviation — merges are quartets,
+see `audit-dwell-program-2026-07-07.md` §1). The consumer side ran as **increment-5** in the
+odmr session (ratified retroactively — no TVW dispatch existed; verdict rules were pre-hoc in
+`experiments/increment5_verdict.py`; odmr main promoted to dde2a74 on NAS + private GitHub).
+
+**Item 10 outcome: zero-retrain cue exploitation FAILED; cues are retrain-tier.** The CR dip
+guard-trips the current checkpoints (field lock-loss 432/864 → 783/864, CI-disjoint every rung);
+strain offsets are an exact null at ~MHz candidate resolution. The H3 boundary measurement
+succeeded and is the primary result: in-coverage learned exit identity is graceful in dwell
+(no observed cliff, D=8→192), and the topology-balanced eval measured CV-KF's identity crown as
+CV-prior-matching (bounce 0.407 vs learned A3 0.045 switches/opportunity).
+
+**Ranking superseded:** the eval discovered a **deterministic training-coverage gap** — cold
+field acquisition fails 216/216 (all seeds) on merge geometries requiring 41–53° off-bias at
+3.3–3.9 mT, jointly outside the ≤18° / ~4.7–5.8 mT training envelope. **Angular/magnitude field
+coverage is now the top program lever, ranked above every identity item.** Successor dispatches:
+`dispatch-nvsim-sequence-train-v3-2026-07-07.md` (v3 coverage lineage + fieldcone eval) and
+`dispatch-6-coverage-retrain-2026-07-07.md` (conditional coverage retrain). Items 3/8/9 unchanged;
+the cue-retrain lineage is the next candidate after increment-6, pending its own go-ahead.
