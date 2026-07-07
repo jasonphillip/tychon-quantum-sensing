@@ -240,6 +240,75 @@ reproducibility / seed-separation discipline.
 > per-component `line_mI` (N, T, L) field is needed to uniquely key the 24 lines; this is
 > deferred (v0 ships L=8). Coordinate with `odmr-vector-tracking` before enabling hyperfine.
 
+### Optional keys — dwell lineage
+
+The dwell-sweep eval lineage (`sequence_dwell_v1` / `sequence_dwell_v1_cues`) adds
+**backward-compatible, optional** manifest keys and per-sequence HDF5 arrays. All are `null`/absent
+on every prior lineage, which therefore loads unchanged, and **the L=8 line contract is unchanged**
+(no new lines, same `resonance_freqs` / `line_axis` / `line_transition` shapes and semantics). With
+both physics knobs off, generation is byte-identical to the same call without them.
+
+**Manifest keys.**
+- `sweep_mode: "dwell"` — held-template merged-dwell sweep (vs `"fixed"`/`"isotropic"`).
+- `axis_offsets_hz` — per-axis static strain / E-field ZFS offset ladder (length 4, Hz), or `null`
+  (off). **Common-mode per orientation**: both the ms0→+1 and ms0→−1 transitions of axis *i* shift
+  by `axis_offsets_hz[i]`, so the per-axis line **center** `(f₊ + f₋)/2` moves but the **split**
+  `(f₊ − f₋)` is preserved. **Sign convention**: a positive value shifts that orientation's ZFS
+  **up** (both transitions together). **Interaction with the splitting-based decode**: because the
+  split is invariant, a decoder that recovers `B·nᵢ` from `(f₊ − f₋)/2` (the standard path, see
+  "Consumer guidance") is **blind** to this offset — it is a *static, center-only* identity
+  fingerprint, invisible per-frame at kHz scale but recoverable by integrating a long merged dwell.
+  It flows into the `resonance_freqs` ground truth automatically. Default cues value = the Meneses
+  et al. real-device fit `(19.6, −4.2, −3.5, −11.9) kHz` (arXiv:2502.14683 as cited in the issuing
+  dispatch). *Caveat:* arXiv:2502.14683 has a **title collision** with an object-tracking paper
+  (flagged in the 2026-07-02 TVW optimization-levers memo, Tier 4); the *values* are used as the
+  per-axis M_z strain ladder — the physics (a per-orientation axial-strain ZFS shift) is standard NV
+  and independent of the exact citation number. *Label precision note*: `resonance_freqs` is float32
+  at ~2.87 GHz (~256 Hz quantization), so the kHz offsets are represented coarsely but adequately;
+  the per-line integer identity labels are exact.
+- `nv_density_ppm` — NV(−) concentration (ppm) driving the **NV–NV cross-relaxation** PL feature, or
+  `null`/`0` (off). At an inter-orientation degeneracy `|B·nᵢ| = |B·nⱼ|` (Espinós & Budker
+  arXiv:2512.13835 Eq. 3 — the same condition that forces the merge here) dipolar flip-flops
+  depopulate ms=0 and reduce PL. Modeled as extra Lorentzian PL dips at the (near-)degenerate
+  transition frequencies (Espinós Eq. 8 phenomenological form), gated by a Lorentzian in the
+  field detuning `‖B·nᵢ| − |B·nⱼ‖` of density-dependent FWHM, amplitude density-dependent — a
+  two-point power-law fit to Dhungel et al. arXiv:2301.09666 (3.8 ppm → 0.78 mT / ~1.79 %;
+  16 ppm → 1.42 mT / 3.95 %; visible ≳0.9 ppm, contrast 0 below that floor). **Modeling choices**
+  (`nv_sensor_sim.physics.cross_relaxation`): the sources measure the MW-free feature as PL-vs-field;
+  we render it as extra dips in the MW-swept CW-ODMR frame; the field-detuning width gates *how
+  strongly / which frames*, while each dip's *spectral* width is the ODMR linewidth Γ. The feature
+  **modifies the spectrum only** — it does **not** add lines to `resonance_freqs`. Its value is
+  realism + a physics-anchored merge marker; identity value is measured downstream, not asserted.
+  Default cues value = 3.8 ppm (the Dhungel calibration point; deployment-relevant density depends on
+  the diamond spec).
+- `data_md5` — reproducible md5 over the dataset arrays (dtype+shape+bytes, key-sorted; independent
+  of HDF5 container timestamps), so same-seed regeneration hashes identically.
+- `sequence_stats["test"]["dwell_config"]` / `["dwell_buckets"]` — the merge templates, dwell/topology
+  bucket layout, realized-dwell summaries, and the mirror-pair note (below).
+
+**Per-sequence HDF5 arrays** (each shape `(N,)`, under the split group):
+```
+exit_topology        int8   0 = cross (lines swap), 1 = bounce (return to entry sides)
+dwell_frames         int32  realized merged-dwell length (contiguous frames with |f_p−f_q| < Γ)
+dwell_frames_target  int32  requested D ∈ {8,16,32,64,128,192}
+merge_p, merge_q     int8   the target coalescing line pair (geometry-matrix indices)
+mirror_p, mirror_q   int8   its NV-symmetry mirror pair (p^1, q^1)
+approach_sign        int8   which side of a_merge the ramp approaches from (±1)
+template_idx         int8   merge-template index within this dataset's enumerated set
+```
+
+> **Mirror-pair note (physics-forced structure).** A **single-pair** cross-axis merge is
+> **physically impossible** in the noiseless L=8 model. The per-axis rendered spectrum depends only
+> on `(|B·nᵢ|, B⊥,ᵢ)`; at any cross-axis frequency degeneracy `f_p = f_q` the condition forces
+> `|B·nᵢ| = |B·nⱼ|`, hence `B⊥,ᵢ = B⊥,ⱼ`, hence identical per-axis Hamiltonians — so the **mirror
+> pair** `(p^1, q^1)` coalesces **exactly and simultaneously** at the reflected frequency (verified:
+> mirror separation = 0.000 MHz; a full field scan finds no window where it resolves). This is the
+> same `|B·nᵢ|=|B·nⱼ|` condition as the cross-relaxation feature. So each dwell sequence realizes
+> **one target coalescing pair + its mirror** (a coalescing quartet) with the **four spectator
+> lines** separation-protected — not the six a naive single-pair reading would imply. This deviation
+> from the issuing dispatch's "one pair / six protected" is inherent to NV C3v symmetry, not a
+> generator choice.
+
 ## Schema Implementation
 
 See `src/nv_sensor_sim/datasets/schema.py` for the `DatasetManifest` dataclass and validation logic.
@@ -253,6 +322,8 @@ See `src/nv_sensor_sim/datasets/schema.py` for the `DatasetManifest` dataclass a
 | `sequence_sanity_v0` | Time-series (dynamic, 4 NV axes, inter-axis crossings) | 64 / 16 / 16 seq × T=128 | ~5 mT bias + ≲±2 mT sweep | `configs/sequence_sanity_v0.yaml` | Generator added 2026-06-29; manifest regenerated at a clean commit 2026-07-01 (arrays verified byte-identical, config_hash unchanged) |
 | `sequence_train_v1` | Time-series (trainable scale: family-mixed isotropic sweeps — held/reversal/OU, per-axis contrast asymmetry + drift, grid pinned to v0) | 512 / 128 / 128 seq × T=256 | ~5 mT bias + ≤±1.4 mT sweep | `configs/sequence_train_v1.yaml` | Available 2026-07-01 |
 | `sequence_train_v2` | Time-series (4× scale run of v1: new master seed, per-sequence seeds disjoint from v1's, recipe frozen — same families/contrast/grid) | 2048 / 512 / 512 seq × T=256 | ~5 mT bias + ≤±1.4 mT sweep | `configs/sequence_train_v2.yaml` | Available 2026-07-02; regenerated at the config commit for clean provenance (arrays verified byte-identical across runs, config_hash unchanged) |
+| `sequence_dwell_v1` | Time-series **eval-only** dwell sweep (held template, parameterized merged dwell D ∈ {8,16,32,64,128,192}, 50/50 cross vs bounce; cues OFF; pins read from archived v1 manifest) | 0 / 0 / 288 seq × T=256 | ~5 mT bias + dwell sweep, grid pinned to v1 (951) | `configs/sequence_dwell_v1.yaml` | Available 2026-07-07; deterministic (content `data_md5` reproducible). One target pair **+ its NV-symmetry mirror pair** coalesce (4 spectators protected) — see "Optional keys — dwell lineage" |
+| `sequence_dwell_v1_cues` | Same kinematics + seeds as `sequence_dwell_v1` with physics cues **ON** (`axis_offsets_hz` = Meneses strain ladder; `nv_density_ppm` = 3.8) | 0 / 0 / 288 seq × T=256 | ~5 mT bias + dwell sweep, grid pinned to v1 (951) | `configs/sequence_dwell_v1_cues.yaml` | Available 2026-07-07; seed-paired to `sequence_dwell_v1` (`B_true` byte-identical) so any downstream identity-recoverability delta is attributable to the cues |
 
 Datasets live under `artifacts/datasets/<lineage>/` (gitignored). The HDF5 + JSON
 manifest bundle is consumed by the downstream `odmr-edge-ml` (static) and
