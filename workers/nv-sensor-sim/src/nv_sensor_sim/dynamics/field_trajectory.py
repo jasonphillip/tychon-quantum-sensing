@@ -17,6 +17,11 @@ from __future__ import annotations
 
 import numpy as np
 
+from nv_sensor_sim.dynamics.coverage_geometry import (
+    max_line_offset_over_traj_hz,
+    min_field_magnitude_T,
+)
+
 
 def static_bias_vector(
     bias_B0_T: float,
@@ -54,6 +59,11 @@ def sample_isotropic_held_ramp(
     bias_T: np.ndarray | None = None,
     min_axis_proj_T: float = 0.0,
     nv_axes: np.ndarray | None = None,
+    min_field_T: float = 0.0,
+    window_pin_Hz: tuple[float, float] | None = None,
+    D_hz: float = 0.0,
+    gamma_hz_per_T: float = 0.0,
+    window_margin_hz: float = 0.0,
     max_resamples: int = 10_000,
 ) -> tuple[np.ndarray, np.ndarray, int, int, int]:
     """Sample a per-sequence held ramp: independent endpoints on a random axis.
@@ -136,6 +146,19 @@ def sample_isotropic_held_ramp(
     guard_active = bias_T is not None and min_axis_proj_T > 0.0
     if guard_active and nv_axes is None:
         raise ValueError("min-projection guard requires nv_axes")
+    floor_active = min_field_T > 0.0
+    window_active = window_pin_Hz is not None
+    if window_active and (D_hz <= 0.0 or gamma_hz_per_T <= 0.0):
+        raise ValueError("window guard requires D_hz > 0 and gamma_hz_per_T > 0")
+    if window_active and nv_axes is None:
+        raise ValueError("window guard requires nv_axes")
+    if (floor_active or window_active) and bias_T is None:
+        raise ValueError("field-floor / window guards require bias_T")
+    window_allowed_hz = (
+        min(D_hz - window_pin_Hz[0], window_pin_Hz[1] - D_hz) - window_margin_hz
+        if window_active
+        else 0.0
+    )
 
     rng = np.random.default_rng(seed)
     span_min = max(1, int(np.ceil(min_window_frac * (n_timesteps - 1))))
@@ -165,24 +188,42 @@ def sample_isotropic_held_ramp(
             start = start + jitter_frac * delta * rng.standard_normal(3)
             end = end + jitter_frac * delta * rng.standard_normal(3)
 
-        if not guard_active:
+        if not (guard_active or floor_active or window_active):
             return start, end, t0, t1, n_resamples
 
-        # Exact per-axis min |B . n_i| on the ramp segment: the projection is
-        # linear in t, so the minimum is at an endpoint unless the sign flips.
-        axes = np.asarray(nv_axes, dtype=float)
-        bias = np.asarray(bias_T, dtype=float).reshape(3)
-        p0 = axes @ (bias + start)
-        p1 = axes @ (bias + end)
-        seg_min = np.where(p0 * p1 <= 0.0, 0.0, np.minimum(np.abs(p0), np.abs(p1)))
-        if float(seg_min.min()) >= min_axis_proj_T:
+        accept = True
+        if guard_active:
+            # Exact per-axis min |B . n_i| on the ramp segment: the projection is
+            # linear in t, so the minimum is at an endpoint unless the sign flips.
+            axes = np.asarray(nv_axes, dtype=float)
+            bias = np.asarray(bias_T, dtype=float).reshape(3)
+            p0 = axes @ (bias + start)
+            p1 = axes @ (bias + end)
+            seg_min = np.where(p0 * p1 <= 0.0, 0.0, np.minimum(np.abs(p0), np.abs(p1)))
+            if float(seg_min.min()) < min_axis_proj_T:
+                accept = False
+        if accept and (floor_active or window_active):
+            # The |B| floor (interior min) and window containment (per-frame line
+            # offset) are evaluated on the rendered-frame trajectory, matching the
+            # stored per-frame fields exactly.
+            traj = held_ramp_trajectory(bias_T, start, end, n_timesteps, t0, t1)
+            if floor_active and min_field_magnitude_T(traj) < min_field_T:
+                accept = False
+            if accept and window_active:
+                if (
+                    max_line_offset_over_traj_hz(traj, nv_axes, D_hz, gamma_hz_per_T)
+                    > window_allowed_hz
+                ):
+                    accept = False
+        if accept:
             return start, end, t0, t1, n_resamples
 
         n_resamples += 1
         if n_resamples > max_resamples:
             raise RuntimeError(
-                f"min-projection guard rejected {max_resamples} consecutive geometries "
-                f"(min_axis_proj_T={min_axis_proj_T}); check the sweep/bias configuration"
+                f"envelope guards rejected {max_resamples} consecutive geometries "
+                f"(min_axis_proj_T={min_axis_proj_T}, min_field_T={min_field_T}, "
+                f"window_pin_Hz={window_pin_Hz}); widen the envelope or check the config"
             )
 
 
@@ -196,6 +237,11 @@ def sample_reversal_ramp(
     bias_T: np.ndarray | None = None,
     min_axis_proj_T: float = 0.0,
     nv_axes: np.ndarray | None = None,
+    min_field_T: float = 0.0,
+    window_pin_Hz: tuple[float, float] | None = None,
+    D_hz: float = 0.0,
+    gamma_hz_per_T: float = 0.0,
+    window_margin_hz: float = 0.0,
     max_resamples: int = 10_000,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, int, int]:
     """Sample a reversal ramp: out along a random axis, turn around, ramp back.
@@ -262,6 +308,19 @@ def sample_reversal_ramp(
     guard_active = bias_T is not None and min_axis_proj_T > 0.0
     if guard_active and nv_axes is None:
         raise ValueError("min-projection guard requires nv_axes")
+    floor_active = min_field_T > 0.0
+    window_active = window_pin_Hz is not None
+    if window_active and (D_hz <= 0.0 or gamma_hz_per_T <= 0.0):
+        raise ValueError("window guard requires D_hz > 0 and gamma_hz_per_T > 0")
+    if window_active and nv_axes is None:
+        raise ValueError("window guard requires nv_axes")
+    if (floor_active or window_active) and bias_T is None:
+        raise ValueError("field-floor / window guards require bias_T")
+    window_allowed_hz = (
+        min(D_hz - window_pin_Hz[0], window_pin_Hz[1] - D_hz) - window_margin_hz
+        if window_active
+        else 0.0
+    )
 
     rng = np.random.default_rng(seed)
     t_lo = max(1, int(np.ceil(tf_lo * (n_timesteps - 1))))
@@ -310,28 +369,40 @@ def sample_reversal_ramp(
             turn = turn + jitter_frac * leg * rng.standard_normal(3)
             end = end + jitter_frac * leg * rng.standard_normal(3)
 
-        if not guard_active:
+        if not (guard_active or floor_active or window_active):
             return start, turn, end, t_turn, n_resamples
 
-        axes = np.asarray(nv_axes, dtype=float)
-        bias = np.asarray(bias_T, dtype=float).reshape(3)
-        p_start = axes @ (bias + start)
-        p_turn = axes @ (bias + turn)
-        p_end = axes @ (bias + end)
-        ok = True
-        for p0, p1 in ((p_start, p_turn), (p_turn, p_end)):
-            seg_min = np.where(p0 * p1 <= 0.0, 0.0, np.minimum(np.abs(p0), np.abs(p1)))
-            if float(seg_min.min()) < min_axis_proj_T:
-                ok = False
-                break
-        if ok:
+        accept = True
+        if guard_active:
+            axes = np.asarray(nv_axes, dtype=float)
+            bias = np.asarray(bias_T, dtype=float).reshape(3)
+            p_start = axes @ (bias + start)
+            p_turn = axes @ (bias + turn)
+            p_end = axes @ (bias + end)
+            for p0, p1 in ((p_start, p_turn), (p_turn, p_end)):
+                seg_min = np.where(p0 * p1 <= 0.0, 0.0, np.minimum(np.abs(p0), np.abs(p1)))
+                if float(seg_min.min()) < min_axis_proj_T:
+                    accept = False
+                    break
+        if accept and (floor_active or window_active):
+            traj = reversal_trajectory(bias_T, start, turn, end, n_timesteps, t_turn)
+            if floor_active and min_field_magnitude_T(traj) < min_field_T:
+                accept = False
+            if accept and window_active:
+                if (
+                    max_line_offset_over_traj_hz(traj, nv_axes, D_hz, gamma_hz_per_T)
+                    > window_allowed_hz
+                ):
+                    accept = False
+        if accept:
             return start, turn, end, t_turn, n_resamples
 
         n_resamples += 1
         if n_resamples > max_resamples:
             raise RuntimeError(
-                f"min-projection guard rejected {max_resamples} consecutive reversal "
-                f"geometries (min_axis_proj_T={min_axis_proj_T})"
+                f"envelope guards rejected {max_resamples} consecutive reversal "
+                f"geometries (min_axis_proj_T={min_axis_proj_T}, min_field_T={min_field_T}, "
+                f"window_pin_Hz={window_pin_Hz})"
             )
 
 

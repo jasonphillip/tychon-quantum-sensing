@@ -10,6 +10,7 @@ import pytest
 
 from nv_sensor_sim.dynamics.coverage_geometry import (
     line_offset_estimate_hz,
+    max_line_offset_over_traj_hz,
     min_field_magnitude_T,
     offbias_angle_deg,
 )
@@ -58,3 +59,22 @@ def test_line_offset_estimate_positive_and_monotone_in_projection():
     )
     assert small > 0.0
     assert large > small
+
+
+def test_max_line_offset_over_traj_matches_single_frame_for_one_frame():
+    D_hz = 2.871e9
+    B = np.array([3.0e-3, 0.0, 1.0e-3])
+    single = line_offset_estimate_hz(B, NV_AXES_UNIT, D_hz, GAMMA_HZ_PER_T)
+    traj = max_line_offset_over_traj_hz(B[None, :], NV_AXES_UNIT, D_hz, GAMMA_HZ_PER_T)
+    assert traj == pytest.approx(single, rel=1e-12)
+
+
+def test_max_line_offset_over_traj_is_the_max_frame():
+    D_hz = 2.871e9
+    traj = np.array([[1.0e-3, 0.0, 0.0], [4.0e-3, 0.0, 0.0], [2.0e-3, 0.0, 0.0]])
+    per_frame = [
+        line_offset_estimate_hz(traj[t], NV_AXES_UNIT, D_hz, GAMMA_HZ_PER_T)
+        for t in range(traj.shape[0])
+    ]
+    got = max_line_offset_over_traj_hz(traj, NV_AXES_UNIT, D_hz, GAMMA_HZ_PER_T)
+    assert got == pytest.approx(max(per_frame), rel=1e-12)

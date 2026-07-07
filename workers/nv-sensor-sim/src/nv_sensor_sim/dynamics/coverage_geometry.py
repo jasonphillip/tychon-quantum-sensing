@@ -106,4 +106,49 @@ def line_offset_estimate_hz(
     return first_order + second_order
 
 
-__all__ = ["offbias_angle_deg", "min_field_magnitude_T", "line_offset_estimate_hz"]
+def max_line_offset_over_traj_hz(
+    B_traj: np.ndarray,
+    nv_axes: np.ndarray,
+    D_hz: float,
+    gamma_hz_per_T: float,
+) -> float:
+    """Maximum ``line_offset_estimate_hz`` over every frame of a trajectory.
+
+    Vectorized over frames. The per-frame offset combines the first-order split
+    and the second-order transverse common-mode shift (same model as
+    ``line_offset_estimate_hz``); both are convex along a linear ramp segment, so
+    the maximum falls on a frame and this is exact for the stored per-frame
+    fields — which is what the window guard must keep inside the pinned grid.
+
+    Parameters
+    ----------
+    B_traj : np.ndarray
+        Lab-frame field trajectory, shape ``(T, 3)`` in Tesla.
+    nv_axes : np.ndarray
+        NV-axis unit vectors, shape ``(4, 3)``.
+    D_hz : float
+        Zero-field splitting (Hz), the window center.
+    gamma_hz_per_T : float
+        Electron gyromagnetic ratio in Hz/T.
+
+    Returns
+    -------
+    float
+        Largest estimated absolute line-center offset from ``D`` over all frames.
+    """
+    B = np.asarray(B_traj, dtype=float).reshape(-1, 3)
+    n = np.asarray(nv_axes, dtype=float)
+    b_par = B @ n.T  # (T, 4)
+    perp = B[:, None, :] - b_par[:, :, None] * n[None, :, :]  # (T, 4, 3)
+    b_perp = np.linalg.norm(perp, axis=2)  # (T, 4)
+    first = gamma_hz_per_T * np.max(np.abs(b_par), axis=1)  # (T,)
+    second = 1.5 * (gamma_hz_per_T * np.max(b_perp, axis=1)) ** 2 / D_hz  # (T,)
+    return float(np.max(first + second))
+
+
+__all__ = [
+    "offbias_angle_deg",
+    "min_field_magnitude_T",
+    "line_offset_estimate_hz",
+    "max_line_offset_over_traj_hz",
+]
