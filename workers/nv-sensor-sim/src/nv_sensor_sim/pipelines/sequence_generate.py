@@ -206,6 +206,8 @@ def _generate_sequence_split(
     cold_start_fraction: float = 0.5,
     carry_start_max_deg: float = 15.0,
     carry_field_range_T: tuple[float, float] = (4.0e-3, 5.6e-3),
+    axis_offsets_hz: np.ndarray | None = None,
+    nv_density_ppm: float = 0.0,
 ) -> tuple[dict[str, np.ndarray], int, dict[str, list]]:
     """Render every sequence in a split and stack into (N, T, ...) arrays.
 
@@ -430,6 +432,8 @@ def _generate_sequence_split(
             extra_b_perp_T=extra_b_perp_T,
             nv_axes=nv_axes,
             axis_mw_scales=axis_scales,
+            axis_offsets_hz=axis_offsets_hz,
+            nv_density_ppm=nv_density_ppm,
         )
         if frequencies is None:
             frequencies = out["frequencies"]
@@ -483,6 +487,8 @@ def generate_sequence_dataset(
     collision_threshold_linewidths: float = 1.0,
     extra_b_perp_T: float = 0.0,
     hyperfine: bool = False,
+    axis_offsets_hz: tuple[float, ...] | None = None,
+    nv_density_ppm: float = 0.0,
     freq_range_Hz: tuple[float, float] | None = None,
     n_freq_points: int | None = None,
     freq_margin_factor: float = 1.15,
@@ -718,6 +724,14 @@ def generate_sequence_dataset(
     gamma_fwhm_hz = compute_linewidth(p1_ppm)
     bias_vec = static_bias_vector(bias_B0_T, bias_direction_uvw)
 
+    # Default-OFF physics cues (dwell lineage). With both off the render path is
+    # byte-identical to the no-knob call (offsets=None / density=0 short-circuit).
+    if axis_offsets_hz is not None:
+        axis_offsets_hz = tuple(float(v) for v in axis_offsets_hz)
+        if len(axis_offsets_hz) != len(nv_axes):
+            raise ValueError(f"axis_offsets_hz must have {len(nv_axes)} entries")
+    axis_offsets_arr = None if axis_offsets_hz is None else np.asarray(axis_offsets_hz, dtype=float)
+
     # --- Derive the MW window from the trajectory field extent + linewidth ---
     # Read D once from a zero-field diagonalization (grid-independent) so the
     # window is centred on the true ZFS.
@@ -872,6 +886,10 @@ def generate_sequence_dataset(
             f":families:{family_weights}:{reversal_turn_frac_range}"
             f":{field_ou_sigma_T}:{field_ou_tau_frames}"
         )
+    # Appended only when a physics cue is active, so cues-OFF lineages rehash
+    # identically to the same call without the knobs.
+    if axis_offsets_hz is not None or nv_density_ppm > 0.0:
+        config_str += f":cues:offsets={axis_offsets_hz}:density={nv_density_ppm}"
     config_hash = hashlib.sha256(config_str.encode()).hexdigest()[:12]
 
     if not sweep_description:
@@ -1018,6 +1036,9 @@ def generate_sequence_dataset(
         # Bias configuration (shared with the static vector path)
         bias_B0_T=bias_B0_T,
         bias_direction_uvw=bias_direction_uvw,
+        # Default-OFF physics cues (None/0 unless a cues lineage turns them on)
+        axis_offsets_hz=axis_offsets_hz,
+        nv_density_ppm=(nv_density_ppm if nv_density_ppm > 0.0 else None),
     )
     manifest.validate()
 
@@ -1113,6 +1134,8 @@ def generate_sequence_dataset(
             cold_start_fraction=cold_start_fraction,
             carry_start_max_deg=carry_start_max_deg,
             carry_field_range_T=carry_field_range_T,
+            axis_offsets_hz=axis_offsets_arr,
+            nv_density_ppm=nv_density_ppm,
         )
         total_resamples += split_resamples
 
