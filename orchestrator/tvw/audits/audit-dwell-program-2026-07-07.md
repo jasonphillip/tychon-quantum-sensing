@@ -212,3 +212,9 @@ Observation for increment-6 reading: density at the extreme rim is thin by desig
 re-measurement). Merge ruling for nv-sim: merge `feat/sequence-train-v3-coverage` into
 `feat/sequence-generator` directly (dwell precedent; private solo repo; no PR ceremony), keep the
 feature branch, push both remotes.
+
+*Merge ruling EXECUTED and TVW-verified (same evening): fast-forward cec6591..3231c1c (no merge
+commit — linear history preserved; tests re-verified 215 green pre-merge), both branches at
+3231c1c on NAS origin AND private GitHub (ls-remote checked by TVW). Feature branch kept;
+cue-twin config staged-not-generated; nv-sim lane CLOSED. All program activity now waits on the
+odmr increment-6 tri-eval verdict.*
