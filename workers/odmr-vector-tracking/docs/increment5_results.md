@@ -56,6 +56,14 @@ the trained field cone. (Reproduce: `experiments/increment5_coverage_split.py`.)
 | exit identity (IDSW/opp), bounce | 0.100 | **0.045** | 0.407 † |
 | in-coll misassoc (floor 0.5) | 0.500 | 0.500 | 0.56–0.60 |
 
+*Denominators:* each learned cell pools 3 seeds × 72 sequences per (coverage, topology)
+population — the lock-loss 0/216 is the per-topology cell, identical for cross and bounce
+(pooled in-coverage: 0/432) — while CV-KF is a single deterministic run (no seeds) whose
+lock-loss pools both topologies: 107/144 = 50/72 cross + 57/72 bounce. Exit-identity
+denominators count (crossing event × lock) opportunities with valid pre/post capture-radius
+majorities, not sequences: 1728 per learned cell (3 seeds × 576), 497 (cross) / 494 (bounce)
+for KF — KF's shortfall from 576 is windows with no valid majority, reported as undefined.
+
 † *Conditioning (2c house rule, patched 2026-07-07 per TVW dispatch 6 §1):* the KF exit-identity
 figures above are **unconditioned** — they pool all 72 in-coverage sequences per topology,
 including the 50 (cross) / 57 (bounce) where KF loses the field lock (`sequence_metrics_row`
