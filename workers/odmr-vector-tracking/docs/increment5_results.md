@@ -52,18 +52,38 @@ the trained field cone. (Reproduce: `experiments/increment5_coverage_split.py`.)
 | metric | learned baseline | learned A3 (stack5) | CV-KF |
 |---|--:|--:|--:|
 | field lock-loss | **0/216** | **0/216** | 107/144 |
-| exit identity (IDSW/opp), cross | 0.154 | 0.111 | 0.233 |
-| exit identity (IDSW/opp), bounce | 0.100 | **0.045** | 0.407 |
+| exit identity (IDSW/opp), cross | 0.154 | 0.111 | 0.233 † |
+| exit identity (IDSW/opp), bounce | 0.100 | **0.045** | 0.407 † |
 | in-coll misassoc (floor 0.5) | 0.500 | 0.500 | 0.56–0.60 |
+
+† *Conditioning (2c house rule, patched 2026-07-07 per TVW dispatch 6 §1):* the KF exit-identity
+figures above are **unconditioned** — they pool all 72 in-coverage sequences per topology,
+including the 50 (cross) / 57 (bounce) where KF loses the field lock (`sequence_metrics_row`
+computes IDSW/opp from the tracked line assignments for every sequence regardless of field-lock
+outcome, and the aggregation applies no lock filter). Conditioned on KF's own lock survival:
+cross **24/176 = 0.136** [0.093–0.195], bounce **61/120 = 0.508** [0.420–0.596] — and the
+surviving sequences are exclusively the two shortest dwells (D = 8/16; 22 and 15 of 72), so the
+conditioned comparison is survivor-biased toward KF's easiest sequences. Conditioning cuts both
+ways: the **bounce** gap vs A3 (0.045 [0.036–0.056]) widens to ~11× and stays CI-disjoint, as
+does **pooled** exit identity (KF conditioned 0.287 [0.239–0.341] vs A3 0.078 [0.070–0.088]);
+the **cross** edge does *not* survive it — conditioned KF 0.136 overlaps both A3 (0.111
+[0.097–0.127]) and the learned baseline decode (0.154 [0.138–0.172]). Learned cells are
+unaffected (0 in-coverage lock-losses: conditioned ≡ unconditioned). Method: conditioned pools
+recomputed from the per-sequence rows of the deterministic coverage-split KF run
+(`increment5_coverage_split.py` KF path); its unconditioned pools and per-sequence lock vectors
+reproduce `coverage_split.json` exactly.
 
 Two claim-shaped findings:
 
 - **KF's identity crown is prior-matching, now measured.** The exit-topology balance was designed
   to de-confound the constant-velocity prior (all-cross evals reward it trivially). On **bounce**
-  exits KF switches identity **0.407** per opportunity (~coin-flip on the pair) vs **0.045** for
-  the learned A3 decode — a ~9× gap in the learned tracker's favor — while on cross KF's 0.233
-  still trails A3's 0.111. Pooled over the balanced eval the learned tracker wins exit identity
-  outright, *and* holds the field where KF loses it on ~74% of in-coverage dwell sequences.
+  exits KF switches identity **0.407** per opportunity (~coin-flip on the pair; **0.508**
+  conditioned-on-lock — an actual coin flip) vs **0.045** for the learned A3 decode — a ~9× gap
+  in the learned tracker's favor that *widens* under lock-conditioning — while on cross KF's
+  0.233 nominally trails A3's 0.111, but that cross edge does not survive lock-conditioning
+  (conditioned KF 0.136 overlaps A3 — see the † note) and is not claimed. Pooled over the
+  balanced eval the learned tracker wins exit identity outright, conditioned or not, *and*
+  holds the field where KF loses it on ~74% of in-coverage dwell sequences.
 - **Graceful dwell degradation — effectively no cliff.** In-coverage learned exit identity is
   flat in dwell length: A3 per-D (topologies pooled, 3 seeds) = 0.073 / 0.059 / 0.090 / 0.059 /
   0.089 / 0.099 for D = 8→192 — a 24× longer merge costs ~0.03 in exit-switch rate. NLS sits at
@@ -71,7 +91,9 @@ Two claim-shaped findings:
   merge exit, as in 2b).
 
 Noise: the in-coverage picture is flat clean→snr10 and degrades gracefully at snr3; KF snr3
-identity is conditioned-on-lock (KF loses lock on 231/288 dwell sequences at snr3).
+identity numbers are likewise unconditioned and heavily lock-confounded (KF loses lock on
+231/288 dwell sequences at snr3), so per the 2c house rule they are read as diagnostics, not
+claims.
 
 ### Cue robustness (guard) — the CR dip breaks the current checkpoints
 
@@ -103,7 +125,9 @@ What this increment *does* establish, for the record and for the next dispatch:
 
 1. **The balanced-topology identity claim** (new, positive): on in-coverage dwell merges the
    learned tracker beats CV-KF on *both* axes of the standing comparison — field lock (0/216 vs
-   107/144) *and* exit identity (0.045–0.111 vs 0.233–0.407) — because the balanced eval removes
+   107/144) *and* exit identity (0.045–0.111 vs 0.233–0.407 unconditioned; 0.136–0.508
+   conditioned-on-lock, under which the pooled and bounce margins stay CI-disjoint but the
+   cross margin is not separable — see the † note) — because the balanced eval removes
    the CV-prior confound that manufactured KF's v1 crown. This is the strongest identity
    evidence the learned tracker has ever had; it is dwell-eval-scoped and does not overturn the
    v1-held numbers.
