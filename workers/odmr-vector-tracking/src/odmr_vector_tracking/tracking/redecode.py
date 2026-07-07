@@ -47,12 +47,19 @@ from odmr_vector_tracking.vector.geometry import (
 N_LINES = 8
 
 
-def predicted_line_positions(b_est_T3: np.ndarray) -> np.ndarray:
+def predicted_line_positions(
+    b_est_T3: np.ndarray, axis_offsets_hz: np.ndarray | None = None
+) -> np.ndarray:
     """Batched Zeeman forward map: ``b_est (T, 3)`` Tesla → 8 line centers ``(T, 8)`` Hz.
 
     Vectorized :func:`geometry.resonance_frequencies_diagonalized` over time — the same
     first-order + common-mode geometry the BLUE decoder inverts (deliberately NOT a richer
     Hamiltonian: the prediction must be consistent with the tracker's own field model).
+
+    ``axis_offsets_hz`` (4,) — optional per-axis static strain/E-field ZFS offsets (dwell-lineage
+    manifest key). A common-mode per-orientation shift: BOTH transitions of axis ``i`` move by
+    ``offsets[i]`` (the split is preserved, so the splitting-based field decode is blind to it;
+    the *center* prediction is not — that is the identity cue).
     """
     B = np.asarray(b_est_T3, dtype=np.float64).reshape(-1, 3)              # (T, 3)
     B_par = B @ NV_AXES_UNIT.T                                             # (T, 4) signed B·n_i
@@ -61,7 +68,10 @@ def predicted_line_positions(b_est_T3: np.ndarray) -> np.ndarray:
     )                                                                     # (T, 4)
     first = GAMMA_E_HZ_PER_T * LINE_SIGN_8.astype(np.float64)[None, :] * B_par[:, LINE_AXIS_8]
     cm = common_mode_shift(B_perp)[:, LINE_AXIS_8]                         # (T, 8)
-    return ZFS_D_HZ + first + cm
+    out = ZFS_D_HZ + first + cm
+    if axis_offsets_hz is not None:
+        out = out + np.asarray(axis_offsets_hz, dtype=np.float64)[LINE_AXIS_8][None, :]
+    return out
 
 
 def _boxsum_time(x: np.ndarray, lag: int) -> np.ndarray:
@@ -112,15 +122,17 @@ def physics_anchored_decode(
     b_est_T3: np.ndarray,
     cand_pos_hz: np.ndarray,
     capture_radius_hz: float,
+    axis_offsets_hz: np.ndarray | None = None,
 ) -> np.ndarray:
     """A1 — assign candidates to the 8 physics-predicted line centers from ``b_est``.
 
     A slot whose nearest assigned candidate is beyond ``capture_radius_hz`` falls back to its
     physics-predicted center (the mechanism by which a good field estimate keeps identity through
     a crossing even when the detector misses the faint line). Uses no association scores → the
-    decode cannot borrow the very assignment it is meant to replace.
+    decode cannot borrow the very assignment it is meant to replace. ``axis_offsets_hz`` makes
+    the prediction strain-aware (dwell lineage).
     """
-    pred = predicted_line_positions(b_est_T3)                            # (T, 8) Hz
+    pred = predicted_line_positions(b_est_T3, axis_offsets_hz)           # (T, 8) Hz
     T = pred.shape[0]
     out = np.empty((T, N_LINES), dtype=np.float64)
     for t in range(T):
@@ -140,6 +152,7 @@ def stacked_decode(
     linewidth_hz: float,
     lag: int = 5,
     mu: float = 1.0,
+    axis_offsets_hz: np.ndarray | None = None,
 ) -> np.ndarray:
     """A3 — A2 smoothed scores biased toward A1's physics prediction, with physics fallback.
 
@@ -147,9 +160,10 @@ def stacked_decode(
     prior (``mu`` in units of one score-point per linewidth of position error) breaks ties the
     scores leave ambiguous at a crossing; the temporal smoothing defers the commit. A slot whose
     assigned candidate lands beyond the capture radius falls back to its physics center.
+    ``axis_offsets_hz`` makes the physics prior strain-aware (dwell lineage).
     """
     S = _boxsum_time(np.asarray(scores, dtype=np.float64), lag)          # (T, 8, K)
-    pred = predicted_line_positions(b_est_T3)                            # (T, 8) Hz
+    pred = predicted_line_positions(b_est_T3, axis_offsets_hz)           # (T, 8) Hz
     T = S.shape[0]
     out = np.empty((T, N_LINES), dtype=np.float64)
     for t in range(T):
@@ -417,4 +431,96 @@ def joint_viterbi_decode(
         for tt in range(te, t, -1):
             si = BP[tt][si]
         out[t] = cand[t, beams[t][si][0]]
+    return out
+
+
+# ==========================================================================================
+# Increment-5 physics-cue decodes (dwell lineage: sequence_dwell_v1_cues).
+#
+# The NV-NV cross-relaxation PL dip fires exactly at the inter-orientation degeneracy
+# |B·n_i| = |B·n_j| (Espinós/Budker resonance condition) — i.e. it is a physical MERGE MARKER
+# in the raw spectrum, far deeper (~1.8% at 3.8 ppm) than the ODMR lines themselves (≤0.36%).
+# The gated decode reads the marker from the spectrum and holds physics identity for the
+# marked (unresolved) lines only — D-UM with the unresolved set given by measurement instead
+# of a prediction-separation radius. Zero-retrain; ``b_est`` untouched.
+# ==========================================================================================
+
+
+def cr_dwell_marker(
+    spectra: np.ndarray, frequencies: np.ndarray, depth_thresh: float
+) -> tuple[np.ndarray, list[list[float]]]:
+    """Detect cross-relaxation dwell markers in raw spectra.
+
+    Per frame, any contiguous frequency run where the PL depth ``1 - spectrum`` exceeds
+    ``depth_thresh`` is one marker; its frequency is the run's deepest point. The threshold sits
+    between the deepest possible line stack (two merged lines, ≲0.8%) and the CR dip (~1.8% at
+    the 3.8 ppm calibration): a plain line merge does NOT fire the marker, the CR feature does.
+
+    Returns ``(marked (T,) bool, dip_freqs)`` — ``dip_freqs[t]`` lists the marker frequencies
+    (Hz) of frame ``t`` (empty when unmarked; the mirror degeneracy yields a second entry).
+    """
+    S = np.asarray(spectra, dtype=np.float64)
+    F = np.asarray(frequencies, dtype=np.float64)
+    depth = 1.0 - S                                          # (T, F)
+    over = depth > float(depth_thresh)
+    T = S.shape[0]
+    marked = over.any(axis=1)
+    dip_freqs: list[list[float]] = []
+    for t in range(T):
+        if not marked[t]:
+            dip_freqs.append([])
+            continue
+        idx = np.where(over[t])[0]
+        breaks = np.where(np.diff(idx) > 1)[0]
+        starts = np.concatenate([[0], breaks + 1])
+        ends = np.concatenate([breaks, [idx.size - 1]])
+        freqs = []
+        for s0, e0 in zip(starts, ends):
+            run = idx[s0:e0 + 1]
+            freqs.append(float(F[run[np.argmax(depth[t, run])]]))
+        dip_freqs.append(freqs)
+    return marked, dip_freqs
+
+
+def cr_gated_decode(
+    spectra: np.ndarray,
+    frequencies: np.ndarray,
+    b_est_T3: np.ndarray,
+    cand_pos_hz: np.ndarray,
+    capture_radius_hz: float,
+    linewidth_hz: float,
+    depth_thresh: float,
+    axis_offsets_hz: np.ndarray | None = None,
+    r_match_lw: float = 2.0,
+) -> np.ndarray:
+    """CR-marker-gated decode: hold physics identity for the lines the marker says are merged.
+
+    Frames with a CR marker: every line whose physics-predicted center lies within
+    ``r_match_lw`` linewidths of a marker frequency is *unresolved* — it holds its (optionally
+    strain-aware) physics-predicted center through the dwell instead of a forced exclusive pick.
+    All other lines (and all unmarked frames) get the exclusive nearest-candidate assignment
+    with the usual capture-radius physics fallback (A1 semantics). No association scores used.
+    """
+    pred = predicted_line_positions(b_est_T3, axis_offsets_hz)           # (T, 8)
+    cand = np.asarray(cand_pos_hz, dtype=np.float64)
+    marked, dip_freqs = cr_dwell_marker(spectra, frequencies, depth_thresh)
+    r_hz = r_match_lw * linewidth_hz
+    T = pred.shape[0]
+    out = np.empty((T, N_LINES), dtype=np.float64)
+    for t in range(T):
+        held = np.zeros(N_LINES, dtype=bool)
+        if marked[t]:
+            for fd in dip_freqs[t]:
+                held |= np.abs(pred[t] - fd) < r_hz
+        res = np.array(pred[t], dtype=np.float64)                        # held lines keep physics
+        free = np.where(~held)[0]
+        if free.size:
+            cost = np.abs(cand[t][None, :] - pred[t][free][:, None])     # (n_free, K)
+            rows, cols = linear_sum_assignment(cost)
+            for r_i, c_i in zip(rows, cols):
+                line = free[r_i]
+                chosen = cand[t, c_i]
+                res[line] = chosen if abs(chosen - pred[t, line]) <= capture_radius_hz \
+                    else pred[t, line]
+        out[t] = res
     return out
