@@ -20,9 +20,10 @@ automatically transfer to v6 — re-select before flipping.
    (baseline / A1 / A3 / stack5, the standing menu — no new decoders) on the v6 checkpoints:
    (a) the immutable v1 standing eval, per family × rung; (b) the dwell eval in-coverage; and
    (c) the off-cone dwell populations (new territory — report which decode wins there).
-   Pre-declare the selection rule in `experiments/increment7_policy.py` BEFORE results (house
+   Pre-declare the selection rule in `experiments/v6_redecode_policy.py` BEFORE results (house
    pattern: CI-disjoint + every-seed to switch a family's decode; ties → keep the v2-era
-   choice for continuity).
+   choice for continuity). NOTE: this is the dispatch-7 policy flip — NOT increment-7 (the
+   identity-recovery retrain is dispatch-8, branch `increment-7-identity-recovery`).
 2. **Flip the deployable default** to the v6 checkpoints + the selected policy. Record v6
    checkpoint md5s alongside the pinned v2 md5s.
 3. **Pin v2 as the in-cone identity reference:** checkpoints + md5s + a short doc note stating
@@ -40,7 +41,7 @@ automatically transfer to v6 — re-select before flipping.
 - No retrain; no new decoders; no dataset work. Cue lineage and capacity/curriculum
   (increment-7 retrain) are SEPARATE dispatches pending Jason's go.
 - Verdict/selection rules pre-hoc; keep-what-survives; stop-and-report on surprises.
-- Branch `increment-7-v6-default`; main promotion after docs land; NAS + private GitHub.
+- Branch `v6-default-flip`; main promotion after docs land; NAS + private GitHub.
 - Outward material untouched (TVW owns it); banned numbers stay banned; IP hold stands.
 - Strategic next-steps route UP to TVW.
 
