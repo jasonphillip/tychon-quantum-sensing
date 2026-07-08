@@ -111,9 +111,10 @@ than one, keep the strongest material identity recovery with no guard trip (tie 
   stands (cue/overlay/coalescence mechanisms out of outward material).
 - Strategic next-steps (increment-8 go, cue sequencing, hardware-validation) route **UP** to TVW.
 
-## References (methodology grounding; being ETL'd into `odmr-pnt-nv-docs` in parallel)
+## References (methodology grounding; ETL'd into `odmr-pnt-nv-docs` 2026-07-08, local embedder)
 
-- Distillation (7b): Hinton, Vinyals, Dean 2015, "Distilling the Knowledge in a Neural Network."
-- PCGrad (7c): Yu et al. 2020, "Gradient Surgery for Multi-Task Learning."
+- Distillation (7b): Hinton, Vinyals, Dean 2015, "Distilling the Knowledge in a Neural Network"
+  (arXiv:1503.02531).
+- PCGrad (7c): Yu et al. 2020, "Gradient Surgery for Multi-Task Learning" (arXiv:2001.06782).
 - QAT (for the separate §0/O11 export item, NOT increment-7): Jacob et al. 2018, "Quantization and
-  Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference."
+  Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference" (arXiv:1712.05877).

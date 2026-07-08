@@ -335,3 +335,18 @@ the repos (no INT8 export).
 frequency-only); `dispatch-8-increment7-identity-recovery-2026-07-08.md` (DRAFT, gated on Jason's go +
 dispatch-7 completion); PROGRAM_RECORD open items O11–O14 + ledger D16; prior-art/method-paper ETL in
 flight into `odmr-pnt-nv-docs`.
+
+**ETL landed (2026-07-08, same session):** background agent ingested 4 papers into
+`~/.corpus/odmr-pnt-nv-docs` (66 raw / 762 chunks; local Qwen3-Embedding-4B on spark2, provenance
+verified — no cloud fallback, index extended additively). Prior-art paper (O14) **IDENTIFIED with
+high confidence:** Fu, Yang, Ren, et al., "Integrated NV real-time vector magnetometer with high
+sensitivity and wide dynamic range," *Opt. Express* **33**(11), 22385–22395 (2025), DOI
+10.1364/OE.548080. **Q5 delta (favorable):** it is a **classical** multi-channel microwave-FM +
+per-NV-axis feedback (frequency-lock-loop) system — zero "machine learning"/"neural network" in the
+full text — a **continuous steady-state lock, not a sequential estimator**; each control channel
+stays captured on an already-resolved, well-separated resonance and there is **no mechanism to
+re-associate lines near degeneracy**. It does not treat crossings/merges as data association — the
+exact regime our sequential ML tracker exists for. Net: it narrows the loose phrase "real-time NV
+vector tracking" but does not reach our claim; **novelty position strengthened, pending the formal
+Q5 re-run (O7).** Method papers Hinton 2015 / Jacob 2018 / Yu 2020 embedded for increment-7 and O11
+grounding (EWC deliberately excluded).
