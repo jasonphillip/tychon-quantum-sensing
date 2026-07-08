@@ -218,3 +218,56 @@ commit — linear history preserved; tests re-verified 215 green pre-merge), bot
 3231c1c on NAS origin AND private GitHub (ls-remote checked by TVW). Feature branch kept;
 cue-twin config staged-not-generated; nv-sim lane CLOSED. All program activity now waits on the
 odmr increment-6 tri-eval verdict.*
+
+---
+
+## Addendum D (2026-07-08) — increment-6 VERDICT: SUCCESS; measured trade-off; v6 deploy RULING
+
+**Verified by TVW on disk:** `docs/increment6_results.md` at odmr main b102cf3 (GitHub current;
+NAS push pending power-on); pre-hoc rules commit 6074f41 timestamped 2026-07-07 18:58 UTC, ~8 h
+before the verdict doc (2026-07-08 02:46 UTC) — the pre-registration held. Frozen v2 recipe
+byte-matched; classical parity exact vs matrix_2c_final.
+
+**The four results:**
+1. **PRIMARY CLEARS.** Off-cone acquisition 216/216 → **1/216 (cross) / 2/216 (bounce)**,
+   CI-disjoint every seed, clean AND snr30. In-cone intact (0/216). Fieldcone directed failure
+   geometries **72/72 → 0/72 with zero never-acquires**. Data, not architecture, was the
+   binding constraint — dispatch-6's premise confirmed.
+2. **Guard holds** (scope = lock, per dispatch): CI-neutral all 12 cells; classical parity
+   exact. Honest lean recorded: snr3 point estimates worse (reversal 12/69→22/69, ou
+   16/90→25/90, CI-overlapping, wide per-seed spread) — real, not a trip.
+3. **Measured trade-off (report-only per dispatch):** v6 identity on the v1 standing eval
+   regresses CI-disjointly clean→snr10 (held misassoc 0.311→0.540, IDSW/opp 0.171→0.398;
+   reversal 0.424→0.538 / 0.181→0.382; ou 0.505→0.576 / 0.204→0.273). Same capacity
+   (175,790 params) spread over a ~3.4× wider cone. **The next binding constraint is
+   capacity/recipe, not data breadth.**
+4. **Boundary is now a measured chart** (`artifacts/increment6/fieldcone_boundary.png`):
+   directed aim points exact (0/72); generic reliability ends ~30–40°; 45–52° controls
+   majority-lost; **hard cliff** past the envelope / below the 3.0 mT floor (never-acq
+   135–144/144 — generalization: none). **v2's true envelope was <30°** (36/36 lost at the 30°
+   control) — the documented ≤18° was the training draw, not the capability edge.
+   Finding (b) RECONFIRMS on v6 (bounce 0.077 vs KF-cond 0.508, pooled 0.122 vs 0.287,
+   every seed; cross stays no-claim — v6 0.166 vs 0.136 neutral). New territory: v6 is the
+   only tracker with measurable off-cone through-merge identity (A3 0.048 bounce / 0.158
+   cross; KF vacuous off-cone).
+
+**TVW DEPLOY RULING (the routed-up trade):** **Adopt v6 as the deployable default; pin v2 as
+the in-cone identity reference.** Rationale: the deployable, outward-facing claim is the FIELD
+claim, and v6 strictly dominates it — acquisition across the widened cone (a capability v2
+does not have at any price), in-cone lock intact, guard CI-neutral. The identity claims were
+never outward (held-internal) and finding (b) survives the checkpoint swap with margin. An
+acquisition failure is a dead instrument; an identity misassignment is a degraded label on a
+field estimate that `b_est` purity keeps intact by construction. Conditions:
+- The default flip requires **re-selecting the per-family re-decode policy on v6** first (the
+  A3-on-OU/reversal / baseline-on-held policy was chosen from v2's 2c matrix and does not
+  automatically transfer) → dispatch-7.
+- v2 checkpoints stay pinned (md5s recorded) as the identity-reference; v2-derived numbers in
+  any material must say "v2 checkpoints."
+- Jason veto window: this is an internal default (no outward surface changes); flagged for
+  awareness, reversible by a one-line ruling.
+
+**Consequences for candidates:** Rieckmann acquisition-head fallback (Addendum B) is **MOOT —
+retired** (acquisition cleared via data). New top retrain-tier candidate: **increment-7
+capacity/curriculum** (capacity bump or v2+v3 curriculum — recipe change, fresh dispatch,
+Jason's go) to buy back in-cone identity at coverage. Cue retrain remains queued behind it;
+do not combine (one variable at a time).
