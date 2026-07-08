@@ -70,8 +70,10 @@ def main() -> int:
     m = validate_dataset_dir(DWELL)
     lw = float(m["linewidth_Hz"])
     cap = nmr.CAPTURE_RADIUS_LW * lw
-    faintest = float(np.min(np.asarray(m["line_depths"])))
-    v1_depths = validate_dataset_dir(V1_DIR)["line_depths"]
+    # Eval-only manifests carry no line_depths; the ladder is sized on the v1 manifest's
+    # faintest depth (identical contrast ladder by construction — increment-5 convention).
+    v1_depths = np.asarray(validate_dataset_dir(V1_DIR)["line_depths"])
+    faintest = float(v1_depths.min())
     clean = SequenceDatasetLoader(DWELL).load_split("test")
     with h5py.File(DWELL / "dataset.h5", "r") as f:
         tmpl = f["test/template_idx"][:]

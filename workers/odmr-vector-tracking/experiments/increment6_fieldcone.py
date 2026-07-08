@@ -84,8 +84,10 @@ def lock_stats(B_true: np.ndarray, b_est: np.ndarray) -> dict:
 def main() -> int:
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     m = validate_dataset_dir(FIELDCONE)
-    faintest = float(np.min(np.asarray(m["line_depths"])))
-    v1_depths = validate_dataset_dir(V1_DIR)["line_depths"]
+    # Eval-only manifest, no line_depths: ladder sized on the v1 manifest's faintest depth
+    # (identical contrast ladder by construction — increment-5 convention).
+    v1_depths = np.asarray(validate_dataset_dir(V1_DIR)["line_depths"])
+    faintest = float(v1_depths.min())
     clean = SequenceDatasetLoader(FIELDCONE).load_split("test")
     with h5py.File(FIELDCONE / "dataset.h5", "r") as f:
         per_seq = {k: f[f"test/{k}"][:].tolist()
