@@ -271,3 +271,67 @@ retired** (acquisition cleared via data). New top retrain-tier candidate: **incr
 capacity/curriculum** (capacity bump or v2+v3 curriculum — recipe change, fresh dispatch,
 Jason's go) to buy back in-cone identity at coverage. Cue retrain remains queued behind it;
 do not combine (one variable at a time).
+
+---
+
+## Addendum E (2026-07-08) — external red-team review intake; honesty pass; increment-7 dispatch DRAFTED
+
+Jason ran three external LLM reviews and relayed them: (1) on the ODMR_Vector README, (2) on the
+PROGRAM_RECORD, (3) on how to approach increment-7. Processed here as a free adversarial pass. TVW
+verified each claim against the repos before accepting or rejecting; the single most valuable item
+came from that verification, not from the reviews.
+
+**The verification finding (repo check, not from the reviews):** review-3's INT8 "quantization
+eraser" gotcha prompted a check of our own INT8 language. Result: **no INT8/TFLite export of the
+tracker exists.** The odmr design docs show the architecture is *built to* the V250 INT8 op-whitelist
+(ops-guard passes) and the recurrence/association run in float on the RISC-V host — but the original
+design-doc "Increment 3 (deployment) → TFLite" never happened (the actual increment-3 became the
+appearance-fingerprint lever). `docs/increment6_results.md` has zero export/quantization content. So
+the README line "≈175k params, INT8 … already running on real silicon" conflated three things: the
+model is **float today**; the INT8 export + parity is **pending**; what is on silicon is the older
+**FPGA-demo model**, not this tracker. Corrected on every surface (README, PROGRAM_RECORD 4.1). New
+open item **O11** (INT8 export + on-target parity; QAT route per Jacob 2018; cross-repo odmr→polarfire).
+
+**ACCEPTED and acted on this session:**
+1. "Beats every classical method" → scoped to "the competent classical baselines we tested"
+   (KF/Hungarian, NLS, PID). MHT/JPDA/labeled-RFS are a pending challenger lane (**O12**, folds in the
+   old Stone Soup GLMB/LMB check). README + claims-register 4.1.
+2. Identity-impossibility → qualified as **frequency-only / channel-specific**, not absolute (a Rabi/
+3. Sim-to-real named the largest unproven link → **O13** hardware-validation planning (blinded real-ODMR
+   run, v2 vs v6 vs best classical). README one-liner note added.
+4. A 2025 NV real-time vector-tracking paper (MW freq-mod + feedback; classical, not a sequential ML
+   tracker) → **O14**, identify + ETL into `odmr-pnt-nv-docs`, feed the Q5 novelty queue. Background
+   agent in flight (also ETL'ing Hinton 2015 / Jacob 2018 / Yu 2020 for increment-7 grounding).
+5. Increment-7 design absorbed the two good method contributions — **knowledge distillation** (FP32
+   teacher → v6-identical student) and **geometry-weighted "foveated" identity loss** — plus optional
+   **PCGrad** for the diagnosed field↔identity gradient conflict, all **deployment-neutral**
+   (architecture/param-count frozen). Capacity bump demoted to a separate **increment-8** (it carries
+   an NPU-budget + `.vnnx`-recompile cost the training-signal arms don't). → dispatch-8 DRAFT.
+
+**REJECTED (recorded so the errors don't propagate):**
+- Review-3 **conflates increment-7 with the cue retrain** — its central "adding CR-dip physics in
+  increment-7 causes catastrophic forgetting" describes a plan we do not have. Increment-7 = fixed-data
+  identity recovery; the CR cue is a separate later dispatch; the one-variable rule already forbids the
+  combination it warned about.
+- "CR dips at ~51.4 mT / ESLAC" is a **physics pattern-match**. Our CR cue is the **cross-axis
+  degeneracy** condition (|B·n_i| = |B·n_j|), geometry-dependent throughout the 3–6 mT operating band —
+  which is precisely why it coincides with merges and carries identity. (Its "compute a CR-proximity
+  scalar upstream and feed it in" idea survives translation but brushes the `b_est`-purity rule, since
+  that scalar derives from the field estimate — an architecture question for the cue increment, flagged.)
+- **EWC (Kirkpatrick 2017) is misapplied.** v6 was trained **from scratch** on v3 under the frozen v2
+  recipe — no sequential fine-tuning, so catastrophic forgetting is not the failure mode. The regression
+  is capacity allocation under joint training; PCGrad is the apt tool from that family (kept). EWC not
+  ETL'd.
+- Review-2's broad agreement with our rulings is **circular** — it read this record, which already
+  encodes them. Not counted as independent corroboration.
+
+**Meta-lesson (recorded):** the external models reliably *retrieve the right toolbox* (distillation,
+QAT, PCGrad — all real, correctly cited) and unreliably *bind it to program state* (which increment
+does what, which physics regime, sequential vs from-scratch training). The binding step is the
+orchestration lane's value-add — and it is what surfaced the only finding that survived contact with
+the repos (no INT8 export).
+
+**Artifacts this session:** README + PROGRAM_RECORD honesty pass (float-status, tested-baselines,
+frequency-only); `dispatch-8-increment7-identity-recovery-2026-07-08.md` (DRAFT, gated on Jason's go +
+dispatch-7 completion); PROGRAM_RECORD open items O11–O14 + ledger D16; prior-art/method-paper ETL in
+flight into `odmr-pnt-nv-docs`.
