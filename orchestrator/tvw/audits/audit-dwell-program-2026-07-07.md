@@ -399,3 +399,41 @@ private GitHub and NAS (NAS push executed by TVW 2026-07-09). Repos remain PRIVA
 do not share repo access or doc files; proof-bank entry may cite doc paths + commit b102cf3 as
 provenance. Real embargoes: §4.3/O4 on identity numbers (item 3); checkpoint-labeling through the
 dispatch-7 flip (item 2c).
+
+---
+
+## Addendum G (2026-07-09) — dispatch-7 COMPLETE, TVW-verified; v6 is deployable default
+
+Worker session (Opus 4.8) executed dispatch-7 end-to-end in ~19 min, no stop conditions triggered.
+TVW verified on disk before booking:
+
+1. **Pre-hoc integrity (STRICT, file-mtime level):** rule commit 9d9a554 (19:21:16 UTC,
+   `experiments/v6_redecode_policy.py` only — 401 lines, zero results) → re-decode surfaces
+   `matrix_6_redecode.json` written 19:21:54 → selection artifacts 19:22:23 → flip commit
+   2f52d69 (19:26:31, docs-only: deployable_default.md + increment6 addendum + README). The
+   5-min window is legitimate: fast eval, not peeking. Rule content was additionally
+   pre-registered in the dispatch text itself (issued 07-08).
+2. **md5s independently recomputed** on the three on-disk v6 `best.pt` files: bf5bfa77…,
+   0d531c2e…, 842e867c… — all match the deployable_default.md table exactly.
+3. **Selection artifact** (`v6_redecode_policy.json/.md`) matches the report: NO family
+   switched (held→baseline, ou/reversal→A3, dwell→A3 all populations). The held call is
+   correct per rule: A3 misassoc is CI-neutral (not disjoint), continuity keeps baseline.
+4. **Language audit:** banned numbers absent from all touched docs; v2-scoped claims (0.311,
+   0.045, v2 lock) carry mandatory "v2 checkpoints" attribution; v6 trade-off caveat and
+   geometry-specific boundary wording present.
+5. **Repo state:** main = v6-default-flip = 2f52d69 on local, NAS (origin), and private
+   GitHub. No library code changed (commits touch experiments/ + docs only) — test-suite
+   claim (175 green) accepted without re-run on that basis.
+
+**RULING: dispatch-7 CLOSED — SUCCESS.** v6 is the deployable default with the re-selected
+(unchanged) per-family policy; v2 pinned as in-cone identity reference; canonical registry
+`docs/deployable_default.md`. Outreach note: Addendum F item 2c's "no defaults changed"
+wording is now STALE — any pre-read drafted after 2026-07-09 evening must say v6 is the
+deployable default (checkpoint labels already mandated, so approved numbers are unaffected).
+
+**Dispatch-8 gate status:** gate 2 (dispatch-7 complete) CLEARED. Gate 1 — Jason's explicit
+go — remains and is the only gate. Baseline-to-beat is now concrete: v6 @ 2f52d69 with policy
+held→baseline, ou/reversal→A3. One correction to the worker's routing note: dispatch-8 as
+drafted (post-Addendum-E) is the TRAINING-SIGNAL increment (7a foveated identity loss, 7b
+distillation, 7c optional PCGrad — deployment-neutral, frozen data/architecture), NOT
+"capacity bump or curriculum" — the capacity bump is increment-8, a separate later decision.

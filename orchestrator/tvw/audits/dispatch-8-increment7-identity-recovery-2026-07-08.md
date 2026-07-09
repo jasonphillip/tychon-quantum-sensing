@@ -1,12 +1,14 @@
 # Dispatch 8 (DRAFT) — odmr-vector-tracking: increment-7 in-cone identity recovery at coverage
 
-> **DRAFT — DO NOT ISSUE YET.** Two gates must clear first:
-> 1. **Jason's explicit go** — this is the program's **first recipe change** (increment-6 froze the
->    v2 recipe; increment-7 deliberately changes the training signal). Per the README "decisions
->    that are yours," increment-7 needs an explicit go.
-> 2. **dispatch-7 completed** (v6 flipped to deployable default + per-family re-decode policy
->    re-selected). Increment-7's baseline-to-beat is **v6-as-default with the dispatch-7 policy**;
->    running it before the flip would measure against a moving target.
+> **GATE STATUS (updated 2026-07-09, Addendum G):**
+> 1. **Jason's explicit go — STILL REQUIRED (the only remaining gate).** This is the program's
+>    **first recipe change** (increment-6 froze the v2 recipe; increment-7 deliberately changes
+>    the training signal). Per the README "decisions that are yours," increment-7 needs an
+>    explicit go. Jason pasting this dispatch's prompt into the worker session constitutes the go.
+> 2. ~~dispatch-7 completed~~ **CLEARED 2026-07-09** — v6 is the deployable default at odmr main
+>    `2f52d69`, per-family re-decode policy re-selected (no family switched: held→baseline,
+>    ou/reversal→A3, dwell→A3). TVW-verified (Addendum G). The baseline-to-beat is now concrete:
+>    **v6 @ 2f52d69 with that policy.** GUARD-B and PRIMARY comparisons inherit these decodes.
 >
 > Naming note: **dispatch-8 executes increment-7.** Dispatch and increment numbers diverged at
 > dispatch-7 (a zero-retrain policy flip, no increment). Verdict script is `increment7_verdict.py`.
