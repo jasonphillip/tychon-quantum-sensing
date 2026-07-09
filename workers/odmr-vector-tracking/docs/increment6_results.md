@@ -141,3 +141,26 @@ main promotion after this doc per dispatch. Training watchdog cron installed for
 run and torn down after completion. 175 tests untouched (no library code changed; eval scripts
 only). No cue data used; spark1 archive untouched; no dataset regeneration; outward material
 untouched.
+
+## Addendum — dispatch-7 default flip (2026-07-09)
+
+The "no defaults change in this increment" line above is superseded by TVW dispatch-7
+(`dispatch-7-v6-default-2026-07-08.md`), which ruled v6 the deployable default (acquisition
+dominates the deployable field claim) with v2 pinned as the in-cone identity reference. The flip
+is zero-retrain (checkpoint swap + a pre-hoc re-selection of the decode policy on the v6 weights;
+no training, no new decoders) and is recorded canonically in
+[`docs/deployable_default.md`](deployable_default.md).
+
+Policy re-selection (`experiments/v6_redecode_policy.py`, rule committed PRE-HOC at 9d9a554;
+result `artifacts/increment6/v6_redecode_policy.{json,md}`): on the standing menu
+`baseline / A1(physics) / A3(stack5)`, selection metric in-collision misassoc, pooled 3 seeds,
+Wilson 95% CI-disjoint + every-seed to switch a family, ties → keep the v2-era choice —
+**no family switched.** The v2-era per-family policy transfers unchanged to v6: held → baseline,
+ou → A3, reversal → A3; the dwell through-merge decode stays A3 (it wins every dwell population,
+in-cone and off-cone, both rungs). Stop-conditions all cleared: field lock is decode-invariant
+and v6-vs-v2 CI-neutral at all 12 standing cells (flip does not damage the field claim); the
+re-decode `baseline` reproduces the `matrix_6_coverage.json` learned column exactly; v6 md5s match
+this run record. The v6 trade-off caveat (in-cone identity regression CI-disjoint clean→snr10;
+snr3 lock lean CI-neutral) and the geometry-specific boundary language travel with the default —
+see `deployable_default.md`. The identity-recovery retrain remains a separate dispatch
+(dispatch-8 / increment-7), pending Jason's go.

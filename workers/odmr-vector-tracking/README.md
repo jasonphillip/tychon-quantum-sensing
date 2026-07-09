@@ -36,6 +36,14 @@ Inception (2026-06-29). Research-grade; the founding literature + prior-art swee
 plan are in [`docs/`](docs/). Honest ceilings: ESLAC ~51 mT, GSLAC ~102.4 mT — target regime
 ~few mT → ~50 mT.
 
+**Deployable default: v6** (angular-coverage checkpoints + per-family re-decode policy) — the
+canonical registry, md5s, decode policy, trade-off caveat, and measured boundary are in
+[`docs/deployable_default.md`](docs/deployable_default.md). Coverage is **geometry-specific**:
+reliable to ~30–40° off-bias for generic geometries and exact on the directed degeneracy
+geometries, with a hard cliff past the training envelope and a binding 3.0 mT field floor —
+not a blanket angle capability. The v2 checkpoints stay pinned as the sharper in-cone identity
+reference (numbers quoted from them must say "v2 checkpoints").
+
 See [`CLAUDE.md`](CLAUDE.md) for scope boundaries and cross-repo rules, and
 [`docs/design/02_approach_and_testbed.md`](docs/design/02_approach_and_testbed.md) for the
 first build increment.
