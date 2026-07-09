@@ -350,3 +350,52 @@ exact regime our sequential ML tracker exists for. Net: it narrows the loose phr
 vector tracking" but does not reach our claim; **novelty position strengthened, pending the formal
 Q5 re-run (O7).** Method papers Hinton 2015 / Jacob 2018 / Yu 2020 embedded for increment-7 and O11
 grounding (EWC deliberately excluded).
+
+---
+
+## Addendum F (2026-07-09) — outreach gate check: incr-5/6 numbers for external pre-read (SPLIT ruling)
+
+Outreach lane requested clearance to cite increment-5/6 results in an outbound pre-read to a
+prospective advisor (name withheld). TVW verified every number against
+`docs/increment5_results.md` / `docs/increment6_results.md` at odmr main b102cf3 and gated against
+PROGRAM_RECORD §4 (claims register). No banned numbers (16/16, 0.811, DR ~5 mT) in the request.
+
+**RULING — split:**
+
+1. **APPROVED — incr-5 field lock-loss contrast** (learned 0/216 vs CV-KF 107/144), as a
+   §4.1-class field-lock claim, with mandatory language: (a) "v2 checkpoints" label; (b)
+   tested-baselines scope ("the competent classical baselines we tested" — CV-KF+Hungarian, NLS,
+   PID; MHT/JPDA/labeled-RFS pending, O12 — never "all classical methods"); (c) population scope:
+   this is the IN-COVERAGE dwell eval (≤~18° off-bias training envelope); (d) denominator
+   harmonization — learned 0/216 is the per-topology cell (0/432 pooled, 3 seeds × 72 seqs),
+   KF 107/144 is a single run pooling both topologies; recommend "0 lock losses across all 432
+   in-coverage runs vs 107/144 for CV-KF" to avoid apples-to-oranges reading.
+2. **APPROVED — incr-6 acquisition numbers** (216/216 → 1/216 cross, 2/216 bounce, CI-disjoint
+   every seed clean+snr30; directed 72/72 → 0/72; guard CI-neutral no trips; identity regression
+   report-only; no defaults changed) — already admitted at §4.1 COVERAGE. Mandatory language:
+   (a) the measured-boundary wording ("reliable to ~30–40° generic + the directed geometries
+   exactly; hard cliff past the envelope; 3.0 mT floor binds" — geometry-specific, never blanket);
+   (b) the v6 trade-off caveat alongside any v6 number (v1-eval identity regresses CI-disjoint
+   clean→snr10); (c) label checkpoints (v2 vs v6) so the pre-read stays accurate through the
+   pending dispatch-7 default flip; "no defaults changed" is accurate as of 2026-07-09 only.
+   NOTE for drafting: incr-5's 0/216 (in-coverage lock) and incr-6's 216/216 (off-cone
+   acquisition, the v2 failure mode) are DIFFERENT populations — the pre-read must scope both or
+   a technical reader hits an apparent contradiction.
+3. **DENIED (for now) — exit-identity bounce contrast (0.045 vs 0.407).** This is finding (b),
+   §4.3 HELD-INTERNAL: release requires Jason's explicit O4 decision + the Q5 novelty re-run
+   (O7, not yet run) + IP review (US10921394B2 adjacency). Not TVW's to approve, and the O4
+   prerequisites cannot complete before 7/15. Additionally the request as phrased is technically
+   deficient: 0.407 is the UNCONDITIONED KF figure — the Addendum-A house rule requires
+   conditioning on KF lock survival (0.508), and the cross edge is retracted (no-claim). Safe
+   alternative offered: a qualitative, number-free line ("an additional identity-continuity
+   result vs classical baselines is held internal pending IP review") — no numbers, no mechanism.
+4. **Cross-cutting mandatory framing (both approvals):** all metrics are FP32 simulation results
+   on synthetic ODMR data from our simulator; sim-to-real unvalidated (O13); no INT8/TFLite
+   export exists; nothing about this tracker is on silicon (§4.1 DEPLOYMENT STATUS wording if any
+   edge/silicon language appears). [MODEL]/synthetic framing as proposed by outreach: required.
+
+**Embargo (c):** none on repo-sync grounds — all cited docs are on odmr main b102cf3, mirrored to
+private GitHub and NAS (NAS push executed by TVW 2026-07-09). Repos remain PRIVATE: quote numbers,
+do not share repo access or doc files; proof-bank entry may cite doc paths + commit b102cf3 as
+provenance. Real embargoes: §4.3/O4 on identity numbers (item 3); checkpoint-labeling through the
+dispatch-7 flip (item 2c).
