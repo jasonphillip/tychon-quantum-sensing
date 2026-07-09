@@ -133,19 +133,26 @@ out to be the binding constraint.
 - **Overclaim risk:** a bench invites "real hardware!" language creep.
   `skeptic_qa_honest_claims.md` discipline extends to bench claims (§2 rails).
 
-## 5. Dispatches issued (Jason relays)
+## 5. Dispatches drafted — ON HOLD pending Jason's decision
+
+Hardware selection and purchasing are Jason's decisions at the TVW level;
+the pricing in §3 is his decision package, not lane work. The drafts below
+carry a HOLD header and contain no hardware-selection tasks:
 
 - `tvw/audits/dispatch-polarfire-bench-cwodmr-2026-07-09.md` — polarfire
-  lane: bench scoping + integration plan (owner of the build).
+  lane: integration plan for whatever hardware Jason picks, golden-image
+  protection, B1 acquisition script stub.
 - `tvw/audits/dispatch-odmr-bench-dataspec-2026-07-09.md` —
-  odmr-vector-tracking lane: data requirements spec for the recorded sweep
-  sets (consumer of the data). nv-sensor-sim gets a follow-on
-  sim-calibration dispatch once first real sweeps exist — not dispatched now.
+  odmr-vector-tracking lane: pure data-spec work (sweep parameters,
+  fidelity-check quantities, geometry metadata). nv-sensor-sim gets a
+  follow-on sim-calibration dispatch once first real sweeps exist — not
+  dispatched now.
 
 ## 6. Decision requested from Jason
 
-1. Approve elevation + budget tier (floor ~$1.4k / recommended ~$2.8k /
-   stretch ~$6.5k).
-2. Relay the two dispatches to their lanes.
-3. Optional: request quotes from qutools/CIQTEK only if build-labor becomes
+1. Approve or reject elevation.
+2. If approved: pick hardware from §3 (floor ~$1.4k / recommended ~$2.8k /
+   stretch ~$6.5k) — TVW can assemble the exact cart on request.
+3. Only then relay the two dispatches.
+4. Optional: request quotes from qutools/CIQTEK only if build-labor becomes
    the constraint.

@@ -1,11 +1,16 @@
 # DISPATCH → odmr-vector-tracking lane — bench data requirements spec (2026-07-09)
 
+**STATUS: HOLD — do not relay.** Gated on Jason's elevation decision.
+Hardware choice and purchasing are Jason's call at the TVW level and are not
+referenced here; this dispatch is pure data-spec work.
+
 **From:** TVW orchestration lane
 **Authority:** eval-bench-elevation-2026-07-09.md (TVW). A minimal
-real-hardware CW-ODMR bench (Icicle Kit + entry-level NV head) is being
-scoped in the polarfire lane. Before hardware is bought or any acquisition
-script is finalized, the data consumer defines what "usable data" means.
-**Paste this whole file into an odmr-vector-tracking session.**
+real-hardware CW-ODMR bench demo is under consideration; decision pending.
+If approved, the data consumer defines what "usable data" means before any
+acquisition script is finalized.
+**Paste this whole file into an odmr-vector-tracking session — only after
+Jason approves elevation.**
 
 ---
 

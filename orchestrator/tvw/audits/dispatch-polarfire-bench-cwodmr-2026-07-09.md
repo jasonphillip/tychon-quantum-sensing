@@ -1,10 +1,15 @@
 # DISPATCH → polarfire-hybrid-control lane — CW-ODMR bench scoping (2026-07-09)
 
+**STATUS: HOLD — do not relay.** Gated on Jason's elevation + budget
+decision. Hardware selection and purchasing are Jason's call at the TVW
+level (pricing table lives in eval-bench-elevation-2026-07-09.md, addressed
+to him) — they are NOT lane work and have been removed from this dispatch.
+
 **From:** TVW orchestration lane
 **Authority:** eval-bench-elevation-2026-07-09.md (TVW), triggered by xTech
-Phantum Round 1 Judge #5 feedback. Elevation recommended; Jason approves
-budget tier before any purchase.
-**Paste this whole file into a polarfire-hybrid-control session.**
+Phantum Round 1 Judge #5 feedback.
+**Paste this whole file into a polarfire-hybrid-control session — only after
+Jason approves elevation and picks the hardware.**
 
 ---
 
@@ -37,26 +42,21 @@ submission and closes RPO-1 for the portfolio story.
 - **B3 (stretch, separate approval).** NN-assist demo: "PID holds the lock;
   the NN corrects what the PID structurally can't see."
 
-## Tasks for this session (scoping only — no purchases)
+## Tasks for this session (scoping only — hardware is already chosen)
 
-1. **Interface plan.** Pick and justify:
-   - MW source control from the bench host and later from the kit: Windfreak
-     SynthNV ($799, USB-serial, includes power detector) vs ADF4351 eval
-     board (~$30, SPI — kit-drivable via Rpi header/mikroBUS). Recommend one
-     for B1 and one path for B2.
-   - Photodiode readout path into the kit for B2: Rpi-header/mikroBUS SPI ADC
-     options, required sample rate (lock-in/modulation budget vs the kHz-class
-     servo), and whether B2 needs the MSS or fabric side first.
-2. **BOM finalization.** Take the eval's Tier 1 table, pick exact line items
-   (diamond choice: Adámas ~$601 high-NV HPHT vs Thorlabs DNV-B1 $1,897.73 /
-   DNV-B14 $4,091.98 in stock), and produce the final cart at each budget
-   tier for Jason's approval.
-3. **Bench plan that protects demo-readiness.** The kit holds the golden
+Jason has selected the hardware at the TVW level; the list accompanies this
+dispatch when relayed. Your work is integration, not selection:
+
+1. **Interface plan for the chosen hardware.** Control path for the selected
+   MW source from the bench host (B1) and from the kit (B2); photodiode
+   readout path into the kit for B2 (Rpi-header/mikroBUS SPI ADC options,
+   required sample rate given the kHz-class servo, MSS-first vs fabric-first).
+2. **Bench plan that protects demo-readiness.** The kit holds the golden
    idfix2 image (verified `kit_replug_inventory_2026-07-01.md`). B1 must not
    touch it at all; for B2, plan a separate SD card / clearly-named branch and
    a documented restore path. No reflash of the golden image without a
    separate go.
-4. **Acquisition script skeleton** for B1 (sweep → CSV with metadata header),
+3. **Acquisition script skeleton** for B1 (sweep → CSV with metadata header),
    consuming the data spec that the odmr-vector-tracking lane will produce
    (TVW `dispatch-odmr-bench-dataspec-2026-07-09.md`). Don't finalize the
    schema until that spec lands — just stub it.
@@ -75,6 +75,6 @@ submission and closes RPO-1 for the portfolio story.
 
 ## Return format
 
-A single `docs/bench_cwodmr_scoping_2026-07-XX.md` with: chosen interfaces,
-final per-tier cart (links + prices), kit-protection plan, B1 script stub
-location, open questions for TVW/Jason.
+A single `docs/bench_cwodmr_scoping_2026-07-XX.md` with: interface plan for
+the chosen hardware, kit-protection plan, B1 script stub location, open
+questions for TVW/Jason.
