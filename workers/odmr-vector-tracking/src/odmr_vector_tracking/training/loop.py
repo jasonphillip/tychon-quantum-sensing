@@ -66,6 +66,14 @@ class TrainSettings:
     scheduled_sampling: bool = False    # lever 3: ramp model-own previous-position feedback
     ss_final_prob: float = 0.5          # peak P(use model-own prev) at the end of the ramp
     ss_ramp_frac: float = 1.0           # ramp reaches ss_final_prob at this fraction of epochs
+    # --- increment-7 training-signal arms (all training-only; deployed graph unchanged) ---
+    foveated: bool = False              # arm 7a: geometry-weighted identity loss (per-seq
+                                        # assoc weight supplied via SplitTensors.assoc_seq_weight)
+    distill: bool = False               # arm 7b: knowledge distillation from an FP32 teacher
+                                        # (teacher passed to train(); students byte-identical)
+    kd_alpha: float = 0.5               # arm 7b: hard-CE / soft-KD blend, assoc = (1−α)CE + α·KD
+    kd_temp: float = 2.0                # arm 7b: KD softmax temperature (Hinton 2015)
+    pcgrad: bool = False                # arm 7c: project conflicting field/identity gradients
     noise_photons: float | None = None
     # Photon budget (photons/point) for per-epoch shot-noise augmentation of the TRAIN split:
     # a fresh Gaussian realization each epoch with sigma from the upstream physics model
@@ -83,6 +91,8 @@ class SplitTensors:
     assoc_targets: torch.Tensor  # (N, T, L) long — nearest-anchor index per line
     proj_labels: torch.Tensor    # (N, T, 4) float32 — B_true·n_i in proj_scale_T units
     line_collision: torch.Tensor  # (N, T, L) bool
+    assoc_seq_weight: torch.Tensor | None = None  # (N,) increment-7 arm 7a foveated multiplier;
+                                                  # None = plain association weighting (default)
 
     @property
     def n_sequences(self) -> int:
@@ -102,10 +112,15 @@ def build_split_tensors(
     freq_range_hz: tuple[float, float],
     proj_scale_T: float,
     device: torch.device | str,
+    assoc_seq_weight: np.ndarray | None = None,
 ) -> SplitTensors:
     """Precompute all supervision targets for a split and move everything to ``device``.
 
     Anchors are fixed (non-learned) buffers, so targets never change during training.
+
+    ``assoc_seq_weight`` (increment-7 arm 7a) is an optional per-sequence ``(N,)`` multiplier on
+    the association loss; stored reshaped to ``(N, 1, 1)`` so it broadcasts onto the ``(N, T, L)``
+    NLL. ``None`` leaves the association term unweighted (default).
     """
     spectra = torch.from_numpy(np.ascontiguousarray(ds.spectra)).float()
     res_hz = torch.from_numpy(np.ascontiguousarray(ds.resonance_freqs)).float()
@@ -116,12 +131,19 @@ def build_split_tensors(
     targets = association_targets(res_norm, anchors.cpu())
     labels = projection_labels(b_true, proj_scale_T)
 
+    sw = None
+    if assoc_seq_weight is not None:
+        sw = torch.from_numpy(
+            np.ascontiguousarray(assoc_seq_weight, dtype=np.float32)
+        ).reshape(-1, 1, 1).to(device)
+
     return SplitTensors(
         spectra=spectra.to(device),
         res_norm=res_norm.to(device),
         assoc_targets=targets.to(device),
         proj_labels=labels.to(device),
         line_collision=lcoll.to(device),
+        assoc_seq_weight=sw,
     )
 
 
@@ -151,6 +173,7 @@ def _split_losses(
     soft_radius_norm: float | None = None,
     ss_prob: float = 1.0,
     teacher_force: bool = False,
+    teacher: LearnedTracker | None = None,
 ) -> tuple[dict[str, torch.Tensor], LearnedTrackerOutput]:
     """Forward one batch (or the whole split) and compute the loss dict.
 
@@ -158,6 +181,10 @@ def _split_losses(
     as the teacher signal at probability ``1 − ss_prob``; ``teacher_force=False`` runs
     free-running (the honest val / inference condition). ``soft_radius_norm`` (lever 1) enables
     the soft/merged CE targets, built per batch from the ground-truth centers.
+
+    ``teacher`` (increment-7 arm 7b) is a distillation teacher run on the SAME (possibly noised)
+    ``spectra`` under ``no_grad``; its association scores supply the KD soft targets. Only passed
+    on the TRAIN call — val/early-stopping stays the honest hard-CE metric.
     """
     if indices is None:
         sl = slice(None)
@@ -179,6 +206,13 @@ def _split_losses(
             res_norm, anchors, radius=soft_radius_norm, hard_targets=tensors.assoc_targets[sl]
         )
 
+    teacher_scores = None
+    if teacher is not None and settings.distill:
+        with torch.no_grad():
+            teacher_scores = teacher(spectra).scores.detach()
+
+    seq_w = None if tensors.assoc_seq_weight is None else tensors.assoc_seq_weight[sl]
+
     losses = compute_losses(
         out,
         tensors.assoc_targets[sl],
@@ -196,8 +230,55 @@ def _split_losses(
         sinkhorn=settings.sinkhorn,
         sinkhorn_iters=settings.sinkhorn_iters,
         sinkhorn_dustbin=settings.sinkhorn_dustbin,
+        assoc_seq_weight=seq_w,
+        teacher_scores=teacher_scores,
+        kd_alpha=(settings.kd_alpha if settings.distill else 0.0),
+        kd_temp=settings.kd_temp,
     )
     return losses, out
+
+
+def _pcgrad_backward(
+    losses: dict[str, torch.Tensor],
+    params: list[torch.Tensor],
+    settings: TrainSettings,
+) -> None:
+    """Arm 7c — PCGrad (Yu et al. 2020) two-task gradient surgery, writing ``param.grad``.
+
+    Tasks: **identity** (``w_assoc·association``) vs **field** (``w_proj·projection``); the shared
+    position/track supervision is added plain. If the two task gradients conflict (negative inner
+    product) each is projected onto the other's normal plane before summing, so a wide-angle-lock
+    update and an in-cone-identity update stop overwriting each other. Reduces exactly to
+    ``total.backward()`` when the gradients don't conflict. Deployment-neutral — this is optimizer
+    math, never in the exported graph.
+    """
+    l_id = settings.w_assoc * losses["association"]
+    l_field = settings.w_proj * losses["projection"]
+    l_shared = settings.w_pos * losses["position"] + settings.w_track * losses["track_position"]
+
+    def flat(grads: tuple[torch.Tensor | None, ...]) -> torch.Tensor:
+        return torch.cat([
+            (g if g is not None else torch.zeros_like(p)).reshape(-1)
+            for g, p in zip(grads, params)
+        ])
+
+    g_id = flat(torch.autograd.grad(l_id, params, retain_graph=True, allow_unused=True))
+    g_field = flat(torch.autograd.grad(l_field, params, retain_graph=True, allow_unused=True))
+    g_shared = flat(torch.autograd.grad(l_shared, params, retain_graph=False, allow_unused=True))
+
+    dot = torch.dot(g_id, g_field)
+    if float(dot) < 0.0:
+        g_id_p = g_id - (dot / (g_field.dot(g_field) + 1e-12)) * g_field
+        g_field_p = g_field - (dot / (g_id.dot(g_id) + 1e-12)) * g_id
+    else:
+        g_id_p, g_field_p = g_id, g_field
+    g_total = g_id_p + g_field_p + g_shared
+
+    off = 0
+    for p in params:
+        num = p.numel()
+        p.grad = g_total[off:off + num].view_as(p).clone()
+        off += num
 
 
 @dataclass
@@ -222,6 +303,7 @@ def train(
     soft_radius_norm: float | None = None,
     out_dir: Path | str | None = None,
     ckpt_meta: dict | None = None,
+    teacher: LearnedTracker | None = None,
     log: Callable[[str], None] = print,
 ) -> TrainResult:
     """Train with full-BPTT minibatches; early-stop and checkpoint on best val total loss.
@@ -243,6 +325,12 @@ def train(
     anchor_spacing = float(2**cfg.n_downsample) / float(cfg.n_freq - 1)
     if settings.soft_targets and soft_radius_norm is None:
         raise ValueError("settings.soft_targets requires soft_radius_norm to be provided")
+    if settings.distill and teacher is None:
+        raise ValueError("settings.distill requires a teacher tracker to be provided")
+    if teacher is not None:
+        teacher = teacher.to(device).eval()
+        for p in teacher.parameters():
+            p.requires_grad_(False)
     ss_ramp_epochs = max(1.0, settings.ss_ramp_frac * settings.epochs)
 
     params = [p for p in tracker.parameters() if p.requires_grad]
@@ -296,9 +384,16 @@ def train(
             losses, _ = _split_losses(
                 tracker, train_tensors, settings, anchor_spacing, scores_are_probs, idx,
                 soft_radius_norm=soft_radius_norm, ss_prob=ss_prob, teacher_force=True,
+                teacher=teacher,
             )
             opt.zero_grad(set_to_none=True)
-            losses["total"].backward()
+            if settings.pcgrad:
+                # Arm 7c: PCGrad (Yu 2020) between the identity task (association term) and the
+                # field task (projection term); the shared position/track terms are added plain.
+                # Deployment-neutral — gradient surgery lives in the optimizer, not the graph.
+                _pcgrad_backward(losses, params, settings)
+            else:
+                losses["total"].backward()
             torch.nn.utils.clip_grad_norm_(params, settings.grad_clip)
             opt.step()
             for k in train_sums:

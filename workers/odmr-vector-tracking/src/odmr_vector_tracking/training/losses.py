@@ -32,6 +32,7 @@ def association_loss(
     line_collision: torch.Tensor | None = None,
     collision_weight: float = 5.0,
     scores_are_probs: bool = False,
+    seq_weight: torch.Tensor | None = None,
 ) -> torch.Tensor:
     """Weighted cross-entropy between association scores and nearest-anchor targets.
 
@@ -44,6 +45,12 @@ def association_loss(
         ``(..., L)`` long — target anchor index per line-slot.
     line_collision
         Optional ``(..., L)`` bool; flagged entries get ``collision_weight``, others 1.
+    seq_weight
+        Optional per-sequence multiplier broadcastable onto the ``(..., L)`` NLL — e.g.
+        ``(B, 1, 1)`` for ``(B, T, L)`` — for increment-7 arm 7a's geometry-weighted
+        ("foveated") identity loss. ``None`` (or a constant) leaves the result unchanged from
+        the plain weighted mean (the per-sequence factor cancels in the normalized ratio when
+        constant, so the default path is byte-identical).
     """
     if scores_are_probs:
         logp = torch.log(scores + _EPS)
@@ -51,9 +58,47 @@ def association_loss(
         logp = F.log_softmax(scores, dim=-1)
     nll = -torch.gather(logp, -1, targets.unsqueeze(-1)).squeeze(-1)  # (..., L)
     if line_collision is None:
-        return nll.mean()
+        return nll.mean() if seq_weight is None else (nll * seq_weight).mean()
     w = 1.0 + (float(collision_weight) - 1.0) * line_collision.to(nll.dtype)
+    if seq_weight is not None:
+        w = w * seq_weight.to(nll.dtype)
     return (nll * w).sum() / w.sum()
+
+
+def distillation_loss(
+    student_scores: torch.Tensor,
+    teacher_scores: torch.Tensor,
+    line_collision: torch.Tensor | None = None,
+    collision_weight: float = 5.0,
+    temperature: float = 2.0,
+    scores_are_probs: bool = False,
+) -> torch.Tensor:
+    """Temperature-scaled soft-target KD on the association head (increment-7 arm 7b).
+
+    Hinton, Vinyals, Dean 2015 (arXiv:1503.02531): ``T² · KL(p_teacher^T ‖ p_student^T)`` where
+    ``p^T = softmax(logits / T)``. The ``T²`` factor keeps the soft-target gradient scale
+    comparable to the hard-CE gradient so the two mix cleanly. Same collision upweighting as the
+    hard association loss. Training-only — the teacher never joins the deployed graph, and the
+    student's inference (argmax over its own logits) is unchanged.
+
+    ``teacher_scores`` are treated as constants (the caller detaches them / runs the teacher
+    under ``no_grad``); the direction is KL(teacher ‖ student), so gradient flows into the
+    student only.
+    """
+    t = float(temperature)
+    if scores_are_probs:
+        log_ps = torch.log(student_scores + _EPS)  # already probabilities; T-scaling N/A
+        log_pt = torch.log(teacher_scores + _EPS)
+    else:
+        log_ps = F.log_softmax(student_scores / t, dim=-1)
+        log_pt = F.log_softmax(teacher_scores / t, dim=-1)
+    pt = log_pt.exp().detach()
+    kl = (pt * (log_pt.detach() - log_ps)).sum(dim=-1)  # (..., L) KL(teacher ‖ student)
+    kl = kl * (t * t)
+    if line_collision is None:
+        return kl.mean()
+    w = 1.0 + (float(collision_weight) - 1.0) * line_collision.to(kl.dtype)
+    return (kl * w).sum() / w.sum()
 
 
 def soft_association_loss(
@@ -239,6 +284,10 @@ def compute_losses(
     sinkhorn: bool = False,
     sinkhorn_iters: int = 20,
     sinkhorn_dustbin: float = 1.0,
+    assoc_seq_weight: torch.Tensor | None = None,
+    teacher_scores: torch.Tensor | None = None,
+    kd_alpha: float = 0.0,
+    kd_temp: float = 2.0,
 ) -> dict[str, torch.Tensor]:
     """All four losses + weighted total for one forward pass over ``(B, T, ...)`` batches.
 
@@ -252,6 +301,11 @@ def compute_losses(
     - ``sinkhorn`` (2c lever 2): replace the independent per-slot CE with
       :func:`sinkhorn_assignment_loss` (one-to-one transport), using the soft targets when
       lever 1 is also on, else the hard ``assoc_targets``.
+    - ``assoc_seq_weight`` (increment-7 arm 7a): per-sequence geometry ("foveated") multiplier on
+      the association term. ``None`` = unchanged.
+    - ``teacher_scores`` + ``kd_alpha`` + ``kd_temp`` (increment-7 arm 7b): blend the hard
+      association CE with the temperature-scaled KD term
+      ``(1−α)·CE + α·distillation_loss``. ``teacher_scores=None`` or ``kd_alpha=0`` = unchanged.
 
     Position supervision always gathers the hard nearest-anchor ``assoc_targets`` (the anchor a
     line's offset must refine toward is unambiguous even when its *identity* is not), so the
@@ -275,6 +329,7 @@ def compute_losses(
             line_collision=line_collision,
             collision_weight=collision_weight,
             scores_are_probs=scores_are_probs,
+            seq_weight=assoc_seq_weight,
         )
     else:
         assoc = soft_association_loss(
@@ -284,6 +339,16 @@ def compute_losses(
             collision_weight=collision_weight,
             scores_are_probs=scores_are_probs,
         )
+    if teacher_scores is not None and kd_alpha > 0.0:
+        kd = distillation_loss(
+            output.scores,
+            teacher_scores,
+            line_collision=line_collision,
+            collision_weight=collision_weight,
+            temperature=kd_temp,
+            scores_are_probs=scores_are_probs,
+        )
+        assoc = (1.0 - float(kd_alpha)) * assoc + float(kd_alpha) * kd
     pos = position_loss(output.cand_pos, assoc_targets, res_norm, anchor_spacing)
     track = track_position_loss(output.track_pos, res_norm, anchor_spacing)
     proj = projection_loss(output.projections, proj_labels)
