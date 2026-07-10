@@ -47,7 +47,7 @@ REPOS=(
     "$HOME/projects/polarfire-hybrid-control:~/dev/projects/polarfire-hybrid-control"
     "$HOME/projects/odmr-edge-ml:"
     "$HOME/projects/nv-sensor-sim:"
-    "$HOME/projects/tychon-sbir/shared-data:"
+    "$HOME/projects/tychon-shared-data:"
 )
 
 # Internal-mirror remotes that can be pushed without per-action approval
@@ -190,7 +190,7 @@ else
         for r in $(git remote 2>/dev/null); do
             [[ "$r" =~ $INTERNAL_REMOTES_REGEX ]] || continue
             for b in $(git for-each-ref --format='%(refname:short)' refs/heads/); do
-                if git log "$b" --not --remotes/"$r" --oneline 2>/dev/null | grep -q .; then
+                if git log "$b" --not --remotes="$r" --oneline 2>/dev/null | grep -q .; then
                     echo "  → $repo  $b → $r"
                     git push "$r" "$b" 2>&1 | tail -2 | sed 's/^/    /'
                 fi
