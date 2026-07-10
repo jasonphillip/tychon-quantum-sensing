@@ -45,7 +45,7 @@ export default function App() {
         <div>
           <h1>PolarFire SoC Icicle — Live Demo</h1>
           <div className="sub">
-            V250 NPU inference · PID control-plane · hardware watchdog · MPFS250T production silicon
+            Tychon AI Control Assist · kit-side V250-to-PID loop · hardware safety fallback · MPFS250T production silicon
           </div>
         </div>
         <ModeBadge mode={mode} onChange={changeMode} />
@@ -57,7 +57,7 @@ export default function App() {
       <div className="grid">
         <V250Panel mode={mode} />
         <div className="col">
-          <CsrPanel mode={mode} />
+          <CsrPanel mode={mode} status={status} evidence={evidence} />
           <WatchdogPanel status={status} />
         </div>
       </div>
@@ -71,9 +71,9 @@ export default function App() {
       <SpectrumViewer />
 
       <div className="footnote">
-        Modes: <b>LIVE</b> reads the kit over ssh (M1-only; the actuator value is M0-gated → 0 on
-        silicon). <b>REPLAY</b> plays a saved capture. <b>DRY-RUN</b> is the software model — no board
-        needed. The dashboard never touches the M0 gains slave (it would wedge a hart).
+        Modes: <b>LIVE</b> uses the idfix2 hardware path over ssh: guarded PID writes,
+        real actuator readback, and the on-kit AI assist loop. <b>REPLAY</b> plays a saved
+        capture. <b>DRY-RUN</b> is the software model — no board needed.
       </div>
     </div>
   )

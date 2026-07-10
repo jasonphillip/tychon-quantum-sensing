@@ -4,7 +4,7 @@ Run from the repo root:
     uvicorn backend.main:app --host 0.0.0.0 --port 8000
 
 Modes: DRY-RUN (default, no kit), LIVE (ssh to the Icicle kit), REPLAY (saved .jsonl).
-All hardware access is M1-only and guarded against M0 (see registers.is_m0).
+LIVE uses idfix2-aware M0 gain/start writes only when explicitly enabled; reads remain M1-only.
 """
 from __future__ import annotations
 
@@ -90,6 +90,30 @@ def v250_probe():
         raise HTTPException(status_code=502, detail=str(e))
 
 
+@app.get("/api/v250-loop/status")
+def v250_loop_status():
+    try:
+        return modes.current().v250_loop_status()
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=str(e))
+
+
+@app.post("/api/v250-loop/start")
+def v250_loop_start():
+    try:
+        return modes.current().v250_loop_start()
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@app.post("/api/v250-loop/stop")
+def v250_loop_stop():
+    try:
+        return modes.current().v250_loop_stop()
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
 @app.get("/api/csr")
 def csr_read():
     return modes.current().csr_read_all()
@@ -112,8 +136,9 @@ def watchdog_demo():
     status = ctrl.read_status()
     return {
         "watchdog_timeout": status.get("watchdog_timeout", 0),
+        "watchdog_raw": status.get("watchdog_raw"),
         "induced": False,
-        "note": "live watchdog_csr readout; on-demand induction TBD (open item #4)",
+        "note": status.get("watchdog_note", "live watchdog_csr readout; induction TBD"),
     }
 
 
@@ -141,8 +166,8 @@ def model_card():
     return {
         "name": "FCNN v2 (residual)",
         "arch": "fully-convolutional (no Linear layers)",
-        "params": 3300,
-        "quant": "symmetric INT8 (per-channel weights)",
+        "params": 2905,
+        "quant": "INT8 deployment (equivalence harness pending)",
         "tflite_kb": 7.5,
         "vnnx_kb": 12.5,
         "input": "100-pt ODMR window + PID-anchor channel (1,1,100,2)",

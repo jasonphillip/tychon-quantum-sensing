@@ -12,6 +12,7 @@ function box(x: number, y: number, w: number, h: number, label: string, sub: str
 
 export function SystemFlow({ mode, tripped }: { mode: string; tripped: boolean }) {
   const nn = tripped ? 'off' : 'on'
+  const displayMode = tripped ? 'Safe fallback active' : 'AI assist active'
   const [hist, setHist] = useState<number[]>([])
   const last = useRef<number | null>(null)
   useEffect(() => {
@@ -36,25 +37,26 @@ export function SystemFlow({ mode, tripped }: { mode: string; tripped: boolean }
         <line className="arrow live" x1="632" y1="98" x2="686" y2="98" markerEnd="url(#ah)" />
         <path className={'arrow wdmon ' + (tripped ? 'tr' : 'ar')} d="M508,48 L362,68"
               strokeDasharray="4 3" markerEnd="url(#ah)" />
-        {box(8, 24, 142, 44, 'ODMR spectrum', 'nv-sensor-sim')}
-        {box(196, 24, 156, 44, 'V250 NN', tripped ? 'stalled' : 'inferring', 'nn ' + nn)}
+        {box(8, 24, 142, 44, 'ODMR spectrum', 'synthetic signal')}
+        {box(196, 24, 156, 44, 'AI correction', tripped ? 'held by safety' : 'from V250 helper', 'nn ' + nn)}
         {box(8, 128, 142, 44, 'ODMR error', 'detuning')}
-        {box(196, 128, 156, 44, 'PID', 'always on', 'live')}
+        {box(196, 128, 156, 44, 'PID', 'stabilizer', 'live')}
         {box(408, 76, 50, 44, 'Σ', '')}
-        {box(506, 76, 126, 44, 'clamp', '±4.5% sector')}
-        {box(686, 76, 150, 44, 'actuator', tripped ? 'PID-only' : 'PID + NN', 'live')}
+        {box(506, 76, 126, 44, 'safety clamp', '±4.5% sector')}
+        {box(686, 76, 150, 44, 'actuator', tripped ? 'PID safety path' : 'PID + AI assist', 'live')}
         <rect x="408" y="6" width="216" height="40" rx="6" className={'wd-box ' + (tripped ? 'tr' : 'ar')} />
-        <text x="516" y="24" className="wd-t">watchdog</text>
-        <text x="516" y="38" className="wd-s">{tripped ? 'TIMEOUT → fallback' : 'armed'}</text>
+        <text x="516" y="24" className="wd-t">safety watchdog</text>
+        <text x="516" y="38" className="wd-s">{tripped ? 'safe fallback active' : 'AI assist fresh'}</text>
       </svg>
       <div className="flow-legend">
-        mode: <b className={tripped ? 'bad' : 'ok'}>{mode}</b>
+        mode: <b className={tripped ? 'warn' : 'ok'}>{displayMode}</b>
+        <span className="flow-code">{mode}</span>
         <span className="wd-hist">{hist.map((v, i) => <span key={i} className={'tick ' + (v ? 'r' : 'g')} />)}</span>
       </div>
       <div className="footnote">
         {tripped
-          ? 'V250 NN path gated out — the watchdog tripped and the controller fell back to pure PID (bumpless). This is the safety behavior.'
-          : 'V250 NN feedforward is live and summed with the PID output; the watchdog is armed.'}
+          ? 'AI assist is not currently refreshing the watchdog, so the hardware actuator tap reflects the PID safety path.'
+          : 'The V250 helper is feeding AI corrections into the PID fabric; the dashboard is monitoring the running loop.'}
       </div>
     </div>
   )

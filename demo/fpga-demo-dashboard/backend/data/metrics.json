@@ -1,18 +1,17 @@
 {
   "scalar_residual": {
-    "deployed_mae_uT": 21.68,
-    "pid_baseline_mae_uT": 23.75,
-    "reduction_pct": 8.71,
-    "coarse_stage_mae_uT": 0.746,
-    "fine_stage_mae_uT": 0.809,
-    "bit_exact": true,
-    "rounding": "round_half_to_even",
-    "epochs": 100
+    "reduction_pct": 4.97,
+    "val_mae_reduction_pct": 5.01,
+    "sweep_mae_reduction_pct": 3.74,
+    "adev_tau_2700_reduction_pct_direct": 4.82,
+    "deployed_model": "fcnn_v2_residual_dataset_a",
+    "int8_note": "INT8 deployment; runner reproducibility is separate from the pending INT8-vs-float equivalence harness.",
+    "source": "odmr-edge-ml/experiments/phase_c_comparison_table.csv"
   },
   "figures": [
     {
       "name": "adev.png",
-      "caption": "Allan deviation over a 2700 s simulated LEO orbit"
+      "caption": "Allan deviation over a 2700 s simulated LEO orbit; deployed-model reduction is the direct OADEV value above."
     }
   ]
 }

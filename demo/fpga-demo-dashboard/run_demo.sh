@@ -3,7 +3,8 @@
 # Serves the built UI + API on http://localhost:8077 (same-origin, offline-capable).
 #
 #   ./run_demo.sh                          # ssh alias 'icicle'
-#   KIT_HOST=192.168.x.x ./run_demo.sh    # travel-router LAN (reserved kit IP)
+#   KIT_BITSTREAM=idfix2 ALLOW_IDFIX2_M0=1 ./run_demo.sh
+#   KIT_HOST=icicle ./run_demo.sh          # override ssh alias/IP
 #   PORT=9000 ./run_demo.sh                # custom port
 #
 # DRY-RUN mode (default in the UI) needs no kit at all.

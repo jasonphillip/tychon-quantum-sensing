@@ -3,6 +3,11 @@ import { Status } from '../api'
 export function ConnectionStrip({ status }: { status: Status | null }) {
   const online = !!status?.online
   const t = status?.last_read ? new Date(status.last_read * 1000).toLocaleTimeString() : '—'
+  const reset = status?.reset_detected_at ? new Date(status.reset_detected_at * 1000).toLocaleTimeString() : null
+  const watchdogClass = status?.watchdog_timeout ? 'warn' : 'ok'
+  const watchdogLabel = status?.watchdog_label ?? (status?.watchdog_timeout ? 'Safe fallback active' : 'AI assist active')
+  const pidClass = status?.idfix2_smoke_ok ? 'ok' : (status?.m0_writes_enabled ? 'warn' : (online ? 'bad' : ''))
+  const pidLabel = status?.idfix2_smoke_ok ? 'checked' : (status?.m0_writes_enabled ? 'needs recheck' : (online ? 'gated' : '—'))
   return (
     <div className="connstrip">
       <div className="item">
@@ -34,10 +39,22 @@ export function ConnectionStrip({ status }: { status: Status | null }) {
       </div>
       <div className="item">
         <span className="k">watchdog</span>
-        <span className={'v ' + (status?.watchdog_timeout ? 'bad' : 'ok')}>
-          {status?.watchdog_timeout ? 'TIMEOUT' : 'ok'}
+        <span className={'v ' + (online ? watchdogClass : '')}>
+          {online ? watchdogLabel : '—'}
         </span>
       </div>
+      <div className="item">
+        <span className="k">PID path</span>
+        <span className={'v ' + pidClass}>
+          {pidLabel}
+        </span>
+      </div>
+      {reset && (
+        <div className="item">
+          <span className="k">reset seen</span>
+          <span className="v warn">{reset}</span>
+        </div>
+      )}
       <div className="item">
         <span className="k">last read</span>
         <span className="v">{t}</span>

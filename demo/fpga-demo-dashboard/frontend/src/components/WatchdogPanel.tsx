@@ -4,11 +4,12 @@ import { Status, watchdogDemo } from '../api'
 export function WatchdogPanel({ status }: { status: Status | null }) {
   const [info, setInfo] = useState<string | null>(null)
   const tripped = !!status?.watchdog_timeout
+  const label = status?.watchdog_label ?? (tripped ? 'Safe fallback active' : 'AI assist active')
 
   const check = async () => {
     try {
       const r = await watchdogDemo()
-      setInfo(`${r.note} (timeout=${r.watchdog_timeout})`)
+      setInfo(`${r.note} · raw ${r.watchdog_raw ?? '—'} · timeout=${r.watchdog_timeout}`)
     } catch (e) {
       setInfo(String(e))
     }
@@ -18,15 +19,15 @@ export function WatchdogPanel({ status }: { status: Status | null }) {
     <div className="panel">
       <h2>Safety watchdog</h2>
       <div className="kv">
-        state: <b className={tripped ? 'bad' : 'ok'}>{tripped ? 'TIMEOUT → PID_ONLY_FALLBACK' : 'armed · PID_NN'}</b>
+        state: <b className={tripped ? 'warn' : 'ok'}>{label}</b>
       </div>
       <div className="row" style={{ marginTop: 10 }}>
-        <button className="ghost" onClick={check}>Read watchdog_csr</button>
+        <button className="ghost" onClick={check}>Read advanced watchdog register</button>
       </div>
       {info && <div className="footnote">{info}</div>}
       <div className="footnote">
-        When the V250 stops producing fresh output, the watchdog trips and the controller reverts to
-        pure PID — the safety behavior to demonstrate. On-demand induction is a follow-up (open item #4).
+        When AI assist is stopped or stops producing fresh output, the controller reverts to the PID safety path.
+        This image uses a 250,000-cycle fabric timeout at the 125 MHz PID clock.
       </div>
     </div>
   )

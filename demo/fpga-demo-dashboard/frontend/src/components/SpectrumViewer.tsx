@@ -10,13 +10,14 @@ interface SpecData { freq_ghz: number[]; samples: Spec[] }
 export function SpectrumViewer() {
   const [data, setData] = useState<SpecData | null>(null)
   const [sel, setSel] = useState(0)
+  const [open, setOpen] = useState(false)
   const elRef = useRef<HTMLDivElement>(null)
   const plotRef = useRef<uPlot | null>(null)
 
   useEffect(() => { fetch('/api/spectrum').then((r) => r.json()).then(setData).catch(() => {}) }, [])
 
   useEffect(() => {
-    if (!data || !elRef.current) return
+    if (!data || !open || !elRef.current) return
     const ax = { stroke: '#8595a6', grid: { stroke: '#1c2733', width: 1 }, ticks: { stroke: '#1c2733' } }
     const opts: uPlot.Options = {
       width: elRef.current.clientWidth, height: 260,
@@ -31,7 +32,7 @@ export function SpectrumViewer() {
     const onResize = () => { if (elRef.current) u.setSize({ width: elRef.current.clientWidth, height: 260 }) }
     window.addEventListener('resize', onResize)
     return () => { window.removeEventListener('resize', onResize); u.destroy(); plotRef.current = null }
-  }, [data])
+  }, [data, open])
 
   useEffect(() => {
     if (data && plotRef.current) {
@@ -44,20 +45,30 @@ export function SpectrumViewer() {
   return (
     <div className="panel" style={{ marginTop: 14 }}>
       <h2>ODMR spectrum — simulated input (nv-sensor-sim)</h2>
-      <div className="row">
-        <span style={{ color: 'var(--muted)', fontSize: 12 }}>sample</span>
-        <select className="sel" value={sel} onChange={(e) => setSel(parseInt(e.target.value))}>
-          {data.samples.map((sm, i) => <option key={i} value={i}>#{sm.idx} · |B| {sm.b_uT} µT</option>)}
-        </select>
-        <span className="kv" style={{ marginLeft: 8 }}>
-          ground-truth |B| <b>{s.b_uT} µT</b> · P1 {s.p1_ppm} ppm · T {s.temp_K} K · B1grad {s.b1_grad}
-        </span>
-      </div>
-      <div ref={elRef} style={{ marginTop: 10 }} />
-      <div className="footnote">
-        Real physics-simulated CW-ODMR spectrum (800 pts, 2.83–2.91 GHz) with ground-truth |B|. The FCNN
-        reads a 100-pt window of this; live inference is in the V250 panel, accuracy in Metrics.
-      </div>
+      <div className="audience-note">This is the synthetic sensor signal the AI reads.</div>
+      <details className="advanced spectrum-details" open={open} onToggle={(e) => setOpen(e.currentTarget.open)}>
+        <summary>Show synthetic ODMR signal · sample #{s.idx} · |B| {s.b_uT} µT</summary>
+        <div className="row" style={{ marginTop: 10 }}>
+          <span style={{ color: 'var(--muted)', fontSize: 12 }}>sample</span>
+          <select className="sel" value={sel} onChange={(e) => setSel(parseInt(e.target.value))}>
+            {data.samples.map((sm, i) => <option key={i} value={i}>#{sm.idx} · |B| {sm.b_uT} µT</option>)}
+          </select>
+          <span className="kv" style={{ marginLeft: 8 }}>
+            ground-truth |B| <b>{s.b_uT} µT</b>
+          </span>
+        </div>
+        <details className="advanced compact">
+          <summary>Advanced simulated-sensor parameters</summary>
+          <div className="kv">
+            P1 {s.p1_ppm} ppm · T {s.temp_K} K · B1grad {s.b1_grad} · B vector [{s.b_xyz_uT.join(', ')}] µT
+          </div>
+        </details>
+        {open && <div ref={elRef} style={{ marginTop: 10 }} />}
+        <div className="footnote">
+          Physics-simulated CW-ODMR spectrum (800 pts, 2.83-2.91 GHz) with ground-truth |B|. The model
+          reads a 100-pt window of this; live inference is in the AI chip test panel.
+        </div>
+      </details>
     </div>
   )
 }

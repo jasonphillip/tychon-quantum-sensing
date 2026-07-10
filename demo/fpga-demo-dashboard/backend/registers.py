@@ -1,20 +1,28 @@
 """Fabric register map (two-slot bitstream) + Q-format helpers.
 
 SLAVE3 page 0x60040000 is split by axi4_demux2 into two sub-slaves:
-  - M0 "gains"   @ 0x60040000..0x600407FF  -- READ WEDGES A U54 HART. OFF-LIMITS.
-  - M1 "pid_csr" @ 0x60040800..0x60040FFF  -- clean; the demo's entire live surface.
+  - M0 "gains"   @ 0x60040000..0x600407FF
+  - M1 "pid_csr" @ 0x60040800..0x60040FFF
 
-The `is_m0()` guard below is enforced in the hardware link so the dashboard can
-NEVER accidentally read M0 and hang the kit. See fpga_demo/07_m0_actuator_fix_investigation.md.
-
-Addresses/offsets verified from polarfire-hybrid-control/tools/rung_g_replay.py and
-docs/two_slot_register_map_2026-06-17.md (2026-06-18).
+M0 reads remain blocked in the dashboard. For the resident idfix2 bitstream,
+allowlisted M0 writes are safe and are required to set authoritative PID gains
+and pulse `acc_start`; the live actuator is still read through the clean M1
+`post_clamp_out` tap. Never touch the stale overlay address 0x60001000.
 """
 from __future__ import annotations
 
 # --- sub-window bases -----------------------------------------------------
-GAINS_BASE = 0x60040000   # M0 — do NOT read
+GAINS_BASE = 0x60040000   # M0 -- writes allowlisted only for idfix2; do not read
 CSR = 0x60040800          # M1
+
+# --- M0 (SmartHLS PID gains/control) -------------------------------------
+R_ACC_START = GAINS_BASE + 0x008   # WO  pulse one host-paced PID compute
+R_KP = GAINS_BASE + 0x00C
+R_KI = GAINS_BASE + 0x010
+R_KD = GAINS_BASE + 0x014
+R_OUT_MIN = GAINS_BASE + 0x018
+R_OUT_MAX = GAINS_BASE + 0x01C
+R_INNER_CLAMP = GAINS_BASE + 0x020
 
 # --- M1 (pid_csr) register offsets ---------------------------------------
 R_AXI_WRITE_COUNT = CSR + 0x000   # RO  liveness counter (+4 per M1 write)
@@ -22,7 +30,7 @@ R_CSR_VERSION = CSR + 0x004       # RO  0x00010000
 R_ERROR_LOW = CSR + 0x010         # RW  error[31:0]  (Q34.30)
 R_ERROR_HIGH = CSR + 0x014        # RW  error[63:32]
 R_U_AI = CSR + 0x018              # RW  NN feedforward (Q16.16)
-R_KP_SHADOW = CSR + 0x020         # RW  shadow gains (write/readback bit-exact)
+R_KP_SHADOW = CSR + 0x020         # RW  shadow gains (write/readback echo)
 R_KI_SHADOW = CSR + 0x024
 R_KD_SHADOW = CSR + 0x028
 R_OUT_MIN_SHADOW = CSR + 0x02C
@@ -48,8 +56,19 @@ OUTER_SECTOR_CLAMP_FRACTION = 0.045   # AI output bounded to +-4.5% of range
 
 
 def is_m0(addr: int) -> bool:
-    """True if addr is in the M0 gains sub-window (reads wedge the hart)."""
+    """True if addr is in the M0 gains/control sub-window."""
     return M0_LO <= addr <= M0_HI
+
+
+M0_WRITE_ALLOWLIST = {
+    R_ACC_START,
+    R_KP,
+    R_KI,
+    R_KD,
+    R_OUT_MIN,
+    R_OUT_MAX,
+    R_INNER_CLAMP,
+}
 
 
 # --- Q-format helpers (ported from rung_g_replay.py) ---------------------
@@ -84,7 +103,7 @@ CSR_READ_REGS = [
     ("kd_shadow", R_KD_SHADOW, "q16"),
 ]
 
-# writable M1 shadow gains (write a float -> read back bit-exact; AXI-path proof)
+# writable M1 shadow gains (write a float -> read back the same Q16.16 value)
 WRITABLE_GAINS = {
     "kp": R_KP_SHADOW,
     "ki": R_KI_SHADOW,
@@ -92,4 +111,14 @@ WRITABLE_GAINS = {
     "out_min": R_OUT_MIN_SHADOW,
     "out_max": R_OUT_MAX_SHADOW,
     "inner_clamp": R_INNER_CLAMP_SHADOW,
+}
+
+# Matching authoritative M0 writes for idfix2 LIVE mode.
+AUTHORITATIVE_M0_GAINS = {
+    "kp": R_KP,
+    "ki": R_KI,
+    "kd": R_KD,
+    "out_min": R_OUT_MIN,
+    "out_max": R_OUT_MAX,
+    "inner_clamp": R_INNER_CLAMP,
 }
