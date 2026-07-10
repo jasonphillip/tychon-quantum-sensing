@@ -88,7 +88,7 @@ When in doubt, ask. When the action is clearly within the granted authorities ab
 ```
 
 ## End-of-day close
-When the user signals end-of-day wrap-up intent ("wrapping up", "done for the day", "closing out", "EOD", etc.), proactively ask whether to run `tvw/scripts/eod_close.sh`. The script sweeps all 5 Tychon repos (TVW + 4 implementation), auto-pushes internal mirrors (NAS, spark2; ⚠️ spark1 target retired 2026-07-05 — verify `eod_close.sh` no longer pushes to spark1), runs a secrets sweep, and gates the GitHub push behind a single yes/N approval. Don't run without explicit yes; don't re-ask in the same session if declined. See memory entry `feedback_eod_close_trigger.md` for the full behavioral rule.
+When the user signals end-of-day wrap-up intent ("wrapping up", "done for the day", "closing out", "EOD", etc.), proactively ask whether to run `tvw/scripts/eod_close.sh`. The script sweeps all 5 Tychon repos (TVW + 4 implementation), auto-pushes internal mirrors (NAS, spark2; spark1 removed from `eod_close.sh` INTERNAL_REMOTES_REGEX 2026-07-10 — decommissioned 2026-07-05), runs a secrets sweep, and gates the GitHub push behind a single yes/N approval. Don't run without explicit yes; don't re-ask in the same session if declined. See memory entry `feedback_eod_close_trigger.md` for the full behavioral rule.
 
 ## Corpus locations
 - `~/.corpus/tychon-docs/` — prose corpus (built in Stage 1)

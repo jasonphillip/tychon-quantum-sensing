@@ -5,7 +5,7 @@
 #   1. Sweeps the 5 active Tychon repos (TVW + 4 implementation) plus the
 #      Beelink polarfire-hybrid-control mirror.
 #   2. Reports per-repo state: branch, uncommitted, unpushed-internal, unpushed-github.
-#   3. Pushes internal mirrors automatically (NAS bare repos, spark1 Tailscale mirror).
+#   3. Pushes internal mirrors automatically (NAS bare repos, Spark Tailscale mirrors).
 #   4. Runs a secrets sweep across all unpushed commits before any GitHub push.
 #   5. Surfaces the GitHub-push set as a SINGLE yes/no approval gate.
 #   6. On approval: pushes all flagged branches to GitHub origins.
@@ -52,7 +52,7 @@ REPOS=(
 
 # Internal-mirror remotes that can be pushed without per-action approval
 # (per global CLAUDE.md autonomous authorities + TVW CLAUDE.md).
-INTERNAL_REMOTES_REGEX='^(nas|spark1|spark2)$'
+INTERNAL_REMOTES_REGEX='^(nas|spark2)$'
 
 # Secret-like filename patterns to scan for in unpushed commits
 SECRET_REGEX='\.env|\.key|\.pem|secret|credential|password|token'
