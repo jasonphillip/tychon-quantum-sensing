@@ -80,12 +80,31 @@ When in doubt, ask. When the action is clearly within the granted authorities ab
 └── tvw/
     ├── configs/          endpoints.yaml, model lineup, MCP wiring
     ├── audits/           audit-NNN.md punch lists, verdict CSVs
-    ├── scripts/          render_report.sh, eod_close.sh (multi-repo EOD sweep + push driver)
+    ├── scripts/          render_report.sh, eod_close.sh (multi-repo EOD sweep + push driver),
+    │                     dispatch.sh (file-based cross-lane dispatch queue)
     ├── services/         systemd unit drafts for NIMs / llama.cpp
     └── source/
         ├── repos/        symlinks → ~/projects/{4 repos}
         └── sbir/         symlink → ~/projects/tychon-sbir/docs
 ```
+
+## Cross-lane dispatch (dispatch.sh)
+
+Cross-lane dispatches go through `tvw/scripts/dispatch.sh` — NOT via pasted prompts
+(paste is the fallback only when the target lane runs on a machine without access to
+`~/projects`). Manual pastes silently truncated 3 times on 2026-07-09, once costing a
+training run; dispatch.sh is file-based end to end and sha256-verifies every body.
+
+- Send: `tvw/scripts/dispatch.sh send <to-lane> "<title>" --file <body.md>` (or pipe stdin).
+  The body file lands verbatim in `~/projects/<to-lane>/.dispatch/inbox/<id>.md`.
+- Overview: `tvw/scripts/dispatch.sh list [--all|--lane X]` — every dispatch in flight, one line each.
+- The worker lane consumes with `show <id>` and closes with `ack <id> [note]`; acked
+  dispatches are kept in `.dispatch/done/` as the permanent record.
+- MANUAL + VISIBLE by design (Jason override #3, 2026-07-10): no SessionStart hooks, no
+  auto-consumption. Jason relays a one-liner ("check your dispatch inbox") to the worker
+  session; the content itself never crosses a paste boundary.
+- Still end every cross-lane next-step with the dispatch id + the one-liner for Jason to
+  relay, per the standing orchestration rules.
 
 ## End-of-day close
 When the user signals end-of-day wrap-up intent ("wrapping up", "done for the day", "closing out", "EOD", etc.), proactively ask whether to run `tvw/scripts/eod_close.sh`. The script sweeps all 5 Tychon repos (TVW + 4 implementation), auto-pushes internal mirrors (NAS, spark2; spark1 removed from `eod_close.sh` INTERNAL_REMOTES_REGEX 2026-07-10 — decommissioned 2026-07-05), runs a secrets sweep, and gates the GitHub push behind a single yes/N approval. Don't run without explicit yes; don't re-ask in the same session if declined. See memory entry `feedback_eod_close_trigger.md` for the full behavioral rule.
