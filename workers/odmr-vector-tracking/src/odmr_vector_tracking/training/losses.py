@@ -101,6 +101,67 @@ def distillation_loss(
     return (kl * w).sum() / w.sum()
 
 
+def logit_standardize(logits: torch.Tensor, dim: int = -1, eps: float = 1e-7) -> torch.Tensor:
+    """Per-sample z-score of ``logits`` along ``dim`` (increment-8 B+C stack; arXiv:2403.01427).
+
+    ``(x − mean) / (std + eps)`` over the class dimension, so a teacher whose logits live on a
+    ~4× wider scale than the student maps onto the same standardized range before the temperature
+    softmax. Used **only inside the KD/KL soft-target term** (both teacher and student), never on
+    the hard-CE term — the hard label objective is unchanged. Training-only; the deployed argmax
+    over the student's own raw logits is unaffected.
+    """
+    mean = logits.mean(dim=dim, keepdim=True)
+    std = logits.std(dim=dim, keepdim=True)
+    return (logits - mean) / (std + eps)
+
+
+def ensemble_soft_targets(
+    teacher_scores: torch.Tensor,
+    temperature: float = 2.0,
+    standardize: bool = True,
+) -> torch.Tensor:
+    """Average ``k`` teachers' **response** distributions into one KD soft target (increment-8).
+
+    ``teacher_scores`` is a stacked ``(k, ..., L, K)`` tensor of teacher association logits
+    (detached upstream). Each teacher's logits are (optionally) logit-standardized, temperature-
+    scaled, softmaxed to a probability, and the ``k`` probabilities are **averaged** (response
+    averaging, not logit averaging). Averaging responses is what buys the O(1/k) inter-student
+    variance reduction (arXiv:2601.18909) that increment-8 is testing. Returns ``(..., L, K)``.
+    """
+    t = float(temperature)
+    z = logit_standardize(teacher_scores) if standardize else teacher_scores
+    probs = F.softmax(z / t, dim=-1)          # (k, ..., L, K)
+    return probs.mean(dim=0)                   # (..., L, K) averaged response
+
+
+def prob_distillation_loss(
+    student_scores: torch.Tensor,
+    teacher_prob: torch.Tensor,
+    line_collision: torch.Tensor | None = None,
+    collision_weight: float = 5.0,
+    temperature: float = 2.0,
+    standardize: bool = True,
+) -> torch.Tensor:
+    """KD against a PRE-AVERAGED teacher target distribution (increment-8 ensemble path).
+
+    ``teacher_prob`` is a ``(..., L, K)`` soft target (from :func:`ensemble_soft_targets`); the
+    student logits are logit-standardized (``standardize``) the same way the teacher targets were
+    built, then temperature-softmaxed, and matched by ``T² · KL(teacher ‖ student)``. The ``T²``
+    factor keeps the soft-target gradient scale comparable to the hard CE. Same collision
+    upweighting as the hard association loss. Training-only — teachers never join the deployed
+    graph, and the student's inference argmax over its own raw logits is unchanged.
+    """
+    t = float(temperature)
+    z = logit_standardize(student_scores) if standardize else student_scores
+    log_ps = F.log_softmax(z / t, dim=-1)
+    tp = teacher_prob.clamp_min(_EPS)
+    kl = (tp * (tp.log() - log_ps)).sum(dim=-1) * (t * t)  # (..., L) KL(teacher ‖ student)
+    if line_collision is None:
+        return kl.mean()
+    w = 1.0 + (float(collision_weight) - 1.0) * line_collision.to(kl.dtype)
+    return (kl * w).sum() / w.sum()
+
+
 def soft_association_loss(
     scores: torch.Tensor,
     target_dist: torch.Tensor,
@@ -286,6 +347,8 @@ def compute_losses(
     sinkhorn_dustbin: float = 1.0,
     assoc_seq_weight: torch.Tensor | None = None,
     teacher_scores: torch.Tensor | None = None,
+    teacher_prob: torch.Tensor | None = None,
+    ensemble_standardize: bool = False,
     kd_alpha: float = 0.0,
     kd_temp: float = 2.0,
 ) -> dict[str, torch.Tensor]:
@@ -303,9 +366,13 @@ def compute_losses(
       lever 1 is also on, else the hard ``assoc_targets``.
     - ``assoc_seq_weight`` (increment-7 arm 7a): per-sequence geometry ("foveated") multiplier on
       the association term. ``None`` = unchanged.
-    - ``teacher_scores`` + ``kd_alpha`` + ``kd_temp`` (increment-7 arm 7b): blend the hard
-      association CE with the temperature-scaled KD term
+    - ``teacher_scores`` + ``kd_alpha`` + ``kd_temp`` (increment-7 arm 7b, kd1): blend the hard
+      association CE with the temperature-scaled single-teacher KD term
       ``(1−α)·CE + α·distillation_loss``. ``teacher_scores=None`` or ``kd_alpha=0`` = unchanged.
+    - ``teacher_prob`` + ``ensemble_standardize`` (increment-8 bc/bc_sam): blend the hard CE with
+      the ensemble KD term against a pre-averaged soft target via :func:`prob_distillation_loss`
+      (student logits logit-standardized iff ``ensemble_standardize``). Takes precedence over
+      ``teacher_scores`` when both are passed; ``teacher_prob=None`` = unchanged.
 
     Position supervision always gathers the hard nearest-anchor ``assoc_targets`` (the anchor a
     line's offset must refine toward is unambiguous even when its *identity* is not), so the
@@ -339,7 +406,17 @@ def compute_losses(
             collision_weight=collision_weight,
             scores_are_probs=scores_are_probs,
         )
-    if teacher_scores is not None and kd_alpha > 0.0:
+    if teacher_prob is not None and kd_alpha > 0.0:
+        kd = prob_distillation_loss(
+            output.scores,
+            teacher_prob,
+            line_collision=line_collision,
+            collision_weight=collision_weight,
+            temperature=kd_temp,
+            standardize=ensemble_standardize,
+        )
+        assoc = (1.0 - float(kd_alpha)) * assoc + float(kd_alpha) * kd
+    elif teacher_scores is not None and kd_alpha > 0.0:
         kd = distillation_loss(
             output.scores,
             teacher_scores,

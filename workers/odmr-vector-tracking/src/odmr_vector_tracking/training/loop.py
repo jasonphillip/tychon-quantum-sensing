@@ -27,7 +27,7 @@ import torch
 
 from odmr_vector_tracking.data.loaders import SequenceDataset
 from odmr_vector_tracking.tracking.learned import LearnedTracker, LearnedTrackerOutput
-from odmr_vector_tracking.training.losses import compute_losses
+from odmr_vector_tracking.training.losses import compute_losses, ensemble_soft_targets
 from odmr_vector_tracking.training.targets import (
     association_targets,
     normalize_freqs,
@@ -74,6 +74,22 @@ class TrainSettings:
     kd_alpha: float = 0.5               # arm 7b: hard-CE / soft-KD blend, assoc = (1−α)CE + α·KD
     kd_temp: float = 2.0                # arm 7b: KD softmax temperature (Hinton 2015)
     pcgrad: bool = False                # arm 7c: project conflicting field/identity gradients
+    # --- increment-8 B+C reliability stack (all training-only; deployed graph unchanged) ---
+    ensemble_kd: bool = False           # bc/bc_sam: distill from AVERAGED multi-teacher soft
+                                        # targets (a list of teachers is passed to train()); the
+                                        # per-teacher responses are averaged (ensemble_soft_targets)
+    logit_standardize: bool = False     # bc/bc_sam: z-score logits inside the KD/KL term only
+                                        # (teacher + student), repairing the ~4x scale mismatch
+                                        # (2403.01427); hard-CE term unchanged
+    ema_decay: float = 0.0              # bc/bc_sam: weight-EMA decay (>0 enables). The EMA
+                                        # weights are evaluated for early-stopping AND become the
+                                        # deployed candidate (2411.18704 churn reduction)
+    sam_rho: float = 0.0                # bc_sam only: SAM neighborhood radius (>0 enables; ~2x
+                                        # step cost) — flat-minima trajectory control (2010.01412)
+    start_epoch: int = 0               # shared-trunk branch: warm-started students resume at
+                                        # start_epoch+1 on the SAME cosine schedule (1912.05671)
+    stop_epoch: int = 0                # 0 = run to `epochs`; >0 stops early at this epoch on the
+                                        # full-length cosine (used to train the shared trunk)
     noise_photons: float | None = None
     # Photon budget (photons/point) for per-epoch shot-noise augmentation of the TRAIN split:
     # a fresh Gaussian realization each epoch with sigma from the upstream physics model
@@ -173,7 +189,7 @@ def _split_losses(
     soft_radius_norm: float | None = None,
     ss_prob: float = 1.0,
     teacher_force: bool = False,
-    teacher: LearnedTracker | None = None,
+    teachers: list[LearnedTracker] | None = None,
 ) -> tuple[dict[str, torch.Tensor], LearnedTrackerOutput]:
     """Forward one batch (or the whole split) and compute the loss dict.
 
@@ -182,9 +198,11 @@ def _split_losses(
     free-running (the honest val / inference condition). ``soft_radius_norm`` (lever 1) enables
     the soft/merged CE targets, built per batch from the ground-truth centers.
 
-    ``teacher`` (increment-7 arm 7b) is a distillation teacher run on the SAME (possibly noised)
-    ``spectra`` under ``no_grad``; its association scores supply the KD soft targets. Only passed
-    on the TRAIN call — val/early-stopping stays the honest hard-CE metric.
+    ``teachers`` are distillation teachers run on the SAME (possibly noised) ``spectra`` under
+    ``no_grad``, only on the TRAIN call — val/early-stopping stays the honest hard-CE metric.
+    With ``settings.ensemble_kd`` (increment-8 bc) all teachers' responses are averaged into one
+    soft target; otherwise (``settings.distill``, increment-7 kd1) the first teacher's raw scores
+    are the KD target.
     """
     if indices is None:
         sl = slice(None)
@@ -207,12 +225,21 @@ def _split_losses(
         )
 
     teacher_scores = None
-    if teacher is not None and settings.distill:
-        with torch.no_grad():
-            teacher_scores = teacher(spectra).scores.detach()
+    teacher_prob = None
+    if teachers:
+        if settings.ensemble_kd:
+            with torch.no_grad():
+                stacked = torch.stack([t(spectra).scores.detach() for t in teachers], dim=0)
+            teacher_prob = ensemble_soft_targets(
+                stacked, temperature=settings.kd_temp, standardize=settings.logit_standardize
+            )
+        elif settings.distill:
+            with torch.no_grad():
+                teacher_scores = teachers[0](spectra).scores.detach()
 
     seq_w = None if tensors.assoc_seq_weight is None else tensors.assoc_seq_weight[sl]
 
+    kd_on = settings.distill or settings.ensemble_kd
     losses = compute_losses(
         out,
         tensors.assoc_targets[sl],
@@ -232,7 +259,9 @@ def _split_losses(
         sinkhorn_dustbin=settings.sinkhorn_dustbin,
         assoc_seq_weight=seq_w,
         teacher_scores=teacher_scores,
-        kd_alpha=(settings.kd_alpha if settings.distill else 0.0),
+        teacher_prob=teacher_prob,
+        ensemble_standardize=settings.logit_standardize,
+        kd_alpha=(settings.kd_alpha if kd_on else 0.0),
         kd_temp=settings.kd_temp,
     )
     return losses, out
@@ -281,6 +310,34 @@ def _pcgrad_backward(
         off += num
 
 
+class _WeightEMA:
+    """Exponential moving average of a tracker's state_dict (increment-8 bc/bc_sam).
+
+    Updated once per optimizer step. Floating-point tensors decay toward the live weights;
+    non-float buffers (e.g. the fixed anchor grid) are copied exactly so the EMA snapshot is a
+    loadable, self-consistent state_dict. The EMA weights are what gets evaluated for early
+    stopping and checkpointed as the deployed candidate — the whole point of the lever is to
+    deploy a lower-variance running average, not the last noisy SGD iterate (arXiv:2411.18704).
+    """
+
+    def __init__(self, tracker: LearnedTracker, decay: float) -> None:
+        self.decay = float(decay)
+        self.shadow = {k: v.detach().clone() for k, v in tracker.state_dict().items()}
+
+    @torch.no_grad()
+    def update(self, tracker: LearnedTracker) -> None:
+        d = self.decay
+        for k, v in tracker.state_dict().items():
+            s = self.shadow[k]
+            if torch.is_floating_point(v):
+                s.mul_(d).add_(v.detach(), alpha=1.0 - d)
+            else:
+                s.copy_(v.detach())
+
+    def state_dict(self) -> dict[str, torch.Tensor]:
+        return {k: v.clone() for k, v in self.shadow.items()}
+
+
 @dataclass
 class TrainResult:
     """Outcome of :func:`train` — best-val weights are already restored into the tracker."""
@@ -304,12 +361,21 @@ def train(
     out_dir: Path | str | None = None,
     ckpt_meta: dict | None = None,
     teacher: LearnedTracker | None = None,
+    teachers: list[LearnedTracker] | None = None,
     log: Callable[[str], None] = print,
 ) -> TrainResult:
     """Train with full-BPTT minibatches; early-stop and checkpoint on best val total loss.
 
     ``ckpt_meta`` (e.g. ``{"core": "relu", "association": "linear"}``) is embedded in the
     checkpoint alongside the model config so evaluation can rebuild the exact variant.
+
+    Increment-8 B+C stack (all opt-in via ``settings``; the default path is byte-identical):
+    ``teachers`` is a list of distillation teachers (``settings.ensemble_kd`` averages their
+    responses; ``settings.distill`` uses the first — a single ``teacher=`` is normalized to a
+    one-element list). ``settings.ema_decay`` maintains a weight-EMA that is evaluated for early
+    stopping and checkpointed as the deployed candidate. ``settings.sam_rho`` runs SAM (2x step
+    cost). ``settings.start_epoch`` resumes a warm-started (shared-trunk) student on the same
+    cosine; ``settings.stop_epoch`` stops the trunk early and writes ``last.pt`` (the branch seed).
 
     ``soft_radius_norm`` (lever 1) is the ambiguity radius in normalized window units; required
     when ``settings.soft_targets``. Scheduled sampling (lever 3) is driven from
@@ -325,17 +391,30 @@ def train(
     anchor_spacing = float(2**cfg.n_downsample) / float(cfg.n_freq - 1)
     if settings.soft_targets and soft_radius_norm is None:
         raise ValueError("settings.soft_targets requires soft_radius_norm to be provided")
-    if settings.distill and teacher is None:
-        raise ValueError("settings.distill requires a teacher tracker to be provided")
-    if teacher is not None:
-        teacher = teacher.to(device).eval()
-        for p in teacher.parameters():
+    teacher_list: list[LearnedTracker] = list(teachers) if teachers else (
+        [teacher] if teacher is not None else []
+    )
+    if (settings.distill or settings.ensemble_kd) and not teacher_list:
+        raise ValueError("settings.distill/ensemble_kd requires teacher(s) to be provided")
+    for t in teacher_list:
+        t.to(device).eval()
+        for p in t.parameters():
             p.requires_grad_(False)
     ss_ramp_epochs = max(1.0, settings.ss_ramp_frac * settings.epochs)
 
     params = [p for p in tracker.parameters() if p.requires_grad]
     opt = torch.optim.AdamW(params, lr=settings.lr, weight_decay=settings.weight_decay)
     sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=settings.epochs)
+    if settings.start_epoch > 0:
+        # Shared-trunk branch: advance the cosine to the branch point so epochs
+        # start_epoch+1..epochs continue the exact schedule the trunk began (1912.05671).
+        import warnings
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            for _ in range(settings.start_epoch):
+                sched.step()
+
+    ema = _WeightEMA(tracker, settings.ema_decay) if settings.ema_decay > 0.0 else None
 
     out_path = Path(out_dir) if out_dir is not None else None
     if out_path is not None:
@@ -343,8 +422,9 @@ def train(
     ckpt_path = out_path / "best.pt" if out_path is not None else None
 
     n = train_tensors.n_sequences
+    run_to = settings.stop_epoch if settings.stop_epoch else settings.epochs
     best_val = float("inf")
-    best_epoch = -1
+    best_epoch = settings.start_epoch - 1  # patience from the branch point (=-1 in the default)
     best_state: dict[str, torch.Tensor] | None = None
     history: list[dict] = []
     t0 = time.perf_counter()
@@ -361,8 +441,8 @@ def train(
         log(f"shot-noise augmentation ON: {settings.noise_photons:.3e} photons/point "
             f"(baseline sigma {float(noise_sigma.max()):.2e}), fresh realization per epoch")
 
-    epoch = 0
-    for epoch in range(1, settings.epochs + 1):
+    epoch = settings.start_epoch
+    for epoch in range(settings.start_epoch + 1, run_to + 1):
         tracker.train()
         if noise_sigma is not None:
             train_tensors.spectra = clean_spectra + noise_sigma * torch.randn_like(
@@ -381,27 +461,61 @@ def train(
         n_batches = 0
         for start in range(0, n, settings.batch_size):
             idx = perm[start : start + settings.batch_size]
-            losses, _ = _split_losses(
-                tracker, train_tensors, settings, anchor_spacing, scores_are_probs, idx,
-                soft_radius_norm=soft_radius_norm, ss_prob=ss_prob, teacher_force=True,
-                teacher=teacher,
-            )
-            opt.zero_grad(set_to_none=True)
-            if settings.pcgrad:
+
+            def _batch_losses():
+                loss_dict, _ = _split_losses(
+                    tracker, train_tensors, settings, anchor_spacing, scores_are_probs, idx,
+                    soft_radius_norm=soft_radius_norm, ss_prob=ss_prob, teacher_force=True,
+                    teachers=teacher_list,
+                )
+                return loss_dict
+
+            if settings.sam_rho > 0.0:
+                # SAM (Foret 2020, arXiv:2010.01412; bc_sam only): perturb the weights toward the
+                # worst-case neighbor e = rho * g/||g||, then take the AdamW step with the gradient
+                # measured there — biasing toward flat minima. Two forward/backward passes (~2x).
+                losses = _batch_losses()
+                grads = torch.autograd.grad(losses["total"], params, allow_unused=True)
+                with torch.no_grad():
+                    gnorm = torch.norm(
+                        torch.stack([g.norm() for g in grads if g is not None])
+                    )
+                    scale = settings.sam_rho / (gnorm + 1e-12)
+                    eps_w: list[torch.Tensor | None] = []
+                    for p, g in zip(params, grads):
+                        if g is None:
+                            eps_w.append(None)
+                            continue
+                        e = g * scale
+                        p.add_(e)
+                        eps_w.append(e)
+                opt.zero_grad(set_to_none=True)
+                _batch_losses()["total"].backward()
+                with torch.no_grad():
+                    for p, e in zip(params, eps_w):
+                        if e is not None:
+                            p.sub_(e)   # restore the clean weights; the perturbed grad stays
+            elif settings.pcgrad:
                 # Arm 7c: PCGrad (Yu 2020) between the identity task (association term) and the
                 # field task (projection term); the shared position/track terms are added plain.
                 # Deployment-neutral — gradient surgery lives in the optimizer, not the graph.
+                losses = _batch_losses()
+                opt.zero_grad(set_to_none=True)
                 _pcgrad_backward(losses, params, settings)
             else:
+                losses = _batch_losses()
+                opt.zero_grad(set_to_none=True)
                 losses["total"].backward()
             torch.nn.utils.clip_grad_norm_(params, settings.grad_clip)
             opt.step()
+            if ema is not None:
+                ema.update(tracker)
             for k in train_sums:
                 train_sums[k] += float(losses[k].detach())
             n_batches += 1
         sched.step()
 
-        evaluate_val = (epoch % settings.val_every == 0) or (epoch == settings.epochs)
+        evaluate_val = (epoch % settings.val_every == 0) or (epoch == run_to)
         row = {
             "epoch": epoch,
             "lr": float(sched.get_last_lr()[0]),
@@ -409,6 +523,16 @@ def train(
             **{f"train_{k}": v / n_batches for k, v in train_sums.items()},
         }
         if evaluate_val:
+            # With weight-EMA (bc/bc_sam), early stopping and the checkpoint track the EMA
+            # weights — the deployed candidate — not the last noisy SGD iterate. Swap the EMA
+            # weights in for the eval, then restore the live training weights before the next
+            # epoch. Default path (ema=None) is unchanged.
+            train_backup = None
+            if ema is not None:
+                train_backup = {
+                    k: v.detach().clone() for k, v in tracker.state_dict().items()
+                }
+                tracker.load_state_dict(ema.state_dict())
             tracker.eval()
             with torch.no_grad():
                 # Val is always free-running (teacher_force=False) — the honest deployed metric.
@@ -445,6 +569,8 @@ def train(
                         },
                         ckpt_path,
                     )
+            if train_backup is not None:
+                tracker.load_state_dict(train_backup)  # resume training from the live weights
         history.append(row)
 
         if epoch % settings.log_every == 0 or epoch == 1:
@@ -464,6 +590,22 @@ def train(
 
     wall = time.perf_counter() - t0
     train_tensors.spectra = clean_spectra  # restore caller's tensors after augmentation
+    if out_path is not None and settings.stop_epoch > 0:
+        # Shared-trunk arm: persist the final-epoch weights (the branch seed all bc/bc_sam
+        # students warm-start from). tracker still holds the last iterate here (best not yet
+        # restored). Only produced by the trunk (stop_epoch>0) — never on the default path.
+        torch.save(
+            {
+                "model_state": {
+                    k: v.detach().cpu().clone() for k, v in tracker.state_dict().items()
+                },
+                "model_cfg": asdict(cfg),
+                "settings": asdict(settings),
+                "meta": ckpt_meta or {},
+                "final_epoch": epoch,
+            },
+            out_path / "last.pt",
+        )
     if best_state is not None:
         tracker.load_state_dict(best_state)
     if ckpt_path is not None and best_state is not None:
