@@ -718,3 +718,6 @@ go longer than 24 hours let it"):**
   fused/batched BPTT — are training-environment/recipe changes BARRED mid-increment by the
   pre-hoc freeze. Booked as candidate increment-9 lane work: "cloud-efficient training path
   (compile/graphs), pre-declared, validated recipe-neutral vs a GB10 reference run."
+
+---
+
