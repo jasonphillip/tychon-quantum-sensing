@@ -619,3 +619,44 @@ lit; adversarial option-space completeness) against the Addendum H diagnosis
    already stubs (cross-relaxation/P1 bath), public/published real-ODMR anchor data, and
    NVRNet-style adapter-based transfer design. Full text in the session record; actionable
    items await Jason's lane assignments.
+
+---
+
+## Addendum L (2026-07-11) — increment-8 execution-infra escalation: RULING = fleet GB10s (Option C)
+
+**Escalation received from the odmr worker (stop-and-report, correct behavior)** and verified:
+pre-hoc science frozen at odmr 2207f87 ("committed BEFORE any training" — confirmed in git);
+wave-1 chunk-1 teachers both exit 137 (SIGKILL, confirmed from S3 exit_code) = host-RAM OOM
+(~17 GB peak v3-load+aug vs g6.xlarge's 16 GiB); second independent blocker = watchdog overrun
+(bc ~99 s/ep, bc_sam ~140 s/ep ⇒ 15–25 h on L4 vs 720-min cap; ensemble×5+SAM is fundamentally
+long). No live instances, no ongoing spend (~$0.15 total cost of discovery). Quota still 8
+(case open), spot 0. The infra smoke test used a placeholder cmd, so real training memory/time
+was never exercised on L4 — booked as a harness lesson: future smoke = 2-epoch real-recipe run.
+
+**RULING: Option C — execute increment-8 entirely on the fleet GB10s (spark2 + spark3), 2
+concurrent, house nohup+pidfile+heartbeat pattern.** Rationale: (i) at the current 8-vCPU quota
+AWS offers ≤ the fleet's parallelism (g6.2xlarge would fix OOM but = 8 vCPU = 1 concurrent —
+strictly worse); (ii) GB10 IS v6's original training environment — the environment-shift
+confound collapses and kd1 connects directly to increment-7's actual numbers; (iii) $0,
+unblocked today; (iv) 128 GB unified memory and no watchdog moot both blockers with zero code
+change (worker confirmed the frozen code runs on GB10 as-is). Expected makespan ~3.5–5 days at
+2×GB10 (~195 GPU-h).
+
+**Amendments to dispatch-9 (execution only — science unchanged, pre-hoc verdict untouched):**
+1. Compute target = spark2 + spark3 GB10s. spark3 reached over ConnectX (10.0.0.3); dataset/
+   repo sync via 200GbE; verify spark3 GPU idle before scheduling onto it.
+2. §0-ii now records: training environment = GB10 (same as v6/increment-7). Stop-condition 1
+   (baseline-env vs v6 material shift) RETAINED as a consistency gate — it now guards
+   torch-version/library drift instead of hardware shift. baseline-env arm RETAINED (its n=5
+   seed-spread measurement of the incumbent recipe is unchanged in value).
+3. NO mid-increment migration to AWS if the quota raise lands — one environment per increment.
+   Schedule longest-first (bc_sam) to minimize makespan; keep both GPUs saturated.
+4. AWS stays warm, nothing torn down (bucket, content-addressed dataset, validated harness incl.
+   the worker's --chunk/--stage-dir extensions at gpu-fanout 8328f48). Credits re-earmarked:
+   (a) a future wider matrix (increment-9+, more seeds/ablations) on g6.2xlarge×N once the
+   64-vCPU raise lands; (b) v4 fidelity dataset generation — embarrassingly parallel,
+   environment-insensitive, and now fully de-risked: **CUDA-Q L4 validation r2 PASSED**
+   (1,024 batched Lindblad evolutions, 201 steps, 4.08 s on L4 — comparable to GB10's 4.51 s;
+   corrects Addendum K item 3 "r2 in flight").
+
+Dispatched back down to the odmr worker via Jason relay.
