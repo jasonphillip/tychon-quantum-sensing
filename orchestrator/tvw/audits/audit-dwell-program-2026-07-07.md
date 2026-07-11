@@ -497,3 +497,46 @@ NOT yet dispatched, decision is Jason's:
   The 7b evidence favors trying (b) first: the failure is reproducibility, not capacity to
   fit, and (b) costs no hardware path. A (b) failure with an ensemble teacher would then be
   clean evidence for (a). HOLD — no dispatch drafted until Jason picks a direction.
+
+---
+
+## Addendum I (2026-07-11) — increment-8 options audit + literature ETL; the (a)/(b) dichotomy is NOT exhaustive
+
+Per Jason's directive, TVW ran a three-agent research sweep (KD-reliability lit; training-stability
+lit; adversarial option-space completeness) against the Addendum H diagnosis
+(reliability-at-fixed-capacity) before any increment-8 direction is picked. Full deliverable:
+**`tvw/audits/increment8-options-audit-2026-07-11.md`**. Headlines:
+
+1. **The Addendum H two-path framing is superseded.** The audited option space has SIX
+   constraint-surviving families: (A) capacity bump [orig. a]; (B) target-signal refinement
+   [orig. b, widened: ensemble teacher, logit standardization, consistent-view+patience,
+   co-distillation]; (C) trajectory-stability levers [NEW: SAM, SWA/EMA, shared-early-checkpoint
+   seed branching — the only family whose literature directly targets seed variance];
+   (D) cross-seed weight aggregation into one same-shape model [NEW, gray-zone: valid via
+   branch-then-soup, NOT via cross-init re-basin at 176k width]; (E) two-stage + EWC retention
+   [NEW]; (F) collapse-exact over-parameterized training, ExpandNets-style [NEW — option (a)'s
+   optimization benefit with zero deployment cost; sharpest structural miss].
+2. **Load-bearing literature findings:** seed variance is trajectory instability, not any single
+   noise source (arXiv:2103.04514 — kills "pin the RNG"); KD is *partial* variance reduction
+   dependent on α (2305.17581 — explains 7b's 2/3); inter-student variance shrinks O(1/k) with
+   k averaged teacher responses (2601.18909, 2026 — theoretical backbone for ensemble teacher);
+   co-distillation/churn methods measurably cut cross-seed disagreement (2102.03349, 2106.02654,
+   2204.04735); soups need a shared basin — branch seeds from an early stable checkpoint
+   (1912.05671, 2203.05482); don't just scale the teacher (1910.01348).
+3. **Governance question flagged for Jason (§5 of the audit, HOLD):** every-seed recipe
+   reliability vs a pre-registered per-run acceptance gate — a policy choice that changes what
+   increment-8 must achieve. TVW recommends keeping the every-seed standard.
+4. **TVW recommendation (§6, decision Jason's):** deployment-neutral "B+C stack" first (ensemble
+   teacher + logit standardization + EMA/SWA + shared-early-branch seeds, optional SAM; free
+   branch-then-soup report-only arm), family F second, true capacity bump (A) only after those
+   fail — at which point the hardware-cost evidence would be clean.
+5. **ETL booked:** 26 arXiv method papers (24 full-text via ar5iv/Jina, 1 native-HTML full text,
+   1 abstract-only — 2601.18909, no HTML render available) into `~/.corpus/odmr-pnt-nv-docs`
+   `raw/arxiv.org/` with provenance headers; manifest 28→54 sources; acquisition.log appended;
+   corpus reprocessed with Qwen3-Embedding-4B (Spark2). Residual gaps (index-verified only, NOT
+   ingested): 2407.04600, 2206.15047, 2512.13905, ASAM/GSAM/Switch-EMA variants.
+6. **Novelty note:** no paper directly addresses seed-stable KD for tiny fixed-architecture
+   embedded students — a positive B+C result would be a defensible novelty point (feeds the Q5
+   ledger / O7 when it runs).
+
+**Status: increment-8 direction remains OPEN — expanded menu on the table; no dispatch drafted.**
