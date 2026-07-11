@@ -689,3 +689,32 @@ Dispatched back down to the odmr worker via Jason relay.
    FANOUT_MAX_RUN_MINUTES=1800. Harness lesson from Addendum L stands: chunk-1 (2 teachers)
    doubles as the real-recipe smoke — verify RAM headroom + epoch pace from its logs before
    draining the waves.
+
+---
+
+## Addendum N (2026-07-11) — chunk-1 time/cost escalation RULED: proceed all arms, budget cap $800, 24h stop-line lifted
+
+Worker escalation verified: teacher_e1 AND teacher_e2 both exit 0 on g6e.xlarge with valid
+2.8 MB checkpoints in S3 (OOM cleared; infra pipeline proven on the real recipe; 2 of 5
+teachers already banked). Measured pace: L40S 76.7 s/epoch vs GB10 38.9 (~1.97× slower —
+latency-bound sequential BPTT; throughput GPUs don't help). Cost projection revised
+$105–160 → ~$650–700 full increment. Month-to-date net spend ≈ $0 (credits absorbing).
+
+**RULINGS (Jason directives 2026-07-11: "make sure it's running efficiently"; "if it needs to
+go longer than 24 hours let it"):**
+- **(A) Budget AUTHORIZED, hard cap $800** for the full increment (grounded in Jason's
+  standing credits directives and his relay of this escalation). Worker reports projected +
+  actual spend at each wave boundary; stop-and-report if the cap is threatened.
+- **(B) = B[i], strengthened by Jason's override: the 24 h monitor stop-line is LIFTED.**
+  Proceed with ALL arms including bc_sam. The watchdog is pure hang-protection, raised to
+  48 h (fanout.env committed). An arm/seed is dropped only on watchdog kill or a guard trip —
+  the data decides, not the clock. (Teacher early-stop @160 supports the optimistic case.)
+- **(C) Instance type stays g6e.xlarge** — switching mid-increment is an environment change
+  (barred), and nothing faster exists in quota anyway: the workload is kernel-launch-latency
+  bound, so bigger cloud GPUs don't help. Concurrency scaling on quota raise remains allowed.
+- **Efficiency question (Jason) answered honestly:** the ~2× vs GB10 is intrinsic to the
+  frozen recipe's sequential BPTT on cloud GPUs (GB10 wins on launch latency via Grace-
+  Blackwell integration, not raw compute). The known fixes — torch.compile, CUDA graphs,
+  fused/batched BPTT — are training-environment/recipe changes BARRED mid-increment by the
+  pre-hoc freeze. Booked as candidate increment-9 lane work: "cloud-efficient training path
+  (compile/graphs), pre-declared, validated recipe-neutral vs a GB10 reference run."
