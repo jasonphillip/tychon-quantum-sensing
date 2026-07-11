@@ -25,12 +25,14 @@ ops-guard (`validation/ops_guard.py`) and the flatbuffer stage (`validation/tfli
 that is a **design property, not an executed export** — no statement here may claim "INT8" or
 "on-silicon" numbers the artifacts do not support.
 
-**(ii) Training environment: AWS g6.xlarge (NVIDIA L4, x86-64).** Increment-8 training runs on
-`~/projects/gpu-fanout` cloud instances (L4/x86), **not** the GB10/ARM primary. L4 (x86) and GB10
-(ARM) are **not bitwise-reproducible** (different BLAS/cuDNN kernels, accumulation order).
-Therefore **all verdict comparisons use the in-environment `baseline-env` arm** — the unchanged
-increment-6 v6 recipe rerun ×5 seeds on the same L4/x86 stack — as the baseline every guard and
-the PRIMARY test compares against. Hardware is a **recorded covariate**: every run preserves its
+**(ii) Training environment: AWS g6e.xlarge (NVIDIA L40S 48 GB, 32 GiB host, x86-64).**
+Increment-8 training runs on `~/projects/gpu-fanout` cloud instances (L40S/x86), **not** the
+GB10/ARM primary. (Instance fixed by TVW Addendum M after `g6.xlarge` proved too small — see the
+execution note below; one environment per increment.) L40S (x86) and GB10 (ARM) are **not
+bitwise-reproducible** (different BLAS/cuDNN kernels, accumulation order). Therefore **all verdict
+comparisons use the in-environment `baseline-env` arm** — the unchanged increment-6 v6 recipe
+rerun ×5 seeds on the same L40S/x86 stack — as the baseline every guard and the PRIMARY test
+compares against. Hardware is a **recorded covariate**: every run preserves its
 `run_manifest.json` (torch/CUDA version, GPU, commit SHAs, dataset sha256) under
 `artifacts/increment8/` + NAS backup `spark2-odmr-increment8`. A report-only cross-check compares
 pooled `baseline-env` against the GB10 v6 numbers; a **material shift there is a STOP** (an
@@ -43,7 +45,7 @@ field-cone sets stay on spark2; checkpoints come back and `experiments/increment
 re-derives every reported number locally. A corrupted/wrong cloud run can only produce a checkpoint
 that fails the local evals — it cannot contaminate the audit chain.
 
-## Arms (train on AWS L4; students byte-identical to v6, 175,790 params; 5 seeds each unless noted)
+## Arms (train on AWS L40S; students byte-identical to v6, 175,790 params; 5 seeds each unless noted)
 
 Frozen for every arm: `sequence_train_v3`, gated core + linear assoc (175,790 params, same
 ops/whitelist), snr10 shot-noise augmentation, epochs 800 / batch 32 / patience 100 / val_every 5,
@@ -121,3 +123,11 @@ No instances remain (self-terminated; teardown clean). Resolution requires a com
 cost decision (bigger-RAM instance + longer watchdog, a faster GPU, or the fleet GB10s) —
 escalated UP to TVW as the increment-8 execution blocker. Training and the verdict are unchanged
 and ready to run the moment a compute target is chosen.
+
+**RESOLVED — TVW Addendum M (2026-07-11, gpu-fanout `e613ec3`): execute on AWS `g6e.xlarge`**
+(NVIDIA L40S 48 GB / 32 GiB host / 4 vCPU → OOM cleared, still 2-concurrent under the 8-vCPU
+quota; watchdog raised to 1800 min / 30 h). Fleet vetoed (sparks can't be locked down); one
+environment per increment (no instance-type change mid-increment — only concurrency may scale if
+the 64-vCPU raise lands). Chunk-1 is re-run as the real-recipe smoke: verify host-RAM headroom +
+s/epoch pace, STOP-AND-REPORT if the worst arm projects past ~24 h (6 h watchdog margin). §0-ii
+above records the L40S environment; the `baseline-env` arm carries the comparison as designed.
