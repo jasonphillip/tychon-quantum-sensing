@@ -576,3 +576,46 @@ lit; adversarial option-space completeness) against the Addendum H diagnosis
    the spark1 preflight clone; (ii) preflight PASS, esp. G-instance quota (often 0 on
    fresh accounts; request early); (iii) the increment-8 dispatch itself (direction pick +
    pre-hoc verdict rules committed in odmr BEFORE any cloud run).
+
+---
+
+## Addendum K (2026-07-11) — CUDA-Q/GPU-sim assessment + ETL; fan-out harness VALIDATED end-to-end; quota state; dispatch-9 launch policy amended
+
+1. **Fan-out harness validated on real AWS runs.** Smoke test PASSED end-to-end (g6.xlarge:
+   boot → scoped-IAM S3 access → sha256-verified bundle → venv+torch cu130 → L4 GPU visible →
+   2.9G dataset readable → both packages import → provenance run_manifest.json → results to
+   S3 → self-terminate). One bug found+fixed on the way: embedded quotes in run commands broke
+   the user-data bash parse — commands are now base64-transported (gpu-fanout b76bcb7+).
+   IAM worker role created BY JASON (permission-gated, correctly held for his review).
+2. **Quota state:** raise to 64 G-vCPUs = Support case 178377947900659 (OPEN; the three AWS
+   emails Jason forwarded 2026-07-11 are its opening notifications, not a decision). History
+   shows a prior 192-vCPU request CLOSED UNGRANTED 2026-06-05 → expect friction. Spot G quota
+   = 0 (no shortcut). **Dispatch-9 gate amended per Jason: launch chunked at current quota
+   (8 vCPUs = 2 concurrent), widen as the raise lands.**
+3. **CUDA-Q question (Jason) answered — assessment filed:**
+   `cudaq-gpu-sim-assessment-2026-07-11.md`. Headlines: CUDA-Q 0.15.0 EMPIRICALLY RUNS ON
+   OUR GB10 (agent installed cu13 wheel + ran 1024 batched 3-level Lindblad evolutions in
+   4.5 s; benchmark preserved as `cudaq-batched-dynamics-benchmark-2026-07-11.py`; cudaq now
+   in spark2 base env). nv-sensor-sim already has a STUB CudaQAdapter (planned, never built) —
+   activation is now de-risked. For the future fidelity generator the recommendation is
+   dynamiqs (JAX; native batching + DIFFERENTIABLE → sim-to-real calibration) as primary with
+   CUDA-Q Dynamics as verified throughput fallback; today's analytic generator needs only
+   batched linear algebra if speed ever binds. Gotchas booked (cu13-only on Blackwell,
+   collapse-ops list-of-lists, RK integrator not torch, chunked batches at 10^6).
+   L4 validation run launched on AWS (r1 failed on a trivial matplotlib dep; r2 in flight).
+4. **ETL booked:** new corpus `~/.corpus/gpu-quantum-sim` — 16 sources (NVIDIA primary docs,
+   dynamiqs/qutip-jax/JAX, 5 arXiv sim-to-real/ODMR refs), 186 chunks, Qwen3-Embedding-4B.
+   3 GitHub sources acquired via raw/API fallback (Jina 403 on github.com).
+5. **NGC/NIM (Jason follow-up):** NGC = yes, relevant as the pinned-container distribution
+   channel for CUDA-Q/cuQuantum (nvcr.io/nvidia/quantum images; DGX Spark porting guide lists
+   cuQuantum "Yes since 25.06") — right route for reproducible envs when the adapter gets
+   built. NIM = NOT relevant to simulation (inference microservices; NIMs keep their existing
+   role as local audit critics only).
+6. **Strategic ruling context (sim-to-real):** Jason flagged that everything rests on
+   simulated data and asked how to improve the dataset before real-hardware access; TVW
+   answered with the sequenced plan (do NOT pause increment-8; recipe first, fidelity data
+   next, merge at a v4 re-validation increment) + the no-hardware levers: differentiable-sim
+   calibration to published spectra, domain randomization widening, fidelity physics the sim
+   already stubs (cross-relaxation/P1 bath), public/published real-ODMR anchor data, and
+   NVRNet-style adapter-based transfer design. Full text in the session record; actionable
+   items await Jason's lane assignments.

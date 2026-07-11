@@ -5,10 +5,14 @@
 >    (direction pick from the options audit); per house convention, pasting this dispatch's
 >    prompt into the worker session constitutes the go to EXECUTE.
 > 2. **Infrastructure gates (all must be green before any `--launch`):**
->    (a) IAM worker role created (`gpu-fanout/scripts/setup_iam.sh` — needs Jason, permission-
->    gated); (b) G-vCPU quota raise landed (requested 64, PENDING, req id
->    1d74e382c8ab4b6c962f803017b9db5aa4TZ2SVX; current 8 = 2 concurrent instances);
->    (c) smoke test passed end-to-end (`configs/smoke-matrix.yaml`).
+>    (a) ~~IAM worker role~~ **DONE 2026-07-11** (Jason ran setup_iam.sh; role scoped to the
+>    fanout bucket); (b) G-vCPU quota: raise to 64 requested (case 178377947900659, OPEN;
+>    prior request for 192 closed 2026-06-05 ungranted — expect delay). **AMENDED per Jason
+>    2026-07-11: do NOT block on the raise — launch chunked at current quota (8 vCPUs = 2
+>    concurrent g6.xlarge), widening waves as quota lands.** Spot quota is 0 (checked) — no
+>    spot shortcut. (c) ~~smoke test~~ **PASSED 2026-07-11** end-to-end (exit 0, L4 GPU,
+>    dataset sha-verified + readable, both packages import, provenance manifest, results
+>    shipped, self-terminated).
 > 3. **Governance default:** verdict uses the EVERY-SEED standard at n=5 seeds (options audit
 >    §5). If Jason prefers a pre-registered k-of-n acceptance gate instead, he must say so
 >    BEFORE issuance — it changes the verdict script.
