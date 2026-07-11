@@ -131,3 +131,26 @@ environment per increment (no instance-type change mid-increment — only concur
 the 64-vCPU raise lands). Chunk-1 is re-run as the real-recipe smoke: verify host-RAM headroom +
 s/epoch pace, STOP-AND-REPORT if the worst arm projects past ~24 h (6 h watchdog margin). §0-ii
 above records the L40S environment; the `baseline-env` arm carries the comparison as designed.
+
+**Chunk-1 smoke result — 2026-07-11 (STOP-AND-REPORT #2: worst-arm time + cost, escalated to
+TVW).** `teacher_e1` **succeeded (exit 0)** on g6e.xlarge — the 32 GiB host cleared the OOM and it
+produced a valid 2.8 MB checkpoint (best_val 0.490, on par with the increment-7 teacher). But the
+measured L40S pace fails the stop-line: **teacher = 76.7 s/epoch (best@60, stop@160, wall 12,280 s)
+vs GB10's 38.9 s/epoch → L40S is ~1.97x SLOWER.** The workload is latency-bound sequential BPTT
+(256 steps, batch 32, small model), so L40S's throughput advantage doesn't apply. Projections at
+increment-7's ~400-epoch early-stop horizon (GB10 pace x 1.97):
+
+| arm | GB10 s/ep | L40S s/ep | ~per-run (400 ep) |
+|---|--:|--:|--:|
+| baseline / teacher | ~37 | ~76 | ~8 h |
+| kd1 | ~43 | ~85 | ~9 h |
+| **bc** | 99 | ~195 | **~21.7 h** |
+| **bc_sam** | ~135 | ~266 | **~29.6 h (over)** |
+
+**Two blockers:** (1) **bc_sam projects ~28-34 h** (400-455 epochs) — over the ~24 h stop-line AND
+the 30 h watchdog (would be watchdog-killed). (2) **Cost overrun**: L40S at ~$1.9/hr x ~2x runtime
+~= 4.7x the g6.xlarge cost-per-run the dispatch estimate assumed -> full increment projects to
+**~$650-700 (bc-only ~$400)** vs the $105-160 estimate. Per the dispatch stop-line, escalated UP to
+TVW; wave-1 launches held after chunk-1 (teacher_e2 allowed to finish, a needed ensemble member),
+nothing else launched pending the ruling. Infra itself is proven working; this is purely a
+time/cost fit problem with the L40S choice.
