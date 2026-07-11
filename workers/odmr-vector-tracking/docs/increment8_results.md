@@ -91,7 +91,7 @@ permanently, Addendum H); any deterministic/pinned-RNG "fix".
 | Student param count | 175,790 (asserted every candidate) | deployment-neutrality; V250 ops-guard passes |
 | Seeds | teachers 30260701–05 · trunk 20260700 · students 20260701/11/21/31/41 | n=5 every-seed reliability standard |
 
-## Verdict — PENDING (training not yet run)
+## Verdict — PENDING (training blocked on an infra decision; escalated UP to TVW 2026-07-11)
 
 Pre-registered in `experiments/increment8_verdict.py` (committed before any training result
 exists). PRIMARY = in-cone identity recovery vs `baseline-env`, every seed (n=5), clean+snr30;
@@ -99,3 +99,25 @@ GUARD-A (HARD) = acquisition (directed 0/72 every seed; off-cone dwell CI-neutra
 GUARD-B = lock CI-neutral. Keep-what-survives; tie → simpler arm (`bc` < `bc_sam`); none →
 keep nothing, escalate UP to TVW on the options-audit ladder. Filled in after the local
 eval+verdict pass.
+
+### Execution status — 2026-07-11 (stop-and-report #6: cloud infra)
+
+All pre-hoc science is committed (`2207f87`) and locally validated (every arm trains end-to-end
+on real v3; every student is exactly 175,790 params + ops-guard clean; 190 tests green; the
+verdict reader was exercised against synthetic 5-seed artifacts). **Wave-1 chunk-1 (`teacher_e1`,
+`teacher_e2`) FAILED on AWS `g6.xlarge`** — the mandated instance cannot run the frozen v6 recipe:
+
+1. **Host-RAM OOM (exit 137 / SIGKILL by the Linux OOM killer, both runs).** Measured peak host
+   footprint ≈ **17 GB** loading full v3 (2048 seqs) + the augmentation pipeline; `g6.xlarge` has
+   **16 GiB host RAM**. (A CUDA-VRAM OOM would be a `RuntimeError`/exit 1, not 137.) The dispatch's
+   pre-flight smoke used a placeholder script, so real data loading was never exercised on L4 —
+   chunk-1 caught it for ~$0.15.
+2. **Watchdog overrun for the ensemble/SAM arms (no memory fix helps).** Measured on GB10:
+   baseline/teacher ≈ 36 s/epoch, **`bc` ≈ 99 s/epoch** (5 teacher forwards + EMA), `bc_sam`
+   ≈ 140 s/epoch. At increment-7's early-stop horizon (~400 epochs) and L4 being slower per
+   epoch, `bc`/`bc_sam` project to **~15–25 h**, exceeding the 720-min (12 h) watchdog.
+
+No instances remain (self-terminated; teardown clean). Resolution requires a compute-target /
+cost decision (bigger-RAM instance + longer watchdog, a faster GPU, or the fleet GB10s) —
+escalated UP to TVW as the increment-8 execution blocker. Training and the verdict are unchanged
+and ready to run the moment a compute target is chosen.
