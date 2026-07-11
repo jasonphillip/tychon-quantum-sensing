@@ -437,3 +437,63 @@ held→baseline, ou/reversal→A3. One correction to the worker's routing note: 
 drafted (post-Addendum-E) is the TRAINING-SIGNAL increment (7a foveated identity loss, 7b
 distillation, 7c optional PCGrad — deployment-neutral, frozen data/architecture), NOT
 "capacity bump or curriculum" — the capacity bump is increment-8, a separate later decision.
+
+---
+
+## Addendum H (2026-07-11) — dispatch-8/increment-7 COMPLETE, TVW-verified; verdict KEEP-NOTHING (escalate); increment-8 decision now open
+
+Worker session executed dispatch-8 (increment-7 identity recovery) 2026-07-09 → 07-11 on branch
+`increment-7-identity-recovery`, final HEAD d8773f3, on NAS + private GitHub (both verified to
+contain d8773f3); main NOT promoted — correct, keep-nothing leaves nothing to promote. TVW
+verified on disk before booking:
+
+1. **Pre-hoc integrity (STRICT):** rules commit a7b3061 (2026-07-09 20:08:47 UTC) contains the
+   full 345-line `experiments/increment7_verdict.py` with BOTH design-freedom points frozen —
+   the 7a foveated bin schedule (angle bins normalized to train-set mean 1.0, wide-angle 0.5×)
+   and the 7b teacher/KD spec (4× teacher via feat_dim 64/assoc 32/state 128/conv 16, α=0.5,
+   T=2.0 per Hinton 2015). First training artifact mtime 20:09:36 — 49 s after the rules
+   commit. The worker also self-flagged the shared-teacher seed-correlation caveat in the
+   rules text. §0 quantization paragraph present and stated first, per dispatch.
+2. **Verdict application is correct and is the interesting part.** 7b distillation pooled held
+   misassoc 0.402 — CI-improve AND below the 0.425 material threshold — but seed 20260721
+   landed at 0.604, worse than its v6 counterpart (0.581), so the every-seed rule fails
+   PRIMARY. Per-seed spread 0.262/0.340/0.604. This is the same seed-instability signature
+   that killed increment-3 lever B; the rule did exactly what it was registered to do. ou
+   recovery ~100% and reversal 65% DID clear CI+every-seed, but the headline gate is held.
+   7a foveated: no effect on target (held 0.548 vs 0.540, neutral) — reweighting gradient
+   location at fixed capacity with hard labels doesn't buy identity back. Verdict artifact
+   decision field = `keep-nothing-escalate`; kept/survivors empty. GUARD-A/B never tripped
+   by any arm (directed 0/72 every seed; off-cone CI-neutral; lock neutral).
+3. **7c PCGrad: declined by Jason 2026-07-11** (dated disposition in the results doc,
+   scaffolding committed untrained). Sound premise-weakening rationale recorded: no
+   field-vs-identity guard conflict was ever observed, so gradient-surgery's target mechanism
+   is unsupported by the evidence.
+4. **Language audit clean:** banned numbers absent; the only "on-silicon" string in the new
+   docs is the §0 sentence prohibiting the claim. Deployment-neutrality asserted on all 6
+   candidates (params == 175,790, state-dict shape-identical to v6, ops-guard pass). Teacher
+   (699,982 params) correctly marked throwaway/never-deployed.
+5. **Diagnosis refinement accepted into the program record:** the pre-registered escalation
+   framing was "capacity tension"; the evidence sharpens it to **reliability-at-fixed-
+   capacity** — no arm ever traded acquisition for identity (the objectives are not in hard
+   opposition at eval time), and 2 of 3 distilled seeds held BOTH, one into v2 territory. The
+   student CAN fit both; it cannot do so reproducibly across seeds at 175,790 params with one
+   teacher. Teacher premise confirmed real dark knowledge existed (teacher val 0.579 vs v6
+   0.658).
+
+**RULING: dispatch-8 CLOSED — executed correctly; verdict KEEP-NOTHING per pre-hoc rules.**
+Deployed default remains v6 @ 2f52d69 with the dispatch-7 policy. v2 remains the pinned in-cone
+identity reference. No outward-claims impact: nothing in §4 changes (no new default, no new
+outward number; increment-7 results are internal evidence). Fieldcone boundary not re-charted
+(no survivor — per dispatch).
+
+**Escalation received — the increment-8 decision is now open at TVW.** Two candidate paths,
+NOT yet dispatched, decision is Jason's:
+  (a) **Capacity bump** (increment-8 as originally framed) — raise param count; carries the
+      NPU-budget re-check + `.vnnx` recompile Beelink handoff (cross-repo, hardware cost).
+  (b) **Distillation-recipe refinement** (deployment-neutral, new recipe = fresh dispatch) —
+      attack the seed instability directly: e.g. teacher ensemble (kills the shared-teacher
+      correlation), stronger/longer KD schedule, seed-selection-with-holdout is NOT eligible
+      (post-hoc selection violates house discipline).
+  The 7b evidence favors trying (b) first: the failure is reproducibility, not capacity to
+  fit, and (b) costs no hardware path. A (b) failure with an ensemble teacher would then be
+  clean evidence for (a). HOLD — no dispatch drafted until Jason picks a direction.
