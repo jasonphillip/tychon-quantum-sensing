@@ -660,3 +660,32 @@ change (worker confirmed the frozen code runs on GB10 as-is). Expected makespan 
    corrects Addendum K item 3 "r2 in flight").
 
 Dispatched back down to the odmr worker via Jason relay.
+
+---
+
+## Addendum M (2026-07-11) — Option C VETOED by Jason (sparks not lockable); superseding ruling: AWS g6e.xlarge
+
+1. **Jason vetoed the Addendum L fleet ruling**: spark2/spark3 cannot be locked down for
+   multi-day runs — that constraint was the original motivation for AWS. His stated fallback
+   was holding for the spark4 RMA replacement.
+2. **Hold is unnecessary — superseding ruling: AWS g6e.xlarge, us-east-1, 2 concurrent.**
+   Verified specs: g6e.xlarge = 4 vCPU / 32 GiB host RAM / 1× L40S 48 GB. Under the existing
+   8-vCPU quota this keeps 2-concurrent (equal to the fleet plan), the 32 GiB host RAM clears
+   the measured ~17 GB OOM, and the L40S clears the watchdog problem (raised to 30 h for
+   bc_sam headroom). Cost ≈ $360–450 of credits for the ~195 GPU-h matrix. Multi-region
+   checked and rejected: G/VT quota = 0 in us-east-2/us-west-2/eu-west-1.
+3. **Environment ruling:** all increment-8 runs on g6e.xlarge/L40S — one uniform environment.
+   The §0-ii cross-hardware framing and stop-condition 1 (baseline-env vs GB10-v6 material
+   shift) return to their ORIGINAL dispatch-9 roles (the baseline-env arm was designed for
+   exactly this). If the 64-vCPU raise lands mid-increment, scaling CONCURRENCY on the same
+   instance type is permitted (not an environment change); switching instance type mid-
+   increment is not.
+4. **NGC/NIM ruled NOT APPLICABLE to this problem** (Jason asked): NGC is a container
+   registry (no compute); NIM free credits are hosted-inference API calls on NVIDIA-served
+   models — they cannot execute arbitrary PyTorch training. The one NVIDIA-compute angle
+   would be Brev (NVIDIA's GPU-VM cloud) IF Jason holds credits there — parked as optional,
+   not needed given the g6e path.
+5. Config landed: gpu-fanout `fanout.env` → FANOUT_INSTANCE_TYPE=g6e.xlarge,
+   FANOUT_MAX_RUN_MINUTES=1800. Harness lesson from Addendum L stands: chunk-1 (2 teachers)
+   doubles as the real-recipe smoke — verify RAM headroom + epoch pace from its logs before
+   draining the waves.
