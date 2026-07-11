@@ -540,3 +540,39 @@ lit; adversarial option-space completeness) against the Addendum H diagnosis
    ledger / O7 when it runs).
 
 **Status: increment-8 direction remains OPEN — expanded menu on the table; no dispatch drafted.**
+
+---
+
+## Addendum J (2026-07-11) — AWS training fan-out capability built (`gpu-fanout`); data-posture ruling recorded
+
+1. **Data-posture ruling (Jason, 2026-07-11):** Jason directed TVW to set up AWS
+   parallelization for the increment-8 training matrix, with the synthetic-data caveat
+   explicitly on the table — this constitutes approval to send (i) the synthetic v3 training
+   set (`sequence_train_v3/dataset.h5`, 2.9 GB, simulator output) and (ii) git-archived
+   tracked SOURCE of odmr-vector-tracking + nv-sensor-sim to AWS S3/EC2 (private account,
+   us-east-1). NOT approved / not sent: eval datasets, checkpoints history, repo .git
+   history, any SBIR document material, anything CUI-adjacent. Evals and pre-hoc verdicts
+   run LOCALLY on spark2 only — the cloud executes training and returns checkpoints; the
+   local verdict re-derives every number, so cloud execution cannot contaminate the audit
+   chain.
+2. **Placement ruling:** new fleet-infra repo `~/projects/gpu-fanout` (private GitHub
+   `jasonphillip/gpu-fanout`, main @ da1dd37) — NOT inside odmr-vector-tracking, keeping
+   cloud-infra churn out of the science repo whose git history is the pre-hoc discipline
+   chain. The odmr worker consumes it via the increment-8 dispatch.
+3. **What was built (v1, validated dry-run):** preflight (SSO/quota L-DB2E81BA/AMI/bucket
+   go-no-go), scoped IAM instance profile (S3 single-bucket), sha256-manifested bundle
+   staging, matrix launcher (dry-run by default, `--launch` to spend, per-invocation
+   instance cap, double-launch refusal, IMDSv2 required, watchdog `shutdown +720` as FIRST
+   user-data action with terminate-on-shutdown), result collection with per-run exit
+   status, teardown by tag. Draft 12-run matrix for the B+C stack (5 teachers + trunk;
+   6 students in wave 2) — clearly marked DRAFT; the real matrix + `increment8_train.py`
+   + pre-hoc verdict belong to the dispatch. Worst-case cost ≈ $58/wave at g6.xlarge caps.
+4. **Provenance discipline:** every cloud run writes `run_manifest.json` (torch/CUDA/GPU/
+   platform, repo commit SHAs, dataset sha256, exact cmd). Cross-hardware caveat booked in
+   the README: L4/x86 vs GB10/ARM is not bitwise-comparable — the increment-8 dispatch must
+   state whether baselines are rerun in-environment or hardware is a recorded covariate.
+5. **Blockers before first launch:** (i) Jason's SSO login (`aws sso login --profile
+   spark-sso --use-device-code`) — CLI v2.35.21 installed on spark2, config restored from
+   the spark1 preflight clone; (ii) preflight PASS, esp. G-instance quota (often 0 on
+   fresh accounts; request early); (iii) the increment-8 dispatch itself (direction pick +
+   pre-hoc verdict rules committed in odmr BEFORE any cloud run).
