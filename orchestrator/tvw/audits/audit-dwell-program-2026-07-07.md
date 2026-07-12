@@ -722,3 +722,23 @@ go longer than 24 hours let it"):**
 ---
 
 
+
+## Addendum Q (2026-07-12) — increment-8 PAUSED by Jason mid-wave-1; direction review open
+
+Jason paused the run amid a direction review (see Addendum P context + this date's
+strategic exchange). Worker executed the pause cleanly while its SSO token was still valid:
+drain loop stopped, sole running instance (teacher_e4, ~3.9 h in, no checkpoint) terminated,
+nothing queued, spend halted at ≈ $31 of the $800 cap. Banked in S3: teacher_e1/e2 verified
+(exit 0, stop@160/240), teacher_e3 finished-likely-banked (unverifiable until SSO refresh —
+the "(none)" listing scare was an expired-token artifact, not data loss). Not started:
+teacher_e5, trunk, baselines, all wave-2. Resume is idempotent (--chunk skips banked runs);
+requires Jason's interactive `aws sso login` first. TVW ruling on the worker's parked-work
+offer: LEAVE PARKED — no tidy-up, no L40S pace investigation (that is the treadmill axis the
+direction review exists to question).
+
+**Decision now owned by Jason (no dispatch until he rules):**
+ (i) resume increment-8 as-is (≈ $620 remaining, ~3–4 days);
+ (ii) keep parked and redirect the next cycle to the value thesis — sim-to-real anchoring /
+ (iii) close increment-8 early with a partial record (3 teachers banked, no verdict — the
+      reliability question stays open).
+zero-compute and can proceed during any pause.
