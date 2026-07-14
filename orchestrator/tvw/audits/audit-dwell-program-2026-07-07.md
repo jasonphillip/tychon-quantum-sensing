@@ -742,3 +742,6 @@ direction review exists to question).
  (iii) close increment-8 early with a partial record (3 teachers banked, no verdict — the
       reliability question stays open).
 zero-compute and can proceed during any pause.
+
+---
+
