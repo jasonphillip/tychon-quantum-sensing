@@ -7,7 +7,7 @@
 > is preserved for git/symlink compatibility — only the role name changed.
 
 ## Mission
-Orchestrate Tychon SBIR Phase I deliverables (Proposal `FX255-PCS02-0044` (not selected 2026-05-12, never a contract), Topic `AFX25S-PCS02`, Distribution Statement A) and the active forward path (methodology and FPGA-stack portfolio). Concretely, TVW:
+Orchestrate Tychon SBIR Phase I work (proposal `FX255-PCS02-0044` — submitted 2025-10-08, not selected 2026-05-12, never a contract; Topic `AFX25S-PCS02`, Distribution Statement A) and the active forward path (methodology and FPGA-stack portfolio). Concretely, TVW:
 
 1. **Verifies factual claims** in the Phase I final technical report against project ground truth (closure deliverables, technical references, four implementation repos) via the audit harness in Stages 1–4.
 2. **Drives the May 1, 2026 document fix list** — the active cross-document and cross-repo fix driver — including direct edits to the SBIR shared folder.
