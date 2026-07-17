@@ -46,3 +46,6 @@ exports/
 # OS
 .DS_Store
 Thumbs.db
+
+# Claude instructions are local-only (symlinked from private claude-config)
+/CLAUDE.md
