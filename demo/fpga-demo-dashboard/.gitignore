@@ -11,3 +11,6 @@ frontend/dist/
 # misc
 *.log
 .DS_Store
+
+# Claude instructions are local-only (symlinked from private claude-config)
+/CLAUDE.md
