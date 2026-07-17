@@ -36,3 +36,6 @@ venv/
 
 # Note: CLAUDE.md is intentionally NOT tracked (user-global core.excludesFile excludes it;
 # matches the odmr-edge-ml / nv-sensor-sim convention — it stays a local working file).
+
+# Claude instructions are local-only (symlinked from private claude-config)
+/CLAUDE.md
