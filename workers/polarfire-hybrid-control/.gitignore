@@ -56,3 +56,7 @@ docs/superpowers/
 libero/reports/2026-06-21-safety-direct/libero_pnr.log
 libero/reports/2026-06-21-*/*.srr
 libero/reports/2026-06-21-*/*.srm
+
+# Claude instructions are local-only (symlinked from private claude-config)
+/CLAUDE.md
+/docs/claude
