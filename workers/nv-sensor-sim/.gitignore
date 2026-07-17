@@ -41,3 +41,6 @@ Thumbs.db
 
 # Claude Code local settings (per-user, not team-wide)
 .claude/settings.local.json
+
+# Claude instructions are local-only (symlinked from private claude-config)
+/CLAUDE.md
