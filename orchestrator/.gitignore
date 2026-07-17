@@ -18,3 +18,7 @@ __pycache__/
 .DS_Store
 .vscode/
 .idea/
+
+# Claude instructions are local-only (symlinked from private claude-config)
+/CLAUDE.md
+/docs/claude
