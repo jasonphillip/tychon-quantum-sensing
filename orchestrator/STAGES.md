@@ -24,6 +24,26 @@ Each stage produces a working artifact and a verifiable stop-gate.
 
 Natural quitting points: after Stage 1 (searchable docs), Stage 4 (audited punch list), Stage 6 (chat workbench), or Stage 8 (Tychon-owned model).
 
+## Repair-loop stopping rule (adopted 2026-08-11, P0-4)
+
+Applies to every verify→repair loop in TVW: critic ensemble re-runs, fix-list edit→re-audit
+cycles, and render→check→re-edit passes. Grounded in VRR-Stop (arXiv 2607.17641, in
+`~/.corpus/agent-reliability/`): when verifier and repairer are both noisy, repair can damage
+already-correct work while *reported* acceptance keeps rising.
+
+1. **Margin, not rounds.** Accept a repair only when the verification evidence for the repaired
+   version is *stronger* than the evidence for the pre-repair version (e.g., a critic verdict
+   flips with citation, a spot-check passes that previously failed). "The critic stopped
+   complaining" is not a margin.
+2. **Never accept a round-N fix on less evidence than round-1.** If the first repair was
+   justified by a failing check, the second repair needs a failing check too — not vibes about
+   the first repair being incomplete.
+3. **Two failed repairs → stop and surface.** After two consecutive repair attempts that don't
+   improve the verification margin, freeze the artifact, log the disagreement (DLOG or audit
+   addendum), and hand the decision up — do not keep looping.
+4. **Repair-of-repair is a flag.** Any loop that touches the same claim/file three times in one
+   session gets called out explicitly in the session report with its evidence trail.
+
 ## Active driver: May 1, 2026 Document Fix List
 
 Source of truth: `tvw/source/sbir/tychon-nv-sim-repos/May_1_2026_Document_Fix_List.md`. Per-fix status: `tvw/source/sbir/tychon-nv-sim-repos/fix-list-status.csv`. Items split by where the work belongs (post-2026-05-03 refactor):
