@@ -23,8 +23,14 @@
 #   from-lane: <lane>
 #   to-lane: <lane>
 #   title: <title>
+#   predicted-hours: <float>      (optional, from send --predict; P0-1 calibration 2026-08-11)
+#   predicted-sessions: <int>     (optional, from send --predict)
+#   p-success: <0..1>             (optional, from send --predict; elicited answer-free, pre-execution)
 #   status: pending|done
 #   sha256: <sha256 of body>
+#   actual-hours: <float>         (optional, from ack --actual)
+#   actual-sessions: <int>        (optional, from ack --actual)
+#   outcome: success|partial|fail (optional, from ack --actual)
 #   ---
 #   <blank line>
 #   <body, verbatim>
@@ -41,9 +47,13 @@ cat <<EOF
 dispatch.sh — lossless, file-based dispatch between Claude lanes (manual by design)
 
   send <to-lane> <title> [--file <path>] [--from <lane>]  queue a dispatch; body from --file or stdin
+       [--predict <hours>,<sessions>,<p_success>]         effort prediction (P0-1 calibration; elicit
+                                                          BEFORE writing the body — answer-free)
   list [--all] [--lane <lane>]                            one line per dispatch (default: pending only)
   show <id>                                               print a dispatch and verify its sha256
-  ack <id> [note]                                         mark done: restamps + moves inbox/ -> done/
+  ack <id> [--actual <hours>,<sessions>,<outcome>] [note] mark done: restamps + moves inbox/ -> done/
+                                                          outcome: success|partial|fail
+  stats [--lane <lane>] [--full]                          predicted-vs-actual calibration report
 
 Workflow: TVW runs 'send' -> file lands in ~/projects/<to-lane>/.dispatch/inbox/ ->
 Jason tells the worker session "check your dispatch inbox" (a one-liner, nothing to
@@ -132,11 +142,12 @@ ensure_git_exclude() {
 # ── send ───────────────────────────────────────────────────────────────────
 
 cmd_send() {
-    local to_lane="" title="" body_src="" from_lane=""
+    local to_lane="" title="" body_src="" from_lane="" predict=""
     while [ $# -gt 0 ]; do
         case "$1" in
             --file) [ $# -ge 2 ] || die "--file needs a path"; body_src="$2"; shift 2 ;;
             --from) [ $# -ge 2 ] || die "--from needs a lane"; from_lane="$2"; shift 2 ;;
+            --predict) [ $# -ge 2 ] || die "--predict needs <hours>,<sessions>,<p_success>"; predict="$2"; shift 2 ;;
             -*) die "unknown flag for send: $1" ;;
             *)  if   [ -z "$to_lane" ]; then to_lane="$1"
                 elif [ -z "$title" ];   then title="$1"
@@ -170,6 +181,17 @@ cmd_send() {
     # Normalize: ensure exactly a trailing newline so storage is byte-faithful.
     [ -z "$(tail -c1 "$tmp")" ] || echo >> "$tmp"
 
+    # Calibration prediction (P0-1, 2026-08-11): --predict <hours>,<sessions>,<p_success>
+    local p_hours="" p_sessions="" p_succ=""
+    if [ -n "$predict" ]; then
+        IFS=',' read -r p_hours p_sessions p_succ <<< "$predict"
+        [[ "$p_hours"    =~ ^[0-9]+([.][0-9]+)?$ ]] || die "--predict hours must be numeric (got '$p_hours')"
+        [[ "$p_sessions" =~ ^[0-9]+$ ]]             || die "--predict sessions must be an integer (got '$p_sessions')"
+        [[ "$p_succ"     =~ ^(0([.][0-9]+)?|1([.]0+)?)$ ]] || die "--predict p_success must be 0..1 (got '$p_succ')"
+    else
+        echo "note: no --predict given — this dispatch will not contribute to calibration stats" >&2
+    fi
+
     local sha bytes; sha="$(sha256sum < "$tmp" | awk '{print $1}')"
     bytes="$(wc -c < "$tmp" | tr -d ' ')"
 
@@ -193,6 +215,11 @@ cmd_send() {
         echo "from-lane: $from_lane"
         echo "to-lane: $to_lane"
         echo "title: $title"
+        if [ -n "$p_hours" ]; then
+            echo "predicted-hours: $p_hours"
+            echo "predicted-sessions: $p_sessions"
+            echo "p-success: $p_succ"
+        fi
         echo "status: pending"
         echo "sha256: $sha"
         echo '---'
@@ -267,10 +294,23 @@ cmd_show() {
 # ── ack ────────────────────────────────────────────────────────────────────
 
 cmd_ack() {
-    [ $# -ge 1 ] || die "usage: dispatch.sh ack <id> [note]"
+    [ $# -ge 1 ] || die "usage: dispatch.sh ack <id> [--actual <hours>,<sessions>,<outcome>] [note]"
     local id="$1"; shift
+    # Calibration actuals (P0-1, 2026-08-11): --actual <hours>,<sessions>,<outcome>
+    local actual="" a_hours="" a_sessions="" a_outcome=""
+    if [ "${1:-}" = "--actual" ]; then
+        [ $# -ge 2 ] || die "--actual needs <hours>,<sessions>,<outcome>"
+        actual="$2"; shift 2
+        IFS=',' read -r a_hours a_sessions a_outcome <<< "$actual"
+        [[ "$a_hours"    =~ ^[0-9]+([.][0-9]+)?$ ]]     || die "--actual hours must be numeric (got '$a_hours')"
+        [[ "$a_sessions" =~ ^[0-9]+$ ]]                 || die "--actual sessions must be an integer (got '$a_sessions')"
+        [[ "$a_outcome"  =~ ^(success|partial|fail)$ ]] || die "--actual outcome must be success|partial|fail (got '$a_outcome')"
+    fi
     local note="${*:-}"
     local f; f="$(find_dispatch_file "$id")"
+    if [ -z "$actual" ] && [ -n "$(fm_get "$f" predicted-hours)" ]; then
+        echo "note: dispatch has predictions but no --actual given — calibration row will be incomplete" >&2
+    fi
     case "$f" in
         */.dispatch/done/*) echo "already acked: $f"; return 0 ;;
         */.dispatch/inbox/*) : ;;
@@ -281,10 +321,14 @@ cmd_ack() {
     dest="$dest_dir/$id.md"
     mkdir -p "$dest_dir"
     tmp="$(mktemp)"; trap "rm -f '$tmp'" EXIT
-    awk -v acked="$(date -Iseconds)" -v note="$note" '
+    awk -v acked="$(date -Iseconds)" -v note="$note" \
+        -v ah="$a_hours" -v as="$a_sessions" -v ao="$a_outcome" '
         fm < 2 && /^status: / { print "status: done"
                                 print "acked: " acked
                                 if (note != "") print "ack-note: " note
+                                if (ah != "") { print "actual-hours: " ah
+                                                print "actual-sessions: " as
+                                                print "outcome: " ao }
                                 next }
         /^---$/ { fm++ }
         { print }
@@ -299,15 +343,72 @@ cmd_ack() {
     echo "  record kept at: $dest"
 }
 
+# ── stats ──────────────────────────────────────────────────────────────────
+# Predicted-vs-actual calibration over acked dispatches (P0-1, 2026-08-11).
+# One-liner by default; --full prints per-dispatch rows. Brier scored against
+# outcome success=1 / partial=0.5 / fail=0; hours error as geometric mean of
+# actual/predicted (log-symmetric, so x2 over and x0.5 under cancel).
+
+cmd_stats() {
+    local lane="" full=0
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --lane) [ $# -ge 2 ] || die "--lane needs a lane"; lane="$2"; shift 2 ;;
+            --full) full=1; shift ;;
+            *) die "unknown flag for stats: $1" ;;
+        esac
+    done
+    local f rows=""
+    while IFS= read -r f; do
+        [ -n "$f" ] || continue
+        case "$f" in */.dispatch/done/*) : ;; *) continue ;; esac
+        local ph ah ps oc did
+        ph="$(fm_get "$f" predicted-hours)"; ah="$(fm_get "$f" actual-hours)"
+        [ -n "$ph" ] && [ -n "$ah" ] || continue
+        ps="$(fm_get "$f" p-success)"; oc="$(fm_get "$f" outcome)"
+        did="$(fm_get "$f" id)"
+        rows+="$did|$ph|$ah|${ps:--}|${oc:--}"$'\n'
+    done <<< "$(all_dispatch_files all "$lane")"
+
+    if [ -z "$rows" ]; then
+        echo "calibration: n=0 — no acked dispatches with predicted+actual fields yet"
+        return 0
+    fi
+    printf '%s' "$rows" | awk -F'|' -v full="$full" '
+        BEGIN { n = 0; nb = 0; sumlog = 0; brier = 0; ok = 0; part = 0; bad = 0 }
+        NF >= 5 {
+            n++
+            ratio = $3 / $2
+            sumlog += log(ratio)
+            if (full) printf "  %-46s pred %sh  actual %sh  (x%.2f)  p=%s  %s\n", $1, $2, $3, ratio, $4, $5
+            if ($4 != "-" && $5 != "-") {
+                o = ($5 == "success") ? 1 : ($5 == "partial") ? 0.5 : 0
+                brier += ($4 - o) ^ 2; nb++
+            }
+            if ($5 == "success") ok++; else if ($5 == "partial") part++; else if ($5 == "fail") bad++
+        }
+        END {
+            if (n == 0) { print "calibration: n=0"; exit }
+            gm = exp(sumlog / n)
+            line = sprintf("calibration: n=%d | hours actual/pred geo-mean x%.2f (%s)", n, gm,
+                           gm > 1.15 ? "under-estimating" : gm < 0.87 ? "over-estimating" : "well calibrated")
+            if (nb > 0) line = line sprintf(" | p_success Brier %.3f (n=%d)", brier / nb, nb)
+            line = line sprintf(" | outcomes %d ok / %d partial / %d fail", ok, part, bad)
+            if (n < 20) line = line " | collecting — report firms up at n>=20"
+            print line
+        }'
+}
+
 # ── main ───────────────────────────────────────────────────────────────────
 
 cmd="${1:-}"
 [ $# -gt 0 ] && shift
 case "$cmd" in
-    send) cmd_send "$@" ;;
-    list) cmd_list "$@" ;;
-    show) cmd_show "$@" ;;
-    ack)  cmd_ack  "$@" ;;
+    send)  cmd_send  "$@" ;;
+    list)  cmd_list  "$@" ;;
+    show)  cmd_show  "$@" ;;
+    ack)   cmd_ack   "$@" ;;
+    stats) cmd_stats "$@" ;;
     -h|--help|help|"") usage ;;
     *) usage >&2; die "unknown command: $cmd" ;;
 esac

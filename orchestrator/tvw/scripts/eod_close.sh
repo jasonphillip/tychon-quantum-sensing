@@ -298,6 +298,19 @@ done
 echo
 
 # ──────────────────────────────────────────────────────────────────────────
+# Phase 4.5 — dispatch calibration one-liner (read-only; P0-1, 2026-08-11)
+# ──────────────────────────────────────────────────────────────────────────
+
+DISPATCH_SH="$HOME/projects/tychon-verification-workbench/tvw/scripts/dispatch.sh"
+if [ -x "$DISPATCH_SH" ]; then
+    hr
+    echo "  $(c_bold 'Dispatch calibration (predicted vs actual)')"
+    hr
+    "$DISPATCH_SH" stats 2>/dev/null | sed 's/^/    /'
+    echo
+fi
+
+# ──────────────────────────────────────────────────────────────────────────
 # Phase 5 — Beelink mirror sanity check (read-only)
 # ──────────────────────────────────────────────────────────────────────────
 
