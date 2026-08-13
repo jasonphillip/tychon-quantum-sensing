@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import numpy as np
 import pytest
+import pytest
 
 from odmr_edge_ml.vector.blue_projection import (
     BluePosteriorVariance,
@@ -50,12 +51,21 @@ def test_A_rank_is_3() -> None:
 def test_A_matches_nv_sensor_sim_canonical() -> None:
     """The geometry MUST agree with nv_sensor_sim.physics.lineshape.
 
-    This is the canonical source per the SBIR vector-readout writeup; a
+    nv_sensor_sim is the canonical source for the NV-axis geometry; a
     drift between repos would silently corrupt the BLUE inversion.
     """
+    import os
     import sys
-    sys.path.insert(0, "~/projects/nv-sensor-sim/src")
-    from nv_sensor_sim.physics.lineshape import nv_geometry_matrix  # type: ignore
+
+    sim_src = os.environ.get(
+        "NV_SENSOR_SIM_SRC",
+        os.path.expanduser("~/projects/nv-sensor-sim/src"),
+    )
+    sys.path.insert(0, sim_src)
+    try:
+        from nv_sensor_sim.physics.lineshape import nv_geometry_matrix  # type: ignore
+    except ImportError:
+        pytest.skip("nv-sensor-sim source not available (set NV_SENSOR_SIM_SRC)")
 
     A_local = nv_axis_geometry_matrix()
     A_sim = nv_geometry_matrix()

@@ -1,8 +1,7 @@
 """BLUE projection: 8 per-resonance scalar ΔB residuals → 3D lab-frame vector.
 
-The vector readout pattern recommended by the SBIR Vector Capability writeup
-(``~/projects/tychon-sbir/ToDo/Vector_Capability_Implementation_and_Research_Prompt_2026-05-04.md``
-§1.3): once 8 FCNN-v2 instances each predict a scalar ΔB residual on their
+The vector readout pattern from the project's vector-capability design
+note (§1.3): once 8 FCNN-v2 instances each predict a scalar ΔB residual on their
 own resonance window, the 8-vector ``δ`` of residuals satisfies
 
     δ ≈ A · B

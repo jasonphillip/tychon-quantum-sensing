@@ -4,8 +4,8 @@ Wraps ``tychon_shared_data.cascade.compose_quantized_then_dequant`` (the
 deployed numerical path — what the FPGA actually computes) and
 ``compose_float_reference`` (a hypothetical float-precision twin — the
 capability ceiling). The difference quantifies how much accuracy the
-INT8 quantization is costing the cascade, which the SBIR DLOG entries
-need to track.
+INT8 quantization is costing the cascade, which the project decision
+log tracks.
 
 The float runners are caller-supplied — there is no canonical way to
 derive a float twin from a TFLite. Typically you pass closures over the

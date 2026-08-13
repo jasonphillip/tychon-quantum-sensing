@@ -11,10 +11,10 @@ Acceptance (per May-4 reorientation):
 
 Run:
     python experiments/pca_fidelity_zenodo.py \\
-        --zenodo ~/projects/nv-sensor-sim/data/experimental/zenodo_odmr \\
-        --sim ~/projects/odmr-edge-ml/data/production_50k/dataset.h5 \\
+        --zenodo <nv-sensor-sim>/data/experimental/zenodo_odmr \\
+        --sim data/production_50k/dataset.h5 \\
         --n-sim 1000 --k 5 \\
-        --memo ~/projects/tychon-sbir/docs/06_research_inputs/pca_fidelity_zenodo_2026-05-17.md
+        --memo notes/pca_fidelity_zenodo.md
 """
 
 from __future__ import annotations
