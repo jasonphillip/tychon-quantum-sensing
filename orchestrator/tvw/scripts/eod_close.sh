@@ -107,9 +107,9 @@ for entry in "${REPOS[@]}"; do
         # Get list of remotes that have this branch
         remotes_with=$(git for-each-ref --format='%(refname:short)' refs/remotes/ 2>/dev/null | \
                        awk -F/ -v b="$b" '$NF==b {print $1}' | sort -u)
-        # Compute commits on local branch not present on ANY remote
-        unpushed_count=$(git log --oneline "$b" --not --remotes 2>/dev/null | wc -l)
-        if [ "$unpushed_count" -gt 0 ]; then
+        # 2026-08-19 fix: the old any-remote gate (--not --remotes) read 0 once Phase 2
+        # auto-pushed nas/spark2, hiding GitHub-unpushed branches. Check every remote.
+        if :; then
             # For each configured remote, check if branch is up-to-date there
             for r in $(git remote 2>/dev/null); do
                 if git show-ref --verify --quiet "refs/remotes/$r/$b"; then
@@ -221,7 +221,7 @@ else
     echo "  $(c_bold 'Phase 3 — GitHub push set'):"
     hr
     for entry in "${GITHUB_PUSH_QUEUE[@]}"; do
-        IFS='::' read -r repo branch remote <<< "$entry"
+        repo="${entry%%::*}"; rest="${entry#*::}"; branch="${rest%%::*}"; remote="${rest##*::}"  # 2026-08-19: IFS='::' splits on ':' (char set) — broke the push gate
         repo_short="${repo##*/}"
         echo "    $repo_short  $branch → $remote"
     done
@@ -250,7 +250,7 @@ else
     if [[ "$approval" =~ ^[yY]$ ]]; then
         echo
         for entry in "${GITHUB_PUSH_QUEUE[@]}"; do
-            IFS='::' read -r repo branch remote <<< "$entry"
+            repo="${entry%%::*}"; rest="${entry#*::}"; branch="${rest%%::*}"; remote="${rest##*::}"  # 2026-08-19: IFS='::' splits on ':' (char set) — broke the push gate
             cd "$repo"
             echo "  → $(basename "$repo")  $branch → $remote"
             git push "$remote" "$branch" 2>&1 | tail -2 | sed 's/^/    /'
@@ -330,6 +330,20 @@ if command -v ssh >/dev/null 2>&1 && timeout 5 ssh -o ConnectTimeout=3 -o BatchM
         done' 2>&1
     echo
 fi
+
+# ──────────────────────────────────────────────────────────────────────────
+# Phase 5.5 — SBIR working-folder divergence check (2026-08-19; canon = Desktop copy)
+# ──────────────────────────────────────────────────────────────────────────
+
+SBIR_CANON="$HOME/Desktop/Shared/tychon/nv-sim-repos"
+for m in "$HOME/projects/tychon-sbir/docs" "$HOME/Tychon SBIR/docs"; do
+    if [ -f "$m/fix-list-status.csv" ] && [ -f "$SBIR_CANON/fix-list-status.csv" ] \
+       && ! cmp -s "$SBIR_CANON/fix-list-status.csv" "$m/fix-list-status.csv"; then
+        hr
+        echo "  $(c_bold 'WARN: SBIR mirror diverged from canon (Desktop copy)')"
+        echo "    $m/fix-list-status.csv differs — mirrors are STALE by decree (Jason 2026-08-19); never edit them"
+    fi
+done
 
 echo "  $(c_bold 'EOD close complete') — $(date -Iseconds)"
 echo
