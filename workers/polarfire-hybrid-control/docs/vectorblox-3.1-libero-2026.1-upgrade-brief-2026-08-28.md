@@ -52,3 +52,27 @@
 3. Import the matching core into a copied Libero project.
 4. Rebuild the two-slot design. Compare timing, resources, register version, and PCIe behavior.
 5. Program hardware only after Jason approves the recorded rollback artifact and command.
+
+## Addendum (2026-08-28 evening) — TVW verification + rationale record
+
+TVW re-verified this brief's findings directly against the clone (git
+log/diff/ls-tree/grep, executed): cited commits `4186f9a1ac81`, `f5a428c3c0ee`
+(release-v3.1), `6c5c98ecb9da` (transpose fix) all exist; the empty V250
+filename diff, the kept-but-reworked 2.0.3 TFLite entry points (+~10k/−4.6k
+lines), the known_issues Libero/CoreVectorBlox row, and the surviving
+`example/soc-c` Icicle-class flow all reproduce. The brief stands.
+
+Two corrections to the *chat summary* that circulated with rev 1 (the summary,
+not this file, was wrong): (a) 2.0.3's TFLite entry points are NOT deleted at
+3.1 — they persist, heavily diverged; (b) no hard "SDK 3.1 requires Libero
+2026.1" pin is established — only the documented v3.0.001/2025.1 known-issue
+coupling. Also note: whether the V250 bug fixed in 3.1 exists in 2.0.3 is
+UNKNOWN (the release note names no introduction version); any future upgrade
+trial must include an on-silicon regression of the two-slot image.
+
+Rationale record: no reason for the 2.0.3 pin is recorded in this repo
+(searched; not located). Jason's recollection (2026-08-28): 3.x was skipped
+because its content centers on the Video-Kit vision flow we do not have.
+Evidence is consistent (v3.0 predates our April install; 3.x additions are
+vision models/demos; the one 3.0-era failure was filed on the Video-Kit
+tracker). This recollection is now the recorded rationale.
