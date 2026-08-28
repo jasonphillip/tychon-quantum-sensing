@@ -44,3 +44,10 @@ Thumbs.db
 
 # Claude instructions are local-only (symlinked from private claude-config)
 /CLAUDE.md
+
+# Real external datasets (large; loaders+manifests are committed, raw data is not — TVW 2026-08-28)
+data/experimental/zenodo_ml_scan_7481960/
+data/experimental/zenodo_zerofield_10629041/
+data/experimental/harvard_lowfield_6TFFPG/
+data/experimental/darus_gradiometry_2817/
+data/experimental/borealis_sbquantum_DRTLGW/
