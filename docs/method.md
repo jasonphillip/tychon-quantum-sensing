@@ -90,7 +90,16 @@ These counts come from the Claude Code and Codex session logs on my machines and
 
 Sessions in the worker repositories end in July. After that, changes to them came from the orchestrator session, which may commit to the worker repositories, and from fixes I made in October while preparing this repository. The orchestrator count includes that October work. Two private helper repositories that are not published here are left out of the table.
 
-The dispatch tool sent 5 dispatches. 4 were acknowledged and 3 have actual hours logged. All three took between a quarter and a third of the predicted hours, so my estimates ran high. Dispatches before the tool existed were hand-carried documents and are not counted. The planning project holds [86 indexed conversations](../planning/conversations-index.md).
+The dispatch tool sent 5 dispatches. 4 were acknowledged and 3 have actual hours logged. All three took between a quarter and a third of the predicted hours, so my estimates ran high. Dispatches before the tool existed were hand-carried documents and are not counted.
+
+I did the planning in chat before writing any code.
+
+| Stage | Where | Conversations | My messages | Active days | Span |
+|---|---|---:|---:|---:|---|
+| Technical plan: research and drafting | ChatGPT, Gemini and Claude | about 106 | about 252 | 34 | 2025-05-03 to 2025-08-06 |
+| 90-day build plan, then the first orchestrator | one claude.ai project ([index](../planning/conversations-index.md)) | 86 | 752 | 47 | 2026-03-04 to 2026-07-06 |
+
+The technical-plan row is a keyword selection over my chat exports, so it's approximate. Four fifths of the project's messages fall in March and April 2026, when I wrote the build plan and started the first repositories.
 
 In the Claude Code sessions, the share of assistant messages by model was Claude Opus 4.7 41 %, Claude Fable 5 25 %, Claude Opus 4.8 18 %, Claude Opus 4.6 9 %, the rest under 4 % each. The Codex sessions used GPT models and aren't in that share.
 
