@@ -10,12 +10,14 @@ from __future__ import annotations
 import logging
 import time
 from dataclasses import dataclass
+from functools import partial
 from pathlib import Path
 
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 
+from odmr_edge_ml.data.targets import canonical_vector_target, fold_bz_sign
 from odmr_edge_ml.training.losses import (
     CompositeAngularHuberLoss,
     angular_error_deg,
@@ -60,36 +62,6 @@ class TrainConfig:
     checkpoint_dir: str = "artifacts/checkpoints"
 
 
-def fold_bz_sign(b_field: torch.Tensor) -> torch.Tensor:
-    """Fold negative-Bz samples to positive hemisphere.
-
-    CW-ODMR spectra at the target field strengths (20-70 µT) cannot
-    resolve B-field direction due to quantum degeneracy: +B and -B
-    produce identical spectra. Folding restricts labels to one hemisphere,
-    breaking the symmetry so the network doesn't face an ambiguous target.
-
-    Only applied when labels have >= 3 components (vector output).
-    Scalar residual labels (output_dim=1) are unaffected.
-
-    Parameters
-    ----------
-    b_field : Tensor
-        Shape (batch, D) where D >= 3. Column 2 is Bz.
-
-    Returns
-    -------
-    Tensor
-        Same shape, with rows where Bz < 0 multiplied by -1.
-    """
-    if b_field.shape[1] < 3:
-        return b_field
-    neg_mask = b_field[:, 2] < 0
-    if neg_mask.any():
-        b_field = b_field.clone()
-        b_field[neg_mask] *= -1.0
-    return b_field
-
-
 def init_weights_kaiming_he(model: nn.Module) -> None:
     """Apply Kaiming He Normal initialization to all Linear/Conv layers.
 
@@ -112,6 +84,7 @@ def validate_physics_regimes(
     model: nn.Module,
     val_loader: DataLoader,
     device: torch.device,
+    fold_bz: bool = True,
 ) -> dict[str, float]:
     """Physics-stratified validation metrics.
 
@@ -127,6 +100,8 @@ def validate_physics_regimes(
         Validation DataLoader yielding dict batches.
     device : torch.device
         Compute device.
+    fold_bz : bool
+        Apply the same Bz target convention used for training.
 
     Returns
     -------
@@ -143,7 +118,7 @@ def validate_physics_regimes(
     with torch.no_grad():
         for batch in val_loader:
             spectra = batch["spectra"].to(device)
-            b_true = batch["b_field_uT"].to(device)
+            b_true = canonical_vector_target(batch["b_field_uT"].to(device), fold_bz)
             b_pred = model(spectra)
 
             all_pred.append(b_pred)
@@ -250,7 +225,7 @@ def train(
             alpha=config.alpha, huber_delta=config.huber_delta
         )
     if val_fn == "default":
-        val_fn = validate_physics_regimes
+        val_fn = partial(validate_physics_regimes, fold_bz=config.fold_sign)
 
     optimizer = torch.optim.AdamW(
         model.parameters(),
@@ -280,9 +255,7 @@ def train(
 
         for batch in train_loader:
             spectra = batch["spectra"].to(device)
-            b_true = batch["b_field_uT"].to(device)
-            if config.fold_sign and b_true.shape[1] >= 3:
-                b_true = fold_bz_sign(b_true)
+            b_true = canonical_vector_target(batch["b_field_uT"].to(device), config.fold_sign)
 
             optimizer.zero_grad()
             b_pred = model(spectra)
