@@ -206,22 +206,53 @@ static bool test_clamp_seu_outer_holds() {
     return pass;
 }
 
+// A tightened inner bound must reach the actuator on the next update,
+// even when the previous AI latch needs many cycles to slew to zero.
+static bool test_inner_clamp_zero_after_slew() {
+    std::cout << "--- Test: zero inner clamp takes effect after AI slew ---\n";
+    gain_t Kp = 0.0, Ki = 0.0, Kd = 0.0;
+    gain_t inner_bound = (gain_t)0.02;
+    out_t out_min = -100.0, out_max = 100.0;
+    out_t actuator_out;
+
+    flush_state(Kp, Ki, Kd, out_min, out_max);
+    nv_pid_top(0.0, 0.0, false, Kp, Ki, Kd, out_min, out_max,
+               inner_bound, actuator_out);
+    out_t pid_only_out = actuator_out;
+
+    for (int i = 0; i < 150; i++) {
+        nv_pid_top(0.0, 0.125, false, Kp, Ki, Kd, out_min, out_max,
+                   inner_bound, actuator_out);
+    }
+    out_t latched_contribution = actuator_out - pid_only_out;
+
+    nv_pid_top(0.0, 0.125, false, Kp, Ki, Kd, out_min, out_max,
+               (gain_t)0, actuator_out);
+    out_t next_contribution = actuator_out - pid_only_out;
+
+    bool latch_established = latched_contribution.to_double()
+                             > 10.0 * MAX_SLEW_PER_CYCLE;
+    bool pass = latch_established && next_contribution.to_double() == 0.0;
+    std::cout << "AI before tightening:  " << latched_contribution.to_double() << " V\n";
+    std::cout << "AI on next update:     " << next_contribution.to_double() << " V\n";
+    std::cout << (pass ? "PASS" : "FAIL")
+              << ": zero inner bound takes effect on the next update.\n\n";
+    return pass;
+}
+
 // =============================================================================
 // Task B — Watchdog cooldown chatter test
 // =============================================================================
-// Drive ai_watchdog_timeout with a rapid toggle and observe whether the
-// cooldown holds the actuator without high-frequency transitions. The
-// 200,000-cycle toggle period was originally sized as "1 kHz at 200 MHz";
-// at the actual 125 MHz PID fabric clock it corresponds to ~625 Hz. The
-// chatter-rejection property under test is cycle-count-based and clock-rate
-// independent. We run two full periods and report the max single-cycle
-// actuator delta plus a count of "large step" events.
+// Use a pulse period shorter than cooldown. With zero PID gains, an AI-to-PID
+// transfer preserves the output on a watchdog rising edge; a rising edge
+// while PID-only instead adds the previously latched AI value. This makes
+// each transfer observable without relying on a loose step-count bound.
 static bool test_chatter_cooldown() {
-    std::cout << "--- Task B: Watchdog 1 kHz chatter — cooldown observation ---\n";
-    gain_t Kp = 0.0001, Ki = 0.00002, Kd = 0.00001;
-    out_t  out_min = 0.0, out_max = 5.0;
-    freq_t error = 5000.0;
-    out_t  u_AI = 0.225;
+    std::cout << "--- Task B: Watchdog chatter — exact cooldown transfers ---\n";
+    gain_t Kp = 0.0, Ki = 0.0, Kd = 0.0;
+    out_t  out_min = -100.0, out_max = 100.0;
+    freq_t error = 0.0;
+    out_t  u_AI = 0.125;
     out_t  actuator_out;
 
     flush_state(Kp, Ki, Kd, out_min, out_max);
@@ -232,42 +263,83 @@ static bool test_chatter_cooldown() {
     }
     out_t baseline = actuator_out;
 
-    const int HALF_PERIOD = 100000;
-    const int CYCLES      = 2 * 2 * HALF_PERIOD;
+    const int HALF_PERIOD = 100;
+    const int CYCLES = 4 * static_cast<int>(WATCHDOG_COOLDOWN_CYCLES);
     out_t prev = actuator_out;
-    double max_abs_delta = 0.0;
-    int    large_step_count = 0;
-    int    rising_edges     = 0;
-    bool   prev_wd          = false;
-    const double LARGE_STEP_THRESHOLD = 0.5;
+    double min_observed = baseline.to_double();
+    double max_observed = min_observed;
+    double min_pid_only = out_max.to_double();
+    double max_pid_only = out_min.to_double();
+    int expected_transfers = 0;
+    int observed_transfers = 0;
+    int rising_edges = 0;
+    int mismatched_edges = 0;
+    bool prev_wd = false;
+    bool model_ai_active = true;
+    bool model_cooldown = false;
+    unsigned int model_counter = 0;
 
     for (int i = 0; i < CYCLES; i++) {
         bool wd = ((i / HALF_PERIOD) % 2) == 0;
-        if (wd && !prev_wd) rising_edges++;
-        prev_wd = wd;
+        bool rising = wd && !prev_wd;
+        bool expected_transfer = rising && model_ai_active;
+        if (rising) {
+            rising_edges++;
+            if (expected_transfer) expected_transfers++;
+            model_cooldown = true;
+            model_counter = 0;
+        }
+        if (model_cooldown) {
+            if (model_counter < WATCHDOG_COOLDOWN_CYCLES) model_counter++;
+            else model_cooldown = false;
+        }
+        model_ai_active = !wd && !model_cooldown;
 
         nv_pid_top(error, u_AI, wd, Kp, Ki, Kd, out_min, out_max,
                    INNER_CLAMP_DEFAULT, actuator_out);
 
-        double d = std::abs(actuator_out.to_double() - prev.to_double());
-        if (d > max_abs_delta) max_abs_delta = d;
-        if (d > LARGE_STEP_THRESHOLD) large_step_count++;
+        double value = actuator_out.to_double();
+        if (value < min_observed) min_observed = value;
+        if (value > max_observed) max_observed = value;
+        if (wd) {
+            if (value < min_pid_only) min_pid_only = value;
+            if (value > max_pid_only) max_pid_only = value;
+        }
+        if (rising) {
+            double delta = value - prev.to_double();
+            bool transferred = std::abs(delta) < 1e-6;
+            if (transferred) observed_transfers++;
+            double expected_delta = expected_transfer ? 0.0 : u_AI.to_double();
+            if (transferred != expected_transfer
+                || std::abs(delta - expected_delta) > 1e-6) mismatched_edges++;
+        }
         prev = actuator_out;
+        prev_wd = wd;
     }
 
     std::cout << "Baseline (pre-toggle):  " << baseline.to_double() << " V\n";
     std::cout << "Cycles run:             " << CYCLES << "\n";
+    std::cout << "Cooldown/period:        " << WATCHDOG_COOLDOWN_CYCLES
+              << "/" << 2 * HALF_PERIOD << " calls\n";
     std::cout << "Watchdog rising edges:  " << rising_edges << "\n";
-    std::cout << "Max |delta_actuator|:   " << max_abs_delta << " V/cycle\n";
-    std::cout << "Large steps (>"
-              << LARGE_STEP_THRESHOLD << " V): " << large_step_count << "\n";
+    std::cout << "Expected AI-to-PID transfers: " << expected_transfers << "\n";
+    std::cout << "Observed AI-to-PID transfers: " << observed_transfers << "\n";
+    std::cout << "Mismatched rising edges: " << mismatched_edges << "\n";
+    std::cout << "Actuator range:        [" << min_observed << ", " << max_observed << "] V\n";
+    bool actuator_unclamped = min_observed > out_min.to_double()
+                           && max_observed < out_max.to_double();
+    bool pid_unclamped = min_pid_only > out_min.to_double()
+                      && max_pid_only < out_max.to_double();
+    bool sector_unclamped = u_AI.to_double() < OUTER_SECTOR_CLAMP_FRACTION
+                            * (out_max.to_double() - out_min.to_double());
+    std::cout << "Clamp state:           actuator=" << (actuator_unclamped ? "inactive" : "ACTIVE")
+              << ", PID integral=" << (pid_unclamped ? "inactive" : "ACTIVE")
+              << ", AI sector=" << (sector_unclamped ? "inactive" : "ACTIVE") << "\n";
 
-    bool pass = (large_step_count <= 2 * rising_edges);
+    bool pass = actuator_unclamped && pid_unclamped && sector_unclamped
+             && mismatched_edges == 0 && observed_transfers == expected_transfers;
     std::cout << (pass ? "PASS" : "FAIL")
-              << ": cooldown chatter behavior "
-              << (pass ? "as expected (no excess transitions)"
-                       : "shows EXCESS transitions per rising edge")
-              << ".\n\n";
+              << ": exact cooldown transfer count.\n\n";
     return pass;
 }
 
@@ -275,6 +347,9 @@ int main() {
     std::cout << "=== SmartHLS NV-Magnetometer Bumpless Transfer Testbench ===\n\n";
 
     int failures = 0;
+
+    // Run first so the private PID derivative state cannot move the baseline.
+    if (!test_inner_clamp_zero_after_slew()) failures++;
 
     // Test A: 5 kHz error, Ki=0.00002 → expected delta = 0.100 V
     if (!run_bumpless_test(

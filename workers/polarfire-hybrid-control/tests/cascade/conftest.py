@@ -12,8 +12,8 @@ output for the bit-exact comparison.
                           tests/cascade/fixtures/hil/. Post-Track-0 only.
 
 The --mode=hil leg requires real hardware-in-the-loop captures to land
-under tests/cascade/fixtures/hil/{capture_name}/. If no captures are
-present, --mode=hil tests skip with a clear message rather than fail.
+under tests/cascade/fixtures/hil/{capture_name}/. Missing captures or
+tychon-shared-data fail explicitly in this mode.
 """
 
 from __future__ import annotations

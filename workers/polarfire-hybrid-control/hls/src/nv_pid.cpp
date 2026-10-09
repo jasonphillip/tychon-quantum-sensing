@@ -78,8 +78,10 @@ void nv_pid_top(
         // limiter, but a proper handshake would avoid processing stale data.
 
         // Safety chain: hybrid sector bound (AXI inner + hardcoded outer)
-        // → slew limit → sum with PID → final actuator saturation.
-        // MAX_SLEW_PER_CYCLE = 0.001 corresponds to 200 V/ms at 200 MHz.
+        // → slew limit → hybrid sector bound again → sum with PID
+        // → final actuator saturation. Re-clamping handles a tightened bound
+        // immediately, even when the previous AI latch exceeds it.
+        // MAX_SLEW_PER_CYCLE = 0.001 corresponds to 125 V/ms at 125 MHz.
         // seu_force_state=false in synthesized hardware (testbench-only knob).
         bool dummy_rejected;
         out_t u_AI_clamped = apply_sector_clamp_gated(
@@ -89,6 +91,12 @@ void nv_pid_top(
             &dummy_rejected,
             false);
         out_t u_AI_safe = apply_slew_limit(u_AI_clamped, u_AI_latch);
+        u_AI_safe = apply_sector_clamp_gated(
+            u_AI_safe, out_min, out_max,
+            inner_clamp_setpoint,
+            inner_clamp_state,
+            &dummy_rejected,
+            false);
         total_out = u_AI_safe + u_pid;
         u_AI_latch = u_AI_safe;
     } else {
