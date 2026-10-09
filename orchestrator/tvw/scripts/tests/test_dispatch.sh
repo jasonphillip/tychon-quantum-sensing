@@ -246,4 +246,24 @@ pass 'show still detects body tampering'
 contains "$TEST_DIR/legacy-output" "$TEST_DIR/legacy/alpha/.dispatch/inbox/"
 pass 'legacy lane-root override remains supported'
 
+# A failed send must leave no visible envelope at either interruption point.
+original_root="$DISPATCH_ROOT"
+export DISPATCH_ROOT="$TEST_DIR/atomic-publish"
+mkdir -p "$DISPATCH_ROOT/alpha"
+for point in body publish; do
+    id="2026-09-27-1200-abort-$point"
+    DISPATCH_TEST_ABORT_AT="$point" status 1 send alpha "Abort $point" --file "$BODY" --from beta --predict 1,1,0.8
+    absent "$DISPATCH_ROOT/alpha/.dispatch/inbox/$id.md"
+    set -- "$DISPATCH_ROOT/alpha/.dispatch/inbox/.$id.md.tmp."*
+    [ ! -e "$1" ] || fail "abort at $point left an envelope temp file"
+    status 0 list --lane alpha
+    if grep -qF "$id" "$TEST_DIR/output"; then fail "list exposed aborted $id"; fi
+    status 1 show "$id"
+    status 1 claim "$id" --by alice
+done
+status 0 stats --lane alpha
+contains "$TEST_DIR/output" 'calibration: n=0'
+export DISPATCH_ROOT="$original_root"
+pass 'interrupted sends leave no published or temporary envelope'
+
 echo "PASS: $PASSES acceptance groups (isolated temporary queues)"

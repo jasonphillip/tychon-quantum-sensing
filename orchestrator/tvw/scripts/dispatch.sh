@@ -42,10 +42,11 @@ set -uo pipefail
 LANES_ROOT="${DISPATCH_ROOT:-${DISPATCH_LANES_ROOT:-$HOME/projects}}"
 LANES_ROOT="${LANES_ROOT%/}"
 SELF_LANE_DEFAULT="tychon-verification-workbench"
-TMP_FILE="" LOCK_DIR=""
+TMP_FILE="" ENVELOPE_TMP="" LOCK_DIR=""
 
 cleanup() {
     [ -z "$TMP_FILE" ] || rm -f "$TMP_FILE"
+    [ -z "$ENVELOPE_TMP" ] || rm -f "$ENVELOPE_TMP"
     [ -z "$LOCK_DIR" ] || rmdir "$LOCK_DIR" 2>/dev/null
     return 0
 }
@@ -300,7 +301,10 @@ cmd_send() {
         fi
         n=$((n + 1)); id="$base-$n"
     done
-    if ! ( set -C; {
+    local envelope_tmp
+    envelope_tmp="$(mktemp "$qdir/inbox/.$id.md.tmp.XXXXXX")" || die "cannot create envelope temporary file"
+    ENVELOPE_TMP="$envelope_tmp"
+    if ! {
         echo '---'
         echo "id: $id"
         echo "date: $(iso_now)"
@@ -316,16 +320,26 @@ cmd_send() {
         echo "sha256: $sha"
         echo '---'
         echo
-        cat "$tmp"
-    } > "$out" ); then
-        die "cannot create envelope: $out"
+        # Test-only: leave a partial body before the EXIT trap removes this temp file.
+        if [ "${DISPATCH_TEST_ABORT_AT:-}" = body ]; then
+            dd if="$tmp" bs=1 count=4 2>/dev/null
+            false
+        else
+            cat "$tmp"
+        fi
+    } > "$envelope_tmp"; then
+        die "cannot create envelope: $envelope_tmp"
     fi
 
-    # Prove no truncation: extracted body must be byte-identical to the input.
-    if ! extract_body "$out" | cmp -s - "$tmp"; then
-        rm -f "$out"
-        die "INTEGRITY FAILURE: stored body differs from input — dispatch NOT queued"
+    # Verify the frontmatter hash and body before the only visible publish step.
+    if [ "$(fm_get "$envelope_tmp" sha256)" != "$(extract_body "$envelope_tmp" | sha256 | awk '{print $1}')" ] ||
+       ! extract_body "$envelope_tmp" | cmp -s - "$tmp"; then
+        die "INTEGRITY FAILURE: envelope body or sha256 differs from input — dispatch NOT queued"
     fi
+    # Test-only: simulate interruption after verification, immediately before rename.
+    [ "${DISPATCH_TEST_ABORT_AT:-}" != publish ] || die "test abort before envelope publish"
+    mv "$envelope_tmp" "$out" || die "cannot publish envelope: $out"
+    ENVELOPE_TMP=""
 
     echo "queued: $id"
     echo "  file:      $out"
