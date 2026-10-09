@@ -26,6 +26,7 @@ elements (the ``.5`` ties).
 from __future__ import annotations
 
 import json
+import importlib
 from pathlib import Path
 
 import numpy as np
@@ -39,22 +40,27 @@ HIL_FIXTURES_DIR = REPO_ROOT / "tests" / "cascade" / "fixtures" / "hil"
 
 
 # ---------------------------------------------------------------------------
-# Skip the whole module if tychon-shared-data isn't installed.
+# Resolve tychon-shared-data when a test runs, so HIL mode can fail explicitly.
 # Pinned via this repo's pyproject / requirements (Track 3 dependency).
 # ---------------------------------------------------------------------------
 
-tsd_cascade_ref = pytest.importorskip(
-    "tychon_shared_data.cascade.cascade_ref",
-    reason="tychon-shared-data not installed — pip install -e ~/projects/tychon-shared-data",
-)
-tsd_manifest = pytest.importorskip(
-    "tychon_shared_data.cascade.manifest",
-    reason="tychon-shared-data not installed",
-)
-
-compose_int8 = tsd_cascade_ref.compose_int8
-verify_bit_exact = tsd_cascade_ref.verify_bit_exact
-CascadeManifest = tsd_manifest.CascadeManifest
+def _shared_data(mode: str):
+    try:
+        cascade_ref = importlib.import_module("tychon_shared_data.cascade.cascade_ref")
+        manifest = importlib.import_module("tychon_shared_data.cascade.manifest")
+    except ModuleNotFoundError as exc:
+        if not exc.name or not (
+            exc.name == "tychon_shared_data" or exc.name.startswith("tychon_shared_data.")
+        ):
+            raise
+        message = (
+            f"tychon-shared-data module {exc.name!r} missing from Python import path "
+            "(PYTHONPATH and site-packages)"
+        )
+        if mode == "hil":
+            pytest.fail(message)
+        pytest.skip(message)
+    return cascade_ref.compose_int8, cascade_ref.verify_bit_exact, manifest.CascadeManifest
 
 
 # ---------------------------------------------------------------------------
@@ -62,7 +68,7 @@ CascadeManifest = tsd_manifest.CascadeManifest
 # ---------------------------------------------------------------------------
 
 
-def _load_synthetic_fixture() -> tuple[CascadeManifest, np.ndarray, np.ndarray, np.ndarray]:
+def _load_synthetic_fixture(CascadeManifest) -> tuple[object, np.ndarray, np.ndarray, np.ndarray]:
     """Load the canonical synthetic fixture shared with hls/tb/tb_cascade.cpp."""
     with open(SYNTHETIC_FIXTURE_DIR / "manifest.json") as f:
         manifest = CascadeManifest.from_dict(json.load(f), root=None)
@@ -90,7 +96,8 @@ def _load_synthetic_fixture() -> tuple[CascadeManifest, np.ndarray, np.ndarray, 
 
 def test_synthetic_compose_matches_golden() -> None:
     """compose_int8 against the static fixture must match expected_int8.csv."""
-    manifest, coarse, fine, expected = _load_synthetic_fixture()
+    compose_int8, _, CascadeManifest = _shared_data("sim")
+    manifest, coarse, fine, expected = _load_synthetic_fixture(CascadeManifest)
 
     # Inject identity runners so no .tflite files are touched.
     actual = compose_int8(
@@ -109,7 +116,8 @@ def test_synthetic_compose_matches_golden() -> None:
 
 def test_synthetic_identity_residual_is_coarse() -> None:
     """When fine_int8 == z_fine elementwise, composed must equal coarse bit-exactly."""
-    manifest, coarse, _fine, _expected = _load_synthetic_fixture()
+    compose_int8, _, CascadeManifest = _shared_data("sim")
+    manifest, coarse, _fine, _expected = _load_synthetic_fixture(CascadeManifest)
     z_fine = int(manifest.fine_model["output_quant"]["zero_point"])
     fine_zero = np.full_like(coarse, z_fine, dtype=np.int8)
 
@@ -126,7 +134,8 @@ def test_synthetic_identity_residual_is_coarse() -> None:
 
 def test_verify_bit_exact_reports_match() -> None:
     """verify_bit_exact must report ok=True with zero mismatches against the golden."""
-    manifest, coarse, fine, expected = _load_synthetic_fixture()
+    _, verify_bit_exact, CascadeManifest = _shared_data("sim")
+    manifest, coarse, fine, expected = _load_synthetic_fixture(CascadeManifest)
     ok, report = verify_bit_exact(
         coarse, expected, manifest,
         coarse_runner=lambda _x: coarse,
@@ -165,9 +174,10 @@ def test_hil_capture_matches_numpy_reference(cascade_mode: str) -> None:
     """
     if cascade_mode != "hil":
         pytest.skip("not in --mode=hil")
+    _, verify_bit_exact, CascadeManifest = _shared_data(cascade_mode)
     captures = _list_hil_captures()
     if not captures:
-        pytest.skip(
+        pytest.fail(
             f"no HIL captures under {HIL_FIXTURES_DIR} — Track 0 must close first"
         )
 
