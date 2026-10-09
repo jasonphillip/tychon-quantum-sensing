@@ -1,0 +1,22 @@
+# Learned-tracker architecture (LearnedTrackerConfig).
+#
+# The execution partition is fixed in code: the anchored fully-conv extractor targets the V250
+# NPU (ops-guarded); the recurrent core, association head, and BLUE decode run on the MSS host.
+# Pick deployable-first vs research variants via build_tracker(core=..., association=...).
+#
+# K (n_candidates) is derived, not set: ceil(n_freq / 2**n_downsample) anchor positions.
+# Training scripts override n_freq from the dataset manifest (sequence_sanity_v0: 951 -> K=60).
+
+n_lines: 8
+n_axes: 4
+n_freq: 400
+n_downsample: 4         # stride-2 conv stages; K = ceil(n_freq / 2**n_downsample)
+feat_dim: 32
+assoc_dim: 16
+state_dim: 64
+conv_channels: 8        # first-stage V250 Conv2d (1,k) channels (doubled per stage, capped 4x)
+conv_kernel: 5
+dt_s: 1.0e-3
+proj_scale_T: 1.0e-2    # Tesla per unit of the regressed axis projections
+input_gain: 1.0         # scale on (1 - PL); training scripts set ~1/nominal_contrast from the
+                        # data (real dips are ~0.4% of baseline) - INT8 input scale in Incr. 3

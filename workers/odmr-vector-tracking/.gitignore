@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Data / artifacts / exports (generated or symlinked to shared storage)
+/data/
+/artifacts/
+/exports/
+*.h5
+*.hdf5
+*.npz
+*.npy
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.tflite
+*.vnnx
+
+# Logs / scratch
+/logs/
+*.log
+
+# OS
+.DS_Store
+
+# Note: CLAUDE.md is intentionally NOT tracked (user-global core.excludesFile excludes it;
+# matches the odmr-edge-ml / nv-sensor-sim convention — it stays a local working file).
+
+# Claude instructions are local-only (symlinked from private claude-config)
+/CLAUDE.md
