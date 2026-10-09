@@ -73,6 +73,28 @@ The roles (a planning project, an orchestrator session, one worker session per r
 
 Who decided what is in the [case study](case-study.md). I set the plan, wrote the specs and reviewed the results. The agents wrote most of the code.
 
+## How the agents kept context
+
+Each agent session starts with no memory of the last one. I kept the sessions consistent with four things:
+
+- instruction files: one global file and one per repository (the public [orchestrator/AGENTS.md](../orchestrator/AGENTS.md) and `workers/*/AGENTS.md`)
+- memory files for each project
+- a shared wiki: each session writes a summary when it ends, and a compiled page of active threads is loaded when the next one starts
+- a searchable corpus of my past agent sessions and chats
+
+Most rules in the instruction files came from a specific failure:
+
+| Date | What went wrong | What I changed |
+|---|---|---|
+| 2026-07-17 | The orchestrator's instruction file had grown to 133 lines | Rewrote it as a map, with detail in linked files: 109 lines, 65 today |
+| 2026-07-24 | A session dated a quote by the audit's file name, but the passage was in an addendum written days later | Cite the addendum and its date, never the file name ([AGENTS.md](../orchestrator/AGENTS.md), rule 6). State plainly only what a command or a file read showed, and mark the rest |
+| 2026-08-27 | A session stated a fact from a one-line memory index entry. The memory file itself had the correct fact | Index lines are pointers only. Live-state facts carry a `verify:` command, run weekly; on 2026-10-06, 1 of 56 had drifted |
+| 2026-09-04 | The agents wrote more reports than I could read | One decisions file became the only required reading |
+| 2026-09-04 | The global instructions had reached 2,632 words | Cut to a 1,216-word map, with reference files read on demand |
+| 2026-10-01 | I could not tell whether the rules worked | Detectors count rule violations in the session logs, and replays and A/B runs test single rules |
+
+No measurement shows that these rules helped. Violation rates fell after rules were added, but the mix of models changed at the same time, and every A/B run was too easy to separate the two arms. The global instructions have since grown back to about 4,500 words. The session logs and chat archives did pay off in one visible way: the effort counts and the learning table on this page came from them.
+
 ## How I came up to speed
 
 I came to this from machine learning and star-tracker work, not from NV physics or FPGA design. The table shows when each topic first appears in my own words in my saved chat archives, and what it led to. My ChatGPT archive starts in December 2022, Codex in October 2025 and Claude Code in February 2026, so "first" means first in those archives, not first exposure.
