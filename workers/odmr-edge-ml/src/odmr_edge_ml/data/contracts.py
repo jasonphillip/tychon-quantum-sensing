@@ -7,6 +7,7 @@ Standalone — does not import from the upstream simulator.
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 
 
@@ -88,6 +89,18 @@ _RANGE_FIELDS = [
     "b_perp_range_T",
 ]
 
+# Positive physical scales: absolute frequency, concentration, temperature,
+# and concentrator gain. B1 gradient and transverse field can be zero.
+_POSITIVE_RANGE_FIELDS = (
+    "freq_range_Hz",
+    "p1_concentration_range_ppm",
+    "temperature_range_K",
+)
+
+# n_freq_points is the required dimension. Split counts may be zero for
+# evaluation-only datasets.
+_POSITIVE_DIMENSION_FIELDS = ("n_freq_points",)
+
 # Provenance fields that must be non-empty strings
 _PROVENANCE_FIELDS = [
     "generator_git_sha",
@@ -125,6 +138,11 @@ def validate_manifest(manifest: dict) -> None:
                 f"got {type(value).__name__}"
             )
 
+    for field_name in _POSITIVE_DIMENSION_FIELDS:
+        value = manifest[field_name]
+        if type(value) is not int or value <= 0:
+            raise ContractViolation(f"{field_name}: expected a positive integer")
+
     # 3. Seed counts match split sizes
     for seeds_key, count_key in [
         ("train_seeds", "n_spectra_train"),
@@ -149,7 +167,22 @@ def validate_manifest(manifest: dict) -> None:
                 f"{count_key} ({manifest[count_key]})"
             )
 
-    # 5. Pairwise disjoint seeds (train ∩ val ∩ test = ∅)
+    # Split indices must not identify the same spectrum across splits.
+    for left, right in (
+        ("train_indices", "val_indices"),
+        ("train_indices", "test_indices"),
+        ("val_indices", "test_indices"),
+    ):
+        if set(manifest[left]) & set(manifest[right]):
+            raise ContractViolation(f"{left} and {right}: overlapping indices")
+
+    # 5. No duplicates within a split; seeds are pairwise disjoint.
+    for seeds_key in ("train_seeds", "val_seeds", "test_seeds"):
+        seeds = manifest[seeds_key]
+        if len(seeds) != len(set(seeds)):
+            raise ContractViolation(f"{seeds_key}: duplicate seed")
+
+    # Pairwise disjoint seeds (train ∩ val ∩ test = ∅)
     train_set = set(manifest["train_seeds"])
     val_set = set(manifest["val_seeds"])
     test_set = set(manifest["test_seeds"])
@@ -164,15 +197,24 @@ def validate_manifest(manifest: dict) -> None:
     if overlap:
         raise ContractViolation(f"Val/test seed overlap: {overlap}")
 
-    # 6. Range fields: 2 elements, lo <= hi
+    # 6. Range fields: 2 finite numeric elements, lo <= hi
     for range_field in _RANGE_FIELDS:
         r = manifest[range_field]
         if len(r) != 2:
             raise ContractViolation(
                 f"{range_field}: expected 2 elements, got {len(r)}"
             )
+        for bound in r:
+            if (
+                isinstance(bound, bool)
+                or not isinstance(bound, (int, float))
+                or not math.isfinite(bound)
+            ):
+                raise ContractViolation(f"{range_field}: bounds must be finite numbers")
         if r[0] > r[1]:
             raise ContractViolation(f"{range_field}: min ({r[0]}) > max ({r[1]})")
+        if range_field in _POSITIVE_RANGE_FIELDS and r[0] <= 0:
+            raise ContractViolation(f"{range_field}: bounds must be positive")
 
     # 7. Units dict has required keys with correct values
     units = manifest["units"]
@@ -201,6 +243,10 @@ def validate_manifest(manifest: dict) -> None:
                 f"Optional vector field '{field_name}': expected "
                 f"{expected_type.__name__}, got {type(value).__name__}"
             )
+        if field_name == "concentrator_amplification" and (
+            not math.isfinite(value) or value <= 0
+        ):
+            raise ContractViolation(f"{field_name}: expected a positive finite scale")
         if field_name == "bias_direction_uvw":
             if len(value) != 3:
                 raise ContractViolation(
