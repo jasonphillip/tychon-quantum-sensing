@@ -1,5 +1,8 @@
 # TVW Stage Roadmap
 
+> **Active plan (2026-10-09):** `tvw/plans/portfolio-review-plan-2026-10-09.md` — public portfolio monorepo; outside-review fixes. A new thread starts there.
+
+
 Each stage produces a working artifact and a verifiable stop-gate.
 
 > **Note (2026-05-03):** TVW was refactored from "Verification Workbench" to "Orchestration Workbench." The audit-pipeline stages (1–9) below are still tracked, but they are now **one capability among several**, not the sole purpose. TVW also drives the May 1 fix list, edits the SBIR shared folder directly, runs web-enabled corpus acquisition, and dispatches committable changes to the four implementation repos. Stages 5–9 (heavyweight reviewer, multi-agent chatbot, txt2kg, fine-tune, publish-repo) remain **optional** — pursue them if their stop-gate is the right next step, otherwise prioritize fix-list orchestration.
