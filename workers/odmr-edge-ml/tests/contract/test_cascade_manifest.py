@@ -17,6 +17,7 @@ import json
 from pathlib import Path
 
 import pytest
+pytest.importorskip('tychon_shared_data', reason='needs the private tychon_shared_data package')
 from tychon_shared_data.cascade import CascadeManifest
 from tychon_shared_data.cascade.manifest import ROUNDING_MODE_TBD
 
