@@ -1,5 +1,7 @@
 # Tychon NV stack: an agent-orchestrated quantum-sensing build
 
+[![CPU benchmark](https://github.com/jasonphillip/tychon-nv-stack/actions/workflows/bench.yml/badge.svg)](https://github.com/jasonphillip/tychon-nv-stack/actions/workflows/bench.yml)
+
 I used coding agents to build the software for NV-diamond quantum magnetometers. One orchestrator session handed out the tasks, and each worker repository had its own agent session. The orchestration was human-mediated: until the dispatch tool existed in July 2026, I carried the prompts between the planning chat and the repository sessions by hand. Together they produced a physics simulator, edge ML models, PID plus neural-network control on a PolarFire SoC FPGA, a field-vector tracker and a live demo dashboard. I planned the work, wrote the specs and reviewed what came back. The agents wrote most of the code.
 
 The build started from a 90-day plan in March 2026 and continued through September 2026.
@@ -9,11 +11,18 @@ The build started from a 90-day plan in March 2026 and continued through Septemb
 | Part | Result | Limit |
 |---|---|---|
 | FPGA watchdog | Trip time measured on PolarFire SoC silicon on 2026-07-01: median 2.000 ms over 120 trips | One dev kit |
-| FPGA control loop | 8-hour soak on silicon on 2026-07-02: 95.7 M steps at 3,319 Hz with zero stalls; five transient scheduling stalls over 2 ms, all caught and recovered by the watchdog | Paced by software on the SoC's processor, not in the fabric; replayed ODMR input, no live diamond |
+| FPGA control loop | 8-hour soak on silicon on 2026-07-02: 95.7 M steps at 3,319 Hz with zero stalls; five transient scheduling stalls over 2 ms, each counted as a watchdog trip | Paced by software on the SoC's processor, not in the fabric; replayed ODMR input, no live diamond. A counted trip does not show that the controller fell back (next row) |
+| Watchdog fallback | Board test on 2026-10-09, 82 runs: when the next controller update saw the timeout, control passed to plain PID within one update (66 to 71 µs), with no jump in the actuator value, 60 of 60 | No fallback when the timeout cleared before the next update (0 of 20) or when the control process stopped. At recovery the actuator steps by about 0.01, ten times the slew limit |
 | Edge ML benchmark | `make bench` trains a 10,689-parameter network on synthetic spectra. Mean field error on 200 test spectra is 10.53 µT, against 12.26 µT for a constant baseline and 25.93 µT for a derivative zero-crossing PID proxy | Synthetic data, FP32 on a CPU; INT8 accuracy on the kit is not in this table |
 | Vector tracker | Follows the field vector through spectral line crossings, reliable to about 30 to 40° off the bias axis | FP32 simulation only; no INT8 export or on-target run |
 | Simulator | Loaders for five public ODMR and magnetometry datasets, and two-sample tests to compare against them | Comparison results not yet committed |
 | Claim checks | Audits of my technical report on 2026-05-01, up to 114 claims per pass through two local critic models. A manual structure review found three critical errors, all fixed in the corrected report | On the first run the two critics agreed 10 times out of 10, which I counted as a failed independence test |
+
+## The demo dashboard
+
+![The FPGA demo dashboard in dry-run mode: a live trace of the final actuator value and the AI correction through three scripted scenarios, a clamp trip, a watchdog fallback and a clean run](docs/media/dashboard-demo.gif)
+
+This recording is the dashboard in dry-run mode. Every value in it, including the PASS and LIVE badges, comes from the dashboard's software model of the kit, not from hardware. In live mode the same screens read the kit over SSH. Source: [demo/fpga-demo-dashboard](demo/fpga-demo-dashboard/).
 
 ## How it fits together
 
@@ -53,6 +62,7 @@ flowchart TD
 | the machines I used and what ran where | [docs/lab.md](docs/lab.md) |
 | how I used manuals, notebooks and local checks | [docs/method.md](docs/method.md) |
 | what I read | [docs/references.md](docs/references.md): manuals, papers and the public datasets |
+| a term I don't know | [docs/glossary.md](docs/glossary.md) |
 | the orchestration loop | [planning/excerpts/](planning/excerpts/): the planning chat writing prompts for each repo session and reviewing what came back |
 | mistakes other models caught | [docs/second-opinions.md](docs/second-opinions.md) |
 | a real dispatch | [orchestrator/tvw/audits/dispatch-9-increment8-bc-stack-2026-07-11.md](orchestrator/tvw/audits/dispatch-9-increment8-bc-stack-2026-07-11.md) and the tool that sends it, [dispatch.sh](orchestrator/tvw/scripts/dispatch.sh) |
@@ -104,7 +114,7 @@ orchestrator/    orchestrator v2: claim-verification pipeline, dispatch tool, au
 workers/         nv-sensor-sim, odmr-edge-ml, polarfire-hybrid-control, odmr-vector-tracking
 demo/            fpga-demo-dashboard: the live demo of the FPGA control loop
 archive/v0/      the first attempts, kept to show where the work began
-docs/            primer, case study, lab, method and tooling, references
+docs/            primer, case study, lab, method and tooling, references, glossary
 ```
 
 ## About this history

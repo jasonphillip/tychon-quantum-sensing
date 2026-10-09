@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you refer to this work, please cite it as below."
+type: software
+title: "Tychon NV stack: an agent-orchestrated quantum-sensing build"
+abstract: >-
+  Software for NV-diamond quantum magnetometers built with coding agents:
+  a physics simulator, INT8 edge machine learning, PID plus neural-network
+  control on a PolarFire SoC FPGA, a field-vector tracker, a demo dashboard,
+  and a workbench that checks written claims with local language-model critics.
+authors:
+  - family-names: Phillip
+    given-names: Jason
+    website: "https://tychonai.com/"
+repository-code: "https://github.com/jasonphillip/tychon-nv-stack"
+keywords:
+  - quantum sensing
+  - NV diamond
+  - ODMR
+  - magnetometry
+  - FPGA
+  - PolarFire SoC
+  - edge machine learning
+  - AI agents

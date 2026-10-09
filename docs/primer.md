@@ -1,6 +1,6 @@
 # NV-diamond sensing in plain words
 
-This page explains the sensor to readers who know software or AI but not the physics, and says why this repository puts a small neural network on an FPGA.
+This page explains the sensor to readers who know software or AI but not the physics, and says why this repository puts a small neural network on an FPGA. Terms are defined in the [glossary](glossary.md).
 
 ```mermaid
 flowchart LR
@@ -21,7 +21,7 @@ To measure a field, green laser light makes the diamond glow red while a microwa
 
 Why up to eight dips? The NV axis can point along four directions in the diamond crystal. Each direction sees a different part of the field, so one spectrum can show four pairs of dips. From all four pairs you can work out the direction of the field as well as its size.
 
-Real spectra are noisy. Temperature moves the 2.87 GHz center, the dips are lopsided, and in a large field dips from different axes cross. A classic lock-in loop with a PID controller tracks one frequency and can lose lock when lines cross. A small neural network takes the whole spectrum as input instead. Here the network corrects the PID loop and doesn't replace it, and a watchdog switches back to plain PID when the network is late.
+Real spectra are noisy. Temperature moves the 2.87 GHz center, the dips are lopsided, and in a large field dips from different axes cross. A classic lock-in loop with a PID controller tracks one frequency and can lose lock when lines cross. A small neural network takes the whole spectrum as input instead. Here the network adds a correction to the PID loop and doesn't replace it. A watchdog detects when the network is late. In a board test, control passed to plain PID within one controller update whenever that update saw the timeout. It did not pass when the timeout cleared before the next update, or when the control process stopped.
 
 The FPGA is there because the control loop has to run with a short, fixed delay at low power, close to the sensor. The PolarFire SoC combines RISC-V processor cores, programmable logic and the VectorBlox neural-network engine on one chip.
 
