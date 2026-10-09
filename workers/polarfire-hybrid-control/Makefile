@@ -25,11 +25,11 @@ hls-test:
 	cd hls && shls sw_run
 
 # Compile and run the bumpless testbench against the checked-in ap_fixpt
-# software shim. No SmartHLS required. Used by `verify-local`.
+# software shim (hls/shim/, kept off the SmartHLS include path). No SmartHLS required. Used by `verify-local`.
 hls-test-local:
 	@mkdir -p .build
 	g++ -std=c++17 -O0 -g -Wall -Wno-unknown-pragmas \
-		-Ihls/include -Ihls/src \
+		-Ihls/shim -Ihls/include -Ihls/src \
 		hls/tb/tb_bumpless.cpp \
 		hls/src/nv_pid.cpp hls/src/safety_clamps.cpp hls/src/watchdog.cpp \
 		-o .build/tb_bumpless_local
@@ -42,7 +42,7 @@ hls-test-local:
 hls-test-cascade-local:
 	@mkdir -p .build
 	g++ -std=c++17 -O0 -g -Wall -Wno-unknown-pragmas \
-		-Ihls/include -Ihls/src \
+		-Ihls/shim -Ihls/include -Ihls/src \
 		hls/tb/tb_cascade.cpp \
 		hls/src/nv_pid.cpp hls/src/safety_clamps.cpp hls/src/watchdog.cpp \
 		-o .build/tb_cascade_local

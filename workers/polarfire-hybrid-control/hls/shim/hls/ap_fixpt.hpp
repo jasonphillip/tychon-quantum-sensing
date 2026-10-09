@@ -1,6 +1,8 @@
 // Software-only shim for SmartHLS hls::ap_fixpt<W,I>
 // For local testbench compilation only — NOT for synthesis.
 // SmartHLS provides the real implementation on the build host.
+// Lives in hls/shim/ (not hls/include/): SmartHLS builds with -Iinclude and must
+// resolve <hls/ap_fixpt.hpp> to the vendor header, never to this file.
 #ifndef HLS_AP_FIXPT_HPP
 #define HLS_AP_FIXPT_HPP
 
