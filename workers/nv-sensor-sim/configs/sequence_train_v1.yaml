@@ -1,0 +1,106 @@
+# Time-series ("dynamic") ODMR training dataset — v1
+#
+# Trainable-scale successor to sequence_sanity_v0: same v1 contract, same fixed
+# ~5 mT deployment-prior bias, same frequency grid (pinned to v0's window and
+# F=951 so downstream models see identical input dimensionality — no
+# distribution shift against the sanity bar).
+#
+# The swept field is diversified per sequence (isotropic held ramp):
+#   - direction u uniform on the sphere (v0 swept +/-x only)
+#   - INDEPENDENT endpoint scalars s_start, s_end ~ U[sweep_scalar_range_T]
+#     along u with |s_end - s_start| >= min_sweep_delta_T, so crossing times,
+#     crossing counts (including none — identity-hold negatives), and sweep
+#     span all vary
+#   - linear ramp over a random sub-interval >= min_ramp_window_frac of the
+#     sequence, held constant outside it: ramp rate is decoupled from sequence
+#     length and steady pre/post-ramp segments support re-lock evaluation
+#   - geometries driving any axis |B.n_i| below min_axis_projection_T are
+#     rejected and redrawn (label association degenerates at projection zeros)
+#
+# The scalar range is +/-1.4 mT (not v0's +/-2.0 mT ramp endpoints): the pinned
+# v0 window can absorb at most ~1.4 mT of worst-case isotropic sweep on top of
+# the bias projection (derived worst case 201.1 MHz vs 203.6 MHz half-window;
+# +/-1.5 mT already needs 206 MHz). Generation asserts this containment and
+# that every stored label lies inside the pinned window.
+#
+# Deterministic like v0: no measurement noise in the stored spectra.
+# Hyperfine (L=24 / line_mI) stays deferred.
+#
+# Consumed by odmr-vector-tracking (per-axis-identity tracking through crossings).
+# Regenerate:
+#   python scripts/generate_sequence_dataset.py \
+#     --config configs/sequence_train_v1.yaml \
+#     --output-dir artifacts/datasets/sequence_train_v1/
+
+# Splits (sequences, not frames) + seed
+n_train: 512
+n_val: 128
+n_test: 128
+master_seed: 20260701
+
+# Time axis
+n_timesteps: 256          # T frames per sequence
+dt_s: 1.0e-3              # 1 kHz notional CW frame rate
+
+# Sample / linewidth (fixed across the dataset; sets Gamma for labeling)
+p1_ppm: 40.0             # Gamma ~ 1.5 MHz FWHM (intrinsic; rendered lines are
+temperature_K: 300.0     # power-broadened ~4.9% wider at s0=0.1, mw_scale=1)
+
+# Static bias (deployment prior — FIXED, identical to v0;
+# lab frame = bias_B0_T * normalize(uvw))
+bias_B0_T: 5.0e-3
+bias_direction_uvw: [0.2, 0.1, 1.0]
+
+# Swept external field: per-sequence isotropic trajectory-family mixture, all
+# within the +/-1.4 mT envelope (see header + freq grid note below):
+#   held     (50%) — hold-ramp-hold as in the base design
+#   reversal (25%) — ramp out, turn around at a uniform-random frame in the
+#                    middle 60%, ramp back at a generally different rate;
+#                    velocity crosses zero, revisiting the crossing region
+#                    (velocity-only tracking is ambiguous there by design)
+#   ou       (25%) — held ramp plus a seeded OU field perturbation
+#                    (sigma 45 uT ~ 0.84 linewidths of resonance wander,
+#                    tau 16 frames ~ the collision dwell scale)
+# Family per sequence is drawn from a seed-derived stream and recorded in the
+# manifest with stratified stats. Min-projection guard + window-containment
+# asserts apply to every family.
+sweep_mode: isotropic
+sweep_scalar_range_T: [-1.4e-3, 1.4e-3]
+min_sweep_delta_T: 1.0e-3     # |s_end - s_start| >= 1 mT: every sequence moves
+min_ramp_window_frac: 0.25    # ramp spans >= 25% of T; holds outside
+min_axis_projection_T: 0.4e-3 # reject ramps entering the projection-zero regime
+jitter_frac: 0.05             # per-sequence endpoint jitter (of ramp length)
+trajectory_family_weights:
+  held: 0.5
+  reversal: 0.25
+  ou: 0.25
+reversal_turn_frac_range: [0.2, 0.8]
+field_ou_sigma_T: 45.0e-6
+field_ou_tau_frames: 16.0
+
+# Per-axis contrast asymmetry: MW polarization projects differently onto each
+# NV axis (Rabi-amplitude factors; contrast follows via saturation, ~3.0x
+# depth spread). A DEPLOYMENT PRIOR like the fixed bias direction: fixed MW
+# geometry -> fixed axis ordering. Identical contrast is the maximally-
+# ambiguous case; the asymmetry is a real, usable identity cue for trackers
+# AND classical baselines. Reference per-line depths are recorded in the
+# manifest (line_depths). Drift is ON: static depths would be a fixed global
+# name tag making association solvable by depth alone — the thesis regime is
+# weak DRIFTING cues fused with dynamics. Seeded AR(1), bit-reproducible from
+# the sequence seed (the deterministic-like-v0 rule concerns measurement
+# noise, which stays consumer-side).
+axis_contrast_scale: [1.0, 0.85, 0.7, 0.55]
+axis_contrast_drift_std: 0.05         # per-sequence AR(1) drift (fractional)
+axis_contrast_drift_tau_frames: 64.0  # drift correlation time (frames)
+
+# Labelling
+collision_threshold_linewidths: 1.0   # k in |f_i - f_j| < k * Gamma_intrinsic
+extra_b_perp_T: 0.0
+hyperfine: false         # L = 8 electronic lines (24 with 14N — deferred)
+
+# Frequency grid: PINNED to sequence_sanity_v0's exact grid (bar parity).
+# Generation fails fast if the sweep's derived worst-case window exceeds it.
+freq_range_Hz: [2667390522.8636284, 3074609477.1363726]
+n_freq_points: 951
+freq_margin_factor: 1.15
+aliasing_safety: 3.5

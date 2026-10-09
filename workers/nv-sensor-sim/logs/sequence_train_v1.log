@@ -1,0 +1,107 @@
+~/projects/nv-sensor-sim/src/nv_sensor_sim/adapters/simos_adapter.py:297: UserWarning: Grid aliasing risk: Frequency step (1.010 MHz) is too coarse to resolve the 0.563 MHz FWHM lineshape. Dip may be under-resolved.
+  warnings.warn(
+D=2.87100 GHz  Gamma=1.5012 MHz  window=[2.6674, 3.0746] GHz (pinned)  F=951  step=0.4287 MHz
+Dry-run: 1.6 ms/frame -> ETA 306 s for 768 sequences x 256 frames; per-split spectra shape (N, 256, 951)
+Generating 512 sequences for train split...
+  train: 8/512
+  train: 16/512
+  train: 24/512
+  train: 32/512
+  train: 40/512
+  train: 48/512
+  train: 56/512
+  train: 64/512
+  train: 72/512
+  train: 80/512
+  train: 88/512
+  train: 96/512
+  train: 104/512
+  train: 112/512
+  train: 120/512
+  train: 128/512
+  train: 136/512
+  train: 144/512
+  train: 152/512
+  train: 160/512
+  train: 168/512
+  train: 176/512
+  train: 184/512
+  train: 192/512
+  train: 200/512
+  train: 208/512
+  train: 216/512
+  train: 224/512
+  train: 232/512
+  train: 240/512
+  train: 248/512
+  train: 256/512
+  train: 264/512
+  train: 272/512
+  train: 280/512
+  train: 288/512
+  train: 296/512
+  train: 304/512
+  train: 312/512
+  train: 320/512
+  train: 328/512
+  train: 336/512
+  train: 344/512
+  train: 352/512
+  train: 360/512
+  train: 368/512
+  train: 376/512
+  train: 384/512
+  train: 392/512
+  train: 400/512
+  train: 408/512
+  train: 416/512
+  train: 424/512
+  train: 432/512
+  train: 440/512
+  train: 448/512
+  train: 456/512
+  train: 464/512
+  train: 472/512
+  train: 480/512
+  train: 488/512
+  train: 496/512
+  train: 504/512
+  train: 512/512
+  train labels: no-crossing 27.3%, crossings/seq mean 5.5, collision frames mean 8.79%, near-merge seqs 0/512, ramp resamples 0, families h/r/o 248/139/125, reversals-in-dwell 11
+Generating 128 sequences for val split...
+  val: 8/128
+  val: 16/128
+  val: 24/128
+  val: 32/128
+  val: 40/128
+  val: 48/128
+  val: 56/128
+  val: 64/128
+  val: 72/128
+  val: 80/128
+  val: 88/128
+  val: 96/128
+  val: 104/128
+  val: 112/128
+  val: 120/128
+  val: 128/128
+  val labels: no-crossing 24.2%, crossings/seq mean 5.9, collision frames mean 8.67%, near-merge seqs 0/128, ramp resamples 0, families h/r/o 59/39/30, reversals-in-dwell 2
+Generating 128 sequences for test split...
+  test: 8/128
+  test: 16/128
+  test: 24/128
+  test: 32/128
+  test: 40/128
+  test: 48/128
+  test: 56/128
+  test: 64/128
+  test: 72/128
+  test: 80/128
+  test: 88/128
+  test: 96/128
+  test: 104/128
+  test: 112/128
+  test: 120/128
+  test: 128/128
+  test labels: no-crossing 32.0%, crossings/seq mean 7.9, collision frames mean 8.83%, near-merge seqs 0/128, ramp resamples 0, families h/r/o 56/30/42, reversals-in-dwell 3
+Sequence dataset written to ~/projects/nv-sensor-sim/artifacts/datasets/sequence_train_v1

@@ -1,0 +1,45 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "nv-sensor-sim"
+version = "0.1.0"
+description = "NV-diamond magnetometer ODMR simulator and synthetic dataset generator"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = [
+    "simos>=0.2.3",
+    "qutip>=5.2.3",
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "pyyaml>=6.0",
+    "h5py>=3.8",
+    "sympy>=1.12",
+    "pandas>=2.0",
+]
+
+[project.optional-dependencies]
+gpu = [
+    "cudaq",
+]
+orbit = [
+    "sgp4>=2.23",
+    "ppigrf>=2.0",
+]
+dev = [
+    "pytest>=7.0",
+    "ruff>=0.1",
+    "matplotlib>=3.7",
+    "jupyter",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "smoke: CPU-only smoke tests (no CUDA required)",
+]

@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Data science / ML artifacts
+*.h5
+*.hdf5
+*.npz
+*.npy
+checkpoints/
+artifacts/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+
+# Claude Code local settings (per-user, not team-wide)
+.claude/settings.local.json
+
+# Claude instructions are local-only (symlinked from private claude-config)
+/CLAUDE.md
+
+# Real external datasets (large; loaders+manifests are committed, raw data is not — TVW 2026-08-28)
+data/experimental/zenodo_ml_scan_7481960/
+data/experimental/zenodo_zerofield_10629041/
+data/experimental/harvard_lowfield_6TFFPG/
+data/experimental/darus_gradiometry_2817/
+data/experimental/borealis_sbquantum_DRTLGW/

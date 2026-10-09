@@ -1,0 +1,61 @@
+# Orbit-in-the-loop benchmark v1 — frozen, air-gap-reproducible.
+#
+# Three representative LEO orbits at ~400-600 km, propagated for 24 hours at
+# dt=1s (~86,400 samples per orbit, ~16 half-orbits per orbit_id). Total:
+# ~259,200 rows across the dataset.
+#
+# ADEV statistical-power note (carry into docs/architecture.md):
+#   24 h × dt=1 s yields only ~32 non-overlapping τ=2,700 s windows per
+#   orbit_id — MARGINAL for reproducing the FTR's 96.1% ADEV claim with
+#   statistical confidence. v1 closes the engineering stop-gate (handoff
+#   consumed by tychon-shared-data, schema validates). Publish-quality
+#   reproduction is captured in configs/orbit_benchmark_v2.yaml (7-day
+#   traces yielding ~225 windows per orbit_id).
+#
+# STATUS (2026-07-01): "96.1%" above is the Final Technical Report's claim
+#   (computed in odmr-edge-ml's adev_simulation.py from the v1 unclamped
+#   model), cited here only as the reproduction TARGET. No ADEV benchmark
+#   has ever been run in THIS repo: the orbit deps (sgp4/ppigrf) are
+#   uninstalled (all 4 orbit tests skip), there is no Allan-deviation code
+#   here, and v2 is a stub.
+#
+# TLE provenance: bodies are baked inline below WITH valid checksums so the
+# benchmark is bit-reproducible on an air-gapped Spark with zero network.
+# Source attribution lives next to each TLE pair as a comment. The loader
+# (orbits/benchmark.py) re-verifies every checksum at parse time.
+
+duration_s: 86400.0
+dt_s: 1.0
+master_seed: 42
+igrf_date: "2026-01-01T00:00:00+00:00"  # mid-bench IGRF-14 epoch (2026.0)
+
+splits:
+  all: [0, 1, 2]   # v1 uses a single split; tychon-shared-data lifts this
+
+orbits:
+  - orbit_id: 0
+    label: iss_like_51deg
+    notes: ISS-like 51.6° inclination, ~400 km altitude, ~92 min period.
+    tle:
+      # source: synthesized from a published 2024-01-01 ISS state vector
+      # retrieved: 2026-04-15 (frozen for v1; do not edit without bumping version)
+      line1: "1 25544U 98067A   24001.50000000  .00016717  00000-0  10270-3 0 90098"
+      line2: "2 25544  51.6400 100.0000 0006703  90.0000  10.0000 15.50000000400000"
+
+  - orbit_id: 1
+    label: polar_85deg
+    notes: Polar 85° inclination, ~400 km altitude, near-LEO regime.
+    tle:
+      # source: synthesized representative polar LEO TLE
+      # retrieved: 2026-04-15 (frozen for v1)
+      line1: "1 99001U 26001A   26001.00000000  .00010000  00000-0  10000-4 0 90005"
+      line2: "2 99001  85.0000  10.0000 0001000  10.0000 350.0000 15.50000000100007"
+
+  - orbit_id: 2
+    label: sso_97p5deg
+    notes: Sun-synchronous 97.5° inclination, ~600 km altitude.
+    tle:
+      # source: synthesized representative SSO TLE
+      # retrieved: 2026-04-15 (frozen for v1)
+      line1: "1 99002U 26002A   26001.00000000  .00010000  00000-0  10000-4 0 90007"
+      line2: "2 99002  97.5000  20.0000 0001000  10.0000 350.0000 14.95000000100005"

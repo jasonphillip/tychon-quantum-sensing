@@ -1,0 +1,112 @@
+# Time-series ("dynamic") ODMR training dataset — v3 (angular field-coverage)
+#
+# Successor to sequence_train_v1/v2 that CLOSES a measured training-coverage gap.
+# odmr-vector-tracking increment-5 found a deterministic field-acquisition failure:
+# the learned tracker loses field lock 216/216 on dwell merge pairs (0,2)/(4,6),
+# which force B to 41.5deg/53.2deg off the deployment bias at 3.9/3.3 mT — outside
+# the v1/v2 training cone (<= ~18deg off-bias). v3 widens the trained off-bias cone
+# to >= 60deg (so the 53.2deg failure geometry sits in the INTERIOR) and lowers the
+# |B| floor to 3.0 mT, on the SAME v1 contract (pinned 951-pt grid, same ~5 mT bias
+# geometry, per-axis contrast ladder + AR(1) drift, T=256, stored noiseless).
+#
+# PINNED-GRID TENSION. The pinned window is only +/-203.6 MHz around D=2.871 GHz and
+# v1's +/-1.4 mT already nearly saturates it, so the isotropic worst-case (scalar
+# parallel to an axis) cannot simply be enlarged. And uniform isotropic sampling
+# structurally under-fills the wide cone: the reachable off-bias angle is bounded by
+# arcsin(|ext|/|bias|) and the high-angle band is a measure-zero sliver near the |B|
+# floor (measured: isotropic +/-4.5 mT reaches median 21deg, 0/1500 >= 53deg). So v3
+# samples the OFF-BIAS ANGLE directly (Amendment 1 Option A):
+#
+#   * ~70% angle-stratified widened sub-population: off-bias angle ~ U[0, 62deg],
+#     magnitude ~ U[3.0, 6.0] mT, constructed at that stratum with random azimuth;
+#     v1-style held/reversal/ou families set the ramp shape. Three per-frame
+#     reject-and-redraw guards keep every geometry physical and in-grid: |B| floor
+#     (min_field_T), window containment (window_margin_frac), min per-axis |B.n|
+#     (min_axis_projection_T). Reaches >= 60deg with 53.2deg in the interior.
+#   * ~30% directed merge-crossing sub-population: v1-style pass-through crossings
+#     aimed EXACTLY at the cross-axis merge degeneracies (reusing the dwell
+#     merge_direction/a_merge machinery), so the exact (0,2)/(4,6) failure geometry
+#     is densely covered.
+#
+# COLD-START DIVERSITY (Amendment 1 condition 2). The measured failure is off-cone
+# ACQUISITION, not lock-carrying. So cold_start_fraction of the angle-stratified
+# sequences START frame-0 at their drawn (possibly wide) stratum (cold acquisition),
+# while the rest carry a lock outward from the near-bias cone. The per-sequence start
+# mode (0=acquire, 1=carry, -1=directed) is recorded, and the full stratification law
+# is written to the manifest (a training DENSITY change vs v1/v2 — needed for the
+# downstream increment-6 coverage attribution).
+#
+# Physics-cue knobs stay DEFAULT OFF here (byte-identical to the no-knob path). The
+# seed-paired cues-ON twin is configs/sequence_train_v3_cues.yaml (config only — not
+# generated yet; for a later cue-retrain experiment).
+#
+# Deterministic: fixed master seed, per-sequence seeds verified disjoint from v1/v2.
+# Consumed by odmr-vector-tracking. Regenerate:
+#   python scripts/generate_sequence_dataset.py \
+#     --config configs/sequence_train_v3.yaml \
+#     --output-dir artifacts/datasets/sequence_train_v3/
+
+# Splits (sequences) + seed — v2-scale (4x v1); new master seed disjoint from v1/v2.
+n_train: 2048
+n_val: 512
+n_test: 512
+master_seed: 20260703
+
+# Time axis
+n_timesteps: 256
+dt_s: 1.0e-3
+
+# Sample / linewidth (fixed; sets Gamma for labeling) — identical to v1/v2.
+p1_ppm: 40.0
+temperature_K: 300.0
+
+# Static bias (deployment prior — FIXED, identical to v1/v2).
+bias_B0_T: 5.0e-3
+bias_direction_uvw: [0.2, 0.1, 1.0]
+
+# Widened envelope (angle-stratified, Amendment 1 Option A).
+sweep_mode: isotropic_widened
+offbias_angle_target_deg: 62.0        # off-bias angle drawn U[0, 62deg]
+field_range_T: [3.0e-3, 6.0e-3]       # magnitude drawn U[3.0, 6.0] mT
+cold_start_fraction: 0.5              # ~half START at the drawn stratum (acquisition)
+carry_start_max_deg: 15.0            # carry sequences start within 15deg of bias
+carry_field_range_T: [4.0e-3, 5.6e-3]  # carry sequences start near the bias magnitude
+directed_fraction: 0.30              # directed merge-crossings at (0,2)/(4,6) etc.
+directed_approach_lw_range: [3.0, 6.0]  # directed pre-merge separation (linewidths)
+
+# Per-frame reject-and-redraw guards.
+min_field_T: 3.0e-3                   # hard |B| floor (interior min over the trajectory)
+min_axis_projection_T: 0.4e-3        # reject geometries entering the label-degenerate zone
+window_margin_frac: 0.02             # keep line offsets 2% inside the pinned half-window
+
+# Motion + v1-style families (shape of the widened ramps).
+min_sweep_delta_T: 1.0e-3
+min_ramp_window_frac: 0.25
+jitter_frac: 0.05
+trajectory_family_weights:
+  held: 0.5
+  reversal: 0.25
+  ou: 0.25
+reversal_turn_frac_range: [0.2, 0.8]
+field_ou_sigma_T: 45.0e-6
+field_ou_tau_frames: 16.0
+
+# Per-axis contrast asymmetry + seeded AR(1) drift — identical to v1/v2.
+axis_contrast_scale: [1.0, 0.85, 0.7, 0.55]
+axis_contrast_drift_std: 0.05
+axis_contrast_drift_tau_frames: 64.0
+
+# Labelling — identical to v1/v2.
+collision_threshold_linewidths: 1.0
+extra_b_perp_T: 0.0
+hyperfine: false
+
+# Physics cues OFF (byte-identical to the no-knob path).
+axis_offsets_hz: null
+nv_density_ppm: 0.0
+
+# Frequency grid: PINNED to v1's exact window/F (bar parity, no distribution shift).
+freq_range_Hz: [2667390522.8636284, 3074609477.1363726]
+n_freq_points: 951
+freq_margin_factor: 1.15
+aliasing_safety: 3.5

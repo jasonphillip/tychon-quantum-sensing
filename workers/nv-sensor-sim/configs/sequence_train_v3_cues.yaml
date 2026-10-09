@@ -1,0 +1,81 @@
+# Time-series ODMR training dataset — sequence_train_v3_cues (physics cues ON)
+#
+# SEED-PAIRED TWIN of sequence_train_v3: IDENTICAL widened envelope, families,
+# stratification law, and master_seed — with the two default-OFF physics cues turned
+# ON. Because the trajectories, strata, and jitter do not depend on the cues, pairing
+# by seed makes any downstream identity/acquisition delta attributable to the cues
+# alone.
+#
+# NOT GENERATED YET. This config is a deliverable for a LATER cue-retrain experiment
+# (the increment-5 disposition retains cue-aware decoders pending a retrain lineage).
+# Do not generate cues-on training data until that experiment is greenlit. Generating
+# it later:
+#   python scripts/generate_sequence_dataset.py \
+#     --config configs/sequence_train_v3_cues.yaml \
+#     --output-dir artifacts/datasets/sequence_train_v3_cues/
+#
+# Cues (see docs/dataset-contract.md "Optional keys — dwell lineage" for the physics):
+#   axis_offsets_hz — per-axis static strain / E-field ZFS offset ladder (Meneses
+#     real-device fit, kHz): a common-mode per-orientation shift, split-invisible, a
+#     static center-only identity fingerprint a long dwell can integrate down.
+#   nv_density_ppm — NV-NV cross-relaxation PL feature at inter-orientation degeneracy
+#     (3.8 ppm = the Dhungel calibration point, ~0.78 mT FWHM / ~1.79% contrast).
+
+# Same splits + master seed as sequence_train_v3 (seed-paired).
+n_train: 2048
+n_val: 512
+n_test: 512
+master_seed: 20260703
+
+# Time axis
+n_timesteps: 256
+dt_s: 1.0e-3
+
+p1_ppm: 40.0
+temperature_K: 300.0
+
+bias_B0_T: 5.0e-3
+bias_direction_uvw: [0.2, 0.1, 1.0]
+
+# Widened envelope — identical to sequence_train_v3.
+sweep_mode: isotropic_widened
+offbias_angle_target_deg: 62.0
+field_range_T: [3.0e-3, 6.0e-3]
+cold_start_fraction: 0.5
+carry_start_max_deg: 15.0
+carry_field_range_T: [4.0e-3, 5.6e-3]
+directed_fraction: 0.30
+directed_approach_lw_range: [3.0, 6.0]
+
+min_field_T: 3.0e-3
+min_axis_projection_T: 0.4e-3
+window_margin_frac: 0.02
+
+min_sweep_delta_T: 1.0e-3
+min_ramp_window_frac: 0.25
+jitter_frac: 0.05
+trajectory_family_weights:
+  held: 0.5
+  reversal: 0.25
+  ou: 0.25
+reversal_turn_frac_range: [0.2, 0.8]
+field_ou_sigma_T: 45.0e-6
+field_ou_tau_frames: 16.0
+
+axis_contrast_scale: [1.0, 0.85, 0.7, 0.55]
+axis_contrast_drift_std: 0.05
+axis_contrast_drift_tau_frames: 64.0
+
+collision_threshold_linewidths: 1.0
+extra_b_perp_T: 0.0
+hyperfine: false
+
+# Physics cues ON. Meneses per-axis strain ladder (arXiv:2502.14683 as cited in the
+# issuing dispatch; title-collision caveat in docs/dataset-contract.md) + 3.8 ppm CR.
+axis_offsets_hz: [19600.0, -4200.0, -3500.0, -11900.0]
+nv_density_ppm: 3.8
+
+freq_range_Hz: [2667390522.8636284, 3074609477.1363726]
+n_freq_points: 951
+freq_margin_factor: 1.15
+aliasing_safety: 3.5

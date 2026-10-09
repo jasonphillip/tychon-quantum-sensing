@@ -1,0 +1,40 @@
+# Orbit-in-the-loop benchmark v2 — STUB (publish-quality follow-up).
+#
+# This config is a placeholder reserved for the 7-day-trace publish-quality
+# benchmark. Bumping to 7 days at dt=1s yields ~225 non-overlapping
+# τ=2,700 s windows per orbit_id (vs. ~32 in v1), enough to compute the
+# FTR's 96.1% ADEV claim with confidence intervals.
+# STATUS (2026-07-01): that 96.1% figure is the report's claim (from
+# odmr-edge-ml's v1-model adev_simulation.py), referenced as the TARGET;
+# no ADEV benchmark has ever run in this repo (deps uninstalled, this
+# config is a stub).
+#
+# v1 (configs/orbit_benchmark_v1.yaml) is the engineering stop-gate; v2 is
+# the science deliverable. Do NOT enable v2 until odmr-edge-ml has run a
+# spot-check evaluation on the v1 dataset and confirmed the half-orbit ADEV
+# behavior reproduces (or diverges with documented explanation).
+#
+# TODO: enable when v1 stop-gate is closed.
+#
+# duration_s: 604800.0   # 7 days
+# dt_s: 1.0
+# master_seed: 42
+# igrf_date: "2026-01-01T00:00:00+00:00"
+# splits:
+#   all: [0, 1, 2]
+# orbits:
+#   - orbit_id: 0
+#     label: iss_like_51deg
+#     tle:
+#       line1: "..."
+#       line2: "..."
+#   - orbit_id: 1
+#     label: polar_85deg
+#     tle:
+#       line1: "..."
+#       line2: "..."
+#   - orbit_id: 2
+#     label: sso_97p5deg
+#     tle:
+#       line1: "..."
+#       line2: "..."
