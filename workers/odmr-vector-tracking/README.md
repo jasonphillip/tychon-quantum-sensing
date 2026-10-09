@@ -58,6 +58,6 @@ the training envelope and a binding 3.0 mT field floor — not a blanket angle c
 checkpoints stay pinned as the sharper in-cone identity reference (numbers quoted from them must
 say "v2 checkpoints").
 
-See [`CLAUDE.md`](CLAUDE.md) for scope boundaries and cross-repo rules, and
+See [`AGENTS.md`](AGENTS.md) for scope boundaries and cross-repo rules, and
 [`docs/design/02_approach_and_testbed.md`](docs/design/02_approach_and_testbed.md) for the
 first build increment.
