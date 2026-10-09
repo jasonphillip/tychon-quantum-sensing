@@ -1,0 +1,13 @@
+csr_version=0x00010000
+watchdog_at_start=0x00000005
+kernel=Linux mpfs-icicle-kit 6.18.17-linux4microchip-2026.04.1-g7fbe4f69684d #1 SMP Wed Apr 29 16:43:56 UTC 2026 riscv64 GNU/Linux
+repository_commit=b9419703808dbc0e3fa4d57eae63c47374eeb527
+image_id=two-slot idfix2 bitstream, fabric digest A77DCEAD3DE3ECC32399CF83AF8F696A295CE449733B76FF0B8A5881A8F687B6
+room_temperature=not measured
+output_load=none (register post_clamp_out only; no physical actuator)
+period_us=300
+out_min=-1.0
+out_max=1.0
+25:constexpr double MAX_SLEW_PER_CYCLE = 0.001;
+29:constexpr unsigned int WATCHDOG_TIMEOUT_CYCLES = 250000;
+35:constexpr unsigned int WATCHDOG_COOLDOWN_CYCLES = 1000;
