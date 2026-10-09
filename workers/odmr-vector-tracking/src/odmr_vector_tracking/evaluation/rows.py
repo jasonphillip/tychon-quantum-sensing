@@ -26,6 +26,7 @@ from __future__ import annotations
 import numpy as np
 
 from odmr_vector_tracking.evaluation.metrics import (
+    _nonfinite_as_lost,
     association_accuracy,
     crossing_events,
     id_switch_rate,
@@ -68,7 +69,7 @@ def sequence_metrics_row(
     phys = physical_line_index(tracked_hz, resonance_freqs, capture_radius_hz)
 
     ae = vector_angular_error(B_true, B_est)          # nan where undefined
-    ae_lock = np.where(np.isnan(ae), np.inf, ae)      # undefined counts as LOST
+    ae_lock = _nonfinite_as_lost(ae)                   # undefined counts as LOST
 
     acc = association_accuracy(pred_axis, ta, line_collision=line_collision)
     lc = np.asarray(line_collision, dtype=bool)
