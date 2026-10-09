@@ -49,35 +49,43 @@ def export_onnx(
     opset_version : int
         ONNX opset version (default 17).
     skip_ops_check : bool
-        If True, skip the VectorBlox compatibility pre-check.
+        If True, skip the VectorBlox compatibility pre-check and mark the
+        exported ONNX model as unverified.
         Default False — always validate before export.
 
     Returns
     -------
     Path
-        The output path of the exported ONNX model.
+        The output path of the exported ONNX model. Its metadata contains
+        ``ops_certified`` and ``ops_certification_reason``.
 
     Raises
     ------
     OpsGuardError
-        If the model contains disallowed VectorBlox ops and
+        If the model contains disallowed or unknown VectorBlox ops and
         ``skip_ops_check`` is False.
     """
     output_path = Path(output_path)
     model.eval()
 
     # Pre-flight: VectorBlox compatibility check
-    if not skip_ops_check:
+    if skip_ops_check:
+        ops_certified = False
+        certification_reason = "ops check skipped by skip_ops_check=True"
+        log.warning("ONNX ops unverified: %s", certification_reason)
+    else:
         report = check_model_ops(model, input_shape=input_shape)
         if not report.is_compatible:
             raise OpsGuardError(
-                f"Model contains VectorBlox-incompatible ops: {report.disallowed}. "
+                "Model contains VectorBlox-incompatible ops: "
+                f"disallowed={report.disallowed}, unknown={report.unknown}. "
                 "Fix the model architecture or pass skip_ops_check=True to bypass."
             )
+        ops_certified = True
+        certification_reason = "ops check passed: no disallowed or unknown ops"
         log.info(
-            "ops_guard passed: %d allowed ops, %d unknown",
+            "ops_guard passed: %d allowed ops",
             len(report.allowed),
-            len(report.unknown),
         )
 
     # Export
@@ -98,7 +106,15 @@ def export_onnx(
     import onnx
 
     onnx_model = onnx.load(str(output_path))
+    for key, value in (
+        ("ops_certified", str(ops_certified).lower()),
+        ("ops_certification_reason", certification_reason),
+    ):
+        metadata = onnx_model.metadata_props.add()
+        metadata.key = key
+        metadata.value = value
     onnx.checker.check_model(onnx_model)
+    onnx.save(onnx_model, str(output_path))
 
     size_kb = output_path.stat().st_size / 1024
     log.info("ONNX exported: %s (%.1f KB)", output_path, size_kb)
