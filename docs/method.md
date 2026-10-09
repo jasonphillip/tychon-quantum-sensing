@@ -73,6 +73,27 @@ The roles (a planning project, an orchestrator session, one worker session per r
 
 Who decided what is in the [case study](case-study.md). I set the plan, wrote the specs and reviewed the results. The agents wrote most of the code.
 
+## Effort in numbers
+
+These counts come from the Claude Code and Codex session logs on my machines and from the git history in this repo. A session is one agent conversation in a repository. A prompt is one message I typed, not counting tool results or slash commands. I didn't log my own hours, so there's no hours figure here.
+
+| Folder | Agent sessions | My prompts | Agent tool calls | Active days | Sessions ran | Commits |
+|---|---:|---:|---:|---:|---|---:|
+| workers/nv-sensor-sim | 28 | 89 | 1,394 | 11 | 2026-04-04 to 07-07 | 46 |
+| workers/odmr-edge-ml | 12 | 59 | 888 | 7 | 2026-04-04 to 05-17 | 36 |
+| workers/polarfire-hybrid-control | 40 | 434 | 3,679 | 21 | 2026-04-04 to 07-03 | 138 |
+| workers/odmr-vector-tracking | 19 | 230 | 1,783 | 12 | 2026-06-29 to 07-12 | 71 |
+| orchestrator | 108 | 1,095 | 9,218 | 72 | 2026-05-01 to 10-09 | 106 |
+| demo/fpga-demo-dashboard | built inside other sessions | | | | | 12 |
+| archive/v0 (three first attempts) | 47 | 239 | 2,955 | 11 | 2026-03-11 to 04-28, one session in August | 42 |
+| Total | 254 | 2,146 | 19,917 | 93 | 2026-03-11 to 10-09 | 451 |
+
+Sessions in the worker repositories end in July. After that, changes to them came from the orchestrator session, which may commit to the worker repositories, and from fixes I made in October while preparing this repository. The orchestrator count includes that October work. Two private helper repositories that are not published here are left out of the table.
+
+The dispatch tool sent 5 dispatches. 4 were acknowledged and 3 have actual hours logged. All three took between a quarter and a third of the predicted hours, so my estimates ran high. Dispatches before the tool existed were hand-carried documents and are not counted. The planning project holds [86 indexed conversations](../planning/conversations-index.md).
+
+In the Claude Code sessions, the share of assistant messages by model was Claude Opus 4.7 41 %, Claude Fable 5 25 %, Claude Opus 4.8 18 %, Claude Opus 4.6 9 %, the rest under 4 % each. The Codex sessions used GPT models and aren't in that share.
+
 ## Verification rules
 
 - A claim verified by execution outranks one verified by retrieval, so a test run beats a search hit.
