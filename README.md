@@ -4,6 +4,17 @@ I used coding agents to build the software for NV-diamond quantum magnetometers.
 
 The build started from a 90-day plan in March 2026 and continued through September 2026.
 
+## Results at a glance
+
+| Part | Result | Limit |
+|---|---|---|
+| FPGA watchdog | Trip time measured on PolarFire SoC silicon on 2026-07-01: median 2.000 ms over 120 trips | One dev kit |
+| FPGA control loop | 8-hour soak on silicon on 2026-07-02: 95.7 M steps at 3,319 Hz with zero stalls; five transient scheduling stalls over 2 ms, all caught and recovered by the watchdog | Paced by software on the SoC's processor, not in the fabric; replayed ODMR input, no live diamond |
+| Edge ML benchmark | `make bench` trains a 10,689-parameter network on synthetic spectra. Mean field error on 200 test spectra is 10.53 µT, against 12.26 µT for a constant baseline and 25.93 µT for a derivative zero-crossing PID proxy | Synthetic data, FP32 on a CPU; INT8 accuracy on the kit is not in this table |
+| Vector tracker | Follows the field vector through spectral line crossings, reliable to about 30 to 40° off the bias axis | FP32 simulation only; no INT8 export or on-target run |
+| Simulator | Loaders for five public ODMR and magnetometry datasets, and two-sample tests to compare against them | Comparison results not yet committed |
+| Claim checks | Audits of my technical report on 2026-05-01, up to 114 claims per pass through two local critic models. A manual structure review found three critical errors, all fixed in the corrected report | On the first run the two critics agreed 10 times out of 10, which I counted as a failed independence test |
+
 ## How it fits together
 
 ```mermaid
@@ -38,8 +49,10 @@ flowchart TD
 |---|---|
 | 1 minute | this page and [the timeline](#timeline) |
 | 5 minutes | [docs/case-study.md](docs/case-study.md): how the work was planned, reviewed and verified |
+| no physics background | [docs/primer.md](docs/primer.md): NV diamonds, ODMR, and why a network on an FPGA |
 | the machines I used and what ran where | [docs/lab.md](docs/lab.md) |
 | how I used manuals, notebooks and local checks | [docs/method.md](docs/method.md) |
+| what I read | [docs/references.md](docs/references.md): manuals, papers and the public datasets |
 | the orchestration loop | [planning/excerpts/](planning/excerpts/): the planning chat writing prompts for each repo session and reviewing what came back |
 | mistakes other models caught | [docs/second-opinions.md](docs/second-opinions.md) |
 | a real dispatch | [orchestrator/tvw/audits/dispatch-9-increment8-bc-stack-2026-07-11.md](orchestrator/tvw/audits/dispatch-9-increment8-bc-stack-2026-07-11.md) and the tool that sends it, [dispatch.sh](orchestrator/tvw/scripts/dispatch.sh) |
@@ -91,7 +104,7 @@ orchestrator/    orchestrator v2: claim-verification pipeline, dispatch tool, au
 workers/         nv-sensor-sim, odmr-edge-ml, polarfire-hybrid-control, odmr-vector-tracking
 demo/            fpga-demo-dashboard: the live demo of the FPGA control loop
 archive/v0/      the first attempts, kept to show where the work began
-docs/            case study, lab, method and tooling
+docs/            primer, case study, lab, method and tooling, references
 ```
 
 ## About this history
