@@ -44,10 +44,12 @@ warnings.filterwarnings("ignore", category=DeprecationWarning, module="torch.ao"
 _REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_REPO / "src"))
 
-from odmr_edge_ml.cascade.train_stage import train_stage  # noqa: E402
-from odmr_edge_ml.vector.windowing import (  # noqa: E402
-    NV_GYROMAGNETIC_RATIO_HZ_T,
-    NV_ZERO_FIELD_SPLITTING_HZ,
+from odmr_edge_ml.vector.anchors import (  # noqa: E402
+    bias_from_manifest,
+    coarse_fit_field,
+    coarse_fit_lock_bins,
+    oracle_lock_bins,
+    prior_lock_bins,
 )
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -96,6 +98,9 @@ def _prepare_channel(
     axis_idx: int,
     sign: int,
     window_size: int,  # unused in full-spectrum mode; kept for CLI compat
+    anchor_source: str = "oracle",
+    bias_B0_T: np.ndarray | None = None,
+    coarse_fields_T: np.ndarray | None = None,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, int, int]:
     """Build per-axis-sign training data on the FULL spectrum.
 
@@ -116,15 +121,18 @@ def _prepare_channel(
     from odmr_edge_ml.vector.windowing import NV_AXES_UNIT
     proj_T = (labels_T @ NV_AXES_UNIT.T)[:, axis_idx]
     labels_uT = (float(sign) * proj_T * 1e6).astype(np.float64)
-    # Lock-bin anchor: the linear-Zeeman expected dip bin, computed from
-    # labels at training time. This leaks the label as a positional hint
-    # in the second channel — acceptable here because at deployment the
-    # bias-field direction is fixed and a coarse PID would emit the same
-    # estimate. Documented in the closing memo.
-    bin_spacing = float(freq_grid[1] - freq_grid[0])
-    f_dip = NV_ZERO_FIELD_SPLITTING_HZ + float(sign) * NV_GYROMAGNETIC_RATIO_HZ_T * proj_T
-    lock_bins_f = (f_dip - freq_grid[0]) / bin_spacing
-    lock_bins = np.clip(np.rint(lock_bins_f), 0, len(freq_grid) - 1).astype(np.int64)
+    # Use either the label-derived anchor or the fixed bias-field prior.
+    if anchor_source == "oracle":
+        lock_bins = oracle_lock_bins(labels_T, freq_grid, axis_idx, sign)
+    elif anchor_source == "prior":
+        if bias_B0_T is None:
+            raise ValueError("Prior anchor requires a bias vector")
+        lock_bins = prior_lock_bins(bias_B0_T, freq_grid, axis_idx, sign, len(labels_T))
+    elif anchor_source == "coarse_fit":
+        fields = coarse_fields_T if coarse_fields_T is not None else coarse_fit_field(spectra, freq_grid)
+        lock_bins = coarse_fit_lock_bins(fields, freq_grid, axis_idx, sign)
+    else:
+        raise ValueError(f"Unknown anchor source: {anchor_source}")
     return (
         spec_norm,
         lock_bins,
@@ -152,16 +160,24 @@ def _run_one_channel(
     n_train_cap: int | None,
     n_val_cap: int | None,
     device: torch.device,
+    anchor_source: str = "oracle",
+    bias_B0_T: np.ndarray | None = None,
+    train_coarse_fields_T: np.ndarray | None = None,
+    val_coarse_fields_T: np.ndarray | None = None,
 ) -> dict:
+    from odmr_edge_ml.cascade.train_stage import train_stage
+
     train_spec, train_lab, freq = train
     val_spec, val_lab, _ = val
 
     t0 = time.time()
     tr_x, tr_lb, tr_y, n_tr_valid, n_tr_total = _prepare_channel(
-        train_spec, train_lab, freq, axis_idx, sign, window_size,
+        train_spec, train_lab, freq, axis_idx, sign, window_size, anchor_source, bias_B0_T,
+        train_coarse_fields_T,
     )
     va_x, va_lb, va_y, n_va_valid, n_va_total = _prepare_channel(
-        val_spec, val_lab, freq, axis_idx, sign, window_size,
+        val_spec, val_lab, freq, axis_idx, sign, window_size, anchor_source, bias_B0_T,
+        val_coarse_fields_T,
     )
     log.info(
         "channel axis=%d sign=%+d valid: train %d/%d (%.1f%%)  val %d/%d (%.1f%%)",
@@ -228,6 +244,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--dataset", type=Path, default=DEFAULT_DATASET)
     ap.add_argument("--out", type=Path, default=DEFAULT_OUT)
+    ap.add_argument("--anchor-source", choices=("oracle", "prior", "coarse_fit"), default="oracle")
     ap.add_argument("--smoke", action="store_true",
                     help="One channel (axis=0, sign=+1), 2 epochs, 1000 train samples")
     ap.add_argument("--epochs", type=int, default=100)
@@ -272,6 +289,7 @@ def main() -> None:
              "(used to model a Path-B concentrator regime with low-magnitude bias).",
     )
     args = ap.parse_args()
+    bias_B0_T = bias_from_manifest(args.dataset) if args.anchor_source == "prior" else None
 
     if not torch.cuda.is_available():
         raise SystemExit("CUDA not available — refusing to train on CPU per CLAUDE.md")
@@ -333,6 +351,12 @@ def main() -> None:
         train = _filter(train)
         val = _filter(val)
 
+    train_coarse_fields_T = None
+    val_coarse_fields_T = None
+    if args.anchor_source == "coarse_fit":
+        train_coarse_fields_T = coarse_fit_field(train[0], train[2])
+        val_coarse_fields_T = coarse_fit_field(val[0], val[2])
+
     args.out.mkdir(parents=True, exist_ok=True)
 
     if args.channels is not None:
@@ -354,6 +378,9 @@ def main() -> None:
                 huber_delta=args.huber_delta, window_size=args.window_size,
                 seed=args.seed, n_train_cap=5000, n_val_cap=1000,
                 device=device,
+                anchor_source=args.anchor_source, bias_B0_T=bias_B0_T,
+                train_coarse_fields_T=train_coarse_fields_T,
+                val_coarse_fields_T=val_coarse_fields_T,
             )
         ]
     else:
@@ -370,11 +397,15 @@ def main() -> None:
                     seed=args.seed,
                     n_train_cap=None, n_val_cap=None,
                     device=device,
+                    anchor_source=args.anchor_source, bias_B0_T=bias_B0_T,
+                    train_coarse_fields_T=train_coarse_fields_T,
+                    val_coarse_fields_T=val_coarse_fields_T,
                 )
             )
 
     summary = {
         "dataset": str(args.dataset),
+        "anchor_source": args.anchor_source,
         "smoke": args.smoke,
         "epochs": args.epochs,
         "huber_delta": args.huber_delta,
