@@ -95,3 +95,23 @@ def test_generator_blind_ids_and_seed(tmp_path):
     originals = {row["id"]: row for row in candidates if row["origin"] == "original"}
     assert {row["source_id"] for row in originals.values()} == {row["id"] for row in source}
     assert all(row["parent_id"] in originals for row in candidates if row["origin"] != "original")
+
+
+def test_generator_balances_all_five_origins(tmp_path):
+    import json as _json
+    import claim_eval_candidates as gen
+    claims = [
+        {"id": f"c{i}", "text": f"Build v3.{i} on 2026-04-2{i % 10} runs at {100 + i} MHz and provides {i + 1} ms latency.",
+         "section": "s", "source_line": i, "kind": "numerical"}
+        for i in range(40)
+    ]
+    src = tmp_path / "claims.jsonl"
+    src.write_text("\n".join(_json.dumps(c) for c in claims))
+    gen.generate(src, tmp_path / "out", 30, 30, 0)
+    rows = [_json.loads(l) for l in (tmp_path / "out" / "candidates.jsonl").read_text().splitlines()]
+    counts = {}
+    for r in rows:
+        counts[r["origin"]] = counts.get(r["origin"], 0) + 1
+    assert counts == {"original": 30, "unit_error": 6, "revision_mismatch": 6, "unmeasured": 6, "stale": 6, "causal": 6}
+    stale = [r for r in rows if r["origin"] == "stale"]
+    assert all("revision." not in r["text"] for r in stale)   # stale edits change a version or date token

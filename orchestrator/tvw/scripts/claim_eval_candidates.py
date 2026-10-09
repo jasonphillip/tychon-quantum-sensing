@@ -26,7 +26,8 @@ ORIGIN_LABEL = dict(unit_error="contradicted", revision_mismatch="contradicted",
                     unmeasured="unsupported", stale="stale", causal="causal")
 NUMBER = re.compile(r"(?<![\w.])\d+(?:[.,]\d+)*(?!\w)")
 VERSION = re.compile(r"\bv\d+(?:\.\d+)+\b", re.I)
-CAUSAL = re.compile(r"is associated with|correlates with|was designed to", re.I)
+CAUSAL = re.compile(r"is associated with|correlates with|was designed to|is designed to|enables|provides|allows|supports|improves|reduces|achieves", re.I)
+DATE = re.compile(r"\b(20\d\d)-(\d\d)-(\d\d)\b")
 UNIT = re.compile(r"\b(?:ns|µs|us|ms|s|Hz|kHz|MHz|GHz|W|mW|V|mV|µT|uT|nT|mT|T|GB|MB)\b")
 UNIT_SWAP = {"ns": "µs", "µs": "ns", "us": "ns", "ms": "s", "s": "ms",
              "Hz": "kHz", "kHz": "Hz", "MHz": "GHz", "GHz": "MHz",
@@ -41,12 +42,21 @@ def perturb(parent, origin, originals, rng):
         return rng.choice(UNMEASURED_TEMPLATES) if parent["kind"] == "numerical" else None
     if origin == "causal":
         match = CAUSAL.search(text)
-        return text[:match.start()] + rng.choice(("causes", "guarantees")) + text[match.end():] if match else None
+        if match:
+            return text[:match.start()] + rng.choice(("causes", "guarantees")) + text[match.end():]
+        return text.rstrip(" .") + ", and this is the direct cause of the measured system performance."
     if origin == "stale":
+        # Stale = an older version or date token replaces the current one; no token, no stale edit.
         match = VERSION.search(text)
         if match:
-            return text[:match.start()] + "v3.0" + text[match.end():] if match.group().lower() != "v3.0" else text + " in the v3.0 revision"
-        return text.rstrip(" .") + " in the v3.0 revision."
+            parts = match.group()[1:].split(".")
+            older = [str(max(int(parts[0]) - 1, 0))] + ["0"] * (len(parts) - 1)
+            if older != parts:
+                return text[:match.start()] + "v" + ".".join(older) + text[match.end():]
+        match = DATE.search(text)
+        if match:
+            return text[:match.start()] + f"{int(match.group(1)) - 1}-{match.group(2)}-{match.group(3)}" + text[match.end():]
+        return None
     if origin == "unit_error":
         units = list(UNIT.finditer(text))
         if units:
@@ -104,14 +114,27 @@ def generate(claims_path, out_dir, n_original, n_perturbed, seed):
         raise ValueError("sampled originals have no eligible perturbations")
     rng.shuffle(possibilities)
     seen = {r["text"] for r in rows}
-    for index in range(n_perturbed):
-        for attempt in range(max(20, len(possibilities) * 4)):
-            origin, parent = possibilities[(index + attempt) % len(possibilities)]
+    origins = list(ORIGIN_LABEL)
+    by_origin = {o: [p for p in possibilities if p[0] == o] for o in origins}
+    # Balance: n_perturbed split evenly over origins (remainder to the first ones); an origin with
+    # no eligible parent gives its quota to the others in turn.
+    quota = {o: n_perturbed // len(origins) + (i < n_perturbed % len(origins)) for i, o in enumerate(origins)}
+    plan = []
+    for o in origins:
+        plan += [o] * quota[o]
+    def draw(pool, index):
+        for attempt in range(max(20, len(pool) * 4)):
+            origin, parent = pool[(index + attempt) % len(pool)]
             changed = perturb(parent, origin, originals, rng)
             if changed and changed not in seen and changed != parent["text"]:
-                break
-        else:
+                return origin, parent, changed
+        return None
+
+    for index, want in enumerate(plan):
+        got = (draw(by_origin[want], index) if by_origin[want] else None) or draw(possibilities, index)
+        if got is None:
             raise ValueError("cannot generate enough distinct perturbations")
+        origin, parent, changed = got
         seen.add(changed)
         rows.append(dict(parent, id=new_id(), source_id=parent["id"], text=changed,
                          kind="definitive" if origin == "unmeasured" else parent["kind"],
