@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+backend/.venv/
+
+# Node / frontend build
+frontend/node_modules/
+frontend/dist/
+
+# misc
+*.log
+.DS_Store
+
+# Claude instructions are local-only (symlinked from private claude-config)
+/CLAUDE.md
