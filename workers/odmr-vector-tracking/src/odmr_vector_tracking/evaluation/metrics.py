@@ -271,6 +271,11 @@ def wilson_ci(successes: float, n: float, z: float = 1.96) -> tuple[float, float
 
 # --- recovery + dynamic range -----------------------------------------------------------
 
+def _nonfinite_as_lost(err: np.ndarray) -> np.ndarray:
+    """Treat undefined or infinite error as loss of lock."""
+    return np.where(np.isfinite(err), err, np.inf)
+
+
 def recovery_time(
     error: np.ndarray,
     dt_s: float,
@@ -284,6 +289,7 @@ def recovery_time(
     ----------
     error
         ``(T,)`` per-frame error signal (e.g. angular error in degrees).
+        Non-finite values count as lost.
     dt_s
         Frame interval (s).
     threshold
@@ -299,7 +305,7 @@ def recovery_time(
     float
         Recovery time in seconds, or ``inf`` if never recovered.
     """
-    err = np.asarray(error, dtype=np.float64)
+    err = _nonfinite_as_lost(np.asarray(error, dtype=np.float64))
     T = err.shape[0]
     over = err > threshold
     if onset_index is None:
@@ -321,8 +327,9 @@ def dynamic_range(
 ) -> dict[str, float]:
     """Max |B| (Tesla) the tracker holds before *irrecoverable* loss of lock.
 
-    A loss of lock is ``error[t] > threshold``. It is *irrecoverable* if the error stays above
-    threshold for the next ``recovery_window`` frames (``None`` → to the end of the sequence).
+    A loss of lock is ``error[t] > threshold`` or a non-finite error. It is *irrecoverable* if
+    the error stays above threshold for the next ``recovery_window`` frames (``None`` → to the
+    end of the sequence).
     The dynamic range is the largest |B_true| over all frames strictly before the first
     irrecoverable loss.
 
@@ -348,7 +355,7 @@ def dynamic_range(
         range is then the max |B| over the whole sequence — a lower bound).
     """
     B_true = np.asarray(B_true, dtype=np.float64)
-    err = np.asarray(error, dtype=np.float64)
+    err = _nonfinite_as_lost(np.asarray(error, dtype=np.float64))
     T = B_true.shape[0]
     mag = np.linalg.norm(B_true, axis=1)
     over = err > threshold
