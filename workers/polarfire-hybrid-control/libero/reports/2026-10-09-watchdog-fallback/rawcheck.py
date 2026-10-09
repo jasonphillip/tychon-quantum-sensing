@@ -6,8 +6,13 @@ timestamp follows the inference completion by tens of microseconds, so trip time
 Fallback = first update where post_clamp_out stops changing while u_ai still moves; recovery = next change."""
 import csv, glob, re, statistics as st, sys
 S = sys.argv[1]
+FORCED = {}
 def rows(p):
-    with open(p) as f: return [x for x in csv.DictReader(l for l in f if not l.startswith('#'))]
+    """Regular controller updates only. Rows logged by --trip-start (mode_phase 'forced') are counted
+    per file in FORCED and left out, so they do not break flat-run or pause bracketing."""
+    with open(p) as f: allr = [x for x in csv.DictReader(l for l in f if not l.startswith('#'))]
+    FORCED[p] = sum(1 for x in allr if x.get('mode_phase') == 'forced')
+    return [x for x in allr if x.get('mode_phase') != 'forced']
 def flat_run(c, start):
     first = None; n = 0
     for i in range(start + 1, len(c)):
@@ -58,3 +63,4 @@ for scen in ['b1', 'b2', 'c1', 'c0']:
     print(f"  flat_updates {stat('flat_n', '%d')}  recovery_s {stat('rec_s', '%.4f')}  recovery_step {stat('rec_step', '%.4f')}")
     print(f"  trip_delta==1: {sum(r['trip_delta'] == 1 for r in res)}/{len(res)}  timeout_high_ms {stat('high_ms')}  starts_seen_high: {sorted(set(r['seen'] for r in res))}  bounds_ok: {sum(r['bounds_ok'] for r in res)}/{len(res)}")
     print(f"  fell_back (flat>=100): {sum(r['flat_n'] >= 100 for r in res)}/{len(res)}")
+    print(f"  forced starts logged (--trip-start): {sum(v for k, v in FORCED.items() if f'/{scen}-' in k)}")
