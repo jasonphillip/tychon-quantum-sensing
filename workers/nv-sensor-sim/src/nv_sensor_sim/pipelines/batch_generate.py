@@ -17,6 +17,8 @@ from __future__ import annotations
 import dataclasses
 import datetime
 import hashlib
+import inspect
+import json
 import subprocess
 from pathlib import Path
 
@@ -25,8 +27,39 @@ import numpy as np
 from nv_sensor_sim.adapters.simos_adapter import SimOSAdapter
 from nv_sensor_sim.config import FieldSampling, NoiseMode, OUNoiseConfig, SimulationConfig
 from nv_sensor_sim.datasets.schema import DatasetManifest
+from nv_sensor_sim.datasets.hashing import content_md5
 from nv_sensor_sim.datasets.writer import DatasetWriter
 from nv_sensor_sim.physics.lineshape import corrupt_spectrum, corrupt_spectrum_multi_axis
+
+
+# These parameters only control the destination, never the generated arrays.
+CONFIG_HASH_EXCLUDED_FIELDS = frozenset({"output_dir"})
+
+
+def _canonical_config_value(value):
+    """Convert supported configuration values to stable JSON values."""
+    if dataclasses.is_dataclass(value) and not isinstance(value, type):
+        return _canonical_config_value(dataclasses.asdict(value))
+    if isinstance(value, np.ndarray):
+        return _canonical_config_value(value.tolist())
+    if isinstance(value, np.generic):
+        return _canonical_config_value(value.item())
+    if isinstance(value, dict):
+        return {key: _canonical_config_value(item) for key, item in value.items()}
+    if isinstance(value, (tuple, list)):
+        return [_canonical_config_value(item) for item in value]
+    return value
+
+
+def _config_hash(config: dict) -> str:
+    """Hash the effective generator arguments with a canonical JSON encoding."""
+    effective = {
+        key: _canonical_config_value(value)
+        for key, value in config.items()
+        if key not in CONFIG_HASH_EXCLUDED_FIELDS
+    }
+    serialized = json.dumps(effective, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(serialized.encode("utf-8")).hexdigest()[:12]
 
 
 def _shift_range(
@@ -471,15 +504,6 @@ def generate_dataset(
 
     simos_ver, qutip_ver = _get_versions()
 
-    # Build config hash for provenance
-    config_str = (
-        f"{master_seed}:{n_freq_points}:{freq_range_Hz}:{p1_range_ppm}:{temp_range_K}"
-        f":{noise_mode}:{field_sampling}:{inverse_crime_active}"
-    )
-    if ou_noise_config is not None:
-        config_str += f":{dataclasses.asdict(ou_noise_config)}"
-    config_hash = hashlib.sha256(config_str.encode()).hexdigest()[:12]
-
     # Temperature range for manifest
     if noise_mode_enum == NoiseMode.DETERMINISTIC:
         manifest_temp_range = temp_range_K
@@ -517,6 +541,13 @@ def generate_dataset(
             )
         if bias_B0_range_T is not None:
             b_mag_range_T = bias_B0_range_T
+
+    # Capture every generator argument after field and test-range overrides.
+    effective_values = locals()
+    config_hash = _config_hash({
+        name: effective_values[name]
+        for name in inspect.signature(generate_dataset).parameters
+    })
 
     manifest = DatasetManifest(
         generator_git_sha=_get_git_sha(),
@@ -562,6 +593,15 @@ def generate_dataset(
     manifest.validate()
 
     writer = DatasetWriter(Path(output_dir))
+    written_arrays: dict[str, np.ndarray] = {}
+
+    def write_spectra(spectra, frequencies, labels, params, seeds, split):
+        writer.write_spectra(spectra, frequencies, labels, params, seeds, split)
+        for key, array in (
+            ("spectra", spectra), ("frequencies", frequencies),
+            ("labels", labels), ("corruption_params", params), ("seeds", seeds),
+        ):
+            written_arrays[f"{split}/{key}"] = array
 
     # Base config — per-spectrum params will be overridden
     config = SimulationConfig(
@@ -624,7 +664,7 @@ def generate_dataset(
                 n_freq_points=kwargs["n_freq_points"],
                 split_name=split_name,
             )
-            writer.write_spectra(spectra, freqs, labels, params, seed_arr, split_name)
+            write_spectra(spectra, freqs, labels, params, seed_arr, split_name)
             continue
 
         if noise_mode_enum == NoiseMode.DETERMINISTIC:
@@ -634,7 +674,7 @@ def generate_dataset(
                 split_name=split_name,
                 **kwargs,
             )
-            writer.write_spectra(spectra, freqs, labels, params, seed_arr, split_name)
+            write_spectra(spectra, freqs, labels, params, seed_arr, split_name)
 
         elif noise_mode_enum == NoiseMode.STOCHASTIC:
             assert ou_noise_config is not None
@@ -645,7 +685,7 @@ def generate_dataset(
                 split_name=split_name,
                 **kwargs,
             )
-            writer.write_spectra(spectra, freqs, labels, params, seed_arr, split_name)
+            write_spectra(spectra, freqs, labels, params, seed_arr, split_name)
 
         elif noise_mode_enum == NoiseMode.BOTH:
             assert ou_noise_config is not None  # guaranteed by ValueError above; narrows type
@@ -656,7 +696,7 @@ def generate_dataset(
                 split_name=f"{split_name}_deterministic",
                 **kwargs,
             )
-            writer.write_spectra(
+            write_spectra(
                 s_det, f_det, l_det, p_det, sd_det, f"{split_name}_deterministic"
             )
 
@@ -668,10 +708,11 @@ def generate_dataset(
                 split_name=f"{split_name}_stochastic",
                 **kwargs,
             )
-            writer.write_spectra(
+            write_spectra(
                 s_sto, f_sto, l_sto, p_sto, sd_sto, f"{split_name}_stochastic"
             )
 
+    manifest.data_md5 = content_md5(written_arrays)
     writer.write_manifest(manifest)
     output_path = writer.finalize()
     print(f"Dataset written to {output_path}")
