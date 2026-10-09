@@ -32,7 +32,7 @@ VBX_SDK ?= /c/Microchip/VectorBlox-SDK
 VBX_DRV := $(VBX_SDK)/drivers/vectorblox
 VBX_FIX := $(VBX_SDK)/example/postprocess/libfixmath
 
-all: pid_poke pid_latency watchdog_trip vnnx_smoke vnnx_latency v250_pid_loop
+all: pid_poke pid_latency watchdog_trip wd_observer vnnx_smoke vnnx_latency v250_pid_loop wd_fallback_test
 
 # Standalone; static so it does not depend on the target rootfs glibc version.
 pid_poke: pid_poke.c
@@ -42,6 +42,9 @@ pid_latency: pid_latency.c
 	$(CC) $(CFLAGS) -static $< -o $@ -lm
 
 watchdog_trip: watchdog_trip.c
+	$(CC) $(CFLAGS) -static $< -o $@ -lm
+
+wd_observer: wd_observer.c
 	$(CC) $(CFLAGS) -static $< -o $@ -lm
 
 # Icicle runtime = poll mode (USE_INTERRUPTS=0) + MSS-DDR udmabuf (MSS_DDR).
@@ -59,7 +62,10 @@ vnnx_latency: vnnx_latency.c
 v250_pid_loop: v250_pid_loop.c
 	$(CC) $(CFLAGS) $(VNNX_DEFS) $(VNNX_INC) $< $(VNNX_RT) -o $@ -lm -lpthread
 
+wd_fallback_test: wd_fallback_test.c
+	$(CC) $(CFLAGS) $(VNNX_DEFS) $(VNNX_INC) $< $(VNNX_RT) -o $@ -lm -lpthread
+
 clean:
-	rm -f pid_poke pid_latency watchdog_trip vnnx_smoke vnnx_latency v250_pid_loop
+	rm -f pid_poke pid_latency watchdog_trip wd_observer vnnx_smoke vnnx_latency v250_pid_loop wd_fallback_test
 
 .PHONY: all clean

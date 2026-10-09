@@ -170,3 +170,13 @@ For every run, in one directory named for the date and scenario:
 - Output limits for any attached load.
 - Whether to add a logic analyzer cross-check, and which pins.
 - Whether a failed C3 should lead to a hardware change (sticky trip bit) or a software rule.
+
+## Running it from spark2 (added 2026-10-09)
+
+The tools exist: `firmware/linux/wd_fallback_test.c`, `firmware/linux/wd_observer.c`, `tools/wd_fallback_analyze.py` (criteria A1–C4; `python3 -m pytest tools/tests -q`), `tools/run_wd_fallback.sh` (scenario sequences, evidence capture, zeroing on exit). Cross-compiled on the build host 2026-10-09 with the SmartHLS-bundled RISC-V GCC 10.2.0 and the VectorBlox SDK driver sources: `wd_observer` static, `wd_fallback_test` dynamic (needs the kit's libc, as `v250_pid_loop` does).
+
+1. Power the kit and connect its Ethernet. It is `192.168.x.x` on the LAN shared by spark2 and the build host. Check: `ping -c1 192.168.x.x`.
+2. Copy both binaries and `tools/run_wd_fallback.sh` to `/root/bringup/` on the kit (from the build host's checkout or via spark2). The model is already there: `/root/bringup/fcnn_v2_residual_dataset_a.vnnx` (the soak used it).
+3. On the kit, stop anything that touches the PID page: `pkill -f v250_pid_loop; pkill -f mss_paced_heartbeat` (precondition 6). Confirm `./wd_observer --read-csr-version` prints `0x00010000`.
+4. Run: `IMAGE_ID=idfix2-two-slot MODEL_PATH=/root/bringup/fcnn_v2_residual_dataset_a.vnnx ROOM_TEMPERATURE="<deg C>" OUTPUT_LOAD="none (register only)" CONTROL_CORE=2 OBSERVER_CORE=3 ./run_wd_fallback.sh`. Expect about 15 minutes. The script zeroes the output on exit or abort.
+5. Copy the dated results directory back and run `tools/wd_fallback_analyze.py` per scenario as the script's summary says; commit the results directory under `libero/reports/` and add the verdicts to this document as a dated section.
