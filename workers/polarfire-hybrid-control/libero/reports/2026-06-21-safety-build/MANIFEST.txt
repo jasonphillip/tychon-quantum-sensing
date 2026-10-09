@@ -1,0 +1,28 @@
+Safety build attempt manifest - 2026-06-21
+
+Remote clone: ~/libero_seedsweep/seed7_vbx201_v250_safety_20260621
+Source seed: ~/libero_seedsweep/seed7_vbx201_v250
+Status: ATTEMPTED, NOT A PASS. Libero/Synplify hung after entering map; no safety .job exported.
+
+Local artifact hashes:
+See SHA256SUMS in this directory. Latency helper hashes are recorded in
+libero/reports/2026-06-21-latency/SHA256SUMS.
+
+Remote safety clone proof lines:
+MPFS_ICICLE_Vectorblox.prjx:35:KEY ProjectLocation "~\libero_seedsweep\seed7_vbx201_v250_safety_20260621"
+component/work/FIC_0_PERIPHERALS/FIC_0_PERIPHERALS.v:1503:        .WATCHDOG_TIMEOUT_CYCLES(125000)
+hdl/pid_subsystem.v:27:    parameter integer WATCHDOG_TIMEOUT_CYCLES = 125_000  // 1 ms @125 MHz safety-spec;
+hdl/pid_subsystem.v:200:    watchdog_timer #(.WATCHDOG_TIMEOUT_CYCLES(WATCHDOG_TIMEOUT_CYCLES)) u_wdog (
+build_two_slot_pnr.tcl:52:puts "==> export_prog_job polarfire_hybrid_control_two_slot_safety"
+build_two_slot_pnr.tcl:54:export_prog_job -job_file_name {polarfire_hybrid_control_two_slot_safety} -export_dir $EXPORT
+
+Remote file timestamps after stopped hung run:
+2026-06-21 09:30:52.209306300 -0400 222452 ~/libero_seedsweep/seed7_vbx201_v250_safety_20260621/two_slot_reports/safety_synth_20260621.log
+2026-06-21 09:33:46.333320600 -0400 3873 ~/libero_seedsweep/seed7_vbx201_v250_safety_20260621/synthesis/synplify.log
+2026-06-21 09:33:45.953472000 -0400 1416896 ~/libero_seedsweep/seed7_vbx201_v250_safety_20260621/synthesis/MPFS_ICICLE_KIT_BASE_DESIGN.srr
+2026-06-21 09:33:45.186507100 -0400 35237 ~/libero_seedsweep/seed7_vbx201_v250_safety_20260621/synthesis/MPFS_ICICLE_KIT_BASE_DESIGN_cck.rpt
+
+Exact commands used:
+ssh bee: cp -a seed7_vbx201_v250 to seed7_vbx201_v250_safety_20260621; rewrite clone paths; patch FIC_0_PERIPHERALS WATCHDOG_TIMEOUT_CYCLES from 62500000 to 125000.
+/c/Microchip/Libero_SoC_2025.2/Libero_SoC/Designer/bin/libero.exe "SCRIPT:~/libero_seedsweep/seed7_vbx201_v250_safety_20260621/build_two_slot_synth.tcl"
+Stopped hung cloned run only: Stop-Process -Id 5608; Stop-Process synbatch,synplify_pro.

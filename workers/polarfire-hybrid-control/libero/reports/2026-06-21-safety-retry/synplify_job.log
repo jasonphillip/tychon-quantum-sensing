@@ -1,0 +1,88 @@
+{
+"Synplify Pro (R) Job Log" : {
+	"Date" : "10:17:40    21-Jun-2026",
+	"Working Directory" : "~/libero_seedsweep/seed7_vbx201_v250_safety_retry_20260621_1015/synthesis",
+	"Install" : "C:/Microchip/Libero_SoC_2025.2/Libero_SoC/Synplify_Pro"
+},
+"synthesis" :{
+   "Job Flow" : "Sequential",
+   "Start Time" : "10:14:54",
+   "Runtime" : "02m:46s",
+   "Executable Run Time" : "02m:44s",
+   "synthesis" : {
+      "Job Flow" : "Sequential",
+      "Start Time" : "10:14:54",
+      "Runtime" : "02m:46s",
+      "Executable Run Time" : "02m:44s",
+      "compile" : {
+         "Job Flow" : "Sequential",
+         "Start Time" : "10:14:54",
+         "Runtime" : "02m:46s",
+         "Executable Run Time" : "02m:44s",
+         "compile_flow" : {
+            "Job Flow" : "Sequential",
+            "Start Time" : "10:14:54",
+            "Runtime" : "02m:09s",
+            "Executable Run Time" : "02m:08s",
+            "compiler" : {
+               "executable" : "bin64/c_hdl.exe",
+               "Run Directory" : "~/libero_seedsweep/seed7_vbx201_v250_safety_retry_20260621_1015/synthesis",
+               "Run State" : "Complete",
+               "Return Code" : "0",
+               "Run Success" : "yes",
+               "Run Start Time" : "10:14:54",
+               "Run Time" : "02m:05s",
+               "Exe Run Time" : "02m:04s",
+               "max_parallel_jobs" : "4",
+               "Memory Usage" : "-",
+               "Up-to-date (run skipped)" : "no"
+            },
+            "multi_srs_gen" : {
+               "executable" : "bin64/syn_nfilter.exe",
+               "Run Directory" : "~/libero_seedsweep/seed7_vbx201_v250_safety_retry_20260621_1015/synthesis",
+               "Run State" : "Complete",
+               "Return Code" : "0",
+               "Run Success" : "yes",
+               "Run Start Time" : "10:16:59",
+               "Run Time" : "04s",
+               "Exe Run Time" : "04s",
+               "Memory Usage" : "-",
+               "Up-to-date (run skipped)" : "no"
+            }
+         },
+         "premap" : {
+            "executable" : "bin64/m_generic.exe",
+            "Run Directory" : "~/libero_seedsweep/seed7_vbx201_v250_safety_retry_20260621_1015/synthesis",
+            "Run State" : "Complete",
+            "Return Code" : "1",
+            "Run Success" : "yes",
+            "Run Start Time" : "10:17:03",
+            "Run Time" : "37s",
+            "Exe Run Time" : "36s",
+            "max_parallel_jobs" : "4",
+            "Memory Usage" : "-",
+            "Up-to-date (run skipped)" : "no"
+         }
+      },
+      "map" : {
+         "Job Flow" : "Sequential",
+         "Start Time" : "-",
+         "Runtime" : "00s",
+         "Executable Run Time" : "00s",
+         "fpga_mapper" : {
+            "executable" : "bin64/m_generic.exe",
+            "Run Directory" : "~/libero_seedsweep/seed7_vbx201_v250_safety_retry_20260621_1015/synthesis",
+            "Run State" : "Queued",
+            "Return Code" : "-",
+            "Run Success" : "yes",
+            "Run Start Time" : "-",
+            "Run Time" : "06m:12s  (06m:12s UI processing)",
+            "Exe Run Time" : "00s",
+            "max_parallel_jobs" : "4",
+            "Memory Usage" : "-",
+            "Up-to-date (run skipped)" : "no"
+         }
+      }
+   }
+}
+}

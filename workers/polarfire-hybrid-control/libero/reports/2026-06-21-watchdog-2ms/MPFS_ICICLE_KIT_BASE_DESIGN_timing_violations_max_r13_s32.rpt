@@ -1,0 +1,919 @@
+Timing Violation Report Max Delay Analysis
+
+SmartTime Version 2025.2
+Microchip Technology Inc. - Microchip Libero Software Release 2025.2 (Version 2025.2.0.14)
+Date: Sun Jun 21 17:05:18 2026
+
+
+Design: MPFS_ICICLE_KIT_BASE_DESIGN
+Family: PolarFireSoC
+Die: MPFS250T
+Package: FCVG484
+Temperature Range: 0 - 100 C
+Voltage Range: 1.0185 - 1.0815 V
+Speed Grade: STD
+Design State: Post-Layout
+Data source: Production
+Multi Corner Report Operating Conditions: slow_lv_lt,fast_hv_lt,slow_lv_ht
+
+
+Path 1
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[1]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[10]:D
+  Delay (ns):              6.813
+  Slack (ns):              1.006
+  Arrival (ns):           13.598
+  Required (ns):          14.604
+  Operating Conditions: slow_lv_ht
+
+Path 2
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[1]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[18]:D
+  Delay (ns):              6.814
+  Slack (ns):              1.006
+  Arrival (ns):           13.599
+  Required (ns):          14.605
+  Operating Conditions: slow_lv_ht
+
+Path 3
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[1]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[0]:D
+  Delay (ns):              6.806
+  Slack (ns):              1.013
+  Arrival (ns):           13.591
+  Required (ns):          14.604
+  Operating Conditions: slow_lv_ht
+
+Path 4
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[1]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[16]:D
+  Delay (ns):              6.806
+  Slack (ns):              1.015
+  Arrival (ns):           13.591
+  Required (ns):          14.606
+  Operating Conditions: slow_lv_ht
+
+Path 5
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[1]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[12]:D
+  Delay (ns):              6.803
+  Slack (ns):              1.018
+  Arrival (ns):           13.588
+  Required (ns):          14.606
+  Operating Conditions: slow_lv_ht
+
+Path 6
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[1]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[8]:D
+  Delay (ns):              6.795
+  Slack (ns):              1.024
+  Arrival (ns):           13.580
+  Required (ns):          14.604
+  Operating Conditions: slow_lv_ht
+
+Path 7
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[18]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[29]:D
+  Delay (ns):              6.772
+  Slack (ns):              1.024
+  Arrival (ns):           13.569
+  Required (ns):          14.593
+  Operating Conditions: slow_lv_ht
+
+Path 8
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[1]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[23]:D
+  Delay (ns):              6.795
+  Slack (ns):              1.025
+  Arrival (ns):           13.580
+  Required (ns):          14.605
+  Operating Conditions: slow_lv_ht
+
+Path 9
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[1]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[15]:D
+  Delay (ns):              6.794
+  Slack (ns):              1.027
+  Arrival (ns):           13.579
+  Required (ns):          14.606
+  Operating Conditions: slow_lv_ht
+
+Path 10
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[1]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[13]:D
+  Delay (ns):              6.793
+  Slack (ns):              1.027
+  Arrival (ns):           13.578
+  Required (ns):          14.605
+  Operating Conditions: slow_lv_ht
+
+Path 11
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[1]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[14]:D
+  Delay (ns):              6.790
+  Slack (ns):              1.031
+  Arrival (ns):           13.575
+  Required (ns):          14.606
+  Operating Conditions: slow_lv_ht
+
+Path 12
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[18]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[4]:D
+  Delay (ns):              6.761
+  Slack (ns):              1.035
+  Arrival (ns):           13.558
+  Required (ns):          14.593
+  Operating Conditions: slow_lv_ht
+
+Path 13
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[6]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[10]:D
+  Delay (ns):              6.777
+  Slack (ns):              1.039
+  Arrival (ns):           13.565
+  Required (ns):          14.604
+  Operating Conditions: slow_lv_ht
+
+Path 14
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[6]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[18]:D
+  Delay (ns):              6.778
+  Slack (ns):              1.039
+  Arrival (ns):           13.566
+  Required (ns):          14.605
+  Operating Conditions: slow_lv_ht
+
+Path 15
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[18]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[10]:D
+  Delay (ns):              6.780
+  Slack (ns):              1.041
+  Arrival (ns):           13.577
+  Required (ns):          14.618
+  Operating Conditions: slow_lv_ht
+
+Path 16
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[13]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[29]:D
+  Delay (ns):              6.752
+  Slack (ns):              1.044
+  Arrival (ns):           13.549
+  Required (ns):          14.593
+  Operating Conditions: slow_lv_ht
+
+Path 17
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[6]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[0]:D
+  Delay (ns):              6.770
+  Slack (ns):              1.046
+  Arrival (ns):           13.558
+  Required (ns):          14.604
+  Operating Conditions: slow_lv_ht
+
+Path 18
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[6]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[16]:D
+  Delay (ns):              6.770
+  Slack (ns):              1.048
+  Arrival (ns):           13.558
+  Required (ns):          14.606
+  Operating Conditions: slow_lv_ht
+
+Path 19
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[18]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[0]:D
+  Delay (ns):              6.773
+  Slack (ns):              1.048
+  Arrival (ns):           13.570
+  Required (ns):          14.618
+  Operating Conditions: slow_lv_ht
+
+Path 20
+  From: MSS_WRAPPER_1/ICICLE_MSS_inst_0/I_MSS:FIC_2_ACLK
+  To:   FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/SlvConvertor_loop[0].slvcnv/slvProtConv/genblk1.u_SlvAxi4WriteID/genblk1.rdata_interleave_fifo/fifo_ctrl_inst/entries_in_fifo[6]:EN
+  Delay (ns):              3.294
+  Slack (ns):              1.050
+  Arrival (ns):           10.236
+  Required (ns):          11.286
+  Operating Conditions: slow_lv_ht
+
+Path 21
+  From: MSS_WRAPPER_1/ICICLE_MSS_inst_0/I_MSS:FIC_2_ACLK
+  To:   FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/SlvConvertor_loop[0].slvcnv/slvProtConv/genblk1.u_SlvAxi4WriteID/genblk1.rdata_interleave_fifo/fifo_ctrl_inst/entries_in_fifo[4]:EN
+  Delay (ns):              3.294
+  Slack (ns):              1.050
+  Arrival (ns):           10.236
+  Required (ns):          11.286
+  Operating Conditions: slow_lv_ht
+
+Path 22
+  From: MSS_WRAPPER_1/ICICLE_MSS_inst_0/I_MSS:FIC_2_ACLK
+  To:   FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/SlvConvertor_loop[0].slvcnv/slvProtConv/genblk1.u_SlvAxi4WriteID/genblk1.rdata_interleave_fifo/fifo_ctrl_inst/entries_in_fifo[3]:EN
+  Delay (ns):              3.294
+  Slack (ns):              1.050
+  Arrival (ns):           10.236
+  Required (ns):          11.286
+  Operating Conditions: slow_lv_ht
+
+Path 23
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[6]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[29]:D
+  Delay (ns):              6.769
+  Slack (ns):              1.050
+  Arrival (ns):           13.557
+  Required (ns):          14.607
+  Operating Conditions: slow_lv_ht
+
+Path 24
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[1]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[29]:D
+  Delay (ns):              6.805
+  Slack (ns):              1.050
+  Arrival (ns):           13.590
+  Required (ns):          14.640
+  Operating Conditions: slow_lv_ht
+
+Path 25
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[18]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[16]:D
+  Delay (ns):              6.773
+  Slack (ns):              1.050
+  Arrival (ns):           13.570
+  Required (ns):          14.620
+  Operating Conditions: slow_lv_ht
+
+Path 26
+  From: MSS_WRAPPER_1/ICICLE_MSS_inst_0/I_MSS:FIC_2_ACLK
+  To:   FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/SlvConvertor_loop[0].slvcnv/slvProtConv/genblk1.u_SlvAxi4WriteID/genblk1.rdata_interleave_fifo/fifo_ctrl_inst/entries_in_fifo[8]:EN
+  Delay (ns):              3.293
+  Slack (ns):              1.051
+  Arrival (ns):           10.235
+  Required (ns):          11.286
+  Operating Conditions: slow_lv_ht
+
+Path 27
+  From: MSS_WRAPPER_1/ICICLE_MSS_inst_0/I_MSS:FIC_2_ACLK
+  To:   FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/SlvConvertor_loop[0].slvcnv/slvProtConv/genblk1.u_SlvAxi4WriteID/genblk1.rdata_interleave_fifo/fifo_ctrl_inst/entries_in_fifo[7]:EN
+  Delay (ns):              3.293
+  Slack (ns):              1.051
+  Arrival (ns):           10.235
+  Required (ns):          11.286
+  Operating Conditions: slow_lv_ht
+
+Path 28
+  From: MSS_WRAPPER_1/ICICLE_MSS_inst_0/I_MSS:FIC_2_ACLK
+  To:   FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/SlvConvertor_loop[0].slvcnv/slvProtConv/genblk1.u_SlvAxi4WriteID/genblk1.rdata_interleave_fifo/fifo_ctrl_inst/entries_in_fifo[5]:EN
+  Delay (ns):              3.293
+  Slack (ns):              1.051
+  Arrival (ns):           10.235
+  Required (ns):          11.286
+  Operating Conditions: slow_lv_ht
+
+Path 29
+  From: MSS_WRAPPER_1/ICICLE_MSS_inst_0/I_MSS:FIC_2_ACLK
+  To:   FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/SlvConvertor_loop[0].slvcnv/slvProtConv/genblk1.u_SlvAxi4WriteID/genblk1.rdata_interleave_fifo/fifo_ctrl_inst/entries_in_fifo[1]:EN
+  Delay (ns):              3.293
+  Slack (ns):              1.051
+  Arrival (ns):           10.235
+  Required (ns):          11.286
+  Operating Conditions: slow_lv_ht
+
+Path 30
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[6]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[12]:D
+  Delay (ns):              6.767
+  Slack (ns):              1.051
+  Arrival (ns):           13.555
+  Required (ns):          14.606
+  Operating Conditions: slow_lv_ht
+
+Path 31
+  From: MSS_WRAPPER_1/ICICLE_MSS_inst_0/I_MSS:FIC_2_ACLK
+  To:   FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/SlvConvertor_loop[0].slvcnv/slvProtConv/genblk1.u_SlvAxi4WriteID/genblk1.rdata_interleave_fifo/fifo_ctrl_inst/fifo_empty:EN
+  Delay (ns):              3.286
+  Slack (ns):              1.052
+  Arrival (ns):           10.228
+  Required (ns):          11.280
+  Operating Conditions: slow_lv_ht
+
+Path 32
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[23]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[29]:D
+  Delay (ns):              6.744
+  Slack (ns):              1.052
+  Arrival (ns):           13.541
+  Required (ns):          14.593
+  Operating Conditions: slow_lv_ht
+
+Path 33
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[18]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[12]:D
+  Delay (ns):              6.770
+  Slack (ns):              1.053
+  Arrival (ns):           13.567
+  Required (ns):          14.620
+  Operating Conditions: slow_lv_ht
+
+Path 34
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[13]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[4]:D
+  Delay (ns):              6.741
+  Slack (ns):              1.055
+  Arrival (ns):           13.538
+  Required (ns):          14.593
+  Operating Conditions: slow_lv_ht
+
+Path 35
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[7]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[29]:D
+  Delay (ns):              6.731
+  Slack (ns):              1.057
+  Arrival (ns):           13.524
+  Required (ns):          14.581
+  Operating Conditions: slow_lv_ht
+
+Path 36
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[6]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[8]:D
+  Delay (ns):              6.759
+  Slack (ns):              1.057
+  Arrival (ns):           13.547
+  Required (ns):          14.604
+  Operating Conditions: slow_lv_ht
+
+Path 37
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[6]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[23]:D
+  Delay (ns):              6.759
+  Slack (ns):              1.058
+  Arrival (ns):           13.547
+  Required (ns):          14.605
+  Operating Conditions: slow_lv_ht
+
+Path 38
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[18]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[25]:D
+  Delay (ns):              6.739
+  Slack (ns):              1.058
+  Arrival (ns):           13.536
+  Required (ns):          14.594
+  Operating Conditions: slow_lv_ht
+
+Path 39
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[18]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[8]:D
+  Delay (ns):              6.762
+  Slack (ns):              1.059
+  Arrival (ns):           13.559
+  Required (ns):          14.618
+  Operating Conditions: slow_lv_ht
+
+Path 40
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[7]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[10]:D
+  Delay (ns):              6.739
+  Slack (ns):              1.060
+  Arrival (ns):           13.532
+  Required (ns):          14.592
+  Operating Conditions: slow_lv_ht
+
+Path 41
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[7]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[18]:D
+  Delay (ns):              6.740
+  Slack (ns):              1.060
+  Arrival (ns):           13.533
+  Required (ns):          14.593
+  Operating Conditions: slow_lv_ht
+
+Path 42
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[6]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[15]:D
+  Delay (ns):              6.758
+  Slack (ns):              1.060
+  Arrival (ns):           13.546
+  Required (ns):          14.606
+  Operating Conditions: slow_lv_ht
+
+Path 43
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[6]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[13]:D
+  Delay (ns):              6.757
+  Slack (ns):              1.060
+  Arrival (ns):           13.545
+  Required (ns):          14.605
+  Operating Conditions: slow_lv_ht
+
+Path 44
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[6]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[4]:D
+  Delay (ns):              6.758
+  Slack (ns):              1.061
+  Arrival (ns):           13.546
+  Required (ns):          14.607
+  Operating Conditions: slow_lv_ht
+
+Path 45
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[1]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[4]:D
+  Delay (ns):              6.794
+  Slack (ns):              1.061
+  Arrival (ns):           13.579
+  Required (ns):          14.640
+  Operating Conditions: slow_lv_ht
+
+Path 46
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[13]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[10]:D
+  Delay (ns):              6.760
+  Slack (ns):              1.061
+  Arrival (ns):           13.557
+  Required (ns):          14.618
+  Operating Conditions: slow_lv_ht
+
+Path 47
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[18]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[15]:D
+  Delay (ns):              6.761
+  Slack (ns):              1.062
+  Arrival (ns):           13.558
+  Required (ns):          14.620
+  Operating Conditions: slow_lv_ht
+
+Path 48
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[23]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[4]:D
+  Delay (ns):              6.733
+  Slack (ns):              1.063
+  Arrival (ns):           13.530
+  Required (ns):          14.593
+  Operating Conditions: slow_lv_ht
+
+Path 49
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[6]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[14]:D
+  Delay (ns):              6.754
+  Slack (ns):              1.064
+  Arrival (ns):           13.542
+  Required (ns):          14.606
+  Operating Conditions: slow_lv_ht
+
+Path 50
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[1]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[20]:D
+  Delay (ns):              6.755
+  Slack (ns):              1.066
+  Arrival (ns):           13.540
+  Required (ns):          14.606
+  Operating Conditions: slow_lv_ht
+
+Path 51
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[18]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[14]:D
+  Delay (ns):              6.757
+  Slack (ns):              1.066
+  Arrival (ns):           13.554
+  Required (ns):          14.620
+  Operating Conditions: slow_lv_ht
+
+Path 52
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[7]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[0]:D
+  Delay (ns):              6.732
+  Slack (ns):              1.067
+  Arrival (ns):           13.525
+  Required (ns):          14.592
+  Operating Conditions: slow_lv_ht
+
+Path 53
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[7]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[4]:D
+  Delay (ns):              6.720
+  Slack (ns):              1.068
+  Arrival (ns):           13.513
+  Required (ns):          14.581
+  Operating Conditions: slow_lv_ht
+
+Path 54
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[1]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[17]:D
+  Delay (ns):              6.753
+  Slack (ns):              1.068
+  Arrival (ns):           13.538
+  Required (ns):          14.606
+  Operating Conditions: slow_lv_ht
+
+Path 55
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[13]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[0]:D
+  Delay (ns):              6.753
+  Slack (ns):              1.068
+  Arrival (ns):           13.550
+  Required (ns):          14.618
+  Operating Conditions: slow_lv_ht
+
+Path 56
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[7]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[16]:D
+  Delay (ns):              6.732
+  Slack (ns):              1.069
+  Arrival (ns):           13.525
+  Required (ns):          14.594
+  Operating Conditions: slow_lv_ht
+
+Path 57
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[23]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[10]:D
+  Delay (ns):              6.752
+  Slack (ns):              1.069
+  Arrival (ns):           13.549
+  Required (ns):          14.618
+  Operating Conditions: slow_lv_ht
+
+Path 58
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[13]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[16]:D
+  Delay (ns):              6.753
+  Slack (ns):              1.070
+  Arrival (ns):           13.550
+  Required (ns):          14.620
+  Operating Conditions: slow_lv_ht
+
+Path 59
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[7]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[12]:D
+  Delay (ns):              6.729
+  Slack (ns):              1.072
+  Arrival (ns):           13.522
+  Required (ns):          14.594
+  Operating Conditions: slow_lv_ht
+
+Path 60
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[13]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[12]:D
+  Delay (ns):              6.750
+  Slack (ns):              1.073
+  Arrival (ns):           13.547
+  Required (ns):          14.620
+  Operating Conditions: slow_lv_ht
+
+Path 61
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[18]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[18]:D
+  Delay (ns):              6.781
+  Slack (ns):              1.075
+  Arrival (ns):           13.578
+  Required (ns):          14.653
+  Operating Conditions: slow_lv_ht
+
+Path 62
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[23]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[0]:D
+  Delay (ns):              6.745
+  Slack (ns):              1.076
+  Arrival (ns):           13.542
+  Required (ns):          14.618
+  Operating Conditions: slow_lv_ht
+
+Path 63
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[7]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[8]:D
+  Delay (ns):              6.721
+  Slack (ns):              1.078
+  Arrival (ns):           13.514
+  Required (ns):          14.592
+  Operating Conditions: slow_lv_ht
+
+Path 64
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[23]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[16]:D
+  Delay (ns):              6.745
+  Slack (ns):              1.078
+  Arrival (ns):           13.542
+  Required (ns):          14.620
+  Operating Conditions: slow_lv_ht
+
+Path 65
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[13]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[25]:D
+  Delay (ns):              6.719
+  Slack (ns):              1.078
+  Arrival (ns):           13.516
+  Required (ns):          14.594
+  Operating Conditions: slow_lv_ht
+
+Path 66
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[7]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[23]:D
+  Delay (ns):              6.721
+  Slack (ns):              1.079
+  Arrival (ns):           13.514
+  Required (ns):          14.593
+  Operating Conditions: slow_lv_ht
+
+Path 67
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[13]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[8]:D
+  Delay (ns):              6.742
+  Slack (ns):              1.079
+  Arrival (ns):           13.539
+  Required (ns):          14.618
+  Operating Conditions: slow_lv_ht
+
+Path 68
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[7]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[15]:D
+  Delay (ns):              6.720
+  Slack (ns):              1.081
+  Arrival (ns):           13.513
+  Required (ns):          14.594
+  Operating Conditions: slow_lv_ht
+
+Path 69
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[7]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[13]:D
+  Delay (ns):              6.719
+  Slack (ns):              1.081
+  Arrival (ns):           13.512
+  Required (ns):          14.593
+  Operating Conditions: slow_lv_ht
+
+Path 70
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[23]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[12]:D
+  Delay (ns):              6.742
+  Slack (ns):              1.081
+  Arrival (ns):           13.539
+  Required (ns):          14.620
+  Operating Conditions: slow_lv_ht
+
+Path 71
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[13]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[15]:D
+  Delay (ns):              6.741
+  Slack (ns):              1.082
+  Arrival (ns):           13.538
+  Required (ns):          14.620
+  Operating Conditions: slow_lv_ht
+
+Path 72
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[6]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[25]:D
+  Delay (ns):              6.736
+  Slack (ns):              1.084
+  Arrival (ns):           13.524
+  Required (ns):          14.608
+  Operating Conditions: slow_lv_ht
+
+Path 73
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[1]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[25]:D
+  Delay (ns):              6.772
+  Slack (ns):              1.084
+  Arrival (ns):           13.557
+  Required (ns):          14.641
+  Operating Conditions: slow_lv_ht
+
+Path 74
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[7]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[14]:D
+  Delay (ns):              6.716
+  Slack (ns):              1.085
+  Arrival (ns):           13.509
+  Required (ns):          14.594
+  Operating Conditions: slow_lv_ht
+
+Path 75
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[23]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[25]:D
+  Delay (ns):              6.711
+  Slack (ns):              1.086
+  Arrival (ns):           13.508
+  Required (ns):          14.594
+  Operating Conditions: slow_lv_ht
+
+Path 76
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[13]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[14]:D
+  Delay (ns):              6.737
+  Slack (ns):              1.086
+  Arrival (ns):           13.534
+  Required (ns):          14.620
+  Operating Conditions: slow_lv_ht
+
+Path 77
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[23]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[8]:D
+  Delay (ns):              6.734
+  Slack (ns):              1.087
+  Arrival (ns):           13.531
+  Required (ns):          14.618
+  Operating Conditions: slow_lv_ht
+
+Path 78
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[23]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[15]:D
+  Delay (ns):              6.733
+  Slack (ns):              1.090
+  Arrival (ns):           13.530
+  Required (ns):          14.620
+  Operating Conditions: slow_lv_ht
+
+Path 79
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[7]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[25]:D
+  Delay (ns):              6.698
+  Slack (ns):              1.091
+  Arrival (ns):           13.491
+  Required (ns):          14.582
+  Operating Conditions: slow_lv_ht
+
+Path 80
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[23]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[14]:D
+  Delay (ns):              6.729
+  Slack (ns):              1.094
+  Arrival (ns):           13.526
+  Required (ns):          14.620
+  Operating Conditions: slow_lv_ht
+
+Path 81
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[18]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[23]:D
+  Delay (ns):              6.762
+  Slack (ns):              1.094
+  Arrival (ns):           13.559
+  Required (ns):          14.653
+  Operating Conditions: slow_lv_ht
+
+Path 82
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[1]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[9]:D
+  Delay (ns):              6.732
+  Slack (ns):              1.095
+  Arrival (ns):           13.517
+  Required (ns):          14.612
+  Operating Conditions: slow_lv_ht
+
+Path 83
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[13]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[18]:D
+  Delay (ns):              6.761
+  Slack (ns):              1.095
+  Arrival (ns):           13.558
+  Required (ns):          14.653
+  Operating Conditions: slow_lv_ht
+
+Path 84
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[1]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[10]:D
+  Delay (ns):              6.723
+  Slack (ns):              1.096
+  Arrival (ns):           13.508
+  Required (ns):          14.604
+  Operating Conditions: slow_lv_ht
+
+Path 85
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[18]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[13]:D
+  Delay (ns):              6.760
+  Slack (ns):              1.096
+  Arrival (ns):           13.557
+  Required (ns):          14.653
+  Operating Conditions: slow_lv_ht
+
+Path 86
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[6]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[20]:D
+  Delay (ns):              6.719
+  Slack (ns):              1.099
+  Arrival (ns):           13.507
+  Required (ns):          14.606
+  Operating Conditions: slow_lv_ht
+
+Path 87
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[1]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[30]:D
+  Delay (ns):              6.728
+  Slack (ns):              1.099
+  Arrival (ns):           13.513
+  Required (ns):          14.612
+  Operating Conditions: slow_lv_ht
+
+Path 88
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[6]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[17]:D
+  Delay (ns):              6.717
+  Slack (ns):              1.101
+  Arrival (ns):           13.505
+  Required (ns):          14.606
+  Operating Conditions: slow_lv_ht
+
+Path 89
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[18]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[20]:D
+  Delay (ns):              6.722
+  Slack (ns):              1.101
+  Arrival (ns):           13.519
+  Required (ns):          14.620
+  Operating Conditions: slow_lv_ht
+
+Path 90
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[4]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[10]:D
+  Delay (ns):              6.717
+  Slack (ns):              1.102
+  Arrival (ns):           13.502
+  Required (ns):          14.604
+  Operating Conditions: slow_lv_ht
+
+Path 91
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[4]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[18]:D
+  Delay (ns):              6.718
+  Slack (ns):              1.102
+  Arrival (ns):           13.503
+  Required (ns):          14.605
+  Operating Conditions: slow_lv_ht
+
+Path 92
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[23]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[18]:D
+  Delay (ns):              6.753
+  Slack (ns):              1.103
+  Arrival (ns):           13.550
+  Required (ns):          14.653
+  Operating Conditions: slow_lv_ht
+
+Path 93
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[1]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[16]:D
+  Delay (ns):              6.718
+  Slack (ns):              1.103
+  Arrival (ns):           13.503
+  Required (ns):          14.606
+  Operating Conditions: slow_lv_ht
+
+Path 94
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[18]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[17]:D
+  Delay (ns):              6.720
+  Slack (ns):              1.103
+  Arrival (ns):           13.517
+  Required (ns):          14.620
+  Operating Conditions: slow_lv_ht
+
+Path 95
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[3]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[29]:D
+  Delay (ns):              6.683
+  Slack (ns):              1.104
+  Arrival (ns):           13.477
+  Required (ns):          14.581
+  Operating Conditions: slow_lv_ht
+
+Path 96
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[3]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[10]:D
+  Delay (ns):              6.691
+  Slack (ns):              1.107
+  Arrival (ns):           13.485
+  Required (ns):          14.592
+  Operating Conditions: slow_lv_ht
+
+Path 97
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[3]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[18]:D
+  Delay (ns):              6.692
+  Slack (ns):              1.107
+  Arrival (ns):           13.486
+  Required (ns):          14.593
+  Operating Conditions: slow_lv_ht
+
+Path 98
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[9]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[29]:D
+  Delay (ns):              6.681
+  Slack (ns):              1.108
+  Arrival (ns):           13.485
+  Required (ns):          14.593
+  Operating Conditions: slow_lv_ht
+
+Path 99
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[1]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[0]:D
+  Delay (ns):              6.711
+  Slack (ns):              1.108
+  Arrival (ns):           13.496
+  Required (ns):          14.604
+  Operating Conditions: slow_lv_ht
+
+Path 100
+  From: FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_pid_integral_inferred_reg[4]:CLK
+  To:   FIC_0_PERIPHERALS_1/u_pid_subsystem/u_nv_pid_top/nv_pid_top_inst/nv_pid_top_inst/nv_pid_top_BB_0_select135_reg_stage3[0]:D
+  Delay (ns):              6.710
+  Slack (ns):              1.109
+  Arrival (ns):           13.495
+  Required (ns):          14.604
+  Operating Conditions: slow_lv_ht
+

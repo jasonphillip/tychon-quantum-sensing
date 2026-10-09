@@ -1,0 +1,5 @@
+v250_pid_loop model=fcnn_v2_residual_dataset_a.vnnx rows=3 warmup=1 u_scale=0.015625000 daemon=0 csr_version=0x00010000 watchdog_before=0x000000c3 model_inputs=1 model_outputs=1 input_len=200 input_dtype=1 input_scale=0.007843018 input_zp=-1 input_source=odmr_v250_rows.csv input_rows=120 state=
+row,t_ns,v250_ns,polls,input_row,error_in,nn_out0,nn_q,u_ai,post_clamp,watchdog_raw,watchdog_timeout,axi_write_count
+0,183000,31000,95,0,-0.570812842,-2.538894653,-110,-0.039670229,-0.496337891,0x000000c2,0,0x00004b41
+1,341000,32000,96,1,-0.546584810,-2.401657104,-104,-0.037525892,-0.475952148,0x000000c2,0,0x00004b44
+2,457000,32000,95,2,-0.527557395,-2.516021729,-109,-0.039312840,-0.461364746,0x000000c2,0,0x00004b47

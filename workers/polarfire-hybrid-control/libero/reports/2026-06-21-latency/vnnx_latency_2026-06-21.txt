@@ -1,0 +1,10 @@
+vnnx_latency model=fcnn_v2_residual_dataset_a.vnnx samples=1000 warmup=20 rdcycle=0 rdtime=1 timebase_hz=1000000
+model_io inputs=1 outputs=1 sanity=0 config=0
+error_val=0 out0=-2.950607
+start_ns min=3000 median=4000 p95=4000 p99=4000 max=32000
+poll_ns min=3000 median=28000 p95=29000 p99=29000 max=55000
+total_ns min=31000 median=32000 p95=33000 p99=33000 max=58000
+start_ticks min=3 median=4 p95=4 p99=4 max=28
+poll_ticks min=28 median=28 p95=29 p99=29 max=53
+total_ticks min=31 median=32 p95=33 p99=33 max=57
+poll_iters_ticks min=0 median=87 p95=87 p99=88 max=89

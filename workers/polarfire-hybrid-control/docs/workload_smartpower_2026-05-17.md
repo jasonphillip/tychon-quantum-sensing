@@ -1,0 +1,261 @@
+# Workload-Driven SmartPower — Residual Proof Obligation #6 (Follow-On Closure)
+
+## Status
+
+**INFRASTRUCTURE PREP, NOT CLOSURE (2026-05-17, DLOG-047).** This session
+discovered three concrete gaps in the pre-existing scaffolding for the
+B2.3 workload-driven SmartPower flow. The scripts have been corrected
+where possible; the remaining gaps are now documented for a future
+session with hands-on Beelink GUI access.
+
+**Capability Brief Total System Power KPP: remains Partial.** The
+default-toggle r6_s25 number (2,692.88 mW total / 2,247.27 mW dynamic =
+~2.7 W FPGA+MSS at the fabric tile-level) is the canonical Phase I
+evidence until the gaps below are resolved.
+
+## What this proof obligation requires
+
+Convert the brief's "~5.2 W FPGA + MSS subsystem only† (default-toggle
+estimate, Partial)" entry to a number defensible as "what the chip will
+actually draw under the Tychon ODMR-PID control workload." Path:
+
+1. SmartHLS C++ testbench → produces stimulus
+2. ModelSim/QuestaSim simulation of generated RTL → produces VCD trace
+3. Libero SmartPower with VCD-driven activity factors → produces
+   workload-specific dynamic + static power breakdown
+4. Brief row update from Partial to Met, with the new number and a
+   docs/ note justifying the test vector
+
+Steps (1) and the testbench infrastructure are in place. Steps (2-4)
+have the three gaps below.
+
+## Discovered gaps (2026-05-17)
+
+### Gap 1: `sim/modelsim_pid_workload.do` had speculative port assumptions
+
+The pre-existing .do script assumed:
+
+| Element | Speculated | Actual (SmartHLS 2025.2) |
+|---|---|---|
+| Top module | `nv_pid_top` | `nv_pid_top_top` |
+| RTL filename | `nv_pid_top.v` | `nv_pid_top_nv_pid_top.v` (doubled prefix) |
+| Reset port | `ap_rst_n` (active-low) | `reset` (active-HIGH) |
+| Kp/Ki/Kd ports | scalar `Kp_V`, etc. | AXI4-target interface |
+| Actuator output | scalar memory port | handshake pair `write_en` + `write_data` |
+| `error` / `u_AI_in` | `_V` suffix | direct names, no suffix |
+
+The `.do` script has been corrected for module name, reset polarity,
+RTL filename, and the dynamic-input port names. **Remaining gap:**
+driving Kp_reg / Ki_reg / Kd_reg / out_min_reg / out_max_reg /
+inner_clamp_setpoint_reg, which live inside a generated
+`nv_pid_top_axi4slv_register` instance (`ram`) within a generate block
+(`genReg`). Two options for a future session:
+
+- **Option A (real AXI transactions):** issue write transactions on
+  axi4target_aw* / axi4target_w* / axi4target_b* channels at the
+  addresses from the SmartHLS-generated AXI4 Target Interface address
+  map (in `hls/hls_output/reports/summary.hls.nv_pid_top.rpt` §4).
+- **Option B (hierarchical force):** after `vsim` elaboration, find the
+  full hierarchy path with `find signals -recursive sim:/nv_pid_top_top/*`
+  filtered to `_reg$`, then `force -freeze <hier>/Kp_reg 32'd7`, etc.
+
+Until one of these is wired, the simulated gains stay at reset (zero),
+the PID datapath produces near-zero outputs, and the resulting VCD
+under-reports dynamic power.
+
+### Gap 2: `libero/scripts/05_smartpower_workload.tcl` opens wrong project
+
+The script currently opens `libero/work/polarfire_hybrid_control.prjx`,
+but that project's `designer/` is empty — no placed netlist exists
+there. The r6_s25 closure (the canonical Phase I integrated evidence)
+lives in the Microchip reference design at
+`C:/Microchip/Libero_SoC_2025.2/SmartHLS/SmartHLS/reference_designs/Icicle_SoC/ref_design/MPFS_ICICLE_Vectorblox/`
+(see `libero/scripts/closure_pipeline.tcl` line 14-15 for the path
+constant). Project-path realignment is the fix: change `open_project`
+to point at the reference design's `.prjx`.
+
+### Gap 3: SmartPower Tcl VCD-activity command form unverified
+
+Libero 2025.2 SmartPower accepts one of several Tcl forms for the VCD
+activity source. The `catch` fallback in the .tcl script (lines 60-87
+of the original; preserved in the prep commit) was designed to discover
+which form at first run:
+
+- `set_smartpower_options -vcd_file <path>`
+- `read_vcd <path>`
+- `import_files -smartpower_vcd <path>`
+
+The corpus at `~/.corpus/polarfire-control-corpus/` is the right place
+to confirm the actual 2025.2 form via `/search-corpus` before the next
+run.
+
+## Why the gaps were not visible to the plan-writing session
+
+The original .do and SmartPower Tcl scripts were committed as
+"scaffolding pending first execution" (commit ea79fae, "libero: add
+workload-SmartPower Tcl driver (P3-RPO-6)"). The plan written from
+CLI-visible state took the scaffolding at face value because nothing in
+the scripts marked them as "TODO at first run." This is the failure
+class the project's `DEBUGGING DISCIPLINE` rule #4 warns about
+("forensics before the first failed run") — the discovery here is the
+exact same pattern, just upstream: real port names should have been
+sampled before committing the speculative `.do` script.
+
+## Test vector choice (when the run lands)
+
+`sim/stimulus/odmr_representative_trace.csv` — 1000 rows, generated by
+`sim/stimulus/generate_odmr_trace.py`. Trace structure:
+
+- 1000 cycles of representative ODMR closed-loop activity
+- Frequency error sweeps from 100 Hz to ~4.6 kHz (linear chirp),
+  modeling laser-locking under measurement-induced drift
+- u_AI_in held at 0.1 V (small steady-state AI feedforward correction)
+- ai_watchdog_timeout held at 0 (nominal AI-active operation)
+
+This is the right test vector because the brief's Total System Power
+KPP is "operational power under the deployed control workload."
+Default-toggle SmartPower assumes statistically-uniform signal
+switching, which overstates activity for slow control loops where most
+of the datapath is idle most of the time. The chirped-frequency ODMR
+trace captures real activity on `error` (continuously changing 64-bit
+Q34.30) and held AXI-target configuration. The trace fits inside the
+range of operational frequencies the ODMR controller will see in flight.
+
+## Path to closure (Follow-On)
+
+1. Fix Gap 1: implement option A or B in `sim/modelsim_pid_workload.do`.
+   For Option B, requires one round-trip to Beelink + ModelSim
+   elaboration + `find signals` query.
+2. Fix Gap 2: change `open_project` in `libero/scripts/05_smartpower_workload.tcl`
+   to point at the reference design `.prjx`.
+3. Fix Gap 3: search the corpus for the 2025.2 SmartPower VCD Tcl form,
+   pin the working command, remove the `catch` fallback.
+4. Run end-to-end on Beelink:
+   ```
+   ssh bee 'cd ~/dev/projects/polarfire-hybrid-control && \
+            vsim -c -do sim/modelsim_pid_workload.do && \
+            libero "SCRIPT:~/dev/projects/polarfire-hybrid-control/libero/scripts/05_smartpower_workload.tcl"'
+   ```
+5. Extract per-tile dynamic + static power from
+   `libero/reports/<date>-workload-power/smartpower_workload.rpt`.
+6. Update Capability Brief Total System Power row Partial → Met.
+7. Append closure DLOG entry; mark fix-list `B2-3-SMARTPOWER-VCD` and
+   `P3-RPO-6` rows as closed.
+
+## Why this is honest reporting
+
+Marking the row Partial-with-prep-progress rather than overstating to
+Met respects the project's `VERIFICATION & FACTS` rule: "Never fabricate
+facts ... For every factual claim either cite the specific file / URL /
+tool output you verified in this session, or mark it explicitly as
+'unverified.'" The workload-driven SmartPower number does not exist
+yet, so the brief cannot claim it. The infrastructure progress is real
+and worth recording; the closure number must wait for the steps above.
+
+## 2026-06-15 update — the hang is FIXED; one real gap remains (annotation)
+
+A clean headless run finally completed end-to-end (exit 0, ~11 min):
+`shls hw` (regenerate the missing `hls_output/rtl/`) → `vsim -c -do
+sim/modelsim_pid_workload.do` (1.6 MB VCD, 1000 rows, 0 errors) →
+`libero SCRIPT:05_smartpower_workload.tcl` (VERIFYPOWER). **The prior
+4-attempt project-open hang did NOT recur** — starting from a
+freshly-killed Libero process with no stale `.spw` was the fix (the
+leading hypothesis). The SmartPower VCD Tcl form
+(`smartpower_import_vcd -opmode {Active}` + `smartpower_report_power`)
+is corpus-confirmed correct for 2025.2 and ran unmodified.
+
+**But the number is NOT workload-annotated — proof obligation still
+Partial.** `verifypower.log` reports **Annotated Pins 0.00% /
+Unannotated 100.00%**: none of the 10,220 VCD signals matched a placed
+netlist pin, so SmartPower discarded the activity and used its default
+vectorless model. The tell: static power **445.612 mW is bit-identical
+to the default-toggle baseline**; dynamic 2177.243 mW is within ~3% of
+default. The reported totals (Total 2622.855 / Static 445.612 / Dynamic
+2177.243 mW, `libero/reports/2026-05-18-workload-power/smartpower_workload.rpt`)
+are therefore the **default-toggle estimate, not a workload number** —
+do not quote them as workload-driven.
+
+**New Gap 4 (the real remaining work):** the `.do` dumps the VCD at top
+scope `nv_pid_top_top` (the standalone SmartHLS module), but the netlist
+instantiates the PID deep inside
+`FIC_0_PERIPHERALS_1/.../pid_io_block` with Synplify/P&R-renamed nets —
+the names cannot match. To get a real workload number: dump the VCD from
+a full-design-scope simulation with post-synthesis net names, OR use
+`smartpower_import_vcd`'s instance-path / hierarchy-prefix option to map
+`nv_pid_top_top` onto the PID's instance path inside
+`MPFS_ICICLE_KIT_BASE_DESIGN`. Closeable headless (one more iteration);
+a GUI SmartPower session that browses netlist hierarchy vs VCD scope
+side-by-side would close it fastest. Evidence:
+`libero/reports/2026-06-15-workload-power/verifypower.log`.
+
+## 2026-06-21 update — explicit VCD top attempted, no closure
+
+The SmartPower Tcl flow was patched to make the VCD import less ambiguous:
+
+```tcl
+smartpower_import_vcd \
+    -file $WORKLOAD_VCD \
+    -opmode {Active} \
+    -auto_detect_top_level_name {FALSE} \
+    -top_level_name {nv_pid_top_top} \
+    -glitch_filtering {auto}
+```
+
+The wrapper also now propagates a dated `SMARTPOWER_REPORT_TAG` so reruns do
+not overwrite earlier evidence bundles.
+
+Result: **ATTEMPTED, NOT CLOSURE.** A headless rerun on bee launched against
+the reference-design project. The streamed outer log stopped growing during
+project source loading, but SmartPower later left a small
+`2026-06-21-workload-power` report directory containing `smartpower_workload.rpt`
+and `rptstyle.xsl`. The report summary is bit-identical to the 2026-06-15
+default/vectorless result: Total `2622.855 mW`, Static `445.612 mW`, Dynamic
+`2177.243 mW`. No `verifypower.log` or `Annotated Pins` result was produced
+for this attempt, so no nonzero VCD annotation evidence exists. The stuck
+wrapper/streaming state was stopped after preserving the log and report.
+Artifacts are archived under
+`libero/reports/2026-06-21-workload-power-topname/`.
+
+This means the 2026-06-15 finding remains the current truth: the latest
+completed annotation check had **0.00% annotated pins**, and the 2026-06-21
+report did not prove otherwise. Treat both as default/vectorless estimates. The
+next discriminator should either map the standalone `nv_pid_top_top` VCD to the
+placed instance hierarchy from a GUI SmartPower session, or switch to a
+full-design/post-synthesis VCD whose signal names already match the placed
+netlist.
+
+## 2026-07-01 — ANNOTATION CLOSED (PID-subsystem scope) on the seed7 two-slot netlist
+
+**Result: 1.28% of design pins annotated from a real PID workload; Total
+`2550.042 mW` / Static `445.842` / Dynamic `2104.200` (Typical/Active).**
+Companion pure-vectorless baseline on the SAME two-slot r12_s31 netlist:
+`2562.215 / 445.842 / 2116.373 mW`. Dynamic moved (−12.2 mW), static
+identical — the annotation demonstrably took.
+
+What fixed the 0.00% problem, in order:
+1. **Netlist-mirroring VCD scope.** New `tests/two_slot_sim/tb_power_wrap.v`
+   instantiates shims named `MPFS_ICICLE_KIT_BASE_DESIGN` /
+   `FIC_0_PERIPHERALS_1` around `u_pid_subsystem`, driven by real AXI
+   transactions (gains via M0; the 1000-row chirped ODMR trace via M1 error
+   + u_ai and M0 start pulses; `vbx_output_valid` pulsed at the measured
+   ~32 µs V250 cadence) at the correct 125 MHz. SmartHLS's `*_inferred_reg`
+   names survive Synplify into the placed netlist, so RTL-VCD names match
+   once scopes align.
+2. **`-top_level_name {MPFS_ICICLE_KIT_BASE_DESIGN}`** — the bare
+   design-instance scope name. The TB-root name imports but annotates 0.00%;
+   a slash path is rejected; auto-detect also annotated 0.00% here.
+3. **Report-before-activity-map ordering** in the inner Tcl:
+   `smartpower_report_power_activity_map` re-imports the VCD and killed the
+   session on attempt 1; it is now opt-in (`SMARTPOWER_ACTIVITY_MAP=1`).
+
+**Provenance correction:** the 2026-06-21 "topname" rerun (2622.855 mW)
+opened the Microchip REFERENCE-design project per its own log header — that
+figure belongs to the reference netlist. The two-slot design's numbers are
+the 2026-07-01 ones above. This was also the first VERIFYPOWER ever executed
+against the seed7 two-slot project.
+
+**Honest scope:** PID-subsystem-annotated only (V250/MSS stay vectorless);
+netlist = saved r12_s31 (identical to the programmed r13_s32 image except
+the watchdog constant); no board-measured power. RPO-6 full-design workload
+closure stays open at reduced scope. Artifacts + 5-attempt forensic trail:
+`libero/reports/2026-07-01-workload-power-subsystem/`.

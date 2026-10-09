@@ -1,0 +1,164 @@
+Reading pref.tcl
+
+# 2024.3
+
+# do sim/modelsim_pid_latency.do
+# hls/hls_output/rtl
+# libero/hdl
+# Model Technology ModelSim Microsemi Pro vlog 2024.3 Compiler 2024.09 Sep 11 2024
+# Start time: 17:01:35 on Jul 01,2026
+# vlog -sv hls/hls_output/rtl/nv_pid_top_nv_pid_top.v 
+# -- Compiling module nv_pid_top_top
+# -- Compiling module nv_pid_top_hw_top
+# -- Compiling module nv_pid_top_nv_pid_top
+# -- Compiling module nv_pid_top_axi4slv
+# -- Compiling module nv_pid_top_axi4slv_accel_ctrl
+# -- Compiling module nv_pid_top_axi4slv_ram_dual_port_drwp
+# -- Compiling module nv_pid_top_axi4slv_read_controller
+# -- Compiling module nv_pid_top_axi4slv_register
+# -- Compiling module nv_pid_top_axi4slv_write_controller
+# -- Compiling module nv_pid_top_first_word
+# -- Compiling module nv_pid_top_shift_reg
+# -- Compiling module nv_pid_top_ram_dual_port
+# -- Compiling module nv_pid_top_ram_dual_port_byte_enabled
+# -- Compiling module nv_pid_top_ram_dual_port_regular
+# -- Compiling module nv_pid_top_fwft_fifo
+# -- Compiling module nv_pid_top_fwft_fifo_bram
+# -- Compiling module nv_pid_top_fwft_fifo_lutram
+# -- Compiling module nv_pid_top_simple_ram_dual_port_fifo
+# -- Compiling module nv_pid_top_lutram_dual_port_fifo
+# -- Compiling module nv_pid_top_legup_mult
+# -- Compiling module nv_pid_top_legup_mult_core
+# -- Compiling module nv_pid_top_legup_mult_pipelined
+# 
+# Top level modules:
+# 	nv_pid_top_top
+# End time: 17:01:35 on Jul 01,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim Microsemi Pro vlog 2024.3 Compiler 2024.09 Sep 11 2024
+# Start time: 17:01:35 on Jul 01,2026
+# vlog libero/hdl/axi4_demux2.v 
+# -- Compiling module axi4_demux2
+# 
+# Top level modules:
+# 	axi4_demux2
+# End time: 17:01:35 on Jul 01,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim Microsemi Pro vlog 2024.3 Compiler 2024.09 Sep 11 2024
+# Start time: 17:01:35 on Jul 01,2026
+# vlog libero/hdl/pid_csr_block.v 
+# -- Compiling module pid_csr_block
+# 
+# Top level modules:
+# 	pid_csr_block
+# End time: 17:01:35 on Jul 01,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim Microsemi Pro vlog 2024.3 Compiler 2024.09 Sep 11 2024
+# Start time: 17:01:35 on Jul 01,2026
+# vlog libero/hdl/pid_csr_axi4_wrap.v 
+# -- Compiling module pid_csr_axi4_wrap
+# 
+# Top level modules:
+# 	pid_csr_axi4_wrap
+# End time: 17:01:35 on Jul 01,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim Microsemi Pro vlog 2024.3 Compiler 2024.09 Sep 11 2024
+# Start time: 17:01:35 on Jul 01,2026
+# vlog libero/hdl/vbx_pulse_gen.v 
+# -- Compiling module vbx_pulse_gen
+# 
+# Top level modules:
+# 	vbx_pulse_gen
+# End time: 17:01:35 on Jul 01,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim Microsemi Pro vlog 2024.3 Compiler 2024.09 Sep 11 2024
+# Start time: 17:01:35 on Jul 01,2026
+# vlog libero/hdl/watchdog_timer.v 
+# -- Compiling module watchdog_timer
+# 
+# Top level modules:
+# 	watchdog_timer
+# End time: 17:01:35 on Jul 01,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim Microsemi Pro vlog 2024.3 Compiler 2024.09 Sep 11 2024
+# Start time: 17:01:35 on Jul 01,2026
+# vlog libero/hdl/pid_subsystem.v 
+# -- Compiling module pid_subsystem
+# 
+# Top level modules:
+# 	pid_subsystem
+# End time: 17:01:35 on Jul 01,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim Microsemi Pro vlog 2024.3 Compiler 2024.09 Sep 11 2024
+# Start time: 17:01:36 on Jul 01,2026
+# vlog -sv tests/two_slot_sim/tb_pid_latency.v 
+# -- Compiling module tb_pid_latency
+# 
+# Top level modules:
+# 	tb_pid_latency
+# End time: 17:01:36 on Jul 01,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -t ps -voptargs="+acc" work.tb_pid_latency 
+# Start time: 17:01:36 on Jul 01,2026
+# //  ModelSim Microsemi Pro 2024.3 Sep 11 2024
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading sv_std.std
+# Loading work.tb_pid_latency
+# Loading work.pid_subsystem
+# Loading work.axi4_demux2
+# Loading work.nv_pid_top_top
+# Loading work.nv_pid_top_axi4slv
+# Loading work.nv_pid_top_axi4slv_read_controller
+# Loading work.nv_pid_top_first_word
+# Loading work.nv_pid_top_shift_reg
+# Loading work.nv_pid_top_axi4slv_write_controller
+# Loading work.nv_pid_top_hw_top
+# Loading work.nv_pid_top_nv_pid_top
+# Loading work.nv_pid_top_legup_mult
+# Loading work.pid_csr_axi4_wrap
+# Loading work.pid_csr_block
+# Loading work.vbx_pulse_gen
+# Loading work.watchdog_timer
+# Loading work.nv_pid_top_fwft_fifo
+# Loading work.nv_pid_top_axi4slv_accel_ctrl
+# Loading work.nv_pid_top_legup_mult_pipelined
+# Loading work.nv_pid_top_fwft_fifo_lutram
+# Loading work.nv_pid_top_lutram_dual_port_fifo
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'axi4slv_inst'.  Expected 68, found 62.
+#    Time: 0 ps  Iteration: 0  Instance: /tb_pid_latency/dut/u_nv_pid_top/axi4slv_inst File: hls/hls_output/rtl/nv_pid_top_nv_pid_top.v Line: 131
+# ** Warning: (vsim-3722) hls/hls_output/rtl/nv_pid_top_nv_pid_top.v(131): [TFMPC] - Missing connection for port 'accel_read_en_a'.
+# ** Warning: (vsim-3722) hls/hls_output/rtl/nv_pid_top_nv_pid_top.v(131): [TFMPC] - Missing connection for port 'accel_read_en_b'.
+# ** Warning: (vsim-3722) hls/hls_output/rtl/nv_pid_top_nv_pid_top.v(131): [TFMPC] - Missing connection for port 'accel_sb_correct_a'.
+# ** Warning: (vsim-3722) hls/hls_output/rtl/nv_pid_top_nv_pid_top.v(131): [TFMPC] - Missing connection for port 'accel_sb_correct_b'.
+# ** Warning: (vsim-3722) hls/hls_output/rtl/nv_pid_top_nv_pid_top.v(131): [TFMPC] - Missing connection for port 'accel_db_detect_a'.
+# ** Warning: (vsim-3722) hls/hls_output/rtl/nv_pid_top_nv_pid_top.v(131): [TFMPC] - Missing connection for port 'accel_db_detect_b'.
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'fw'.  Expected 7, found 6.
+#    Time: 0 ps  Iteration: 0  Instance: /tb_pid_latency/dut/u_nv_pid_top/axi4slv_inst/rd_controller/fw File: hls/hls_output/rtl/nv_pid_top_nv_pid_top.v Line: 4804
+# ** Warning: (vsim-3722) hls/hls_output/rtl/nv_pid_top_nv_pid_top.v(4804): [TFMPC] - Missing connection for port 'o_first_wd_pulse'.
+# ========== TB_PID_LATENCY: start-pulse -> actuator-we cycle count ==========
+# iter 0: lat_aw=6 cyc (48 ns)  lat_b=4 cyc (32 ns)
+# iter 1: lat_aw=6 cyc (48 ns)  lat_b=4 cyc (32 ns)
+# iter 2: lat_aw=6 cyc (48 ns)  lat_b=4 cyc (32 ns)
+# iter 3: lat_aw=6 cyc (48 ns)  lat_b=4 cyc (32 ns)
+# iter 32: lat_aw=6 cyc (48 ns)  lat_b=4 cyc (32 ns)
+# iter 64: lat_aw=6 cyc (48 ns)  lat_b=4 cyc (32 ns)
+# iter 96: lat_aw=6 cyc (48 ns)  lat_b=4 cyc (32 ns)
+# final actuator readback = 0xffff0000
+# TB_PID_LATENCY SUMMARY: n=128 missed=0
+#   start-AW-accept -> actuator-we : min=6 max=6 cycles (48..48 ns @125 MHz)
+#   start-B-retire  -> actuator-we : min=4 max=4 cycles (32..32 ns @125 MHz)
+#   RESULT: CONSTANT latency (II=1 fixed-latency pipeline confirmed in RTL sim)
+# ** Note: $finish    : tests/two_slot_sim/tb_pid_latency.v(168)
+#    Time: 75284 ns  Iteration: 1  Instance: /tb_pid_latency
+# End time: 17:01:36 on Jul 01,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 9

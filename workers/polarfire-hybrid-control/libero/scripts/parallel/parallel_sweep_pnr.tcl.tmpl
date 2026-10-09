@@ -1,0 +1,68 @@
+# parallel_sweep_pnr.tcl.tmpl — Place&Route + VerifyTiming on a cloned project.
+#
+# ⚠️ AUDIT-006 FINDING (2026-05-03): the configure_tool RANDOM_SEED:$SEED
+# call below DOES NOT actually vary placement across clones. Libero overrides
+# it with its own auto-increment from designer/<TOP>/<TOP>_iterate_seedindex.txt
+# regardless. Three clones with SEED 7 / 13 / 23 produced bit-identical
+# placement (Path 1/2/3 endpoints + delays + slacks all match to 3 decimal
+# places). Use this template knowing that you're getting N copies of the same
+# placement, not N seed variants. See ../README.md "Critical caveat" section.
+#
+# Caller must propagate a fresh master synth state into this clone's
+# synthesis/ + component/ before invoking, otherwise PLACEROUTE will fail
+# with "SYNTHESIZE Tool inputs are out of date".
+#
+# Generate per-seed copies via sed:
+#   sed -e "s|__SEED__|7|g" -e "s|__CLONE_DIR__|C:/path/to/seed_7|g" \
+#       parallel_sweep_pnr.tcl.tmpl > parallel_seed_7.tcl
+#
+# Skips POWERANALYSIS and GENERATEPROGRAMMINGDATA (only slack matters for
+# variance sweeps).
+set CLONE_DIR  "__CLONE_DIR__"
+set REF_PRJ    "$CLONE_DIR/MPFS_ICICLE_Vectorblox.prjx"
+set SEED       __SEED__
+
+puts "==> PARALLEL_SWEEP_SEED${SEED}_START [clock format [clock seconds]]"
+flush stdout
+
+open_project -file $REF_PRJ
+flush stdout
+
+puts "==> configuring PLACEROUTE RANDOM_SEED:$SEED"
+flush stdout
+if {[catch {configure_tool -name {PLACEROUTE} -params [list "RANDOM_SEED:$SEED"]} err]} {
+    puts "==> CONFIGURE_FAILED: $err"
+    flush stdout
+}
+
+# Belt-and-suspenders seed write
+set IT_SEED  "$CLONE_DIR/designer/MPFS_ICICLE_KIT_BASE_DESIGN/MPFS_ICICLE_KIT_BASE_DESIGN_iterate_seed.txt"
+set IT_INDEX "$CLONE_DIR/designer/MPFS_ICICLE_KIT_BASE_DESIGN/MPFS_ICICLE_KIT_BASE_DESIGN_iterate_seedindex.txt"
+foreach f [list $IT_SEED $IT_INDEX] {
+    if {[file exists $f]} {
+        set fh [open $f w]; puts $fh $SEED; close $fh
+    }
+}
+flush stdout
+
+proc run_stage {name} {
+    puts "==> RUN_TOOL $name [clock format [clock seconds]]"
+    flush stdout
+    if {[catch {run_tool -name $name} err]} {
+        puts "==> STAGE_FAILED $name : $err"
+        flush stdout
+        save_project
+        error "STAGE_FAILED $name"
+    }
+    puts "==> STAGE_OK $name [clock format [clock seconds]]"
+    flush stdout
+}
+
+run_stage PLACEROUTE
+run_stage VERIFYTIMING
+
+save_project
+close_project
+puts "==> PARALLEL_SWEEP_SEED${SEED}_DONE [clock format [clock seconds]]"
+flush stdout
+exit 0

@@ -1,0 +1,6 @@
+2026-06-21T10:11:18-04:00
+ M libero/scripts/05_smartpower_workload.tcl
+ M libero/scripts/05_smartpower_workload_inner.tcl
+?? libero/reports/2026-06-21-execution-baseline/
+?? libero/reports/2026-06-21-scan/
+?? libero/reports/2026-06-21-workload-power/

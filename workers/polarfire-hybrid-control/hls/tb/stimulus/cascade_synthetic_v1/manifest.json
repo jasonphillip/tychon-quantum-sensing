@@ -1,0 +1,28 @@
+{
+  "schema_version": "1",
+  "generator_git_sha": "synthetic-fixture-cascade_synthetic_v1",
+  "generated_at": "2026-05-02T00:00:00Z",
+  "input_dim": 1,
+  "output_dim": 16,
+  "coarse_model": {
+    "tflite_path": "coarse_placeholder.tflite",
+    "tflite_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "quantization_granularity": "per_tensor",
+    "input_quant":  {"scale": 0.01, "zero_point": 0},
+    "output_quant": {"scale": 0.01, "zero_point": 0}
+  },
+  "fine_model": {
+    "tflite_path": "fine_placeholder.tflite",
+    "tflite_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "quantization_granularity": "per_tensor",
+    "input_quant":  {"scale": 0.01, "zero_point": 0},
+    "output_quant": {"scale": 0.005, "zero_point": 0}
+  },
+  "composition": {
+    "mode": "additive_raw_x",
+    "rounding_mode": "round_half_up",
+    "output_quant": {"scale": 0.01, "zero_point": 0},
+    "saturate_int8": true
+  },
+  "notes": "Synthetic fixture cascade_synthetic_v1. tflite paths and sha256 are placeholders; runners are injected explicitly by the smoke test (cascade_ref does not require real .tflite files when runners are passed). composition.rounding_mode pinned to round_half_up per HW-05 T3.2 SDK source review (2026-05-02): VectorBlox-SDK@4186f9a python/vbx/vbx/generate/vnnx_tflite.py MultiplyByQuantizedMultiplier (line 416) implements int(x*QM + half) // 2**shift, the canonical TFLite round_half_up pattern. See docs/vectorblox_rounding_resolution.md."
+}

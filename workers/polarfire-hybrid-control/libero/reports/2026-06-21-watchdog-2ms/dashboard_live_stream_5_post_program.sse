@@ -1,0 +1,13 @@
+data: {"t_host": 0.009632, "sample_idx": 0, "error_in": 0.5, "nn_u_ai": -0.06, "pid_only_out": 0.322083, "pidnn_out": 0.322083, "actuator_out": 0.322083, "unclamped_calc": 0.262083, "clamp_active": 1, "watchdog_timeout": 1, "mode": "PID_ONLY_FALLBACK", "vbx_error": 0, "axi_write_count": 5778, "csr_version": 65536}
+
+data: {"t_host": 0.019789, "sample_idx": 1, "error_in": 0.522613, "nn_u_ai": -0.06, "pid_only_out": 0.340179, "pidnn_out": 0.340179, "actuator_out": 0.340179, "unclamped_calc": 0.280179, "clamp_active": 1, "watchdog_timeout": 1, "mode": "PID_ONLY_FALLBACK", "vbx_error": 0, "axi_write_count": 5782, "csr_version": 65536}
+
+data: {"t_host": 0.029032, "sample_idx": 2, "error_in": 0.545226, "nn_u_ai": -0.06, "pid_only_out": 0.358261, "pidnn_out": 0.358261, "actuator_out": 0.358261, "unclamped_calc": 0.298261, "clamp_active": 1, "watchdog_timeout": 1, "mode": "PID_ONLY_FALLBACK", "vbx_error": 0, "axi_write_count": 5786, "csr_version": 65536}
+
+data: {"t_host": 0.044323, "sample_idx": 3, "error_in": 0.567839, "nn_u_ai": -0.06, "pid_only_out": 0.376358, "pidnn_out": 0.376358, "actuator_out": 0.376358, "unclamped_calc": 0.316358, "clamp_active": 1, "watchdog_timeout": 1, "mode": "PID_ONLY_FALLBACK", "vbx_error": 0, "axi_write_count": 5790, "csr_version": 65536}
+
+data: {"t_host": 0.055651, "sample_idx": 4, "error_in": 0.590452, "nn_u_ai": -0.06, "pid_only_out": 0.39444, "pidnn_out": 0.39444, "actuator_out": 0.39444, "unclamped_calc": 0.33444, "clamp_active": 1, "watchdog_timeout": 1, "mode": "PID_ONLY_FALLBACK", "vbx_error": 0, "axi_write_count": 5794, "csr_version": 65536}
+
+event: done
+data: {}
+

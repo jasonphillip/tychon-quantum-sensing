@@ -1,0 +1,14 @@
+Software Version: 2025.2.0.14
+Opened '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN_fp\MPFS_ICICLE_KIT_BASE_DESIGN.pro'
+PDB file '~\libero_seedsweep\seed7_vbx201_v250_2ms_20260621_160037\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN.pdb' has been loaded successfully.
+DESIGN : MPFS_ICICLE_KIT_BASE_DESIGN;  CHECKSUM : E6A6;  PDB_VERSION : 1.9
+Info: Programming Interface selected is JTAG.
+Info: Design version: 0
+Successfully generated bitstream file and it has been added to the job container; file programs Fabric and sNVM.
+Fabric component bitstream digest: fdb9ca8fe9ce93a8fa5858e45513eca9a56c4cd362adbded87432086b83b0f02
+sNVM component bitstream digest: c011b109e3879c06a0abcd593ac8b9ef014b1f12a5d99e91780d834b2e12349c
+Entire bitstream digest: fc91c13f145e39a16016bc8f50e5508f86869a9c6276ffb00401b9a2f78ca0d5
+Finished: Sun Jun 21 17:17:14 2026 (Elapsed time 00:00:42)
+
+Project saved.
+Project closed.

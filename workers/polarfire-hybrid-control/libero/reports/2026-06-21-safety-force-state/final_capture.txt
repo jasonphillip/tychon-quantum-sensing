@@ -1,0 +1,24 @@
+SAFETY_FORCE_STATE_CAPTURE 2026-06-21T11:11:45-04:00
+REMOTE_CLONE ~/libero_seedsweep/seed7_vbx201_v250_safety_cleanhandoff_20260621_1055
+REMOTE_LOGDIR /tmp/codex_safety_force_state_20260621_1112
+PROCESS_CHECK
+SCRIPT_HASH
+5a12e1e0faa71fa4e143c3cd669168d12e403420c62ef86dc5b863a77e6842e7 *~/libero_seedsweep/seed7_vbx201_v250_safety_cleanhandoff_20260621_1055/build_two_slot_force_state_pnr.tcl
+STATE_AND_ERROR_MARKERS
+640:==> get_tool_state SYNTHESIZE = Tool inputs are out of date
+641:==> get_tool_state PLACEROUTE = Tool inputs are out of date
+642:==> get_tool_state VERIFYTIMING = Tool inputs are out of date
+643:==> get_tool_state GENERATEPROGRAMMINGDATA = Tool inputs are out of date
+644:==> set_tool_state SYNTHESIZE StateSuccess
+645:Unkown state StateSuccess
+646:Error:  The command 'set_tool_state' failed.
+EXPORT_JOBS
+~/libero_seedsweep/seed7_vbx201_v250_safety_cleanhandoff_20260621_1055/export/polarfire_hybrid_control_two_slot_demo.job
+a5550f9e486e19f127aad78e97e06e0839d359c91028d4bcd21bb32b98f5b367 *~/libero_seedsweep/seed7_vbx201_v250_safety_cleanhandoff_20260621_1055/export/polarfire_hybrid_control_two_slot_demo.job
+~/libero_seedsweep/seed7_vbx201_v250_safety_cleanhandoff_20260621_1055/export/polarfire_hybrid_control_two_slot_idfix.job
+7907a83f9fc6e99ca25ebc3c389c802d6d07e42b71403767ee644103783dff6e *~/libero_seedsweep/seed7_vbx201_v250_safety_cleanhandoff_20260621_1055/export/polarfire_hybrid_control_two_slot_idfix.job
+~/libero_seedsweep/seed7_vbx201_v250_safety_cleanhandoff_20260621_1055/export/polarfire_hybrid_control_two_slot_idfix2.job
+39c8bcf2665ce8b79bcc2abb552ddd2b7b703729d50876744c2cb63c82ca230b *~/libero_seedsweep/seed7_vbx201_v250_safety_cleanhandoff_20260621_1055/export/polarfire_hybrid_control_two_slot_idfix2.job
+~/libero_seedsweep/seed7_vbx201_v250_safety_cleanhandoff_20260621_1055/export/polarfire_hybrid_control_vbx201_v250.job
+4e3323e8590e0e87aeae2874ff363ed8843966fd4123d502b280ad0ccfb4af8e *~/libero_seedsweep/seed7_vbx201_v250_safety_cleanhandoff_20260621_1055/export/polarfire_hybrid_control_vbx201_v250.job
+SAFETY_JOB_SEARCH

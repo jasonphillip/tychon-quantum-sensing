@@ -1,0 +1,62 @@
+# Libero SoC work directories
+work/
+ip_cache/
+component/
+simulation/
+/stimulus/
+designer/
+
+# Allow HLS testbench stimulus directory
+!hls/tb/stimulus/
+smartgen/
+
+# Synthesis outputs (committed selectively via libero/reports/)
+*.job
+*.stp
+
+# VectorBlox compiled models (large binaries, not committed)
+*.vnnx
+
+# SmartHLS ap_fixpt software shim (local testbench only, not for synthesis)
+hls/include/hls/
+
+# Compiled test binaries
+hls/tb_bumpless
+
+# Cross-compiled Linux userspace tools (build artifacts; rebuild via firmware/linux/Makefile)
+firmware/linux/pid_poke
+firmware/linux/vnnx_smoke
+
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+!libero/reports/*.log
+!libero/reports/**/*.log
+.build/
+
+# Tool scratch / regenerable build outputs (not source)
+hls/hls_output/
+sim/output/
+transcript
+libero/reports/**/fpexpress_job_project/
+
+# Editor/plugin scratch
+docs/superpowers/
+
+# 2026-06-21 evidence curation: raw synthesis/P&R dumps stay out of history
+# (working copies remain on disk and on the Beelink; the per-bundle READMEs
+# summarize their outcomes). Committed per bundle: READMEs, program/timing/
+# power reports, job digests, dashboard captures, curated logs.
+libero/reports/2026-06-21-safety-direct/libero_pnr.log
+libero/reports/2026-06-21-*/*.srr
+libero/reports/2026-06-21-*/*.srm
+
+# Claude instructions are local-only (symlinked from private claude-config)
+/CLAUDE.md
+/docs/claude

@@ -1,0 +1,23 @@
+2026-07-02 13:33:02.848886: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-07-02 13:33:03.088398: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+Traceback (most recent call last):
+  File "~/vbx-env/bin/vnnx_compile", line 6, in <module>
+    sys.exit(main())
+  File "~/VectorBlox-SDK/python/vbx/vbx/generate/lite_flow.py", line 155, in main
+    tflite_to_vnnx(optimized_tflite, #args.tflite
+  File "~/VectorBlox-SDK/python/vbx/vbx/generate/lite_flow.py", line 88, in tflite_to_vnnx
+    vnnx_graph_binary = generate_vnnx_from_json_subgraphs(json_graph, size_config, inputs, outputs, include_io_data, tmp_dir, engine_graphs_nx)
+  File "~/VectorBlox-SDK/python/vbx/vbx/generate/vnnx_tflite.py", line 1095, in generate_vnnx_from_json_subgraphs
+    Nodes = populate_nodes(json_subgraphs, preset, graph_activations, weights, aliased_ids, ids_with_dummies, tmp_dir,\
+  File "~/VectorBlox-SDK/python/vbx/vbx/generate/vnnx_tflite.py", line 2288, in populate_nodes
+    subnode_array, subnode_tensors, prev_subop = populate_subnodes(subcode, ops, lut_ops, reshape_ops, subops_, prev_subop, graph_activations, tensors, buffers, weights, dequantize_op_params, aliased_ids, tmp_dir,\
+  File "~/VectorBlox-SDK/python/vbx/vbx/generate/vnnx_tflite.py", line 4431, in populate_subnodes
+    mode = channels_first_array_reshape(ishape, transform)
+  File "~/VectorBlox-SDK/python/vbx/vbx/generate/vnnx_tflite.py", line 664, in channels_first_array_reshape
+    tmp = np.squeeze(c_iarr, axis=-1)
+  File "<__array_function__ internals>", line 180, in squeeze
+  File "~/vbx-env/lib/python3.10/site-packages/numpy/core/fromnumeric.py", line 1545, in squeeze
+    return squeeze(axis=axis)
+ValueError: cannot select an axis to squeeze out which has size not equal to one

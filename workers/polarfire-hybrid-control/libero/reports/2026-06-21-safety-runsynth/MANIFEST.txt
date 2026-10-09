@@ -1,0 +1,8 @@
+./MANIFEST.txt
+./MPFS_ICICLE_KIT_BASE_DESIGN.srr
+./README.md
+./build_two_slot_runsynth_pnr.tcl
+./final_capture.txt
+./libero_runsynth_pnr.log
+./run_synthesis.log
+./synplify.log

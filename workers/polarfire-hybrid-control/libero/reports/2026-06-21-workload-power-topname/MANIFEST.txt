@@ -1,0 +1,22 @@
+SmartPower explicit-top attempt manifest - 2026-06-21
+
+Status: ATTEMPTED, NOT CLOSURE.
+
+Patched local scripts:
+libero/scripts/05_smartpower_workload.tcl
+libero/scripts/05_smartpower_workload_inner.tcl
+
+Remote command launched on bee:
+/c/Microchip/Libero_SoC_2025.2/Libero_SoC/Designer/bin/libero.exe "SCRIPT:~/dev/projects/polarfire-hybrid-control/libero/scripts/05_smartpower_workload.tcl"
+
+Observed result:
+The streamed outer log stopped growing during reference-design project source loading.
+SmartPower still left a small 2026-06-21-workload-power report directory on bee.
+The report summary is default-equivalent: Total 2622.855 mW, Static 445.612 mW, Dynamic 2177.243 mW.
+No verifypower.log or Annotated Pins result exists for this attempt.
+Stopped only the stuck libero.exe/wrapper/tee state after preserving artifacts.
+
+Artifact:
+smartpower_topname.log
+smartpower_workload.rpt
+rptstyle.xsl

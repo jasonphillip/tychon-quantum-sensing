@@ -1,0 +1,13 @@
+data: {"t_host": 0.000265, "sample_idx": 0, "error_in": -0.570813, "nn_u_ai": -0.03967, "pid_only_out": -0.45665, "pidnn_out": -0.496338, "actuator_out": -0.496338, "unclamped_calc": -0.496321, "clamp_active": 0, "watchdog_timeout": 0, "mode": "PID_NN", "vbx_error": 0, "axi_write_count": 18140, "csr_version": 65536}
+
+data: {"t_host": 0.000464, "sample_idx": 1, "error_in": -0.546585, "nn_u_ai": -0.037526, "pid_only_out": -0.437268, "pidnn_out": -0.475952, "actuator_out": -0.475952, "unclamped_calc": -0.474794, "clamp_active": 0, "watchdog_timeout": 0, "mode": "PID_NN", "vbx_error": 0, "axi_write_count": 18143, "csr_version": 65536}
+
+data: {"t_host": 0.000583, "sample_idx": 2, "error_in": -0.527557, "nn_u_ai": -0.039313, "pid_only_out": -0.422046, "pidnn_out": -0.461365, "actuator_out": -0.461365, "unclamped_calc": -0.461359, "clamp_active": 0, "watchdog_timeout": 0, "mode": "PID_NN", "vbx_error": 0, "axi_write_count": 18146, "csr_version": 65536}
+
+data: {"t_host": 0.000695, "sample_idx": 3, "error_in": -0.509173, "nn_u_ai": -0.038598, "pid_only_out": -0.407339, "pidnn_out": -0.445953, "actuator_out": -0.445953, "unclamped_calc": -0.445937, "clamp_active": 0, "watchdog_timeout": 0, "mode": "PID_NN", "vbx_error": 0, "axi_write_count": 18149, "csr_version": 65536}
+
+data: {"t_host": 0.000802, "sample_idx": 4, "error_in": -0.490323, "nn_u_ai": -0.03967, "pid_only_out": -0.392259, "pidnn_out": -0.43187, "actuator_out": -0.43187, "unclamped_calc": -0.431929, "clamp_active": 0, "watchdog_timeout": 0, "mode": "PID_NN", "vbx_error": 0, "axi_write_count": 18152, "csr_version": 65536}
+
+event: done
+data: {}
+

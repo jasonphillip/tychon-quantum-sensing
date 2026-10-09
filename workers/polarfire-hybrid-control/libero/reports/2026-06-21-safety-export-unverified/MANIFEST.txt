@@ -1,0 +1,5 @@
+./MANIFEST.txt
+./README.md
+./export_unverified_from_pnr.tcl
+./final_capture.txt
+./libero_export_unverified.log

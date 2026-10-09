@@ -1,0 +1,59 @@
+Key log lines:
+1:Console Mode = ==> STATE_VALUE_PROBE_START 2026-06-21T11:17:34-0400
+641:==> INITIAL SYNTHESIZE = Tool inputs are out of date
+642:==> INITIAL PLACEROUTE = Tool inputs are out of date
+643:==> INITIAL VERIFYTIMING = Tool inputs are out of date
+644:==> INITIAL GENERATEPROGRAMMINGDATA = Tool inputs are out of date
+645:==> INITIAL EXPORTPROGRAMMINGJOB = Tool inputs are out of date
+646:==> TRY SYNTHESIZE state=<1>
+647:Unkown state 1
+649:==> REJECT SYNTHESIZE state=<1> err=<>
+650:==> TRY SYNTHESIZE state=<0>
+651:Unkown state 0
+653:==> REJECT SYNTHESIZE state=<0> err=<>
+654:==> TRY SYNTHESIZE state=<2>
+655:Unkown state 2
+657:==> REJECT SYNTHESIZE state=<2> err=<>
+658:==> TRY SYNTHESIZE state=<3>
+659:Unkown state 3
+661:==> REJECT SYNTHESIZE state=<3> err=<>
+662:==> TRY SYNTHESIZE state=<4>
+663:Unkown state 4
+665:==> REJECT SYNTHESIZE state=<4> err=<>
+666:==> TRY SYNTHESIZE state=<5>
+667:Unkown state 5
+669:==> REJECT SYNTHESIZE state=<5> err=<>
+670:==> TRY SYNTHESIZE state=<6>
+671:Unkown state 6
+673:==> REJECT SYNTHESIZE state=<6> err=<>
+674:==> TRY SYNTHESIZE state=<Success>
+675:Unkown state Success
+677:==> REJECT SYNTHESIZE state=<Success> err=<>
+678:==> TRY SYNTHESIZE state=<Passed>
+679:Unkown state Passed
+681:==> REJECT SYNTHESIZE state=<Passed> err=<>
+682:==> TRY SYNTHESIZE state=<StateSuccess>
+683:Unkown state StateSuccess
+685:==> REJECT SYNTHESIZE state=<StateSuccess> err=<>
+686:==> TRY SYNTHESIZE state=<StateFailure>
+687:Unkown state StateFailure
+689:==> REJECT SYNTHESIZE state=<StateFailure> err=<>
+690:==> TRY SYNTHESIZE state=<StateNoResult>
+691:Unkown state StateNoResult
+693:==> REJECT SYNTHESIZE state=<StateNoResult> err=<>
+694:==> TRY SYNTHESIZE state=<Tool passed>
+695:Unkown state Tool passed
+697:==> REJECT SYNTHESIZE state=<Tool passed> err=<>
+698:==> TRY SYNTHESIZE state=<Tool succeeded>
+699:Unkown state Tool succeeded
+701:==> REJECT SYNTHESIZE state=<Tool succeeded> err=<>
+702:==> TRY SYNTHESIZE state=<Tool inputs are up to date>
+703:Unkown state Tool inputs are up to date
+705:==> REJECT SYNTHESIZE state=<Tool inputs are up to date> err=<>
+706:==> TRY SYNTHESIZE state=<Tool completed successfully>
+707:Unkown state Tool completed successfully
+709:==> REJECT SYNTHESIZE state=<Tool completed successfully> err=<>
+710:==> TRY SYNTHESIZE state=<Tool inputs are out of date>
+711:==> ACCEPT SYNTHESIZE state=<Tool inputs are out of date>
+714:==> STATE_VALUE_PROBE_DONE 2026-06-21T11:17:56-0400
+715:The Execute Script command succeeded.

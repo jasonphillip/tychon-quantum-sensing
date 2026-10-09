@@ -1,0 +1,99 @@
+{
+  "seed": 20260702,
+  "tf_version": "2.21.0",
+  "models": {
+    "gru_cell_onestep": {
+      "tflite": "gru_cell_onestep_int8.tflite",
+      "tflite_sha256": "0071351ecfe302c6",
+      "tflite_bytes": 6392,
+      "fixed_io": "gru_cell_onestep_fixed_io.npz",
+      "n_fixed": 64,
+      "tflite_ops": [
+        "ADD",
+        "CONCATENATION",
+        "FULLY_CONNECTED",
+        "LOGISTIC",
+        "MUL",
+        "QUANTIZE",
+        "RESHAPE",
+        "SUB",
+        "TANH"
+      ],
+      "io": {
+        "inputs": [
+          {
+            "name": "serving_default_h_prev:0",
+            "dtype": "int8",
+            "shape": [
+              1,
+              16
+            ],
+            "scale": 0.014230705797672272,
+            "zero_point": 1
+          },
+          {
+            "name": "serving_default_x_t:0",
+            "dtype": "int8",
+            "shape": [
+              1,
+              16
+            ],
+            "scale": 0.013632521964609623,
+            "zero_point": -4
+          }
+        ],
+        "outputs": [
+          {
+            "name": "StatefulPartitionedCall_1:0",
+            "dtype": "int8",
+            "shape": [
+              1,
+              16
+            ],
+            "scale": 0.009193437173962593,
+            "zero_point": 19
+          }
+        ]
+      }
+    },
+    "softmax_head_8x60": {
+      "tflite": "softmax_head_8x60_int8.tflite",
+      "tflite_sha256": "f3cdc455e57b557a",
+      "tflite_bytes": 38056,
+      "fixed_io": "softmax_head_8x60_fixed_io.npz",
+      "n_fixed": 64,
+      "tflite_ops": [
+        "FULLY_CONNECTED",
+        "RESHAPE",
+        "SOFTMAX"
+      ],
+      "io": {
+        "inputs": [
+          {
+            "name": "serving_default_feat:0",
+            "dtype": "int8",
+            "shape": [
+              1,
+              64
+            ],
+            "scale": 0.016243819147348404,
+            "zero_point": -4
+          }
+        ],
+        "outputs": [
+          {
+            "name": "StatefulPartitionedCall_1:0",
+            "dtype": "int8",
+            "shape": [
+              1,
+              8,
+              60
+            ],
+            "scale": 0.00390625,
+            "zero_point": -128
+          }
+        ]
+      }
+    }
+  }
+}

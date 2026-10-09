@@ -1,0 +1,221 @@
+INFO: Reading User SDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\MPFS_ICICLE_KIT_BASE_DESIGN_derived_constraints.sdc.
+INFO: Reading User SDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\fic_clocks.sdc.
+
+No errors or warnings found.
+INFO: The option "Abort flow if errors are found in PDC" is turned ON in Project Settings> Design flow page. The Place & Route tool will fail if errors are found in associated PDC files. Please uncheck the option to ignore the errors and continue running the tool
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+***** Place and Route Configurations *****
+Timing-driven            : ON
+Power-driven             : OFF
+I/O Register Combining   : OFF
+Global Pins Demotion     : ON
+Driver Replication       : ON
+High-effort              : ON
+Repair min-delay         : OFF
+Incremental              : OFF
+Inter-clock optimization : ON
+
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_CAN0.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_MAC.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_MIKROBUS.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_MMUART0.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_MMUART1.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_MMUART2.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_MMUART3.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_PCIE.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_USB.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_SDIO.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_RPi.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\fp\NW_PLL.pdc. 0 error(s) and 0 warning(s)
+
+ Running Timing based Global Demotion. 
+        Moved all 2326 async pins from global to its source 'FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/arst_aclk_sync/sysReset'.
+
+ Timing based Global Demotion completed successfully. 
+
+Running the I/O Bank and Globals Assigner.
+Info:  I/O Bank and Globals Assigner identified 75 fixed I/O macros, 0 unfixed I/O macros
+Info:  I/O Bank and Globals Assigner identified bank 'Bank0' as being fixed at VCCI:1.80V VCCR:n/a
+Info:  I/O Bank and Globals Assigner identified bank 'Bank1' as being fixed at VCCI:3.30V VCCR:n/a
+Info:  I/O Bank and Globals Assigner detected (2) out of (5) I/O Bank(s) with locked I/O technologies.
+
+I/O Bank and Globals Assigner completed successfully.
+Total time spent in I/O Bank and Globals Assigner: 15 seconds
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+
+Placer V5.0 - 2025.2.0 
+Design: MPFS_ICICLE_KIT_BASE_DESIGN     Started: Wed Apr 29 10:53:05 2026
+
+Initializing High-Effort Timing-Driven Placement ...
+Logic optimization identified and removed 275 redundant LUTs
+Clustering ...
+Placing ...
+Improving placement ...
+==== Registers Duplicated ====
+1  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_392/MSC_i_396/writeenable_a_dINPUT_fanned_out[0] duplicated 1 time. NumSink = 2
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_392/MSC_i_396/writeenable_a_dINPUT_fanned_out[0]__DUP4341558 . NumSink = 3
+2  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/instruction_c_5.op_rep_fast_fast[1] duplicated 1 time. NumSink = 14
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/instruction_c_5.op_rep_fast_fast[1]__DUP4341220 . NumSink = 15
+3  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/SlvConvertor_loop[0].slvcnv/rgsl/genblk3.rrs/currState[1] duplicated 1 time. NumSink = 6
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/SlvConvertor_loop[0].slvcnv/rgsl/genblk3.rrs/currState[1]__DUP4340728 . NumSink = 4
+4  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/instruction_c_5.exec_size_2_ret duplicated 2 times. NumSink = 10
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/instruction_c_5.exec_size_2_ret__DUP4341174 . NumSink = 9
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/instruction_c_5.exec_size_2_ret__DUP4341883 . NumSink = 18
+5  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_494/signed_cSTAGESm1_fanned_out_1_rep1 duplicated 1 time. NumSink = 9
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_494/signed_cSTAGESm1_fanned_out_1_rep1__DUP4340755 . NumSink = 9
+6  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/dotp_first_c[0] duplicated 1 time. NumSink = 131
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/dotp_first_c[0]__DUP4341543 . NumSink = 128
+7  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/offset_c_2[2] duplicated 1 time. NumSink = 153
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/offset_c_2[2]__DUP4341149 . NumSink = 105
+8  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/MstConvertor_loop[0].mstrconv/mstrDWC/genblk1.DownConverter_inst/writeWidthConv/DWC_DownConv_preCalcCmdFifoWrCtrl_inst/ASIZE_pre_1[0] duplicated 1 time. NumSink = 6
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/MstConvertor_loop[0].mstrconv/mstrDWC/genblk1.DownConverter_inst/writeWidthConv/DWC_DownConv_preCalcCmdFifoWrCtrl_inst/ASIZE_pre_1[0]__DUP4340894 . NumSink = 8
+9  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/output_shift_register_load_c_4_rep[0] duplicated 1 time. NumSink = 1
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/output_shift_register_load_c_4_rep[0]__DUP4342474 . NumSink = 4
+10 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/MSC_i_541/conversion[1] duplicated 2 times. NumSink = 3
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/MSC_i_541/conversion[1]__DUP4341388 . NumSink = 106
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/MSC_i_541/conversion[1]__DUP4342238 . NumSink = 127
+11 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/kernel_accumulator_resetn_cACCUMULATOR_READ_CYCLE_fanned_out[1] duplicated 1 time. NumSink = 26
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/kernel_accumulator_resetn_cACCUMULATOR_READ_CYCLE_fanned_out[1]__DUP4340902 . NumSink = 38
+12 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/size_half_c1 duplicated 3 times. NumSink = 16
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/size_half_c1__DUP4340651 . NumSink = 66
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/size_half_c1__DUP4341949 . NumSink = 49
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/size_half_c1__DUP4342520 . NumSink = 32
+13 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/arith_word0_negative_c2[2] duplicated 1 time. NumSink = 18
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/arith_word0_negative_c2[2]__DUP4341597 . NumSink = 21
+14 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/dotp_first_c0_fanned_out[1] duplicated 1 time. NumSink = 35
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/dotp_first_c0_fanned_out[1]__DUP4341068 . NumSink = 22
+15 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_494/instruction_c_1.b_signed duplicated 1 time. NumSink = 13
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_494/instruction_c_1.b_signed__DUP4340635 . NumSink = 20
+16 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/MstConvertor_loop[0].mstrconv/rgsl/genblk3.rrs/currState[0] duplicated 1 time. NumSink = 73
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/MstConvertor_loop[0].mstrconv/rgsl/genblk3.rrs/currState[0]__DUP4341617 . NumSink = 4
+17 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/result_c2_7_ret_0 duplicated 1 time. NumSink = 4
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/result_c2_7_ret_0__DUP4340602 . NumSink = 14
+18 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/result_c2_7_ret duplicated 1 time. NumSink = 17
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/result_c2_7_ret__DUP4341115 . NumSink = 2
+19 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_546/MSC_i_550/signed_op_word_fanned_out_fast[0] duplicated 1 time. NumSink = 9
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_546/MSC_i_550/signed_op_word_fanned_out_fast[0]__DUP4340818 . NumSink = 8
+20 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/arith_half1_negative_c2[2] duplicated 1 time. NumSink = 2
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/arith_half1_negative_c2[2]__DUP4340798 . NumSink = 20
+21 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/instruction_c_5.a_signed_0_rep1 duplicated 1 time. NumSink = 5
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/instruction_c_5.a_signed_0_rep1__DUP4340994 . NumSink = 4
+22 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/kernel_accumulator_we_cACCUMULATOR_WRITE_CYCLE_fanned_out[0] duplicated 1 time. NumSink = 41
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/kernel_accumulator_we_cACCUMULATOR_WRITE_CYCLE_fanned_out[0]__DUP4340616 . NumSink = 71
+23 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/out_signed_c1_fanned_out[0] duplicated 1 time. NumSink = 13
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/out_signed_c1_fanned_out[0]__DUP4341195 . NumSink = 12
+24 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_494/signed_cSTAGESm1_fanned_out[0] duplicated 1 time. NumSink = 52
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_494/signed_cSTAGESm1_fanned_out[0]__DUP4340826 . NumSink = 46
+25 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_494/signed_cSTAGESm1_fanned_out_fast[1] duplicated 1 time. NumSink = 8
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_494/signed_cSTAGESm1_fanned_out_fast[1]__DUP4341128 . NumSink = 8
+26 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/kernel_accumulator_resetn_cACCUMULATOR_READ_CYCLE_fanned_out[0] duplicated 1 time. NumSink = 26
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/kernel_accumulator_resetn_cACCUMULATOR_READ_CYCLE_fanned_out[0]__DUP4340753 . NumSink = 38
+27 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/result_c2_14_ret_19 duplicated 1 time. NumSink = 7
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/result_c2_14_ret_19__DUP4340683 . NumSink = 12
+28 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/instruction_c_5.op[0] duplicated 1 time. NumSink = 45
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/instruction_c_5.op[0]__DUP4340594 . NumSink = 98
+29 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_494/shift_c1 duplicated 1 time. NumSink = 193
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_494/shift_c1__DUP4340637 . NumSink = 112
+End of placement.
+
+Placer Runtime Summary   :
+Logic Optimization       : 68 seconds
+Clustering (1 pass)      : 109 seconds
+Placement                : 192 seconds
+Improvement              : 399 seconds
+Physical Optimization    : 151 seconds
+
+Placer completed successfully.
+
+Design: MPFS_ICICLE_KIT_BASE_DESIGN     
+Finished: Wed Apr 29 11:11:29 2026
+Total CPU Time:     00:24:01            Total Elapsed Time: 00:18:24
+Total Memory Usage: 3949.9 Mbytes
+                        o - o - o - o - o - o
+
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+
+Router 
+Design: C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGNStarted: Wed Apr 29 11:13:08 2026
+
+@ 1099 14 0
+
+Router completed successfully.
+
+Design: C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN
+Finished: Wed Apr 29 11:17:29 2026
+Total CPU Time:     00:05:43            Total Elapsed Time: 00:04:21
+Total Memory Usage: 4794.2 Mbytes
+                        o - o - o - o - o - o
+
+Resource Usage
++---------------------------+-------+--------+------------+
+| Type                      | Used  | Total  | Percentage |
++---------------------------+-------+--------+------------+
+| 4LUT                      | 62553 | 254196 | 24.61      |
+| DFF                       | 63921 | 254196 | 25.15      |
+| Logic Element             | 78029 | 254196 | 30.70      |
+| I/Os using I/O Registers  | 0     | 144    | 0.00       |
+| I/O Register Flip-Flops   | 0     | 432    | 0.00       |
+| -- Input  I/O Flip-Flops  | 0     | 144    | 0.00       |
+| -- Output I/O Flip-Flops  | 0     | 144    | 0.00       |
+| -- Enable I/O Flip-Flops  | 0     | 144    | 0.00       |
++---------------------------+-------+--------+------------+
+
+I/O Placement
++--------+-------+------------+
+| Type   | Count | Percentage |
++--------+-------+------------+
+| Locked |  65   | 100.00%    |
+| Placed |  0    | 0.00%      |
++--------+-------+------------+
+
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+Completed writing pin report files.
+INFO: Reading User SDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\MPFS_ICICLE_KIT_BASE_DESIGN_derived_constraints.sdc.
+INFO: Reading User SDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\fic_clocks.sdc.
+
+No errors or warnings found.
+INFO: The option "Abort flow if errors are found in PDC" is turned ON in Project Settings> Design flow page. The Place & Route tool will fail if errors are found in associated PDC files. Please uncheck the option to ignore the errors and continue running the tool
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+***** Place and Route Configurations *****
+Timing-driven            : ON
+Power-driven             : OFF
+I/O Register Combining   : OFF
+Global Pins Demotion     : ON
+Driver Replication       : ON
+High-effort              : ON
+Repair min-delay         : ON
+Incremental              : ON
+Inter-clock optimization : ON
+
+INFO: Skipping Placer...
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+Info: Iteration 1:
+  Worst minimum delay slack: 
+  Total violating paths eligible for improvement: 0
+  Total violating paths improved: 0
+Resource Usage
++---------------------------+-------+--------+------------+
+| Type                      | Used  | Total  | Percentage |
++---------------------------+-------+--------+------------+
+| 4LUT                      | 62553 | 254196 | 24.61      |
+| DFF                       | 63921 | 254196 | 25.15      |
+| Logic Element             | 78029 | 254196 | 30.70      |
+| I/Os using I/O Registers  | 0     | 144    | 0.00       |
+| I/O Register Flip-Flops   | 0     | 432    | 0.00       |
+| -- Input  I/O Flip-Flops  | 0     | 144    | 0.00       |
+| -- Output I/O Flip-Flops  | 0     | 144    | 0.00       |
+| -- Enable I/O Flip-Flops  | 0     | 144    | 0.00       |
++---------------------------+-------+--------+------------+
+
+I/O Placement
++--------+-------+------------+
+| Type   | Count | Percentage |
++--------+-------+------------+
+| Locked |  65   | 100.00%    |
+| Placed |  0    | 0.00%      |
++--------+-------+------------+
+
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+Completed writing pin report files.

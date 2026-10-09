@@ -1,0 +1,5 @@
+./MANIFEST.txt
+./README.md
+./final_capture.txt
+./libero_stateprobe.log
+./probe_set_tool_state_values.tcl

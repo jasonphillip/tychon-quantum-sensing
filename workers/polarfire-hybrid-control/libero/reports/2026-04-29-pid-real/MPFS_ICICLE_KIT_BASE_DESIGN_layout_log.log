@@ -1,0 +1,284 @@
+INFO: Reading User SDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\MPFS_ICICLE_KIT_BASE_DESIGN_derived_constraints.sdc.
+INFO: Reading User SDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\fic_clocks.sdc.
+
+No errors or warnings found.
+INFO: The option "Abort flow if errors are found in PDC" is turned ON in Project Settings> Design flow page. The Place & Route tool will fail if errors are found in associated PDC files. Please uncheck the option to ignore the errors and continue running the tool
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+***** Place and Route Configurations *****
+Timing-driven            : ON
+Power-driven             : OFF
+I/O Register Combining   : OFF
+Global Pins Demotion     : ON
+Driver Replication       : ON
+High-effort              : ON
+Repair min-delay         : OFF
+Incremental              : OFF
+Inter-clock optimization : ON
+
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_CAN0.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_MAC.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_MIKROBUS.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_MMUART0.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_MMUART1.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_MMUART2.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_MMUART3.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_PCIE.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_USB.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_SDIO.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\io\ICICLE_RPi.pdc. 0 error(s) and 0 warning(s)
+INFO: Reading User PDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\fp\NW_PLL.pdc. 0 error(s) and 0 warning(s)
+
+ Running Timing based Global Demotion. 
+        Moved all 2493 async pins from global to its source 'FIC_0_PERIPHERALS_1/Vectorblox_ss_0/vectorblox_axi_resize_0/vectorblox_axi_resize_0/arst_aclk_sync/sysReset'.
+
+ Timing based Global Demotion completed successfully. 
+
+Running the I/O Bank and Globals Assigner.
+Info:  I/O Bank and Globals Assigner identified 75 fixed I/O macros, 0 unfixed I/O macros
+Info:  I/O Bank and Globals Assigner identified bank 'Bank0' as being fixed at VCCI:1.80V VCCR:n/a
+Info:  I/O Bank and Globals Assigner identified bank 'Bank1' as being fixed at VCCI:3.30V VCCR:n/a
+Info:  I/O Bank and Globals Assigner detected (2) out of (5) I/O Bank(s) with locked I/O technologies.
+
+I/O Bank and Globals Assigner completed successfully.
+Total time spent in I/O Bank and Globals Assigner: 15 seconds
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+
+Placer V5.0 - 2025.2.0 
+Design: MPFS_ICICLE_KIT_BASE_DESIGN     Started: Wed Apr 29 18:44:51 2026
+
+Initializing High-Effort Timing-Driven Placement ...
+Logic optimization identified and removed 257 redundant LUTs
+Clustering ...
+Placing ...
+Improving placement ...
+==== Registers Duplicated ====
+1  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_2[0] duplicated 1 time. NumSink = 18
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_2[0]__DUP4403029 . NumSink = 38
+2  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/accumulator_select_c2_fanned_out_3[3] duplicated 1 time. NumSink = 21
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/accumulator_select_c2_fanned_out_3[3]__DUP4403558 . NumSink = 35
+3  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/dotp_first_c0_fanned_out[3] duplicated 1 time. NumSink = 28
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/dotp_first_c0_fanned_out[3]__DUP4403550 . NumSink = 29
+4  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/size_up_data_in_cALIGNMENT_STAGESp1_13[7] duplicated 1 time. NumSink = 2
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/size_up_data_in_cALIGNMENT_STAGESp1_13[7]__DUP4401716 . NumSink = 3
+5  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/unsigned_input_cINPUT_DELAY_fanned_out[0] duplicated 2 times. NumSink = 2
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/unsigned_input_cINPUT_DELAY_fanned_out[0]__DUP4402333 . NumSink = 12
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/unsigned_input_cINPUT_DELAY_fanned_out[0]__DUP4404585 . NumSink = 4
+6  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/instruction_c_2.exec_size[1] duplicated 1 time. NumSink = 20
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/instruction_c_2.exec_size[1]__DUP4402007 . NumSink = 100
+7  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/size_up_data_in_cALIGNMENT_STAGESp1_5[7] duplicated 1 time. NumSink = 1
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/size_up_data_in_cALIGNMENT_STAGESp1_5[7]__DUP4401396 . NumSink = 5
+8  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/instruction_c_5.exec_size_2_ret duplicated 2 times. NumSink = 17
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/instruction_c_5.exec_size_2_ret__DUP4402194 . NumSink = 11
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/instruction_c_5.exec_size_2_ret__DUP4404464 . NumSink = 8
+9  - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/instruction_c_5.op_rep[1] duplicated 2 times. NumSink = 179
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/instruction_c_5.op_rep[1]__DUP4401449 . NumSink = 84
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/instruction_c_5.op_rep[1]__DUP4403966 . NumSink = 151
+10 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_494/MSC_i_516/use_high_byte_dDELAY duplicated 1 time. NumSink = 6
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_494/MSC_i_516/use_high_byte_dDELAY__DUP4403215 . NumSink = 6
+11 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/dotp_first_c[0] duplicated 1 time. NumSink = 159
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/dotp_first_c[0]__DUP4401429 . NumSink = 111
+12 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/offset_c_2[2] duplicated 3 times. NumSink = 18
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/offset_c_2[2]__DUP4403840 . NumSink = 167
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/offset_c_2[2]__DUP4405874 . NumSink = 35
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/offset_c_2[2]__DUP4406047 . NumSink = 40
+13 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_2[2] duplicated 1 time. NumSink = 38
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_2[2]__DUP4403033 . NumSink = 18
+14 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_3[0] duplicated 1 time. NumSink = 34
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_3[0]__DUP4402843 . NumSink = 22
+15 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_2[5] duplicated 1 time. NumSink = 18
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_2[5]__DUP4402696 . NumSink = 38
+16 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_2[3] duplicated 1 time. NumSink = 38
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_2[3]__DUP4402912 . NumSink = 18
+17 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/out_signed_c1_fanned_out[1] duplicated 1 time. NumSink = 12
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/out_signed_c1_fanned_out[1]__DUP4401737 . NumSink = 14
+18 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/MSC_i_541/conversion[1] duplicated 1 time. NumSink = 58
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/MSC_i_541/conversion[1]__DUP4403525 . NumSink = 176
+19 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/kernel_accumulator_resetn_cACCUMULATOR_READ_CYCLE_fanned_out[1] duplicated 1 time. NumSink = 41
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/kernel_accumulator_resetn_cACCUMULATOR_READ_CYCLE_fanned_out[1]__DUP4401323 . NumSink = 23
+20 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/size_half_c1 duplicated 3 times. NumSink = 44
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/size_half_c1__DUP4402067 . NumSink = 41
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/size_half_c1__DUP4404788 . NumSink = 40
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/size_half_c1__DUP4406067 . NumSink = 38
+21 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_2[1] duplicated 1 time. NumSink = 38
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_2[1]__DUP4403031 . NumSink = 18
+22 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_494/instruction_c_1.b_signed duplicated 1 time. NumSink = 8
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_494/instruction_c_1.b_signed__DUP4401850 . NumSink = 24
+23 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/arith_word_gen.3.op_size_c1_fanned_out_1[1] duplicated 1 time. NumSink = 16
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/arith_word_gen.3.op_size_c1_fanned_out_1[1]__DUP4402143 . NumSink = 17
+24 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/unsigned_input_cINPUT_DELAY_fanned_out[1] duplicated 2 times. NumSink = 4
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/unsigned_input_cINPUT_DELAY_fanned_out[1]__DUP4401575 . NumSink = 13
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/unsigned_input_cINPUT_DELAY_fanned_out[1]__DUP4404065 . NumSink = 2
+25 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/kernel_accumulator_we_cACCUMULATOR_WRITE_CYCLE_fanned_out[1] duplicated 1 time. NumSink = 39
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/kernel_accumulator_we_cACCUMULATOR_WRITE_CYCLE_fanned_out[1]__DUP4402141 . NumSink = 73
+26 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_3[5] duplicated 1 time. NumSink = 34
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_3[5]__DUP4402539 . NumSink = 22
+27 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_3[3] duplicated 1 time. NumSink = 22
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_3[3]__DUP4402768 . NumSink = 34
+28 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/arith_word_gen.3.word0_result_c1_1[9] duplicated 1 time. NumSink = 2
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/arith_word_gen.3.word0_result_c1_1[9]__DUP4402437 . NumSink = 1
+29 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_2[4] duplicated 1 time. NumSink = 18
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_2[4]__DUP4402766 . NumSink = 38
+30 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/accumulator_select_c2_fanned_out_3[2] duplicated 1 time. NumSink = 25
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/accumulator_select_c2_fanned_out_3[2]__DUP4403556 . NumSink = 31
+31 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_3[1] duplicated 1 time. NumSink = 25
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_3[1]__DUP4402845 . NumSink = 31
+32 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/instruction_c_5.a_signed[0] duplicated 1 time. NumSink = 28
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/instruction_c_5.a_signed[0]__DUP4401932 . NumSink = 29
+33 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/accumulator_select_c2_fanned_out_3[0] duplicated 1 time. NumSink = 35
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/accumulator_select_c2_fanned_out_3[0]__DUP4403552 . NumSink = 21
+34 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/out_signed_c1_fanned_out[0] duplicated 1 time. NumSink = 5
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/out_signed_c1_fanned_out[0]__DUP4401456 . NumSink = 21
+35 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_494/signed_cSTAGESm1_fanned_out[1] duplicated 3 times. NumSink = 45
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_494/signed_cSTAGESm1_fanned_out[1]__DUP4401470 . NumSink = 3
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_494/signed_cSTAGESm1_fanned_out[1]__DUP4403886 . NumSink = 30
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_494/signed_cSTAGESm1_fanned_out[1]__DUP4405882 . NumSink = 13
+36 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/saturate_c1 duplicated 1 time. NumSink = 115
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/saturate_c1__DUP4402937 . NumSink = 40
+37 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_535/pipeline_control_out.clk_first_cycle duplicated 1 time. NumSink = 188
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_535/pipeline_control_out.clk_first_cycle__DUP4401901 . NumSink = 74
+38 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/unsigned_output_cOUTPUT_SCALER_INPUT_CYCLEpSCALING_INPUT_DELAYpSCALING_OUTPUT_DELAY_fanned_out[0] duplicated 2 times. NumSink = 6
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/unsigned_output_cOUTPUT_SCALER_INPUT_CYCLEpSCALING_INPUT_DELAYpSCALING_OUTPUT_DELAY_fanned_out[0]__DUP4402716 . NumSink = 9
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/unsigned_output_cOUTPUT_SCALER_INPUT_CYCLEpSCALING_INPUT_DELAYpSCALING_OUTPUT_DELAY_fanned_out[0]__DUP4405489 . NumSink = 9
+39 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_392/MSC_i_448/writeenable_a_dINPUT_fanned_out[0] duplicated 1 time. NumSink = 3
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_392/MSC_i_448/writeenable_a_dINPUT_fanned_out[0]__DUP4402052 . NumSink = 2
+40 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/result_c2_3_ret duplicated 1 time. NumSink = 13
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/result_c2_3_ret__DUP4401886 . NumSink = 4
+41 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/instruction_c_5.b_signed[0] duplicated 1 time. NumSink = 4
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/instruction_c_5.b_signed[0]__DUP4402775 . NumSink = 13
+42 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_clk_first_cycle duplicated 1 time. NumSink = 158
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_clk_first_cycle__DUP4402096 . NumSink = 232
+43 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/size_byte_c1 duplicated 1 time. NumSink = 16
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/size_byte_c1__DUP4402376 . NumSink = 30
+44 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_clk_first_cycle_fanned_out[2] duplicated 1 time. NumSink = 16
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_clk_first_cycle_fanned_out[2]__DUP4403344 . NumSink = 42
+45 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/instruction_c_2.op[0] duplicated 1 time. NumSink = 72
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/instruction_c_2.op[0]__DUP4402457 . NumSink = 21
+46 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/kernel_accumulator_resetn_cACCUMULATOR_READ_CYCLE_fanned_out[0] duplicated 1 time. NumSink = 17
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/kernel_accumulator_resetn_cACCUMULATOR_READ_CYCLE_fanned_out[0]__DUP4401600 . NumSink = 47
+47 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/arith_word_gen.3.op_size_c1_fanned_out_1[0] duplicated 1 time. NumSink = 19
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/arith_word_gen.3.op_size_c1_fanned_out_1[0]__DUP4401940 . NumSink = 15
+48 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/result_c2_7_ret_13 duplicated 1 time. NumSink = 5
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/result_c2_7_ret_13__DUP4401332 . NumSink = 14
+49 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/pipeline_control_c_2.clk_first_cycle duplicated 2 times. NumSink = 9
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/pipeline_control_c_2.clk_first_cycle__DUP4403059 . NumSink = 11
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/pipeline_control_c_2.clk_first_cycle__DUP4405185 . NumSink = 10
+50 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/instruction_c_5.op[0] duplicated 2 times. NumSink = 70
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/instruction_c_5.op[0]__DUP4401330 . NumSink = 38
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_540/instruction_c_5.op[0]__DUP4403847 . NumSink = 34
+51 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/size_word_c1 duplicated 2 times. NumSink = 173
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/size_word_c1__DUP4403458 . NumSink = 164
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_531/MSC_i_534/size_word_c1__DUP4405527 . NumSink = 271
+52 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_494/shift_c1 duplicated 1 time. NumSink = 228
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_391/MSC_i_492/MSC_i_493/MSC_i_494/shift_c1__DUP4402088 . NumSink = 76
+53 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/accumulator_select_c2_fanned_out_3[1] duplicated 1 time. NumSink = 31
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/accumulator_select_c2_fanned_out_3[1]__DUP4403554 . NumSink = 25
+54 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_3[4] duplicated 1 time. NumSink = 31
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_3[4]__DUP4402675 . NumSink = 25
+55 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/unsigned_input_cINPUT_DELAY_fanned_out[2] duplicated 1 time. NumSink = 14
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/unsigned_input_cINPUT_DELAY_fanned_out[2]__DUP4401477 . NumSink = 4
+56 - FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_3[2] duplicated 1 time. NumSink = 21
+     FIC_0_PERIPHERALS_1/Vectorblox_ss_0/core_vectorblox_C0_0/MSC_i_0/MSC_i_1/MSC_i_37/pointwise_accumulator_select_cACCUMULATOR_WRITE_CYCLE_fanned_out_3[2]__DUP4402847 . NumSink = 35
+End of placement.
+
+Placer Runtime Summary   :
+Logic Optimization       : 74 seconds
+Clustering (1 pass)      : 112 seconds
+Placement                : 204 seconds
+Improvement              : 545 seconds
+Physical Optimization    : 290 seconds
+
+Placer completed successfully.
+
+Design: MPFS_ICICLE_KIT_BASE_DESIGN     
+Finished: Wed Apr 29 19:08:27 2026
+Total CPU Time:     00:29:50            Total Elapsed Time: 00:23:36
+Total Memory Usage: 4128.2 Mbytes
+                        o - o - o - o - o - o
+
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+
+Router 
+Design: C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGNStarted: Wed Apr 29 19:10:05 2026
+
+
+Router completed successfully.
+
+Design: C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\designer\MPFS_ICICLE_KIT_BASE_DESIGN\MPFS_ICICLE_KIT_BASE_DESIGN
+Finished: Wed Apr 29 19:14:42 2026
+Total CPU Time:     00:06:05            Total Elapsed Time: 00:04:37
+Total Memory Usage: 4805.1 Mbytes
+                        o - o - o - o - o - o
+
+Resource Usage
++---------------------------+-------+--------+------------+
+| Type                      | Used  | Total  | Percentage |
++---------------------------+-------+--------+------------+
+| 4LUT                      | 65834 | 254196 | 25.90      |
+| DFF                       | 66713 | 254196 | 26.24      |
+| Logic Element             | 82102 | 254196 | 32.30      |
+| I/Os using I/O Registers  | 0     | 144    | 0.00       |
+| I/O Register Flip-Flops   | 0     | 432    | 0.00       |
+| -- Input  I/O Flip-Flops  | 0     | 144    | 0.00       |
+| -- Output I/O Flip-Flops  | 0     | 144    | 0.00       |
+| -- Enable I/O Flip-Flops  | 0     | 144    | 0.00       |
++---------------------------+-------+--------+------------+
+
+I/O Placement
++--------+-------+------------+
+| Type   | Count | Percentage |
++--------+-------+------------+
+| Locked |  65   | 100.00%    |
+| Placed |  0    | 0.00%      |
++--------+-------+------------+
+
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+Completed writing pin report files.
+INFO: Reading User SDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\MPFS_ICICLE_KIT_BASE_DESIGN_derived_constraints.sdc.
+INFO: Reading User SDC file C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\constraint\fic_clocks.sdc.
+
+No errors or warnings found.
+INFO: The option "Abort flow if errors are found in PDC" is turned ON in Project Settings> Design flow page. The Place & Route tool will fail if errors are found in associated PDC files. Please uncheck the option to ignore the errors and continue running the tool
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+***** Place and Route Configurations *****
+Timing-driven            : ON
+Power-driven             : OFF
+I/O Register Combining   : OFF
+Global Pins Demotion     : ON
+Driver Replication       : ON
+High-effort              : ON
+Repair min-delay         : ON
+Incremental              : ON
+Inter-clock optimization : ON
+
+INFO: Skipping Placer...
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+Info: Iteration 1:
+  Worst minimum delay slack: 
+  Total violating paths eligible for improvement: 0
+  Total violating paths improved: 0
+Resource Usage
++---------------------------+-------+--------+------------+
+| Type                      | Used  | Total  | Percentage |
++---------------------------+-------+--------+------------+
+| 4LUT                      | 65834 | 254196 | 25.90      |
+| DFF                       | 66713 | 254196 | 26.24      |
+| Logic Element             | 82102 | 254196 | 32.30      |
+| I/Os using I/O Registers  | 0     | 144    | 0.00       |
+| I/O Register Flip-Flops   | 0     | 432    | 0.00       |
+| -- Input  I/O Flip-Flops  | 0     | 144    | 0.00       |
+| -- Output I/O Flip-Flops  | 0     | 144    | 0.00       |
+| -- Enable I/O Flip-Flops  | 0     | 144    | 0.00       |
++---------------------------+-------+--------+------------+
+
+I/O Placement
++--------+-------+------------+
+| Type   | Count | Percentage |
++--------+-------+------------+
+| Locked |  65   | 100.00%    |
+| Placed |  0    | 0.00%      |
++--------+-------+------------+
+
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+Completed writing pin report files.
