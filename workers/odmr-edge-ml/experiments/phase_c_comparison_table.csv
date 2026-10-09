@@ -1,0 +1,16 @@
+metric,v1_unclamped,v1_clamped,v2_apr1_production_50k,v2_dataset_a,units,notes
+val_mae_reduction_pct,54.27,6.91,6.19,5.01,percent,production_50k val n=5000
+sweep_mae_reduction_pct,31.31,1.09,3.93,3.74,percent,1440-angle heading sweep
+sweep_easy_bins_avg_delta_uT,+6.41,+2.25,+0.83,+1.03,microtesla,bins 0/1/8/9 avg signed Δ vs PID
+sweep_hard_bins_avg_delta_uT,-16.65,-2.25,-1.98,-1.96,microtesla,bins 3/4/5/6 avg signed Δ vs PID
+dataset_a_aic_test_reduction_pct,54.21,6.88,5.91,4.97,percent,production_50k_v2_aic test n=5000
+adev_tau_2700_reduction_pct_direct,96.13,N/A,N/A,4.82,percent,direct OADEV (not octave-interpolated)
+val_pid_baseline_mae_uT,23.75,23.75,23.75,23.75,microtesla,common PID baseline
+sweep_pid_baseline_mae_uT,13.33,13.33,13.33,13.33,microtesla,common PID baseline
+aic_pid_baseline_mae_uT,23.54,23.54,23.54,23.54,microtesla,common PID baseline
+val_n_clipped_pct,97.4,N/A,28.0,6.5,percent,fraction of raw FCNN outputs |delta| > 2.25
+sweep_n_clipped_pct,94.2,N/A,1.9,1.4,percent,fraction of raw FCNN outputs |delta| > 2.25
+sigma_value,1.5,1.5,1.5124,1.267999,unitless,Gaussian anchor sigma
+training_data,production_50k,production_50k,production_50k,production_50k_v2_aic,n/a,training distribution
+target_clamp,none,none,±2.25,±2.25,microtesla,training-time target clipping
+deployable,N/A,N/A,N/A,12.5KB_vnnx,n/a,V250 .vnnx exists only for v2 Dataset A

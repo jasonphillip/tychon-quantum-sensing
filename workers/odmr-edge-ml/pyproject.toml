@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "odmr-edge-ml"
+version = "0.1.0"
+description = "Edge-optimized neural networks for real-time ODMR spectral analysis"
+requires-python = ">=3.11"
+dependencies = [
+    "torch>=2.2",
+    "numpy>=1.26",
+    "h5py>=3.10",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    # Cascade manifest reader/composer + orbit benchmark loader. Editable
+    # install path: pip install -e ~/projects/tychon-shared-data
+    "tychon-shared-data",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

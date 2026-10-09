@@ -1,0 +1,48 @@
+{
+  "ckpt": "~/projects/odmr-edge-ml/experiments/scalar_residual_v2_dataset_a/checkpoints/best_model_dataset_a.pt",
+  "ckpt_sha256": "e0c314265017a999cd57c2b0c168c2d3dc229c9edbb3c630887ffb94ff57ed0a",
+  "clamp_uT": 2.25,
+  "dataset": "~/projects/tychon-shared-data/production_50k_v2_aic",
+  "float_accuracy": {
+    "clamped_mae_uT": 22.36606216430664,
+    "clamped_reduction_pct": 4.969734191894531,
+    "name": "float",
+    "pid_baseline_mae_uT": 23.535724639892578,
+    "raw_exceeds_clamp_fraction": 0.0798,
+    "raw_mae_uT": 22.35257339477539,
+    "raw_reduction_pct": 5.02704381942749
+  },
+  "float_vs_int8_delta": {
+    "mae_uT": 0.03461451455950737,
+    "max_abs_uT": 0.7033159732818604,
+    "p50_abs_uT": 0.02861696481704712,
+    "p95_abs_uT": 0.0871502086520195,
+    "p99_abs_uT": 0.12319687753915787,
+    "rmse_uT": 0.04523028878218094
+  },
+  "int8_accuracy": {
+    "clamped_mae_uT": 22.381698608398438,
+    "clamped_reduction_pct": 4.903292655944824,
+    "name": "int8",
+    "pid_baseline_mae_uT": 23.535724639892578,
+    "raw_exceeds_clamp_fraction": 0.0738,
+    "raw_mae_uT": 22.37001609802246,
+    "raw_reduction_pct": 4.9529314041137695
+  },
+  "n": 5000,
+  "quantization": {
+    "input_scale": 0.007843137718737125,
+    "input_values_at_max": 0,
+    "input_values_at_min": 5501,
+    "input_zero_point": -1,
+    "output_at_max": 6,
+    "output_at_min": 0,
+    "output_saturation_fraction": 0.0012,
+    "output_scale": 0.022874947637319565,
+    "output_zero_point": 1
+  },
+  "sigma": 1.267999,
+  "split": "test",
+  "tflite": "~/projects/odmr-edge-ml/exports/fcnn_v2_residual_dataset_a_int8.tflite",
+  "tflite_sha256": "e3b55da96ee633a58109007d4244304e2ad4a22853b10335fa41879e815b5371"
+}

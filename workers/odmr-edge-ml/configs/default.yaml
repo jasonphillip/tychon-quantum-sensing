@@ -1,0 +1,5 @@
+# Default configuration for odmr-edge-ml
+dataset_dir: ./data/golden
+n_freq_points: 100
+output_dim: 3
+device: cpu
