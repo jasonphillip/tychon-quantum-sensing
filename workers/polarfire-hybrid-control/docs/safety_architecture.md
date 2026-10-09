@@ -25,7 +25,7 @@ The Circle Criterion argument holds only if all of these assumptions hold:
 
 - The plant model used in the analysis is valid, and the plant gain stays in the range the analysis assumes. Plant model identification is an open obligation (see below).
 - The classical PID is asymptotically stable on that plant for the configured Kp, Ki and Kd.
-- The AI contribution at the actuator is bounded by the clamp. In the current code the clamp is applied before the slew limiter, so the bound is not re-enforced after slew. This is an open obligation (see below).
+- The AI contribution at the actuator is bounded by the clamp. The code re-applies the clamp after slew limiting (C++ testbench verified; synthesis check open, see below).
 - The update period is fixed and known, and the analysis uses the same period. The analysis so far is continuous-time. Sampled-data effects are open (see below).
 - The slew limiter and the final actuator saturation are active as modelled.
 - The AI block behaves as a sector-bounded nonlinearity. For a neural network this needs separate verification of the trained weights (see below).
@@ -65,7 +65,7 @@ The watchdog detects a missed deadline, and control returns to the classical PID
 
 - The watchdog logic keeps running, and the heartbeat input reflects real inference completion.
 - The watchdog fires within its configured deadline, and the timeout signal reaches `nv_pid_top()`.
-- The PID path that takes over runs on logic that does not depend on the stalled processor.
+- The PID path that takes over runs on logic that does not depend on the stalled processor. In the current software-paced build this condition does not hold: the core computes only when the processor starts it (`firmware/linux/v250_pid_loop.c` runs the inference, then writes `R_ACC_START`), so a stalled processor stops PID updates too. This is from reading the code and is untested; scenarios (a) and (c) of the test plan check it.
 - The fallback at the actuator works with a stalled processor. This has not been tested on the board (see open obligations).
 
 The cooldown length depends on the controller update period, as described in the open obligations.
@@ -102,9 +102,9 @@ The results above hold *within the assumptions listed beside each one*. The foll
 | Derivative filter SI | Unfiltered first-difference amplifies HF noise at expanded authority | Astrom-Hagglund Ch.4 |
 | ReLU sector verification (NN-in-loop) | The AI block is a sector-bounded nonlinearity only if the trained weights satisfy a sector bound | Recent arXiv work on sector-bounded NN feedback |
 | Workload-driven SmartPower | Default-toggle estimate is an upper bound, not an operational measurement | Microchip SmartPower UG 2025.2 |
-| Cooldown counter units (verified in code 2026-10-09) | The cooldown counter in `hls/src/nv_pid.cpp` (line 63, `cooldown_counter++` inside `if (in_cooldown)`) increments once per controller invocation. `hls/include/rta_config.hpp` (lines 34-35) describes `WATCHDOG_COOLDOWN_CYCLES = 1000` as "1000 cycles at 125 MHz = 8.0 µs". At the measured software-paced cadence of about 3.3 kHz, 1000 invocations take about 0.3 s. Every time-based statement about the cooldown depends on the update period. A memo is planned at `docs/controller_sample_interval_2026-10.md`. | Code inspection; measured update cadence |
-| Clamp bound after slew limiting (verified in code 2026-10-09) | In `hls/src/nv_pid.cpp` the AI amplitude clamp is applied first (line 85) and the slew limiter second (line 91, `apply_slew_limit`). The clamp bound is not re-enforced after the slew step. A change to enforce it after slew is planned. | Code inspection |
-| Watchdog fallback on the board (verified 2026-10-09: no such test exists) | The watchdog fallback at the actuator has not been tested on the board with a stalled processor. A test plan is planned at `docs/watchdog_fallback_test_plan.md`. | Test plan, not yet written |
+| Cooldown counter units (verified in code 2026-10-09) | The cooldown counter in `hls/src/nv_pid.cpp` (line 63, `cooldown_counter++` inside `if (in_cooldown)`) increments once per controller invocation. `hls/include/rta_config.hpp` (lines 34-35) describes `WATCHDOG_COOLDOWN_CYCLES = 1000` as "1000 cycles at 125 MHz = 8.0 µs". At the measured software-paced cadence of about 3.3 kHz, 1000 invocations take about 0.3 s. Every time-based statement about the cooldown depends on the update period. The memo [`docs/controller_sample_interval_2026-10.md`](controller_sample_interval_2026-10.md) gives the per-build semantics and a proposed explicit update period; the design change is open. | Code inspection; measured update cadence |
+| Clamp bound after slew limiting (verified in code 2026-10-09) | Until 2026-10-09, `hls/src/nv_pid.cpp` applied the AI amplitude clamp before the slew limiter only, so a lowered bound was not re-enforced after the slew step. The clamp now runs again after slew, and `hls/tb/tb_bumpless.cpp` checks that a zero inner bound gives zero AI contribution on the next update (C++ testbench). The SmartHLS synthesis check of this change is still open. | Code inspection |
+| Watchdog fallback on the board (verified 2026-10-09: no such test exists) | The watchdog fallback at the actuator has not been tested on the board with a stalled processor. The test plan is [`docs/watchdog_fallback_test_plan.md`](watchdog_fallback_test_plan.md); running it needs the board. | Test plan; not yet run |
 
 Until these items are discharged, all stability and power statements in this file and the README are qualified as "sector-bounded by design, within the listed assumptions". They are not statements that the loop is proven unable to destabilize.
 
