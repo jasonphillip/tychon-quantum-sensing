@@ -1,10 +1,12 @@
 # Tychon NV stack: an agent-orchestrated quantum-sensing build
 
-[![CPU benchmark](https://github.com/jasonphillip/tychon-nv-stack/actions/workflows/bench.yml/badge.svg)](https://github.com/jasonphillip/tychon-nv-stack/actions/workflows/bench.yml)
+[![CPU benchmark](https://github.com/jasonphillip/tychon-nv-stack/actions/workflows/bench.yml/badge.svg)](https://github.com/jasonphillip/tychon-nv-stack/actions/workflows/bench.yml) [![Tests](https://github.com/jasonphillip/tychon-nv-stack/actions/workflows/tests.yml/badge.svg)](https://github.com/jasonphillip/tychon-nv-stack/actions/workflows/tests.yml)
 
 I used coding agents to build the software for NV-diamond quantum magnetometers. One orchestrator session handed out the tasks, and each worker repository had its own agent session. The orchestration was human-mediated: until the dispatch tool existed in July 2026, I carried the prompts between the planning chat and the repository sessions by hand. Together they produced a physics simulator, edge ML models, PID plus neural-network control on a PolarFire SoC FPGA, a field-vector tracker and a live demo dashboard. I planned the work, wrote the specs and reviewed what came back. The agents wrote most of the code.
 
 The build started from a 90-day plan in March 2026 and continued through September 2026.
+
+GitHub Actions runs the tests on CPU runners for every push, and in the 2026-10-09 run 696 passed across the simulator, edge ML, tracker, FPGA tooling, dashboard and orchestrator. Another 60 were skipped because they need datasets that aren't in the repository, optional packages, a private package or the FPGA kit.
 
 ## Results at a glance
 
