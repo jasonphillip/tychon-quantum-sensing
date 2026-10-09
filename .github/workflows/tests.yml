@@ -1,0 +1,49 @@
+name: Tests
+
+"on":
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('workers/*/pyproject.toml') }}
+      - name: Install CPU-only torch
+        run: python -m pip install --index-url https://download.pytorch.org/whl/cpu torch
+      - name: Install test dependencies
+        run: python -m pip install numpy scipy h5py pyyaml pandas sympy qutip simos pytest
+      - name: Test nv-sensor-sim
+        working-directory: workers/nv-sensor-sim
+        env:
+          PYTHONPATH: src
+        run: python -m pytest -q -p no:cacheprovider
+      - name: Test odmr-edge-ml
+        working-directory: workers/odmr-edge-ml
+        env:
+          PYTHONPATH: src:../nv-sensor-sim/src
+        run: python -m pytest -q -p no:cacheprovider
+      - name: Test odmr-vector-tracking
+        working-directory: workers/odmr-vector-tracking
+        env:
+          PYTHONPATH: src:../nv-sensor-sim/src
+        run: python -m pytest -q -p no:cacheprovider
+      - name: Test polarfire-hybrid-control
+        working-directory: workers/polarfire-hybrid-control
+        run: python -m pytest -q -p no:cacheprovider tests
+      - name: Test fpga-demo-dashboard
+        working-directory: demo/fpga-demo-dashboard
+        run: python -m pytest -q -p no:cacheprovider
+      - name: Test orchestrator claim evaluation
+        working-directory: orchestrator
+        run: python -m pytest -q -p no:cacheprovider tvw/scripts/tests/test_claim_eval.py
+      - name: Test orchestrator dispatch
+        working-directory: orchestrator
+        run: bash tvw/scripts/tests/test_dispatch.sh
