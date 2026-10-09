@@ -25,6 +25,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 import torch
+pytest.importorskip('tychon_shared_data', reason='needs the private tychon_shared_data package')
 from tychon_shared_data.cascade import CascadeManifest, verify_bit_exact
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
