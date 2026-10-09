@@ -59,12 +59,31 @@ spark1 was in the lab until 2026-07-05 and is not drawn. Before spark4 arrived, 
 
 ## What ran where
 
-- **Simulator.** `nv-sensor-sim` is CPU code, developed on the Sparks. Its CUDA-Q backend is a stub marked planned. Where the datasets were generated is not recorded, so I do not claim GPU generation.
+- **Simulator.** `nv-sensor-sim` is CPU code, developed on the Sparks. Its CUDA-Q backend is a stub marked planned. On 2026-07-11 I benchmarked CUDA-Q's batched Lindblad dynamics on spark2 (a batch of 128 systems over 201 steps in 1.39 s, 1,024 in 4.51 s). The [assessment](../orchestrator/tvw/audits/cudaq-gpu-sim-assessment-2026-07-11.md) kept CUDA-Q as the throughput fallback and pointed the next fidelity generator at a differentiable JAX library instead. Where the datasets were generated is not recorded, so I do not claim GPU generation.
 - **Edge ML.** The path is PyTorch, QAT, ONNX, TFLite INT8, then `.vnnx` on bee. I timed the cascade experiments on spark1's GB10 (8 m 28 s, bf16 with torch.compile). The training host for the rest is not recorded.
 - **Vector tracker.** Increments up to 7 trained on a single GB10, 2 to 7 hours per run. Increment 8, a 26-run matrix in July 2026, trained in the cloud on L40S instances, so I could run 26 trainings in parallel. I used the cloud only for training. Checkpoints came back, and a pre-registered script re-derived every number on spark2. See [increment 8 results](../workers/odmr-vector-tracking/docs/increment8_results.md).
 - **Claim verification.** Embeddings ran on spark2. The critics ran under Ollama on the machine that hosted the orchestrator: spark1 for the May 2026 audits, spark2 from July. Nothing in this step went to a cloud API.
-- **FPGA flow.** Libero, SmartHLS and VectorBlox on bee. Bitstreams and binaries went from bee to the kit. Measurements came back from the kit over the LAN. See the [PolarFire README](../workers/polarfire-hybrid-control/README.md).
+- **FPGA flow.** Libero, SmartHLS and VectorBlox on bee. Bitstreams and binaries went from bee to the kit. Measurements came back from the kit over the LAN. See [How a change reached the board](#how-a-change-reached-the-board) and the [PolarFire README](../workers/polarfire-hybrid-control/README.md).
 - **Demo.** I built the dashboard on spark1, then spark2, and showed it from the mac. See the [dashboard README](../demo/fpga-demo-dashboard/README.md).
+
+## How a change reached the board
+
+I worked from the mac. The coding agents ran on a Spark, and the Microchip tools run only on bee, a Windows machine. So a change to the FPGA design crossed four machines, and the agents drove every hop over SSH.
+
+```mermaid
+flowchart LR
+  MAC["mac<br/>my terminal"] -- "SSH over Tailscale" --> SP["spark1, later spark2<br/>Claude Code or Codex session<br/>repository of record"]
+  SP -- "ssh bee: git fetch, batch tool runs,<br/>reports copied back" --> BEE["bee: Windows + MSYS2<br/>Libero, SmartHLS, QuestaSim<br/>VectorBlox in WSL"]
+  BEE -- "FlashPro6 over USB JTAG;<br/>binaries by scp" --> KIT["Icicle kit<br/>PolarFire SoC"]
+  KIT -. "measurements over the LAN;<br/>serial console during bring-up" .-> SP
+```
+
+- **Code moves by git, not by copying files.** [`tools/run_beelink_verification.sh`](../workers/polarfire-hybrid-control/tools/run_beelink_verification.sh) checks that bee answers, pushes the branch, has bee fetch it from the Spark, runs SmartHLS and the Libero flow there, extracts the reports, pulls them back through git and checks them with a report-audit script. Each stage has its own exit code, so a failure names its step. On 2026-10-09 bee could not reach the Spark, so the branches went over as a git bundle.
+- **Programming.** Libero's programming Tcl drives a FlashPro6 over USB JTAG, with a scan-chain check before each program job. Production silicon was first programmed on 2026-06-15.
+- **Firmware and models.** Firmware is cross-compiled on bee with the RISC-V toolchain that ships with SmartHLS and copied to the kit's Linux. `vnnx_compile` runs in WSL Ubuntu on bee.
+- **Place and route in parallel.** [Four Libero copies](../workers/polarfire-hybrid-control/libero/scripts/parallel/README.md) run seed sweeps at once: about 50 minutes for four seeds, against about 3 hours one after another. Each copy's project file stores its own absolute path, so a script rewrites it.
+- **Windows problems the agents had to work around.** Libero stayed running after a Tcl script until the script closed the project and exited. A Libero project on bee became corrupt, and I documented the recovery options. The license file needed a patch, and the serial driver was installed over SSH. A stored netlist did not match a fresh synthesis of the same RTL with the same tool versions, so the timing audit was re-based on the fresh netlist ([audit-006](../orchestrator/tvw/audits/audit-006-fpga-timing-claim-revalidation.md)). The kit needs a cold power cycle after fabric programming. On 2026-10-09 I found that `shls sw_run` exits 0 even when its testbench fails, so the wrapper cannot yet catch a failing testbench.
+- **Logs.** bee's project folders and the board-test logs are copied to the NAS.
 
 ## Local model serving
 

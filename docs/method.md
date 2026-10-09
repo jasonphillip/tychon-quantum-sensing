@@ -106,7 +106,7 @@ In the Claude Code sessions, the share of assistant messages by model was Claude
 ## Verification rules
 
 - A claim verified by execution outranks one verified by retrieval, so a test run beats a search hit.
-- Critics run only on local hosts.
+- Critics run only on local hosts, and they see only corpora built from the project's own files, never the web. The reasons are in [orchestrator/README.md](../orchestrator/README.md).
 - Two critics that return identical verdicts count as a failed independence test. In the first audit they did so 10 times out of 10.
 - A repair is accepted only when its evidence is stronger than before. The loop stops after two failed repairs.
 - Each stage ends at a stop-gate. See [STAGES.md](../orchestrator/STAGES.md).
