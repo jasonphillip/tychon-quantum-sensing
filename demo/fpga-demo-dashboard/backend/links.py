@@ -31,6 +31,7 @@ from .registers import (
     R_CSR_VERSION,
     R_ERROR_HIGH,
     R_ERROR_LOW,
+    R_INNER_CLAMP,
     R_KD,
     R_KI,
     R_KP,
@@ -51,6 +52,7 @@ class M0AccessError(RuntimeError):
 
 _OUT0_RE = re.compile(r"out\[0\].*?:\s*(-?[\d.]+)")
 _ERRVAL_RE = re.compile(r"error_val=(\d+)")
+MAX_SLEW_PER_CYCLE = 0.001
 
 
 def _q(s: str) -> str:
@@ -325,10 +327,12 @@ class FakeKit:
         self.prev_err = 0.0
         self.error = 0.0
         self.u_ai = 0.0
+        self.inner_clamp_fraction = OUTER_SECTOR_CLAMP_FRACTION
+        self._ai_latch = 0.0
         self.write_count = 0
         self.wd_timeout = 0
         self._elo = 0
-        self._regs: dict[int, int] = {}   # shadow-gain store for readback echo
+        self._regs: dict[int, int] = {R_POST_CLAMP: f_to_q16(0.0)}
 
     def wraw(self, addr: int, val: int) -> None:
         self.write_count += 1
@@ -350,8 +354,12 @@ class FakeKit:
             self.out_min = q16_to_f(val)
         elif addr == R_OUT_MAX:
             self.out_max = q16_to_f(val)
+        elif addr == R_INNER_CLAMP:
+            fraction = q16_to_f(val)
+            if 0.0 <= fraction <= OUTER_SECTOR_CLAMP_FRACTION:
+                self.inner_clamp_fraction = fraction
         elif addr == R_ACC_START:
-            self._regs[addr] = val
+            self._regs[R_POST_CLAMP] = f_to_q16(self._pid())
         else:
             self._regs[addr] = val   # shadow gains et al.
 
@@ -360,14 +368,19 @@ class FakeKit:
         deriv = self.kd * (self.error - self.prev_err)
         self.prev_err = self.error
         u_pid = self.kp * self.error + self.integ + deriv
-        u_ai = 0.0 if self.wd_timeout else self.u_ai
-        u_ai_clamped = max(-OUTER_SECTOR_CLAMP_FRACTION,
-                           min(OUTER_SECTOR_CLAMP_FRACTION, u_ai))
-        return max(self.out_min, min(self.out_max, u_pid + u_ai_clamped))
+        if self.wd_timeout:
+            u_ai_safe = 0.0
+        else:
+            delta = max(-MAX_SLEW_PER_CYCLE,
+                        min(MAX_SLEW_PER_CYCLE, self.u_ai - self._ai_latch))
+            u_ai_slewed = self._ai_latch + delta
+            # Enforce the current bound after slew, including an immediate zero bound.
+            bound = (self.out_max - self.out_min) * self.inner_clamp_fraction
+            u_ai_safe = max(-bound, min(bound, u_ai_slewed))
+            self._ai_latch = u_ai_safe
+        return max(self.out_min, min(self.out_max, u_pid + u_ai_safe))
 
     def rraw(self, addr: int) -> int:
-        if addr == R_POST_CLAMP:
-            return f_to_q16(self._pid())
         if addr == R_WATCHDOG:
             return self.wd_timeout & 0x1
         if addr == R_CSR_VERSION:
