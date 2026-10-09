@@ -25,6 +25,7 @@ Headline metrics:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import logging
 import sys
@@ -44,10 +45,17 @@ from odmr_edge_ml.vector.blue_projection import (  # noqa: E402
     blue_project,
     nv_axis_geometry_matrix,
 )
+from odmr_edge_ml.vector.anchors import (  # noqa: E402
+    bias_from_manifest,
+    coarse_fit_field,
+    coarse_fit_lock_bins,
+    jitter_bins,
+    oracle_lock_bins,
+    prior_lock_bins,
+    spectrum_lock_bins,
+)
 from odmr_edge_ml.vector.windowing import (  # noqa: E402
     NV_AXES_UNIT,
-    NV_GYROMAGNETIC_RATIO_HZ_T,
-    NV_ZERO_FIELD_SPLITTING_HZ,
     build_windows_for_axis_sign,
 )
 
@@ -88,6 +96,9 @@ def _tflite_predict_batch(
     spectra_norm: np.ndarray,
     lock_bins: np.ndarray,
     sigma_anchor: float,
+    *,
+    spectrum_scale: float = 1.0,
+    anchor_scale: float = 1.0,
 ) -> np.ndarray:
     in_det = interp.get_input_details()[0]
     out_det = interp.get_output_details()[0]
@@ -101,8 +112,8 @@ def _tflite_predict_batch(
         anchor = np.exp(
             -0.5 * ((bins - float(lock_bins[i])) / max(sigma_anchor, 0.1)) ** 2
         ).astype(np.float32)
-        chan0 = spectra_norm[i].astype(np.float32)
-        nhwc = np.stack([chan0, anchor[0]], axis=-1).reshape(1, 1, input_dim, 2)
+        chan0 = spectra_norm[i].astype(np.float32) * spectrum_scale
+        nhwc = np.stack([chan0, anchor[0] * anchor_scale], axis=-1).reshape(1, 1, input_dim, 2)
         q = np.clip(np.round(nhwc / in_scale + in_zp), -128, 127).astype(np.int8)
         interp.set_tensor(in_det["index"], q)
         interp.invoke()
@@ -111,15 +122,49 @@ def _tflite_predict_batch(
     return preds
 
 
-def _compute_lock_bins(
-    labels_T: np.ndarray, freq_grid: np.ndarray, axis_idx: int, sign: int,
-) -> np.ndarray:
-    """Linear-Zeeman expected dip bin for the oracle anchor."""
-    proj = (labels_T @ NV_AXES_UNIT.T)[:, axis_idx]
-    f_dip = NV_ZERO_FIELD_SPLITTING_HZ + float(sign) * NV_GYROMAGNETIC_RATIO_HZ_T * proj
-    bin_spacing = float(freq_grid[1] - freq_grid[0])
-    raw = (f_dip - freq_grid[0]) / bin_spacing
-    return np.clip(np.rint(raw), 0, len(freq_grid) - 1).astype(np.int64)
+def _dataset_md5(path: Path) -> str:
+    digest = hashlib.md5()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _assemble_results(
+    metrics: dict,
+    *,
+    anchor_source: str,
+    condition: str,
+    anchor_noise_bins: float,
+    dataset_md5: str,
+    regenerated_dataset: bool,
+    wall_s: float,
+) -> dict:
+    """Attach ablation provenance to the measured evaluation results."""
+    return {
+        **metrics,
+        "anchor_source": anchor_source,
+        "condition": condition,
+        "anchor_noise_bins": anchor_noise_bins,
+        "oracle_conditioned": anchor_source == "oracle",
+        "dataset_md5": dataset_md5,
+        "regenerated_dataset": regenerated_dataset,
+        "wall_s": wall_s,
+    }
+
+
+def _coarse_fit_diagnostics(coarse_fields: np.ndarray, labels_T: np.ndarray) -> dict:
+    """Summarize field error with the spectrum's B/-B ambiguity."""
+    coarse_mag = np.linalg.norm(coarse_fields, axis=1)
+    true_mag = np.linalg.norm(labels_T, axis=1)
+    dot = np.sum(coarse_fields * labels_T, axis=1)
+    cosine = np.abs(dot) / np.maximum(coarse_mag * true_mag, 1e-30)
+    return {
+        "coarse_fit_angle_err_deg_median": float(np.median(
+            np.degrees(np.arccos(np.clip(cosine, -1.0, 1.0)))
+        )),
+        "coarse_fit_mag_err_T_median": float(np.median(np.abs(coarse_mag - true_mag))),
+    }
 
 
 def _per_channel_sigma_from_summary(summary_path: Path) -> dict[tuple[int, int], float]:
@@ -135,12 +180,19 @@ def _per_channel_sigma_from_summary(summary_path: Path) -> dict[tuple[int, int],
 
 
 def main() -> None:
+    wall_start = time.monotonic()
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--dataset", type=Path, default=DEFAULT_DATASET)
     ap.add_argument("--models", type=Path, default=DEFAULT_MODELS)
     ap.add_argument("--split", choices=("val", "test"), default="test")
     ap.add_argument("--n", type=int, default=5000)
     ap.add_argument("--sigma-anchor", type=float, default=1.5)
+    ap.add_argument("--anchor-source", choices=("oracle", "prior", "spectrum", "coarse_fit"), default="oracle")
+    ap.add_argument("--spectrum-window-bins", type=int, default=25)
+    ap.add_argument("--condition", choices=("full", "spectrum_only", "anchor_only", "noisy_anchor"), default="full")
+    ap.add_argument("--anchor-noise-bins", type=float, default=0.0)
+    ap.add_argument("--bias-B0-T", type=float, nargs=3, metavar=("X", "Y", "Z"), default=None)
+    ap.add_argument("--regenerated-dataset", action="store_true")
     ap.add_argument("--default-sigma-uT", type=float, default=100.0,
                     help="Per-channel BLUE Σ when training_summary not found")
     ap.add_argument("--out-json", type=Path, default=None)
@@ -154,6 +206,20 @@ def main() -> None:
     ap.add_argument("--filter-cone-deg", type=float, default=30.0)
     ap.add_argument("--filter-bmag-max-mT", type=float, default=None)
     args = ap.parse_args()
+    if args.anchor_noise_bins < 0:
+        ap.error("--anchor-noise-bins must be non-negative")
+    if args.spectrum_window_bins < 0:
+        ap.error("--spectrum-window-bins must be non-negative")
+    bias_B0_T = None
+    if args.anchor_source in ("prior", "spectrum"):
+        try:
+            bias_B0_T = (
+                np.asarray(args.bias_B0_T, dtype=np.float64)
+                if args.bias_B0_T is not None else bias_from_manifest(args.dataset)
+            )
+        except ValueError as exc:
+            ap.error(f"{exc}; supply --bias-B0-T X Y Z")
+    rng = np.random.default_rng(0)
 
     log.info("loading split=%s from %s", args.split, args.dataset)
     with h5py.File(args.dataset, "r") as h5:
@@ -207,6 +273,7 @@ def main() -> None:
     )
 
     spec_norm = _symmetric_norm(spec_raw)
+    coarse_fields = coarse_fit_field(spec_raw, freq) if args.anchor_source == "coarse_fit" else None
 
     # Per-channel σ from training_summary.json (val MAE = posterior uncertainty)
     sigma_map = _per_channel_sigma_from_summary(args.models / "training_summary.json")
@@ -228,8 +295,19 @@ def main() -> None:
             sigma_for_blue[:, ch_idx] = MASKED_SIGMA_UT
             continue
 
-        # Oracle lock-bin anchor (see §1 of the memo for the leak acknowledgement)
-        lock_bins = _compute_lock_bins(lab_T, freq, axis_idx, sign)
+        if args.anchor_source == "oracle":
+            lock_bins = oracle_lock_bins(lab_T, freq, axis_idx, sign)
+        elif args.anchor_source == "coarse_fit":
+            assert coarse_fields is not None
+            lock_bins = coarse_fit_lock_bins(coarse_fields, freq, axis_idx, sign)
+        else:
+            assert bias_B0_T is not None
+            lock_bins = prior_lock_bins(bias_B0_T, freq, axis_idx, sign, take)
+            if args.anchor_source == "spectrum":
+                lock_bins = spectrum_lock_bins(spec_norm, freq, lock_bins,
+                                               window_bins=args.spectrum_window_bins)
+        if args.condition == "noisy_anchor":
+            lock_bins = jitter_bins(lock_bins, args.anchor_noise_bins, rng, len(freq))
 
         # Truth label = signed projection
         proj_T = (lab_T @ NV_AXES_UNIT.T)[:, axis_idx]
@@ -246,6 +324,8 @@ def main() -> None:
         t0 = time.time()
         preds = _tflite_predict_batch(
             interp, spec_norm, lock_bins, sigma_anchor=args.sigma_anchor,
+            spectrum_scale=0.0 if args.condition == "anchor_only" else 1.0,
+            anchor_scale=0.0 if args.condition == "spectrum_only" else 1.0,
         )
         log.info("  CH%d %s  TFLite over %d samples in %.1fs",
                  ch_idx, tag, take, time.time() - t0)
@@ -308,7 +388,7 @@ def main() -> None:
     blue_rms = float(np.sqrt(np.mean(err_3d[used_blue] ** 2)))
     b_norm_mean = float(np.linalg.norm(lab_uT[used_blue], axis=1).mean())
 
-    summary = {
+    metrics = {
         "dataset": str(args.dataset),
         "models_dir": str(args.models),
         "split": args.split,
@@ -343,6 +423,17 @@ def main() -> None:
             "max": float(np.linalg.norm(lab_uT[used_blue], axis=1).max()),
         },
     }
+    if coarse_fields is not None:
+        metrics.update(_coarse_fit_diagnostics(coarse_fields, lab_T))
+    summary = _assemble_results(
+        metrics,
+        anchor_source=args.anchor_source,
+        condition=args.condition,
+        anchor_noise_bins=args.anchor_noise_bins,
+        dataset_md5=_dataset_md5(args.dataset),
+        regenerated_dataset=args.regenerated_dataset,
+        wall_s=time.monotonic() - wall_start,
+    )
     log.info("=== BLUE 3D vector residual (n=%d / %d) ===", n_used, take)
     log.info("  RMS=%.2f µT  mean=%.2f µT  p50=%.2f µT  p90=%.2f µT",
              summary["blue_3d_residual_uT"]["rms"],
@@ -357,7 +448,10 @@ def main() -> None:
              summary["blue_per_axis_residual_uT"]["y_p50"],
              summary["blue_per_axis_residual_uT"]["z_p50"])
 
-    out_path = args.out_json or (args.models / f"vector_v1_{args.split}_eval.json")
+    noise_suffix = f"_n{args.anchor_noise_bins:g}" if args.anchor_noise_bins else ""
+    out_path = args.out_json or (
+        args.models / f"vector_v1_{args.split}_eval_{args.anchor_source}_{args.condition}{noise_suffix}.json"
+    )
     out_path.write_text(json.dumps(summary, indent=2))
     log.info("wrote %s", out_path)
 
