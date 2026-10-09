@@ -1,6 +1,6 @@
 # Watchdog fallback test plan: PID-only fallback at the actuator
 
-Date: 2026-10-09. Status: plan only. Running it needs the board and Jason. No result exists yet.
+Date: 2026-10-09. Status: **run on the board 2026-10-09** (section "Results" at the end). The plan text below is as written before the run.
 
 ## Purpose
 
@@ -180,3 +180,36 @@ The tools exist: `firmware/linux/wd_fallback_test.c`, `firmware/linux/wd_observe
 3. On the kit, stop anything that touches the PID page: `pkill -f v250_pid_loop; pkill -f mss_paced_heartbeat` (precondition 6). Confirm `./wd_observer --read-csr-version` prints `0x00010000`.
 4. Run: `IMAGE_ID=idfix2-two-slot MODEL_PATH=/root/bringup/fcnn_v2_residual_dataset_a.vnnx ROOM_TEMPERATURE="<deg C>" OUTPUT_LOAD="none (register only)" CONTROL_CORE=2 OBSERVER_CORE=3 ./run_wd_fallback.sh`. Expect about 15 minutes. The script zeroes the output on exit or abort.
 5. Copy the dated results directory back and run `tools/wd_fallback_analyze.py` per scenario as the script's summary says; commit the results directory under `libero/reports/` and add the verdicts to this document as a dated section.
+
+## Results (run 2026-10-09, 17:56–18:10 UTC, Icicle Kit, two-slot idfix2 bitstream)
+
+Run from spark2 over SSH with `tools/run_wd_fallback.sh` (CONTROL_CORE=2, OBSERVER_CORE=3, period 300 µs, limits ±1.0, inner clamp 0.045, Kp 0.8, Ki 0, Kd 0, error 0.20, AI triangle ±0.08 at 0.0005 per update). 82 runs: dry 1, (a) 1 run with 10 pauses, (b1) 20, (b2) 20, (c1) 20, (c0) 20. Evidence: `libero/reports/2026-10-09-watchdog-fallback/` (control logs, metadata, `rawcheck.py`, its summary); raw observer logs on the NAS (path in that directory's README). Zeroing sequence read back 0 at the end. Numbers below come from `rawcheck.py` over the control logs with the observer's timeout-rise times; the on-kit analyzer's A1/B1/A3 columns are wrong (see the README there) and are not used.
+
+| Criterion | Result | Measured |
+|---|---|---|
+| A1 trip time | **pass** | timeout rises 1.998–2.002 ms after the last update, 10/10 pauses (all 90 trips in the run: 1.997–2.002 ms, median 2.000) |
+| A2 one trip per pause | **pass** | 10/10 |
+| A3 no writes during a pause | **pass** | `axi_write_count` advanced only by the first update after SIGCONT, 10/10 |
+| A4 actuator holds | **observed** | held within one triangle step for the whole 1.007 s pause, 10/10; no hold limit set |
+| (a) fallback after resume | **none, as predicted** | 0/10: the first inference after SIGCONT clears the timeout before the first start |
+| B1 trip time | **pass** | 1.997–2.002 ms, 60/60 (b1, b2, c0) |
+| B2 fallback latency | **pass** | 66–71 µs from the timeout rise to the first PID-only update (b1 20/20, b2 20/20); end to end 2.07 ms |
+| B3 bumpless | **pass** | actuator step at fallback 0.0, 40/40 |
+| B4 no chatter | **pass** | b1: actuator flat for all 1,994 remaining updates, 20/20 |
+| B5 cooldown count | **pass** | exactly 1000 PID-only updates, 20/20 (b2) |
+| B6 recovery time | **pass** | 0.3000 s at 300 µs per update, 20/20 |
+| B7 recovery step ≤ 0.001 | **fail, as predicted** | step 0.0100 (b2, 20/20) and 0.0130 (c0, 20/20): the absorbed AI value stays in the integrator and the AI term is added again at recovery |
+| B8 bounds | **pass** | AI term ≤ 0.09 and actuator within limits in every row, 82/82 |
+| C1 pulse width | **pass** | timeout high 0.533–0.574 ms (c1), 0.533–0.565 ms (c0), as intended |
+| C2 one trip per repetition | **pass** | 20/20 in c1 and c0 |
+| **C3 fallback when the pulse ends before the next start** | **fail, as predicted** | c1: the trip counter rose 20/20, the controller saw no start with the timeout high (0/20) and never fell back (0 PID-only updates, 20/20). The AI term kept tracking. |
+| C4 control case | **pass** | c0: one start while the timeout was high → fallback 20/20, 999–1000 PID-only updates, recovery 0.2997 s, step 0.013 |
+
+What this means:
+
+1. **The fallback works when the controller sees the timeout at a start.** Latency is one update (about 70 µs after the rise at this cadence), the hand-over is bumpless, there is no chatter, and the cooldown is exactly 1000 updates.
+2. **A stall that ends between two starts is invisible to the controller (C3).** The watchdog trips and the CSR counter counts it, but the next start already sees the timeout cleared by the inference that just completed. Any "trips recovered" count read from the CSR therefore does not show the controller falling back. The fix direction is Jason's: a sticky trip bit set by the timeout edge and cleared only when the core consumes it (hardware), or a software rule (for example: start the core before clearing the heartbeat, or check the trip counter in software and force a start while the bit is high).
+3. **A stopped control process gives no fallback value (A4, prediction 1).** The actuator register holds its last value until software restarts the core. With the controller started by software, there is no PID-only output during a processor stall. This is the architecture question in `docs/controller_sample_interval_2026-10.md`.
+4. **Recovery steps (B7).** The step at recovery equals the AI term being re-added on top of the value absorbed into the integrator (0.010–0.013 here, 10× the slew limit). With Ki = 0 nothing unwinds the absorbed value.
+
+Open: the on-kit analyzer needs its A1/B1 reference and A3 bracketing fixed (`tools/wd_fallback_analyze.py`); the hold limit for A4; the trip-time measurement here is from the control tool's row timestamp, which follows the inference completion by tens of microseconds (the July measurement with a dedicated probe stands as the precise figure).

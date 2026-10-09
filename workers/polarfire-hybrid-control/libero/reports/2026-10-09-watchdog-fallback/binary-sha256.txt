@@ -1,0 +1,2 @@
+48eb72662bf758a8d1788f03396aa3e7fc8bdcd33fb019dc25b89e7894699971  /root/pfhc/firmware/linux/wd_fallback_test
+09a20f5b5c59f6c58405bab5c7147f59b41c6742c486f954f1a174d8fc22a25a  /root/pfhc/firmware/linux/wd_observer
