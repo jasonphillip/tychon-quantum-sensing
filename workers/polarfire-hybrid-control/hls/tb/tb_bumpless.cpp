@@ -206,6 +206,40 @@ static bool test_clamp_seu_outer_holds() {
     return pass;
 }
 
+// A tightened inner bound must reach the actuator on the next update,
+// even when the previous AI latch needs many cycles to slew to zero.
+static bool test_inner_clamp_zero_after_slew() {
+    std::cout << "--- Test: zero inner clamp takes effect after AI slew ---\n";
+    gain_t Kp = 0.0, Ki = 0.0, Kd = 0.0;
+    gain_t inner_bound = (gain_t)0.02;
+    out_t out_min = -100.0, out_max = 100.0;
+    out_t actuator_out;
+
+    flush_state(Kp, Ki, Kd, out_min, out_max);
+    nv_pid_top(0.0, 0.0, false, Kp, Ki, Kd, out_min, out_max,
+               inner_bound, actuator_out);
+    out_t pid_only_out = actuator_out;
+
+    for (int i = 0; i < 150; i++) {
+        nv_pid_top(0.0, 0.125, false, Kp, Ki, Kd, out_min, out_max,
+                   inner_bound, actuator_out);
+    }
+    out_t latched_contribution = actuator_out - pid_only_out;
+
+    nv_pid_top(0.0, 0.125, false, Kp, Ki, Kd, out_min, out_max,
+               (gain_t)0, actuator_out);
+    out_t next_contribution = actuator_out - pid_only_out;
+
+    bool latch_established = latched_contribution.to_double()
+                             > 10.0 * MAX_SLEW_PER_CYCLE;
+    bool pass = latch_established && next_contribution.to_double() == 0.0;
+    std::cout << "AI before tightening:  " << latched_contribution.to_double() << " V\n";
+    std::cout << "AI on next update:     " << next_contribution.to_double() << " V\n";
+    std::cout << (pass ? "PASS" : "FAIL")
+              << ": zero inner bound takes effect on the next update.\n\n";
+    return pass;
+}
+
 // =============================================================================
 // Task B — Watchdog cooldown chatter test
 // =============================================================================
@@ -313,6 +347,9 @@ int main() {
     std::cout << "=== SmartHLS NV-Magnetometer Bumpless Transfer Testbench ===\n\n";
 
     int failures = 0;
+
+    // Run first so the private PID derivative state cannot move the baseline.
+    if (!test_inner_clamp_zero_after_slew()) failures++;
 
     // Test A: 5 kHz error, Ki=0.00002 → expected delta = 0.100 V
     if (!run_bumpless_test(
