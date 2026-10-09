@@ -3,6 +3,9 @@
 import warnings
 
 import torch
+from torch.ao.nn.intrinsic.qat import ConvReLU2d, LinearReLU
+from torch.ao.nn.qat import Conv2d, Linear
+from torch.ao.quantization import FakeQuantize
 
 from odmr_edge_ml.models.fcnn import OdmrFCNN
 from odmr_edge_ml.models.mlp import OdmrMLP
@@ -41,18 +44,36 @@ def test_qconfig_weights_are_per_tensor_symmetric():
 
 def test_prepare_mlp_qat():
     """QAT preparation inserts FakeQuantize into MLP and forward still works."""
-    model = OdmrMLP(hidden_dims=[64, 32])
-    qat = prepare_model_qat(model)
-    out = qat(torch.randn(4, 100))
+    with torch.random.fork_rng(devices=[]):
+        torch.manual_seed(0)
+        model = OdmrMLP(hidden_dims=[64, 32])
+        x = torch.linspace(-1.0, 1.0, steps=400).reshape(4, 100)
+        float_out = model(x).detach().clone()
+        qat = prepare_model_qat(model)
+        out = qat(x)
+
+    linear_layers = [m for m in qat.modules() if isinstance(m, (Linear, LinearReLU))]
+    assert len(linear_layers) >= 3
+    assert all(isinstance(m.weight_fake_quant, FakeQuantize) for m in linear_layers)
     assert out.shape == (4, 3)
+    assert not torch.allclose(out, float_out, atol=1e-5, rtol=1e-5)
 
 
 def test_prepare_fcnn_qat():
     """QAT preparation inserts FakeQuantize into FCNN and forward still works."""
-    model = OdmrFCNN()
-    qat = prepare_model_qat(model)
-    out = qat(torch.randn(4, 100))
+    with torch.random.fork_rng(devices=[]):
+        torch.manual_seed(0)
+        model = OdmrFCNN()
+        x = torch.linspace(-1.0, 1.0, steps=400).reshape(4, 100)
+        float_out = model(x).detach().clone()
+        qat = prepare_model_qat(model)
+        out = qat(x)
+
+    conv_layers = [m for m in qat.modules() if isinstance(m, (Conv2d, ConvReLU2d))]
+    assert len(conv_layers) >= 4
+    assert all(isinstance(m.weight_fake_quant, FakeQuantize) for m in conv_layers)
     assert out.shape == (4, 3)
+    assert not torch.allclose(out, float_out, atol=1e-5, rtol=1e-5)
 
 
 def test_extract_clean_state_dict_mlp():
