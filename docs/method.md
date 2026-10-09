@@ -73,6 +73,26 @@ The roles (a planning project, an orchestrator session, one worker session per r
 
 Who decided what is in the [case study](case-study.md). I set the plan, wrote the specs and reviewed the results. The agents wrote most of the code.
 
+## How I came up to speed
+
+I came to this from machine learning and star-tracker work, not from NV physics or FPGA design. The table shows when each topic first appears in my own words in my saved chat archives, and what it led to. My ChatGPT archive starts in December 2022, Codex in October 2025 and Claude Code in February 2026, so "first" means first in those archives, not first exposure.
+
+| Date | What I asked or did | What it led to |
+|---|---|---|
+| 2024-11-05 | Asked what VHDL meant in "PyTorch CNN to ONNX to VHDL (FPGA)" while working on edge ML | My first FPGA question |
+| 2024-12-19 | Asked whether a PolarFire SoC could run both RTEMS and Linux | The SoC family the control loop now runs on |
+| 2024-12-22 | Asked the trade-offs of building a model in INT8 rather than FP32 | INT8 export in [workers/odmr-edge-ml](../workers/odmr-edge-ml); the VectorBlox INT8 rounding mode settled on 2026-05-02 |
+| 2025-04-23 | First NotebookLM notebook, for FPGA basics | [Grounded Q&A over the manuals](#grounded-qa-over-vendor-manuals) |
+| 2025-07-05 | First question about NV centers in my own words | The technical plan, August 2025 |
+| 2025-10-19 | Asked what the Codex CLI was; first Codex session the same day | Codex as a worker in this repo |
+| 2025-10-20 | Asked whether the DGX Spark was in stock; a week later I had a model running in a container on one | [The lab](lab.md) |
+| 2026-02-06 | First Claude Code session | The orchestrator and most worker sessions |
+| 2026-03-26 | First simulator commit, in the first attempts | [archive/v0](../archive/v0), then the clean restart on 2026-04-03 |
+| 2026-06-15 | First program of production PolarFire SoC silicon | [workers/polarfire-hybrid-control](../workers/polarfire-hybrid-control) |
+| 2026-07-01 | Watchdog trip time measured on silicon: median 2.000 ms over 120 trips | The results table on the [front page](../README.md) |
+
+From the first NV question to the first measurement on silicon took just under a year. The build itself, from the first simulator commit to that measurement, took about three months.
+
 ## Effort in numbers
 
 These counts come from the Claude Code and Codex session logs on my machines and from the git history in this repo. A session is one agent conversation in a repository. A prompt is one message I typed, not counting tool results or slash commands. I didn't log my own hours, so there's no hours figure here.
