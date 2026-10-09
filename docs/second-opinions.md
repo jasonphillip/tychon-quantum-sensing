@@ -26,9 +26,9 @@ Claude Code then checked the units in the code, and the result came back as "The
 
 ## Where the fp32 gain went in INT8 (2026-05-02)
 
-The ML correction cut error roughly in half in fp32 simulation but by only 5 to 7% once deployed in INT8. I asked Gemini Deep Think to bound each possible cause. It put quantization at under one point and the rest on saturation plus distribution shift: "Because $s_f \approx s_c$, the cascade collapses." Its recommendation was "Bias-Aware Augmentation First".
+The ML correction cut error roughly in half in fp32 simulation but by only 5 to 7% once deployed in INT8. The deployed scalar INT8 model ends at about 4.9% lower error than a synthetic PID proxy, on synthetic data. I asked Gemini Deep Think to bound each possible cause. It put quantization at under one point and the rest on saturation plus distribution shift: "Because $s_f \approx s_c$, the cascade collapses." Its recommendation was "Bias-Aware Augmentation First".
 
-That split was adopted in the plan of 2026-05-15, with bias-aware augmentation as the top priority. A later run showed a fine-stage clip fraction of 0.939, which supports the saturation finding.
+That split was adopted in the plan of 2026-05-15, with bias-aware augmentation as the top priority. A later run showed a fine-stage clip fraction of 0.939, which supports the saturation finding. That run's log is not in this repository.
 
 ## Checking a results table before it was used (2026-05-31)
 

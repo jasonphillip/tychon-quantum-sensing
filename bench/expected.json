@@ -1,0 +1,11 @@
+{
+  "reference": "Measured on CPU with Python 3.13.11, torch 2.11.0, NumPy 2.4.2, SimOS 0.2.3, QuTiP 5.2.3",
+  "units": "microtesla",
+  "metrics": {
+    "val_mae_uT": {"value": 10.592604637145996, "absolute_tolerance": 2.0},
+    "test_mae_uT": {"value": 10.530261039733887, "absolute_tolerance": 1.0},
+    "test_rmse_uT": {"value": 12.728923797607422, "absolute_tolerance": 1.0},
+    "mean_baseline_mae_uT": {"value": 12.26234245300293, "absolute_tolerance": 0.65},
+    "pid_proxy_mae_uT": {"value": 25.931017450346094, "absolute_tolerance": 2.5}
+  }
+}

@@ -1,6 +1,6 @@
 # Tychon NV stack: an agent-orchestrated quantum-sensing build
 
-I used coding agents to build the software for NV-diamond quantum magnetometers. One orchestrator session handed out the tasks, and each worker repository had its own agent session. Together they produced a physics simulator, edge ML models, PID plus neural-network control on a PolarFire SoC FPGA, a field-vector tracker and a live demo dashboard. I planned the work, wrote the specs and reviewed what came back. The agents wrote most of the code.
+I used coding agents to build the software for NV-diamond quantum magnetometers. One orchestrator session handed out the tasks, and each worker repository had its own agent session. The orchestration was human-mediated: until the dispatch tool existed in July 2026, I carried the prompts between the planning chat and the repository sessions by hand. The orchestration was human-mediated: until the dispatch tool existed in July 2026, I carried the prompts between the planning chat and the repository sessions by hand. Together they produced a physics simulator, edge ML models, PID plus neural-network control on a PolarFire SoC FPGA, a field-vector tracker and a live demo dashboard. I planned the work, wrote the specs and reviewed what came back. The agents wrote most of the code.
 
 The build started from a 90-day plan in March 2026 and continued through September 2026.
 
@@ -57,7 +57,7 @@ flowchart TD
 | Workers | one Claude Code or Codex session per repository | [workers/](workers/) |
 | Claim critics | qwen3-coder:30b and nemotron-mini, run locally with Ollama | [orchestrator/STAGES.md](orchestrator/STAGES.md) |
 
-By rule, the orchestrator session never edits a worker's code. It sends a written dispatch with a goal and an acceptance check, sometimes with a predicted effort, and the worker session does the work in its own repository. The critic models run only on my own machines.
+By rule, the orchestrator session sends a written dispatch with a goal and an acceptance check, sometimes with a predicted effort, and the worker session does the work in its own repository. (The orchestrator's rules also let it commit to the implementation repositories for multi-repository bring-up work.) The critic models run only on my own machines.
 
 ## Timeline
 
@@ -77,8 +77,8 @@ By rule, the orchestrator session never edits a worker's code. It sends a writte
 
 ## Not finished
 
-- An NV diamond has four crystal orientations, so one sensor can measure the direction of the field as well as its size. The edge models and the FPGA loop use the scalar field. The vector tracker in [workers/odmr-vector-tracking](workers/odmr-vector-tracking) works in simulation, reliably to about 30-40° off the bias axis, but it isn't in the FPGA loop.
-- The control loop runs on PolarFire silicon with replayed ODMR traces as its input. No live diamond sensor has been in that loop.
+- An NV diamond has four crystal orientations, so one sensor can measure the direction of the field as well as its size. The edge models and the FPGA loop use the scalar field. The vector tracker in [workers/odmr-vector-tracking](workers/odmr-vector-tracking) works in FP32 simulation only, reliably to about 30-40° off the bias axis. No INT8 export or on-target parity run exists for it, and it isn't in the FPGA loop.
+- The control loop runs on PolarFire silicon with replayed ODMR traces as its input. It is paced by software on the SoC's processor, not resident in the fabric, and the 8-hour soak ran at about 3.3 kHz. No live diamond sensor has been in that loop.
 
 ## Layout
 
