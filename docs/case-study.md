@@ -49,7 +49,7 @@ One catch was in my own tracker program. On 2026-07-01 I ran a design review wit
 | 2026-06-29 | `odmr-vector-tracking` started |
 | 2026-07-01 to 07-02 | Per-claim inventory of every repo, plus watchdog trip time and a kit-resident paced loop measured on silicon |
 | 2026-07 | Busiest month, with 56 commits in the tracker repo and 24 each in the simulator and FPGA repos |
-| 2026-08 | Loaders for five external ODMR and magnetometry datasets, plus two-sample statistical tests of the simulator against them |
+| 2026-08 | Loaders for five external ODMR and magnetometry datasets, plus two-sample test code to compare the simulator against them (results not yet committed) |
 | 2026-09 | Dispatch tooling hardened: atomic ID reservation, leases and an 18-group test |
 
 

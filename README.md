@@ -72,7 +72,7 @@ By rule, the orchestrator session never edits a worker's code. It sends a writte
 | 2026-06 | PolarFire SoC silicon brought up on the dev kit; demo dashboard built for a live demo |
 | 2026-06-29 | The orchestrator starts a fourth worker, the vector tracker |
 | 2026-07 | Busiest month: dispatches, retraining rounds and watchdog measurements on silicon |
-| 2026-08 | Simulator checked against five external ODMR and magnetometry datasets with two-sample statistical tests |
+| 2026-08 | Loaders for five external ODMR and magnetometry datasets, and two-sample test code (sliced-Wasserstein, MMD, KS) to compare the simulator against them; comparison results not yet committed |
 | 2026-09 | Dispatch tool hardened with atomic IDs, leases and an 18-group test |
 
 ## Not finished
