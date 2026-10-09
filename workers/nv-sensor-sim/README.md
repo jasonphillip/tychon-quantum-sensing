@@ -112,6 +112,7 @@ tests/
   integration/       # Integration tests
 configs/             # YAML configs for batch generation and sweeps
 data/experimental/   # Zenodo ODMR reference data (25 CSV spectra)
+docs/external_validation_results.md   # Simulator vs public ODMR datasets: overlap, shape, contrast, linewidth (table)
 experiments/         # Exploratory Jupyter notebooks
 scripts/             # Benchmarking, data extraction, notebook generation
 docs/                # Architecture docs, dataset contract

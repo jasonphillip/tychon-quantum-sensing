@@ -34,3 +34,4 @@ deposit, not separately investigated).
 Each directory retains its repository metadata as `_zenodo_metadata.json` /
 `_dataverse_metadata.json`. Raw data is not committed; re-download via the
 repository APIs using the DOIs above.
+Comparison results against the simulator: ../../docs/external_validation_results.md (committed; data stays uncommitted).
