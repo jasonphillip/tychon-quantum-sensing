@@ -1,0 +1,7 @@
+Production loop (firmware/linux/v250_pid_loop) on the kit, 2026-10-09 19:13 UTC, core 2, odmr_v250_rows.csv, no observer:
+old (pre-fix)            10000 rows  rate 9083.2 Hz  forced starts n/a
+new (trip start on)      10000 rows  rate 9115.9 Hz  forced starts 0
+new --no-trip-start      10000 rows  rate 9130.9 Hz  forced starts 0
+new, daemon, 5 x 50 ms SIGSTOP/SIGCONT pauses 2 s apart: 38811 rows in 13.5 s (daemon writes the state JSON each row),
+  forced starts 6 = one per pause (t = 2.93, 4.28, 6.34, 8.40, 10.47 s) + one natural trip before the first pause (t = 2.21 s);
+  every forced start logged with watchdog bit 0 = 1. CSV header unchanged. Zeroing read back 0.

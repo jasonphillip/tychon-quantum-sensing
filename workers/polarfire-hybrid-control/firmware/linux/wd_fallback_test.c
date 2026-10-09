@@ -15,6 +15,7 @@
 #ifndef WD_NO_VBX
 #include "vbx_cnn_api.h"
 #endif
+#include "wd_trip_start.h"
 
 #define PAGE 0x1000UL
 #define SLOT3_PAGE 0x60040000UL
@@ -90,10 +91,47 @@ static int integer(const char *s, uint64_t *out)
     return s != end && !*end && !errno && *s != '-';
 }
 
+typedef struct {
+    volatile uint32_t *pid;
+    wd_trip_start_state *trip;
+    uint64_t idx;
+    int64_t error_q34_30;
+    uint32_t u_ai_q16;
+    double error;
+    double ai;
+    uint64_t *emitted;
+    uint64_t *timeouts;
+    uint64_t *edge_idx;
+    uint64_t *trips_started;
+    uint64_t skip_at;
+    int resume_mode;
+} trip_context_t;
+
+static void check_trip_start(trip_context_t *ctx)
+{
+    if (!ctx || !wd_trip_start(ctx->pid, ctx->trip, ctx->error_q34_30, ctx->u_ai_q16))
+        return;
+    uint32_t post = rd(ctx->pid, R_POST_CLAMP), wd = rd(ctx->pid, R_WATCHDOG);
+    uint32_t writes = rd(ctx->pid, R_AXI_WRITE_COUNT);
+    uint64_t ticks = rdtime_raw(), t_ns = nsec_now();
+    printf("%" PRIu64 ",%" PRIu64 ",%" PRIu64 ",%.9f,%.9f,%" PRId32 ",%.9f,0x%08x,%u,%u,%u,forced,0,1\n",
+           ctx->idx, ticks, t_ns, ctx->error, ctx->ai, (int32_t)post,
+           (double)(int32_t)post / 65536.0, wd, wd & 1u, wd >> 1, writes);
+    fflush(stdout);
+    ++*ctx->emitted;
+    if (wd & 1u) {
+        ++*ctx->timeouts;
+        if (ctx->resume_mode && *ctx->edge_idx == UINT64_MAX && ctx->idx >= ctx->skip_at) {
+            *ctx->edge_idx = ctx->idx;
+            ++*ctx->trips_started;
+        }
+    }
+}
+
 #ifdef WD_NO_VBX
 // Syntax-only host stub: never performs an inference or hardware access.
 static int inference_init(const char *path) { (void)path; return -1; }
-static int inference_run(void) { return -1; }
+static int inference_run(trip_context_t *ctx) { (void)ctx; return -1; }
 #else
 static vbx_cnn_t *vbx;
 static model_t *model;
@@ -136,12 +174,15 @@ static int inference_init(const char *path)
     }
     return 0;
 }
-static int inference_run(void)
+static int inference_run(trip_context_t *ctx)
 {
     int status = vbx_cnn_model_start(vbx, model, io);
     if (status) return -1;
     int polls = 0;
-    while ((status = vbx_cnn_model_poll(vbx)) > 0) {
+    for (;;) {
+        check_trip_start(ctx);
+        status = vbx_cnn_model_poll(vbx);
+        if (status <= 0) break;
         if (!running || ++polls > MAX_POLL_ITERS) return -1;
     }
     return status < 0 || vbx_cnn_get_error_val(vbx) ? -1 : 0;
@@ -151,7 +192,7 @@ static int inference_run(void)
 static void usage(const char *name)
 {
     fprintf(stderr, "usage: %s normal | skip-inference-after N | resume-after N M | gap-then-inference D_us [START_AT_us] [options]\n"
-            "options: --model PATH --updates TOTAL --period-us P --gap-after N --repeat-trips N --kp X --ki X --kd X --out-min X --out-max X --inner-clamp X --error X --ai-amp X --ai-step X --zero-and-exit\n", name);
+            "options: --model PATH --updates TOTAL --period-us P --gap-after N --repeat-trips N --kp X --ki X --kd X --out-min X --out-max X --inner-clamp X --error X --ai-amp X --ai-step X --trip-start --zero-and-exit\n", name);
 }
 int main(int argc, char **argv)
 {
@@ -161,10 +202,11 @@ int main(int argc, char **argv)
     double kp = .8, ki = 0, kd = 0, out_min = -1, out_max = 1, clamp = .045;
     double error = .20, amp = .08, step = .0005;
     const char *model_path = "fcnn_v2_residual_dataset_a.vnnx";
-    int zero = 0, positional = 0;
+    int zero = 0, trip_enabled = 0, positional = 0;
     for (int i = 1; i < argc; ++i) {
         const char *a = argv[i];
         if (!strcmp(a, "--zero-and-exit")) { zero = 1; continue; }
+        if (!strcmp(a, "--trip-start")) { trip_enabled = 1; continue; }
         if (a[0] == '-' && a[1] == '-') {
             if (i + 1 == argc) { usage(argv[0]); return 2; }
             const char *v = argv[++i];
@@ -229,7 +271,7 @@ int main(int argc, char **argv)
     wr(pid, R_KP, q16(kp)); wr(pid, R_KI, q16(ki)); wr(pid, R_KD, q16(kd));
     wr(pid, R_INNER_CLAMP, q16(clamp));
     if (inference_init(model_path)) { fprintf(stderr, "VBX model initialization failed\n"); munmap((void *)pid, PAGE); return 1; }
-    puts("idx,rdtime_ticks,t_ns,error,u_ai,post_clamp_q16,post_clamp_f,wd_raw,wd_timeout_bit,wd_trip_count,axi_write_count,mode_phase,overrun_ns");
+    puts("idx,rdtime_ticks,t_ns,error,u_ai,post_clamp_q16,post_clamp_f,wd_raw,wd_timeout_bit,wd_trip_count,axi_write_count,mode_phase,overrun_ns,forced_start");
     uint32_t error_lo, error_hi;
     q34_30(error, &error_lo, &error_hi);
     printf("# mode=%s skip_at=%" PRIu64 " resume_after=%" PRIu64 " gap_us=%" PRIu64 " start_at_us=%" PRIu64 " gap_after=%" PRIu64 " repeat_trips=%" PRIu64 " updates=%" PRIu64 " period_us=%" PRIu64 " model=%s error=%.9f(0x60040810=0x%08x,0x60040814=0x%08x) ai_amp=%.9f ai_step=%.9f first_u_ai=0x%08x kp=%.9f(0x6004000c=0x%08x) ki=%.9f(0x60040010=0x%08x) kd=%.9f(0x60040014=0x%08x) out_min=%.9f(0x60040018=0x%08x) out_max=%.9f(0x6004001c=0x%08x) inner_clamp=%.9f(0x60040020=0x%08x) csr_version=0x%08x\n",
@@ -240,6 +282,7 @@ int main(int argc, char **argv)
     fflush(stdout);
     uint64_t deadline = nsec_now(), overruns = 0, max_overrun = 0, timeouts = 0, emitted = 0;
     uint64_t edge_idx = UINT64_MAX, last_completion = 0, trips_started = 0;
+    wd_trip_start_state trip = WD_TRIP_START_INIT;
     int gap_done = 0, direction = 1, rc = 0;
     double ai = -amp;
     for (uint64_t idx = 0; running && idx < n; ++idx) {
@@ -260,7 +303,7 @@ int main(int argc, char **argv)
                 wr(pid, R_ACC_START, 1);
                 uint32_t post = rd(pid, R_POST_CLAMP), wd = rd(pid, R_WATCHDOG);
                 uint32_t writes = rd(pid, R_AXI_WRITE_COUNT);
-                printf("%" PRIu64 ",%" PRIu64 ",%" PRIu64 ",%.9f,%.9f,%" PRId32 ",%.9f,0x%08x,%u,%u,%u,gap,%" PRIu64 "\n",
+                printf("%" PRIu64 ",%" PRIu64 ",%" PRIu64 ",%.9f,%.9f,%" PRId32 ",%.9f,0x%08x,%u,%u,%u,gap,%" PRIu64 ",0\n",
                        idx, rdtime_raw(), nsec_now(), error, ai, (int32_t)post,
                        (double)(int32_t)post / 65536.0, wd, wd & 1u, wd >> 1, writes, extra_overrun);
                 fflush(stdout);
@@ -289,7 +332,11 @@ int main(int argc, char **argv)
         const char *phase = gap_row ? "gap" : (mode == GAP && gap_done) ? "resume" :
                             !infer ? "skip" : (mode == RESUME && edge_idx != UINT64_MAX) ? "resume" : "normal";
         if (infer) {
-            if (inference_run()) {
+            trip_context_t ctx = {pid, &trip, idx, (int64_t)(((uint64_t)hi << 32) | lo),
+                                  q16(ai), error, ai, &emitted, &timeouts, &edge_idx,
+                                  &trips_started, skip_at, mode == RESUME};
+            if (trip_enabled) check_trip_start(&ctx);
+            if (inference_run(trip_enabled ? &ctx : NULL)) {
                 if (running) { fprintf(stderr, "inference failed at update %" PRIu64 "\n", idx); rc = 1; }
                 break;
             }
@@ -303,7 +350,7 @@ int main(int argc, char **argv)
             edge_idx = idx; ++trips_started;
         }
         if (wd & 1u) ++timeouts;
-        printf("%" PRIu64 ",%" PRIu64 ",%" PRIu64 ",%.9f,%.9f,%" PRId32 ",%.9f,0x%08x,%u,%u,%u,%s,%" PRIu64 "\n",
+        printf("%" PRIu64 ",%" PRIu64 ",%" PRIu64 ",%.9f,%.9f,%" PRId32 ",%.9f,0x%08x,%u,%u,%u,%s,%" PRIu64 ",0\n",
                idx, ticks, t_ns, error, ai, (int32_t)post, (double)(int32_t)post / 65536.0,
                wd, wd & 1u, wd >> 1, writes, phase, overrun);
         fflush(stdout);

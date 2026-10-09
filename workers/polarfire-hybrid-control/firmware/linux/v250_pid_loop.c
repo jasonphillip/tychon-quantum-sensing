@@ -39,6 +39,7 @@
 #include <sys/mman.h>
 
 #include "vbx_cnn_api.h"
+#include "wd_trip_start.h"
 
 #define PAGE       0x1000UL
 #define SLOT3_PAGE 0x60040000UL
@@ -141,7 +142,7 @@ static int write_pid_file(const char *path)
 static int write_state_json(const char *path, int running, uint64_t row, uint64_t t_ns,
                             uint64_t v250_ns, int polls, size_t input_row, double error,
                             double nn_out, int nn_q, double u_ai, double post_clamp,
-                            uint32_t watchdog_raw, uint32_t axi_write_count,
+                            uint32_t watchdog_raw, uint32_t axi_write_count, uint64_t forced_starts,
                             const char *input_source)
 {
     if (!path) {
@@ -162,10 +163,11 @@ static int write_state_json(const char *path, int running, uint64_t row, uint64_
             ",\"nn_out0\":%.9f,\"nn_q\":%d,\"u_ai\":%.9f"
             ",\"post_clamp\":%.9f,\"watchdog_raw\":\"0x%08x\""
             ",\"watchdog_timeout\":%u,\"axi_write_count\":\"0x%08x\""
+            ",\"forced_starts\":%" PRIu64
             ",\"input_source\":\"%s\",\"updated_ns\":%" PRIu64 "}\n",
             running ? "true" : "false", (long)getpid(), row, t_ns, v250_ns,
             polls, input_row, error, nn_out, nn_q, u_ai, post_clamp,
-            watchdog_raw, watchdog_raw & 0x1u, axi_write_count,
+            watchdog_raw, watchdog_raw & 0x1u, axi_write_count, forced_starts,
             input_source ? input_source : "embedded_test_vector", nsec_now());
     if (fclose(f) != 0) {
         unlink(tmp);
@@ -183,6 +185,16 @@ static void f_to_q34_30(double v, uint32_t *lo, uint32_t *hi)
     int64_t raw = (int64_t)llround(v * (double)(1LL << 30));
     *lo = (uint32_t)(raw & 0xffffffffu);
     *hi = (uint32_t)((uint64_t)raw >> 32);
+}
+
+static void check_trip_start(volatile uint32_t *pid, wd_trip_start_state *trip,
+                             int64_t error_q34_30, uint32_t last_u_ai,
+                             uint64_t row, uint64_t t0)
+{
+    if (wd_trip_start(pid, trip, error_q34_30, last_u_ai)) {
+        fprintf(stderr, "forced_start row=%" PRIu64 " t_ns=%" PRIu64 " watchdog_raw=0x%08x\n",
+                row, nsec_now() - t0, trip->last_watchdog_raw);
+    }
 }
 
 static volatile uint32_t *map_slot3(void)
@@ -421,7 +433,9 @@ static int load_rows_csv(const char *path, size_t input_len, row_set_t *rows)
     return 0;
 }
 
-static int run_v250(vbx_cnn_t *vbx, model_t *model, vbx_cnn_io_ptr_t *io, int *polls_out)
+static int run_v250(vbx_cnn_t *vbx, model_t *model, vbx_cnn_io_ptr_t *io, int *polls_out,
+                    volatile uint32_t *pid, wd_trip_start_state *trip, int trip_enabled,
+                    int64_t error_q34_30, uint32_t last_u_ai, uint64_t row, uint64_t t0)
 {
     int status = vbx_cnn_model_start(vbx, model, io);
     if (status != 0) {
@@ -431,7 +445,12 @@ static int run_v250(vbx_cnn_t *vbx, model_t *model, vbx_cnn_io_ptr_t *io, int *p
 
     int p = 1;
     int polls = 0;
-    while ((p = vbx_cnn_model_poll(vbx)) > 0) {
+    for (;;) {
+        if (trip_enabled)
+            check_trip_start(pid, trip, error_q34_30, last_u_ai, row, t0);
+        p = vbx_cnn_model_poll(vbx);
+        if (p <= 0)
+            break;
         ++polls;
         if (polls > MAX_POLL_ITERS) {
             fprintf(stderr, "poll timeout err=%d\n", (int)vbx_cnn_get_error_val(vbx));
@@ -509,7 +528,7 @@ static void usage(const char *argv0)
     fprintf(stderr,
             "usage: %s [model.vnnx] [rows 1..10000] [warmup 0..1000] "
             "[input.csv | error_start] [error_step] [u_scale] [sleep_us] [input.csv] "
-            "[--daemon] [--state path] [--pid-file path]\n"
+            "[--daemon] [--state path] [--pid-file path] [--no-trip-start]\n"
             "default: model=fcnn_v2_residual_dataset_a.vnnx rows=50 warmup=2 "
             "error_start=0.20 error_step=0.001 u_scale=1/64 sleep_us=0 input=embedded_test_vector\n"
             "input.csv rows: error_in,spectrum_0..spectrum_99,anchor_0..anchor_99\n",
@@ -521,12 +540,15 @@ int main(int argc, char **argv)
     const char *pos[12];
     int npos = 0;
     int daemon_mode = 0;
+    int trip_enabled = 1;
     const char *state_path = NULL;
     const char *pid_file = NULL;
 
     for (int i = 1; i < argc; ++i) {
         if (strcmp(argv[i], "--daemon") == 0) {
             daemon_mode = 1;
+        } else if (strcmp(argv[i], "--no-trip-start") == 0) {
+            trip_enabled = 0;
         } else if (strcmp(argv[i], "--state") == 0 && i + 1 < argc) {
             state_path = argv[++i];
         } else if (strcmp(argv[i], "--pid-file") == 0 && i + 1 < argc) {
@@ -645,6 +667,8 @@ int main(int argc, char **argv)
     printf("row,t_ns,v250_ns,polls,input_row,error_in,nn_out0,nn_q,u_ai,post_clamp,watchdog_raw,watchdog_timeout,axi_write_count\n");
 
     uint64_t t0 = nsec_now();
+    wd_trip_start_state trip = WD_TRIP_START_INIT;
+    uint32_t last_u_ai = rd(pid, R_U_AI);
     uint64_t iter = 0;
     uint64_t emitted = 0;
     while (keep_running && (daemon_mode || emitted < (uint64_t)rows)) {
@@ -658,9 +682,16 @@ int main(int argc, char **argv)
             err = row_inputs.error[src_row];
         }
 
+        uint32_t lo, hi;
+        f_to_q34_30(err, &lo, &hi);
+        int64_t error_q34_30 = (int64_t)(((uint64_t)hi << 32) | lo);
+        if (trip_enabled)
+            check_trip_start(pid, &trip, error_q34_30, last_u_ai, logical_row, t0);
+
         int polls = 0;
         uint64_t v0 = nsec_now();
-        if (run_v250(vbx, model, io, &polls) != 0) {
+        if (run_v250(vbx, model, io, &polls, pid, &trip, trip_enabled,
+                     error_q34_30, last_u_ai, logical_row, t0) != 0) {
             free_rows(&row_inputs);
             munmap((void *)pid, PAGE);
             return 1;
@@ -670,12 +701,10 @@ int main(int argc, char **argv)
         int q = 0;
         double nn_out = output0(io, nin, model, &q);
         double u_ai = nn_out * u_scale;
-        uint32_t lo, hi;
-        f_to_q34_30(err, &lo, &hi);
-
         wr(pid, R_ERROR_LOW, lo);
         wr(pid, R_ERROR_HIGH, hi);
-        wr(pid, R_U_AI, f_to_q16(u_ai));
+        last_u_ai = f_to_q16(u_ai);
+        wr(pid, R_U_AI, last_u_ai);
         wr(pid, R_ACC_START, 1);
 
         uint32_t post = rd(pid, R_POST_CLAMP);
@@ -690,6 +719,7 @@ int main(int argc, char **argv)
             fflush(stdout);
             write_state_json(state_path, 1, emitted, elapsed, v1 - v0, polls, src_row,
                              err, nn_out, q, u_ai, q16_to_f(post), wd, writes,
+                             trip.forced_starts,
                              input_csv ? input_csv : "embedded_test_vector");
             ++emitted;
         }
@@ -703,7 +733,7 @@ int main(int argc, char **argv)
     if (state_path) {
         write_state_json(state_path, 0, emitted, nsec_now() - t0, 0, 0, 0, 0.0,
                          0.0, 0, 0.0, 0.0, rd(pid, R_WATCHDOG),
-                         rd(pid, R_AXI_WRITE_COUNT),
+                         rd(pid, R_AXI_WRITE_COUNT), trip.forced_starts,
                          input_csv ? input_csv : "embedded_test_vector");
     }
     free_rows(&row_inputs);

@@ -213,3 +213,20 @@ What this means:
 4. **Recovery steps (B7).** The step at recovery equals the AI term being re-added on top of the value absorbed into the integrator (0.010–0.013 here, 10× the slew limit). With Ki = 0 nothing unwinds the absorbed value.
 
 Open: the on-kit analyzer needs its A1/B1 reference and A3 bracketing fixed (`tools/wd_fallback_analyze.py`); the hold limit for A4; the trip-time measurement here is from the control tool's row timestamp, which follows the inference completion by tens of microseconds (the July measurement with a dedicated probe stands as the precise figure).
+
+## Fix 1a: trip start (software), retested 2026-10-09 18:45–19:00 UTC
+
+Jason chose the software fix. `firmware/linux/wd_trip_start.h` (used by `v250_pid_loop`, on by default, and by `wd_fallback_test --trip-start`): before every inference and on every inference poll, if the timeout bit is high and the rule is armed, write the current error and u_ai and start the core once; re-arm only after reading the bit low; start disarmed. Same 82-run scenario set. Evidence: `libero/reports/2026-10-09-trip-start-fix/`.
+
+| Case | Before (first run) | With trip start |
+|---|---|---|
+| C3: timeout clears before the next start (c1) | fell back 0/20 | **fell back 20/20**; 908–998 PID-only updates; 0.83 ms from the timeout rise to the first PID-only update (the forced start comes at the 2.5 ms resume, before the inference) |
+| (a) control process paused 1 s | PID-only after resume 0/10 | **10/10** ended PID-only after resume (9 through a forced start right after SIGCONT; 1 was already PID-only from a natural trip 0.1 s before the pause) |
+| b1, b2, c0 (start sees the timeout) | 60/60 | 59/60 unchanged behaviour; the one exception (b2-05) had a natural trip just before the test trip |
+| Bumpless hand-over at a forced start | — | step 0 at 93 of 104 forced starts; the 11 with a step had the integrator at or near the −1.0 limit, or a new trip during cooldown (re-absorption): the existing core behaviour of predictions 3–4, not the rule |
+| Recovery step (B7) | 0.010–0.013 | unchanged, 0.010–0.013 (core behaviour; not addressed by this fix) |
+| Natural trips during normal running | ignored by the controller | now each one gives a 1000-update PID-only period (0.3 s at 3.3 kHz). In this test setup about 2 per minute with the observer polling at full speed; 1 in 13 s of the production loop below; 6 in the 8.3 h soak |
+
+Production loop (`prodcheck/summary.txt`): free-running rate unchanged (old 9,083 Hz, fix on 9,116 Hz, fix off 9,131 Hz); 0 forced starts in 10,000 normal updates; five 50 ms pauses gave five forced starts, each with the timeout bit high. CSV output unchanged.
+
+Still open: a processor that stays frozen gets no PID-only output until it resumes (the fix acts at resume); absorbed AI values accumulate in the integrator (Ki = 0) and clip at the output limit, which causes the 11 steps above and the recovery step; the core should clear its AI latch after absorbing it. HLS change, Jason's decision.
