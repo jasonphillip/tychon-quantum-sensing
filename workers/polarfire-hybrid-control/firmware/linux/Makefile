@@ -59,13 +59,17 @@ vnnx_smoke: vnnx_smoke.c
 vnnx_latency: vnnx_latency.c
 	$(CC) $(CFLAGS) $(VNNX_DEFS) $(VNNX_INC) $< $(VNNX_RT) -o $@ -lm -lpthread
 
-v250_pid_loop: v250_pid_loop.c
+v250_pid_loop: v250_pid_loop.c wd_trip_start.h
 	$(CC) $(CFLAGS) $(VNNX_DEFS) $(VNNX_INC) $< $(VNNX_RT) -o $@ -lm -lpthread
 
-wd_fallback_test: wd_fallback_test.c
+wd_fallback_test: wd_fallback_test.c wd_trip_start.h
 	$(CC) $(CFLAGS) $(VNNX_DEFS) $(VNNX_INC) $< $(VNNX_RT) -o $@ -lm -lpthread
+
+host-test:
+	cc -std=c11 -Wall -Wextra -O2 tests/test_wd_trip_start.c -o /tmp/test_wd_trip_start
+	/tmp/test_wd_trip_start
 
 clean:
 	rm -f pid_poke pid_latency watchdog_trip wd_observer vnnx_smoke vnnx_latency v250_pid_loop wd_fallback_test
 
-.PHONY: all clean
+.PHONY: all clean host-test

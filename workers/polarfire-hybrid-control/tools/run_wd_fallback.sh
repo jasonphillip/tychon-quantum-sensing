@@ -16,6 +16,16 @@ image_id=${IMAGE_ID:-}
 room_temp=${ROOM_TEMPERATURE:-}
 load=${OUTPUT_LOAD:-}
 output_root=${OUTPUT_ROOT:-$repo/watchdog-runs}
+control_extra=${CONTROL_EXTRA_ARGS:-}
+scenarios=${SCENARIOS:-dry a b1 b2 c1 c0}
+read -r -a control_extra_args <<< "$control_extra"
+read -r -a requested_scenarios <<< "$scenarios"
+declare -A selected=()
+for scenario in "${requested_scenarios[@]}"; do
+    case $scenario in dry|a|b1|b2|c1|c0) ;; *) printf 'Invalid scenario: %s\n' "$scenario" >&2; exit 2 ;; esac
+    if [[ -n ${selected[$scenario]:-} ]]; then printf 'Duplicate scenario: %s\n' "$scenario" >&2; exit 2; fi
+    selected[$scenario]=1
+done
 
 if [[ -z $image_id || -z $model || -z $room_temp || -z $load || $control_core == "$observer_core" ]]; then
     printf '%s\n' 'Set IMAGE_ID, MODEL_PATH, ROOM_TEMPERATURE, OUTPUT_LOAD, and distinct CONTROL_CORE/OBSERVER_CORE before running.' >&2
@@ -42,6 +52,7 @@ sha256sum -- "$control" "$observer" > "$run_dir/binary-sha256.txt"
     printf 'repository_commit='; git -C "$repo" rev-parse HEAD
     printf 'image_id=%s\nroom_temperature=%s\noutput_load=%s\n' "$image_id" "$room_temp" "$load"
     printf 'period_us=%s\nout_min=%s\nout_max=%s\n' "$period_us" "$out_min" "$out_max"
+    printf 'control_extra_args=%s\nscenarios=%s\n' "$control_extra" "$scenarios"
     grep -nE 'WATCHDOG_TIMEOUT_CYCLES|WATCHDOG_COOLDOWN_CYCLES|MAX_SLEW_PER_CYCLE' "$repo/hls/include/rta_config.hpp"
 } > "$run_dir/metadata.txt"
 
@@ -60,9 +71,9 @@ cleanup() {
         kill -TERM "$observer_pid" 2>/dev/null || true
         wait "$observer_pid" 2>/dev/null || true
     fi
-    printf '%q ' "$control" --zero-and-exit >> "$run_dir/commands.txt"
+    printf '%q ' "$control" --zero-and-exit "${control_extra_args[@]}" >> "$run_dir/commands.txt"
     printf '\n' >> "$run_dir/commands.txt"
-    "$control" --zero-and-exit > "$run_dir/zeroing.txt" 2>&1 || rc=1
+    "$control" --zero-and-exit "${control_extra_args[@]}" > "$run_dir/zeroing.txt" 2>&1 || rc=1
     if ! grep -q '^post_clamp_q16=0 ' "$run_dir/zeroing.txt"; then rc=1; fi
     if (( rc )); then printf 'Abort or check failure; inspect %s and zeroing.txt. Power-cycle if readback is nonzero.\n' "$run_dir" >&2; fi
     exit "$rc"
@@ -75,7 +86,7 @@ launch() {
     local scenario=$1 rep=$2; shift 2
     local stem="$run_dir/$scenario-$(printf '%02d' "$rep")"
     local obs_cmd=(taskset -c "$observer_core" "$observer")
-    local ctl_cmd=(taskset -c "$control_core" "$control" "$@" --model "$model" --period-us "$period_us" --out-min "$out_min" --out-max "$out_max")
+    local ctl_cmd=(taskset -c "$control_core" "$control" "$@" --model "$model" --period-us "$period_us" --out-min "$out_min" --out-max "$out_max" "${control_extra_args[@]}")
     printf '%q ' "${obs_cmd[@]}" >> "$run_dir/commands.txt"; printf '> %q\n' "$stem-observer.csv" >> "$run_dir/commands.txt"
     printf '%q ' "${ctl_cmd[@]}" >> "$run_dir/commands.txt"; printf '> %q 2> %q\n' "$stem-control.csv" "$stem-control.stderr" >> "$run_dir/commands.txt"
     "${obs_cmd[@]}" > "$stem-observer.csv" 2> "$stem-observer.stderr" & observer_pid=$!
@@ -96,7 +107,7 @@ finish() {
     observer_pid=
     if [[ $scenario == dry ]]; then
         # Every control row must have timeout bit 0 after its inference.
-        awk -F, 'NR > 2 && $9 != 0 {bad=1} END {exit bad}' "$stem-control.csv"
+        awk -F, 'NR > 2 && $12 != "forced" && $9 != 0 {bad=1} END {exit bad}' "$stem-control.csv"
         return
     fi
     local analysis_cmd=(python3 "$analyzer" "$stem-observer.csv" "$stem-control.csv" --scenario "$scenario" --period-us "$period_us" --out-dir "$stem-analysis")
@@ -105,44 +116,56 @@ finish() {
 }
 
 # Precondition: 60 s normal mode, with no timeout reported in control rows.
-launch dry 1 normal --updates "$((60000000 / period_us))"
-finish dry 1
+if [[ -n ${selected[dry]:-} ]]; then
+    launch dry 1 normal --updates "$((60000000 / period_us))"
+    finish dry 1
+fi
 
 # Ten SIGSTOP/SIGCONT pauses, five seconds of normal operation between pauses.
-launch a 1 normal --updates "$((180000000 / period_us))"
-sleep 5
-for rep in {1..10}; do
-    printf 'kill -STOP %q; sleep 1; kill -CONT %q; sleep 5\n' "$control_pid" "$control_pid" >> "$run_dir/commands.txt"
-    kill -STOP "$control_pid"
-    sleep 1
-    kill -CONT "$control_pid"
+if [[ -n ${selected[a]:-} ]]; then
+    launch a 1 normal --updates "$((180000000 / period_us))"
     sleep 5
-done
-kill -TERM "$control_pid"
-finish a 1
+    for rep in {1..10}; do
+        printf 'kill -STOP %q; sleep 1; kill -CONT %q; sleep 5\n' "$control_pid" "$control_pid" >> "$run_dir/commands.txt"
+        kill -STOP "$control_pid"
+        sleep 1
+        kill -CONT "$control_pid"
+        sleep 5
+    done
+    kill -TERM "$control_pid"
+    finish a 1
+fi
 
-for rep in {1..20}; do
-    launch b1 "$rep" skip-inference-after "$((1000000 / period_us))" --updates "$((1000000 / period_us + 2000))"
-    finish b1 "$rep"
-    sleep 2
-done
-for rep in {1..20}; do
-    if (( rep <= 3 )); then
-        launch b2 "$rep" resume-after "$((1000000 / period_us))" 200 --repeat-trips 3 --updates "$((1000000 / period_us + 3400))"
-    else
-        launch b2 "$rep" resume-after "$((1000000 / period_us))" 200 --updates "$((1000000 / period_us + 1100))"
-    fi
-    finish b2 "$rep"
-    sleep 2
-done
-for rep in {1..20}; do
-    launch c1 "$rep" gap-then-inference 2500 --gap-after "$((1000000 / period_us))" --updates "$((1000000 / period_us + 1100))"
-    finish c1 "$rep"
-    sleep 2
-done
-for rep in {1..20}; do
-    launch c0 "$rep" gap-then-inference 2500 2200 --gap-after "$((1000000 / period_us))" --updates "$((1000000 / period_us + 1100))"
-    finish c0 "$rep"
-    sleep 2
-done
+if [[ -n ${selected[b1]:-} ]]; then
+    for rep in {1..20}; do
+        launch b1 "$rep" skip-inference-after "$((1000000 / period_us))" --updates "$((1000000 / period_us + 2000))"
+        finish b1 "$rep"
+        sleep 2
+    done
+fi
+if [[ -n ${selected[b2]:-} ]]; then
+    for rep in {1..20}; do
+        if (( rep <= 3 )); then
+            launch b2 "$rep" resume-after "$((1000000 / period_us))" 200 --repeat-trips 3 --updates "$((1000000 / period_us + 3400))"
+        else
+            launch b2 "$rep" resume-after "$((1000000 / period_us))" 200 --updates "$((1000000 / period_us + 1100))"
+        fi
+        finish b2 "$rep"
+        sleep 2
+    done
+fi
+if [[ -n ${selected[c1]:-} ]]; then
+    for rep in {1..20}; do
+        launch c1 "$rep" gap-then-inference 2500 --gap-after "$((1000000 / period_us))" --updates "$((1000000 / period_us + 1100))"
+        finish c1 "$rep"
+        sleep 2
+    done
+fi
+if [[ -n ${selected[c0]:-} ]]; then
+    for rep in {1..20}; do
+        launch c0 "$rep" gap-then-inference 2500 2200 --gap-after "$((1000000 / period_us))" --updates "$((1000000 / period_us + 1100))"
+        finish c0 "$rep"
+        sleep 2
+    done
+fi
 printf 'Logs: %s\n' "$run_dir"

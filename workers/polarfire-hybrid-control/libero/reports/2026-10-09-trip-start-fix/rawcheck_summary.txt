@@ -1,0 +1,30 @@
+== scenario a (SIGSTOP pauses)
+pauses=10 no_writes_during_pause=1 actuator_held=9 rise_after_last_update_ms min/med/max=1.998/2.000/2.069 fallback_after_resume=9
+== b1 reps=20
+  trip_ms n=20 min/med/max=1.997/2.000/2.002
+  fallback_latency_us n=20 min/med/max=66/68/70  fallback_step n=20 min/med/max=0.00000/0.00000/0.00000
+  flat_updates n=20 min/med/max=1994/1994/1994  recovery_s n/a  recovery_step n/a
+  trip_delta==1: 20/20  timeout_high_ms n/a  starts_seen_high: [1994]  bounds_ok: 20/20
+  fell_back (flat>=100): 20/20
+  forced starts logged (--trip-start): 3
+== b2 reps=20
+  trip_ms n=20 min/med/max=1.976/2.000/2.001
+  fallback_latency_us n=20 min/med/max=-1733/68/70  fallback_step n=20 min/med/max=0.00000/0.00000/0.00000
+  flat_updates n=20 min/med/max=6/999/999  recovery_s n=20 min/med/max=0.0018/0.2997/0.2997  recovery_step n=20 min/med/max=0.0100/0.0100/0.0650
+  trip_delta==1: 16/20  timeout_high_ms n=20 min/med/max=60.405/60.435/60.461  starts_seen_high: [201, 603]  bounds_ok: 20/20
+  fell_back (flat>=100): 19/20
+  forced starts logged (--trip-start): 29
+== c1 reps=20
+  trip_ms n=20 min/med/max=1.998/2.000/2.002
+  fallback_latency_us n=20 min/med/max=832/835/837  fallback_step n=20 min/med/max=0.00000/0.00000/0.00000
+  flat_updates n=20 min/med/max=908/998/998  recovery_s n=20 min/med/max=0.2769/0.2994/0.2994  recovery_step n=20 min/med/max=0.0130/0.0130/0.0330
+  trip_delta==1: 19/20  timeout_high_ms n=20 min/med/max=0.566/0.593/0.604  starts_seen_high: [0]  bounds_ok: 20/20
+  fell_back (flat>=100): 20/20
+  forced starts logged (--trip-start): 25
+== c0 reps=20
+  trip_ms n=20 min/med/max=1.998/1.999/2.002
+  fallback_latency_us n=20 min/med/max=568/575/599  fallback_step n=20 min/med/max=0.00000/0.00000/0.00000
+  flat_updates n=20 min/med/max=998/998/1099  recovery_s n=19 min/med/max=0.2993/0.2994/0.2994  recovery_step n=19 min/med/max=0.0130/0.0130/0.0130
+  trip_delta==1: 19/20  timeout_high_ms n=20 min/med/max=0.566/0.573/0.597  starts_seen_high: [1]  bounds_ok: 20/20
+  fell_back (flat>=100): 20/20
+  forced starts logged (--trip-start): 25
