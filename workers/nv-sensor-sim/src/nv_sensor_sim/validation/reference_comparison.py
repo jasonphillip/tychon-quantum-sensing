@@ -1,20 +1,53 @@
-"""Validation against experimental reference data.
+"""Compare simulated and experimental CW-ODMR spectra.
 
-Structural hooks for cross-validating synthetic ODMR spectra against
-published laboratory CW-ODMR datasets. Required for validation acceptance.
+``compare_spectra`` accepts one-dimensional, finite, paired frequency and signal
+arrays. Frequencies may be in Hz or MHz independently and are converted to Hz.
+Frequency axes are sorted before comparison; duplicate frequencies are invalid.
 
-Validation steps:
-1. Spectral MSE against Zenodo CW-ODMR datasets
-2. P1/T2 cross-check against CCE study values
-3. Peak position accuracy (transition frequencies vs. expected Zeeman splitting)
-4. Linewidth consistency check (measured FWHM vs. predicted from P1 concentration)
+Overlap is the experimental span's intersection with the simulated span, divided
+by the simulated span. The shape MSE uses only simulated samples inside the
+experimental range. Both sampled signals are independently min-max normalized
+over those samples after interpolating the experimental signal onto that grid.
+The MSE is NaN when overlap is below ``min_overlap`` or has no sampled points;
+it is infinite if either sampled signal is constant. An overlap at the threshold passes.
+
+For each full spectrum, the baseline is the median of its highest 20 percent of
+samples (rounded up). Contrast is (baseline - minimum) / baseline. Dip peaks
+come from ``scipy.signal.find_peaks`` on (baseline - signal) / baseline using
+``peak_prominence``. Each simulated peak's offset is its nearest experimental
+peak frequency minus its own frequency, in Hz. An unmatched peak has a NaN
+offset. Linewidth is the deepest dip's full width at half depth relative to
+the measured baseline, with linear interpolation at both crossings; it is NaN
+when either crossing is outside the sampled span. Experimental noise is the
+standard deviation of the residual after a Savitzky-Golay filter (11, 3),
+divided by its baseline; it is NaN for fewer than 11 samples. Ratios needing
+a zero baseline or zero experimental contrast are NaN.
 """
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+
 import numpy as np
 import pandas as pd
-from scipy.interpolate import interp1d
+from scipy.signal import find_peaks, savgol_filter
+
+
+@dataclass(frozen=True)
+class SpectralComparison:
+    """Measured agreement and dip properties for two spectra."""
+
+    overlap_fraction: float
+    overlap_ok: bool
+    shape_mse: float
+    contrast_sim: float
+    contrast_exp: float
+    contrast_ratio: float
+    peak_offsets_hz: list[float]
+    linewidth_sim_hz: float
+    linewidth_exp_hz: float
+    noise_exp: float
+    n_points_overlap: int
 
 
 def load_experimental_odmr(filepath: str) -> tuple[np.ndarray, np.ndarray]:
@@ -73,50 +106,151 @@ def load_experimental_odmr(filepath: str) -> tuple[np.ndarray, np.ndarray]:
     return df[freq_col].to_numpy(dtype=np.float64), df[signal_col].to_numpy(dtype=np.float64)
 
 
+def _prepared_spectrum(
+    freqs: np.ndarray, signal: np.ndarray, unit: str
+) -> tuple[np.ndarray, np.ndarray]:
+    if unit not in ("Hz", "MHz"):
+        raise ValueError(f"Frequency unit must be 'Hz' or 'MHz', got {unit!r}")
+    freqs = np.asarray(freqs, dtype=np.float64)
+    signal = np.asarray(signal, dtype=np.float64)
+    if freqs.ndim != 1 or signal.ndim != 1 or len(freqs) != len(signal) or len(freqs) < 2:
+        raise ValueError("Frequency and signal must be paired one-dimensional arrays of length >= 2")
+    freqs = freqs * (1e6 if unit == "MHz" else 1.0)
+    if not np.all(np.isfinite(freqs)) or not np.all(np.isfinite(signal)):
+        raise ValueError("Frequency and signal must contain only finite values")
+    order = np.argsort(freqs)
+    freqs, signal = freqs[order], signal[order]
+    if np.any(np.diff(freqs) <= 0):
+        raise ValueError("Frequency samples must be distinct")
+    return freqs, signal
+
+
+def _baseline(signal: np.ndarray) -> float:
+    top_count = max(1, int(np.ceil(len(signal) * 0.2)))
+    return float(np.median(np.partition(signal, -top_count)[-top_count:]))
+
+
+def _linewidth(freqs: np.ndarray, signal: np.ndarray, baseline: float) -> float:
+    minimum = int(np.argmin(signal))
+    half_depth = (baseline + signal[minimum]) / 2
+    if minimum == 0 or minimum == len(signal) - 1:
+        return float("nan")
+
+    left = minimum
+    while left > 0 and signal[left] < half_depth:
+        left -= 1
+    right = minimum
+    while right < len(signal) - 1 and signal[right] < half_depth:
+        right += 1
+    if left == 0 and signal[left] < half_depth:
+        return float("nan")
+    if right == len(signal) - 1 and signal[right] < half_depth:
+        return float("nan")
+    if left == minimum or right == minimum:
+        return float("nan")
+
+    left_freq = np.interp(half_depth, signal[left : left + 2][::-1], freqs[left : left + 2][::-1])
+    right_freq = np.interp(half_depth, signal[right - 1 : right + 1], freqs[right - 1 : right + 1])
+    return float(right_freq - left_freq)
+
+
+def compare_spectra(
+    sim_freqs: np.ndarray,
+    sim_signal: np.ndarray,
+    exp_freqs: np.ndarray,
+    exp_signal: np.ndarray,
+    *,
+    exp_freq_unit: str = "Hz",
+    sim_freq_unit: str = "Hz",
+    min_overlap: float = 0.8,
+    peak_prominence: float = 0.02,
+) -> SpectralComparison:
+    """Return shape agreement and physical dip metrics as documented above."""
+    sim_freqs, sim_signal = _prepared_spectrum(sim_freqs, sim_signal, sim_freq_unit)
+    exp_freqs, exp_signal = _prepared_spectrum(exp_freqs, exp_signal, exp_freq_unit)
+    if not 0 <= min_overlap <= 1:
+        raise ValueError("min_overlap must be between 0 and 1")
+    if peak_prominence < 0:
+        raise ValueError("peak_prominence must be nonnegative")
+
+    overlap_span = max(
+        0.0,
+        min(sim_freqs[-1], exp_freqs[-1]) - max(sim_freqs[0], exp_freqs[0]),
+    )
+    overlap_fraction = float(overlap_span / (sim_freqs[-1] - sim_freqs[0]))
+    overlap_ok = bool(overlap_fraction >= min_overlap)
+    inside = (sim_freqs >= exp_freqs[0]) & (sim_freqs <= exp_freqs[-1])
+    n_points_overlap = int(np.count_nonzero(inside))
+    shape_mse = float("nan")
+    if overlap_ok and n_points_overlap:
+        sampled_sim = sim_signal[inside]
+        sampled_exp = np.interp(sim_freqs[inside], exp_freqs, exp_signal)
+        sim_range = np.ptp(sampled_sim)
+        exp_range = np.ptp(sampled_exp)
+        if sim_range == 0 or exp_range == 0:
+            shape_mse = float("inf")
+        else:
+            sim_norm = (sampled_sim - np.min(sampled_sim)) / sim_range
+            exp_norm = (sampled_exp - np.min(sampled_exp)) / exp_range
+            shape_mse = float(np.mean((sim_norm - exp_norm) ** 2))
+
+    sim_baseline = _baseline(sim_signal)
+    exp_baseline = _baseline(exp_signal)
+    contrast_sim = (
+        float((sim_baseline - np.min(sim_signal)) / sim_baseline)
+        if sim_baseline != 0 else float("nan")
+    )
+    contrast_exp = (
+        float((exp_baseline - np.min(exp_signal)) / exp_baseline)
+        if exp_baseline != 0 else float("nan")
+    )
+    contrast_ratio = float(contrast_sim / contrast_exp) if contrast_exp != 0 else float("nan")
+
+    sim_peaks = (
+        find_peaks((sim_baseline - sim_signal) / sim_baseline, prominence=peak_prominence)[0]
+        if sim_baseline != 0 else np.array([], dtype=int)
+    )
+    exp_peaks = (
+        find_peaks((exp_baseline - exp_signal) / exp_baseline, prominence=peak_prominence)[0]
+        if exp_baseline != 0 else np.array([], dtype=int)
+    )
+    peak_offsets_hz = []
+    for peak in sim_peaks:
+        if len(exp_peaks):
+            nearest = exp_peaks[np.argmin(abs(exp_freqs[exp_peaks] - sim_freqs[peak]))]
+            peak_offsets_hz.append(float(exp_freqs[nearest] - sim_freqs[peak]))
+        else:
+            peak_offsets_hz.append(float("nan"))
+    noise_exp = (
+        float(np.std(exp_signal - savgol_filter(exp_signal, 11, 3)) / exp_baseline)
+        if len(exp_signal) >= 11 and exp_baseline != 0 else float("nan")
+    )
+    return SpectralComparison(
+        overlap_fraction=overlap_fraction,
+        overlap_ok=overlap_ok,
+        shape_mse=shape_mse,
+        contrast_sim=contrast_sim,
+        contrast_exp=contrast_exp,
+        contrast_ratio=contrast_ratio,
+        peak_offsets_hz=peak_offsets_hz,
+        linewidth_sim_hz=_linewidth(sim_freqs, sim_signal, sim_baseline),
+        linewidth_exp_hz=_linewidth(exp_freqs, exp_signal, exp_baseline),
+        noise_exp=noise_exp,
+        n_points_overlap=n_points_overlap,
+    )
+
+
 def compute_spectral_mse(
     sim_freqs: np.ndarray,
     sim_signal: np.ndarray,
     exp_freqs: np.ndarray,
     exp_signal: np.ndarray,
 ) -> float:
-    """Compute Mean Squared Error between simulated and experimental ODMR spectra.
-
-    Both signals are normalized to [0, 1] for pure morphological comparison,
-    removing dependence on absolute PL intensity.
-
-    Parameters
-    ----------
-    sim_freqs : np.ndarray
-        Simulated frequency array in Hz.
-    sim_signal : np.ndarray
-        Simulated PL signal.
-    exp_freqs : np.ndarray
-        Experimental frequency array in Hz.
-    exp_signal : np.ndarray
-        Experimental PL signal.
-
-    Returns
-    -------
-    float
-        Mean squared error between normalized lineshapes.
-    """
-    # Normalize to [0, 1] for morphological comparison
-    exp_ptp = np.ptp(exp_signal)
-    sim_ptp = np.ptp(sim_signal)
-
-    if exp_ptp == 0 or sim_ptp == 0:
-        return float("inf")
-
-    exp_norm = (exp_signal - np.min(exp_signal)) / exp_ptp
-    sim_norm = (sim_signal - np.min(sim_signal)) / sim_ptp
-
-    # Interpolate experimental data onto simulated frequency grid
-    interp_func = interp1d(
-        exp_freqs, exp_norm, kind="linear", bounds_error=False, fill_value=1.0
-    )
-    aligned_exp = interp_func(sim_freqs)
-
-    return float(np.mean((sim_norm - aligned_exp) ** 2))
+    """Return the normalized shape MSE, raising for insufficient overlap."""
+    comparison = compare_spectra(sim_freqs, sim_signal, exp_freqs, exp_signal)
+    if not comparison.overlap_ok:
+        raise ValueError("Experimental spectrum covers less than the required simulated span")
+    return comparison.shape_mse
 
 
 def check_peak_positions(
