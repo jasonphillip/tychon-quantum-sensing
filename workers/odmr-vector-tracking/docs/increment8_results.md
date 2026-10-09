@@ -1,15 +1,21 @@
 # Increment 8 — reliability-at-fixed-capacity: the B+C stack (cloud fan-out)
 
+**Status: no increment-8 arm has been trained, so no increment-8 result exists yet.** The one
+teacher run known to have finished (`teacher_e1`, which also served as the smoke test of the cloud
+setup) is infrastructure, not an arm. Everything below the title, apart from the 2026-07-11 execution status at the end, is the
+pre-registered plan. No number in this file is an increment-8 result. The v6 figures quoted here
+are FP32 simulation results from increment 6 (v1 standing eval, held family, clean rung).
+
 *TVW dispatch-9 (`dispatch-9-increment8-bc-stack-2026-07-11.md`) executes increment-8 on branch
 `increment-8-bc-stack` off odmr `d8773f3`. Goal: recover the in-cone line identity v6 lost
-(v1-standing-eval held misassoc 0.311 → 0.540) **reliably across seeds** — increment-7 showed
+(v1 standing eval, `held` family, clean rung, FP32 simulation, pooled 3 seeds: misassoc 0.311 → 0.540) **reliably across seeds** — increment-7 showed
 single-teacher KD recovers it in 2/3 seeds but not every-seed (diagnosis:
 reliability-at-fixed-capacity, not identity-vs-acquisition opposition). Increment-8 stacks
-deployment-neutral levers that shrink run-to-run variance without touching the deployed shape:
+deployment-neutral levers that shrink run-to-run variance without touching the default model's shape:
 frozen `sequence_train_v3`, frozen v6 architecture (gated core + linear assoc, 175,790 params,
 V250 whitelist), cues OFF — **only the training signal and trajectory control change.** Verdict
 is pre-registered (`experiments/increment8_verdict.py`) and every number is re-derived LOCALLY on
-spark2; AWS only ever executes training. Keep-what-survives; NO default flip inside increment-8
+the GPU host; AWS only ever executes training. Keep-what-survives; NO default flip inside increment-8
 (adoption is a separate TVW ruling). Baseline-to-beat: the **`baseline-env` arm** — the unchanged
 increment-6 v6 recipe rerun in the same AWS environment ×5 seeds (see §0-ii).*
 
@@ -25,6 +31,18 @@ ops-guard (`validation/ops_guard.py`) and the flatbuffer stage (`validation/tfli
 that is a **design property, not an executed export** — no statement here may claim "INT8" or
 "on-silicon" numbers the artifacts do not support.
 
+Readiness of the v6 default model, one state at a time:
+
+| state | v6 default |
+|---|---|
+| trained (FP32) | yes: 3 seeds, simulated data (`sequence_train_v3`) |
+| evaluated | yes, on synthetic sets only: the v1 standing eval, the dwell sets and the field-cone set `sequence_eval_fieldcone_v1` |
+| exported (INT8 or other format) | no |
+| compiled for a target | no |
+| executed on target hardware | no (no on-target parity run; not in the FPGA loop) |
+
+No increment-8 arm (`baseline-env`, `kd1`, `bc`, `bc_sam`) has been trained, so none has reached any of these states.
+
 **(ii) Training environment: AWS g6e.xlarge (NVIDIA L40S 48 GB, 32 GiB host, x86-64).**
 Increment-8 training runs on `~/projects/gpu-fanout` cloud instances (L40S/x86), **not** the
 GB10/ARM primary. (Instance fixed by TVW Addendum M after `g6.xlarge` proved too small — see the
@@ -34,14 +52,14 @@ comparisons use the in-environment `baseline-env` arm** — the unchanged increm
 rerun ×5 seeds on the same L40S/x86 stack — as the baseline every guard and the PRIMARY test
 compares against. Hardware is a **recorded covariate**: every run preserves its
 `run_manifest.json` (torch/CUDA version, GPU, commit SHAs, dataset sha256) under
-`artifacts/increment8/` + NAS backup `spark2-odmr-increment8`. A report-only cross-check compares
+`artifacts/increment8/` + a network-storage backup. A report-only cross-check compares
 pooled `baseline-env` against the GB10 v6 numbers; a **material shift there is a STOP** (an
 environment problem, not a science result — stop-and-report #1).
 
-**(iii) Eval sets and verdict never leave spark2.** AWS receives only synthetic simulator output
+**(iii) Eval sets and verdict never leave the GPU host.** AWS receives only synthetic simulator output
 (`sequence_train_v3/dataset.h5`, sha256-verified) + git-archived tracked source of the two private
 repos (no artifacts, no eval sets, no history). The immutable v1 standing eval, dwell, and
-field-cone sets stay on spark2; checkpoints come back and `experiments/increment8_verdict.py`
+field-cone sets stay on the GPU host; checkpoints come back and `experiments/increment8_verdict.py`
 re-derives every reported number locally. A corrupted/wrong cloud run can only produce a checkpoint
 that fails the local evals — it cannot contaminate the audit chain.
 
@@ -87,7 +105,7 @@ permanently, Addendum H); any deterministic/pinned-RNG "fix".
 | Teacher arch overrides | feat 64 / assoc 32 / state 128 / conv 16 | increment-7 teacher; **not grown** (1910.01348) |
 | Ensemble averaging | mean of per-teacher **response** probs `softmax(z_i/T)` | O(1/k) variance reduction (2601.18909) — average responses, not logits |
 | Logit standardization | per-sample z-score over K-anchor dim (eps 1e-7), **KD/KL term only** (teacher + student); hard-CE on raw logits, unchanged | repairs ~4× teacher/student logit-scale mismatch (2403.01427) without altering the hard-label objective |
-| Weight-EMA decay | 0.999 per optimizer step; EMA weights are the deployed candidate + the val/early-stop model | churn reduction (2411.18704) |
+| Weight-EMA decay | 0.999 per optimizer step; EMA weights are the candidate default + the val/early-stop model | churn reduction (2411.18704) |
 | SAM ρ | 0.05 (`bc_sam` only; ~2× step cost) | 2010.01412 default; flat-minima trajectory control |
 | Trunk branch epoch | 40 (of the frozen 800) | shared early-stability phase; branches resume epochs 41→800 on the same cosine, total epochs unchanged (LMC, 1912.05671) |
 | Student param count | 175,790 (asserted every candidate) | deployment-neutrality; V250 ops-guard passes |
@@ -120,13 +138,13 @@ verdict reader was exercised against synthetic 5-seed artifacts). **Wave-1 chunk
    epoch, `bc`/`bc_sam` project to **~15–25 h**, exceeding the 720-min (12 h) watchdog.
 
 No instances remain (self-terminated; teardown clean). Resolution requires a compute-target /
-cost decision (bigger-RAM instance + longer watchdog, a faster GPU, or the fleet GB10s) —
+cost decision (bigger-RAM instance + longer watchdog, a faster GPU, or the local GB10 hosts) —
 escalated UP to TVW as the increment-8 execution blocker. Training and the verdict are unchanged
 and ready to run the moment a compute target is chosen.
 
 **RESOLVED — TVW Addendum M (2026-07-11, gpu-fanout `e613ec3`): execute on AWS `g6e.xlarge`**
 (NVIDIA L40S 48 GB / 32 GiB host / 4 vCPU → OOM cleared, still 2-concurrent under the 8-vCPU
-quota; watchdog raised to 1800 min / 30 h). Fleet vetoed (sparks can't be locked down); one
+quota; watchdog raised to 1800 min / 30 h). Local GPU hosts vetoed (they can't be locked down); one
 environment per increment (no instance-type change mid-increment — only concurrency may scale if
 the 64-vCPU raise lands). Chunk-1 is re-run as the real-recipe smoke: verify host-RAM headroom +
 s/epoch pace, STOP-AND-REPORT if the worst arm projects past ~24 h (6 h watchdog margin). §0-ii
