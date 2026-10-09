@@ -225,12 +225,12 @@ ensure_git_exclude() {
 # ── send ───────────────────────────────────────────────────────────────────
 
 cmd_send() {
-    local to_lane="" title="" body_src="" from_lane="" predict=""
+    local to_lane="" title="" body_src="" from_lane="" predict="" predict_set=0
     while [ $# -gt 0 ]; do
         case "$1" in
             --file) [ $# -ge 2 ] || die "--file needs a path"; body_src="$2"; shift 2 ;;
             --from) [ $# -ge 2 ] || die "--from needs a lane"; from_lane="$2"; shift 2 ;;
-            --predict) [ $# -ge 2 ] || die "--predict needs <hours>,<sessions>,<p_success>"; predict="$2"; shift 2 ;;
+            --predict) [ $# -ge 2 ] || die "--predict needs <hours>,<sessions>,<p_success>"; predict="$2"; predict_set=1; shift 2 ;;
             -*) die "unknown flag for send: $1" ;;
             *)  if   [ -z "$to_lane" ]; then to_lane="$1"
                 elif [ -z "$title" ];   then title="$1"
@@ -251,6 +251,20 @@ cmd_send() {
     fi
     valid_lane_name "$from_lane" || die "invalid from-lane: '$from_lane'"
 
+    # Calibration prediction (P0-1, 2026-08-11): --predict <hours>,<sessions>,<p_success>
+    local p_hours="" p_sessions="" p_succ=""
+    if [ "$predict_set" -eq 1 ]; then
+        IFS=',' read -r p_hours p_sessions p_succ <<< "$predict"
+        [[ "$p_hours"    =~ ^[0-9]+([.][0-9]+)?$ ]] || die "--predict hours must be numeric (got '$p_hours')"
+        [[ "$p_hours"    =~ [1-9] ]] || die "--predict hours must be greater than 0 (got '$p_hours')"
+        [[ "$p_sessions" =~ ^[0-9]+$ ]]             || die "--predict sessions must be an integer (got '$p_sessions')"
+        [[ "$p_sessions" =~ [1-9] ]] || die "--predict sessions must be at least 1 (got '$p_sessions')"
+        [[ "$p_succ"     =~ ^(0([.][0-9]+)?|1([.]0+)?)$ ]] || die "--predict p_success must be in (0,1] (got '$p_succ')"
+        [[ "$p_succ"     =~ [1-9] ]] || die "--predict p_success must be in (0,1] (got '$p_succ')"
+    else
+        echo "note: no --predict given — this dispatch will not contribute to calibration stats" >&2
+    fi
+
     # Body: from --file or stdin. Never passes through an argv/paste boundary.
     local tmp; tmp="$(mktemp)" || die "cannot create body temporary file"; TMP_FILE="$tmp"
     if [ -n "$body_src" ]; then
@@ -263,17 +277,6 @@ cmd_send() {
     [ -s "$tmp" ] || die "dispatch body is empty"
     # Normalize: ensure exactly a trailing newline so storage is byte-faithful.
     [ -z "$(tail -c1 "$tmp")" ] || echo >> "$tmp"
-
-    # Calibration prediction (P0-1, 2026-08-11): --predict <hours>,<sessions>,<p_success>
-    local p_hours="" p_sessions="" p_succ=""
-    if [ -n "$predict" ]; then
-        IFS=',' read -r p_hours p_sessions p_succ <<< "$predict"
-        [[ "$p_hours"    =~ ^[0-9]+([.][0-9]+)?$ ]] || die "--predict hours must be numeric (got '$p_hours')"
-        [[ "$p_sessions" =~ ^[0-9]+$ ]]             || die "--predict sessions must be an integer (got '$p_sessions')"
-        [[ "$p_succ"     =~ ^(0([.][0-9]+)?|1([.]0+)?)$ ]] || die "--predict p_success must be 0..1 (got '$p_succ')"
-    else
-        echo "note: no --predict given — this dispatch will not contribute to calibration stats" >&2
-    fi
 
     local sha bytes; sha="$(sha256 < "$tmp" | awk '{print $1}')" || die "cannot hash body"
     bytes="$(wc -c < "$tmp" | tr -d ' ')"
@@ -524,21 +527,22 @@ finish_ack() {
 cmd_ack() {
     [ $# -ge 1 ] || die "usage: dispatch.sh ack <id> [--by <name>] [--force] [--actual h,s,outcome] [note]"
     local id="$1"; shift
-    local actual="" a_hours="" a_sessions="" a_outcome="" note="" by force=0
+    local actual="" actual_set=0 a_hours="" a_sessions="" a_outcome="" note="" by force=0
     by="$(default_holder)"
     while [ $# -gt 0 ]; do
         case "$1" in
             --by) [ $# -ge 2 ] || die "--by needs a name"; by="$2"; shift 2 ;;
             --force) force=1; shift ;;
-            --actual) [ $# -ge 2 ] || die "--actual needs <hours>,<sessions>,<outcome>"; actual="$2"; shift 2 ;;
+            --actual) [ $# -ge 2 ] || die "--actual needs <hours>,<sessions>,<outcome>"; actual="$2"; actual_set=1; shift 2 ;;
             --) shift; note="${*:-}"; break ;;
             *) note="${note:+$note }$1"; shift ;;
         esac
     done
     validate_holder "$by"
-    if [ -n "$actual" ]; then
+    if [ "$actual_set" -eq 1 ]; then
         IFS=',' read -r a_hours a_sessions a_outcome <<< "$actual"
         [[ "$a_hours"    =~ ^[0-9]+([.][0-9]+)?$ ]]     || die "--actual hours must be numeric (got '$a_hours')"
+        [[ "$a_hours"    =~ [1-9] ]] || die "--actual hours must be greater than 0 (got '$a_hours')"
         [[ "$a_sessions" =~ ^[0-9]+$ ]]                 || die "--actual sessions must be an integer (got '$a_sessions')"
         [[ "$a_outcome"  =~ ^(success|partial|fail)$ ]] || die "--actual outcome must be success|partial|fail (got '$a_outcome')"
     fi
@@ -618,19 +622,16 @@ cmd_stats() {
         case "$f" in */.dispatch/done/*) : ;; *) continue ;; esac
         local ph ah ps oc did
         ph="$(fm_get "$f" predicted-hours)"; ah="$(fm_get "$f" actual-hours)"
-        [ -n "$ph" ] && [ -n "$ah" ] || continue
         ps="$(fm_get "$f" p-success)"; oc="$(fm_get "$f" outcome)"
         did="$(fm_get "$f" id)"
         rows+="$did|$ph|$ah|${ps:--}|${oc:--}"$'\n'
     done <<< "$(all_dispatch_files all "$lane")"
 
-    if [ -z "$rows" ]; then
-        echo "calibration: n=0 — no acked dispatches with predicted+actual fields yet"
-        return 0
-    fi
     printf '%s' "$rows" | awk -F'|' -v full="$full" '
-        BEGIN { n = 0; nb = 0; sumlog = 0; brier = 0; ok = 0; part = 0; bad = 0 }
+        BEGIN { n = 0; skipped = 0; nb = 0; sumlog = 0; brier = 0; ok = 0; part = 0; bad = 0 }
         NF >= 5 {
+            if ($2 !~ /^[0-9]+([.][0-9]+)?$/ || $3 !~ /^[0-9]+([.][0-9]+)?$/ ||
+                $2 + 0 <= 0 || $3 + 0 <= 0) { skipped++; next }
             n++
             ratio = $3 / $2
             sumlog += log(ratio)
@@ -642,7 +643,7 @@ cmd_stats() {
             if ($5 == "success") ok++; else if ($5 == "partial") part++; else if ($5 == "fail") bad++
         }
         END {
-            if (n == 0) { print "calibration: n=0"; exit }
+            if (n == 0) { print "calibration: n=0"; print "skipped " skipped " records with missing or non-positive hours"; exit }
             gm = exp(sumlog / n)
             line = sprintf("calibration: n=%d | hours actual/pred geo-mean x%.2f (%s)", n, gm,
                            gm > 1.15 ? "under-estimating" : gm < 0.87 ? "over-estimating" : "well calibrated")
@@ -650,6 +651,7 @@ cmd_stats() {
             line = line sprintf(" | outcomes %d ok / %d partial / %d fail", ok, part, bad)
             if (n < 20) line = line " | collecting — report firms up at n>=20"
             print line
+            print "skipped " skipped " records with missing or non-positive hours"
         }'
 }
 
