@@ -23,7 +23,7 @@ set CONSTR_DIR  [file join $REPO_ROOT libero constraints]
 # resource estimation fails after 02_import_ip.tcl
 # ──────────────────────────────────────────────────────
 set DEVICE_FAMILY  "PolarFireSoC"
-set DEVICE_DIE     "MPFS250T"
+set DEVICE_DIE     "MPFS160T"
 set DEVICE_PACKAGE "FCSG536"
 set DEVICE_SPEED   "STD"
 set PROJECT_NAME   "tychon_polarfire_control"
@@ -41,7 +41,7 @@ new_project \
     -die $DEVICE_DIE \
     -package $DEVICE_PACKAGE \
     -speed $DEVICE_SPEED \
-    -hdl_type {VERILOG}
+    -hdl {VERILOG}
 
 # ──────────────────────────────────────────────────────
 # Import constraint files into project
@@ -50,36 +50,17 @@ new_project \
 puts "INFO: Importing constraint files..."
 
 import_files -sdc [file join $CONSTR_DIR timing_200mhz.sdc]
-import_files -pdc [file join $CONSTR_DIR pinout.pdc]
+import_files -io_pdc [file join $CONSTR_DIR pinout.pdc]
 
 # ──────────────────────────────────────────────────────
-# Associate constraints with design flow tools
+# Constraint association
 #
-# The SDC timing constraint applies to synthesis, P&R,
-# and SmartTime. The PDC pinout constraint applies to
-# P&R only. Constraint-to-tool binding ensures each
-# tool sees the right constraint set.
+# Libero 2025.2 uses the enhanced constraint flow —
+# imported SDC and IO_PDC files are auto-associated
+# with synthesis, P&R, and timing tools. No manual
+# organize_tool_files needed.
 # ──────────────────────────────────────────────────────
-puts "INFO: Organizing constraints into tool flows..."
-
-organize_tool_files \
-    -tool {SYNTHESIZE} \
-    -file [file join $PROJ_DIR constraint timing_200mhz.sdc] \
-    -module "${PROJECT_NAME}::work" \
-    -input_type {constraint}
-
-organize_tool_files \
-    -tool {PLACEROUTE} \
-    -file [file join $PROJ_DIR constraint timing_200mhz.sdc] \
-    -file [file join $PROJ_DIR constraint pinout.pdc] \
-    -module "${PROJECT_NAME}::work" \
-    -input_type {constraint}
-
-organize_tool_files \
-    -tool {VERITIMING} \
-    -file [file join $PROJ_DIR constraint timing_200mhz.sdc] \
-    -module "${PROJECT_NAME}::work" \
-    -input_type {constraint}
+puts "INFO: Constraints imported (enhanced flow — auto-associated)"
 
 # ──────────────────────────────────────────────────────
 # Save and report
