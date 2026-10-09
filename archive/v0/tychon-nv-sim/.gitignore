@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Data science / ML artifacts
+*.h5
+*.hdf5
+*.npz
+*.npy
+checkpoints/
+artifacts/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tool state
+.serena/
+
+# Business-sensitive docs — never commit
+*playbook*
+*addendum*
+*AFX25E*
+*stakeholder*
+*IP_strategy*
+*.docx
+
+# Environment
+.env
+.env.local
