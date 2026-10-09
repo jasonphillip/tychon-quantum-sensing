@@ -90,8 +90,8 @@ class OpsReport:
 
     @property
     def is_compatible(self) -> bool:
-        """True only if no disallowed ops were found."""
-        return len(self.disallowed) == 0
+        """True only if every operation is known and allowed."""
+        return not self.disallowed and not self.unknown
 
 
 def _base_op_name(target: object) -> str:
