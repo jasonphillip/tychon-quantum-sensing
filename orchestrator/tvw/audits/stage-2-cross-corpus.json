@@ -1,0 +1,23 @@
+{
+  "stage": 2,
+  "query": "200 MHz",
+  "tychon_docs": {
+    "hits": 8,
+    "top_source": "research_inputs/Tychon_AI_Project_Analysis_and_Evaluation_2026-04-30.md",
+    "top3": [
+      "research_inputs/Tychon_AI_Project_Analysis_and_Evaluation_2026-04-30.md",
+      "research_inputs/Tychon_AI_Project_Analysis_and_Evaluation_2026-04-30.md",
+      "research_inputs/Tychon_AI_Project_Analysis_and_Evaluation_2026-04-30.md"
+    ]
+  },
+  "tychon_code": {
+    "hits": 3,
+    "top_source": "polarfire-hybrid-control/libero/reports/2026-04-29-axi-target-experiment/MPFS_ICICLE_KIT_BASE_DESIGN.patched.v",
+    "top3": [
+      "polarfire-hybrid-control/libero/reports/2026-04-29-axi-target-experiment/MPFS_ICICLE_KIT_BASE_DESIGN.patched.v",
+      "polarfire-hybrid-control/hls/include/rta_config.hpp",
+      "odmr-edge-ml/tests/unit/test_pid_derivative.py"
+    ]
+  },
+  "both_returned_hits": true
+}

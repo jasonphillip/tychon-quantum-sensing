@@ -1,0 +1,165 @@
+{
+  "corpus": "tychon-docs",
+  "stage": 1,
+  "spot_checks": [
+    {
+      "query": "200 MHz timing closure",
+      "expected_source_pattern": "closure/CLOSURE_DELIVERABLE.md or report/Tychon_*Final_Report*.md",
+      "top_hit": "report/Tychon_Phase_I_Final_Report_2026-04-30.md",
+      "top3_sources": [
+        "report/Tychon_Phase_I_Final_Report_2026-04-30.md",
+        "closure/CLOSURE_DELIVERABLE.md",
+        "report/Tychon_Phase_I_Final_Report_2026-04-30.md"
+      ],
+      "results": [
+        {
+          "source": "report/Tychon_Phase_I_Final_Report_2026-04-30.md",
+          "score": 0.595,
+          "match_type": "vector",
+          "hybrid": 0.595,
+          "vec": 1.0,
+          "bm25": 0.0
+        },
+        {
+          "source": "closure/CLOSURE_DELIVERABLE.md",
+          "score": 0.463,
+          "match_type": "vector",
+          "hybrid": 0.463,
+          "vec": 0.778,
+          "bm25": 0.0
+        },
+        {
+          "source": "report/Tychon_Phase_I_Final_Report_2026-04-30.md",
+          "score": 0.371,
+          "match_type": "vector",
+          "hybrid": 0.371,
+          "vec": 0.624,
+          "bm25": 0.0
+        },
+        {
+          "source": "sessions/tychon_session_log_2026-04-28.md",
+          "score": 0.342,
+          "match_type": "vector",
+          "hybrid": 0.342,
+          "vec": 0.574,
+          "bm25": 0.0
+        },
+        {
+          "source": "report/Tychon_Final_Report_V3_2026-04-27.md",
+          "score": 0.339,
+          "match_type": "vector",
+          "hybrid": 0.339,
+          "vec": 0.569,
+          "bm25": 0.0
+        }
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "query": "PolarFire MPFS250T",
+      "expected_source_pattern": "refs/* or report/Tychon_*Final_Report*.md",
+      "top_hit": "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+      "top3_sources": [
+        "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+        "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+        "refs/tychon_microchip_toolchain_reference_2026-03-20.md"
+      ],
+      "results": [
+        {
+          "source": "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+          "score": 0.595,
+          "match_type": "vector",
+          "hybrid": 0.595,
+          "vec": 1.0,
+          "bm25": 0.0
+        },
+        {
+          "source": "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+          "score": 0.474,
+          "match_type": "vector",
+          "hybrid": 0.474,
+          "vec": 0.796,
+          "bm25": 0.0
+        },
+        {
+          "source": "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+          "score": 0.461,
+          "match_type": "vector",
+          "hybrid": 0.461,
+          "vec": 0.774,
+          "bm25": 0.0
+        },
+        {
+          "source": "refs/gemini-dt-repo3-architecture-reviewed_2026-03-27.md",
+          "score": 0.359,
+          "match_type": "vector",
+          "hybrid": 0.359,
+          "vec": 0.604,
+          "bm25": 0.0
+        },
+        {
+          "source": "refs/tychon_repo3_scaffold_spec_2026-04-01.md",
+          "score": 0.346,
+          "match_type": "vector",
+          "hybrid": 0.346,
+          "vec": 0.581,
+          "bm25": 0.0
+        }
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "query": "VectorBlox",
+      "expected_source_pattern": "refs/*",
+      "top_hit": "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+      "top3_sources": [
+        "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+        "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+        "refs/gemini-dt-repo3-architecture-reviewed_2026-03-27.md"
+      ],
+      "results": [
+        {
+          "source": "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+          "score": 0.595,
+          "match_type": "vector",
+          "hybrid": 0.595,
+          "vec": 1.0,
+          "bm25": 0.0
+        },
+        {
+          "source": "refs/tychon_microchip_toolchain_reference_2026-03-20.md",
+          "score": 0.526,
+          "match_type": "vector",
+          "hybrid": 0.526,
+          "vec": 0.884,
+          "bm25": 0.0
+        },
+        {
+          "source": "refs/gemini-dt-repo3-architecture-reviewed_2026-03-27.md",
+          "score": 0.473,
+          "match_type": "vector",
+          "hybrid": 0.473,
+          "vec": 0.795,
+          "bm25": 0.0
+        },
+        {
+          "source": "refs/gemini-dt-repo3-architecture-reviewed_2026-03-27.md",
+          "score": 0.411,
+          "match_type": "vector",
+          "hybrid": 0.411,
+          "vec": 0.691,
+          "bm25": 0.0
+        },
+        {
+          "source": "sessions/tychon_session_log_2026-04-28.md",
+          "score": 0.396,
+          "match_type": "vector",
+          "hybrid": 0.396,
+          "vec": 0.665,
+          "bm25": 0.0
+        }
+      ],
+      "verdict": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+Loaded 2 critic(s): ['qwen3-coder-30b', 'nemotron-mini']
+  processed 5 claims
+  processed 10 claims
+  processed 15 claims
+  processed 20 claims
+  processed 25 claims
+  processed 30 claims
+  processed 35 claims
+  processed 40 claims
+  processed 45 claims
+  processed 50 claims
+  processed 55 claims
+  processed 60 claims
+  processed 65 claims
+  processed 70 claims
+  processed 75 claims
+  processed 80 claims
+  processed 85 claims
+  processed 90 claims
+  processed 95 claims
+
+Wrote tvw/audits/stage-4.6-verdicts.csv with 97 rows.
+TOTAL_RUNTIME_S=371

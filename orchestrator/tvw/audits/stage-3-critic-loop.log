@@ -1,0 +1,6 @@
+Loaded 2 critic(s): ['qwen3-coder-30b', 'nemotron-mini']
+  processed 5 claims
+  processed 10 claims
+
+Wrote tvw/audits/stage-3-verdicts-sample.csv with 10 rows.
+TOTAL_RUNTIME_S=41

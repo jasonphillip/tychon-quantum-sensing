@@ -1,0 +1,14 @@
+Embedding: Qwen3-Embedding-4B (Spark 2)
+Dimensions: 2560
+Chunk size: 6000 chars
+
+Files to process: 100
+  [70/100] spark1_r6_s25_closure/MPFS_ICICLE_KIT_BASE_DESIGN_timing_violations_min_r6_s25.txt: 8 chunks (0 dupes, 0 noise, 0 dropped) — 11.1s elapsed
+
+==================================================
+Processing complete for 'tychon-docs'
+  Files: 6 processed, 94 unchanged, 0 failed (of 100)
+  Chunks: 23 new (2 dupes, 0 noise filtered, 0 embed-dropped)
+  Total in DB: 469
+  Time: 14.1s
+  DB: ~/.corpus/tychon-docs/processed/chunks.db
