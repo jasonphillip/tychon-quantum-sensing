@@ -17,10 +17,9 @@ smartgen/
 # VectorBlox compiled models (large binaries, not committed)
 *.vnnx
 
-# Vendor SmartHLS headers stay out of git; the ap_fixpt software shim (local testbench only,
-# not for synthesis) is tracked so `make hls-test-local` works from a clean clone.
-hls/include/hls/*
-!hls/include/hls/ap_fixpt.hpp
+# Nothing under hls/include/hls/: SmartHLS compiles with -Iinclude, so a header there would
+# shadow the vendor hls/ap_fixpt.hpp. The software shim for g++ testbenches lives in hls/shim/.
+hls/include/hls/
 
 # Compiled test binaries
 hls/tb_bumpless
