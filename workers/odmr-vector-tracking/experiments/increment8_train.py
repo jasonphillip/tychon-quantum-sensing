@@ -60,7 +60,8 @@ from odmr_vector_tracking.training import (  # noqa: E402
 
 DATASET = _REPO_ROOT / "data" / "sequence_train_v3"
 
-STUDENT_ARMS = ("trunk", "baseline_v6", "kd1", "bc", "bc_sam")
+STUDENT_ARMS = ("trunk", "baseline_v6", "kd1", "bc", "bc_sam",
+                "ema_only", "trunk_only", "std_only", "ens_only")
 TEACHER_NAMES = tuple(f"teacher_e{i + 1}" for i in range(v8.N_TEACHERS))
 
 
@@ -75,17 +76,32 @@ def load_teacher(ckpt_path: Path, device: torch.device):
     return t
 
 
+def configure_arm(settings: TrainSettings, arm: str, branch_epoch: int) -> None:
+    """Set the training levers for one arm, independent of checkpoint and data I/O."""
+    settings.distill = arm == "kd1"
+    settings.ensemble_kd = arm in ("bc", "bc_sam", "std_only", "ens_only")
+    settings.logit_standardize = arm in ("bc", "bc_sam", "std_only")
+    settings.ema_decay = v8.EMA_DECAY if arm in ("bc", "bc_sam", "ema_only") else 0.0
+    settings.sam_rho = v8.SAM_RHO if arm == "bc_sam" else 0.0
+    settings.start_epoch = branch_epoch if arm in ("bc", "bc_sam", "trunk_only") else 0
+    settings.stop_epoch = branch_epoch if arm == "trunk" else 0
+    if settings.distill or settings.ensemble_kd:
+        settings.kd_alpha = v8.KD_ALPHA
+        settings.kd_temp = v8.KD_TEMP
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Increment-8 B+C reliability-stack training arms")
     ap.add_argument("--arm", required=True,
-                    choices=("teacher", "trunk", "baseline_v6", "kd1", "bc", "bc_sam"))
+                    choices=("teacher", *STUDENT_ARMS))
     ap.add_argument("--seed", type=int, required=True)
+    ap.add_argument("--trunk-seed", type=int, default=20260700)
     ap.add_argument("--run-name", required=True)
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--teacher-dir", type=Path, default=None,
-                    help="dir with teacher_e1..teacher_eN/best.pt (required for kd1/bc/bc_sam)")
+                    help="dir with teacher_e1..teacher_eN/best.pt (required for KD arms)")
     ap.add_argument("--trunk-ckpt", type=Path, default=None,
-                    help="shared-trunk checkpoint (last.pt) to warm-start from (bc/bc_sam)")
+                    help="shared-trunk checkpoint (last.pt) to warm-start from (bc/bc_sam/trunk_only)")
     ap.add_argument("--epochs", type=int, default=None,
                     help="override the frozen 800 (smoke-test only; omit for real runs)")
     ap.add_argument("--branch-epoch", type=int, default=None,
@@ -105,7 +121,7 @@ def main() -> int:
     settings.batch_size = v8.BATCH_SIZE
     settings.patience = v8.PATIENCE
     settings.val_every = v8.VAL_EVERY
-    settings.seed = args.seed
+    settings.seed = args.trunk_seed if arm == "trunk" else args.seed
 
     device = base.preflight_device(settings.device)
     loader = SequenceDatasetLoader(DATASET)
@@ -139,28 +155,17 @@ def main() -> int:
     )
 
     # --- arm wiring (only the training signal + trajectory control change) ------------------
-    kd_single = arm == "kd1"
-    kd_ensemble = arm in ("bc", "bc_sam")
-    settings.distill = kd_single
-    settings.ensemble_kd = kd_ensemble
-    if kd_single or kd_ensemble:
-        settings.kd_alpha = v8.KD_ALPHA
-        settings.kd_temp = v8.KD_TEMP
-    if kd_ensemble:
-        settings.logit_standardize = v8.LOGIT_STANDARDIZE
-        settings.ema_decay = v8.EMA_DECAY
-        settings.start_epoch = branch_epoch          # resume from the shared trunk
-    if arm == "bc_sam":
-        settings.sam_rho = v8.SAM_RHO
-    if arm == "trunk":
-        settings.stop_epoch = branch_epoch            # stop early; write last.pt (branch seed)
+    configure_arm(settings, arm, branch_epoch)
+    kd_single = settings.distill
+    kd_ensemble = settings.ensemble_kd
 
     # teachers (kd1 uses teacher_e1 only; bc/bc_sam average all N).
     teachers = None
     if kd_single or kd_ensemble:
         if args.teacher_dir is None:
             raise SystemExit(f"--arm {arm} requires --teacher-dir")
-        names = (v8.KD1_TEACHER,) if kd_single else TEACHER_NAMES
+        names = ((v8.KD1_TEACHER,) if arm in ("kd1", "std_only")
+                 else TEACHER_NAMES)
         teachers = [load_teacher(args.teacher_dir / n / "best.pt", device) for n in names]
         tp = sum(p.numel() for p in teachers[0].parameters() if p.requires_grad)
         print(f"[{arm}] {len(teachers)} teacher(s) from {args.teacher_dir} "
@@ -171,10 +176,12 @@ def main() -> int:
     tracker = build_tracker(model_cfg, core="gated", association="linear").to(device)
 
     # shared-trunk warm-start (bc/bc_sam): all branches start from the SAME trunk weights.
-    if kd_ensemble:
+    if arm in ("bc", "bc_sam", "trunk_only"):
         if args.trunk_ckpt is None:
             raise SystemExit(f"--arm {arm} requires --trunk-ckpt")
         tck = torch.load(args.trunk_ckpt, map_location=device, weights_only=False)
+        if arm == "trunk_only":
+            settings.start_epoch = int(tck["final_epoch"])
         load_tracker_state(tracker, tck["model_state"])
         print(f"[{arm}] warm-started from trunk {args.trunk_ckpt} "
               f"(branch epoch {settings.start_epoch}, resume on the frozen cosine)")
@@ -194,7 +201,7 @@ def main() -> int:
 
     out_dir = args.out / args.run_name
     levers = [name for name, on in (
-        ("teacher", is_teacher), ("trunk", arm == "trunk"), ("kd1", kd_single),
+        ("teacher", is_teacher), ("trunk", arm in ("trunk", "trunk_only")), ("kd1", kd_single),
         ("ensemble_kd", kd_ensemble), ("logit_std", settings.logit_standardize),
         ("ema", settings.ema_decay > 0), ("sam", settings.sam_rho > 0)) if on]
     meta = {
