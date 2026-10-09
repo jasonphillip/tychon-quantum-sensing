@@ -1,0 +1,105 @@
+> Original: claude.ai project document, created 2026-04-02. Edited for publication: names of other people and business details removed.
+
+Option definition override for: enable_hydra_infer_clocks_from_latch_data
+
+                               Synplify Pro (R) 
+
+               Version W-2025.03M-SP1-1 for win64 - Nov 18, 2025 
+
+                    Copyright (c) 1988 - 2025 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+
+Starting:    C:\Microchip\Libero_SoC_2025.2\Libero_SoC\Synplify_Pro\bin64\mbin\synbatch.exe
+Install:     C:\Microchip\Libero_SoC_2025.2\Libero_SoC\Synplify_Pro
+Hostname:    (local workstation)
+Date:        Thu Apr  2 11:53:52 2026
+Version:     W-2025.03M-SP1-1
+
+Arguments:   -product synplify_base -licensetype synplifypro_actel -batch -log synplify.log MPFS_ICICLE_KIT_BASE_DESIGN_syn.tcl
+ProductType: synplify_pro
+
+License checkout: synplifypro_actel
+License: synplifypro_actel node-locked 
+Licensed Vendor: actel
+License Option: actel_oem
+
+Running in Vendor Mode
+
+
+
+
+log file: "C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\synthesis\MPFS_ICICLE_KIT_BASE_DESIGN.srr"
+Running: synthesis in foreground
+
+Running MPFS_ICICLE_KIT_BASE_DESIGN_syn|synthesis
+
+Running Flow: compile (Compile) on MPFS_ICICLE_KIT_BASE_DESIGN_syn|synthesis
+# Thu Apr  2 11:53:52 2026
+
+Running Flow: compile_flow (Compile Process) on MPFS_ICICLE_KIT_BASE_DESIGN_syn|synthesis
+# Thu Apr  2 11:53:52 2026
+
+Running: compiler (Compile Input) on MPFS_ICICLE_KIT_BASE_DESIGN_syn|synthesis
+# Thu Apr  2 11:53:52 2026
+Copied C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\synthesis\synwork\MPFS_ICICLE_KIT_BASE_DESIGN_comp.srs to C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\synthesis\MPFS_ICICLE_KIT_BASE_DESIGN.srs
+
+compiler completed
+# Thu Apr  2 11:55:29 2026
+
+Return Code: 0
+Run Time:00h:01m:35s
+
+Running: multi_srs_gen (Multi-srs Generator) on MPFS_ICICLE_KIT_BASE_DESIGN_syn|synthesis
+# Thu Apr  2 11:55:29 2026
+
+multi_srs_gen completed
+# Thu Apr  2 11:55:32 2026
+
+Return Code: 0
+Run Time:00h:00m:03s
+Copied C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\synthesis\synwork\MPFS_ICICLE_KIT_BASE_DESIGN_mult.srs to C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\synthesis\MPFS_ICICLE_KIT_BASE_DESIGN.srs
+Complete: Compile Process on MPFS_ICICLE_KIT_BASE_DESIGN_syn|synthesis
+
+Running: premap (Premap) on MPFS_ICICLE_KIT_BASE_DESIGN_syn|synthesis
+# Thu Apr  2 11:55:32 2026
+
+premap completed with warnings
+# Thu Apr  2 11:56:03 2026
+
+Return Code: 1
+Run Time:00h:00m:31s
+Complete: Compile on MPFS_ICICLE_KIT_BASE_DESIGN_syn|synthesis
+
+Running Flow: map (Map) on MPFS_ICICLE_KIT_BASE_DESIGN_syn|synthesis
+# Thu Apr  2 11:56:03 2026
+License granted for 4 parallel jobs
+
+Running: fpga_mapper (Map & Optimize) on MPFS_ICICLE_KIT_BASE_DESIGN_syn|synthesis
+# Thu Apr  2 11:56:03 2026
+Copied C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\synthesis\synwork\MPFS_ICICLE_KIT_BASE_DESIGN_m.srm to C:\Microchip\Libero_SoC_2025.2\SmartHLS\SmartHLS\reference_designs\Icicle_SoC\ref_design\MPFS_ICICLE_Vectorblox\synthesis\MPFS_ICICLE_KIT_BASE_DESIGN.srm
+
+fpga_mapper completed with warnings
+# Thu Apr  2 12:00:36 2026
+
+Return Code: 1
+Run Time:00h:04m:33s
+Complete: Map on MPFS_ICICLE_KIT_BASE_DESIGN_syn|synthesis
+Complete: Logic Synthesis on MPFS_ICICLE_KIT_BASE_DESIGN_syn|synthesis
+TCL script complete: "MPFS_ICICLE_KIT_BASE_DESIGN_syn.tcl"
+exit status=0
+exit status=0
+License checkin: synplifypro_actel
+
