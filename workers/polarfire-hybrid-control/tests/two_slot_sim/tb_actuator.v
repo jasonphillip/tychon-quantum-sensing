@@ -34,6 +34,8 @@ module tb_actuator;
   );
 
   integer k;
+  integer errors = 0;
+  integer delta;
   reg [31:0] rcap;
 
   task step(input integer n); begin repeat (n) @(posedge clk); end endtask
@@ -46,10 +48,10 @@ module tb_actuator;
       else         begin s_wdata <= {32'h0, d32}; s_wstrb <= 8'h0F; end
       s_wlast <= 1'b1; s_wvalid <= 1'b1; s_bready <= 1'b1;
       k=0; @(posedge clk); while (!s_awready && k<300) begin @(posedge clk); k=k+1; end
-      if (!s_awready) begin $display("WRITE 0x%03h AW-HANG", addr); s_awvalid<=0;s_wvalid<=0;s_bready<=0; disable do_write32; end
+      if (!s_awready) $fatal(1, "WRITE 0x%03h AW-HANG", addr);
       s_awvalid <= 1'b0;
       k=0; while (!s_wready && k<300) begin @(posedge clk); k=k+1; end
-      if (!s_wready) begin $display("WRITE 0x%03h W-HANG", addr); s_wvalid<=0;s_bready<=0; disable do_write32; end
+      if (!s_wready) $fatal(1, "WRITE 0x%03h W-HANG", addr);
       s_wvalid <= 1'b0;
       k=0; while (!s_bvalid && k<300) begin @(posedge clk); k=k+1; end
       @(posedge clk); s_bready <= 1'b0;
@@ -61,23 +63,30 @@ module tb_actuator;
       @(posedge clk);
       s_araddr <= addr; s_arid <= id; s_arlen <= 8'd0; s_arsize <= 3'd2; s_arburst <= 2'b01; s_arvalid <= 1'b1; s_rready <= 1'b1;
       k=0; @(posedge clk); while (!s_arready && k<300) begin @(posedge clk); k=k+1; end
-      if (!s_arready) begin $display("READ 0x%03h AR-HANG", addr); s_arvalid<=0;s_rready<=0; rcap=32'hDEAD; disable do_read32; end
+      if (!s_arready) $fatal(1, "READ 0x%03h AR-HANG", addr);
       s_arvalid <= 1'b0;
       k=0; while (!s_rvalid && k<300) begin @(posedge clk); k=k+1; end
-      if (!s_rvalid) begin $display("READ 0x%03h R-HANG", addr); s_rready<=0; rcap=32'hDEAD; disable do_read32; end
+      if (!s_rvalid) $fatal(1, "READ 0x%03h R-HANG", addr);
       rcap = addr[2] ? s_rdata[63:32] : s_rdata[31:0];
       @(posedge clk); s_rready <= 1'b0;
     end
   endtask
 
-  task run_err(input [31:0] elo, input [31:0] ehi, input [127:0] label);
+  task run_err(input [31:0] elo, input [31:0] ehi,
+               input [31:0] expected, input [127:0] label);
     begin
       do_write32(38'h810, elo, 9'd1);   // error_low  (M1)
       do_write32(38'h814, ehi, 9'd1);   // error_high (M1)
       do_write32(38'h008, 32'h1, 9'd1); // pulse start (M0 START_STATUS_ADDR)
       step(20);                          // pipeline latency
       do_read32(38'h844, 9'd1);          // read latched actuator (M1 post_clamp)
-      $display("%0s actuator=0x%08h (%0d/65536)", label, rcap, $signed(rcap));
+      delta = $signed(rcap) - $signed(expected);
+      $display("%0s actuator=0x%08h expected=0x%08h delta=%0d LSB", label, rcap, expected, delta);
+      // SmartHLS fixed-point rounding can differ by one Q16.16 LSB.
+      if ($isunknown(rcap) || delta < -1 || delta > 1) begin
+        errors = errors + 1;
+        $display("FAIL: %0s actuator mismatch", label);
+      end
     end
   endtask
 
@@ -94,17 +103,23 @@ module tb_actuator;
     do_write32(38'h00C, 32'h0000CCCD, 9'd1); // Kp = 0.8
     do_write32(38'h010, 32'h00000000, 9'd1); // Ki = 0
     do_write32(38'h014, 32'h00000000, 9'd1); // Kd = 0
-    do_read32(38'h00C, 9'd1); $display("Kp readback = 0x%08h (expect 0000cccd)", rcap);
+    do_read32(38'h00C, 9'd1);
+    $display("Kp readback = 0x%08h (expect 0000cccd)", rcap);
+    if (rcap !== 32'h0000CCCD) begin errors = errors + 1; $display("FAIL: Kp readback"); end
     do_write32(38'h818, 32'h00000000, 9'd1); // u_ai = 0 (M1)
 
     // sweep error (Q34.30), read latched actuator (expect ~Kp*error in Q16.16)
-    run_err(32'h20000000, 32'h00000000, "err= 0.50 ->");  // expect ~0.4 = 0x6666
-    run_err(32'hE0000000, 32'hFFFFFFFF, "err=-0.50 ->");  // expect ~-0.4 = 0xFFFF999A
-    run_err(32'h10000000, 32'h00000000, "err= 0.25 ->");  // expect ~0.2 = 0x3333
-    run_err(32'h80000000, 32'h00000000, "err= 2.00 ->");  // 0.8*2=1.6 -> clamp to 1.0 = 0x10000
-    $display("================ DONE ================");
+    run_err(32'h20000000, 32'h00000000, 32'h00006666, "err= 0.50 ->");  // expect ~0.4
+    run_err(32'hE0000000, 32'hFFFFFFFF, 32'hFFFF999A, "err=-0.50 ->");  // expect ~-0.4
+    run_err(32'h10000000, 32'h00000000, 32'h00003333, "err= 0.25 ->");  // expect ~0.2
+    run_err(32'h80000000, 32'h00000000, 32'h00010000, "err= 2.00 ->");  // clamp to 1.0
+    if (errors == 0) $display("PASS: actuator datapath (0 errors)");
+    else begin
+      $display("FAIL: actuator datapath (%0d errors)", errors);
+      $fatal(1, "actuator datapath mismatch");
+    end
     $finish;
   end
 
-  initial begin #500000; $display("GLOBAL TIMEOUT"); $finish; end
+  initial begin #500000; $fatal(1, "GLOBAL TIMEOUT"); end
 endmodule
