@@ -129,6 +129,12 @@ def main() -> int:
                     help="sanity gate: fit one training sequence (val = same sequence)")
     # Optional overrides of the YAML TrainSettings.
     ap.add_argument("--epochs", type=int, default=None)
+    ap.add_argument("--stop-epoch", type=int, default=0,
+                    help="stop at this epoch on the full-length cosine (0 = full run)")
+    ap.add_argument("--w-assoc", type=float, default=None,
+                    help="override the association loss weight")
+    ap.add_argument("--collision-weight", type=float, default=None,
+                    help="override the collision association weight")
     ap.add_argument("--batch-size", type=int, default=None)
     ap.add_argument("--lr", type=float, default=None)
     ap.add_argument("--patience", type=int, default=None)
@@ -168,10 +174,12 @@ def main() -> int:
     args = ap.parse_args()
 
     settings = load_config(args.train_config, TrainSettings)
-    for name in ("epochs", "batch_size", "lr", "patience", "seed", "device", "val_every"):
+    for name in ("epochs", "batch_size", "lr", "patience", "seed", "device", "val_every",
+                 "w_assoc", "collision_weight"):
         val = getattr(args, name)
         if val is not None:
             setattr(settings, name, val)
+    settings.stop_epoch = args.stop_epoch
     # 2c levers: CLI flags flip the TrainSettings toggles (cumulative across runs).
     settings.soft_targets = settings.soft_targets or bool(args.soft_targets)
     settings.sinkhorn = settings.sinkhorn or bool(args.sinkhorn)
