@@ -246,4 +246,56 @@ pass 'show still detects body tampering'
 contains "$TEST_DIR/legacy-output" "$TEST_DIR/legacy/alpha/.dispatch/inbox/"
 pass 'legacy lane-root override remains supported'
 
+# A failed send must leave no visible envelope at either interruption point.
+original_root="$DISPATCH_ROOT"
+export DISPATCH_ROOT="$TEST_DIR/atomic-publish"
+mkdir -p "$DISPATCH_ROOT/alpha"
+for point in body publish; do
+    id="2026-09-27-1200-abort-$point"
+    DISPATCH_TEST_ABORT_AT="$point" status 1 send alpha "Abort $point" --file "$BODY" --from beta --predict 1,1,0.8
+    absent "$DISPATCH_ROOT/alpha/.dispatch/inbox/$id.md"
+    set -- "$DISPATCH_ROOT/alpha/.dispatch/inbox/.$id.md.tmp."*
+    [ ! -e "$1" ] || fail "abort at $point left an envelope temp file"
+    status 0 list --lane alpha
+    if grep -qF "$id" "$TEST_DIR/output"; then fail "list exposed aborted $id"; fi
+    status 1 show "$id"
+    status 1 claim "$id" --by alice
+done
+status 0 stats --lane alpha
+contains "$TEST_DIR/output" 'calibration: n=0'
+export DISPATCH_ROOT="$original_root"
+pass 'interrupted sends leave no published or temporary envelope'
+
+# Invalid durations and calibration records must never publish or crash stats.
+export DISPATCH_ROOT="$TEST_DIR/zero-duration"
+mkdir -p "$DISPATCH_ROOT/alpha" "$DISPATCH_ROOT/beta"
+for prediction in '' 0,1,0.8 0.0,1,0.8 1,0,0.8 1,1,0 1,1,0.0 1,1,1.1; do
+    status 1 send alpha 'Invalid prediction' --file "$BODY" --from beta --predict "$prediction"
+    contains "$TEST_DIR/output" 'dispatch: error: --predict'
+    absent "$DISPATCH_ROOT/alpha/.dispatch"
+    absent "$DISPATCH_ROOT/.dispatch-ids"
+done
+send 'Valid calibration'
+status 1 ack "$ID" --actual 0,1,success
+contains "$TEST_DIR/output" '--actual hours must be greater than 0'
+status 1 ack "$ID" --actual ''
+contains "$TEST_DIR/output" '--actual hours must be numeric'
+[ -f "$INBOX" ] || fail 'zero-hour ack removed inbox'
+absent "$DONE"
+status 0 ack "$ID" --actual 1,1,success
+cat > "$DISPATCH_ROOT/alpha/.dispatch/done/zero-hour-record.md" <<'EOF'
+---
+id: zero-hour-record
+predicted-hours: 0
+actual-hours: 1
+status: done
+---
+
+Legacy zero-hour prediction.
+EOF
+status 0 stats --lane alpha
+contains "$TEST_DIR/output" 'calibration: n=1'
+contains "$TEST_DIR/output" 'skipped 1 records with missing or non-positive hours'
+pass 'non-positive hours are refused; legacy zero-hour records are skipped by stats'
+
 echo "PASS: $PASSES acceptance groups (isolated temporary queues)"
