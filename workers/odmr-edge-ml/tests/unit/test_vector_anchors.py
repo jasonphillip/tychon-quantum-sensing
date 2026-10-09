@@ -32,6 +32,15 @@ def test_spectrum_lock_finds_dip_near_prior():
     assert out.tolist() == [310, 500]
 
 
+def test_spectrum_lock_finds_shallow_noisy_dip():
+    f = _grid()
+    bins = np.arange(f.size)
+    spectrum = 1.0 - 0.005 / (1.0 + ((bins - 310) / 3.0) ** 2)
+    spectrum += np.random.default_rng(12).normal(0.0, 0.0005, f.size)
+    out = spectrum_lock_bins(spectrum[None, :], f, np.array([300]))
+    assert abs(int(out[0]) - 310) <= 2
+
+
 def test_jitter_is_clipped_and_integer():
     rng = np.random.default_rng(1)
     bins = np.array([0, 799, 400])

@@ -8,7 +8,7 @@ from functools import lru_cache
 from pathlib import Path
 
 import numpy as np
-from scipy.signal import find_peaks
+from scipy.signal import find_peaks, savgol_filter
 
 from odmr_edge_ml.vector.windowing import (
     NV_AXES_UNIT,
@@ -54,8 +54,10 @@ def coarse_fit_field(
     n_dirs: int = 2000,
     mags_T: np.ndarray | None = None,
     prominence: float = 0.02,
+    method: str = "matched",
+    fwhm_bins: float = 6.0,
 ) -> np.ndarray:
-    """Fit a field from dip positions using a symmetric line-bin Chamfer score."""
+    """Fit a field by matched Lorentzian templates or dip-bin Chamfer score."""
     spectra = np.asarray(spectra, dtype=np.float64)
     freq_grid = np.asarray(freq_grid, dtype=np.float64)
     mags = np.asarray(np.linspace(0.5e-3, 5e-3, 19) if mags_T is None else mags_T,
@@ -70,8 +72,41 @@ def coarse_fit_field(
         raise ValueError("spectra and increasing freq_grid must be finite")
     if prominence < 0 or not np.isfinite(prominence):
         raise ValueError("prominence must be non-negative and finite")
+    if method not in ("matched", "chamfer"):
+        raise ValueError("method must be 'matched' or 'chamfer'")
+    if not np.isfinite(fwhm_bins) or fwhm_bins <= 0:
+        raise ValueError("fwhm_bins must be positive and finite")
     fields, predicted = _coarse_candidates(freq_grid.tobytes(), freq_grid.size,
                                             int(n_dirs), tuple(mags.tolist()))
+    if method == "matched":
+        # Build one contiguous candidate matrix; spectrum batches use BLAS matrix products.
+        n_bins = freq_grid.size
+        templates = np.empty((len(fields), n_bins), dtype=np.float32)
+        sample_bins = np.arange(n_bins, dtype=np.float32)[None, :]
+        half_width = np.float32(fwhm_bins / 2.0)
+        for start in range(0, len(fields), 2048):
+            stop = min(start + 2048, len(fields))
+            block = templates[start:stop]
+            block.fill(0)
+            for line in range(8):
+                offset = (sample_bins - predicted[start:stop, line, None]) / half_width
+                block += 1.0 / (1.0 + offset * offset)
+            block -= block.mean(axis=1, keepdims=True)
+            block /= np.linalg.norm(block, axis=1, keepdims=True)
+
+        fitted = np.empty((len(spectra), 3), dtype=np.float64)
+        top_count = max(1, int(np.ceil(n_bins * 0.2)))
+        for start in range(0, len(spectra), 64):
+            stop = min(start + 64, len(spectra))
+            batch = spectra[start:stop].astype(np.float32)
+            baseline = np.median(np.partition(batch, -top_count, axis=1)[:, -top_count:], axis=1)
+            if np.any(baseline == 0):
+                raise ValueError("matched filter requires a nonzero spectrum baseline")
+            dips = (baseline[:, None] - batch) / baseline[:, None]
+            dips -= dips.mean(axis=1, keepdims=True)
+            fitted[start:stop] = fields[np.argmax(dips @ templates.T, axis=1)]
+        return fitted
+
     fitted = np.empty((len(spectra), 3), dtype=np.float64)
     zero_nearest = int(np.argmin(np.linalg.norm(fields, axis=1)))
     top_count = max(1, int(np.ceil(freq_grid.size * 0.2)))
@@ -121,7 +156,8 @@ def spectrum_lock_bins(
     freq_grid: np.ndarray,
     prior_bins: np.ndarray,
     window_bins: int = 25,
-    prominence: float = 0.02,
+    prominence: float = 0.002,
+    smooth: bool = True,
 ) -> np.ndarray:
     """Find the deepest local dip near each prior, or retain the prior."""
     spectra = np.asarray(spectra)
@@ -136,12 +172,17 @@ def spectrum_lock_bins(
     for i, prior in enumerate(prior_bins):
         lo = max(0, int(prior) - window_bins)
         hi = min(spectra.shape[1], int(prior) + window_bins + 1)
-        window = spectra[i, lo:hi]
-        if not len(window):
+        if hi <= lo:
             continue
-        candidate = int(np.argmin(window))
-        if np.max(window) - window[candidate] >= prominence:
-            out[i] = lo + candidate
+        baseline = float(np.max(spectra[i]))
+        if baseline == 0:
+            continue
+        dips = (baseline - spectra[i]) / baseline
+        if smooth and len(dips) >= 9:
+            dips = savgol_filter(dips, 9, 2)
+        peaks, _ = find_peaks(dips[lo:hi], prominence=prominence)
+        if peaks.size:
+            out[i] = lo + int(peaks[np.argmax(dips[lo + peaks])])
     return out
 
 

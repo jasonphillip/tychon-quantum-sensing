@@ -42,10 +42,31 @@ def test_coarse_fit_recovers_synthetic_line_sets():
             )
 
 
+def test_coarse_fit_recovers_shallow_noisy_line_sets():
+    grid = np.linspace(2.70e9, 3.04e9, 800)
+    n_dirs = 120
+    indices = np.array([11, 47, 96])
+    z = 1.0 - (indices + 0.5) / n_dirs
+    theta = indices * np.pi * (3.0 - np.sqrt(5.0))
+    radial = np.sqrt(1.0 - z * z)
+    directions = np.stack([radial * np.cos(theta), radial * np.sin(theta), z], axis=1)
+    mags = np.array([1e-3, 2.5e-3, 4e-3])
+    true_lines = _lines(directions * mags[:, None], grid)
+    sample_bins = np.arange(grid.size)
+    spectra = 1.0 - np.sum(
+        0.005 / (1.0 + ((sample_bins[None, None, :] - true_lines[:, :, None]) / 3.0) ** 2),
+        axis=1,
+    )
+    spectra += np.random.default_rng(20261009).normal(0.0, 0.0005, spectra.shape)
+
+    fitted = coarse_fit_field(spectra, grid, n_dirs=n_dirs, mags_T=mags)
+    assert np.all(np.abs(_lines(fitted, grid) - true_lines) <= 3)
+
+
 def test_coarse_fit_marks_no_dip_fallback():
     grid = np.linspace(2.70e9, 3.04e9, 800)
     with pytest.warns(RuntimeWarning, match="No dips found"):
-        fitted = coarse_fit_field(np.ones((1, 800)), grid, n_dirs=10,
+        fitted = coarse_fit_field(np.ones((1, 800)), grid, method="chamfer", n_dirs=10,
                                   mags_T=np.array([1e-3, 2e-3]))
     np.testing.assert_allclose(np.linalg.norm(fitted, axis=1), [1e-3])
 
