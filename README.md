@@ -18,6 +18,8 @@ The build started from a 90-day plan in March 2026 and continued through Septemb
 | Simulator | Loaders for five public ODMR and magnetometry datasets, and two-sample tests to compare against them | Comparison results not yet committed |
 | Claim checks | Audits of my technical report on 2026-05-01, up to 114 claims per pass through two local critic models. A manual structure review found three critical errors, all fixed in the corrected report | On the first run the two critics agreed 10 times out of 10, which I counted as a failed independence test |
 
+Where I'd push back on these results myself: [the weakest claims](orchestrator/INVENTORY.md#6-weakest-claims--what-would-not-survive-a-sharp-reviewer), my own list. What review made me retract: [the tracker baseline numbers](docs/case-study.md#what-the-reviews-caught) and [the errors caught in agent output](orchestrator/README.md#checking-the-agents-as-well-as-the-report).
+
 ## The demo dashboard
 
 ![The FPGA demo dashboard in dry-run mode: a live trace of the final actuator value and the AI correction through three scripted scenarios, a clamp trip, a watchdog fallback and a clean run](docs/media/dashboard-demo.gif)
@@ -58,13 +60,13 @@ flowchart TD
 |---|---|
 | 1 minute | this page and [the timeline](#timeline) |
 | 5 minutes | [docs/case-study.md](docs/case-study.md): how the work was planned, reviewed and verified |
+| the claims I'd challenge first | [orchestrator/INVENTORY.md, section 6](orchestrator/INVENTORY.md#6-weakest-claims--what-would-not-survive-a-sharp-reviewer): what would not survive a sharp reviewer |
 | no physics background | [docs/primer.md](docs/primer.md): NV diamonds, ODMR, and why a network on an FPGA |
 | the machines I used and what ran where | [docs/lab.md](docs/lab.md) |
 | how I used manuals, notebooks and local checks | [docs/method.md](docs/method.md) |
 | what I read | [docs/references.md](docs/references.md): manuals, papers and the public datasets |
 | a term I don't know | [docs/glossary.md](docs/glossary.md) |
 | why the orchestrator exists and why its critics stay off the web | [orchestrator/README.md](orchestrator/README.md): it started as a check on my own work |
-| the claims I'd challenge first | [orchestrator/INVENTORY.md, section 6](orchestrator/INVENTORY.md#6-weakest-claims--what-would-not-survive-a-sharp-reviewer): what would not survive a sharp reviewer |
 | the orchestration loop | [planning/excerpts/](planning/excerpts/): the planning chat writing prompts for each repo session and reviewing what came back |
 | mistakes other models caught | [docs/second-opinions.md](docs/second-opinions.md) |
 | a real dispatch | [orchestrator/tvw/audits/dispatch-9-increment8-bc-stack-2026-07-11.md](orchestrator/tvw/audits/dispatch-9-increment8-bc-stack-2026-07-11.md) and the tool that sends it, [dispatch.sh](orchestrator/tvw/scripts/dispatch.sh) |
