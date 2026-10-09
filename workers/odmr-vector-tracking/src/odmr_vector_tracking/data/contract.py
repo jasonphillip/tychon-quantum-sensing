@@ -15,6 +15,7 @@ Contract changelog v0→v1: added ``line_collision (N,T,L)`` and ``seeds (N,)``.
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 
 import h5py
@@ -87,6 +88,14 @@ _SEED_FIELDS = [
     ("test_seeds", "n_spectra_test"),
 ]
 
+# Positive physical scales: time step, linewidth, collision threshold in linewidths,
+# and bias field magnitude. Frequency range endpoints are positive frequencies.
+_POSITIVE_SCALES = (
+    "dt_s", "linewidth_Hz", "collision_threshold_linewidths", "bias_B0_T"
+)
+_POSITIVE_DIMENSIONS = ("n_timesteps", "n_lines", "n_freq_points")
+_SPLIT_COUNTS = ("n_spectra_train", "n_spectra_val", "n_spectra_test")
+
 
 def validate_manifest(manifest: dict) -> None:
     """Validate a manifest dict against the v1 schema.
@@ -125,15 +134,32 @@ def validate_manifest(manifest: dict) -> None:
             f"'{manifest['contract_version']}'"
         )
 
-    # 4. Seed-list lengths match split sizes.
+    # 4. Numeric scales and dimensions. A split count may be zero for a test-only dataset.
+    for field_name in _POSITIVE_SCALES:
+        value = manifest[field_name]
+        if not math.isfinite(value) or value <= 0:
+            raise ContractViolation(f"{field_name} must be finite and positive, got {value}")
+    for field_name in _POSITIVE_DIMENSIONS:
+        if manifest[field_name] <= 0:
+            raise ContractViolation(f"{field_name} must be a positive integer, got {manifest[field_name]}")
+    for field_name in _SPLIT_COUNTS:
+        if manifest[field_name] < 0:
+            raise ContractViolation(f"{field_name} must be a nonnegative integer, got {manifest[field_name]}")
+
+    # 5. Seed-list lengths match split sizes; each list contains distinct integer seeds.
     for seeds_key, count_key in _SEED_FIELDS:
+        seeds = manifest[seeds_key]
+        if any(type(seed) is not int for seed in seeds):
+            raise ContractViolation(f"{seeds_key} must contain integer seeds")
+        if len(seeds) != len(set(seeds)):
+            raise ContractViolation(f"{seeds_key} contains duplicate seeds")
         if len(manifest[seeds_key]) != manifest[count_key]:
             raise ContractViolation(
                 f"{seeds_key} length ({len(manifest[seeds_key])}) != "
                 f"{count_key} ({manifest[count_key]})"
             )
 
-    # 5. Pairwise-disjoint seed lists (train ∩ val ∩ test = ∅).
+    # 6. Pairwise-disjoint seed lists (train ∩ val ∩ test = ∅).
     train_set = set(manifest["train_seeds"])
     val_set = set(manifest["val_seeds"])
     test_set = set(manifest["test_seeds"])
@@ -146,15 +172,48 @@ def validate_manifest(manifest: dict) -> None:
         if overlap:
             raise ContractViolation(f"{a_name}/{b_name} seed overlap: {sorted(overlap)}")
 
-    # 6. Range fields: 2 elements, lo <= hi.
-    for range_field in _RANGE_FIELDS:
-        r = manifest[range_field]
+    # 7. Every populated top-level numeric range has finite bounds and lo <= hi.
+    for range_field, r in manifest.items():
+        if range_field not in _RANGE_FIELDS and not (
+            range_field.endswith("_range") or "_range_" in range_field
+        ):
+            continue
+        if r is None:
+            if range_field in _RANGE_FIELDS:
+                raise ContractViolation(f"{range_field}: expected 2 numeric bounds")
+            continue
+        if not isinstance(r, list):
+            raise ContractViolation(f"{range_field}: expected a 2-element list")
         if len(r) != 2:
             raise ContractViolation(f"{range_field}: expected 2 elements, got {len(r)}")
+        if any(type(bound) not in (int, float) or not math.isfinite(bound) for bound in r):
+            raise ContractViolation(f"{range_field}: bounds must be finite numbers")
         if r[0] > r[1]:
             raise ContractViolation(f"{range_field}: min ({r[0]}) > max ({r[1]})")
+        if range_field == "freq_range_Hz" and r[0] <= 0:
+            raise ContractViolation(f"{range_field}: frequency bounds must be positive")
 
-    # 7. Units dict has required keys with correct values.
+    # 8. Optional split indices refer to the combined sequence population.
+    total = sum(manifest[field_name] for field_name in _SPLIT_COUNTS)
+    seen_indices: set[int] = set()
+    for split in VALID_SPLITS:
+        field_name = f"{split}_indices"
+        if field_name not in manifest:
+            continue
+        indices = manifest[field_name]
+        if not isinstance(indices, list):
+            raise ContractViolation(f"{field_name} must be a list")
+        if len(indices) != manifest[f"n_spectra_{split}"]:
+            raise ContractViolation(f"{field_name} length must match n_spectra_{split}")
+        if any(type(index) is not int or index < 0 or index >= total for index in indices):
+            raise ContractViolation(f"{field_name} must contain integer indices in [0, {total})")
+        if len(indices) != len(set(indices)):
+            raise ContractViolation(f"{field_name} contains duplicate indices")
+        if seen_indices.intersection(indices):
+            raise ContractViolation(f"{field_name} overlaps another split's indices")
+        seen_indices.update(indices)
+
+    # 9. Units dict has required keys with correct values.
     units = manifest["units"]
     for unit_key, expected_val in REQUIRED_UNITS.items():
         if unit_key not in units:
@@ -164,26 +223,22 @@ def validate_manifest(manifest: dict) -> None:
                 f"Unit '{unit_key}': expected '{expected_val}', got '{units[unit_key]}'"
             )
 
-    # 8. Provenance fields non-empty.
+    # 10. Provenance fields non-empty.
     for prov_field in _PROVENANCE_FIELDS:
         if not manifest[prov_field].strip():
             raise ContractViolation(f"Provenance field '{prov_field}' is empty")
 
-    # 9. bias_direction_uvw: 3 elements, nonzero norm. The upstream stores the raw [uvw]
+    # 11. bias_direction_uvw: 3 elements, nonzero norm. The upstream stores the raw [uvw]
     # crystal direction (NOT normalized — e.g. (0.2, 0.1, 1.0)); the bias vector is
     # ``bias_B0_T · normalize(uvw)`` and the authoritative magnitude is the top-level /bias.
     bdir = manifest["bias_direction_uvw"]
     if len(bdir) != 3:
         raise ContractViolation(f"bias_direction_uvw must have 3 elements, got {len(bdir)}")
+    if any(type(c) not in (int, float) or not math.isfinite(c) for c in bdir):
+        raise ContractViolation("bias_direction_uvw must have finite numeric components")
     if sum(float(c) ** 2 for c in bdir) < 1e-12:
         raise ContractViolation("bias_direction_uvw must have nonzero norm")
 
-    # 10. Positive temporal/spectral dimensions.
-    for dim_key in ("n_timesteps", "n_lines", "n_freq_points"):
-        if manifest[dim_key] <= 0:
-            raise ContractViolation(f"{dim_key} must be positive, got {manifest[dim_key]}")
-    if manifest["dt_s"] <= 0:
-        raise ContractViolation(f"dt_s must be positive, got {manifest['dt_s']}")
 
 
 # --- HDF5 dataset schema ----------------------------------------------------------------
