@@ -2,7 +2,7 @@
 
 NV-diamond magnetometer ODMR simulator and synthetic dataset generator.
 
-**Tychon AI Phase I SBIR** — Deliverable 1: Validated NV-Diamond Magnetometer Sensor Model + Synthetic Data Generator.
+**Tychon AI 90-day plan** — Deliverable 1: Validated NV-Diamond Magnetometer Sensor Model + Synthetic Data Generator.
 
 ## What This Does
 

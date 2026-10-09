@@ -50,7 +50,7 @@ A hybrid PID + neural-network controller **is genuinely running on production Po
 
 ---
 
-## 2. Phase I history — initial intent → pivots → today
+## 2. History — initial intent → pivots → today
 
 ### 2.1 Initial intent (what was set out to build)
 - **ML (both `odmr-edge-ml` and `nv-sensor-sim` initial commits, 2026-04-03):** a VectorBlox-compatible model zoo (MLP / 1D-CNN / FCNN) predicting a **full 3-D B-field vector** `[Bx,By,Bz]` from NV-diamond ODMR spectra, trained on a physics simulator, with a stated ambition to "validate synthetic spectra against published reference data." Every model still defaults to `output_dim=3` (`odmr-edge-ml/models/{mlp,cnn1d,fcnn}.py`, `configs/default.yaml:4`). The real Zenodo reference CSVs shipped in the very first `nv-sensor-sim` commit (`data/experimental/zenodo_odmr/f*.csv`). **[DOCS]** for the intent.
@@ -68,7 +68,6 @@ A hybrid PID + neural-network controller **is genuinely running on production Po
 | **FPGA silicon: engineering-sample → production.** Package designator corrected `FCSG536` → `FCVG484E`; ES board that blocked bring-up on 2026-05-18 replaced by a **Production** kit | `tvw/audits/audit-005-fpga-package-correction.md` (F-018); `polarfire-hybrid-control/docs/silicon_production_confirmed_2026-06-02.md` | The ES board could not be programmed for rung-A; the production kit (IDCODE `1F81A1CF`, no `_ES`) passes. **[HW]** for the IDCODE. |
 | **CoreVectorBlox V500 → V250** rebuild | `polarfire-hybrid-control/docs/rung_f_v250_on_silicon_results_2026-06-16.md` | The rung-A program (2026-06-15) shipped a V500 bitstream; the V250 rebuild (2026-06-16) is the design target and the current NPU. |
 | **Two-slot `idfix2` bitstream + live PID actuator** (fixed two latent RTL bugs: M0 AXI-completion demux truncation, un-latched actuator) | `polarfire-hybrid-control` `95d946b`,`263d030` (2026-06-18); `docs/two_slot_handoff_2026-06-17.md` | Get a clean decoded control plane + a live actuator that tracks Kp·error with a saturating clamp. Verified in ModelSim and on silicon. **[HW]**. |
-| **Program pivot: AFWERX Phase I "Not Selected."** Reframed to methodology and FPGA-stack portfolio; no Phase II DTP2 | project record (DLOG-049); global memory `afwerx_pivot_2026-05-17` | External program outcome, not a technical result. Affects who funds the open work below. |
 | **NEW: `odmr-vector-tracking`** repo scaffolded (through-crossing vector tracker) | `odmr-vector-tracking` `738b70c` (2026-06-29) → `840eb0e` (2026-06-30); `nv-sensor-sim` time-series generator `303b07e` (2026-06-29) | Extend usable vector dynamic range at a fixed bias by learning to hold line-identity through inter-axis crossings (§5). |
 
 ### 2.3 The current running artifact on the FPGA today

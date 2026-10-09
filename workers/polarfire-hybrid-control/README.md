@@ -188,7 +188,7 @@ The AI feedforward path is bounded by three safety mechanisms:
 3. **Hardware watchdog** -- timeout triggers bumpless transfer from AI+PID to pure PID mode; the
    current programmed image uses the verified `250000`-cycle / 2 ms fabric watchdog.
 
-These mechanisms make the AI feedforward path **sector-bounded by design within the Phase I assumptions** documented in `docs/safety_architecture.md`. They do not constitute a proof that the AI cannot destabilize the loop — that requires discharging the Residual Proof Obligations table (closable under follow-on path) in the same document (plant model identification, ZOH phase margin, transport delay bound, derivative filter SI, ReLU sector verification, workload-driven SmartPower).
+These mechanisms make the AI feedforward path **sector-bounded by design within the documented design assumptions** documented in `docs/safety_architecture.md`. They do not constitute a proof that the AI cannot destabilize the loop — that requires discharging the Residual Proof Obligations table (closable under follow-on path) in the same document (plant model identification, ZOH phase margin, transport delay bound, derivative filter SI, ReLU sector verification, workload-driven SmartPower).
 
 ## Power Analysis
 
