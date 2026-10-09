@@ -1,0 +1,80 @@
+# The lab
+
+I built a small home lab to develop, train and check the software in this repo, and to run parts of the quantum-sensing work on my own machines. It has no live diamond sensor and only one FPGA kit, so every hardware result here comes from replayed ODMR traces.
+
+<!-- photo: rack, to be added -->
+
+## At a glance
+
+| Host | Hardware | What it did in this project | Since |
+|---|---|---|---|
+| spark1 | NVIDIA DGX Spark (GB10, Arm, 128 GB unified memory) | First machine and primary dev host. Corpus pipeline, edge-ML cascade timing, early vector-tracker runs, demo dashboard dev. Failed its field diagnostic with a hard power cut at 92 °C and went back for warranty replacement on 2026-07-05. | Ordered mid-October 2025 (recorded). Arrival date not recorded. |
+| spark2 | DGX Spark | Primary host from 2026-07-05. Embedding service, local critics, hybrid search index, UPS master, vector-tracker training up to increment 7. | Present by 2026-02-24 (recorded). Arrival date not recorded. |
+| spark3 | DGX Spark | Document vault. Bought so it could switch between connected and air-gapped use. Ring member, UPS client. | Unopened on 2026-06-10 (recorded). |
+| spark4 | DGX Spark | Replacement for spark1. I gave it a new number so old spark1 config could not collide. Ring member. | Arrived 2026-08-10 (recorded). |
+| bee | Beelink GTi15 Ultra, Intel Core Ultra 9 285H, 64 GB, Windows with MSYS2 | The only x86 host. Libero SoC 2025.2, SmartHLS 2025.2 and the VectorBlox SDK run only here. Synthesis, place-and-route, HLS, `.vnnx` compiles. | VectorBlox SDK installed April 2026 (recorded). Purchase date not recorded. |
+| icicle | PolarFire SoC Icicle kit (MPFS250T) | The FPGA target. Watchdog and soak measurements. | On the bench by June 2026 (recorded). |
+| nas | ASUSTOR AS6804T, four bays, 22 TB RAID 5, 1.8 TB SSD cache, 10GbE | Backups of every Spark, archives of training runs and evaluation sets, NFS mounts. Runs 24/7 since 2026-07-09. | First seen in my records 2026-03-23 (not the purchase date). |
+| mac | MacBook Air M4 | Mobile dev. Ran the live demo dashboard offline at a June 2026 demo. | Throughout |
+| UPS | CyberPower CP1500PFCLCDa with NUT | spark2 is the NUT master. NAS and spark3 are clients and shut down cleanly on power loss (NAS client test passed 2026-07-09). | NUT commands seen 2026-02-26 |
+
+## Topology
+
+```mermaid
+flowchart TB
+  subgraph RING["ConnectX-7 200GbE ring"]
+    direction LR
+    S2["spark2"] --- S3["spark3"] --- S4["spark4"] --- S2
+  end
+  SW["10GbE LAN switch"]
+  RING --- SW
+  NAS[("nas")] --- SW
+  BEE["bee: Beelink, Windows<br/>Libero, SmartHLS, VectorBlox"] --- SW
+  ICI["icicle: PolarFire SoC kit"] --- SW
+  MAC["mac"] --- SW
+  UPS["UPS, NUT<br/>master spark2; clients nas, spark3"] -.-> S2
+```
+
+spark1 was in the lab until 2026-07-05 and is not drawn. Before spark4 arrived, spark1 and spark2 had two direct 200 Gb/s links (RoCE active by 2026-06-09, recorded). I built the three-node ring on 2026-08-11 with NVIDIA's Sync Cluster Assistant. A two-node all-reduce ran at about 175 Gb/s. That figure is from my lab notes and I have not re-run it for this repo. A Tailscale mesh and a Syncthing folder connect all hosts.
+
+## Timeline
+
+| Date | Event | Status |
+|---|---|---|
+| 2025-10-13 to 10-14 | spark1 ordered | Recorded. Arrival not recorded. |
+| 2025-10-26 to 10-28 | spark1 in use: a notebook on serving a model on it, then docker installs | Inferred from the notebook; the installs are recorded |
+| 2026-02-24 | SSH set up between two Sparks | Recorded |
+| 2026-03-23 | NAS first appears in my records | Recorded, not the purchase date |
+| 2026-04 | VectorBlox SDK installed on bee | Recorded |
+| 2026-06 | PolarFire silicon brought up on the Icicle kit | Recorded |
+| 2026-06-09 | Two direct 200 Gb/s links between spark1 and spark2 verified | Recorded |
+| 2026-06-10 | spark3 unopened, planned for air-gapped use | Recorded |
+| 2026-07-05 | spark1 decommissioned, spark2 becomes primary | Recorded |
+| 2026-07-09 | NAS switches to 24/7 | Recorded |
+| 2026-07-11 | Cloud fan-out harness built for the 26-run increment 8 matrix | Recorded |
+| 2026-07-18 | Rack re-cabled | Recorded |
+| 2026-08-10 | spark4 arrives | Recorded |
+| 2026-08-11 | Three-node ring built | Recorded |
+| 2026-09-14 | Rack re-cabled again | Recorded |
+
+## What ran where
+
+- **Simulator.** `nv-sensor-sim` is CPU code, developed on the Sparks. Its CUDA-Q backend is a stub marked planned. Where the datasets were generated is not recorded, so I do not claim GPU generation.
+- **Edge ML.** The path is PyTorch, QAT, ONNX, TFLite INT8, then `.vnnx` on bee. I timed the cascade experiments on spark1's GB10 (8 m 28 s, bf16 with torch.compile). The training host for the rest is not recorded.
+- **Vector tracker.** Increments up to 7 trained on a single GB10, 2 to 7 hours per run. Increment 8, a 26-run matrix in July 2026, trained in the cloud on L40S instances, so I could run 26 trainings in parallel. I used the cloud only for training. Checkpoints came back, and a pre-registered script re-derived every number on spark2. See [increment 8 results](../workers/odmr-vector-tracking/docs/increment8_results.md).
+- **Claim verification.** Embeddings ran on spark2. The critics ran under Ollama on the machine that hosted the orchestrator: spark1 for the May 2026 audits, spark2 from July. Nothing in this step went to a cloud API.
+- **FPGA flow.** Libero, SmartHLS and VectorBlox on bee. Bitstreams and binaries went from bee to the kit. Measurements came back from the kit over the LAN. See the [PolarFire README](../workers/polarfire-hybrid-control/README.md).
+- **Demo.** I built the dashboard on spark1, then spark2, and showed it from the mac. See the [dashboard README](../demo/fpga-demo-dashboard/README.md).
+
+## Local model serving
+
+The embedding service runs Qwen3-Embedding-4B on spark2. It feeds the corpora behind the claim checks. The two critics, qwen3-coder:30b and nemotron-mini, run under Ollama on the orchestrator's host, spark1 and then spark2. I planned an NVIDIA NIM route and skipped it on 2026-05-01.
+
+The rule is that critic inference runs only on local hosts. The coding agents (Claude Code and Codex) do run in the cloud, but they write and orchestrate and do not judge claims. See [STAGES.md](../orchestrator/STAGES.md) and the [pipeline README](../orchestrator/pipeline/README.md).
+
+## What went wrong
+
+- **spark1 failed and was replaced.** On 2026-07-05 its field diagnostic ended in a hard power cut at 92 °C, and it went back for warranty replacement. spark4 arrived on 2026-08-10. For five weeks the lab ran on two Sparks.
+- **Rack re-cabling.** I re-cabled on 2026-07-18 and 2026-09-14. On 2026-07-18 the router and switch were power-cycled mid-shuffle. spark2, spark3 and the NAS lost power and rebooted, and every long-running job that day started over.
+- **Single points of failure.** One FPGA workstation, one FPGA kit, and a UPS master on one host.
+- **No live sensor.** The FPGA loop never saw a real diamond.

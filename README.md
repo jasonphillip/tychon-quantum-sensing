@@ -1,6 +1,6 @@
 # Tychon NV stack: an agent-orchestrated quantum-sensing build
 
-I used coding agents to build the software for NV-diamond quantum magnetometers. One orchestrator session handed out the tasks, and each worker repository had its own agent session. The orchestration was human-mediated: until the dispatch tool existed in July 2026, I carried the prompts between the planning chat and the repository sessions by hand. The orchestration was human-mediated: until the dispatch tool existed in July 2026, I carried the prompts between the planning chat and the repository sessions by hand. Together they produced a physics simulator, edge ML models, PID plus neural-network control on a PolarFire SoC FPGA, a field-vector tracker and a live demo dashboard. I planned the work, wrote the specs and reviewed what came back. The agents wrote most of the code.
+I used coding agents to build the software for NV-diamond quantum magnetometers. One orchestrator session handed out the tasks, and each worker repository had its own agent session. The orchestration was human-mediated: until the dispatch tool existed in July 2026, I carried the prompts between the planning chat and the repository sessions by hand. Together they produced a physics simulator, edge ML models, PID plus neural-network control on a PolarFire SoC FPGA, a field-vector tracker and a live demo dashboard. I planned the work, wrote the specs and reviewed what came back. The agents wrote most of the code.
 
 The build started from a 90-day plan in March 2026 and continued through September 2026.
 
@@ -38,6 +38,8 @@ flowchart TD
 |---|---|
 | 1 minute | this page and [the timeline](#timeline) |
 | 5 minutes | [docs/case-study.md](docs/case-study.md): how the work was planned, reviewed and verified |
+| the machines I used and what ran where | [docs/lab.md](docs/lab.md) |
+| how I used manuals, notebooks and local checks | [docs/method.md](docs/method.md) |
 | the orchestration loop | [planning/excerpts/](planning/excerpts/): the planning chat writing prompts for each repo session and reviewing what came back |
 | mistakes other models caught | [docs/second-opinions.md](docs/second-opinions.md) |
 | a real dispatch | [orchestrator/tvw/audits/dispatch-9-increment8-bc-stack-2026-07-11.md](orchestrator/tvw/audits/dispatch-9-increment8-bc-stack-2026-07-11.md) and the tool that sends it, [dispatch.sh](orchestrator/tvw/scripts/dispatch.sh) |
@@ -51,6 +53,7 @@ flowchart TD
 | Role | Tool | Where it shows |
 |---|---|---|
 | Planner and first orchestrator | a claude.ai project | [planning/](planning/) |
+| Grounded Q&A over vendor manuals | Google NotebookLM | [docs/method.md](docs/method.md) |
 | Math and physics checks | Gemini Deep Think, on the problems it was strongest at | [docs/second-opinions.md](docs/second-opinions.md) |
 | Second reviews of plans and patches | ChatGPT Pro | [docs/second-opinions.md](docs/second-opinions.md) |
 | Orchestrator | a Claude Code session with its own rules | [orchestrator/](orchestrator/) |
@@ -88,7 +91,7 @@ orchestrator/    orchestrator v2: claim-verification pipeline, dispatch tool, au
 workers/         nv-sensor-sim, odmr-edge-ml, polarfire-hybrid-control, odmr-vector-tracking
 demo/            fpga-demo-dashboard: the live demo of the FPGA control loop
 archive/v0/      the first attempts, kept to show where the work began
-docs/            case study
+docs/            case study, lab, method and tooling
 ```
 
 ## About this history
