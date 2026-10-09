@@ -47,6 +47,8 @@ from odmr_edge_ml.vector.blue_projection import (  # noqa: E402
 )
 from odmr_edge_ml.vector.anchors import (  # noqa: E402
     bias_from_manifest,
+    coarse_fit_field,
+    coarse_fit_lock_bins,
     jitter_bins,
     oracle_lock_bins,
     prior_lock_bins,
@@ -151,6 +153,20 @@ def _assemble_results(
     }
 
 
+def _coarse_fit_diagnostics(coarse_fields: np.ndarray, labels_T: np.ndarray) -> dict:
+    """Summarize field error with the spectrum's B/-B ambiguity."""
+    coarse_mag = np.linalg.norm(coarse_fields, axis=1)
+    true_mag = np.linalg.norm(labels_T, axis=1)
+    dot = np.sum(coarse_fields * labels_T, axis=1)
+    cosine = np.abs(dot) / np.maximum(coarse_mag * true_mag, 1e-30)
+    return {
+        "coarse_fit_angle_err_deg_median": float(np.median(
+            np.degrees(np.arccos(np.clip(cosine, -1.0, 1.0)))
+        )),
+        "coarse_fit_mag_err_T_median": float(np.median(np.abs(coarse_mag - true_mag))),
+    }
+
+
 def _per_channel_sigma_from_summary(summary_path: Path) -> dict[tuple[int, int], float]:
     """Read val MAE per channel from training_summary.json — used as Σ diag."""
     if not summary_path.exists():
@@ -171,7 +187,8 @@ def main() -> None:
     ap.add_argument("--split", choices=("val", "test"), default="test")
     ap.add_argument("--n", type=int, default=5000)
     ap.add_argument("--sigma-anchor", type=float, default=1.5)
-    ap.add_argument("--anchor-source", choices=("oracle", "prior", "spectrum"), default="oracle")
+    ap.add_argument("--anchor-source", choices=("oracle", "prior", "spectrum", "coarse_fit"), default="oracle")
+    ap.add_argument("--spectrum-window-bins", type=int, default=25)
     ap.add_argument("--condition", choices=("full", "spectrum_only", "anchor_only", "noisy_anchor"), default="full")
     ap.add_argument("--anchor-noise-bins", type=float, default=0.0)
     ap.add_argument("--bias-B0-T", type=float, nargs=3, metavar=("X", "Y", "Z"), default=None)
@@ -191,6 +208,8 @@ def main() -> None:
     args = ap.parse_args()
     if args.anchor_noise_bins < 0:
         ap.error("--anchor-noise-bins must be non-negative")
+    if args.spectrum_window_bins < 0:
+        ap.error("--spectrum-window-bins must be non-negative")
     bias_B0_T = None
     if args.anchor_source in ("prior", "spectrum"):
         try:
@@ -254,6 +273,7 @@ def main() -> None:
     )
 
     spec_norm = _symmetric_norm(spec_raw)
+    coarse_fields = coarse_fit_field(spec_raw, freq) if args.anchor_source == "coarse_fit" else None
 
     # Per-channel σ from training_summary.json (val MAE = posterior uncertainty)
     sigma_map = _per_channel_sigma_from_summary(args.models / "training_summary.json")
@@ -277,11 +297,15 @@ def main() -> None:
 
         if args.anchor_source == "oracle":
             lock_bins = oracle_lock_bins(lab_T, freq, axis_idx, sign)
+        elif args.anchor_source == "coarse_fit":
+            assert coarse_fields is not None
+            lock_bins = coarse_fit_lock_bins(coarse_fields, freq, axis_idx, sign)
         else:
             assert bias_B0_T is not None
             lock_bins = prior_lock_bins(bias_B0_T, freq, axis_idx, sign, take)
             if args.anchor_source == "spectrum":
-                lock_bins = spectrum_lock_bins(spec_norm, freq, lock_bins)
+                lock_bins = spectrum_lock_bins(spec_norm, freq, lock_bins,
+                                               window_bins=args.spectrum_window_bins)
         if args.condition == "noisy_anchor":
             lock_bins = jitter_bins(lock_bins, args.anchor_noise_bins, rng, len(freq))
 
@@ -399,6 +423,8 @@ def main() -> None:
             "max": float(np.linalg.norm(lab_uT[used_blue], axis=1).max()),
         },
     }
+    if coarse_fields is not None:
+        metrics.update(_coarse_fit_diagnostics(coarse_fields, lab_T))
     summary = _assemble_results(
         metrics,
         anchor_source=args.anchor_source,

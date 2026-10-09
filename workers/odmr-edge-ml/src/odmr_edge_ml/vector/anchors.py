@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 import json
+import warnings
+from functools import lru_cache
 from pathlib import Path
 
 import numpy as np
+from scipy.signal import find_peaks
 
 from odmr_edge_ml.vector.windowing import (
     NV_AXES_UNIT,
@@ -23,6 +26,84 @@ def oracle_lock_bins(
     bin_spacing = float(freq_grid[1] - freq_grid[0])
     raw = (f_dip - freq_grid[0]) / bin_spacing
     return np.clip(np.rint(raw), 0, len(freq_grid) - 1).astype(np.int64)
+
+
+@lru_cache(maxsize=4)
+def _coarse_candidates(
+    grid_bytes: bytes, grid_size: int, n_dirs: int, mags: tuple[float, ...],
+) -> tuple[np.ndarray, np.ndarray]:
+    """Cache candidate fields and their eight line bins for one grid."""
+    freq_grid = np.frombuffer(grid_bytes, dtype=np.float64, count=grid_size)
+    indices = np.arange(n_dirs, dtype=np.float64)
+    z = 1.0 - (indices + 0.5) / n_dirs
+    theta = indices * np.pi * (3.0 - np.sqrt(5.0))
+    radial = np.sqrt(1.0 - z * z)
+    directions = np.stack((radial * np.cos(theta), radial * np.sin(theta), z), axis=1)
+    fields = (directions[:, None, :] * np.asarray(mags)[None, :, None]).reshape(-1, 3)
+    bins = np.stack([
+        oracle_lock_bins(fields, freq_grid, axis, sign)
+        for axis in range(4) for sign in (+1, -1)
+    ], axis=1)
+    return fields, bins
+
+
+def coarse_fit_field(
+    spectra: np.ndarray,
+    freq_grid: np.ndarray,
+    *,
+    n_dirs: int = 2000,
+    mags_T: np.ndarray | None = None,
+    prominence: float = 0.02,
+) -> np.ndarray:
+    """Fit a field from dip positions using a symmetric line-bin Chamfer score."""
+    spectra = np.asarray(spectra, dtype=np.float64)
+    freq_grid = np.asarray(freq_grid, dtype=np.float64)
+    mags = np.asarray(np.linspace(0.5e-3, 5e-3, 19) if mags_T is None else mags_T,
+                      dtype=np.float64)
+    if spectra.ndim != 2 or freq_grid.ndim != 1 or freq_grid.size < 2 or spectra.shape[1] != freq_grid.size:
+        raise ValueError("spectra must have shape (N, len(freq_grid)); grid needs two bins")
+    if not isinstance(n_dirs, (int, np.integer)) or n_dirs < 1:
+        raise ValueError("n_dirs must be a positive integer")
+    if mags.ndim != 1 or mags.size == 0 or not np.isfinite(mags).all() or np.any(mags < 0):
+        raise ValueError("mags_T must be a nonempty array of non-negative finite magnitudes")
+    if not np.isfinite(spectra).all() or not np.isfinite(freq_grid).all() or not np.all(np.diff(freq_grid) > 0):
+        raise ValueError("spectra and increasing freq_grid must be finite")
+    if prominence < 0 or not np.isfinite(prominence):
+        raise ValueError("prominence must be non-negative and finite")
+    fields, predicted = _coarse_candidates(freq_grid.tobytes(), freq_grid.size,
+                                            int(n_dirs), tuple(mags.tolist()))
+    fitted = np.empty((len(spectra), 3), dtype=np.float64)
+    zero_nearest = int(np.argmin(np.linalg.norm(fields, axis=1)))
+    top_count = max(1, int(np.ceil(freq_grid.size * 0.2)))
+    for row, spectrum in enumerate(spectra):
+        baseline = float(np.median(np.partition(spectrum, -top_count)[-top_count:]))
+        dips = np.empty(0, dtype=np.int64) if baseline == 0 else find_peaks(
+            (baseline - spectrum) / baseline, prominence=prominence,
+        )[0]
+        if dips.size == 0:
+            warnings.warn(f"No dips found in spectrum {row}; using nearest-zero candidate",
+                          RuntimeWarning, stacklevel=2)
+            fitted[row] = fields[zero_nearest]
+            continue
+        best_score = np.inf
+        best_index = 0
+        for start in range(0, len(fields), 2048):
+            line_bins = predicted[start:start + 2048]
+            distances = np.abs(line_bins[:, :, None] - dips[None, None, :])
+            scores = distances.min(axis=2).mean(axis=1) + distances.min(axis=1).mean(axis=1)
+            local_index = int(np.argmin(scores))
+            if scores[local_index] < best_score:
+                best_score = float(scores[local_index])
+                best_index = start + local_index
+        fitted[row] = fields[best_index]
+    return fitted
+
+
+def coarse_fit_lock_bins(
+    B_hat: np.ndarray, freq_grid: np.ndarray, axis_idx: int, sign: int,
+) -> np.ndarray:
+    """Return the selected field's expected line bin for one channel."""
+    return oracle_lock_bins(B_hat, freq_grid, axis_idx, sign)
 
 
 def prior_lock_bins(
