@@ -16,7 +16,7 @@ The software is licensed under Apache-2.0. That license does not cover output fr
 
 The build started from a 90-day plan in March 2026 and continued through September 2026.
 
-GitHub Actions runs the tests on CPU runners for every push, and in the 2026-10-09 run 696 passed across the simulator, edge ML, tracker, FPGA tooling, dashboard and orchestrator. Another 60 were skipped because they need datasets that aren't in the repository, optional packages, a private package or the FPGA kit.
+GitHub Actions runs the tests on CPU runners for every push, and in the 2026-10-10 run 764 passed across the simulator, edge ML, tracker, FPGA tooling, dashboard and orchestrator. Another 63 were skipped because they need datasets that aren't in the repository, optional packages, a private package or the FPGA kit.
 
 ## Results at a glance
 
