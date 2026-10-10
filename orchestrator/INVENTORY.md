@@ -183,7 +183,7 @@ A hybrid PID + neural-network controller **is genuinely running on production Po
 | INT8 **not bit-exact** vs float (max gap 0.70 µT) | `..._int8_float_equivalence_2026-06-21.json` | **[MODEL]** |
 | "54% / 96%" figures = **non-deployable v1 unclamped** (clips 97.4% of outputs) | `phase_c_comparison_table.csv` | **[MODEL]**, misleading if cited |
 | Cascade (P3-11B) = **documented negative result** (does not beat monolithic) | `docs/phase2/cascade_saturation_finding.md` | **[TB]** (negative) |
-| Vector/3-D BLUE fusion: residual RMS **2216 µT ≈ 97.8% of |B|**; BLUE is deterministic least-squares, not learned | `exports/vector_v1/vector_v1_test_eval.json` | **[MODEL]**, exploratory |
+| Vector/3-D BLUE fusion: residual RMS **2216 µT ≈ 97.8% of |B|**; BLUE is deterministic least-squares, not learned. ⊘ 2026-10-10: 2216 µT measured bf16-trained artifacts whose checkpoints did not reproduce their validation error; fp32-trained models give 548 µT on the same 3632 samples, still with anchors from the test labels (odmr-edge-ml `docs/vector_v1_anchor_ablation.md`) | `exports/vector_v1/vector_v1_test_eval.json` | **[MODEL]**, exploratory |
 | Quantization: deployed INT8 is **TF post-training calibration, not QAT-exported** | `train_stage.py:151-160` | **[TB]** (code-path confirmed) |
 | **No `.vnnx` in repo** (0 files); deployed TFLite = 7,656 bytes; `exports/` gitignored | `find . -name '*.vnnx'` → 0 | handoff to polarfire; "12.5 KB clean vnnx compile" is **[DOCS]** here |
 | **No inference-latency measurement** (every "ms" figure is data-gen wall-clock) | `adev_simulation.py`, `forward_recon_eval.py` | **[DOCS]** claim, not measured |
