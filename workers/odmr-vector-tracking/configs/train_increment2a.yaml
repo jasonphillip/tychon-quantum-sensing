@@ -11,7 +11,7 @@ batch_size: 16
 patience: 200
 grad_clip: 1.0
 collision_weight: 5.0   # in-collision CE upweight (the hard regime the thesis targets)
-w_assoc: 1.0
+w_assoc: 0.0   # plan N 2026-10: association losses cost field accuracy; see docs/association_loss_multiseed.md
 w_pos: 1.0
 w_track: 1.0            # per-slot predicted-position Huber (supervises the recurrent state)
 w_proj: 1.0

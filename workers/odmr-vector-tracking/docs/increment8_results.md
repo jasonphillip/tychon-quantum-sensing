@@ -114,6 +114,8 @@ permanently, Addendum H); any deterministic/pinned-RNG "fix".
 ## Verdict — PENDING (training blocked on an infra decision; escalated UP to TVW 2026-07-11)
 
 > 2026-10-10: single-component ablations at a reduced 200-epoch horizon (EMA, trunk ×3 seeds, single-teacher KD, standardization, ensemble KD) are in [increment8_ablations.md](increment8_ablations.md). The frozen-recipe `bc` stack remains untrained.
+>
+> 2026-10-10: `w_assoc` is now 0.0 by default in `configs/train_increment2a.yaml` (Jason, after the three-seed ablation in [association_loss_multiseed.md](association_loss_multiseed.md): field-cone RMSE lower in all three seeds). Earlier runs from this config used 1.0, except the no-association ablation arms.
 
 Pre-registered in `experiments/increment8_verdict.py` (committed before any training result
 exists). PRIMARY = in-cone identity recovery vs `baseline-env`, every seed (n=5), clean+snr30;
