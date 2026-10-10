@@ -136,19 +136,19 @@ def _markdown(report: dict) -> str:
     lines = ["# Increment-8 single-component ablation verdicts", "",
              f"Margins: **{MARGIN_STATUS}**. Candidate minus reference; lower is better.",
              "The 0.1 degree angular margin is a proposed p90 sensitivity threshold.", "",
-             "| Pair | Split | Metric | Difference | CI (95%) | Margin | Verdict |",
-             "|---|---|---|---:|---:|---:|---|"]
+             "| Pair | Split | Rung | Decode | Metric | Difference | CI (95%) | Margin | Verdict |",
+             "|---|---|---|---|---|---:|---:|---:|---|"]
     for row in report["comparisons"]:
         fmt = lambda x: "—" if x is None else f"{x:.4f}"
-        cell = f"{row['metric']} ({row['rung']}, {row['decode']})"
         ci = f"[{fmt(row['ci_low'])}, {fmt(row['ci_high'])}]"
-        lines.append(f"| {row['pair']} | {row['split']} | {cell} | "
+        lines.append(f"| {row['pair']} | {row['split']} | {row['rung']} | "
+                     f"{row['decode']} | {row['metric']} | "
                      f"{fmt(row['difference'])} | {ci} | {fmt(row['margin'])} | {row['verdict']} |")
-    lines += ["", "## Runs", "", "| Run | Epochs run | Best epoch | Wall seconds | Truncated |",
-              "|---|---:|---:|---:|---|"]
+    lines += ["", "## Runs", ""]
     for name, run in report["runs"].items():
-        lines.append(f"| {name} | {run['epochs_run']} | {run['best_epoch']} | "
-                     f"{run['wall_s']} | {run['truncated']} |")
+        lines.append(f"- {name}: epochs run {run['epochs_run']}; "
+                     f"best epoch {run['best_epoch']}; wall seconds {run['wall_s']}; "
+                     f"truncated {run['truncated']}")
     lines += ["", "## Skipped pairs", ""]
     lines += [f"- {item['candidate']} vs {item['reference']}: {item['reason']}"
               for item in report["skipped_pairs"]]
