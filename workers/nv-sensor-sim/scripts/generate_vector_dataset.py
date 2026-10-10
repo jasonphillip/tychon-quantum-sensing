@@ -86,6 +86,7 @@ def main() -> None:
         "multi_axis_mode", "bias_B0_T", "bias_direction_uvw",
         "concentrator_amplification", "magnet_drift_ppm_per_K",
         "bias_B0_range_T",
+        "inhomogeneous_fwhm_hz", "base_contrast",
     }
     kwargs = {k: v for k, v in cfg.items() if k in accepted}
     generate_dataset(output_dir=output_dir, **kwargs)
