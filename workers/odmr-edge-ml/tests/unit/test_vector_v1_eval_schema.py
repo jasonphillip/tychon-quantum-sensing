@@ -134,3 +134,22 @@ def test_non_oracle_rejects_label_based_sample_filters(tmp_path, monkeypatch):
                                     str(tmp_path / "unused.h5")])
     with pytest.raises(SystemExit, match="2"):
         evaluator.main()
+
+
+def test_residual_metrics_handle_no_usable_sample():
+    # A label-free anchor source can leave every sample with fewer than 3 valid channels
+    # (plan N, bias set at 2 mT): the summary must report n_blue_used 0, not crash.
+    from experiments.vector_v1_eval import _residual_metrics
+
+    lab = np.array([[0.0, 0.0, 10.0], [0.0, 0.0, 10.0]])
+    b_hat = np.array([[3.0, 4.0, 10.0], [0.0, 0.0, 0.0]])
+    empty = _residual_metrics(b_hat, lab, np.array([False, False]))
+    assert empty["blue_3d_residual_uT"] == dict(rms=None, mean=None, p50=None, p90=None, max=None)
+    assert empty["blue_3d_residual_pct_of_B"]["rms_over_b_mean"] is None
+    assert empty["b_norm_true_uT"]["mean"] is None
+    one = _residual_metrics(b_hat, lab, np.array([True, False]))
+    assert one["blue_3d_residual_uT"]["rms"] == pytest.approx(5.0)
+    assert one["blue_3d_residual_uT"]["p90"] == pytest.approx(5.0)
+    assert one["blue_3d_residual_pct_of_B"]["rms_over_b_mean"] == pytest.approx(0.5)
+    assert one["blue_per_axis_residual_uT"]["y_p50"] == pytest.approx(4.0)
+    assert one["b_norm_true_uT"]["max"] == pytest.approx(10.0)

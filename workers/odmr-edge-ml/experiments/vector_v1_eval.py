@@ -192,6 +192,39 @@ def _predicted_line_validity(preds_uT: np.ndarray, freq: np.ndarray,
     return finite & (bins >= half) & (bins + window_size - half <= len(freq))
 
 
+def _residual_metrics(b_hat_uT: np.ndarray, lab_uT: np.ndarray, used: np.ndarray) -> dict:
+    """BLUE residual summaries over the used samples; None when no sample is usable."""
+    err_axis = (b_hat_uT - lab_uT)[used]
+    err = np.linalg.norm(err_axis, axis=1)
+    b_norm = np.linalg.norm(lab_uT[used], axis=1)
+    if not used.any():
+        return {
+            "blue_3d_residual_uT": dict.fromkeys(("rms", "mean", "p50", "p90", "max")),
+            "blue_3d_residual_pct_of_B": {"rms_over_b_mean": None},
+            "blue_per_axis_residual_uT": dict.fromkeys(
+                ("x_p50", "y_p50", "z_p50", "x_mae", "y_mae", "z_mae")),
+            "b_norm_true_uT": dict.fromkeys(("mean", "p50", "min", "max")),
+        }
+    rms = float(np.sqrt(np.mean(err ** 2)))
+    b_norm_mean = float(b_norm.mean())
+    abs_axis = np.abs(err_axis)
+    return {
+        "blue_3d_residual_uT": {
+            "rms": rms, "mean": float(err.mean()), "p50": float(np.median(err)),
+            "p90": float(np.percentile(err, 90)), "max": float(err.max()),
+        },
+        "blue_3d_residual_pct_of_B": {"rms_over_b_mean": rms / max(b_norm_mean, 1e-12)},
+        "blue_per_axis_residual_uT": {
+            **{f"{a}_p50": float(np.median(abs_axis[:, k])) for k, a in enumerate("xyz")},
+            **{f"{a}_mae": float(np.mean(abs_axis[:, k])) for k, a in enumerate("xyz")},
+        },
+        "b_norm_true_uT": {
+            "mean": b_norm_mean, "p50": float(np.median(b_norm)),
+            "min": float(b_norm.min()), "max": float(b_norm.max()),
+        },
+    }
+
+
 def main() -> None:
     wall_start = time.monotonic()
     ap = argparse.ArgumentParser(description=__doc__)
@@ -400,12 +433,10 @@ def main() -> None:
         used_blue[i] = True
 
     lab_uT = lab_T * 1e6
-    err_per_axis = b_hat_uT - lab_uT
-    err_3d = np.linalg.norm(err_per_axis, axis=1)
     n_used = int(used_blue.sum())
 
-    blue_rms = float(np.sqrt(np.mean(err_3d[used_blue] ** 2)))
-    b_norm_mean = float(np.linalg.norm(lab_uT[used_blue], axis=1).mean())
+    residuals = _residual_metrics(b_hat_uT, lab_uT, used_blue)
+    b_norm_mean = residuals["b_norm_true_uT"]["mean"]
 
     metrics = {
         "dataset": str(args.dataset),
@@ -417,30 +448,7 @@ def main() -> None:
             np.mean(np.abs(true_matrix[valid_matrix]))
         ) if valid_matrix.any() else float("nan"),
         "per_channel": per_channel,
-        "blue_3d_residual_uT": {
-            "rms": blue_rms,
-            "mean": float(np.mean(err_3d[used_blue])),
-            "p50": float(np.median(err_3d[used_blue])),
-            "p90": float(np.percentile(err_3d[used_blue], 90)),
-            "max": float(err_3d[used_blue].max()),
-        },
-        "blue_3d_residual_pct_of_B": {
-            "rms_over_b_mean": blue_rms / max(b_norm_mean, 1e-12),
-        },
-        "blue_per_axis_residual_uT": {
-            "x_p50": float(np.median(np.abs(err_per_axis[used_blue, 0]))),
-            "y_p50": float(np.median(np.abs(err_per_axis[used_blue, 1]))),
-            "z_p50": float(np.median(np.abs(err_per_axis[used_blue, 2]))),
-            "x_mae": float(np.mean(np.abs(err_per_axis[used_blue, 0]))),
-            "y_mae": float(np.mean(np.abs(err_per_axis[used_blue, 1]))),
-            "z_mae": float(np.mean(np.abs(err_per_axis[used_blue, 2]))),
-        },
-        "b_norm_true_uT": {
-            "mean": b_norm_mean,
-            "p50": float(np.median(np.linalg.norm(lab_uT[used_blue], axis=1))),
-            "min": float(np.linalg.norm(lab_uT[used_blue], axis=1).min()),
-            "max": float(np.linalg.norm(lab_uT[used_blue], axis=1).max()),
-        },
+        **residuals,
     }
     if coarse_fields is not None:
         metrics.update(_coarse_fit_diagnostics(coarse_fields, lab_T))
@@ -454,18 +462,21 @@ def main() -> None:
         wall_s=time.monotonic() - wall_start,
     )
     log.info("=== BLUE 3D vector residual (n=%d / %d) ===", n_used, take)
-    log.info("  RMS=%.2f µT  mean=%.2f µT  p50=%.2f µT  p90=%.2f µT",
-             summary["blue_3d_residual_uT"]["rms"],
-             summary["blue_3d_residual_uT"]["mean"],
-             summary["blue_3d_residual_uT"]["p50"],
-             summary["blue_3d_residual_uT"]["p90"])
-    log.info("  RMS as %% of <|B|>=%.1f µT: %.1f%%",
-             b_norm_mean,
-             100.0 * summary["blue_3d_residual_pct_of_B"]["rms_over_b_mean"])
-    log.info("  per-axis |err| p50: x=%.2f y=%.2f z=%.2f µT",
-             summary["blue_per_axis_residual_uT"]["x_p50"],
-             summary["blue_per_axis_residual_uT"]["y_p50"],
-             summary["blue_per_axis_residual_uT"]["z_p50"])
+    if n_used == 0:
+        log.warning("  no sample has 3 or more valid channels: BLUE residual undefined")
+    else:
+        log.info("  RMS=%.2f µT  mean=%.2f µT  p50=%.2f µT  p90=%.2f µT",
+                 summary["blue_3d_residual_uT"]["rms"],
+                 summary["blue_3d_residual_uT"]["mean"],
+                 summary["blue_3d_residual_uT"]["p50"],
+                 summary["blue_3d_residual_uT"]["p90"])
+        log.info("  RMS as %% of <|B|>=%.1f µT: %.1f%%",
+                 b_norm_mean,
+                 100.0 * summary["blue_3d_residual_pct_of_B"]["rms_over_b_mean"])
+        log.info("  per-axis |err| p50: x=%.2f y=%.2f z=%.2f µT",
+                 summary["blue_per_axis_residual_uT"]["x_p50"],
+                 summary["blue_per_axis_residual_uT"]["y_p50"],
+                 summary["blue_per_axis_residual_uT"]["z_p50"])
 
     noise_suffix = f"_n{args.anchor_noise_bins:g}" if args.anchor_noise_bins else ""
     out_path = args.out_json or (
