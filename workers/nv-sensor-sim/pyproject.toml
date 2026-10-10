@@ -7,7 +7,8 @@ name = "nv-sensor-sim"
 version = "0.1.0"
 description = "NV-diamond magnetometer ODMR simulator and synthetic dataset generator"
 requires-python = ">=3.11"
-license = "MIT"
+license = "LicenseRef-Proprietary"
+license-files = ["LICENSE"]
 dependencies = [
     "simos>=0.2.3",
     "qutip>=5.2.3",
