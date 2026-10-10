@@ -16,7 +16,18 @@ Both sets use seed 1717 and identical ranges (700 / 150 / 150); only the two sim
 | default | narrow default (about 0.6 MHz at 10 ppm P1), 0.03 | 150 | 116 | 2069 | 1445 | 3412 | 527 |
 | fitted | +2.69 MHz inhomogeneous, 0.0299 | 150 | 116 | 2065 | 1446 | 3412 | 522 |
 
-Sensitivity (fitted minus default): BLUE 3-D RMS −4 µT (−0.2 %). The mean true field on this slice is 2106 µT, so both rows sit at about 98 % of the field magnitude.
+Sensitivity (fitted minus default): BLUE 3-D RMS −4 µT (−0.2 %).
+
+### Retrained in fp32 (2026-10-10)
+
+The models above came from GPU training with bfloat16 autocast, whose saved checkpoints do not reproduce their recorded validation error (caveat below). The oracle set was retrained on `production_50k_v3_vector` in fp32 (30 epochs, `--no-compile --no-autocast`, odmr-edge-ml branch `portfolio/n3-bias-field`; eight channels, 444 s on one GPU; each channel's exported float and INT8 validation error within 0.2–14 µT of the recorded 267–282 µT) and evaluated the same way, with each channel's learned anchor width:
+
+| Set | Linewidth / contrast | n | n_blue_used | BLUE 3-D RMS (µT) | p50 | p90 | Mean per-channel MAE (µT) |
+|---|---|---:|---:|---:|---:|---:|---:|
+| default | narrow default, 0.03 | 150 | 116 | 526.5 | 57.9 | 864.4 | 30.2 |
+| fitted | +2.69 MHz inhomogeneous, 0.0299 | 150 | 116 | 523.9 | 45.9 | 856.5 | 27.1 |
+
+With correctly saved models the measured line width and contrast do not degrade the oracle-anchored estimate on this slice (RMS −2.6 µT, p50 −12.0 µT); the oracle anchor still carries the label, so this is not a deployment number. GPU use for this item: 444 s of the 1 GPU-hour cap. The mean true field on this slice is 2106 µT, so both rows sit at about 98 % of the field magnitude.
 
 ## Reading
 
