@@ -159,7 +159,7 @@ def spectrum_lock_bins(
     prominence: float = 0.002,
     smooth: bool = True,
 ) -> np.ndarray:
-    """Find the deepest local dip near each prior, or retain the prior."""
+    """Find the nearest local dip to each prior; break ties by depth."""
     spectra = np.asarray(spectra)
     prior_bins = np.asarray(prior_bins, dtype=np.int64)
     if spectra.ndim != 2 or spectra.shape[1] != len(freq_grid):
@@ -182,7 +182,9 @@ def spectrum_lock_bins(
             dips = savgol_filter(dips, 9, 2)
         peaks, _ = find_peaks(dips[lo:hi], prominence=prominence)
         if peaks.size:
-            out[i] = lo + int(peaks[np.argmax(dips[lo + peaks])])
+            dip_bins = lo + peaks
+            out[i] = int(dip_bins[np.lexsort((-dips[dip_bins],
+                                              np.abs(dip_bins - prior)))[0]])
     return out
 
 
