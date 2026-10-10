@@ -26,8 +26,9 @@ MARGIN_STATUS = "proposed, not approved by Jason"
 # docs/noninferiority_reverdict.md proposes lock-loss and post-crossing angular-error
 # margins. The angular threshold is reused here for per-sequence p90 as a proposed
 # sensitivity check; the document does not approve a p90-specific threshold.
-METRICS = {"lost_rate": ("lost", 0.01, True),
-           "angular_error_p90": ("angular_error_p90", 0.1, False)}
+METRICS = {"lost_rate": ("lost", 0.01, True, False),
+           "angular_error_p90": ("angular_error_p90", 0.1, False, False),
+           "lock_fraction": ("lock_fraction", 0.01, False, True)}
 SPLITS = ("dwell", "fieldcone")
 
 
@@ -50,7 +51,7 @@ def _read_rows(path: Path) -> dict[tuple[str, str], dict[str, dict]]:
 
 
 def _compare(candidate: dict[str, dict], reference: dict[str, dict],
-             field: str, margin: float, binary: bool) -> dict:
+             field: str, margin: float, binary: bool, higher_better: bool) -> dict:
     if candidate.keys() != reference.keys():
         raise ValueError("candidate and reference need matching sequence IDs")
     a, b = [], []
@@ -63,13 +64,19 @@ def _compare(candidate: dict[str, dict], reference: dict[str, dict],
     if not a:
         return {"difference": None, "ci_low": None, "ci_high": None,
                 "n_sequences": 0, "verdict": "not shown"}
-    result = compare_paired(a, b, margin=margin, binary=binary)
-    verdict = ("inferior" if math.isfinite(result.ci_low) and result.ci_low > margin
-               else "non-inferior" if result.verdict in ("non-inferior", "superior")
+    result = compare_paired(b, a, margin=margin, binary=binary) if higher_better else \
+        compare_paired(a, b, margin=margin, binary=binary)
+    difference = -result.estimate if higher_better else result.estimate
+    ci_low = -result.ci_high if higher_better else result.ci_low
+    ci_high = -result.ci_low if higher_better else result.ci_high
+    verdict = ("inferior" if math.isfinite(ci_high if higher_better else ci_low)
+               and (ci_high < -margin if higher_better else ci_low > margin)
+               else "non-inferior" if math.isfinite(ci_low if higher_better else ci_high)
+               and (ci_low > -margin if higher_better else ci_high < margin)
                else "not shown")
-    return {"difference": result.estimate,
-            "ci_low": result.ci_low if math.isfinite(result.ci_low) else None,
-            "ci_high": result.ci_high if math.isfinite(result.ci_high) else None,
+    return {"difference": difference,
+            "ci_low": ci_low if math.isfinite(ci_low) else None,
+            "ci_high": ci_high if math.isfinite(ci_high) else None,
             "n_sequences": result.n_sequences, "verdict": verdict}
 
 
@@ -109,17 +116,20 @@ def build_verdicts(out_dir: Path, runs: list[str], *, baseline: str,
                                     "split": split, "rung": rung, "decode": decode,
                                     "reason": "unmatched sequence IDs"})
                     continue
-                for metric, (field, margin, binary) in METRICS.items():
-                    result = _compare(candidate_rows, reference_rows, field, margin, binary)
+                for metric, (field, margin, binary, higher_better) in METRICS.items():
+                    result = _compare(candidate_rows, reference_rows, field, margin,
+                                      binary, higher_better)
                     rows.append({"candidate": candidate, "reference": reference,
                                  "pair": f"{candidate} vs {reference}", "split": split,
                                  "rung": rung, "decode": decode, "metric": metric,
                                  "margin": margin, "margin_status": MARGIN_STATUS,
+                                 "higher_is_better": higher_better,
                                  **result})
     return {"margin_status": MARGIN_STATUS,
             "margin_source": "docs/noninferiority_reverdict.md",
             "angular_p90_margin_note": "0.1 degree is proposed for post-crossing mean; reused for p90 sensitivity only",
-            "unsupported_metrics": ["lock_fraction: no per-frame lock fraction in increment8_eval output"],
+            "lock_fraction_margin_note": "0.01 absolute fraction proposed here; not approved",
+            "unsupported_metrics": [],
             "comparisons": rows, "skipped_pairs": skipped}
 
 
@@ -134,8 +144,9 @@ def _truncated(run_dir: Path, summary: dict) -> bool:
 
 def _markdown(report: dict) -> str:
     lines = ["# Increment-8 single-component ablation verdicts", "",
-             f"Margins: **{MARGIN_STATUS}**. Candidate minus reference; lower is better.",
+             f"Margins: **{MARGIN_STATUS}**. Candidate minus reference; higher is better for lock_fraction.",
              "The 0.1 degree angular margin is a proposed p90 sensitivity threshold.", "",
+             "The 0.01 lock_fraction margin is proposed here as an absolute fraction.", "",
              "| Pair | Split | Rung | Decode | Metric | Difference | CI (95%) | Margin | Verdict |",
              "|---|---|---|---|---|---:|---:|---:|---|"]
     for row in report["comparisons"]:
@@ -152,7 +163,6 @@ def _markdown(report: dict) -> str:
     lines += ["", "## Skipped pairs", ""]
     lines += [f"- {item['candidate']} vs {item['reference']}: {item['reason']}"
               for item in report["skipped_pairs"]]
-    lines += ["", "Lock fraction is unsupported by the per-sequence evaluator output."]
     return "\n".join(lines) + "\n"
 
 
