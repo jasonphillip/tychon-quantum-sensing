@@ -9,9 +9,11 @@ from __future__ import annotations
 
 import dataclasses
 
+import pytest
 import torch
 import torch.nn.functional as F
 
+from experiments.increment8_train import configure_arm
 from odmr_vector_tracking.tracking.learned import LearnedTrackerConfig, build_tracker
 from odmr_vector_tracking.training import TrainSettings, train
 from odmr_vector_tracking.training.loop import SplitTensors, _WeightEMA, set_seed
@@ -121,6 +123,28 @@ def test_compute_losses_default_unchanged_by_new_kwargs() -> None:
     assert torch.allclose(a["total"], b["total"], atol=0.0)
 
 
+def test_std_only_one_teacher_kd_differs_from_kd1() -> None:
+    """One-teacher ensemble standardization changes the actual KD objective."""
+    cfg = LearnedTrackerConfig(n_freq=64)
+    trk = build_tracker(cfg)
+    out = trk(torch.rand(1, 3, cfg.n_freq))
+    anchors = trk.extractor.get_buffer("anchors")
+    res_norm = torch.rand(1, 3, cfg.n_lines)
+    targets = association_targets(res_norm, anchors)
+    labels = torch.randn(1, 3, cfg.n_axes) * 0.3
+    coll = torch.zeros(1, 3, cfg.n_lines, dtype=torch.bool)
+    spacing = float(2**cfg.n_downsample) / float(cfg.n_freq - 1)
+    teacher_scores = out.scores.detach() * 3.7 + 1.9
+    teacher_prob = ensemble_soft_targets(teacher_scores.unsqueeze(0),
+                                         temperature=2.0, standardize=True)
+    common = dict(anchor_spacing=spacing, kd_alpha=0.5, kd_temp=2.0)
+    kd1 = compute_losses(out, targets, res_norm, labels, coll,
+                         teacher_scores=teacher_scores, **common)
+    std = compute_losses(out, targets, res_norm, labels, coll,
+                         teacher_prob=teacher_prob, ensemble_standardize=True, **common)
+    assert not torch.allclose(std["association"], kd1["association"], atol=1e-6)
+
+
 # --------------------------------------------------------------------------------------------
 # weight-EMA
 # --------------------------------------------------------------------------------------------
@@ -169,6 +193,24 @@ def _settings(**over) -> TrainSettings:
                 seed=0, noise_photons=None, log_every=100)
     base.update(over)
     return TrainSettings(**base)
+
+
+@pytest.mark.parametrize(("arm", "expected"), [
+    ("ema_only", {"ema_decay": 0.999}),
+    ("trunk_only", {"start_epoch": 40}),
+    ("std_only", {"ensemble_kd": True, "logit_standardize": True}),
+    ("ens_only", {"ensemble_kd": True}),
+])
+def test_new_arm_settings_exact_flags(arm: str, expected: dict) -> None:
+    settings = TrainSettings()
+    baseline = dataclasses.asdict(settings)
+    configure_arm(settings, arm, branch_epoch=40)
+    changed = {key: value for key, value in dataclasses.asdict(settings).items()
+               if value != baseline[key]}
+    assert changed == expected
+    assert settings.distill is False
+    assert settings.sam_rho == 0.0
+    assert settings.stop_epoch == 0
 
 
 def _params(trk) -> int:
