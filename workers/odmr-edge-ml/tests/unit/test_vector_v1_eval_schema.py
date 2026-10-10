@@ -12,6 +12,12 @@ from experiments.vector_v1_eval import _assemble_results, _coarse_fit_diagnostic
 from odmr_edge_ml.vector.anchors import bias_from_manifest
 
 
+def test_anchor_sigma_precedence():
+    assert evaluator._select_anchor_sigma(2.5, 1.8) == 2.5
+    assert evaluator._select_anchor_sigma(None, 1.8) == 1.8
+    assert evaluator._select_anchor_sigma(None, None) == 1.5
+
+
 def test_results_carry_anchor_source():
     for source in ("oracle", "prior", "spectrum", "coarse_fit"):
         result = _assemble_results(
@@ -83,7 +89,8 @@ def test_non_oracle_selection_and_blue_inputs_ignore_labels(tmp_path, monkeypatc
             path.parent.mkdir(parents=True)
             path.touch()
             channels.append({"axis_idx": axis, "sign": sign,
-                             "val_mae_uT": float(10 + len(channels))})
+                             "val_mae_uT": float(10 + len(channels)),
+                             "learned_sigma": 1.8})
     (models / "training_summary.json").write_text(json.dumps({"channels": channels}))
     freq = np.linspace(2.82e9, 2.92e9, 800)
     spectra = np.ones((2, 800))
@@ -119,6 +126,8 @@ def test_non_oracle_selection_and_blue_inputs_ignore_labels(tmp_path, monkeypatc
                             lambda spec, grid: np.zeros((len(spec), 3)))
         evaluator.main()
         result = json.loads(output.read_text())
+        assert all(ch["anchor_sigma"] == pytest.approx(1.8)
+                   for ch in result["per_channel"])
         snapshots.append((result["n_blue_used"], result["selection_uses_labels"],
                           [ch["n_in_grid"] for ch in result["per_channel"]],
                           [(pred.tolist(), sigma.tolist()) for pred, sigma in calls]))
@@ -134,3 +143,22 @@ def test_non_oracle_rejects_label_based_sample_filters(tmp_path, monkeypatch):
                                     str(tmp_path / "unused.h5")])
     with pytest.raises(SystemExit, match="2"):
         evaluator.main()
+
+
+def test_residual_metrics_handle_no_usable_sample():
+    # A label-free anchor source can leave every sample with fewer than 3 valid channels
+    # (plan N, bias set at 2 mT): the summary must report n_blue_used 0, not crash.
+    from experiments.vector_v1_eval import _residual_metrics
+
+    lab = np.array([[0.0, 0.0, 10.0], [0.0, 0.0, 10.0]])
+    b_hat = np.array([[3.0, 4.0, 10.0], [0.0, 0.0, 0.0]])
+    empty = _residual_metrics(b_hat, lab, np.array([False, False]))
+    assert empty["blue_3d_residual_uT"] == dict(rms=None, mean=None, p50=None, p90=None, max=None)
+    assert empty["blue_3d_residual_pct_of_B"]["rms_over_b_mean"] is None
+    assert empty["b_norm_true_uT"]["mean"] is None
+    one = _residual_metrics(b_hat, lab, np.array([True, False]))
+    assert one["blue_3d_residual_uT"]["rms"] == pytest.approx(5.0)
+    assert one["blue_3d_residual_uT"]["p90"] == pytest.approx(5.0)
+    assert one["blue_3d_residual_pct_of_B"]["rms_over_b_mean"] == pytest.approx(0.5)
+    assert one["blue_per_axis_residual_uT"]["y_p50"] == pytest.approx(4.0)
+    assert one["b_norm_true_uT"]["max"] == pytest.approx(10.0)

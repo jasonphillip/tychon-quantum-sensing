@@ -168,15 +168,24 @@ def _coarse_fit_diagnostics(coarse_fields: np.ndarray, labels_T: np.ndarray) -> 
     }
 
 
-def _per_channel_sigma_from_summary(summary_path: Path) -> dict[tuple[int, int], float]:
-    """Read val MAE per channel from training_summary.json — used as Σ diag."""
+def _select_anchor_sigma(override: float | None, learned_sigma: float | None) -> float:
+    """Choose the host-side Gaussian width independently of BLUE uncertainty."""
+    if override is not None:
+        return float(override)
+    if learned_sigma is not None:
+        return float(learned_sigma)
+    return 1.5
+
+
+def _channel_summary(summary_path: Path) -> dict[tuple[int, int], dict]:
+    """Read per-channel training metadata for anchors and BLUE weights."""
     if not summary_path.exists():
         log.warning("training_summary.json not found at %s; defaulting σ=100 µT", summary_path)
         return {}
     blob = json.loads(summary_path.read_text())
-    out: dict[tuple[int, int], float] = {}
+    out: dict[tuple[int, int], dict] = {}
     for ch in blob.get("channels", []):
-        out[(int(ch["axis_idx"]), int(ch["sign"]))] = float(ch["val_mae_uT"])
+        out[(int(ch["axis_idx"]), int(ch["sign"]))] = ch
     return out
 
 
@@ -192,6 +201,39 @@ def _predicted_line_validity(preds_uT: np.ndarray, freq: np.ndarray,
     return finite & (bins >= half) & (bins + window_size - half <= len(freq))
 
 
+def _residual_metrics(b_hat_uT: np.ndarray, lab_uT: np.ndarray, used: np.ndarray) -> dict:
+    """BLUE residual summaries over the used samples; None when no sample is usable."""
+    err_axis = (b_hat_uT - lab_uT)[used]
+    err = np.linalg.norm(err_axis, axis=1)
+    b_norm = np.linalg.norm(lab_uT[used], axis=1)
+    if not used.any():
+        return {
+            "blue_3d_residual_uT": dict.fromkeys(("rms", "mean", "p50", "p90", "max")),
+            "blue_3d_residual_pct_of_B": {"rms_over_b_mean": None},
+            "blue_per_axis_residual_uT": dict.fromkeys(
+                ("x_p50", "y_p50", "z_p50", "x_mae", "y_mae", "z_mae")),
+            "b_norm_true_uT": dict.fromkeys(("mean", "p50", "min", "max")),
+        }
+    rms = float(np.sqrt(np.mean(err ** 2)))
+    b_norm_mean = float(b_norm.mean())
+    abs_axis = np.abs(err_axis)
+    return {
+        "blue_3d_residual_uT": {
+            "rms": rms, "mean": float(err.mean()), "p50": float(np.median(err)),
+            "p90": float(np.percentile(err, 90)), "max": float(err.max()),
+        },
+        "blue_3d_residual_pct_of_B": {"rms_over_b_mean": rms / max(b_norm_mean, 1e-12)},
+        "blue_per_axis_residual_uT": {
+            **{f"{a}_p50": float(np.median(abs_axis[:, k])) for k, a in enumerate("xyz")},
+            **{f"{a}_mae": float(np.mean(abs_axis[:, k])) for k, a in enumerate("xyz")},
+        },
+        "b_norm_true_uT": {
+            "mean": b_norm_mean, "p50": float(np.median(b_norm)),
+            "min": float(b_norm.min()), "max": float(b_norm.max()),
+        },
+    }
+
+
 def main() -> None:
     wall_start = time.monotonic()
     ap = argparse.ArgumentParser(description=__doc__)
@@ -199,7 +241,8 @@ def main() -> None:
     ap.add_argument("--models", type=Path, default=DEFAULT_MODELS)
     ap.add_argument("--split", choices=("val", "test"), default="test")
     ap.add_argument("--n", type=int, default=5000)
-    ap.add_argument("--sigma-anchor", type=float, default=1.5)
+    ap.add_argument("--sigma-anchor", type=float, default=None,
+                    help="Override each channel's learned Gaussian width")
     ap.add_argument("--anchor-source", choices=("oracle", "prior", "spectrum", "coarse_fit"), default="oracle")
     ap.add_argument("--spectrum-window-bins", type=int, default=25)
     ap.add_argument("--condition", choices=("full", "spectrum_only", "anchor_only", "noisy_anchor"), default="full")
@@ -293,7 +336,10 @@ def main() -> None:
     coarse_fields = coarse_fit_field(spec_raw, freq) if args.anchor_source == "coarse_fit" else None
 
     # Per-channel σ from training_summary.json (val MAE = posterior uncertainty)
-    sigma_map = _per_channel_sigma_from_summary(args.models / "training_summary.json")
+    channel_summary = _channel_summary(args.models / "training_summary.json")
+    sigma_map = {
+        key: float(ch["val_mae_uT"]) for key, ch in channel_summary.items()
+    }
 
     pred_matrix = np.zeros((take, 8), dtype=np.float64)
     valid_matrix = np.zeros((take, 8), dtype=bool)
@@ -338,9 +384,11 @@ def main() -> None:
             valid_matrix[:, ch_idx] = wb.valid_mask
 
         interp = _load_tflite(tflite_path)
+        learned_sigma = channel_summary.get((axis_idx, sign), {}).get("learned_sigma")
+        anchor_sigma = _select_anchor_sigma(args.sigma_anchor, learned_sigma)
         t0 = time.time()
         preds = _tflite_predict_batch(
-            interp, spec_norm, lock_bins, sigma_anchor=args.sigma_anchor,
+            interp, spec_norm, lock_bins, sigma_anchor=anchor_sigma,
             spectrum_scale=0.0 if args.condition == "anchor_only" else 1.0,
             anchor_scale=0.0 if args.condition == "spectrum_only" else 1.0,
         )
@@ -375,6 +423,7 @@ def main() -> None:
                 "test_mae_uT": test_mae,
                 "test_rmse_uT": test_rmse,
                 "val_mae_uT_from_summary": sigma_map.get((axis_idx, sign), None),
+                "anchor_sigma": anchor_sigma,
                 "label_range_uT": [
                     float(true_matrix[:, ch_idx].min()),
                     float(true_matrix[:, ch_idx].max()),
@@ -400,12 +449,10 @@ def main() -> None:
         used_blue[i] = True
 
     lab_uT = lab_T * 1e6
-    err_per_axis = b_hat_uT - lab_uT
-    err_3d = np.linalg.norm(err_per_axis, axis=1)
     n_used = int(used_blue.sum())
 
-    blue_rms = float(np.sqrt(np.mean(err_3d[used_blue] ** 2)))
-    b_norm_mean = float(np.linalg.norm(lab_uT[used_blue], axis=1).mean())
+    residuals = _residual_metrics(b_hat_uT, lab_uT, used_blue)
+    b_norm_mean = residuals["b_norm_true_uT"]["mean"]
 
     metrics = {
         "dataset": str(args.dataset),
@@ -417,30 +464,7 @@ def main() -> None:
             np.mean(np.abs(true_matrix[valid_matrix]))
         ) if valid_matrix.any() else float("nan"),
         "per_channel": per_channel,
-        "blue_3d_residual_uT": {
-            "rms": blue_rms,
-            "mean": float(np.mean(err_3d[used_blue])),
-            "p50": float(np.median(err_3d[used_blue])),
-            "p90": float(np.percentile(err_3d[used_blue], 90)),
-            "max": float(err_3d[used_blue].max()),
-        },
-        "blue_3d_residual_pct_of_B": {
-            "rms_over_b_mean": blue_rms / max(b_norm_mean, 1e-12),
-        },
-        "blue_per_axis_residual_uT": {
-            "x_p50": float(np.median(np.abs(err_per_axis[used_blue, 0]))),
-            "y_p50": float(np.median(np.abs(err_per_axis[used_blue, 1]))),
-            "z_p50": float(np.median(np.abs(err_per_axis[used_blue, 2]))),
-            "x_mae": float(np.mean(np.abs(err_per_axis[used_blue, 0]))),
-            "y_mae": float(np.mean(np.abs(err_per_axis[used_blue, 1]))),
-            "z_mae": float(np.mean(np.abs(err_per_axis[used_blue, 2]))),
-        },
-        "b_norm_true_uT": {
-            "mean": b_norm_mean,
-            "p50": float(np.median(np.linalg.norm(lab_uT[used_blue], axis=1))),
-            "min": float(np.linalg.norm(lab_uT[used_blue], axis=1).min()),
-            "max": float(np.linalg.norm(lab_uT[used_blue], axis=1).max()),
-        },
+        **residuals,
     }
     if coarse_fields is not None:
         metrics.update(_coarse_fit_diagnostics(coarse_fields, lab_T))
@@ -454,18 +478,21 @@ def main() -> None:
         wall_s=time.monotonic() - wall_start,
     )
     log.info("=== BLUE 3D vector residual (n=%d / %d) ===", n_used, take)
-    log.info("  RMS=%.2f µT  mean=%.2f µT  p50=%.2f µT  p90=%.2f µT",
-             summary["blue_3d_residual_uT"]["rms"],
-             summary["blue_3d_residual_uT"]["mean"],
-             summary["blue_3d_residual_uT"]["p50"],
-             summary["blue_3d_residual_uT"]["p90"])
-    log.info("  RMS as %% of <|B|>=%.1f µT: %.1f%%",
-             b_norm_mean,
-             100.0 * summary["blue_3d_residual_pct_of_B"]["rms_over_b_mean"])
-    log.info("  per-axis |err| p50: x=%.2f y=%.2f z=%.2f µT",
-             summary["blue_per_axis_residual_uT"]["x_p50"],
-             summary["blue_per_axis_residual_uT"]["y_p50"],
-             summary["blue_per_axis_residual_uT"]["z_p50"])
+    if n_used == 0:
+        log.warning("  no sample has 3 or more valid channels: BLUE residual undefined")
+    else:
+        log.info("  RMS=%.2f µT  mean=%.2f µT  p50=%.2f µT  p90=%.2f µT",
+                 summary["blue_3d_residual_uT"]["rms"],
+                 summary["blue_3d_residual_uT"]["mean"],
+                 summary["blue_3d_residual_uT"]["p50"],
+                 summary["blue_3d_residual_uT"]["p90"])
+        log.info("  RMS as %% of <|B|>=%.1f µT: %.1f%%",
+                 b_norm_mean,
+                 100.0 * summary["blue_3d_residual_pct_of_B"]["rms_over_b_mean"])
+        log.info("  per-axis |err| p50: x=%.2f y=%.2f z=%.2f µT",
+                 summary["blue_per_axis_residual_uT"]["x_p50"],
+                 summary["blue_per_axis_residual_uT"]["y_p50"],
+                 summary["blue_per_axis_residual_uT"]["z_p50"])
 
     noise_suffix = f"_n{args.anchor_noise_bins:g}" if args.anchor_noise_bins else ""
     out_path = args.out_json or (
