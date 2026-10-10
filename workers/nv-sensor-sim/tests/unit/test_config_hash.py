@@ -50,7 +50,52 @@ CHANGES = {
     "concentrator_amplification": 2.0,
     "magnet_drift_ppm_per_K": 1.0,
     "bias_B0_range_T": (0.001, 0.002),
+    "inhomogeneous_fwhm_hz": 2e6,
+    "base_contrast": 0.05,
 }
+
+
+def test_simulator_fit_parameters_passthrough(tmp_path, monkeypatch):
+    """A tiny real dataset carries both physical settings into simulation and manifest."""
+    original_adapter = batch.SimOSAdapter
+    seen = []
+
+    def adapter_with_capture(config):
+        seen.append(config)
+        return original_adapter(config)
+
+    monkeypatch.setattr(batch, "SimOSAdapter", adapter_with_capture)
+    batch.generate_dataset(
+        str(tmp_path), n_train=1, n_val=1, n_test=1, n_freq_points=100,
+        inhomogeneous_fwhm_hz=2e6, base_contrast=0.05,
+    )
+    manifest = json.loads((tmp_path / "manifest.json").read_text())
+    assert seen and all(c.inhomogeneous_fwhm_hz == 2e6 for c in seen)
+    assert all(c.base_contrast == 0.05 for c in seen)
+    assert manifest["inhomogeneous_fwhm_hz"] == 2e6
+    assert manifest["base_contrast"] == 0.05
+
+
+def test_default_fit_parameters_preserve_legacy_hash(tmp_path, monkeypatch):
+    monkeypatch.setattr(batch, "_get_versions", lambda: ("test", "test"))
+    monkeypatch.setattr(batch, "_get_git_sha", lambda: "test")
+    monkeypatch.setattr(batch, "SimOSAdapter", lambda config: object())
+
+    def fake_split(adapter, config, split_seeds, **kwargs):
+        n = len(split_seeds)
+        return (np.zeros((n, 100)), np.zeros((n, 3)), np.zeros((n, 4)),
+                np.asarray(split_seeds), np.arange(100, dtype=float))
+
+    monkeypatch.setattr(batch, "_generate_split_deterministic", fake_split)
+    batch.generate_dataset(str(tmp_path), n_train=1, n_val=1, n_test=1)
+    manifest = json.loads((tmp_path / "manifest.json").read_text())
+    legacy = {key: value for key, value in _defaults().items()
+              if key not in {"inhomogeneous_fwhm_hz", "base_contrast"}}
+    legacy.update(n_train=1, n_val=1, n_test=1)
+    legacy["b_perp_range_T"] = (0.0, 0.0)
+    assert manifest["config_hash"] == batch._config_hash(legacy)
+    assert manifest["inhomogeneous_fwhm_hz"] == 0.0
+    assert manifest["base_contrast"] == 0.03
 
 
 @pytest.mark.parametrize("field", sorted(CHANGES))

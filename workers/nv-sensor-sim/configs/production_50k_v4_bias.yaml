@@ -1,0 +1,43 @@
+# Full 50,000-spectrum production cut for fixed 2 mT bias plus ambient field.
+# Generate only after the v4 bias sanity slice passes its checks.
+#
+# Lineage: copied from production_50k_v3_vector; split sizes and seed retained.
+
+# Split sizes
+n_train: 40000
+n_val: 5000
+n_test: 5000
+master_seed: 4218  # production_50k_v3 used master_seed=4096; +0x7A marks vector
+
+# Spectral parameters retained from the v3 vector config.
+n_freq_points: 800
+freq_range_Hz: [2.83e9, 2.91e9]
+
+# Vector-readiness mode
+multi_axis_mode: true
+field_sampling: bias_plus_ambient
+
+# Ambient field magnitude around the fixed bias.
+b_mag_range_T: [0.0, 200.0e-6]
+
+# Fixed lab-frame bias metadata.
+bias_B0_T: 2.0e-3
+bias_direction_uvw: [0.2, 0.1, 1.0]
+concentrator_amplification: 1.0
+magnet_drift_ppm_per_K: 0.0
+
+# Corruption parameter ranges
+p1_range_ppm: [1.0, 300.0]
+temp_range_K: [280.0, 320.0]
+b1_gradient_range: [0.05, 0.30]
+b_perp_range_T: [0.0, 10.0e-6]
+
+# Anti-inverse-crime: shift test ranges
+shift_test_ranges: true
+
+# Physics options
+include_nitrogen: false
+use_optics: false
+
+# Output
+output_format: h5
