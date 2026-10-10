@@ -1,4 +1,8 @@
-"""Fit simulated ODMR linewidth and contrast to comparable external spectra."""
+"""Fit comparable ODMR spectra by squared log linewidth and contrast ratios.
+
+Shape MSE is reported but not optimized: offsets and broad wings can make its
+min-max-normalized value prefer an unrealistically wide simulated line.
+"""
 
 from __future__ import annotations
 
@@ -21,6 +25,8 @@ from nv_sensor_sim.validation.reference_comparison import compare_spectra, load_
 
 GRID_FWHM_HZ = (0, 1e6, 2e6, 3e6, 5e6, 8e6, 12e6, 20e6)
 GRID_CONTRAST = (0.001, 0.002, 0.003, 0.005, 0.01, 0.02, 0.03, 0.05, 0.08)
+OBJECTIVE = "Minimize squared log simulated-to-measured linewidth ratio, plus squared log contrast ratio when contrast is used."
+FIT_DATASETS = {"zenodo_zerofield", "zenodo_odmr", "harvard"}
 
 
 def fit_row(
@@ -51,10 +57,16 @@ def fit_row(
             freq_range=(float(freq.min()), float(freq.max())), n_points=len(freq),
         )
         result = compare_spectra(sim_freq, sim_signal, freq, signal)
-        score = result.shape_mse
+        linewidth_sim = result.linewidth_sim_hz
+        linewidth_exp = result.linewidth_exp_hz
+        ratio = result.contrast_ratio
+        if (not math.isfinite(linewidth_sim) or linewidth_sim <= 0
+                or not math.isfinite(linewidth_exp) or linewidth_exp <= 0
+                or not math.isfinite(ratio) or ratio <= 0):
+            return math.inf, result
+        score = math.log(linewidth_sim / linewidth_exp) ** 2
         if use_contrast:
-            ratio = result.contrast_ratio
-            score += math.log(ratio) ** 2 if math.isfinite(ratio) and ratio > 0 else math.inf
+            score += math.log(ratio) ** 2
         return score, result
 
     best_score = math.inf
@@ -87,6 +99,9 @@ def fit_row(
         "inhomogeneous_fwhm_hz": chosen[0],
         "base_contrast": chosen[1],
         "shape_mse": result.shape_mse,
+        "linewidth_ratio": result.linewidth_sim_hz / result.linewidth_exp_hz,
+        "linewidth_sim_hz": result.linewidth_sim_hz,
+        "linewidth_exp_hz": result.linewidth_exp_hz,
         "contrast_ratio": result.contrast_ratio,
         "n_evals": n_evals,
     }
@@ -129,42 +144,67 @@ def main() -> None:
     args = parser.parse_args()
     ed.DATA_DIR = args.data_dir.resolve()
     source = json.loads(args.rows_json.read_text())
-    fit_rows = []
+    rows = []
     for row in source["rows"]:
-        if not row["comparable"]:
+        if not row["comparable"] or row["dataset"] not in FIT_DATASETS:
             continue
         dataset, item = row["dataset"], row["item"]
         freq_hz, signal = _load_row(dataset, item)
         use_contrast = dataset in {"zenodo_zerofield", "zenodo_odmr"}
-        fitted = fit_row(freq_hz, signal, np.asarray(row["B_lab_mT"]) * 1e-3,
-                         SimOSAdapter, use_contrast=use_contrast)
-        fit_rows.append({
+        field = np.asarray(row["B_lab_mT"], dtype=float) * 1e-3
+        default_freq, default_signal = generate_multi_axis_spectrum(
+            SimOSAdapter(SimulationConfig()), field,
+            freq_range=(float(np.min(freq_hz)), float(np.max(freq_hz))),
+            n_points=len(freq_hz),
+        )
+        default = compare_spectra(default_freq, default_signal, freq_hz, signal)
+        fitted = fit_row(freq_hz, signal, field, SimOSAdapter,
+                         use_contrast=use_contrast)
+        rows.append({
             "dataset": dataset, "item": item,
             "B_lab_mT": row["B_lab_mT"],
             "sim_field_source": row["sim_field_source"],
             "use_contrast": use_contrast,
-            "defaults": {"inhomogeneous_fwhm_hz": 0.0, "base_contrast": 0.03},
-            **fitted,
+            "fwhm_default_hz": 0.0,
+            "contrast_default": 0.03,
+            "shape_mse_default": default.shape_mse,
+            "linewidth_exp_hz": default.linewidth_exp_hz,
+            "linewidth_sim_default_hz": default.linewidth_sim_hz,
+            "fitted": {key: fitted[key] for key in ("inhomogeneous_fwhm_hz", "base_contrast")},
+            "shape_mse_fitted": fitted["shape_mse"],
+            "linewidth_sim_fitted_hz": fitted["linewidth_sim_hz"],
+            "contrast_ratio_fitted": fitted["contrast_ratio"],
+            "n_evals": fitted["n_evals"],
         })
-    median = {key: float(np.median([row[key] for row in fit_rows]))
-              for key in ("inhomogeneous_fwhm_hz", "base_contrast")} if fit_rows else {}
+    median = {key: float(np.median([row["fitted"][key] for row in rows]))
+              for key in ("inhomogeneous_fwhm_hz", "base_contrast")} if rows else {}
     payload = {
         "date": date.today().isoformat(),
         "git_sha": subprocess.check_output(["git", "rev-parse", "HEAD"],
                                            cwd=Path(__file__).resolve().parents[1], text=True).strip(),
-        "cross_row_median": median,
-        "fit_rows": fit_rows,
+        "objective": OBJECTIVE,
+        "rows": rows,
+        "median": median,
+        "fit_rows": [[row["dataset"], row["item"]] for row in rows],
     }
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(_json_safe(payload), indent=2, allow_nan=False) + "\n")
     lines = ["# Simulator fit to external ODMR", "", f"Date: {payload['date']}",
-             f"Git SHA: {payload['git_sha']}", "",
-             "| Dataset | Item | Default FWHM (Hz) | Fitted FWHM (Hz) | Default contrast | Fitted contrast | Shape MSE | Contrast ratio | Evaluations |",
+             f"Git SHA: {payload['git_sha']}", "", OBJECTIVE, "",
+             "| Dataset | Item | Default linewidth (MHz) | Fitted linewidth (MHz) | Measured linewidth (MHz) | Default shape MSE | Fitted shape MSE | Fitted contrast | Contrast ratio |",
              "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |"]
-    for row in fit_rows:
-        lines.append(f"| {row['dataset']} | {row['item']} | 0 | {row['inhomogeneous_fwhm_hz']:.6g} | 0.03 | {row['base_contrast']:.6g} | {row['shape_mse']:.6g} | {row['contrast_ratio']:.6g} | {row['n_evals']} |")
-    lines.extend(["", f"Cross-row median FWHM (Hz): {median.get('inhomogeneous_fwhm_hz', 'n/a')}",
-                  f"Cross-row median contrast: {median.get('base_contrast', 'n/a')}", ""])
+    for row in rows:
+        lines.append(
+            f"| {row['dataset']} | {row['item']} | "
+            f"{row['linewidth_sim_default_hz'] / 1e6:.6g} | "
+            f"{row['linewidth_sim_fitted_hz'] / 1e6:.6g} | "
+            f"{row['linewidth_exp_hz'] / 1e6:.6g} | "
+            f"{row['shape_mse_default']:.6g} | {row['shape_mse_fitted']:.6g} | "
+            f"{row['fitted']['base_contrast']:.6g} | "
+            f"{row['contrast_ratio_fitted']:.6g} |"
+        )
+    lines.extend(["", f"Median fitted inhomogeneous FWHM (Hz): {median.get('inhomogeneous_fwhm_hz', 'n/a')}",
+                  f"Median fitted base contrast: {median.get('base_contrast', 'n/a')}", ""])
     args.out.with_suffix(".md").write_text("\n".join(lines))
 
 

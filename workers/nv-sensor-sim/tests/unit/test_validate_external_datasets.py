@@ -61,3 +61,18 @@ def test_fit_rows_marked_in_sample():
     )
     assert first["fitted_in_sample"] is True
     assert second["fitted_in_sample"] is False
+
+
+def test_config_json_accepts_inline_json_and_fit_rows_reads_pairs(tmp_path):
+    import json
+
+    from scripts.validate_external_datasets import load_fit_rows, parse_config_overrides
+
+    assert parse_config_overrides('{"inhomogeneous_fwhm_hz": 5e6, "base_contrast": 0.05}') == {
+        "inhomogeneous_fwhm_hz": 5e6, "base_contrast": 0.05}
+    path = tmp_path / "cfg.json"
+    path.write_text('{"base_contrast": 0.02}')
+    assert parse_config_overrides(str(path)) == {"base_contrast": 0.02}
+    fit = tmp_path / "fit.json"
+    fit.write_text(json.dumps({"fit_rows": [["harvard", "0.40579"], ["zenodo_zerofield", "Position 1"]]}))
+    assert load_fit_rows(fit) == {("harvard", "0.40579"), ("zenodo_zerofield", "Position 1")}
