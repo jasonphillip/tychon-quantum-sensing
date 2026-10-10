@@ -115,3 +115,26 @@ def test_balanced_critics_have_no_prevalence_warning(tmp_path):
     r = run(wide(tmp_path, {"a": ["SUPPORTED", "SUPPORTED", "UNSUPPORTED", "UNSUPPORTED"],
                             "b": ["SUPPORTED", "UNSUPPORTED", "SUPPORTED", "UNSUPPORTED"]}))
     assert r["prevalence_warning"] is None
+
+
+def test_no_prevalence_warning_when_agreement_is_low(tmp_path):
+    # Review pass 2: balanced non-SUPPORTED verdicts with 50 % agreement must not be blamed on prevalence.
+    r = run(wide(tmp_path, {"a": ["UNSUPPORTED", "CONTRADICTED", "UNSUPPORTED", "CONTRADICTED"],
+                            "b": ["UNSUPPORTED", "UNSUPPORTED", "CONTRADICTED", "CONTRADICTED"]}))
+    assert r["raw_agreement"] == pytest.approx(0.5)
+    assert r["prevalence_warning"] is None
+
+
+def test_truth_coverage_is_reported(tmp_path):
+    verdicts = wide(tmp_path, {"a": ["SUPPORTED", "UNSUPPORTED", "SUPPORTED"], "b": ["SUPPORTED", "UNSUPPORTED", "UNSUPPORTED"]})
+    truth = tmp_path / "truth.csv"
+    truth.write_text("claim,verdict\nc0,SUPPORTED\nc1,SUPPORTED\n")
+    r = run(verdicts, "--truth", str(truth))
+    assert r["n_truth_matched"] == 2 and r["n_claims"] == 3
+
+
+def test_positive_label_is_configurable(tmp_path):
+    r = run(wide(tmp_path, {"a": ["PASS", "PASS", "FAIL", "FAIL"], "b": ["PASS", "FAIL", "PASS", "FAIL"]}), "--positive", "PASS")
+    assert r["basis"] == "verdicts: PASS vs other"
+    assert r["mean_pairwise_phi"] == pytest.approx(0.0) and r["n_eff"] == pytest.approx(2.0)
+    assert r["positive_rate"] == {"a": pytest.approx(0.5), "b": pytest.approx(0.5)}

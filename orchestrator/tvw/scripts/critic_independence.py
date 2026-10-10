@@ -84,7 +84,7 @@ def phi(left, right):
     return None if denominator == 0 else (n11 * n00 - n10 * n01) / denominator
 
 
-def measure(critics, claims, truth=None):
+def measure(critics, claims, truth=None, positive="SUPPORTED"):
     if len(critics) < 2:
         raise ValueError("at least two critics are required")
     kept = {claim: row for claim, row in claims.items()
@@ -96,7 +96,7 @@ def measure(critics, claims, truth=None):
         "n_critics": n,
         "n_claims": len(kept),
         "n_dropped": dropped,
-        "basis": "errors against --truth" if truth is not None else "verdicts: SUPPORTED vs other",
+        "basis": "errors against --truth" if truth is not None else f"verdicts: {positive} vs other",
         "raw_agreement": None,
         "mean_pairwise_agreement": None,
         "fleiss_kappa": None,
@@ -106,19 +106,20 @@ def measure(critics, claims, truth=None):
         "n_eff_note": "undefined: no kept claims",
         "positive_rate": {},
         "prevalence_warning": None,
+        "n_truth_matched": None,
     }
     if not verdict_rows:
         return result
 
     count = len(verdict_rows)
-    rates = {c: sum(row[c] == "SUPPORTED" for row in verdict_rows) / count for c in critics}
+    rates = {c: sum(row[c] == positive for row in verdict_rows) / count for c in critics}
     result["positive_rate"] = rates
-    if any(rate >= 0.9 or rate <= 0.1 for rate in rates.values()):
-        result["prevalence_warning"] = (
-            "near-constant verdicts: high raw agreement here comes mostly from prevalence; "
-            "read the chance-corrected agreement, and pass --truth if reference verdicts exist")
     result["raw_agreement"] = sum(len({row[c] for c in critics}) == 1
                                   for row in verdict_rows) / count
+    if result["raw_agreement"] >= 0.8 and any(rate >= 0.9 or rate <= 0.1 for rate in rates.values()):
+        result["prevalence_warning"] = (
+            f"near-constant {positive} rate: high raw agreement here comes mostly from prevalence; "
+            "read the chance-corrected agreement, and pass --truth if reference verdicts exist")
     category_counts = [Counter(row[c] for c in critics) for row in verdict_rows]
     pooled = Counter(value for row in verdict_rows for value in (row[c] for c in critics))
     p_bar = sum(sum(v * (v - 1) for v in counts.values()) / (n * (n - 1))
@@ -140,10 +141,12 @@ def measure(critics, claims, truth=None):
         result["mean_pairwise_cohen_kappa"] = sum(kappas) / len(pairs)
 
     vectors = {critic: [int(row[critic] != truth[claim]) if truth is not None
-                        else int(row[critic] == "SUPPORTED")
+                        else int(row[critic] == positive)
                         for claim, row in kept.items() if truth is None or claim in truth]
                for critic in critics}
     correlations = [phi(vectors[first], vectors[second]) for first, second in pairs]
+    if truth is not None:
+        result["n_truth_matched"] = len(vectors[critics[0]])
     if not vectors[critics[0]]:
         result["n_eff_note"] = "undefined: no kept claims present in --truth"
     elif any(value is None for value in correlations):
@@ -164,17 +167,20 @@ def main():
     parser.add_argument("csv", help="wide or long verdict CSV")
     parser.add_argument("--truth", help="reference CSV with claim,verdict columns")
     parser.add_argument("--json", action="store_true", help="print one JSON object")
+    parser.add_argument("--positive", default="SUPPORTED", help="verdict counted as acceptance (default SUPPORTED)")
     args = parser.parse_args()
     try:
         critics, claims = read_verdicts(args.csv)
         truth = read_truth(args.truth) if args.truth else None
-        result = measure(critics, claims, truth)
+        result = measure(critics, claims, truth, normalized(args.positive))
     except (OSError, ValueError) as error:
         parser.error(str(error))
     if args.json:
         print(json.dumps(result, allow_nan=False))
     else:
         for key, value in result.items():
+            if key == "n_truth_matched" and value is None:
+                continue
             label = "effective votes" if key == "n_eff" else key.replace("_", " ")
             if isinstance(value, float):
                 value = f"{value:.3f}"
