@@ -16,7 +16,7 @@ Both sets use seed 1717 and identical ranges (700 / 150 / 150); only the two sim
 | default | narrow default (about 0.6 MHz at 10 ppm P1), 0.03 | 150 | 116 | 2069 | 1445 | 3412 | 527 |
 | fitted | +2.69 MHz inhomogeneous, 0.0299 | 150 | 116 | 2065 | 1446 | 3412 | 522 |
 
-Sensitivity (fitted minus default): BLUE 3-D RMS −4 µT (−0.2 %).
+Sensitivity (fitted minus default): BLUE 3-D RMS −4 µT (−0.2 %). The mean true field on this slice is 2106 µT, so both rows sit at about 98 % of the field magnitude.
 
 ### Retrained in fp32 (2026-10-10)
 
@@ -27,12 +27,12 @@ The models above came from GPU training with bfloat16 autocast, whose saved chec
 | default | narrow default, 0.03 | 150 | 116 | 526.5 | 57.9 | 864.4 | 30.2 |
 | fitted | +2.69 MHz inhomogeneous, 0.0299 | 150 | 116 | 523.9 | 45.9 | 856.5 | 27.1 |
 
-With correctly saved models the measured line width and contrast do not degrade the oracle-anchored estimate on this slice (RMS −2.6 µT, p50 −12.0 µT); the oracle anchor still carries the label, so this is not a deployment number. GPU use for this item: 444 s of the 1 GPU-hour cap. The mean true field on this slice is 2106 µT, so both rows sit at about 98 % of the field magnitude.
+With correctly saved models the measured line width and contrast do not degrade the oracle-anchored estimate on this slice (RMS −2.6 µT, p50 −12.0 µT); the oracle anchor still carries the label, so this is not a deployment number. Both rows sit at about 25 % of the 2106 µT mean field. GPU use for this item: 444 s of the 1 GPU-hour cap.
 
 ## Reading
 
-The oracle-anchored models do not degrade when the lines take the measured width and contrast, but this is not evidence of robustness: in the plan C anchor ablation (`docs/vector_v1_anchor_ablation.md`) the same models score 2199 µT with the spectrum input set to zero against 2216 µT with it, so their output comes almost entirely from the oracle anchor, and a change to the spectrum cannot move it much. Both training sets were generated with the narrow default lines: the vector models' `production_50k_v3_vector` (inhomogeneous FWHM 0) and the tracker's `sequence_train_v2` (linewidth 1.5 MHz), 2–5× narrower than the public measurements (2.3–7.3 MHz); a model that does use the spectrum would need retraining on fitted-width data before this sensitivity number means anything for it.
+For the first table (bf16-trained artifacts) the near-zero change says nothing about robustness: in the plan C anchor ablation (`docs/vector_v1_anchor_ablation.md`) those artifacts score 2199 µT with the spectrum input set to zero against 2216 µT with it, so their output comes almost entirely from the oracle anchor. For the fp32-retrained models (second table) the measured line width and contrast do not degrade the oracle-anchored estimate either; how much of their output comes from the spectrum is not measured here (no anchor-only run), and the oracle anchor carries the label. Both training sets were generated with the narrow default lines: the vector models' `production_50k_v3_vector` (inhomogeneous FWHM 0) and the tracker's `sequence_train_v2` (linewidth 1.5 MHz), 2–5× narrower than the public measurements (2.3–7.3 MHz); retraining on fitted-width data has not been done.
 
 ## Caveat added 2026-10-10
 
-The models evaluated here were trained on the GPU with bfloat16 autocast. Plan N item N3 found that checkpoints from that training path do not reproduce the validation error recorded during training (for these models: 510–2959 µT on reload against 266–287 µT recorded, four channels checked). The table therefore measures the exported artifacts of that path; it is not a sensitivity of a correctly trained model. See odmr-edge-ml `docs/vector_v1_bias_field.md`.
+The models in the first table were trained on the GPU with bfloat16 autocast. Plan N item N3 found that checkpoints from that training path do not reproduce the validation error recorded during training (for these models: 510–2959 µT on reload against 266–287 µT recorded, four channels checked). That table therefore measures the exported artifacts of that path; the second table is the sensitivity of correctly saved models. See odmr-edge-ml `docs/vector_v1_bias_field.md`.
