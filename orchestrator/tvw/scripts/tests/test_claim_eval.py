@@ -164,4 +164,5 @@ def test_third_labeler_majority_and_policy(tmp_path):
                     "--critics", "c1,c3", "--policy", "majority", "--out", str(report)], check=True)
     text = report.read_text()
     assert "accept iff at least 2 verdicts are SUPPORTED and none is CONTRADICTED" in text
+    assert "\n\nCohen's kappa AB on original rows" in text   # a blank line ends the labeler table
     assert "c2" not in text.split("## All rows")[1]

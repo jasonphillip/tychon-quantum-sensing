@@ -193,6 +193,7 @@ def render(result):
         row = result["labelers"][name]
         lines.append(f"| {name} | {fmt(row['constructed_binary_accuracy'])} | {fmt(row['constructed_five_class_accuracy'])} | {row['original_supported_count']} |")
     if three_labelers:
+        lines.append("")
         for pair in ("ab", "ac", "bc"):
             lines.append(f"Cohen's kappa {pair.upper()} on original rows: {fmt(result['labelers'][f'kappa_{pair}'])}")
         lines.append(f"Three-way raw agreement on original rows: {fmt(result['labelers']['three_way_raw_agreement'])}")
