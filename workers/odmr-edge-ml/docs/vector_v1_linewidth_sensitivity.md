@@ -1,0 +1,23 @@
+# vector_v1 sensitivity to the simulator's linewidth and contrast
+
+Date: 2026-10-10. Code: odmr-edge-ml `43092f2` (evaluation, unchanged), nv-sensor-sim `51452b0` (branch `portfolio/n4-simulator-fit`: configurable `base_contrast`, inhomogeneous linewidth in dataset generation). Models: the existing oracle-trained `vector_v1` set (`exports/vector_v1`), not retrained. Both datasets regenerated (`regenerated_dataset: true`). Cap 1 GPU-h; used 0 (CPU TFLite evaluation, 2–3 s per set).
+
+| Set | Config | md5 | Generation wall |
+|---|---|---|---:|
+| default | `production_50k_v3_vector_sanity1k.yaml` (inhomogeneous FWHM 0, base contrast 0.03) | `d1fa47c39bc4f8ebe9ac7e3d37e6b36e` | 17 s |
+| fitted | `production_50k_v3_vector_sanity1k_fitted.yaml` (inhomogeneous FWHM 2.689 MHz, base contrast 0.0299) | `531db369ca2eed947aa6094ac0eb4678` | 15 s |
+
+Both sets use seed 1717 and identical ranges (700 / 150 / 150); only the two simulator parameters differ. The fitted values are the cross-dataset median of the simulator fit to the public ODMR measurements (nv-sensor-sim `docs/simulator_fit_results.md`): the width median over nine rows, the contrast median over the six rows where contrast is comparable.
+
+## Results (test split, oracle anchors, label-based channel and sample gate as in the original evaluation)
+
+| Set | Linewidth / contrast | n | n_blue_used | BLUE 3-D RMS (µT) | p50 | p90 | Mean per-channel MAE (µT) |
+|---|---|---:|---:|---:|---:|---:|---:|
+| default | narrow default (about 0.6 MHz at 10 ppm P1), 0.03 | 150 | 116 | 2069 | 1445 | 3412 | 527 |
+| fitted | +2.69 MHz inhomogeneous, 0.0299 | 150 | 116 | 2065 | 1446 | 3412 | 522 |
+
+Sensitivity (fitted minus default): BLUE 3-D RMS −4 µT (−0.2 %). The mean true field on this slice is 2106 µT, so both rows sit at about 98 % of the field magnitude.
+
+## Reading
+
+The oracle-anchored models do not degrade when the lines take the measured width and contrast, but this is not evidence of robustness: in the plan C anchor ablation (`docs/vector_v1_anchor_ablation.md`) the same models score 2199 µT with the spectrum input set to zero against 2216 µT with it, so their output comes almost entirely from the oracle anchor, and a change to the spectrum cannot move it much. Both training sets were generated with the narrow default lines: the vector models' `production_50k_v3_vector` (inhomogeneous FWHM 0) and the tracker's `sequence_train_v2` (linewidth 1.5 MHz), 2–5× narrower than the public measurements (2.3–7.3 MHz); a model that does use the spectrum would need retraining on fitted-width data before this sensitivity number means anything for it.
