@@ -1,10 +1,10 @@
 # Full-vector metrics and the association-loss ablation
 
-Date: 2026-10-10. Code: odmr-vector-tracking `4abefee` (branch `portfolio/c3-full-vector`). Evaluation set: `data/sequence_eval_fieldcone_v1` (120 sequences × 256 frames; content hash `819d9ac0a2b0`), rungs clean and snr30. Training set: `sequence_train_v2` (config hash `3341810ccda0`, the matched baseline's own set). Cap: 8 GPU-hours (two runs); used 4.8 job-hours (2.9 h + 1.9 h wall, one GPU each).
+Date: 2026-10-10. Code: odmr-vector-tracking `64fd20f` (branch `portfolio/c3-full-vector`). Evaluation set: `data/sequence_eval_fieldcone_v1` (120 sequences × 256 frames; content hash `819d9ac0a2b0`), rungs clean and snr30. Training set: `sequence_train_v2` (config hash `3341810ccda0`, the matched baseline's own set). Cap: 8 GPU-hours (two runs); used 4.8 job-hours (2.9 h + 1.9 h wall, one GPU each).
 
 ## Metrics (per sequence, then averaged)
 
-- **rmse_T** — RMS of |B_est − B_true| over frames, Tesla.
+- **rmse_T** — RMS of |B_est − B_true| over frames where both are finite, Tesla. All 120 sequences had finite frames in every cell (n_valid_sequences = 120), so no sequence was dropped.
 - **mag_err** — |B_est| − |B_true| per frame (signed; the row's mean is the magnitude bias, its p90 is taken over |error|).
 - **bias** — mean of B_est − B_true per axis.
 - **ae** — angle between B_est and B_true, degrees.
