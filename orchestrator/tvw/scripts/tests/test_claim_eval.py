@@ -166,3 +166,22 @@ def test_third_labeler_majority_and_policy(tmp_path):
     assert "accept iff at least 2 verdicts are SUPPORTED and none is CONTRADICTED" in text
     assert "\n\nCohen's kappa AB on original rows" in text   # a blank line ends the labeler table
     assert "c2" not in text.split("## All rows")[1]
+
+
+def test_majority_with_one_critic_uses_one_verdict_rule(tmp_path):
+    # Review finding (plan N pass 1): --critics X --policy majority must not demand two votes from one critic.
+    from claim_eval import evaluate
+
+    ids = ["r1", "r2", "r3"]
+    for name in ("a", "b", "c"):
+        write_csv(tmp_path / f"{name}.csv", ["id", "label", "evidence", "rationale"],
+                  [dict(id=i, label=l, evidence="e", rationale="r") for i, l in zip(ids, ["supported", "supported", "contradicted"])])
+    write_csv(tmp_path / "constructed.csv", ["id", "label", "origin"], [])
+    write_csv(tmp_path / "verdicts.csv", ["claim_id", "c1_verdict", "c2_verdict"],
+              [dict(claim_id=i, c1_verdict=v, c2_verdict="SUPPORTED") for i, v in zip(ids, ["SUPPORTED", "WEAK", "CONTRADICTED"])])
+    result = evaluate(tmp_path / "verdicts.csv", tmp_path / "constructed.csv", tmp_path / "a.csv", tmp_path / "b.csv",
+                      labels_c_path=tmp_path / "c.csv", critics=["c1"], policy="majority")
+    pooled = result["metrics"]["all"]["pooled"]
+    for key in ("accept_precision", "accept_recall", "abstention_rate", "false_acceptance_rate"):
+        assert pooled["ensemble"][key] == pooled["c1"][key], key
+    assert pooled["ensemble"]["accept_recall"] == pytest.approx(1 / 2)

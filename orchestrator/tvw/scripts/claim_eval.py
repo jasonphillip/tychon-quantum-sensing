@@ -42,7 +42,7 @@ def kappa(a, b):
 def decision(verdicts, policy="unanimous"):
     if "ERROR" in verdicts:
         return "abstain"
-    if policy == "majority":
+    if policy == "majority" and len(verdicts) > 1:   # one verdict: the one-verdict rule below
         if verdicts.count("SUPPORTED") >= 2 and "CONTRADICTED" not in verdicts:
             return "accept"
         if verdicts.count("CONTRADICTED") >= 2 or all(v == "UNSUPPORTED" for v in verdicts):
