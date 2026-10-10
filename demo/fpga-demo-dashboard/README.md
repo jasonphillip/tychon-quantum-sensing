@@ -3,8 +3,7 @@
 Live demo control panel for the **PolarFire SoC Icicle Kit** (MPFS250T + CoreVectorBlox V250).
 Runs fully offline on a Mac/Linux laptop; talks to the kit over SSH.
 
-Design + plan: `~/Desktop/Shared/fpga_demo/` (README index, `06_implementation_plan.md`,
-`07_m0_actuator_fix_investigation.md`).
+The design notes and implementation plan behind this dashboard are kept in a private planning folder and are not part of this repository.
 
 ## Quick start
 ```bash
