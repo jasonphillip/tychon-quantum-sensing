@@ -27,7 +27,7 @@ overlap_ok false means the comparison is not valid; contrast_ratio far from 1 me
 
 - Every spectrum row passes the overlap gate: the simulated range is set from each experimental range, and units are declared per loader.
 - Shape agreement (normalized MSE over the overlap) is best for the zero-field set (0.14–0.23) and the Zenodo ODMR sweeps (0.29–0.41), and poor for the ML-scan and Harvard low-field rows (0.44–0.72).
-- Where the measured linewidth is meaningful (zero-field, Zenodo ODMR and Harvard rows), the simulator's default lines are 2–10× narrower: simulated FWHM 0.58–1.6 MHz against 2.3–7.3 MHz measured. The ML-scan linewidths (25 and 110 MHz) are not meaningful, for the same reason as their contrast (below).
+- Where the measured linewidth is meaningful (zero-field, Zenodo ODMR and Harvard rows), the simulator's default lines are about 2–11× narrower: simulated FWHM 0.58–1.6 MHz against 2.3–7.3 MHz measured. The ML-scan linewidths (25 and 110 MHz) are not meaningful, for the same reason as their contrast (below).
 - Contrast is comparable only where the experimental signal is a positive photoluminescence trace (zero-field, Zenodo ODMR): there the simulated contrast is 0.6–0.8× the measured one. The ML-scan and Harvard signals give contrast_exp > 1, so they are not positive PL traces (baseline-subtracted or differently normalized) and their contrast ratio is not meaningful.
 - The field for the ML-scan and Zenodo ODMR rows is a coarse grid fit (sim_field_source = fitted-grid), not a documented value.
 - Excluded: the Borealis files are pulsed calibration data (pulse and interpulse duration swept at one detuning per file), and the DaRUS set holds Allan-deviation tables. Neither is a CW ODMR spectrum.
