@@ -24,4 +24,4 @@ The oracle-anchored models do not degrade when the lines take the measured width
 
 ## Caveat added 2026-10-10
 
-The models evaluated here were trained on the GPU with `torch.compile`. Plan N item N3 found that checkpoints from that training path do not reproduce the validation error recorded during training (for these models: 510–2959 µT on reload against 266–287 µT recorded, four channels checked). The table therefore measures the exported artifacts of that path; it is not a sensitivity of a correctly trained model. See odmr-edge-ml `docs/vector_v1_bias_field.md`.
+The models evaluated here were trained on the GPU with bfloat16 autocast. Plan N item N3 found that checkpoints from that training path do not reproduce the validation error recorded during training (for these models: 510–2959 µT on reload against 266–287 µT recorded, four channels checked). The table therefore measures the exported artifacts of that path; it is not a sensitivity of a correctly trained model. See odmr-edge-ml `docs/vector_v1_bias_field.md`.
