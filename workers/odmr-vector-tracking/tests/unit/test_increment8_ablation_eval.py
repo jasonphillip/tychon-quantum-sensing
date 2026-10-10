@@ -154,3 +154,17 @@ def test_worse_run_and_missing_pairs(tmp_path):
                            baseline="baseline_e200", available_runs={"baseline_e200"})
     assert not stale["comparisons"]
     assert any(item["candidate"] == "std_only_e200" for item in stale["skipped_pairs"])
+
+
+REPO_ROOT = __import__("pathlib").Path(__file__).resolve().parents[2]
+
+
+def test_missing_named_run_fails_loudly(tmp_path):
+    import subprocess, sys
+    runs = tmp_path / "runs"; (runs / "baseline_e200").mkdir(parents=True)
+    (runs / "baseline_e200" / "best.pt").write_bytes(b"x"); (runs / "baseline_e200" / "summary.json").write_text("{}")
+    r = subprocess.run([sys.executable, "experiments/increment8_ablation_eval.py", "--runs-dir", str(runs),
+                        "--runs", "baseline_e200", "nope_e200", "--out", str(tmp_path / "out")],
+                       capture_output=True, text=True, cwd=REPO_ROOT)
+    assert r.returncode == 2
+    assert "missing run: nope_e200" in r.stderr
