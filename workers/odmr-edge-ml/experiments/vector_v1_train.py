@@ -162,6 +162,7 @@ def _run_one_channel(
     n_val_cap: int | None,
     device: torch.device,
     use_compile: bool | None = None,
+    use_autocast: bool | None = None,
     anchor_source: str = "oracle",
     bias_B0_T: np.ndarray | None = None,
     train_coarse_fields_T: np.ndarray | None = None,
@@ -217,6 +218,7 @@ def _run_one_channel(
         seed=seed,
         num_workers=2,
         use_compile=use_compile,
+        use_autocast=use_autocast,
     )
 
     elapsed = time.time() - t0
@@ -250,6 +252,8 @@ def main() -> None:
     ap.add_argument("--smoke", action="store_true",
                     help="One channel (axis=0, sign=+1), 2 epochs, 1000 train samples")
     ap.add_argument("--epochs", type=int, default=100)
+    ap.add_argument("--no-autocast", action="store_true",
+                    help="train in fp32 (bf16 autocast on CUDA breaks checkpoint/validation parity)")
     ap.add_argument("--no-compile", action="store_true",
                     help="Disable torch.compile for every channel")
     ap.add_argument("--batch-size", type=int, default=64)
@@ -383,6 +387,7 @@ def main() -> None:
                 seed=args.seed, n_train_cap=5000, n_val_cap=1000,
                 device=device,
                 use_compile=False if args.no_compile else None,
+                use_autocast=False if args.no_autocast else None,
                 anchor_source=args.anchor_source, bias_B0_T=bias_B0_T,
                 train_coarse_fields_T=train_coarse_fields_T,
                 val_coarse_fields_T=val_coarse_fields_T,
@@ -403,6 +408,7 @@ def main() -> None:
                     n_train_cap=None, n_val_cap=None,
                     device=device,
                     use_compile=False if args.no_compile else None,
+                use_autocast=False if args.no_autocast else None,
                     anchor_source=args.anchor_source, bias_B0_T=bias_B0_T,
                     train_coarse_fields_T=train_coarse_fields_T,
                     val_coarse_fields_T=val_coarse_fields_T,
@@ -415,6 +421,7 @@ def main() -> None:
         "smoke": args.smoke,
         "epochs": args.epochs,
         "use_compile": not args.no_compile,
+        "use_autocast": not args.no_autocast,
         "huber_delta": args.huber_delta,
         "window_size": args.window_size,
         "seed": args.seed,

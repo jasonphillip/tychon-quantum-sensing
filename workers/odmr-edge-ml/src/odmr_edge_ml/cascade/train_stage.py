@@ -187,6 +187,7 @@ def train_stage(
     seed: int = 42,
     use_compile: bool | None = None,
     num_workers: int = 4,
+    use_autocast: bool | None = None,
     train_sample_weights: np.ndarray | None = None,
 ) -> StageResult:
     """Train one cascade stage and export INT8 artifacts.
@@ -306,7 +307,9 @@ def train_stage(
         seed=seed, checkpoint_dir=str(output_dir / "checkpoints"),
     )
     criterion = _ScalarHuberLoss(delta=huber_delta)
-    autocast_enabled = device.type == "cuda"
+    # bf16 autocast on CUDA leaves checkpoints that do not reproduce the in-process
+    # validation (plan N, 2026-10-10); use_autocast=False trains in fp32.
+    autocast_enabled = (device.type == "cuda") if use_autocast is None else bool(use_autocast)
     t0 = time.time()
     with torch.autocast(
         device_type=device.type, dtype=torch.bfloat16, enabled=autocast_enabled,

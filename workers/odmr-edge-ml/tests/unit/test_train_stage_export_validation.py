@@ -50,3 +50,28 @@ def test_stage_reports_export_mae_and_matches_reloaded_checkpoint(tmp_path):
     loader = DataLoader(dataset, batch_size=32, collate_fn=_collate, num_workers=0)
     checkpoint_mae = _validate_scalar(reloaded, loader, torch.device("cpu"))["mae_uT"]
     assert result.export_val_mae_uT["float"] == pytest.approx(checkpoint_mae, rel=1e-3)
+
+
+@pytest.mark.parametrize("use_autocast,expected", [(True, True), (None, False)])
+def test_stage_honours_use_autocast(tmp_path, monkeypatch, use_autocast, expected):
+    # Explicit use_autocast overrides the device default (CPU default: off; CUDA default: on).
+    pytest.importorskip("tensorflow")
+    import contextlib
+    import importlib
+    ts = importlib.import_module("odmr_edge_ml.cascade.train_stage")
+    seen = []
+
+    def recorder(*args, **kwargs):
+        seen.append(kwargs.get("enabled"))
+        return contextlib.nullcontext()
+
+    monkeypatch.setattr(ts.torch, "autocast", recorder)
+    rng = np.random.default_rng(5)
+    x = rng.uniform(-1, 1, (32, 40)).astype(np.float32)
+    bins = rng.integers(4, 36, 32).astype(np.float32)
+    y = rng.uniform(400, 600, 32).astype(np.float32)
+    train_stage(name="ac", train_spectra_norm=x, train_lock_bins=bins, train_labels_uT=y,
+                val_spectra_norm=x, val_lock_bins=bins, val_labels_uT=y, output_dir=tmp_path,
+                device=torch.device("cpu"), input_dim=40, epochs=1, batch_size=32,
+                use_compile=False, num_workers=0, use_autocast=use_autocast)
+    assert seen and seen[0] is expected
