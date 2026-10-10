@@ -14,7 +14,7 @@ GitHub Actions runs the tests on CPU runners for every push, and in the 2026-10-
 |---|---|---|
 | FPGA watchdog | Trip time measured on PolarFire SoC silicon on 2026-07-01: median 2.000 ms over 120 trips | One dev kit |
 | FPGA control loop | 8-hour soak on silicon on 2026-07-02: 95.7 M steps at 3,319 Hz, and the loop never stopped advancing. Five short scheduling delays over 2 ms each tripped the watchdog | Paced by software on the SoC's processor, not in the fabric; replayed ODMR input, no live diamond. A counted trip does not show that the controller fell back (next row) |
-| Watchdog fallback | Board test on 2026-10-09, 82 runs: when the next controller update saw the timeout, control passed to plain PID within one update (66 to 71 µs), with no jump in the actuator value, 60 of 60 | No fallback when the timeout cleared before the next update (0 of 20) or when the control process stopped. At recovery the actuator steps by about 0.01, ten times the slew limit |
+| Watchdog fallback | Board tests on 2026-10-09. When the next controller update saw the timeout, control passed to plain PID within one update (66 to 71 µs), with no jump in the actuator value, 60 of 60. After a software fix that starts the hand-over whenever the timeout is high, the two cases that had failed now fall back as well: a timeout that cleared before the next update, 20 of 20 (was 0 of 20), and a 1 s pause of the control process, 10 of 10 after it resumes (was 0 of 10) | A processor that stays frozen gets no fallback until it resumes. At recovery the actuator still steps by about 0.01, ten times the slew limit |
 | Edge ML benchmark | `make bench` trains a 10,689-parameter network on synthetic spectra. Mean field error on 200 test spectra is 10.53 µT, against 12.26 µT for a constant baseline and 25.93 µT for a derivative zero-crossing PID proxy | Synthetic data, FP32 on a CPU; INT8 accuracy on the kit is not in this table |
 | Vector tracker | Follows the field vector through spectral line crossings, reliable to about 30 to 40° off the bias axis | FP32 simulation only; no INT8 export or on-target run |
 | Simulator | Loaders for five public ODMR and magnetometry datasets, and two-sample tests to compare against them | Comparison results not yet committed |
@@ -68,6 +68,7 @@ flowchart TD
 | how I used manuals, notebooks and local checks | [docs/method.md](docs/method.md) |
 | what I read | [docs/references.md](docs/references.md): manuals, papers and the public datasets |
 | a term I don't know | [docs/glossary.md](docs/glossary.md) |
+| how the workflow performed, from its own records | [docs/workflow-retrospective.md](docs/workflow-retrospective.md) |
 | why the orchestrator exists and why its critics stay off the web | [orchestrator/README.md](orchestrator/README.md): it started as a check on my own work |
 | the orchestration loop | [planning/excerpts/](planning/excerpts/): the planning chat writing prompts for each repo session and reviewing what came back |
 | mistakes other models caught | [docs/second-opinions.md](docs/second-opinions.md) |
@@ -110,6 +111,7 @@ By rule, the orchestrator session sends a written dispatch with a goal and an ac
 ## Not finished
 
 - An NV diamond has four crystal orientations, so one sensor can measure the direction of the field as well as its size. The edge models and the FPGA loop use the scalar field. The vector tracker in [workers/odmr-vector-tracking](workers/odmr-vector-tracking) works in FP32 simulation only, reliably to about 30-40° off the bias axis. No INT8 export or on-target parity run exists for it, and it isn't in the FPGA loop.
+- The simulator has been compared against four public ODMR datasets ([table](workers/nv-sensor-sim/docs/external_validation_results.md)). Every comparison passes the frequency-overlap check, but the simulated lines are about 2 to 11 times narrower than the measured ones and the default contrast model is not fitted to any experiment.
 - The control loop runs on PolarFire silicon with replayed ODMR traces as its input. It is paced by software on the SoC's processor, not resident in the fabric, and the 8-hour soak ran at about 3.3 kHz. No live diamond sensor has been in that loop.
 
 ## Layout
@@ -120,7 +122,7 @@ orchestrator/    orchestrator v2: claim-verification pipeline, dispatch tool, au
 workers/         nv-sensor-sim, odmr-edge-ml, polarfire-hybrid-control, odmr-vector-tracking
 demo/            fpga-demo-dashboard: the live demo of the FPGA control loop
 archive/v0/      the first attempts, kept to show where the work began
-docs/            primer, case study, lab, method and tooling, references, glossary
+docs/            primer, case study, lab, method and tooling, references, glossary, workflow retrospective
 ```
 
 ## About this history

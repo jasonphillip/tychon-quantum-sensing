@@ -44,7 +44,7 @@ Terms used across this repository, grouped by area. The [primer](primer.md) expl
 | QuestaSim, ModelSim | HDL simulators used to test the generated RTL. |
 | Yocto | The Linux build system behind the kit's Linux image. |
 | PID | Proportional-integral-derivative controller, the classic feedback loop. |
-| Watchdog | A fabric timer that detects a missed network deadline so the controller can hand over to plain PID. In the 2026-10-09 board test the handover worked when the next update saw the timeout, and not when the timeout cleared first. |
+| Watchdog | A fabric timer that detects a missed network deadline so the controller can hand over to plain PID. In the 2026-10-09 board tests the hand-over worked when the next update saw the timeout. After a software fix it also works when the timeout clears first or the control process pauses; a processor that stays frozen gets no fallback until it resumes. |
 | RTA | Run-time assurance: a simple trusted controller bounds a complex one and can take over. Here PID, a clamp on the network's output and the watchdog. |
 | HIL | Hardware in the loop: the kit runs the controller against recorded or replayed sensor data. |
 | Soak test | A long run, here 8 hours, to catch stalls, drift and memory growth. |
