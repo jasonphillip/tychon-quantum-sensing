@@ -1,0 +1,49 @@
+# Plan N task N4 (2026-10-10): the sanity1k vector slice with the cross-dataset median simulator fit
+# (docs/simulator_fit_results.md). Same seed and ranges as production_50k_v3_vector_sanity1k.yaml; only the
+# two lines below differ, so the pair isolates the linewidth/contrast effect.
+# Split sizes (sanity slice: ~700 train / 150 val / 150 test ≈ 1000)
+n_train: 700
+n_val: 150
+n_test: 150
+master_seed: 1717
+
+# Spectral parameters: wider 80 MHz window to fit the ±28 MHz outer dips at 1 mT
+n_freq_points: 800
+freq_range_Hz: [2.83e9, 2.91e9]
+
+# Vector-readiness mode
+multi_axis_mode: true
+field_sampling: spherical
+
+# Bias-regime field-magnitude range — covers Path A 0.5-5 mT and Path B
+# 30x-amplified Earth field (50 µT × 30 = 1.5 mT, with margin)
+bias_B0_range_T: [0.5e-3, 5.0e-3]
+b_mag_range_T: [0.5e-3, 5.0e-3]
+
+# Bias setpoint metadata — describes hardware intent, not per-spectrum draw.
+# Path A would set bias_B0_T to the magnet field; Path B would set it to 0
+# and rely on concentrator_amplification. The Phase-II Path-A-vs-B decision
+# tychon-sbir/docs/06_research_inputs/bias_field_path_decision_2026-05-17.md.
+bias_B0_T: 0.0
+bias_direction_uvw: [0.0, 0.0, 1.0]
+concentrator_amplification: 1.0
+magnet_drift_ppm_per_K: 0.0
+
+# Corruption parameter ranges (per-spectrum uniform sampling)
+p1_range_ppm: [1.0, 300.0]
+temp_range_K: [280.0, 320.0]
+b1_gradient_range: [0.05, 0.30]
+# In multi-axis mode b_perp_range_T is *extra* transverse field beyond the
+# geometric per-axis projection of B_lab. Keep small.
+b_perp_range_T: [0.0, 10.0e-6]
+
+# Physics options
+include_nitrogen: false
+use_optics: false
+
+# Output
+output_format: h5
+
+# Simulator fit (median over the in-sample external rows; see docs/simulator_fit_results.md)
+inhomogeneous_fwhm_hz: 2.6889136904152087e+6
+base_contrast: 0.029872511664386057

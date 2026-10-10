@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+from dataclasses import fields
 import json
 import math
 import subprocess
@@ -32,14 +33,33 @@ ROW_KEYS = (
     "dataset", "item", "n_points", "overlap_fraction", "overlap_ok", "shape_mse",
     "contrast_exp", "contrast_sim", "contrast_ratio", "linewidth_exp_hz",
     "linewidth_sim_hz", "max_abs_peak_offset_hz", "noise_exp", "sim_field_source",
-    "B_lab_mT", "comparable", "reason",
+    "B_lab_mT", "comparable", "reason", "fitted_in_sample",
 )
 FIELD_GRID_MT = (0, 0.5, 1, 2, 3, 5)
 
 
+def parse_config_overrides(text: str) -> dict:
+    """Read overrides from inline JSON or an existing JSON file."""
+    if text.lstrip().startswith("{"):
+        value = json.loads(text)
+    else:
+        path = Path(text)
+        value = json.loads(path.read_text() if path.is_file() else text)
+    if not isinstance(value, dict):
+        raise ValueError("--config-json must contain a JSON object")
+    return value
+
+
+def load_fit_rows(path: Path) -> set[tuple[str, str]]:
+    """Read dataset and item pairs from a simulator fit payload."""
+    payload = json.loads(Path(path).read_text())
+    return {(dataset, item) for dataset, item in payload["fit_rows"]}
+
+
 def _blank_row(dataset: str, item: str, reason: str, n_points: int | None = None) -> dict:
     row = dict.fromkeys(ROW_KEYS)
-    row.update(dataset=dataset, item=item, n_points=n_points, comparable=False, reason=reason)
+    row.update(dataset=dataset, item=item, n_points=n_points, comparable=False,
+               reason=reason, fitted_in_sample=False)
     return row
 
 
@@ -64,6 +84,7 @@ def build_comparison_row(
     sim_field_source: str | None = None,
     reason: str = "",
     simulate: Callable = generate_multi_axis_spectrum,
+    fit_rows: set[tuple[str, str]] | None = None,
 ) -> dict:
     """Build one row; a missing field is selected by minimum valid shape MSE."""
     freq = np.asarray(exp_freq, dtype=float).reshape(-1)
@@ -100,6 +121,7 @@ def build_comparison_row(
     _, field, comparison = best
     offsets = [abs(x) for x in comparison.peak_offsets_hz if math.isfinite(x)]
     row = _blank_row(dataset, item, reason, len(freq))
+    row["fitted_in_sample"] = (dataset, item) in (fit_rows or set())
     row.update(
         overlap_fraction=comparison.overlap_fraction,
         overlap_ok=comparison.overlap_ok,
@@ -120,11 +142,13 @@ def build_comparison_row(
     return row
 
 
-def _dataset_rows(adapter: SimOSAdapter, max_items: int) -> list[dict]:
+def _dataset_rows(adapter: SimOSAdapter, max_items: int,
+                  fit_rows: set[tuple[str, str]] | None = None) -> list[dict]:
     rows = []
 
     def add(dataset: str, item: str, freq: np.ndarray, signal: np.ndarray, **kwargs) -> None:
-        rows.append(build_comparison_row(dataset, item, freq, signal, adapter, **kwargs))
+        rows.append(build_comparison_row(dataset, item, freq, signal, adapter,
+                                         fit_rows=fit_rows, **kwargs))
 
     try:
         selected = 0
@@ -184,6 +208,8 @@ def _dataset_rows(adapter: SimOSAdapter, max_items: int) -> list[dict]:
 
     rows.append(_blank_row("darus_gradiometry", "dataset",
                            "Allan-deviation tables, not spectra"))
+    for row in rows:
+        row["fitted_in_sample"] = (row["dataset"], row["item"]) in (fit_rows or set())
     return rows
 
 
@@ -223,6 +249,8 @@ def main() -> None:
     parser.add_argument("--data-dir", type=Path, default=Path("data/experimental"))
     parser.add_argument("--out-dir", type=Path, default=Path("docs"))
     parser.add_argument("--max-items-per-dataset", type=int, default=3)
+    parser.add_argument("--config-json", type=str)
+    parser.add_argument("--fit-rows", type=Path)
     args = parser.parse_args()
     if args.max_items_per_dataset < 1:
         parser.error("--max-items-per-dataset must be positive")
@@ -230,8 +258,15 @@ def main() -> None:
     data_dir = args.data_dir.resolve()
     out_dir = args.out_dir.resolve()
     ed.DATA_DIR = data_dir
-    adapter = SimOSAdapter(SimulationConfig())
-    rows = _dataset_rows(adapter, args.max_items_per_dataset)
+    overrides = parse_config_overrides(args.config_json) if args.config_json else {}
+    valid_fields = {field.name for field in fields(SimulationConfig)}
+    if not isinstance(overrides, dict) or set(overrides) - valid_fields:
+        parser.error("--config-json must contain only SimulationConfig fields")
+    fit_rows = set()
+    if args.fit_rows:
+        fit_rows = load_fit_rows(args.fit_rows)
+    adapter = SimOSAdapter(SimulationConfig(**overrides))
+    rows = _dataset_rows(adapter, args.max_items_per_dataset, fit_rows)
     file_counts = {name: sum(p.is_file() for p in (data_dir / dirname).rglob("*"))
                    for name, dirname in DATASET_DIRS.items()}
     payload = _clean({

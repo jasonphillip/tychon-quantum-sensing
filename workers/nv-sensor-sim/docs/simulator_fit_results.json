@@ -1,0 +1,275 @@
+{
+  "date": "2026-10-10",
+  "git_sha": "1ce32afc9bc57d783d42ffdf6dd0d4e54138a06d",
+  "objective": "Minimize squared log simulated-to-measured linewidth ratio, plus squared log contrast ratio when contrast is used.",
+  "rows_json": "docs/external_validation_results.json",
+  "rows_json_sha256": "5465f608ef8337cb8d38b240b64736ee15d44e67eaf38b2e9362d252330fa0c4",
+  "data_dir": "~/projects/nv-sensor-sim/data/experimental",
+  "input_tree_sha256": {
+    "harvard": "9936294d2432181534a0f46291be3a53e5ede6c53c0ae3fa6cf4f6dddc1931e9",
+    "zenodo_odmr": "f744d2d081fd4dd06f31f336a6a7152772611fe244b89735c5baf7e210216345",
+    "zenodo_zerofield": "49b1fdeffb60bb8ca841fab8714ebb24fd64365f0d7bd03c943d831b6ac62d44"
+  },
+  "wall_s": 4.507,
+  "job_hours": 0.0,
+  "rows": [
+    {
+      "dataset": "zenodo_zerofield",
+      "item": "Position 1",
+      "B_lab_mT": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "sim_field_source": "zero",
+      "use_contrast": true,
+      "fwhm_default_hz": 0.0,
+      "contrast_default": 0.03,
+      "shape_mse_default": 0.23158495975366966,
+      "linewidth_exp_hz": 6302534.847597599,
+      "linewidth_sim_default_hz": 658305.454773426,
+      "fitted": {
+        "inhomogeneous_fwhm_hz": 6040285.321801385,
+        "base_contrast": 0.05228557502375089
+      },
+      "shape_mse_fitted": 0.13865027530326304,
+      "linewidth_sim_fitted_hz": 6302533.519306183,
+      "contrast_ratio_fitted": 0.9999995661827458,
+      "n_evals": 150
+    },
+    {
+      "dataset": "zenodo_zerofield",
+      "item": "Position 2",
+      "B_lab_mT": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "sim_field_source": "zero",
+      "use_contrast": true,
+      "fwhm_default_hz": 0.0,
+      "contrast_default": 0.03,
+      "shape_mse_default": 0.16747235019684462,
+      "linewidth_exp_hz": 7247587.367552757,
+      "linewidth_sim_default_hz": 658305.454773426,
+      "fitted": {
+        "inhomogeneous_fwhm_hz": 6985867.944307733,
+        "base_contrast": 0.047944351163054955
+      },
+      "shape_mse_fitted": 0.07555298593838478,
+      "linewidth_sim_fitted_hz": 7247583.990281105,
+      "contrast_ratio_fitted": 0.9999993923625115,
+      "n_evals": 153
+    },
+    {
+      "dataset": "zenodo_zerofield",
+      "item": "Position 3",
+      "B_lab_mT": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "sim_field_source": "zero",
+      "use_contrast": true,
+      "fwhm_default_hz": 0.0,
+      "contrast_default": 0.03,
+      "shape_mse_default": 0.14431201583552597,
+      "linewidth_exp_hz": 6629389.6613230705,
+      "linewidth_sim_default_hz": 658305.454773426,
+      "fitted": {
+        "inhomogeneous_fwhm_hz": 6364104.423610744,
+        "base_contrast": 0.0507914636333692
+      },
+      "shape_mse_fitted": 0.06844795827709196,
+      "linewidth_sim_fitted_hz": 6629390.7391290665,
+      "contrast_ratio_fitted": 1.0000006237224943,
+      "n_evals": 152
+    },
+    {
+      "dataset": "harvard",
+      "item": "0.40579",
+      "B_lab_mT": [
+        0.288675134594813,
+        0.288675134594813,
+        0.288675134594813
+      ],
+      "sim_field_source": "documented",
+      "use_contrast": false,
+      "fwhm_default_hz": 0.0,
+      "contrast_default": 0.03,
+      "shape_mse_default": 0.5489735801016451,
+      "linewidth_exp_hz": 2473745.4093704224,
+      "linewidth_sim_default_hz": 575891.8534150124,
+      "fitted": {
+        "inhomogeneous_fwhm_hz": 2688913.6904152087,
+        "base_contrast": null
+      },
+      "shape_mse_fitted": 0.35437600040626194,
+      "linewidth_sim_fitted_hz": 2473746.272406101,
+      "contrast_ratio_fitted": 0.0008685888548418195,
+      "n_evals": 135
+    },
+    {
+      "dataset": "harvard",
+      "item": "0.40781894999999996",
+      "B_lab_mT": [
+        0.288675134594813,
+        0.288675134594813,
+        0.288675134594813
+      ],
+      "sim_field_source": "documented",
+      "use_contrast": false,
+      "fwhm_default_hz": 0.0,
+      "contrast_default": 0.03,
+      "shape_mse_default": 0.5489735801016451,
+      "linewidth_exp_hz": 2473745.4093704224,
+      "linewidth_sim_default_hz": 575891.8534150124,
+      "fitted": {
+        "inhomogeneous_fwhm_hz": 2688913.6904152087,
+        "base_contrast": null
+      },
+      "shape_mse_fitted": 0.35437600040626194,
+      "linewidth_sim_fitted_hz": 2473746.272406101,
+      "contrast_ratio_fitted": 0.0008685888548418195,
+      "n_evals": 135
+    },
+    {
+      "dataset": "harvard",
+      "item": "0.40984790000000004",
+      "B_lab_mT": [
+        0.288675134594813,
+        0.288675134594813,
+        0.288675134594813
+      ],
+      "sim_field_source": "documented",
+      "use_contrast": false,
+      "fwhm_default_hz": 0.0,
+      "contrast_default": 0.03,
+      "shape_mse_default": 0.5328247885595835,
+      "linewidth_exp_hz": 2294335.7897405624,
+      "linewidth_sim_default_hz": 575891.8534150124,
+      "fitted": {
+        "inhomogeneous_fwhm_hz": 2421576.344268394,
+        "base_contrast": null
+      },
+      "shape_mse_fitted": 0.3558726639132844,
+      "linewidth_sim_fitted_hz": 2294333.628051758,
+      "contrast_ratio_fitted": 0.000877180748600305,
+      "n_evals": 126
+    },
+    {
+      "dataset": "zenodo_odmr",
+      "item": "f0_odmr.csv",
+      "B_lab_mT": [
+        -0.288675134594813,
+        -0.288675134594813,
+        0.288675134594813
+      ],
+      "sim_field_source": "fitted-grid",
+      "use_contrast": true,
+      "fwhm_default_hz": 0.0,
+      "contrast_default": 0.03,
+      "shape_mse_default": 0.2846176061121429,
+      "linewidth_exp_hz": 3786053.792019367,
+      "linewidth_sim_default_hz": 1600494.9497227669,
+      "fitted": {
+        "inhomogeneous_fwhm_hz": 2674734.830961021,
+        "base_contrast": 0.010449915072221181
+      },
+      "shape_mse_fitted": 0.26949563437007595,
+      "linewidth_sim_fitted_hz": 3786053.5564455986,
+      "contrast_ratio_fitted": 1.0000009202265931,
+      "n_evals": 143
+    },
+    {
+      "dataset": "zenodo_odmr",
+      "item": "f12_odmr.csv",
+      "B_lab_mT": [
+        -0.288675134594813,
+        -0.288675134594813,
+        0.288675134594813
+      ],
+      "sim_field_source": "fitted-grid",
+      "use_contrast": true,
+      "fwhm_default_hz": 0.0,
+      "contrast_default": 0.03,
+      "shape_mse_default": 0.3332462255092338,
+      "linewidth_exp_hz": 3061467.2152318954,
+      "linewidth_sim_default_hz": 1600494.9497227669,
+      "fitted": {
+        "inhomogeneous_fwhm_hz": 1554558.5624533445,
+        "base_contrast": 0.011800672165717159
+      },
+      "shape_mse_fitted": 0.3260101970280372,
+      "linewidth_sim_fitted_hz": 3061468.3878974915,
+      "contrast_ratio_fitted": 0.9999993867820691,
+      "n_evals": 147
+    },
+    {
+      "dataset": "zenodo_odmr",
+      "item": "f24_odmr.csv",
+      "B_lab_mT": [
+        -0.288675134594813,
+        -0.288675134594813,
+        0.288675134594813
+      ],
+      "sim_field_source": "fitted-grid",
+      "use_contrast": true,
+      "fwhm_default_hz": 0.0,
+      "contrast_default": 0.03,
+      "shape_mse_default": 0.40980242959875324,
+      "linewidth_exp_hz": 4242032.930529594,
+      "linewidth_sim_default_hz": 1600494.9497227669,
+      "fitted": {
+        "inhomogeneous_fwhm_hz": 3238302.9219851093,
+        "base_contrast": 0.00857468897245705
+      },
+      "shape_mse_fitted": 0.3915990788615247,
+      "linewidth_sim_fitted_hz": 4242030.152644157,
+      "contrast_ratio_fitted": 0.9999991135359793,
+      "n_evals": 149
+    }
+  ],
+  "median": {
+    "inhomogeneous_fwhm_hz": 2688913.6904152087,
+    "base_contrast": 0.029872511664386057
+  },
+  "fit_rows": [
+    [
+      "zenodo_zerofield",
+      "Position 1"
+    ],
+    [
+      "zenodo_zerofield",
+      "Position 2"
+    ],
+    [
+      "zenodo_zerofield",
+      "Position 3"
+    ],
+    [
+      "harvard",
+      "0.40579"
+    ],
+    [
+      "harvard",
+      "0.40781894999999996"
+    ],
+    [
+      "harvard",
+      "0.40984790000000004"
+    ],
+    [
+      "zenodo_odmr",
+      "f0_odmr.csv"
+    ],
+    [
+      "zenodo_odmr",
+      "f12_odmr.csv"
+    ],
+    [
+      "zenodo_odmr",
+      "f24_odmr.csv"
+    ]
+  ]
+}
