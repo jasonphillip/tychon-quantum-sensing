@@ -115,3 +115,73 @@ def test_generator_balances_all_five_origins(tmp_path):
     assert counts == {"original": 30, "unit_error": 6, "revision_mismatch": 6, "unmeasured": 6, "stale": 6, "causal": 6}
     stale = [r for r in rows if r["origin"] == "stale"]
     assert all("revision." not in r["text"] for r in stale)   # stale edits change a version or date token
+
+
+def test_third_labeler_majority_and_policy(tmp_path):
+    from claim_eval import evaluate
+
+    ids = ["r1", "r2", "r3", "r4"]
+    labels = {"a": ["supported", "supported", "supported", "unsupported"],
+              "b": ["supported", "supported", "unsupported", "unsupported"],
+              "c": ["supported", "contradicted", "contradicted", "supported"]}
+    for name, column in labels.items():
+        write_csv(tmp_path / f"{name}.csv", ["id", "label", "evidence", "rationale"],
+                  [dict(id=i, label=label, evidence="e", rationale="r") for i, label in zip(ids, column)])
+    write_csv(tmp_path / "constructed.csv", ["id", "label", "origin"], [])
+    write_csv(tmp_path / "verdicts.csv", ["claim_id", "c1_verdict", "c2_verdict", "c3_verdict"],
+              [dict(claim_id=i, c1_verdict=x, c2_verdict=y, c3_verdict=z) for i, x, y, z in zip(ids,
+               ["SUPPORTED", "SUPPORTED", "CONTRADICTED", "UNSUPPORTED"],
+               ["CONTRADICTED", "SUPPORTED", "CONTRADICTED", "UNSUPPORTED"],
+               ["SUPPORTED", "UNSUPPORTED", "UNSUPPORTED", "UNSUPPORTED"])])
+    paths = (tmp_path / "verdicts.csv", tmp_path / "constructed.csv", tmp_path / "a.csv", tmp_path / "b.csv")
+
+    # Majority key: r2 two of three say supported; r3 all differ -> most adverse; r4 A=B.
+    subset = evaluate(*paths, labels_c_path=tmp_path / "c.csv", critics=["c1", "c3"], policy="majority")
+    assert subset["final_labels"] == dict(zip(ids, ["supported", "supported", "contradicted", "unsupported"]))
+    assert subset["contested"] == ["r2", "r3", "r4"]
+    assert subset["labelers"]["kappa_ab"] == pytest.approx(0.5)
+    assert {"kappa_ac", "kappa_bc"} <= set(subset["labelers"])
+    # Only c1 and c3 form the ensemble: r1 (S, -, S) is accepted although c2 says CONTRADICTED.
+    assert subset["critic_columns"] == ["c1_verdict", "c3_verdict"]
+    pooled = subset["metrics"]["all"]["pooled"]
+    assert "c2" not in pooled
+    assert pooled["ensemble"]["accept_precision"] == 1
+    assert pooled["ensemble"]["accept_recall"] == pytest.approx(1 / 2)
+    assert pooled["ensemble"]["abstention_rate"] == pytest.approx(2 / 4)
+
+    # Majority over all three critics accepts r2 (SUPPORTED, SUPPORTED, UNSUPPORTED); r1 abstains (one CONTRADICTED).
+    three = evaluate(*paths, labels_c_path=tmp_path / "c.csv", policy="majority")["metrics"]["all"]["pooled"]["ensemble"]
+    assert three["accept_precision"] == 1 and three["accept_recall"] == pytest.approx(1 / 2)
+    assert three["abstention_rate"] == pytest.approx(1 / 4)
+    # Unanimous (default) over all three accepts nothing.
+    unanimous = evaluate(*paths, labels_c_path=tmp_path / "c.csv")["metrics"]["all"]["pooled"]["ensemble"]
+    assert unanimous["accept_precision"] is None and unanimous["abstention_rate"] == pytest.approx(1 / 4)
+
+    script = Path(__file__).resolve().parents[1] / "claim_eval.py"
+    report = tmp_path / "report.md"
+    subprocess.run([sys.executable, str(script), "--verdicts", str(paths[0]), "--constructed", str(paths[1]),
+                    "--labels-a", str(paths[2]), "--labels-b", str(paths[3]), "--labels-c", str(tmp_path / "c.csv"),
+                    "--critics", "c1,c3", "--policy", "majority", "--out", str(report)], check=True)
+    text = report.read_text()
+    assert "accept iff at least 2 verdicts are SUPPORTED and none is CONTRADICTED" in text
+    assert "\n\nCohen's kappa AB on original rows" in text   # a blank line ends the labeler table
+    assert "c2" not in text.split("## All rows")[1]
+
+
+def test_majority_with_one_critic_uses_one_verdict_rule(tmp_path):
+    # Review finding (plan N pass 1): --critics X --policy majority must not demand two votes from one critic.
+    from claim_eval import evaluate
+
+    ids = ["r1", "r2", "r3"]
+    for name in ("a", "b", "c"):
+        write_csv(tmp_path / f"{name}.csv", ["id", "label", "evidence", "rationale"],
+                  [dict(id=i, label=l, evidence="e", rationale="r") for i, l in zip(ids, ["supported", "supported", "contradicted"])])
+    write_csv(tmp_path / "constructed.csv", ["id", "label", "origin"], [])
+    write_csv(tmp_path / "verdicts.csv", ["claim_id", "c1_verdict", "c2_verdict"],
+              [dict(claim_id=i, c1_verdict=v, c2_verdict="SUPPORTED") for i, v in zip(ids, ["SUPPORTED", "WEAK", "CONTRADICTED"])])
+    result = evaluate(tmp_path / "verdicts.csv", tmp_path / "constructed.csv", tmp_path / "a.csv", tmp_path / "b.csv",
+                      labels_c_path=tmp_path / "c.csv", critics=["c1"], policy="majority")
+    pooled = result["metrics"]["all"]["pooled"]
+    for key in ("accept_precision", "accept_recall", "abstention_rate", "false_acceptance_rate"):
+        assert pooled["ensemble"][key] == pooled["c1"][key], key
+    assert pooled["ensemble"]["accept_recall"] == pytest.approx(1 / 2)

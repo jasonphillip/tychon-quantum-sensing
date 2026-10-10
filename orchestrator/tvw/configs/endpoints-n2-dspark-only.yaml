@@ -1,0 +1,7 @@
+# Plan N (2026-10-10) N2: the strong local critic alone (flip-rate repeat).
+critics:
+  - name: deepseek-v4-flash
+    base_url: http://192.168.x.x:8002/v1
+    model: deepseek-v4-flash
+    max_tokens: 4096
+    timeout_s: 180

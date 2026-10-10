@@ -1,0 +1,16 @@
+Loaded 3 critic(s): ['qwen3-coder-30b', 'nemotron-mini', 'deepseek-v4-flash']
+  processed 5 claims
+  processed 10 claims
+  processed 15 claims
+  processed 20 claims
+  processed 25 claims
+  processed 30 claims
+  processed 35 claims
+  processed 40 claims
+  processed 45 claims
+  processed 50 claims
+  processed 55 claims
+  processed 60 claims
+
+Wrote tvw/audits/claim-eval/verdicts-n2.csv with 60 rows.
+rc=0 wall=1894s

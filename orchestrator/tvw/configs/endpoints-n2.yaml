@@ -1,0 +1,14 @@
+# Plan N (2026-10-10) N2: the C5 critics plus a strong local critic.
+# All three endpoints are local under TVW Hard rule 1 (127.0.0.1 and 192.168.*).
+critics:
+  - name: qwen3-coder-30b
+    base_url: http://127.0.0.1:11434/v1
+    model: qwen3-coder:30b
+  - name: nemotron-mini
+    base_url: http://127.0.0.1:11434/v1
+    model: nemotron-mini:latest
+  - name: deepseek-v4-flash
+    base_url: http://192.168.x.x:8002/v1
+    model: deepseek-v4-flash
+    max_tokens: 4096
+    timeout_s: 180
