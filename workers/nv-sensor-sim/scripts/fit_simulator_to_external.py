@@ -170,14 +170,19 @@ def main() -> None:
             "shape_mse_default": default.shape_mse,
             "linewidth_exp_hz": default.linewidth_exp_hz,
             "linewidth_sim_default_hz": default.linewidth_sim_hz,
-            "fitted": {key: fitted[key] for key in ("inhomogeneous_fwhm_hz", "base_contrast")},
+            "fitted": {"inhomogeneous_fwhm_hz": fitted["inhomogeneous_fwhm_hz"],
+                       # Without the contrast term the contrast is unconstrained: not a fitted value.
+                       "base_contrast": fitted["base_contrast"] if use_contrast else None},
             "shape_mse_fitted": fitted["shape_mse"],
             "linewidth_sim_fitted_hz": fitted["linewidth_sim_hz"],
             "contrast_ratio_fitted": fitted["contrast_ratio"],
             "n_evals": fitted["n_evals"],
         })
-    median = {key: float(np.median([row["fitted"][key] for row in rows]))
-              for key in ("inhomogeneous_fwhm_hz", "base_contrast")} if rows else {}
+    median = {}
+    for key in ("inhomogeneous_fwhm_hz", "base_contrast"):
+        values = [row["fitted"][key] for row in rows if row["fitted"][key] is not None]
+        if values:
+            median[key] = float(np.median(values))
     payload = {
         "date": date.today().isoformat(),
         "git_sha": subprocess.check_output(["git", "rev-parse", "HEAD"],
@@ -200,7 +205,7 @@ def main() -> None:
             f"{row['linewidth_sim_fitted_hz'] / 1e6:.6g} | "
             f"{row['linewidth_exp_hz'] / 1e6:.6g} | "
             f"{row['shape_mse_default']:.6g} | {row['shape_mse_fitted']:.6g} | "
-            f"{row['fitted']['base_contrast']:.6g} | "
+            f"{'not fitted' if row['fitted']['base_contrast'] is None else format(row['fitted']['base_contrast'], '.6g')} | "
             f"{row['contrast_ratio_fitted']:.6g} |"
         )
     lines.extend(["", f"Median fitted inhomogeneous FWHM (Hz): {median.get('inhomogeneous_fwhm_hz', 'n/a')}",

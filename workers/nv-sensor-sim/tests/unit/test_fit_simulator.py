@@ -85,3 +85,23 @@ def test_cli_payload_matches_plan_interface(tmp_path, monkeypatch):
     assert set(row["fitted"]) == {"inhomogeneous_fwhm_hz", "base_contrast"}
     assert payload["rows"][1]["use_contrast"] is False
     assert out.with_suffix(".md").is_file()
+
+
+def test_median_contrast_uses_only_contrast_fitted_rows(tmp_path, monkeypatch):
+    # Harvard rows fit width only; their contrast is unconstrained and must not enter the contrast median.
+    import json
+    import sys
+    import scripts.fit_simulator_to_external as F
+
+    c = _sim_center_hz()
+    monkeypatch.setattr(F, "_load_row", lambda dataset, item: (FREQ, _lorentzian_dip(FREQ, c, 6e6, 0.05)))
+    rows = [dict(dataset="zenodo_zerofield", item="Position 1", comparable=True, B_lab_mT=[0, 0, 0], sim_field_source="zero")] + [
+        dict(dataset="harvard", item=f"h{i}", comparable=True, B_lab_mT=[0, 0, 0], sim_field_source="documented") for i in range(2)]
+    src = tmp_path / "rows.json"
+    src.write_text(json.dumps({"rows": rows}))
+    out = tmp_path / "fit.json"
+    monkeypatch.setattr(sys, "argv", ["fit", "--rows-json", str(src), "--out", str(out)])
+    F.main()
+    payload = json.loads(out.read_text())
+    assert abs(payload["median"]["base_contrast"] - 0.05) < 0.05 * 0.05
+    assert payload["rows"][1]["fitted"]["base_contrast"] is None
