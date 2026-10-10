@@ -174,6 +174,13 @@ def main() -> int:
     parser.add_argument("--out", required=True, type=Path)
     parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     args = parser.parse_args()
+    for name in dict.fromkeys(args.runs):
+        run_dir = args.runs_dir / name
+        for filename in ("best.pt", "summary.json"):
+            expected = run_dir / filename
+            if not expected.is_file():
+                print(f"missing run: {name} (expected {expected})", file=sys.stderr)
+                return 2
     device = torch.device(args.device)
     args.out.mkdir(parents=True, exist_ok=True)
     metadata = {}
