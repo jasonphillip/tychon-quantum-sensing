@@ -118,6 +118,7 @@ class DatasetManifest:
     # Field sampling mode and magnitude range
     field_sampling: str = "z_only"
     b_mag_range_T: tuple[float, float] | None = None
+    labels_are: str | None = None
 
     # Vector-readiness: bias-field configuration (Path A magnet vs Path B concentrator).
     # bias_B0_T=0.0 + concentrator_amplification=1.0 + magnet_drift_ppm_per_K=0.0 reproduces
@@ -234,6 +235,8 @@ class DatasetManifest:
     def to_dict(self) -> dict:
         """Convert manifest to dictionary."""
         d = asdict(self)
+        if d["labels_are"] is None:
+            del d["labels_are"]
         # Convert tuples to lists for JSON serialization
         for key in (
             "freq_range_Hz",
@@ -318,6 +321,7 @@ class DatasetManifest:
         d.setdefault("ou_params", None)
         d.setdefault("field_sampling", "z_only")
         d.setdefault("b_mag_range_T", None)
+        d.setdefault("labels_are", None)
 
         # Backward compat: older manifests lack inverse-crime fields
         d.setdefault("test_p1_concentration_range_ppm", None)
@@ -492,11 +496,19 @@ class DatasetManifest:
                 if lo > hi:
                     raise ValueError(f"{name}: min ({lo}) > max ({hi})")
 
-        # Validate b_mag_range_T if spherical mode
-        if self.field_sampling == "spherical" and self.b_mag_range_T is not None:
+        if self.field_sampling == "bias_plus_ambient":
+            if self.bias_B0_T <= 0.0:
+                raise ValueError("bias_plus_ambient requires bias_B0_T > 0")
+            if self.b_mag_range_T is None:
+                raise ValueError("bias_plus_ambient requires b_mag_range_T")
+
+        # Validate sampled spherical magnitude range.
+        if self.field_sampling in ("spherical", "bias_plus_ambient") and self.b_mag_range_T is not None:
             lo, hi = self.b_mag_range_T
             if lo > hi:
                 raise ValueError(f"b_mag_range_T: min ({lo}) > max ({hi})")
+            if self.field_sampling == "bias_plus_ambient" and lo < 0.0:
+                raise ValueError("b_mag_range_T lower bound must be non-negative")
 
         # Validate bias-field configuration
         if self.bias_B0_T < 0.0:
