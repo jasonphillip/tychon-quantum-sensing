@@ -10,7 +10,10 @@ export TRITON_CACHE_DIR=${TRITON_CACHE_DIR:-/tmp/triton-cache-$USER}
 DS=${DS:-~/projects/nv-sensor-sim/artifacts/datasets/production_50k_v3_vector/dataset.h5}
 OUT=${OUT:-~/projects/odmr-edge-ml/exports/portfolio-c2}
 mkdir -p "$OUT"
-ORACLE=~/projects/odmr-edge-ml/exports/vector_v1
+# 2026-10-10 fp32 rerun: ORACLE=<fp32 oracle models> TRAIN_FLAGS='--no-compile --no-autocast'.
+# bf16 autocast on CUDA saved checkpoints that did not reproduce their validation error.
+ORACLE=${ORACLE:-~/projects/odmr-edge-ml/exports/vector_v1}
+TRAIN_FLAGS=${TRAIN_FLAGS:-}
 EXTRA=${REGEN:+--regenerated-dataset}
 
 cd "$WT"
@@ -37,7 +40,7 @@ done
 
 # B: Train coarse-fit models, then evaluate alternate anchor sources.
 timeout --signal=INT 75m "$PY" experiments/vector_v1_train.py \
-    --anchor-source coarse_fit --epochs 30 --dataset "$DS" --out "$OUT/models_coarse_fit"
+    --anchor-source coarse_fit --epochs 30 --dataset "$DS" --out "$OUT/models_coarse_fit" $TRAIN_FLAGS
 
 for src in coarse_fit spectrum prior; do
     ev --models "$OUT/models_coarse_fit" --anchor-source "$src" \
