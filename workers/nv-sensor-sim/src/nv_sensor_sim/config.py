@@ -122,6 +122,8 @@ class SimulationConfig:
         magnetic gradients. Default 0.0 for pure homogeneous limit.
     base_saturation_s0 : float
         Baseline MW saturation parameter for power broadening at mw_scale=1.0.
+    base_contrast : float
+        Nominal ODMR contrast at mw_scale=1.0.
     """
 
     B_field_T: np.ndarray = field(default_factory=lambda: np.array([0.0, 0.0, 0.01]))
@@ -136,6 +138,7 @@ class SimulationConfig:
     use_optics: bool = True
     inhomogeneous_fwhm_hz: float = 0.0
     base_saturation_s0: float = 0.1
+    base_contrast: float = 0.03
 
 
 @dataclass

@@ -317,7 +317,7 @@ class SimOSAdapter:
             )
 
         # Contrast scales with saturation: C ∝ s / (1 + s)
-        base_contrast = 0.03
+        base_contrast = self.config.base_contrast
         # Normalize so contrast = base_contrast at nominal mw_scale=1.0
         contrast = base_contrast * (s / (1.0 + s)) / (s0 / (1.0 + s0))
 

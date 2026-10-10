@@ -100,6 +100,8 @@ class DatasetManifest:
     # Spectral resolution
     n_freq_points: int = 100
     freq_range_Hz: tuple[float, float] = (2.82e9, 2.92e9)
+    inhomogeneous_fwhm_hz: float = 0.0
+    base_contrast: float = 0.03
 
     # Corruption parameter ranges (train/val)
     p1_concentration_range_ppm: tuple[float, float] = (1.0, 300.0)

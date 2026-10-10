@@ -380,6 +380,8 @@ def generate_dataset(
     concentrator_amplification: float = 1.0,
     magnet_drift_ppm_per_K: float = 0.0,
     bias_B0_range_T: tuple[float, float] | None = None,
+    inhomogeneous_fwhm_hz: float = 0.0,
+    base_contrast: float = 0.03,
 ) -> str:
     """Generate a complete synthetic ODMR dataset with manifest.
 
@@ -544,10 +546,16 @@ def generate_dataset(
 
     # Capture every generator argument after field and test-range overrides.
     effective_values = locals()
-    config_hash = _config_hash({
+    hash_values = {
         name: effective_values[name]
         for name in inspect.signature(generate_dataset).parameters
-    })
+    }
+    # Preserve hashes for calls using the legacy physical defaults.
+    if inhomogeneous_fwhm_hz == 0.0:
+        hash_values.pop("inhomogeneous_fwhm_hz")
+    if base_contrast == 0.03:
+        hash_values.pop("base_contrast")
+    config_hash = _config_hash(hash_values)
 
     manifest = DatasetManifest(
         generator_git_sha=_get_git_sha(),
@@ -568,6 +576,8 @@ def generate_dataset(
         test_indices=list(range(n_train + n_val, total)),
         n_freq_points=n_freq_points,
         freq_range_Hz=freq_range_Hz,
+        inhomogeneous_fwhm_hz=inhomogeneous_fwhm_hz,
+        base_contrast=base_contrast,
         p1_concentration_range_ppm=p1_range_ppm,
         temperature_range_K=manifest_temp_range,
         b1_gradient_range=b1_gradient_range,
@@ -610,6 +620,8 @@ def generate_dataset(
         include_nitrogen=False,
         n_freq_points=n_freq_points,
         mw_freq_range_Hz=freq_range_Hz,
+        inhomogeneous_fwhm_hz=inhomogeneous_fwhm_hz,
+        base_contrast=base_contrast,
     )
     adapter = SimOSAdapter(config)
 
