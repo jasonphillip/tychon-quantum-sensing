@@ -28,6 +28,7 @@ import numpy as np
 from odmr_vector_tracking.evaluation.metrics import (
     association_accuracy,
     crossing_events,
+    finite_frame_pairs,
     full_vector_lock,
     full_vector_lock_stats,
     id_switch_rate,
@@ -57,11 +58,12 @@ def fieldcone_metrics_row(
     ``dt_s`` is the dataset frame interval; indices and frame counts stay in frames.
     Undefined angular errors are excluded from means and count as unlocked.
     """
+    valid = finite_frame_pairs(B_true, B_est)
     ae = vector_angular_error(B_true, B_est)
     mag_err = magnitude_error(B_true, B_est)
     bias = vector_bias(B_true, B_est)
     lock = full_vector_lock(B_true, B_est, mag_tol_frac, angle_tol_deg)
-    finite_ae = ae[np.isfinite(ae)]
+    finite_ae = ae[valid & np.isfinite(ae)]
     finite_mag = mag_err[np.isfinite(mag_err)]
     return {
         "rmse_T": vector_rmse(B_true, B_est),
@@ -74,6 +76,7 @@ def fieldcone_metrics_row(
         "ae_p90_deg": float(np.percentile(finite_ae, 90)) if finite_ae.size else float("nan"),
         **full_vector_lock_stats(lock),
         "n_frames": int(np.asarray(B_true).shape[0]),
+        "n_valid_frames": int(valid.sum()),
     }
 
 

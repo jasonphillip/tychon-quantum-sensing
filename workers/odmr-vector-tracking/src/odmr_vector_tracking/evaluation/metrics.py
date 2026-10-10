@@ -53,22 +53,39 @@ def vector_angular_error(
     return ang
 
 
+def finite_frame_pairs(B_true: np.ndarray, B_est: np.ndarray) -> np.ndarray:
+    """Frames where both field vectors have three finite components."""
+    true = np.asarray(B_true, dtype=np.float64)
+    est = np.asarray(B_est, dtype=np.float64)
+    return np.isfinite(true).all(axis=1) & np.isfinite(est).all(axis=1)
+
+
 def vector_rmse(B_true: np.ndarray, B_est: np.ndarray) -> float:
-    """Root mean squared Euclidean field error (Tesla) over all frames."""
-    delta = np.asarray(B_est, dtype=np.float64) - np.asarray(B_true, dtype=np.float64)
+    """Root mean squared Euclidean field error (Tesla) over finite frame pairs."""
+    valid = finite_frame_pairs(B_true, B_est)
+    if not valid.any():
+        return float("nan")
+    delta = np.asarray(B_est, dtype=np.float64)[valid] - np.asarray(B_true, dtype=np.float64)[valid]
     return float(np.sqrt(np.mean(np.sum(delta**2, axis=1))))
 
 
 def magnitude_error(B_true: np.ndarray, B_est: np.ndarray) -> np.ndarray:
-    """Per-frame signed error in field magnitude, ``|B_est| - |B_true|`` (Tesla)."""
-    true_mag = np.linalg.norm(np.asarray(B_true, dtype=np.float64), axis=1)
-    est_mag = np.linalg.norm(np.asarray(B_est, dtype=np.float64), axis=1)
-    return est_mag - true_mag
+    """Signed magnitude error (Tesla), with ``nan`` for nonfinite frame pairs."""
+    valid = finite_frame_pairs(B_true, B_est)
+    result = np.full(valid.shape, np.nan)
+    result[valid] = (
+        np.linalg.norm(np.asarray(B_est, dtype=np.float64)[valid], axis=1)
+        - np.linalg.norm(np.asarray(B_true, dtype=np.float64)[valid], axis=1)
+    )
+    return result
 
 
 def vector_bias(B_true: np.ndarray, B_est: np.ndarray) -> np.ndarray:
-    """Mean signed estimate-minus-truth field vector, ``(3,)`` in Tesla."""
-    delta = np.asarray(B_est, dtype=np.float64) - np.asarray(B_true, dtype=np.float64)
+    """Mean signed estimate-minus-truth vector over finite frame pairs, in Tesla."""
+    valid = finite_frame_pairs(B_true, B_est)
+    if not valid.any():
+        return np.full(3, np.nan)
+    delta = np.asarray(B_est, dtype=np.float64)[valid] - np.asarray(B_true, dtype=np.float64)[valid]
     return np.mean(delta, axis=0)
 
 

@@ -75,12 +75,14 @@ def paired_differences(first: list[dict], second: list[dict],
 
 def _summary(rows: list[dict]) -> dict:
     """Aggregate per-sequence scores without weighting longer sequences more."""
-    out = {"n_sequences": len(rows)}
+    out = {"n_sequences": len(rows),
+           "n_valid_sequences": sum(int(row["n_valid_frames"]) > 0 for row in rows)}
     for metric in ("rmse_T", "ae_mean_deg", "mag_err_mean_T"):
         values = np.asarray([row[metric] for row in rows], dtype=float)
         valid = values[np.isfinite(values)]
         out[metric] = {"mean": float(valid.mean()) if valid.size else float("nan"),
-                       "p90": float(np.percentile(valid, 90)) if valid.size else float("nan")}
+                       "p90": float(np.percentile(valid, 90)) if valid.size else float("nan"),
+                       "n_valid_sequences": int(valid.size)}
     out["lock_frac_mean"] = float(np.mean([row["lock_frac"] for row in rows])) if rows else float("nan")
     lost = sum(bool(row["lost"]) for row in rows)
     out["lost"] = {"count": lost, "wilson_ci": list(wilson_ci(lost, len(rows)))}
