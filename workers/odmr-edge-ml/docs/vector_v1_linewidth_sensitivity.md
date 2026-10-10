@@ -21,3 +21,7 @@ Sensitivity (fitted minus default): BLUE 3-D RMS −4 µT (−0.2 %). The mean t
 ## Reading
 
 The oracle-anchored models do not degrade when the lines take the measured width and contrast, but this is not evidence of robustness: in the plan C anchor ablation (`docs/vector_v1_anchor_ablation.md`) the same models score 2199 µT with the spectrum input set to zero against 2216 µT with it, so their output comes almost entirely from the oracle anchor, and a change to the spectrum cannot move it much. Both training sets were generated with the narrow default lines: the vector models' `production_50k_v3_vector` (inhomogeneous FWHM 0) and the tracker's `sequence_train_v2` (linewidth 1.5 MHz), 2–5× narrower than the public measurements (2.3–7.3 MHz); a model that does use the spectrum would need retraining on fitted-width data before this sensitivity number means anything for it.
+
+## Caveat added 2026-10-10
+
+The models evaluated here were trained on the GPU with `torch.compile`. Plan N item N3 found that checkpoints from that training path do not reproduce the validation error recorded during training (for these models: 510–2959 µT on reload against 266–287 µT recorded, four channels checked). The table therefore measures the exported artifacts of that path; it is not a sensitivity of a correctly trained model. See odmr-edge-ml `docs/vector_v1_bias_field.md`.
