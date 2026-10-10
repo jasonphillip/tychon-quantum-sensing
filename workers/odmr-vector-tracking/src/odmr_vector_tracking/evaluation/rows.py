@@ -29,15 +29,56 @@ from odmr_vector_tracking.evaluation.metrics import (
     _nonfinite_as_lost,
     association_accuracy,
     crossing_events,
+    finite_frame_pairs,
+    full_vector_lock,
+    full_vector_lock_stats,
     id_switch_rate,
     id_switches_per_opportunity,
     physical_line_index,
+    magnitude_error,
     recovery_time,
     resolve_true_axis,
     vector_angular_error,
+    vector_bias,
+    vector_rmse,
 )
 
 LOSS_DEG = 5.0  # vector lock deemed "lost" above this angular error
+
+
+def fieldcone_metrics_row(
+    B_true: np.ndarray,
+    B_est: np.ndarray,
+    *,
+    dt_s: float,
+    mag_tol_frac: float = 0.05,
+    angle_tol_deg: float = 5.0,
+) -> dict:
+    """Score one field-cone sequence in Tesla and degrees.
+
+    ``dt_s`` is the dataset frame interval; indices and frame counts stay in frames.
+    Undefined angular errors are excluded from means and count as unlocked.
+    """
+    valid = finite_frame_pairs(B_true, B_est)
+    ae = vector_angular_error(B_true, B_est)
+    mag_err = magnitude_error(B_true, B_est)
+    bias = vector_bias(B_true, B_est)
+    lock = full_vector_lock(B_true, B_est, mag_tol_frac, angle_tol_deg)
+    finite_ae = ae[valid & np.isfinite(ae)]
+    finite_mag = mag_err[np.isfinite(mag_err)]
+    return {
+        "rmse_T": vector_rmse(B_true, B_est),
+        "mag_err_mean_T": float(finite_mag.mean()) if finite_mag.size else float("nan"),
+        "mag_err_p90_T": float(np.percentile(np.abs(finite_mag), 90)) if finite_mag.size else float("nan"),
+        "bias_x_T": float(bias[0]),
+        "bias_y_T": float(bias[1]),
+        "bias_z_T": float(bias[2]),
+        "ae_mean_deg": float(finite_ae.mean()) if finite_ae.size else float("nan"),
+        "ae_p90_deg": float(np.percentile(finite_ae, 90)) if finite_ae.size else float("nan"),
+        **full_vector_lock_stats(lock),
+        "n_frames": int(np.asarray(B_true).shape[0]),
+        "n_valid_frames": int(valid.sum()),
+    }
 
 
 def sequence_metrics_row(

@@ -25,8 +25,17 @@ def test_equal_requires_enough_distinct_sequences():
     large = compare_paired(rows([0, 1] * 20), rows([0, 1] * 20),
                            margin=0.01, binary=True)
     assert small.verdict == "inconclusive"
-    assert large.verdict == "non-inferior"
-    assert large.ci_high == 0
+    assert large.verdict == "inconclusive"
+    assert large.ci_high > 0.01
+
+
+def test_zero_discordant_288_pairs_does_not_certify_one_percent_margin():
+    result = compare_paired(rows([0] * 288), rows([0] * 288),
+                            margin=0.01, binary=True)
+    # Tango's 95% score bound: z^2 / (n + z^2) = 0.013162827640106801.
+    assert result.ci_high == pytest.approx(0.013162827640106801)
+    assert result.ci_low == pytest.approx(-0.013162827640106801)
+    assert result.verdict == "inconclusive"
 
 
 def test_pairing_detects_worsening_hidden_by_marginal_overlap():
