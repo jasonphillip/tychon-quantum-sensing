@@ -21,6 +21,7 @@ class FieldSampling(str, Enum):
 
     Z_ONLY = "z_only"
     SPHERICAL = "spherical"
+    BIAS_PLUS_AMBIENT = "bias_plus_ambient"
 
 
 @dataclass

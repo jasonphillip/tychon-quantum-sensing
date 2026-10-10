@@ -29,6 +29,7 @@ from nv_sensor_sim.config import FieldSampling, NoiseMode, OUNoiseConfig, Simula
 from nv_sensor_sim.datasets.schema import DatasetManifest
 from nv_sensor_sim.datasets.hashing import content_md5
 from nv_sensor_sim.datasets.writer import DatasetWriter
+from nv_sensor_sim.dynamics.field_trajectory import static_bias_vector
 from nv_sensor_sim.physics.lineshape import corrupt_spectrum, corrupt_spectrum_multi_axis
 
 
@@ -159,6 +160,15 @@ def _sample_spherical_field(
     ])
 
 
+def _sample_bias_plus_ambient(
+    rng: np.random.Generator,
+    bias_vec_T: np.ndarray,
+    b_mag_range_T: tuple[float, float],
+) -> np.ndarray:
+    """Return the fixed lab bias plus an isotropic ambient field."""
+    return bias_vec_T + _sample_spherical_field(rng, b_mag_range_T)
+
+
 def _generate_split_deterministic(
     adapter: SimOSAdapter,
     config: SimulationConfig,
@@ -172,6 +182,7 @@ def _generate_split_deterministic(
     split_name: str,
     field_sampling: str = "z_only",
     b_mag_range_T: tuple[float, float] = (20e-6, 70e-6),
+    bias_vec_T: np.ndarray | None = None,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray | None]:
     """Generate spectra for a split using deterministic (uniform) sampling."""
     n_split = len(split_seeds)
@@ -191,6 +202,9 @@ def _generate_split_deterministic(
 
         if field_sampling == "spherical":
             B_vec = _sample_spherical_field(sp_rng, b_mag_range_T)
+        elif field_sampling == "bias_plus_ambient":
+            assert bias_vec_T is not None
+            B_vec = _sample_bias_plus_ambient(sp_rng, bias_vec_T, b_mag_range_T)
         else:
             Bz = sp_rng.uniform(*bz_range_T)
             B_vec = np.array([0.0, 0.0, Bz])
@@ -230,6 +244,7 @@ def _generate_split_stochastic(
     split_name: str,
     field_sampling: str = "z_only",
     b_mag_range_T: tuple[float, float] = (20e-6, 70e-6),
+    bias_vec_T: np.ndarray | None = None,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray | None]:
     """Generate spectra for a split using OU stochastic trajectory sampling."""
     from nv_sensor_sim.physics.noise_injection import sample_ou_trajectory_pair
@@ -262,6 +277,9 @@ def _generate_split_stochastic(
 
         if field_sampling == "spherical":
             B_vec = _sample_spherical_field(sp_rng, b_mag_range_T)
+        elif field_sampling == "bias_plus_ambient":
+            assert bias_vec_T is not None
+            B_vec = _sample_bias_plus_ambient(sp_rng, bias_vec_T, b_mag_range_T)
         else:
             Bz = sp_rng.uniform(*bz_range_T)
             B_vec = np.array([0.0, 0.0, Bz])
@@ -299,12 +317,14 @@ def _generate_split_multi_axis(
     b_mag_range_T: tuple[float, float],
     n_freq_points: int,
     split_name: str,
+    field_sampling: str = "spherical",
+    bias_vec_T: np.ndarray | None = None,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray | None]:
-    """Generate vector-regime spectra: isotropic field sampling + 4-axis lineshape.
+    """Generate vector-regime spectra with a 4-axis lineshape.
 
-    Each spectrum samples an isotropic lab-frame B-field whose magnitude is
-    drawn from ``b_mag_range_T`` (the bias-amplified regime, typically
-    0.5-5 mT), then averages the spectrum over the 4 NV crystallographic axes.
+    Spherical mode samples the total lab field. Bias-plus-ambient mode samples
+    an isotropic ambient field and adds the fixed lab bias. Each spectrum
+    averages the response over the 4 NV crystallographic axes.
     Labels are the total lab-frame field B_lab (what the geometry matrix A
     inverts to recover from the resonance residuals).
     """
@@ -323,8 +343,11 @@ def _generate_split_multi_axis(
         b1_grad = sp_rng.uniform(*b1_gradient_range)
         extra_b_perp = sp_rng.uniform(*extra_b_perp_range_T)
 
-        # Isotropic direction on the sphere, magnitude from bias-regime range
-        B_lab = _sample_spherical_field(sp_rng, b_mag_range_T)
+        if field_sampling == "bias_plus_ambient":
+            assert bias_vec_T is not None
+            B_lab = _sample_bias_plus_ambient(sp_rng, bias_vec_T, b_mag_range_T)
+        else:
+            B_lab = _sample_spherical_field(sp_rng, b_mag_range_T)
 
         adapter.config.temperature_K = T_K
         adapter.config.p1_concentration_ppm = p1
@@ -412,10 +435,10 @@ def generate_dataset(
     ou_noise_config : OUNoiseConfig, optional
         OU trajectory config. Required when noise_mode is "stochastic" or "both".
     field_sampling : str
-        B-field sampling mode: "spherical" (uniform on sphere, default) or
-        "z_only" (legacy z-axis only).
+        B-field sampling mode: "spherical" (uniform on sphere, default),
+        "bias_plus_ambient" (fixed bias plus isotropic ambient), or "z_only".
     b_mag_range_T : tuple[float, float]
-        B-field magnitude range in Tesla (spherical mode only).
+        B-field magnitude range in Tesla (spherical field or ambient component).
     shift_test_ranges : bool
         When True and no explicit test_*_range params are given, automatically
         shift test-set corruption parameter distributions (mean +12.5%,
@@ -448,8 +471,8 @@ def generate_dataset(
         valid = ", ".join(f'"{m.value}"' for m in FieldSampling)
         raise ValueError(f"Invalid field_sampling='{field_sampling}'. Must be one of: {valid}")
 
-    # In spherical mode, override b_perp to (0, 0) — transverse field is in B_field_T
-    if field_sampling_enum == FieldSampling.SPHERICAL:
+    # Vector sampling already includes transverse field in B_field_T.
+    if field_sampling_enum in (FieldSampling.SPHERICAL, FieldSampling.BIAS_PLUS_AMBIENT):
         b_perp_range_T = (0.0, 0.0)
 
     if noise_mode_enum in (NoiseMode.STOCHASTIC, NoiseMode.BOTH) and ou_noise_config is None:
@@ -531,18 +554,18 @@ def generate_dataset(
         dataclasses.asdict(ou_noise_config) if ou_noise_config is not None else None
     )
 
-    # Multi-axis (vector-readiness) mode: bias-amplified regime, isotropic field
-    # sampling with magnitudes covering ~0.5-5 mT (union of Path A magnet + Path B
-    # concentrator operational ranges). When enabled, b_mag_range_T defaults to
-    # bias_B0_range_T (if supplied) so the spectrum samples the bias regime.
+    # Spherical multi-axis sampling may use the optional bias range. The new
+    # mode keeps its ambient range separate from the fixed bias magnitude.
     if multi_axis_mode:
-        if field_sampling_enum != FieldSampling.SPHERICAL:
+        if field_sampling_enum not in (FieldSampling.SPHERICAL, FieldSampling.BIAS_PLUS_AMBIENT):
             raise ValueError(
-                "multi_axis_mode requires field_sampling='spherical' to draw "
-                "isotropic bias-regime fields"
+                "multi_axis_mode requires field_sampling='spherical' or "
+                "'bias_plus_ambient'"
             )
-        if bias_B0_range_T is not None:
+        if field_sampling_enum == FieldSampling.SPHERICAL and bias_B0_range_T is not None:
             b_mag_range_T = bias_B0_range_T
+
+    bias_vec_T = static_bias_vector(bias_B0_T, bias_direction_uvw)
 
     # Capture every generator argument after field and test-range overrides.
     effective_values = locals()
@@ -585,7 +608,10 @@ def generate_dataset(
         noise_mode=noise_mode,
         ou_params=ou_params_dict,
         field_sampling=field_sampling,
-        b_mag_range_T=b_mag_range_T if field_sampling == "spherical" else None,
+        b_mag_range_T=b_mag_range_T if field_sampling_enum in (
+            FieldSampling.SPHERICAL, FieldSampling.BIAS_PLUS_AMBIENT
+        ) else None,
+        labels_are="total_field" if field_sampling_enum == FieldSampling.BIAS_PLUS_AMBIENT else None,
         # Anti-inverse-crime: test-specific ranges (None when same as train)
         inverse_crime_shift=inverse_crime_active,
         test_p1_concentration_range_ppm=test_p1_range_ppm,
@@ -635,6 +661,7 @@ def generate_dataset(
         n_freq_points=n_freq_points,
         field_sampling=field_sampling,
         b_mag_range_T=b_mag_range_T,
+        bias_vec_T=bias_vec_T,
     )
     test_kwargs = dict(
         p1_range_ppm=eff_test_p1,
@@ -644,6 +671,7 @@ def generate_dataset(
         n_freq_points=n_freq_points,
         field_sampling=field_sampling,
         b_mag_range_T=b_mag_range_T,
+        bias_vec_T=bias_vec_T,
     )
     split_ranges["train"] = train_val_kwargs
     split_ranges["val"] = train_val_kwargs
@@ -663,7 +691,7 @@ def generate_dataset(
         split_temp = eff_test_temp if split_name == "test" else temp_range_K
 
         if multi_axis_mode:
-            # Vector-readiness path: 4-axis ensemble, isotropic bias-regime field.
+            # Vector-readiness path: 4-axis ensemble with total lab field.
             # In multi-axis mode b_perp acts as *extra* residual transverse field
             # beyond the geometric per-axis projection of B_lab.
             spectra, labels, params, seed_arr, freqs = _generate_split_multi_axis(
@@ -675,6 +703,8 @@ def generate_dataset(
                 b_mag_range_T=kwargs["b_mag_range_T"],
                 n_freq_points=kwargs["n_freq_points"],
                 split_name=split_name,
+                field_sampling=field_sampling,
+                bias_vec_T=bias_vec_T,
             )
             write_spectra(spectra, freqs, labels, params, seed_arr, split_name)
             continue
