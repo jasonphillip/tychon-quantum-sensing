@@ -1,0 +1,7 @@
+Loaded 1 critic(s): ['deepseek-v4-flash']
+  processed 5 claims
+  processed 10 claims
+
+Wrote tvw/audits/claim-eval/verdicts-n2-repeat10.csv with 10 rows.
+rc=0 wall=147s
+ALLDONE
