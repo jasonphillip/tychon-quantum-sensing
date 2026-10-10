@@ -41,6 +41,17 @@ def test_spectrum_lock_finds_shallow_noisy_dip():
     assert abs(int(out[0]) - 310) <= 2
 
 
+def test_spectrum_lock_prefers_nearest_dip_then_depth():
+    f = _grid()
+    spectra = np.ones((2, f.size))
+    spectra[:, 302] -= 0.1
+    spectra[:, 320] -= 0.3
+    spectra[1, 298] -= 0.2
+    out = spectrum_lock_bins(spectra, f, np.array([300, 300]),
+                             window_bins=25, smooth=False)
+    assert out.tolist() == [302, 298]
+
+
 def test_jitter_is_clipped_and_integer():
     rng = np.random.default_rng(1)
     bins = np.array([0, 799, 400])

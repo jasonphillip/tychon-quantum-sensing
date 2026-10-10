@@ -36,8 +36,8 @@ for src in prior spectrum coarse_fit; do
 done
 
 # B: Train coarse-fit models, then evaluate alternate anchor sources.
-timeout --signal=INT 60m "$PY" experiments/vector_v1_train.py \
-    --anchor-source coarse_fit --out "$OUT/models_coarse_fit"
+timeout --signal=INT 75m "$PY" experiments/vector_v1_train.py \
+    --anchor-source coarse_fit --epochs 30 --dataset "$DS" --out "$OUT/models_coarse_fit"
 
 for src in coarse_fit spectrum prior; do
     ev --models "$OUT/models_coarse_fit" --anchor-source "$src" \
