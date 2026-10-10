@@ -95,6 +95,8 @@ permanently, Addendum H); any deterministic/pinned-RNG "fix".
 
 ## Verdict — PENDING (training blocked on an infra decision; escalated UP to TVW 2026-07-11)
 
+> 2026-10-10: single-component ablations at a reduced 200-epoch horizon (EMA, trunk ×3 seeds, single-teacher KD, standardization, ensemble KD) are in [increment8_ablations.md](increment8_ablations.md). The frozen-recipe `bc` stack remains untrained.
+
 Pre-registered in `experiments/increment8_verdict.py` (committed before any training result
 exists). PRIMARY = in-cone identity recovery vs `baseline-env`, every seed (n=5), clean+snr30;
 GUARD-A (HARD) = acquisition (directed 0/72 every seed; off-cone dwell CI-neutral-or-better);
