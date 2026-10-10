@@ -7,9 +7,11 @@ min-max-normalized value prefer an unrealistically wide simulated line.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import subprocess
+import time
 from datetime import date
 from pathlib import Path
 
@@ -61,11 +63,12 @@ def fit_row(
         linewidth_exp = result.linewidth_exp_hz
         ratio = result.contrast_ratio
         if (not math.isfinite(linewidth_sim) or linewidth_sim <= 0
-                or not math.isfinite(linewidth_exp) or linewidth_exp <= 0
-                or not math.isfinite(ratio) or ratio <= 0):
+                or not math.isfinite(linewidth_exp) or linewidth_exp <= 0):
             return math.inf, result
         score = math.log(linewidth_sim / linewidth_exp) ** 2
         if use_contrast:
+            if not math.isfinite(ratio) or ratio <= 0:
+                return math.inf, result
             score += math.log(ratio) ** 2
         return score, result
 
@@ -136,12 +139,31 @@ def _json_safe(value):
     return value
 
 
+FIT_DATASET_DIRS = {
+    "zenodo_zerofield": "zenodo_zerofield_10629041",
+    "zenodo_odmr": "zenodo_odmr",
+    "harvard": "harvard_lowfield_6TFFPG",
+}
+
+
+def _tree_sha256(root: Path) -> str | None:
+    """sha256 over (relative path, file sha256) of every file under root, sorted; None if absent."""
+    if not root.is_dir():
+        return None
+    digest = hashlib.sha256()
+    for path in sorted(p for p in root.rglob("*") if p.is_file()):
+        digest.update(str(path.relative_to(root)).encode())
+        digest.update(hashlib.sha256(path.read_bytes()).hexdigest().encode())
+    return digest.hexdigest()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-dir", type=Path, default=Path("data/experimental"))
     parser.add_argument("--rows-json", type=Path, default=Path("docs/external_validation_results.json"))
     parser.add_argument("--out", type=Path, default=Path("docs/simulator_fit_results.json"))
     args = parser.parse_args()
+    wall_start = time.monotonic()
     ed.DATA_DIR = args.data_dir.resolve()
     source = json.loads(args.rows_json.read_text())
     rows = []
@@ -188,6 +210,13 @@ def main() -> None:
         "git_sha": subprocess.check_output(["git", "rev-parse", "HEAD"],
                                            cwd=Path(__file__).resolve().parents[1], text=True).strip(),
         "objective": OBJECTIVE,
+        "rows_json": str(args.rows_json),
+        "rows_json_sha256": hashlib.sha256(args.rows_json.read_bytes()).hexdigest(),
+        "data_dir": str(args.data_dir),
+        "input_tree_sha256": {name: _tree_sha256(args.data_dir / FIT_DATASET_DIRS[name])
+                              for name in sorted({row["dataset"] for row in rows})},
+        "wall_s": round(time.monotonic() - wall_start, 3),
+        "job_hours": 0.0,
         "rows": rows,
         "median": median,
         "fit_rows": [[row["dataset"], row["item"]] for row in rows],
@@ -196,6 +225,10 @@ def main() -> None:
     args.out.write_text(json.dumps(_json_safe(payload), indent=2, allow_nan=False) + "\n")
     lines = ["# Simulator fit to external ODMR", "", f"Date: {payload['date']}",
              f"Git SHA: {payload['git_sha']}", "", OBJECTIVE, "",
+             f"Inputs: `{payload['rows_json']}` (sha256 {payload['rows_json_sha256'][:12]}); data folder `{payload['data_dir']}`, "
+             + "; ".join(f"{name} tree sha256 {(digest or 'missing')[:12]}" for name, digest in payload["input_tree_sha256"].items())
+             + f". Wall {payload['wall_s']:.1f} s on CPU, 0 GPU job-hours; no dataset regenerated. "
+             "Every row below was used for the fit, so every row is in-sample.", "",
              "| Dataset | Item | Default linewidth (MHz) | Fitted linewidth (MHz) | Measured linewidth (MHz) | Default shape MSE | Fitted shape MSE | Fitted contrast | Contrast ratio |",
              "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |"]
     for row in rows:

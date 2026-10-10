@@ -105,3 +105,36 @@ def test_median_contrast_uses_only_contrast_fitted_rows(tmp_path, monkeypatch):
     payload = json.loads(out.read_text())
     assert abs(payload["median"]["base_contrast"] - 0.05) < 0.05 * 0.05
     assert payload["rows"][1]["fitted"]["base_contrast"] is None
+
+
+def test_width_only_fit_accepts_baseline_subtracted_signal():
+    # Review finding (plan N pass 1): with use_contrast=False an invalid contrast ratio must not void the fit.
+    exp = _lorentzian_dip(FREQ, _sim_center_hz(), 6e6, 0.05) - 1.0   # zero baseline, negative dip
+    fit = fit_row(FREQ, exp, B_lab_T=np.zeros(3), adapter_factory=lambda cfg: SimOSAdapter(cfg), use_contrast=False)
+    assert abs(fit["inhomogeneous_fwhm_hz"] - _expected_inhomogeneous_hz(6e6)) < 2e6
+
+
+def test_cli_records_input_hashes_and_wall_time(tmp_path, monkeypatch):
+    # Plan N global constraint: every result table states its inputs' hashes and run accounting.
+    import hashlib
+    import json
+    import sys
+    import scripts.fit_simulator_to_external as F
+
+    c = _sim_center_hz()
+    monkeypatch.setattr(F, "_load_row", lambda dataset, item: (FREQ, _lorentzian_dip(FREQ, c, 6e6, 0.05)))
+    (tmp_path / "zenodo_zerofield_10629041").mkdir()
+    (tmp_path / "zenodo_zerofield_10629041" / "a.csv").write_text("1,2\n")
+    src = tmp_path / "rows.json"
+    src.write_text(json.dumps({"rows": [dict(dataset="zenodo_zerofield", item="Position 1", comparable=True,
+                                             B_lab_mT=[0, 0, 0], sim_field_source="zero")]}))
+    out = tmp_path / "fit.json"
+    monkeypatch.setattr(sys, "argv", ["fit", "--data-dir", str(tmp_path), "--rows-json", str(src), "--out", str(out)])
+    F.main()
+    payload = json.loads(out.read_text())
+    assert payload["rows_json_sha256"] == hashlib.sha256(src.read_bytes()).hexdigest()
+    assert set(payload["input_tree_sha256"]) == {"zenodo_zerofield"}
+    assert len(payload["input_tree_sha256"]["zenodo_zerofield"]) == 64
+    assert payload["wall_s"] >= 0
+    md = out.with_suffix(".md").read_text()
+    assert payload["rows_json_sha256"][:12] in md and "in-sample" in md
