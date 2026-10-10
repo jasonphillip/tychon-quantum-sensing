@@ -1,0 +1,26 @@
+# External ODMR validation — fitted simulator
+
+Second table: the simulator with the cross-dataset median fit (inhomogeneous FWHM 2.69 MHz, base contrast 0.0299; from docs/simulator_fit_results.md). Rows marked in-sample were used to choose those values; this table is not independent validation. The width median comes from all nine fitted rows; the contrast median comes from the six zero-field and zenodo_odmr rows, the only rows where contrast is comparable. One parameter set cannot match every dataset: the zero-field lines stay narrower than measured (2.9 against 6.3–7.2 MHz) and the zenodo_odmr contrast becomes deeper than measured.
+
+| dataset | item | n_points | overlap_fraction | overlap_ok | shape_mse | contrast_exp | contrast_sim | contrast_ratio | linewidth_exp_hz | linewidth_sim_hz | max_abs_peak_offset_hz | noise_exp | sim_field_source | B_lab_mT | comparable | reason | fitted_in_sample |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| zenodo_ml_scan | x_1 | 600 | 1.0 | True | 0.708767404514111 | 1.096189741332081 | 0.010033207736915415 | 0.00915280207304544 | — | 3240338.8744311333 | — | 0.04450281462123129 | fitted-grid | -1.1547, -1.1547, 1.1547 | True |  | False |
+| zenodo_ml_scan | x_2 | 600 | 1.0 | True | 0.6952166066235179 | 1.142859717590763 | 0.010033207736915415 | 0.008779036991579505 | 109824230.07489729 | 3240338.8744311333 | — | 0.045856593792754065 | fitted-grid | -1.1547, -1.1547, 1.1547 | True |  | False |
+| zenodo_ml_scan | x_2_1 | 600 | 1.0 | True | 0.43063670869363385 | 1.7809852495764118 | 0.010033207736915415 | 0.005633515347362762 | 24721071.391522884 | 3240338.8744311333 | — | 0.05521433022191399 | fitted-grid | -1.1547, -1.1547, 1.1547 | True |  | False |
+| zenodo_zerofield | Position 1 | 130 | 1.0 | True | 0.188143924186029 | 0.05170627007497946 | 0.02980262845643189 | 0.5763832589976996 | 6302534.847597599 | 2885515.643054962 | 3000000.0 | 0.005874439346406519 | zero | 0, 0, 0 | True |  | True |
+| zenodo_zerofield | Position 2 | 130 | 1.0 | True | 0.12828469910978405 | 0.047234650888579685 | 0.02980262845643189 | 0.630948422308283 | 7247587.367552757 | 2885515.643054962 | 3000000.0 | 0.004499847789911437 | zero | 0, 0, 0 | True |  | True |
+| zenodo_zerofield | Position 3 | 130 | 1.0 | True | 0.10697527256349565 | 0.0501669711291811 | 0.02980262845643189 | 0.5940687226200968 | 6629389.6613230705 | 2885515.643054962 | 4000000.0 | 0.00394352068311701 | zero | 0, 0, 0 | True |  | True |
+| harvard | 0.40579 | 121 | 1.0 | True | 0.3543760004062588 | 1.0659070385414913 | 0.009552185052196443 | 0.008961555470416022 | 2473745.4093704224 | 2473746.2724051476 | — | 0.10946072246490447 | documented | 0.288675, 0.288675, 0.288675 | True | 0.5 mT documented; direction assumed first NV axis | True |
+| harvard | 0.40781894999999996 | 121 | 1.0 | True | 0.3543760004062588 | 1.0659070385414913 | 0.009552185052196443 | 0.008961555470416022 | 2473745.4093704224 | 2473746.2724051476 | — | 0.10946072246490447 | documented | 0.288675, 0.288675, 0.288675 | True | 0.5 mT documented; direction assumed first NV axis | True |
+| harvard | 0.40984790000000004 | 121 | 1.0 | True | 0.3429795303366671 | 1.081120463720615 | 0.009552185052196443 | 0.008835449307215162 | 2294335.7897405624 | 2473746.2724051476 | — | 0.1119646392362074 | documented | 0.288675, 0.288675, 0.288675 | True | 0.5 mT documented; direction assumed first NV axis | True |
+| borealis | 0_2867000-1.csv | 328350 | — | — | — | — | — | — | — | — | — | — | — | — | False | Pulsed calibration data: each file sweeps pulse and interpulse duration at one fixed detuning; the simulator models CW ODMR | False |
+| borealis | 0_2867000-2.csv | 328350 | — | — | — | — | — | — | — | — | — | — | — | — | False | Pulsed calibration data: each file sweeps pulse and interpulse duration at one fixed detuning; the simulator models CW ODMR | False |
+| borealis | 0_2867000-3.csv | 328350 | — | — | — | — | — | — | — | — | — | — | — | — | False | Pulsed calibration data: each file sweeps pulse and interpulse duration at one fixed detuning; the simulator models CW ODMR | False |
+| zenodo_odmr | f0_odmr.csv | 200 | 1.0 | True | 0.26459077370749134 | 0.0034472656157459695 | 0.011230296507360946 | 3.257740412013703 | 3786053.792019367 | 3088335.409898758 | — | 0.0006727078841151455 | fitted-grid | -0.57735, 0.57735, -0.57735 | True |  | True |
+| zenodo_odmr | f12_odmr.csv | 200 | 1.0 | True | 0.31691354048168063 | 0.003045694239230536 | 0.011005126911582957 | 3.6133393726230683 | 3061467.2152318954 | 3226338.781320572 | — | 0.0006483242349365748 | fitted-grid | -1.1547, -1.1547, 1.1547 | True |  | True |
+| zenodo_odmr | f24_odmr.csv | 200 | 1.0 | True | 0.39446052737006715 | 0.003007182503262597 | 0.011067019161813109 | 3.6801953821579216 | 4242032.930529594 | 3243129.8988218307 | — | 0.0007384153592828244 | fitted-grid | -1.73205, -1.73205, 1.73205 | True |  | True |
+| darus_gradiometry | dataset | — | — | — | — | — | — | — | — | — | — | — | — | — | False | Allan-deviation tables, not spectra | False |
+
+## How to read this
+
+overlap_ok false means the comparison is not valid; contrast_ratio far from 1 means the simulation's contrast model disagrees even when the shape agrees.
