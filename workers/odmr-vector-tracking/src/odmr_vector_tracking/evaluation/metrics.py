@@ -53,6 +53,74 @@ def vector_angular_error(
     return ang
 
 
+def vector_rmse(B_true: np.ndarray, B_est: np.ndarray) -> float:
+    """Root mean squared Euclidean field error (Tesla) over all frames."""
+    delta = np.asarray(B_est, dtype=np.float64) - np.asarray(B_true, dtype=np.float64)
+    return float(np.sqrt(np.mean(np.sum(delta**2, axis=1))))
+
+
+def magnitude_error(B_true: np.ndarray, B_est: np.ndarray) -> np.ndarray:
+    """Per-frame signed error in field magnitude, ``|B_est| - |B_true|`` (Tesla)."""
+    true_mag = np.linalg.norm(np.asarray(B_true, dtype=np.float64), axis=1)
+    est_mag = np.linalg.norm(np.asarray(B_est, dtype=np.float64), axis=1)
+    return est_mag - true_mag
+
+
+def vector_bias(B_true: np.ndarray, B_est: np.ndarray) -> np.ndarray:
+    """Mean signed estimate-minus-truth field vector, ``(3,)`` in Tesla."""
+    delta = np.asarray(B_est, dtype=np.float64) - np.asarray(B_true, dtype=np.float64)
+    return np.mean(delta, axis=0)
+
+
+def full_vector_lock(
+    B_true: np.ndarray,
+    B_est: np.ndarray,
+    mag_tol_frac: float = 0.05,
+    angle_tol_deg: float = 5.0,
+    eps_T: float = 1e-12,
+) -> np.ndarray:
+    """Per-frame lock when magnitude and angular errors both meet their limits.
+
+    A frame with a near-zero or nonfinite field is unlocked. Magnitude tolerance
+    is a fraction of the true magnitude; angle tolerance is in degrees.
+    """
+    true_mag = np.linalg.norm(np.asarray(B_true, dtype=np.float64), axis=1)
+    est_mag = np.linalg.norm(np.asarray(B_est, dtype=np.float64), axis=1)
+    angle = vector_angular_error(B_true, B_est, eps_T=eps_T)
+    return (
+        np.isfinite(true_mag) & np.isfinite(est_mag) & np.isfinite(angle)
+        & (true_mag >= eps_T) & (est_mag >= eps_T)
+        & (np.abs(est_mag - true_mag) <= mag_tol_frac * true_mag)
+        & (angle <= angle_tol_deg)
+    )
+
+
+def full_vector_lock_stats(lock: np.ndarray) -> dict[str, float | int | bool]:
+    """Acquisition and irrecoverable loss from a per-frame lock mask.
+
+    Loss starts at the first unlocked frame whose entire suffix is unlocked.
+    A sequence that never acquires is lost from frame zero.
+    """
+    held = np.asarray(lock, dtype=bool)
+    acquired = np.flatnonzero(held)
+    acq_index = int(acquired[0]) if acquired.size else -1
+    loss_index = -1
+    if acq_index < 0:
+        loss_index = 0 if held.size else -1
+    else:
+        unlocked = ~held
+        suffix_unlocked = np.logical_and.accumulate(unlocked[::-1])[::-1]
+        losses = np.flatnonzero(suffix_unlocked & (np.arange(held.size) > acq_index))
+        if losses.size:
+            loss_index = int(losses[0])
+    return {
+        "lock_frac": float(held.mean()) if held.size else 0.0,
+        "acq_index": acq_index,
+        "lost": acq_index < 0 or loss_index >= 0,
+        "loss_index": loss_index,
+    }
+
+
 # --- association ground-truth helpers ---------------------------------------------------
 
 def physical_line_index(
