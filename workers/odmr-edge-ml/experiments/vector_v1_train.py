@@ -51,6 +51,7 @@ from odmr_edge_ml.vector.anchors import (  # noqa: E402
     oracle_lock_bins,
     prior_lock_bins,
 )
+from odmr_edge_ml.cascade.train_stage import train_stage  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("vector_v1_train")
@@ -160,13 +161,12 @@ def _run_one_channel(
     n_train_cap: int | None,
     n_val_cap: int | None,
     device: torch.device,
+    use_compile: bool | None = None,
     anchor_source: str = "oracle",
     bias_B0_T: np.ndarray | None = None,
     train_coarse_fields_T: np.ndarray | None = None,
     val_coarse_fields_T: np.ndarray | None = None,
 ) -> dict:
-    from odmr_edge_ml.cascade.train_stage import train_stage
-
     train_spec, train_lab, freq = train
     val_spec, val_lab, _ = val
 
@@ -216,6 +216,7 @@ def _run_one_channel(
         huber_delta=huber_delta,
         seed=seed,
         num_workers=2,
+        use_compile=use_compile,
     )
 
     elapsed = time.time() - t0
@@ -231,6 +232,7 @@ def _run_one_channel(
         "label_val_min_uT": float(va_y.min()),
         "label_val_max_uT": float(va_y.max()),
         "val_mae_uT": float(result.val_metrics.get("mae_uT", float("nan"))),
+        "export_val_mae_uT": result.export_val_mae_uT,
         "val_rmse_uT": float(result.val_metrics.get("rmse_uT", float("nan"))),
         "learned_sigma": float(result.learned_sigma),
         "n_params": int(result.n_params),
@@ -248,6 +250,8 @@ def main() -> None:
     ap.add_argument("--smoke", action="store_true",
                     help="One channel (axis=0, sign=+1), 2 epochs, 1000 train samples")
     ap.add_argument("--epochs", type=int, default=100)
+    ap.add_argument("--no-compile", action="store_true",
+                    help="Disable torch.compile for every channel")
     ap.add_argument("--batch-size", type=int, default=64)
     ap.add_argument("--huber-delta", type=float, default=200.0)
     ap.add_argument("--window-size", type=int, default=800,
@@ -378,6 +382,7 @@ def main() -> None:
                 huber_delta=args.huber_delta, window_size=args.window_size,
                 seed=args.seed, n_train_cap=5000, n_val_cap=1000,
                 device=device,
+                use_compile=False if args.no_compile else None,
                 anchor_source=args.anchor_source, bias_B0_T=bias_B0_T,
                 train_coarse_fields_T=train_coarse_fields_T,
                 val_coarse_fields_T=val_coarse_fields_T,
@@ -397,6 +402,7 @@ def main() -> None:
                     seed=args.seed,
                     n_train_cap=None, n_val_cap=None,
                     device=device,
+                    use_compile=False if args.no_compile else None,
                     anchor_source=args.anchor_source, bias_B0_T=bias_B0_T,
                     train_coarse_fields_T=train_coarse_fields_T,
                     val_coarse_fields_T=val_coarse_fields_T,
@@ -408,6 +414,7 @@ def main() -> None:
         "anchor_source": args.anchor_source,
         "smoke": args.smoke,
         "epochs": args.epochs,
+        "use_compile": not args.no_compile,
         "huber_delta": args.huber_delta,
         "window_size": args.window_size,
         "seed": args.seed,

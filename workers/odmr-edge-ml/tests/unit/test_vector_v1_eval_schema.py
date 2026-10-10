@@ -12,6 +12,12 @@ from experiments.vector_v1_eval import _assemble_results, _coarse_fit_diagnostic
 from odmr_edge_ml.vector.anchors import bias_from_manifest
 
 
+def test_anchor_sigma_precedence():
+    assert evaluator._select_anchor_sigma(2.5, 1.8) == 2.5
+    assert evaluator._select_anchor_sigma(None, 1.8) == 1.8
+    assert evaluator._select_anchor_sigma(None, None) == 1.5
+
+
 def test_results_carry_anchor_source():
     for source in ("oracle", "prior", "spectrum", "coarse_fit"):
         result = _assemble_results(
@@ -83,7 +89,8 @@ def test_non_oracle_selection_and_blue_inputs_ignore_labels(tmp_path, monkeypatc
             path.parent.mkdir(parents=True)
             path.touch()
             channels.append({"axis_idx": axis, "sign": sign,
-                             "val_mae_uT": float(10 + len(channels))})
+                             "val_mae_uT": float(10 + len(channels)),
+                             "learned_sigma": 1.8})
     (models / "training_summary.json").write_text(json.dumps({"channels": channels}))
     freq = np.linspace(2.82e9, 2.92e9, 800)
     spectra = np.ones((2, 800))
@@ -119,6 +126,8 @@ def test_non_oracle_selection_and_blue_inputs_ignore_labels(tmp_path, monkeypatc
                             lambda spec, grid: np.zeros((len(spec), 3)))
         evaluator.main()
         result = json.loads(output.read_text())
+        assert all(ch["anchor_sigma"] == pytest.approx(1.8)
+                   for ch in result["per_channel"])
         snapshots.append((result["n_blue_used"], result["selection_uses_labels"],
                           [ch["n_in_grid"] for ch in result["per_channel"]],
                           [(pred.tolist(), sigma.tolist()) for pred, sigma in calls]))

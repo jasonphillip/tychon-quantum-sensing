@@ -25,8 +25,7 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset, WeightedRandomSampler
 
-warnings.filterwarnings("ignore", category=DeprecationWarning, module="torch.ao")
-
+from odmr_edge_ml.cascade.fine_labels import _run_tflite_int8
 from odmr_edge_ml.export import export_onnx as _export_onnx_module
 from odmr_edge_ml.models.fcnn import OdmrFCNN
 from odmr_edge_ml.models.fcnn_v2 import OdmrFCNNv2
@@ -34,6 +33,8 @@ from odmr_edge_ml.training.loop import TrainConfig, init_weights_kaiming_he, tra
 from odmr_edge_ml.training.qat import extract_clean_state_dict, prepare_model_qat
 from odmr_edge_ml.validation.ops_guard import check_model_ops
 from odmr_edge_ml.validation.tflite_ops import verify_tflite_ops
+
+warnings.filterwarnings("ignore", category=DeprecationWarning, module="torch.ao")
 
 log = logging.getLogger(__name__)
 
@@ -47,6 +48,7 @@ class StageResult:
     tflite_path: Path
     sigma_trajectory_csv: Path
     val_metrics: dict[str, float]
+    export_val_mae_uT: dict[str, float]
     training_time_s: float
     n_params: int
     sigma_trajectory: list[tuple[int, float, float]] = field(default_factory=list)
@@ -351,6 +353,30 @@ def train_stage(
     _convert_to_tflite_int8(clean, cal_nhwc, tflite_path)
 
     val_metrics = results.get("final_val_metrics") or {}
+    val_anchors = _gaussian_anchor(val_lock_bins, input_dim, learned_sigma)
+    val_combined = np.concatenate(
+        [val_spectra_norm.astype(np.float32), val_anchors], axis=1,
+    )
+    with torch.no_grad():
+        float_preds = np.concatenate([
+            clean(torch.from_numpy(batch)).numpy().reshape(-1)
+            for batch in np.array_split(val_combined, range(batch_size, len(val_combined), batch_size))
+        ])
+    int8_preds = _run_tflite_int8(
+        tflite_path, val_spectra_norm.astype(np.float32), val_anchors,
+    )
+    val_truth = val_labels_uT.reshape(-1)
+    export_val_mae_uT = {
+        "float": float(np.mean(np.abs(float_preds - val_truth))),
+        "int8": float(np.mean(np.abs(int8_preds - val_truth))),
+    }
+    in_process_mae = val_metrics.get("mae_uT", float("nan"))
+    for artifact, export_mae in export_val_mae_uT.items():
+        if abs(export_mae - in_process_mae) > max(5.0, 0.5 * in_process_mae):
+            log.warning(
+                "[stage=%s] %s export val MAE %.4f µT differs from in-process %.4f µT",
+                name, artifact, export_mae, in_process_mae,
+            )
     log.info("[stage=%s] val MAE: %.4f µT (%.1fs total)",
              name, val_metrics.get("mae_uT", float("nan")), training_time_s)
 
@@ -362,6 +388,7 @@ def train_stage(
         tflite_path=tflite_path,
         sigma_trajectory_csv=sigma_csv,
         val_metrics=val_metrics,
+        export_val_mae_uT=export_val_mae_uT,
         training_time_s=training_time_s,
         n_params=n_params,
         sigma_trajectory=sigma_traj,

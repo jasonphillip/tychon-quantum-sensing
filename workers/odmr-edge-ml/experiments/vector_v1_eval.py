@@ -168,15 +168,24 @@ def _coarse_fit_diagnostics(coarse_fields: np.ndarray, labels_T: np.ndarray) -> 
     }
 
 
-def _per_channel_sigma_from_summary(summary_path: Path) -> dict[tuple[int, int], float]:
-    """Read val MAE per channel from training_summary.json — used as Σ diag."""
+def _select_anchor_sigma(override: float | None, learned_sigma: float | None) -> float:
+    """Choose the host-side Gaussian width independently of BLUE uncertainty."""
+    if override is not None:
+        return float(override)
+    if learned_sigma is not None:
+        return float(learned_sigma)
+    return 1.5
+
+
+def _channel_summary(summary_path: Path) -> dict[tuple[int, int], dict]:
+    """Read per-channel training metadata for anchors and BLUE weights."""
     if not summary_path.exists():
         log.warning("training_summary.json not found at %s; defaulting σ=100 µT", summary_path)
         return {}
     blob = json.loads(summary_path.read_text())
-    out: dict[tuple[int, int], float] = {}
+    out: dict[tuple[int, int], dict] = {}
     for ch in blob.get("channels", []):
-        out[(int(ch["axis_idx"]), int(ch["sign"]))] = float(ch["val_mae_uT"])
+        out[(int(ch["axis_idx"]), int(ch["sign"]))] = ch
     return out
 
 
@@ -232,7 +241,8 @@ def main() -> None:
     ap.add_argument("--models", type=Path, default=DEFAULT_MODELS)
     ap.add_argument("--split", choices=("val", "test"), default="test")
     ap.add_argument("--n", type=int, default=5000)
-    ap.add_argument("--sigma-anchor", type=float, default=1.5)
+    ap.add_argument("--sigma-anchor", type=float, default=None,
+                    help="Override each channel's learned Gaussian width")
     ap.add_argument("--anchor-source", choices=("oracle", "prior", "spectrum", "coarse_fit"), default="oracle")
     ap.add_argument("--spectrum-window-bins", type=int, default=25)
     ap.add_argument("--condition", choices=("full", "spectrum_only", "anchor_only", "noisy_anchor"), default="full")
@@ -326,7 +336,10 @@ def main() -> None:
     coarse_fields = coarse_fit_field(spec_raw, freq) if args.anchor_source == "coarse_fit" else None
 
     # Per-channel σ from training_summary.json (val MAE = posterior uncertainty)
-    sigma_map = _per_channel_sigma_from_summary(args.models / "training_summary.json")
+    channel_summary = _channel_summary(args.models / "training_summary.json")
+    sigma_map = {
+        key: float(ch["val_mae_uT"]) for key, ch in channel_summary.items()
+    }
 
     pred_matrix = np.zeros((take, 8), dtype=np.float64)
     valid_matrix = np.zeros((take, 8), dtype=bool)
@@ -371,9 +384,11 @@ def main() -> None:
             valid_matrix[:, ch_idx] = wb.valid_mask
 
         interp = _load_tflite(tflite_path)
+        learned_sigma = channel_summary.get((axis_idx, sign), {}).get("learned_sigma")
+        anchor_sigma = _select_anchor_sigma(args.sigma_anchor, learned_sigma)
         t0 = time.time()
         preds = _tflite_predict_batch(
-            interp, spec_norm, lock_bins, sigma_anchor=args.sigma_anchor,
+            interp, spec_norm, lock_bins, sigma_anchor=anchor_sigma,
             spectrum_scale=0.0 if args.condition == "anchor_only" else 1.0,
             anchor_scale=0.0 if args.condition == "spectrum_only" else 1.0,
         )
@@ -408,6 +423,7 @@ def main() -> None:
                 "test_mae_uT": test_mae,
                 "test_rmse_uT": test_rmse,
                 "val_mae_uT_from_summary": sigma_map.get((axis_idx, sign), None),
+                "anchor_sigma": anchor_sigma,
                 "label_range_uT": [
                     float(true_matrix[:, ch_idx].min()),
                     float(true_matrix[:, ch_idx].max()),
