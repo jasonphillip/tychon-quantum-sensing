@@ -16,8 +16,6 @@ Public surface:
 """
 
 from odmr_edge_ml.cascade.fine_labels import compute_fine_labels
-from odmr_edge_ml.cascade.manifest_emit import emit_cascade_manifest
-from odmr_edge_ml.cascade.quant_gap import measure_quantization_gap
 from odmr_edge_ml.cascade.runners import (
     make_float_runner,
     make_int8_runner,
@@ -35,3 +33,16 @@ __all__ = [
     "quantize_input",
     "train_stage",
 ]
+
+
+def __getattr__(name):
+    if name == "emit_cascade_manifest":
+        # manifest_emit needs the private tychon_shared_data package.
+        from odmr_edge_ml.cascade.manifest_emit import emit_cascade_manifest
+
+        return emit_cascade_manifest
+    if name == "measure_quantization_gap":
+        from odmr_edge_ml.cascade.quant_gap import measure_quantization_gap
+
+        return measure_quantization_gap
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
