@@ -15,9 +15,11 @@ deployment or policy decision.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from statistics import NormalDist
 from typing import Hashable, Mapping
 
 import numpy as np
+from scipy.optimize import brentq
 
 
 # PROPOSED, NOT APPROVED by Jason. One extra lost sequence per 100 is a small
@@ -57,6 +59,34 @@ class Comparison:
     verdict: str
     n_sequences: int
     n_pairs: int
+
+
+def _tango_score_interval(b: float, c: float, n: int,
+                          confidence: float) -> tuple[float, float]:
+    """Invert Tango's paired-proportion score test (1998, equations 24-26).
+
+    b and c count candidate-only and baseline-only events. Fractional counts
+    allow seed-averaged discordances with the sequence as the sampling unit.
+    """
+    z = NormalDist().inv_cdf((1 + confidence) / 2)
+    estimate = (b - c) / n
+
+    def score(theta: float) -> float:
+        delta = -theta
+        aa = 2 * n
+        bb = -b - c - (2 * n - b + c) * delta
+        cc = c * delta * (delta + 1)
+        q21 = (np.sqrt(max(0.0, bb * bb - 4 * aa * cc)) - bb) / (2 * aa)
+        variance = n * (2 * q21 - delta * (delta + 1))
+        if variance <= 0:
+            if theta == estimate:
+                return 0.0
+            return float("inf") if theta < estimate else -float("inf")
+        return (b - c - n * theta) / np.sqrt(variance)
+
+    lo = -1.0 if estimate == -1 else brentq(lambda x: score(x) - z, -1, estimate)
+    hi = 1.0 if estimate == 1 else brentq(lambda x: score(x) + z, estimate, 1)
+    return float(lo), float(hi)
 
 
 def compare_paired(
@@ -123,16 +153,24 @@ def compare_paired(
     if len(ids) < min_sequences:
         return Comparison(estimate, float("nan"), float("nan"), margin,
                           "inconclusive", len(ids), len(keys))
-    rng = np.random.default_rng(bootstrap_seed)
-    boot = np.empty(bootstrap_samples)
-    for i in range(bootstrap_samples):
-        sampled = rng.integers(0, len(ids), size=len(ids))
-        if binary:
-            boot[i] = (av[sampled].sum() / ae[sampled].sum()
-                       - bv[sampled].sum() / be[sampled].sum())
-        else:
-            boot[i] = np.mean(av[sampled] - bv[sampled])
-    tail = (1 - confidence) / 2
-    lo, hi = np.quantile(boot, [tail, 1 - tail])
+    if binary and np.all(ae == 1) and np.all(be == 1) \
+            and np.all((av == 0) | (av == 1)) and np.all((bv == 0) | (bv == 1)):
+        # Average discordances over matched seeds. The effective sample size
+        # remains the number of independent sequence blocks.
+        b_only = float(np.sum((av == 1) & (bv == 0)) / len(seeds))
+        a_only = float(np.sum((av == 0) & (bv == 1)) / len(seeds))
+        lo, hi = _tango_score_interval(b_only, a_only, len(ids), confidence)
+    else:
+        rng = np.random.default_rng(bootstrap_seed)
+        boot = np.empty(bootstrap_samples)
+        for i in range(bootstrap_samples):
+            sampled = rng.integers(0, len(ids), size=len(ids))
+            if binary:
+                boot[i] = (av[sampled].sum() / ae[sampled].sum()
+                           - bv[sampled].sum() / be[sampled].sum())
+            else:
+                boot[i] = np.mean(av[sampled] - bv[sampled])
+        tail = (1 - confidence) / 2
+        lo, hi = np.quantile(boot, [tail, 1 - tail])
     verdict = "superior" if hi < 0 else "non-inferior" if hi < margin else "inconclusive"
     return Comparison(estimate, float(lo), float(hi), margin, verdict, len(ids), len(keys))

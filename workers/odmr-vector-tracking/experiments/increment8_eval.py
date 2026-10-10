@@ -36,6 +36,7 @@ import noise_matrix_report as nmr  # noqa: E402
 from odmr_vector_tracking.data import SequenceDatasetLoader  # noqa: E402
 from odmr_vector_tracking.data.contract import validate_dataset_dir  # noqa: E402
 from odmr_vector_tracking.evaluation.metrics import vector_angular_error  # noqa: E402
+from odmr_vector_tracking.evaluation.rows import LOSS_DEG  # noqa: E402
 from odmr_vector_tracking.tracking.learned import (  # noqa: E402
     build_tracker, config_from_checkpoint, load_tracker_state,
 )
@@ -54,11 +55,12 @@ def _angular_row(B_true: np.ndarray, B_est: np.ndarray) -> dict:
     ae = vector_angular_error(B_true, B_est)
     valid = ae[np.isfinite(ae)]
     return {"angular_error_mean": float(valid.mean()) if valid.size else float("nan"),
-            "angular_error_p90": float(np.percentile(valid, 90)) if valid.size else float("nan")}
+            "angular_error_p90": float(np.percentile(valid, 90)) if valid.size else float("nan"),
+            "lock_fraction": float(np.mean(np.isfinite(ae) & (ae <= LOSS_DEG)))}
 
 
 def write_sequence_csv(path: Path, rows: list[dict]) -> None:
-    """Write per-sequence observations without changing the pooled JSON schema."""
+    """Write per-sequence observations."""
     columns = ["seq_index", "bucket_class", "rung", "seed", "decode"]
     columns += sorted({key for row in rows for key in row} - set(columns))
     with path.open("w", newline="") as fh:
@@ -93,6 +95,8 @@ def dwell_split(runs_dir: Path, seeds: list[str], device: torch.device,
         cells = out["cells"].setdefault(tag, {})
         for seed in seeds:
             seqs, _ = ir.run_ckpt_outputs(runs_dir / seed / "best.pt", ds, device)
+            angular = [_angular_row(ds.B_true[n], s["b_est"])
+                       for n, s in enumerate(seqs)]
             for kind in ("baseline", "stack5"):
                 rows = [nmr._row(ir.decode_tracked(kind, s, cap, lw), pred_axis,
                                  s["b_est"], ds, n, m) for n, s in enumerate(seqs)]
@@ -101,7 +105,7 @@ def dwell_split(runs_dir: Path, seeds: list[str], device: torch.device,
                         sequence_rows.append({
                             "seq_index": n, "bucket_class": labels[n], "rung": tag,
                             "seed": seed, "decode": kind,
-                            **_angular_row(ds.B_true[n], seqs[n]["b_est"]),
+                            **angular[n],
                             "acq_index": fc6.lock_stats(ds.B_true[n],
                                                          seqs[n]["b_est"])["acq_index"],
                             **(row or {}),
@@ -109,7 +113,13 @@ def dwell_split(runs_dir: Path, seeds: list[str], device: torch.device,
                 agg = nmr.aggregate(rows, labels)
                 cells.setdefault(f"decode:{kind}", {})[seed] = {
                     p: {"idsw_opp": agg[p]["idsw_opp"][:2],
-                        "lock_loss": agg[p]["lock_loss"][:2]} for p in pops}
+                        "lock_loss": agg[p]["lock_loss"][:2],
+                        "lock_fraction": float(np.mean([
+                            angular[n]["lock_fraction"] for n, label in enumerate(labels)
+                            if label == p])),
+                        "lock_fraction_all": [angular[n]["lock_fraction"]
+                                              for n, label in enumerate(labels) if label == p]}
+                    for p in pops}
             print(f"[dwell:{tag}] {seed} done ({time.time()-t0:.0f}s)", flush=True)
     return out
 
@@ -134,6 +144,8 @@ def fieldcone(runs_dir: Path, seeds: list[str], device: torch.device,
         for seed in seeds:
             seqs, _ = ir.run_ckpt_outputs(runs_dir / seed / "best.pt", ds, device)
             stats = [fc6.lock_stats(ds.B_true[n], s["b_est"]) for n, s in enumerate(seqs)]
+            angular = [_angular_row(ds.B_true[n], s["b_est"])
+                       for n, s in enumerate(seqs)]
             if sequence_rows is not None:
                 for n, stat in enumerate(stats):
                     sequence_rows.append({
@@ -141,10 +153,12 @@ def fieldcone(runs_dir: Path, seeds: list[str], device: torch.device,
                         "rung": tag, "seed": seed, "decode": "fieldcone",
                         "target_angle_deg": per_seq["target_angle_deg"][n],
                         "target_B_mT": per_seq["target_B_mT"][n],
-                        **_angular_row(ds.B_true[n], seqs[n]["b_est"]), **stat,
+                        **angular[n], **stat,
                     })
             cells[seed] = {k + "_all": [s[k] for s in stats]
                            for k in ("lost", "loss_index", "acq_index", "never_locked", "ae_med")}
+            cells[seed]["lock_fraction_all"] = [row["lock_fraction"] for row in angular]
+            cells[seed]["lock_fraction"] = float(np.mean(cells[seed]["lock_fraction_all"]))
             print(f"[fieldcone:{tag}] {seed} done ({time.time()-t0:.0f}s)", flush=True)
     return out
 
