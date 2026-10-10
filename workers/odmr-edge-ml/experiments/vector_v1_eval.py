@@ -4,14 +4,12 @@ For each test spectrum:
 
 1. Symmetric-normalise the full 800-point spectrum.
 2. For each of the 8 (axis_idx, sign) channels:
-   - Compute the linear-Zeeman lock-bin anchor from the *label* (oracle
-     anchor — see §1 of the closing memo for the explicit acknowledgement
-     of this leak; equivalent to a fixed-bias-direction Path-A/B PID lock).
+   - Compute the lock-bin anchor from the selected source. Oracle uses the
+     label; the other sources use a fixed prior or the measured spectrum.
    - Run the channel's INT8 TFLite FCNN over the (spectrum, anchor) pair.
    - Output: scalar prediction of ``B · n_i × sign`` in µT.
-3. Mask channels whose dip lies outside the 80 MHz spectral grid via the
-   windowing utility's `valid_mask` — those FCNN outputs are unreliable
-   because the dip isn't visible.
+3. Mask channels whose line cannot centre a full grid window. Oracle uses
+   its historical label-based mask; other sources use the predicted line.
 4. BLUE inversion per spectrum with per-channel σ from training_summary
    (val MAE per channel) for in-grid channels, large σ for out-of-grid
    channels. Recovers a 3D B̂.
@@ -56,6 +54,8 @@ from odmr_edge_ml.vector.anchors import (  # noqa: E402
 )
 from odmr_edge_ml.vector.windowing import (  # noqa: E402
     NV_AXES_UNIT,
+    NV_GYROMAGNETIC_RATIO_HZ_T,
+    NV_ZERO_FIELD_SPLITTING_HZ,
     build_windows_for_axis_sign,
 )
 
@@ -147,6 +147,7 @@ def _assemble_results(
         "condition": condition,
         "anchor_noise_bins": anchor_noise_bins,
         "oracle_conditioned": anchor_source == "oracle",
+        "selection_uses_labels": anchor_source == "oracle",
         "dataset_md5": dataset_md5,
         "regenerated_dataset": regenerated_dataset,
         "wall_s": wall_s,
@@ -177,6 +178,18 @@ def _per_channel_sigma_from_summary(summary_path: Path) -> dict[tuple[int, int],
     for ch in blob.get("channels", []):
         out[(int(ch["axis_idx"]), int(ch["sign"]))] = float(ch["val_mae_uT"])
     return out
+
+
+def _predicted_line_validity(preds_uT: np.ndarray, freq: np.ndarray,
+                             window_size: int = 100) -> np.ndarray:
+    """Check whether a predicted resonance can centre a full grid window."""
+    predicted_freq = (NV_ZERO_FIELD_SPLITTING_HZ +
+                      NV_GYROMAGNETIC_RATIO_HZ_T * np.asarray(preds_uT) * 1e-6)
+    bin_float = (predicted_freq - freq[0]) / (freq[1] - freq[0])
+    finite = np.isfinite(bin_float)
+    bins = np.rint(np.where(finite, bin_float, -1)).astype(np.int64)
+    half = window_size // 2
+    return finite & (bins >= half) & (bins + window_size - half <= len(freq))
 
 
 def main() -> None:
@@ -210,6 +223,10 @@ def main() -> None:
         ap.error("--anchor-noise-bins must be non-negative")
     if args.spectrum_window_bins < 0:
         ap.error("--spectrum-window-bins must be non-negative")
+    if args.anchor_source != "oracle" and (
+        args.filter_target_uvw is not None or args.filter_bmag_max_mT is not None
+    ):
+        ap.error("label-based sample filters require --anchor-source oracle")
     bias_B0_T = None
     if args.anchor_source in ("prior", "spectrum"):
         try:
@@ -313,12 +330,12 @@ def main() -> None:
         proj_T = (lab_T @ NV_AXES_UNIT.T)[:, axis_idx]
         true_matrix[:, ch_idx] = sign * proj_T * 1e6
 
-        # In-grid mask: only channels whose dip lies in the 80 MHz window are
-        # informative — the others get a large σ in BLUE
-        wb = build_windows_for_axis_sign(
-            spec_raw, lab_T, freq, axis_idx=axis_idx, sign=sign, window_size=100,
-        )
-        valid_matrix[:, ch_idx] = wb.valid_mask
+        if args.anchor_source == "oracle":
+            # Preserve the historical label-conditioned oracle mask exactly.
+            wb = build_windows_for_axis_sign(
+                spec_raw, lab_T, freq, axis_idx=axis_idx, sign=sign, window_size=100,
+            )
+            valid_matrix[:, ch_idx] = wb.valid_mask
 
         interp = _load_tflite(tflite_path)
         t0 = time.time()
@@ -330,6 +347,8 @@ def main() -> None:
         log.info("  CH%d %s  TFLite over %d samples in %.1fs",
                  ch_idx, tag, take, time.time() - t0)
         pred_matrix[:, ch_idx] = preds
+        if args.anchor_source != "oracle":
+            valid_matrix[:, ch_idx] = _predicted_line_validity(preds, freq)
 
         # Per-channel σ for BLUE: val MAE from training summary, with masked
         # rows blown up to effective infinity.

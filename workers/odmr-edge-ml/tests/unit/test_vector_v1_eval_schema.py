@@ -1,10 +1,13 @@
 """Evaluation JSON provenance contract."""
 
 import json
+import sys
 
+import h5py
 import numpy as np
 import pytest
 
+from experiments import vector_v1_eval as evaluator
 from experiments.vector_v1_eval import _assemble_results, _coarse_fit_diagnostics, _tflite_predict_batch
 from odmr_edge_ml.vector.anchors import bias_from_manifest
 
@@ -23,6 +26,7 @@ def test_results_carry_anchor_source():
         assert result["anchor_source"] == source
         assert result["condition"] == "full"
         assert result["oracle_conditioned"] is (source == "oracle")
+        assert result["selection_uses_labels"] is (source == "oracle")
 
 
 def test_coarse_fit_diagnostics_respect_field_sign():
@@ -67,3 +71,66 @@ def test_predict_batch_zeroes_selected_input_channel():
     assert np.all(interp.input[..., 1] == 0)
     _tflite_predict_batch(interp, spectrum, bins, 1.5, spectrum_scale=0.0)
     assert np.all(interp.input[..., 0] == 0)
+
+
+def test_non_oracle_selection_and_blue_inputs_ignore_labels(tmp_path, monkeypatch):
+    models = tmp_path / "models"
+    channels = []
+    for axis in range(4):
+        for sign in (1, -1):
+            tag = evaluator._channel_tag(axis, sign)
+            path = models / evaluator._channel_dirname(axis, sign) / f"{tag}_int8.tflite"
+            path.parent.mkdir(parents=True)
+            path.touch()
+            channels.append({"axis_idx": axis, "sign": sign,
+                             "val_mae_uT": float(10 + len(channels))})
+    (models / "training_summary.json").write_text(json.dumps({"channels": channels}))
+    freq = np.linspace(2.82e9, 2.92e9, 800)
+    spectra = np.ones((2, 800))
+    predictions = np.array([50., -70., 90., -110., 150., -170., 200., 5000.])
+    monkeypatch.setattr(evaluator, "_load_tflite", lambda path: path)
+    monkeypatch.setattr(evaluator, "_tflite_predict_batch", lambda path, spectra_norm,
+                        lock_bins, sigma_anchor, **kwargs: np.full(len(spectra_norm),
+                        predictions[next(i for i, ch in enumerate(channels)
+                                         if evaluator._channel_tag(ch["axis_idx"], ch["sign"]) in path.name)]))
+    calls = []
+    original_blue = evaluator.blue_project
+
+    def capture_blue(pred, geometry, sigma):
+        calls.append((pred.copy(), sigma.copy()))
+        return original_blue(pred, geometry, sigma=sigma)
+
+    monkeypatch.setattr(evaluator, "blue_project", capture_blue)
+    snapshots = []
+    for run, labels in enumerate((np.zeros((2, 3)),
+                                  np.array([[0.004, 0.003, 0.002],
+                                            [-0.004, -0.003, -0.002]]))):
+        dataset = tmp_path / f"dataset_{run}.h5"
+        with h5py.File(dataset, "w") as h5:
+            h5.create_dataset("test/spectra", data=spectra)
+            h5.create_dataset("test/labels", data=labels)
+            h5.create_dataset("test/frequencies", data=freq)
+        output = tmp_path / f"output_{run}.json"
+        calls.clear()
+        monkeypatch.setattr(sys, "argv", ["vector_v1_eval.py", "--dataset", str(dataset),
+                                        "--models", str(models), "--anchor-source", "coarse_fit",
+                                        "--out-json", str(output)])
+        monkeypatch.setattr(evaluator, "coarse_fit_field",
+                            lambda spec, grid: np.zeros((len(spec), 3)))
+        evaluator.main()
+        result = json.loads(output.read_text())
+        snapshots.append((result["n_blue_used"], result["selection_uses_labels"],
+                          [ch["n_in_grid"] for ch in result["per_channel"]],
+                          [(pred.tolist(), sigma.tolist()) for pred, sigma in calls]))
+    assert snapshots[0] == snapshots[1]
+    assert snapshots[0][0] == 2
+    assert snapshots[0][1] is False
+    assert snapshots[0][2][-1] == 0
+
+
+def test_non_oracle_rejects_label_based_sample_filters(tmp_path, monkeypatch):
+    monkeypatch.setattr(sys, "argv", ["vector_v1_eval.py", "--anchor-source", "coarse_fit",
+                                    "--filter-bmag-max-mT", "1", "--dataset",
+                                    str(tmp_path / "unused.h5")])
+    with pytest.raises(SystemExit, match="2"):
+        evaluator.main()
