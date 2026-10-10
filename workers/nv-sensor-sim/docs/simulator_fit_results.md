@@ -1,9 +1,11 @@
 # Simulator fit to external ODMR
 
 Date: 2026-10-10
-Git SHA: ee3f5d47d7d15393e5e53290313d5df5d087bb00
+Git SHA: 1ce32afc9bc57d783d42ffdf6dd0d4e54138a06d
 
 Minimize squared log simulated-to-measured linewidth ratio, plus squared log contrast ratio when contrast is used.
+
+Inputs: `docs/external_validation_results.json` (sha256 5465f608ef83); data folder `~/projects/nv-sensor-sim/data/experimental`, harvard tree sha256 9936294d2432; zenodo_odmr tree sha256 f744d2d081fd; zenodo_zerofield tree sha256 49b1fdeffb60. Wall 4.5 s on CPU, 0 GPU job-hours; no dataset regenerated. Every row below was used for the fit, so every row is in-sample.
 
 | Dataset | Item | Default linewidth (MHz) | Fitted linewidth (MHz) | Measured linewidth (MHz) | Default shape MSE | Fitted shape MSE | Fitted contrast | Contrast ratio |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |

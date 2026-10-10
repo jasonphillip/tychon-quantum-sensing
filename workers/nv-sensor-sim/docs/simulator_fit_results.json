@@ -1,7 +1,17 @@
 {
   "date": "2026-10-10",
-  "git_sha": "ee3f5d47d7d15393e5e53290313d5df5d087bb00",
+  "git_sha": "1ce32afc9bc57d783d42ffdf6dd0d4e54138a06d",
   "objective": "Minimize squared log simulated-to-measured linewidth ratio, plus squared log contrast ratio when contrast is used.",
+  "rows_json": "docs/external_validation_results.json",
+  "rows_json_sha256": "5465f608ef8337cb8d38b240b64736ee15d44e67eaf38b2e9362d252330fa0c4",
+  "data_dir": "~/projects/nv-sensor-sim/data/experimental",
+  "input_tree_sha256": {
+    "harvard": "9936294d2432181534a0f46291be3a53e5ede6c53c0ae3fa6cf4f6dddc1931e9",
+    "zenodo_odmr": "f744d2d081fd4dd06f31f336a6a7152772611fe244b89735c5baf7e210216345",
+    "zenodo_zerofield": "49b1fdeffb60bb8ca841fab8714ebb24fd64365f0d7bd03c943d831b6ac62d44"
+  },
+  "wall_s": 4.507,
+  "job_hours": 0.0,
   "rows": [
     {
       "dataset": "zenodo_zerofield",
