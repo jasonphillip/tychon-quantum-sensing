@@ -19,20 +19,20 @@ Field-cone metrics come from `experiments/full_vector_eval.py` (clean rung); dwe
 
 ## Paired differences within each seed (noassoc minus assoc)
 
-Field-cone, per-sequence paired, 95 % CI from the C3 driver; dwell, paired over the same sequences, 95 % percentile bootstrap (2000 resamples, seed 0). Negative is better except for lock fraction.
+Field-cone, per-sequence paired, 95 % CI from the C3 driver. Dwell, paired over the same 288 sequences with `evaluation/noninferiority.py`: Tango score interval for the binary lost rate, sequence-blocked bootstrap (10,000 resamples) for the other metrics. Negative is better except for lock fraction.
 
 | Seed | Field-cone RMSE (mT) | Field-cone angular error (°) | Dwell angular p90 (°) | Dwell identity switches | Dwell collision misassociation | Dwell lost rate | Dwell lock fraction |
 |---|---|---|---|---|---|---|---|
-| 20260701 | −0.456 [−0.650, −0.276] | −10.4 [−14.9, −6.2] | −9.8 [−12.5, −7.2] | −0.064 [−0.096, −0.032] | +0.005 [−0.001, +0.011] | −0.090 [−0.129, −0.059] | +0.072 [+0.053, +0.092] |
-| 20260702 | −0.167 [−0.276, −0.065] | −3.7 [−6.0, −1.6] | −5.3 [−7.4, −3.4] | −0.235 [−0.276, −0.198] | −0.029 [−0.036, −0.021] | −0.010 [−0.024, 0.000] | +0.017 [+0.006, +0.029] |
-| 20260703 | −0.172 [−0.271, −0.078] | −8.6 [−12.1, −5.4] | −9.6 [−12.3, −7.0] | −0.159 [−0.194, −0.127] | +0.000 [−0.000, +0.001] | 0.000 [0.000, 0.000] | −0.004 [−0.010, 0.000] |
+| 20260701 | −0.456 [−0.650, −0.276] | −10.4 [−14.9, −6.2] | −9.8 [−12.5, −7.1] | −0.064 [−0.095, −0.032] | +0.005 [−0.001, +0.011] | −0.090 [−0.129, −0.062] | +0.072 [+0.054, +0.091] |
+| 20260702 | −0.167 [−0.276, −0.065] | −3.7 [−6.0, −1.6] | −5.3 [−7.4, −3.4] | −0.235 [−0.275, −0.197] | −0.029 [−0.036, −0.021] | −0.010 [−0.030, +0.003] | +0.017 [+0.006, +0.029] |
+| 20260703 | −0.172 [−0.271, −0.078] | −8.6 [−12.1, −5.4] | −9.6 [−12.2, −7.1] | −0.159 [−0.193, −0.127] | +0.000 [−0.000, +0.001] | +0.000 [−0.013, +0.013] | −0.004 [−0.010, +0.000] |
 | mean of three | −0.265 | −7.6 | | | | | |
 
 The ablation driver's verdicts against the single baseline run (assoc, seed 20260701), with the proposed margins (not approved by Jason), are in `docs/association_loss_multiseed_verdicts.json`. They mix the arm effect with seed-to-seed spread: the two other assoc seeds are themselves "inferior" to the baseline on dwell angular p90 (+1.2° and +5.2°), so the within-seed pairs above are the cleaner comparison.
 
 ## Reading
 
-Removing the association losses improves field accuracy in every seed: all three paired RMSE intervals and all three angular-error intervals lie below zero, so the plan C finding holds across seeds, at a smaller size than seed 20260701 alone suggested (mean −0.27 mT and −7.6° against −0.46 mT and −10.4°). On dwell it does not cost identity: identity switches fall in every seed, collision misassociation changes by +0.005, −0.029 and +0.000 (no consistent cost), and dwell angular p90 improves by 5–10°. One caveat on training length: with the matched recipe the assoc runs stop improving earlier (best epochs 230, 140 and 225, and seed 20260702 stopped by patience at 240), while the noassoc runs keep improving to 305–325; the comparison is at the same recipe, not at the same number of useful epochs. The association head itself stays in the model: its output (`assignment`) is computed off the NPU and never feeds the field estimate, so removing the losses changes only an output that no deployed consumer reads; removing the head is an architecture change and out of scope.
+Removing the association losses improves field accuracy in every seed: all three paired RMSE intervals and all three angular-error intervals lie below zero, so the plan C finding holds across seeds, at a smaller size than seed 20260701 alone suggested (mean −0.27 mT and −7.6° against −0.46 mT and −10.4°). On dwell it does not cost identity: identity switches fall in every seed, collision misassociation changes by +0.005, −0.029 and +0.000 (no consistent cost), and dwell angular p90 improves by 5–10°. The dwell lost rate improves for seed 20260701; for the other two seeds its interval includes zero and crosses the proposed 1 % margin, so neither harm nor non-inferiority is shown there. One caveat on training length: with the matched recipe the assoc runs stop improving earlier (best epochs 230, 140 and 225, and seed 20260702 stopped by patience at 240), while the noassoc runs keep improving to 305–325; the comparison is at the same recipe, not at the same number of useful epochs. The association head itself stays in the model: its output (`assignment`) is computed off the NPU and never feeds the field estimate, so removing the losses changes only an output that no deployed consumer reads; removing the head is an architecture change and out of scope.
 
 ## Adoption
 
