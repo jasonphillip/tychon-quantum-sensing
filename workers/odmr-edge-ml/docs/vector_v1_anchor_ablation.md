@@ -43,3 +43,7 @@ Reference floors: the RMS field magnitude of the test set is 3035 µT (the error
 - In this single-spectrum pipeline, then, the field estimate comes from the oracle anchor, not from the spectrum.
 
 No readiness or deployment statement is made here.
+
+## Caveat added 2026-10-10 (plan N, item N3)
+
+The models in this table were trained on the GPU with `torch.compile` and bfloat16 autocast. Their saved checkpoints do not reproduce the validation error recorded during training: reloaded and run on the validation split, the four channels checked give 510–2959 µT against 266–287 µT recorded. The same gap appears in new models trained with the same path (1.7 µT recorded, 883 µT on reload), while a CPU run without `torch.compile` reproduces its recorded error from its checkpoint. The rows above therefore measure the exported artifacts of that training path, not the network that training reported. Training now has a `--no-compile` switch and records the exported artifacts' own validation error (`export_val_mae_uT`); see `docs/vector_v1_bias_field.md`.
