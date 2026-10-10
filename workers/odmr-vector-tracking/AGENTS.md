@@ -19,7 +19,7 @@ Never commit `.dispatch/` contents; never poll or auto-consume — Jason relays 
 2. **Deployable default is contractual**: `docs/deployable_default.md` documents the canonical policy pair. Changing it requires a TVW dispatch, not lane initiative.
 3. **No retraining or policy re-selection without a dispatch** authorizing it.
 4. **Artifact boundary**: this repo stops at trained models/policies. `.vnnx` and all FPGA-side artifacts belong to `polarfire-hybrid-control` — never ssh bee for `vnnx_compile` from this lane; hand off via TVW.
-5. `experiments/increment4_parity_gate.py` deliberately compares against the archived spark1-era reference — its spark1 paths are its purpose, do not "fix" them.
+5. `experiments/increment4_parity_gate.py` deliberately compares against the archived ws1-era reference — its ws1 paths are its purpose, do not "fix" them.
 
 ## Git
 `origin` = NAS bare mirror (file:///mnt/nas/projects/git/…, auto-pushed by TVW eod_close), `github` = private GitHub. Both stay private.

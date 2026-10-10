@@ -98,7 +98,7 @@ per cycle for the trip measurement:
    other sensor is `hwmon0 = mpfs_tvs` (on-die temp/voltage) — not board rail
    power, not a substitute for the deck's "board-measured X W [HW]" line.
    Per the plan's own pre-flight rule: drop item 4 from the window.
-5. / 6. Not kit-gated (5 = spark2 training) / buffer-only (6 = resynthesis,
+5. / 6. Not kit-gated (5 = ws2 training) / buffer-only (6 = resynthesis,
    guardrail says leave the golden image alone). Unaffected by this inventory.
 
 ## Guardrail compliance

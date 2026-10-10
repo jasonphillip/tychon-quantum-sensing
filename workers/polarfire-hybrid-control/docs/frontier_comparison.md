@@ -127,7 +127,7 @@ points:
 | Local g++ shim test | absent | `make hls-test-local` | `make hls-test-local` |
 | Report classifier | manual | `tools/audit_libero_reports.py` | `tools/audit_libero_reports.py` (calibrated differently — see audit-gate row) |
 | Citation linter | absent | absent | `tools/audit_corpus_citations.py` (35/35 citations resolve) |
-| Beelink runner | none | `tools/run_beelink_verification.sh` (origin-only fetch — fails when GitHub SSH not configured on Beelink) | `tools/run_beelink_verification.sh` with spark1 fallback (works without GitHub SSH on Beelink) |
+| Beelink runner | none | `tools/run_beelink_verification.sh` (origin-only fetch — fails when GitHub SSH not configured on Beelink) | `tools/run_beelink_verification.sh` with ws1 fallback (works without GitHub SSH on Beelink) |
 
 ### Synthesis evidence
 
@@ -223,7 +223,7 @@ the corpus actually warns about.
 - **Beelink reachability.** The corpus has nothing about SSH config or
   GitHub credentials. Round 1 failed every Beelink attempt because
   Beelink can't authenticate to GitHub origin; Round 2 worked around it
-  by fetching from the `spark1` SSH remote already configured on
+  by fetching from the `ws1` SSH remote already configured on
   Beelink. This is a tooling difference, not a corpus difference.
 
 ## Conclusion

@@ -12,14 +12,14 @@ audit-003 = r1_s1 archived, r6_s25 hier CSV + closure timing reports added
 
 - **c0057** qwen: `CONTRADICTED -> SUPPORTED` | nemo: `ERROR -> SUPPORTED`
   - Claim: "The worst slack across the design is **+0.728 ns** on the FIC_0 PLL OUT0 (125 MHz / 8 ns) domain, on a path **internal to the integrated PID compute datapath** (nv_pid_top_0/\.../nv_pid_top_pid_integr"
-  - audit-003 doc top: ["report/Tychon_Phase_I_Final_Report_2026-04-30.md", "spark1_r6_s25_closure/MPFS_ICICLE_KIT_BASE_DESIGN_timing_violations_max_r6_s25.txt", "spark1_r6_s25_closure/MPFS_ICICLE_KIT_BASE_DESIGN_timing_violations_max_r6_s25.txt"]
+  - audit-003 doc top: ["report/Tychon_Phase_I_Final_Report_2026-04-30.md", "ws1_r6_s25_closure/MPFS_ICICLE_KIT_BASE_DESIGN_timing_violations_max_r6_s25.txt", "ws1_r6_s25_closure/MPFS_ICICLE_KIT_BASE_DESIGN_timing_violations_max_r6_s25.txt"]
   - audit-003 qwen rationale: Evidence confirms +0.728 ns slack on FIC_0 PLL OUT0 domain and specifies internal PID datapath path delay.
 
 ## Worsened (1)
 
 - **c0033** qwen: `SUPPORTED -> CONTRADICTED` | nemo: `SUPPORTED -> SUPPORTED`
   - Claim: "On the FIC_0 clock domain at 125 MHz, the PID achieves a worst-case path delay of 5.893 ns with +2.107 ns positive slack."
-  - audit-003 doc top: ["report/Tychon_Phase_I_Final_Report_2026-04-30.md", "spark1_r6_s25_closure/MPFS_ICICLE_KIT_BASE_DESIGN_timing_violations_max_r6_s25.txt", "spark1_r6_s25_closure/MPFS_ICICLE_KIT_BASE_DESIGN_timing_violations_max_r6_s25.txt"]
+  - audit-003 doc top: ["report/Tychon_Phase_I_Final_Report_2026-04-30.md", "ws1_r6_s25_closure/MPFS_ICICLE_KIT_BASE_DESIGN_timing_violations_max_r6_s25.txt", "ws1_r6_s25_closure/MPFS_ICICLE_KIT_BASE_DESIGN_timing_violations_max_r6_s25.txt"]
   - audit-003 qwen rationale: Timing analysis shows worst-case delays exceed 5.893 ns and slack is negative, contradicting the claim.
 
 ## Lateral (3)

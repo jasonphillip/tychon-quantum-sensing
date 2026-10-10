@@ -19,7 +19,7 @@ fetched verbatim from the kit at `/root/bringup/wdt-2026-07-01/`).
   was invoked directly — identical flags:
   `riscv64-unknown-linux-gnu-gcc -O2 -Wall -static watchdog_trip.c -o watchdog_trip -lm`
   (SmartHLS toolchain + cygwin PATH exactly as the Makefile header specifies).
-  Output: static RISC-V ELF, 453,552 bytes; deployed to kit via spark1.
+  Output: static RISC-V ELF, 453,552 bytes; deployed to kit via ws1.
 
 ## Pre-checks (all passed)
 

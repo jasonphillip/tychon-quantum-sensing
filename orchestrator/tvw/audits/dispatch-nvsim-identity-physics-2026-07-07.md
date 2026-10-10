@@ -1,6 +1,6 @@
 # Dispatch — nv-sim identity-physics lineage: dwell-sweep eval + physics identity cues
 
-**Target session:** `~/projects/nv-sensor-sim/` on **spark2** (all compute local; spark1 is
+**Target session:** `~/projects/nv-sensor-sim/` on **ws2** (all compute local; ws1 is
 decommissioned). This reopens the nv-sim lane closed 2026-07-02 — the closure listed
 "open by design" follow-ons, and this is one of them. **Hyperfine (L=24) stays deferred** —
 it is a contract change and is NOT part of this dispatch.
@@ -81,7 +81,7 @@ usual manifest stats. Do NOT change the L=8 line contract.
    bucket twice with the same seed → identical md5).
 3. Verify the 951-grid pin and v1 bias vector are read from the v1 manifest, not hard-coded
    anew. The immutable v1 reference lives at
-   `~/archives/spark1-projects-2026-07-05/odmr-vector-tracking/data/sequence_train_v1/` — the
+   `~/archives/ws1-projects-2026-07-05/odmr-vector-tracking/data/sequence_train_v1/` — the
    odmr archive's copy is the real one there (the tracking-repo archive entry is a dangling
    symlink; resolve via the nv-sensor-sim archive if needed). Read-only.
 

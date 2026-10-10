@@ -13,6 +13,6 @@
 - Anything else the user explicitly asks for that doesn't conflict with the rules above.
 
 **Out-of-scope (delegate elsewhere):**
-- **Heavy ML training / inference jobs** that belong on a dedicated Spark background runner (multi-hour fine-tunes, large sweeps, batch embedding of >GB-scale corpora). TVW prepares the job, dispatches it to spark2 (or spark3) via `nohup` + pidfile, and watches the heartbeats — but doesn't host the compute itself.
+- **Heavy ML training / inference jobs** that belong on a dedicated Spark background runner (multi-hour fine-tunes, large sweeps, batch embedding of >GB-scale corpora). TVW prepares the job, dispatches it to ws2 (or ws3) via `nohup` + pidfile, and watches the heartbeats — but doesn't host the compute itself.
 
 > Note (2026-09-04): the first bullet's `~/projects/tychon-sbir/docs/` path predates the

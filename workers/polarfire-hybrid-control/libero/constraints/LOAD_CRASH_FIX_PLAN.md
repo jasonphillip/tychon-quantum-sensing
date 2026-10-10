@@ -147,7 +147,7 @@ characterizes the broken file.
 ### Step 5 — Load-only test (the gate)
 
 ```bash
-ssh bee "cd ~/dev/projects/polarfire-hybrid-control && git pull spark1 decision-2-option-c && libero \"SCRIPT:libero/scripts/decision-2-c-load-only.tcl\"" 2>&1 | tee /tmp/loadonly_postrestore.log
+ssh bee "cd ~/dev/projects/polarfire-hybrid-control && git pull ws1 decision-2-option-c && libero \"SCRIPT:libero/scripts/decision-2-c-load-only.tcl\"" 2>&1 | tee /tmp/loadonly_postrestore.log
 ```
 
 Expected: clean completion ending with `==> LOAD_ONLY COMPLETE`.

@@ -24,7 +24,7 @@ RESET_, and _read a COM port_.** Everything buildable was pre-staged on bee + NA
 | seed_7 bitstream | **already on silicon** (rung A) + `.job` on bee + NAS | fabric digest `0769…C03DF8` matched on program |
 | Linux image `mchp-base-image-mpfs-icicle-kit.rootfs-20260430113402.wic.gz` (linux4microchip-2026.04, ~117 MB) | bee `~/icicle-linux/` | sha256 `87bde5454c6d951665ba12883f38b8d9da1274484900d5f33a79945b874c430d` |
 | `pid_poke`, `vnnx_smoke` (RISC-V Linux ELFs) | bee `firmware/linux/` + NAS `backups/bee-polarfire-hybrid-control/` | `pid_poke`=static, `vnnx_smoke`=dynamic, both "for GNU/Linux" |
-| `fcnn_v2_residual_dataset_a.vnnx` (V250, 12.5 KB) | bee + spark1 `models/` | sha256 `6c5cd21a…512eb` (DLOG-048) |
+| `fcnn_v2_residual_dataset_a.vnnx` (V250, 12.5 KB) | bee + ws1 `models/` | sha256 `6c5cd21a…512eb` (DLOG-048) |
 | `seed7_vbx_pid.dtso` (DT overlay) | `firmware/linux/` | exposes V250 `0x60030000` + PID `0x60001000` |
 
 **Confirmed (F.1, 2026-06-15):** the seed_7 MSS config has **eMMC/SD enabled**

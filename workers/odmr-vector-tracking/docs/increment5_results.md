@@ -156,6 +156,6 @@ CR marker + gated decode (`cr_dwell_marker`, `cr_gated_decode`) are **retained**
 `tracking/redecode.py` (6 new unit tests; 163 unit / 169 total green) — correct, field-safe, and
 ready for a post-retrain re-test; they change no default. Datasets verified against the nv-sim
 handoff (md5, seed-pairing, bucket structure, cue presence) before any scoring. Branch
-`increment-5-dwell-cues`; NAS only; no GitHub push; the spark1 archive untouched; no retrain, no
+`increment-5-dwell-cues`; NAS only; no GitHub push; the ws1 archive untouched; no retrain, no
 dataset regeneration. Per the standing IP flag, cue mechanisms stay out of outward-facing
 material (TVW lane owns outward material).

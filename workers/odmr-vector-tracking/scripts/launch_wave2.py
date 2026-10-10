@@ -9,7 +9,7 @@ seeded final runs on the frozen reference recipe via ``scripts/train_run_2c.sh``
 - plus one extra baseline seed (20260711) for baseline seed-variance context;
 - no survivors -> baseline x the two missing seeds (wave-1 A covers 20260701).
 
-Placement alternates spark1 (local) / spark2 (ssh). Dry-run with --dry-run.
+Placement alternates ws1 (local) / ws2 (ssh). Dry-run with --dry-run.
 """
 
 from __future__ import annotations
@@ -74,14 +74,14 @@ def main() -> int:
     if combo != frozenset():
         jobs.append((run_name(frozenset(), BASELINE_EXTRA_SEED), BASELINE_EXTRA_SEED, []))
 
-    hosts = ("spark1", "spark2")
+    hosts = ("ws1", "ws2")
     for i, (name, seed, jflags) in enumerate(jobs):
         host = hosts[i % 2]
         cmd = ["bash", "scripts/train_run_2c.sh", name, str(seed), *jflags]
-        if host == "spark1":
+        if host == "ws1":
             full = cmd
         else:
-            full = ["ssh", "spark2",
+            full = ["ssh", "ws2",
                     "cd ~/projects/odmr-vector-tracking && " + " ".join(cmd)]
         print(f"[wave2] {host}: {name} seed {seed} flags {jflags or '(none)'}")
         if not args.dry_run:

@@ -55,7 +55,7 @@ version+size mismatch is why inference latched START but never advanced (`docs/r
   kit and reported it is fully up.**
 
 ## CURRENT BLOCKER (where the next session starts)
-- **Cannot reach the kit.** `mpfs-icicle-kit.local` mDNS does **not** resolve from spark1 (retried),
+- **Cannot reach the kit.** `mpfs-icicle-kit.local` mDNS does **not** resolve from ws1 (retried),
   and the old lease **`192.168.x.x` is stale** (the kit got a new dynamic DHCP IP this boot).
 - **DO NOT mass-scan or key-probe the shared subnet** (192.168.x.x/24). A blanket SSH-key probe was
   attempted and correctly blocked — do not repeat it.

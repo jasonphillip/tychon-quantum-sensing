@@ -136,7 +136,7 @@ The `Makefile` exposes `verify-local`, `verify-strict`, and
 the report audit and the citation linter; the third pushes the
 current branch through `shls sw_run` + Libero closure on Beelink and
 captures the bundle into `libero/reports/<tag>/`. The Beelink runner
-fetches via the `spark1` SSH remote already configured on Beelink,
+fetches via the `ws1` SSH remote already configured on Beelink,
 removing a GitHub-SSH-on-Beelink dependency that previously blocked
 remote synthesis attempts. For Phase II, this lets a single command
 produce reproducible closure bundles per iteration.

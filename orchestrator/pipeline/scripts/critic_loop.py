@@ -84,14 +84,34 @@ def load_critics(config_path: Path) -> list[dict]:
             if k not in c:
                 raise ValueError(f"critic entry missing '{k}': {c}")
         _validate_endpoint(c["name"], c["base_url"])
+        c.setdefault("max_tokens", 1024)
+        c.setdefault("timeout_s", 60.0)
+        if isinstance(c["max_tokens"], bool) or not isinstance(c["max_tokens"], int):
+            raise ValueError(f"critic '{c['name']}' max_tokens must be an int")
+        if isinstance(c["timeout_s"], bool) or not isinstance(c["timeout_s"], (int, float)):
+            raise ValueError(f"critic '{c['name']}' timeout_s must be a float")
+        c["timeout_s"] = float(c["timeout_s"])
     return critics
 
 
+def filter_excluded(chunks: list[dict],
+                    exclude_substrings: list[str]) -> tuple[list[dict], int]:
+    """Drop chunks whose source path contains any excluded substring."""
+    kept = [chunk for chunk in chunks
+            if not any(substring in chunk.get("source_path", "")
+                       for substring in exclude_substrings)]
+    return kept, len(chunks) - len(kept)
+
+
 def retrieve_evidence(query: str, top_k_doc: int = 5,
-                      top_k_code: int = 5) -> list[dict]:
-    """Pull top chunks from both corpora. Returns a flat list with provenance."""
+                      top_k_code: int = 5,
+                      exclude_substrings: list[str] | None = None,
+                      ) -> tuple[list[dict], int]:
+    """Pull, filter, and select top chunks from both corpora."""
     emb = embed_query(query)
     out: list[dict] = []
+    excluded_n = 0
+    exclude_substrings = exclude_substrings or []
 
     for topic, top_k in (("tychon-docs", top_k_doc), ("tychon-code", top_k_code)):
         try:
@@ -99,20 +119,23 @@ def retrieve_evidence(query: str, top_k_doc: int = 5,
         except Exception:
             continue
         try:
-            results = search_hybrid(conn, query, emb, top_k=top_k)
+            results = search_hybrid(conn, query, emb,
+                                    top_k=top_k * 3 if exclude_substrings else top_k)
         except Exception as e:
             print(f"  WARN: search failed on {topic}: {e}", file=sys.stderr)
             results = []
         finally:
             conn.close()
-        for r in results:
+        results, n = filter_excluded(results, exclude_substrings)
+        excluded_n += n
+        for r in results[:top_k]:
             out.append({
                 "topic": topic,
                 "score": r.get("score", 0.0),
                 "source_path": r.get("source_path", ""),
                 "content": r.get("content", "")[:1500],
             })
-    return out
+    return out, excluded_n
 
 
 def _format_evidence(chunks: list[dict]) -> str:
@@ -135,16 +158,23 @@ def call_critic(critic: dict, prompt: str, timeout: float = 60.0) -> dict:
             {"role": "user", "content": prompt},
         ],
         "temperature": 0.0,
-        "max_tokens": 1024,
+        "max_tokens": critic.get("max_tokens", 1024),
     }
     try:
-        r = httpx.post(url, json=payload, timeout=timeout)
+        r = httpx.post(url, json=payload, timeout=critic.get("timeout_s", timeout))
         r.raise_for_status()
         data = r.json()
-        content = data["choices"][0]["message"]["content"].strip()
+        choice = data["choices"][0]
+        content = choice["message"]["content"]
     except (httpx.HTTPError, KeyError, IndexError) as e:
         return {"verdict": "ERROR", "evidence_chunks": [],
                 "rationale": f"endpoint error: {e}"}
+    if content is None:
+        # Reasoning models served by vLLM return no content when the reasoning
+        # uses the whole max_tokens budget (finish_reason "length").
+        return {"verdict": "ERROR", "evidence_chunks": [],
+                "rationale": f"empty content (finish_reason={choice.get('finish_reason')})"}
+    content = content.strip()
 
     parsed = _extract_json(content)
     if not parsed:
@@ -249,6 +279,8 @@ def main() -> int:
     p.add_argument("--config", type=Path, default=_DEFAULT_CONFIG)
     p.add_argument("--top-k-doc", type=int, default=5)
     p.add_argument("--top-k-code", type=int, default=5)
+    p.add_argument("--exclude-source", action="append", default=[], metavar="SUBSTR",
+                   help="Exclude retrieved chunks with SUBSTR in source_path; repeatable")
     p.add_argument("--limit", type=int, default=0,
                    help="Process only the first N claims (0 = all)")
     args = p.parse_args()
@@ -265,7 +297,8 @@ def main() -> int:
     for c in critics:
         fieldnames += [f"{c['name']}_verdict", f"{c['name']}_rationale",
                        f"{c['name']}_evidence_chunks"]
-    fieldnames += ["agreement", "doc_top_sources", "code_top_sources"]
+    fieldnames += ["agreement", "doc_top_sources", "code_top_sources",
+                   "evidence_excluded_n"]
 
     with args.out_csv.open("w", newline="", encoding="utf-8") as fh:
         writer = csv.DictWriter(fh, fieldnames=fieldnames)
@@ -282,8 +315,9 @@ def main() -> int:
                 except json.JSONDecodeError:
                     continue
 
-                evidence = retrieve_evidence(claim["text"],
-                                             args.top_k_doc, args.top_k_code)
+                evidence, excluded_n = retrieve_evidence(
+                    claim["text"], args.top_k_doc, args.top_k_code,
+                    args.exclude_source)
                 evidence_text = _format_evidence(evidence)
                 prompt = _VERDICT_PROMPT.format(
                     claim=claim["text"],
@@ -308,6 +342,7 @@ def main() -> int:
                     )
 
                 row["agreement"] = "yes" if len(set(verdicts)) == 1 else "no"
+                row["evidence_excluded_n"] = excluded_n
                 row["doc_top_sources"] = json.dumps(
                     [c["source_path"] for c in evidence if c["topic"] == "tychon-docs"][:3]
                 )

@@ -139,7 +139,7 @@ Branch `increment-6-coverage-retrain`; doc-only + experiment scripts committed (
 artifacts gitignored per standing practice, preserved on disk); pushed NAS + private GitHub;
 main promotion after this doc per dispatch. Training watchdog cron installed for the overnight
 run and torn down after completion. 175 tests untouched (no library code changed; eval scripts
-only). No cue data used; spark1 archive untouched; no dataset regeneration; outward material
+only). No cue data used; ws1 archive untouched; no dataset regeneration; outward material
 untouched.
 
 ## Addendum — dispatch-7 default flip (2026-07-09)

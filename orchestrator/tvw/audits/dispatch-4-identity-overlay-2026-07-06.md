@@ -1,7 +1,7 @@
 # Dispatch 4 — coalescence-aware identity overlay decoders (zero-retrain)
 
-**Target session:** `~/projects/odmr-vector-tracking/` on **spark2** (spark1 is DECOMMISSIONED;
-its archive at `~/archives/spark1-projects-2026-07-05/odmr-vector-tracking/` is a **read-only
+**Target session:** `~/projects/odmr-vector-tracking/` on **ws2** (ws1 is DECOMMISSIONED;
+its archive at `~/archives/ws1-projects-2026-07-05/odmr-vector-tracking/` is a **read-only
 source** — copy from it, never modify it, never run anything in it).
 **Issued:** 2026-07-06, from TVW improvement search
 `tvw/audits/research-improvement-search-2026-07-06.md` (TVW commit c9894fd).
@@ -53,7 +53,7 @@ unrecoverable — so the goal is measured, graceful improvement, not a guarantee
    `matrix_2c_final.json`'s learned-baseline misassoc **exactly** (all seeds/rungs/families —
    the harness has this check) and field metrics byte-identical across decodes.
    **STOP-AND-REPORT if parity fails** (environment drift) — do not proceed.
-4. Environment: spark2 GB10, `~/miniconda3` python. No NAS dependency at runtime. Long steps
+4. Environment: ws2 GB10, `~/miniconda3` python. No NAS dependency at runtime. Long steps
    run via `nohup` + pidfile per house pattern (`artifacts/increment4/*.pid`).
 
 ## Step 0 — merge-dwell diagnostic (cheap; informative, NOT a gate)
@@ -142,7 +142,7 @@ don't flip defaults).
 1. Pre-flight parity gate fails. 2. Field-metric byte-identity assert fires and the cause is
 not a local bug you can fix within the decoder (never touch model/training code). 3. No decoder
 survives Step 2. 4. Anything requires regenerating datasets, retraining, GitHub push, or
-touching the spark1 archive in place — those are out of scope for this dispatch.
+touching the ws1 archive in place — those are out of scope for this dispatch.
 
 ## Out of scope (explicitly deferred; do not start)
 

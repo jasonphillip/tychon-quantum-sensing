@@ -60,7 +60,7 @@ Source of truth: `May_1_2026_Document_Fix_List.md`, with per-fix status in `fix-
 - Direct edits to STATUS.md, INDEX.md, fix-list-status.csv, the DLOG, and audit mirror.
 
 **TVW dispatches to other sessions:**
-- Items 11a / 11b (Path A/B clamp authority), 12 (bias-aware augmentation), 13 (orbit-in-the-loop benchmark) — heavy ML on the dual DGX Sparks. TVW prepares + monitors; the long-running compute lives on spark1/spark2 background runners (`nohup` + pidfile). Note: SGP4 (`sgp4`) and IGRF-13 (`ppigrf`) pip packages must be staged onto Spark wheels before use.
+- Items 11a / 11b (Path A/B clamp authority), 12 (bias-aware augmentation), 13 (orbit-in-the-loop benchmark) — heavy ML on the dual DGX Sparks. TVW prepares + monitors; the long-running compute lives on ws1/ws2 background runners (`nohup` + pidfile). Note: SGP4 (`sgp4`) and IGRF-13 (`ppigrf`) pip packages must be staged onto Spark wheels before use.
 - Repo commits — TVW edits files in the implementation repos but does not commit. Each repo's own Claude session owns the commit step.
 
 **Stays on the user (not Claude-doable):**

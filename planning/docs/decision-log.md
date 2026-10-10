@@ -496,7 +496,7 @@ A citation linter (`tools/audit_corpus_citations.py`) verifies that all referenc
 - Power claims similarly hedged: SmartPower numbers labeled "default-toggle estimates" (preliminary) until workload-driven SmartPower runs.
 - Final technical report (`Tychon_Phase_I_Final_Report.docx`) already uses the careful framing — this entry brings the Repo 3 docs into alignment with the report.
 
-**Source:** `polarfire-hybrid-control` `claude/corpus-verification` branch commit `21bce03` (Phase C — `README.md`, `docs/safety_architecture.md`, `docs/corpus_grounded_evaluation.md`, `docs/frontier_comparison.md`, `tools/run_beelink_verification.sh` spark1 fallback); commit `bb1198f` (closeout — `docs/phase1_closeout_findings.md`); commit `8fbf81b` (closeout reframe — `docs/phase1_closeout_findings.md` revised to authoritative-source citations only). Reference: Khalil §7 / §11; Astrom-Hagglund Ch.4 / Ch.6; Microchip SmartPower User Guide 2025.2; project Follow-on Stability Analysis.  
+**Source:** `polarfire-hybrid-control` `claude/corpus-verification` branch commit `21bce03` (Phase C — `README.md`, `docs/safety_architecture.md`, `docs/corpus_grounded_evaluation.md`, `docs/frontier_comparison.md`, `tools/run_beelink_verification.sh` ws1 fallback); commit `bb1198f` (closeout — `docs/phase1_closeout_findings.md`); commit `8fbf81b` (closeout reframe — `docs/phase1_closeout_findings.md` revised to authoritative-source citations only). Reference: Khalil §7 / §11; Astrom-Hagglund Ch.4 / Ch.6; Microchip SmartPower User Guide 2025.2; project Follow-on Stability Analysis.  
 **Verified by:** Comparison against the Final technical report's Section 3 / Section 9 framing — the report and the repo docs now use consistent language.
 
 ---

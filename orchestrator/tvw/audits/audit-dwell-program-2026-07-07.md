@@ -337,7 +337,7 @@ dispatch-7 completion); PROGRAM_RECORD open items O11–O14 + ledger D16; prior-
 flight into `odmr-pnt-nv-docs`.
 
 **ETL landed (2026-07-08, same session):** background agent ingested 4 papers into
-`~/.corpus/odmr-pnt-nv-docs` (66 raw / 762 chunks; local Qwen3-Embedding-4B on spark2, provenance
+`~/.corpus/odmr-pnt-nv-docs` (66 raw / 762 chunks; local Qwen3-Embedding-4B on ws2, provenance
 verified — no cloud fallback, index extended additively). Prior-art paper (O14) **IDENTIFIED with
 high confidence:** Fu, Yang, Ren, et al., "Integrated NV real-time vector magnetometer with high
 sensitivity and wide dynamic range," *Opt. Express* **33**(11), 22385–22395 (2025), DOI
@@ -552,7 +552,7 @@ lit; adversarial option-space completeness) against the Addendum H diagnosis
    tracked SOURCE of odmr-vector-tracking + nv-sensor-sim to AWS S3/EC2 (private account,
    us-east-1). NOT approved / not sent: eval datasets, checkpoints history, repo .git
    history, any SBIR document material, anything CUI-adjacent. Evals and pre-hoc verdicts
-   run LOCALLY on spark2 only — the cloud executes training and returns checkpoints; the
+   run LOCALLY on ws2 only — the cloud executes training and returns checkpoints; the
    local verdict re-derives every number, so cloud execution cannot contaminate the audit
    chain.
 2. **Placement ruling:** new fleet-infra repo `~/projects/gpu-fanout` (private GitHub
@@ -572,8 +572,8 @@ lit; adversarial option-space completeness) against the Addendum H diagnosis
    the README: L4/x86 vs GB10/ARM is not bitwise-comparable — the increment-8 dispatch must
    state whether baselines are rerun in-environment or hardware is a recorded covariate.
 5. **Blockers before first launch:** (i) Jason's SSO login (`aws sso login --profile
-   spark-sso --use-device-code`) — CLI v2.35.21 installed on spark2, config restored from
-   the spark1 preflight clone; (ii) preflight PASS, esp. G-instance quota (often 0 on
+   spark-sso --use-device-code`) — CLI v2.35.21 installed on ws2, config restored from
+   the ws1 preflight clone; (ii) preflight PASS, esp. G-instance quota (often 0 on
    fresh accounts; request early); (iii) the increment-8 dispatch itself (direction pick +
    pre-hoc verdict rules committed in odmr BEFORE any cloud run).
 
@@ -596,7 +596,7 @@ lit; adversarial option-space completeness) against the Addendum H diagnosis
    `cudaq-gpu-sim-assessment-2026-07-11.md`. Headlines: CUDA-Q 0.15.0 EMPIRICALLY RUNS ON
    OUR GB10 (agent installed cu13 wheel + ran 1024 batched 3-level Lindblad evolutions in
    4.5 s; benchmark preserved as `cudaq-batched-dynamics-benchmark-2026-07-11.py`; cudaq now
-   in spark2 base env). nv-sensor-sim already has a STUB CudaQAdapter (planned, never built) —
+   in ws2 base env). nv-sensor-sim already has a STUB CudaQAdapter (planned, never built) —
    activation is now de-risked. For the future fidelity generator the recommendation is
    dynamiqs (JAX; native batching + DIFFERENTIABLE → sim-to-real calibration) as primary with
    CUDA-Q Dynamics as verified throughput fallback; today's analytic generator needs only
@@ -633,7 +633,7 @@ long). No live instances, no ongoing spend (~$0.15 total cost of discovery). Quo
 (case open), spot 0. The infra smoke test used a placeholder cmd, so real training memory/time
 was never exercised on L4 — booked as a harness lesson: future smoke = 2-epoch real-recipe run.
 
-**RULING: Option C — execute increment-8 entirely on the fleet GB10s (spark2 + spark3), 2
+**RULING: Option C — execute increment-8 entirely on the fleet GB10s (ws2 + ws3), 2
 concurrent, house nohup+pidfile+heartbeat pattern.** Rationale: (i) at the current 8-vCPU quota
 AWS offers ≤ the fleet's parallelism (g6.2xlarge would fix OOM but = 8 vCPU = 1 concurrent —
 strictly worse); (ii) GB10 IS v6's original training environment — the environment-shift
@@ -643,8 +643,8 @@ change (worker confirmed the frozen code runs on GB10 as-is). Expected makespan 
 2×GB10 (~195 GPU-h).
 
 **Amendments to dispatch-9 (execution only — science unchanged, pre-hoc verdict untouched):**
-1. Compute target = spark2 + spark3 GB10s. spark3 reached over ConnectX (10.0.0.3); dataset/
-   repo sync via 200GbE; verify spark3 GPU idle before scheduling onto it.
+1. Compute target = ws2 + ws3 GB10s. ws3 reached over ConnectX (10.0.0.3); dataset/
+   repo sync via 200GbE; verify ws3 GPU idle before scheduling onto it.
 2. §0-ii now records: training environment = GB10 (same as v6/increment-7). Stop-condition 1
    (baseline-env vs v6 material shift) RETAINED as a consistency gate — it now guards
    torch-version/library drift instead of hardware shift. baseline-env arm RETAINED (its n=5
@@ -665,9 +665,9 @@ Dispatched back down to the odmr worker via Jason relay.
 
 ## Addendum M (2026-07-11) — Option C VETOED by Jason (sparks not lockable); superseding ruling: AWS g6e.xlarge
 
-1. **Jason vetoed the Addendum L fleet ruling**: spark2/spark3 cannot be locked down for
+1. **Jason vetoed the Addendum L fleet ruling**: ws2/ws3 cannot be locked down for
    multi-day runs — that constraint was the original motivation for AWS. His stated fallback
-   was holding for the spark4 RMA replacement.
+   was holding for the ws4 RMA replacement.
 2. **Hold is unnecessary — superseding ruling: AWS g6e.xlarge, us-east-1, 2 concurrent.**
    Verified specs: g6e.xlarge = 4 vCPU / 32 GiB host RAM / 1× L40S 48 GB. Under the existing
    8-vCPU quota this keeps 2-concurrent (equal to the fleet plan), the 32 GiB host RAM clears

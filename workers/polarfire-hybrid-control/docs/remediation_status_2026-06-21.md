@@ -11,7 +11,7 @@ An additional FPGA push on 2026-06-21 added on-kit V250/PID latency helpers, a V
 Persistent programming was performed only for the dated 2 ms watchdog image. No writes were made to `0x60001000`.
 
 2026-06-22 demo portability follow-up: the live Spark dashboard working tree was copied to the Mac
-at `~/projects/fpga-demo-dashboard`, backend dependencies were installed into its
+at `~phillip/projects/fpga-demo-dashboard`, backend dependencies were installed into its
 local `.venv`, a Python 3.9 compatibility dependency was added, and a Mac-local `/api/health` smoke
 passed in DRY-RUN mode. The FPGA was unplugged for this step, so Mac-to-FPGA LIVE validation still
 requires the travel-router LAN and `KIT_HOST=<FPGA IP or alias>`.

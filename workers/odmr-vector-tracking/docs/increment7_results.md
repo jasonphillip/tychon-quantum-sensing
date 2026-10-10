@@ -97,7 +97,7 @@ recipe = fresh dispatch). Per the dispatch, no capacity work was started here.
 ## Disposition (2026-07-11)
 
 Branch `increment-7-identity-recovery`; verdict artifacts in `artifacts/increment7/`
-(gitignored, preserved on disk + NAS backup `spark2-odmr-increment7`); no default change
+(gitignored, preserved on disk + NAS backup `ws2-odmr-increment7`); no default change
 (deployed default remains v6 @ `docs/deployable_default.md` with the dispatch-7 policy); no new
 decoders, no dataset work, no cue data; 7c deferred mid-increment and **declined by Jason 2026-07-11**
 (not trained — the verdict evidence weakened its premise: no field/identity guard conflict was

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Copied 2026-10-10 from ~/cjobs.sh (plan C GPU queue runner; also present on spark3 and spark4 at that path).
-# Lessons: GNU timeout takes plain durations (270m, not 4h30m); one training job at a time on spark2 (psi-guard);
+# Copied 2026-10-10 from ~/cjobs.sh (plan C GPU queue runner; also present on ws3 and ws4 at that path).
+# Lessons: GNU timeout takes plain durations (270m, not 4h30m); one training job at a time on ws2 (psi-guard);
 # run with `taskset -c <perf core>`; never overwrite a running queue script in place (bash reads by offset).
 # Plan C GPU job queue (2026-10-09). Usage: cjobs.sh <queue-file>. Lines:
 #   RUN <name> <timeout> <worktree> <script> <args...>   train under timeout --signal=INT; log $A/logs/<name>.log

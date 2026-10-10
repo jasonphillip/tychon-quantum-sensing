@@ -6,7 +6,7 @@ Produces the eval artifacts the increment-8 verdict compares against the (also l
 
 Reuses the increment-6/7 harness verbatim (`identity_redecode.run_ckpt_outputs`,
 `noise_matrix_report` helpers, `redecode` decoders, the field-cone `lock_stats`) so an arm's
-numbers are directly comparable across arms (identical fixed-seed noise). LOCAL on spark2 only —
+numbers are directly comparable across arms (identical fixed-seed noise). LOCAL on ws2 only —
 the eval sets never leave the machine.
 
     python experiments/increment8_eval.py --arm bc \

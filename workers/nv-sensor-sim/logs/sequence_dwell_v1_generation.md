@@ -1,18 +1,18 @@
 # sequence_dwell_v1 / sequence_dwell_v1_cues — generation run log
 
 **Dispatch:** `tychon-verification-workbench/tvw/audits/dispatch-nvsim-identity-physics-2026-07-07.md`
-**Session:** nv-sensor-sim on spark2, 2026-07-07.
+**Session:** nv-sensor-sim on ws2, 2026-07-07.
 **Branch:** `feat/dwell-identity-lineage` (created from `feat/sequence-generator` HEAD `07ed894`).
 
 ## Pre-flight
-- Environment: spark2's conda base lacked `simos`/`qutip` (not migrated from the
-  decommissioned spark1). Installed the archived-matching pins `qutip==5.2.3`,
+- Environment: ws2's conda base lacked `simos`/`qutip` (not migrated from the
+  decommissioned ws1). Installed the archived-matching pins `qutip==5.2.3`,
   `simos==0.2.3` (numpy already 2.4.2). All local compute.
 - Baseline test suite: **165 passed, 4 skipped** (green before changes).
 - v1 pins read from the archived v1 manifest (read-only), resolved via the
   **nv-sensor-sim** archive (the odmr-vector-tracking archive path in the
   dispatch is the dangling symlink it warned about):
-  `~/archives/spark1-projects-2026-07-05/nv-sensor-sim/artifacts/datasets/sequence_train_v1/manifest.json`
+  `~/archives/ws1-projects-2026-07-05/nv-sensor-sim/artifacts/datasets/sequence_train_v1/manifest.json`
   (dataset.h5 md5 `bf83440ea36f38d0fe6c70c31881c174`):
   - `freq_range_Hz = [2667390522.8636284, 3074609477.1363726]`, `n_freq_points = 951`
   - `bias_B0_T = 0.005`, `bias_direction_uvw = [0.2, 0.1, 1.0]`
@@ -75,7 +75,7 @@ required.**
   `src/nv_sensor_sim/physics/cross_relaxation.py`. **Cited sources were sufficient to
   ground the model credibly — stop-condition 2 not triggered.**
 
-## Results (generated 2026-07-07 on spark2, all local)
+## Results (generated 2026-07-07 on ws2, all local)
 
 Environment: numpy 2.4.2, simos 0.2.3, qutip 5.2.3 (match the archived v1 lineage).
 Test suite green throughout: **188 passed, 4 skipped** (165 baseline + 23 new).

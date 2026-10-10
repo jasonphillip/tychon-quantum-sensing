@@ -28,7 +28,7 @@ association), so a menu of four such decoders is **zero-retrain and field-safe b
 - **D-JV** — joint fixed-lag Viterbi over the gated assignment beam; latencies 5/15, plus the best
   composition (D-UM merged states inside D-JV).
 
-Pre-flight parity gate passed: the spark2 re-decode reproduces the archived `matrix_2c_final`
+Pre-flight parity gate passed: the ws2 re-decode reproduces the archived `matrix_2c_final`
 learned baseline exactly (756 count comparisons, all seeds/rungs/families; field metrics
 byte-identical) — the result below is attributable to the decoders, not environment drift.
 

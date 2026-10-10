@@ -6,7 +6,7 @@ models, ML-parameter changes, papers, and adaptable code that could improve resu
 how many of our open issues each item would plausibly close, most first.
 
 **Method.** (1) Failure inventory from the repo (`odmr-vector-tracking` at origin
-`increment-2-learned-tracker` HEAD 46db71b + spark1 archive) and the TVW audit trail. (2) Internal
+`increment-2-learned-tracker` HEAD 46db71b + ws1 archive) and the TVW audit trail. (2) Internal
 corpus sweep (`odmr-pnt-nv-docs`, `tychon-physics`, `polarfire-control-corpus`; embedder pre-flight
 green). (3) External sweep: the `deep-research` workflow (run `wf_737b6676-bb1` — 105 agents, 5
 angles, 23 sources → 113 claims → **25 adversarially verified, 22 confirmed / 3 refuted**) plus my

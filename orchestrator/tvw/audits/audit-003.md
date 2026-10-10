@@ -1,7 +1,7 @@
 # Audit 003 — Tychon Phase I Final Report (post-versioning fix)
 
 - Date: 2026-05-01
-- Auditor: critic_loop ensemble (`qwen3-coder:30b` + `nemotron-mini:latest`) via Ollama on spark1, plus carry-over Pass 1 structure findings from audit-001
+- Auditor: critic_loop ensemble (`qwen3-coder:30b` + `nemotron-mini:latest`) via Ollama on ws1, plus carry-over Pass 1 structure findings from audit-001
 - Source under audit: same `Tychon_Phase_I_Final_Report_2026-04-30.md` (1,450 lines)
 - Corpus delta vs audit-002: tychon-docs **−52 chunks** (r1_s1 archived) **+23 chunks** (r6_s25 closure + hier CSV summary) → net **498 → 469** chunks
 - Claims processed: 97 (same set as audit-001 / audit-002)
@@ -10,7 +10,7 @@
 
 ## Versioning fix
 
-The Stage 4.5 ingest pulled in superseded April 2 r1_s1 timing artifacts that conflicted with the report's cited April 29 r6_s25 closure run. Stage 4.6 archived all r1_s1-derived files (and dependent .md summaries that referenced them) to `~/.corpus/tychon-docs/_superseded_baseline_r1_s1/` and pulled the actual r6_s25 closure artifacts from `tvw/source/sbir/05_repo_status/repo3_pid_real_closure_r6_s25_2026-04-29/` into a new `spark1_r6_s25_closure/` subdir.
+The Stage 4.5 ingest pulled in superseded April 2 r1_s1 timing artifacts that conflicted with the report's cited April 29 r6_s25 closure run. Stage 4.6 archived all r1_s1-derived files (and dependent .md summaries that referenced them) to `~/.corpus/tychon-docs/_superseded_baseline_r1_s1/` and pulled the actual r6_s25 closure artifacts from `tvw/source/sbir/05_repo_status/repo3_pid_real_closure_r6_s25_2026-04-29/` into a new `ws1_r6_s25_closure/` subdir.
 
 ### Resolved by versioning fix
 - **F-012 (audit-002, c0057, critic FALSE POSITIVE)**: was CONTRADICTED, now **SUPPORTED**. The r6_s25 closure timing reports are now the authoritative timing evidence in the corpus. qwen quotes back +0.728 ns on the FIC_0 PLL OUT0 domain and confirms the internal PID datapath path. **This finding is closed.**
@@ -46,7 +46,7 @@ Cross-cutting numbers (audit-003 vs audit-002):
 ### F-001: Abstract claims "+1.04 ns at 200 MHz" but body shows +0.728 ns at 125 MHz with no 200 MHz corroborating value
 - Severity: CRITICAL — **unchanged across all three audits**
 - Status: r6_s25 closure now in corpus and confirms +0.728 ns on PLL OUT0 (125 MHz). The 200 MHz Vectorblox PLL still shows only "positive" slack (no specific number) in any retrieved artifact.
-- Suggested action (unchanged): Replace abstract's "+1.04 ns at 200 MHz" with "+0.728 ns on PLL OUT0 at 125 MHz" sourced from §7.5 / `spark1_r6_s25_closure/MPFS_ICICLE_KIT_BASE_DESIGN_timing_violations_max_r6_s25.txt`.
+- Suggested action (unchanged): Replace abstract's "+1.04 ns at 200 MHz" with "+0.728 ns on PLL OUT0 at 125 MHz" sourced from §7.5 / `ws1_r6_s25_closure/MPFS_ICICLE_KIT_BASE_DESIGN_timing_violations_max_r6_s25.txt`.
 
 ### F-002: Deliverable 1 (§5.1–5.3) entirely [TODO]
 - Severity: CRITICAL — **unchanged**
@@ -69,7 +69,7 @@ Cross-cutting numbers (audit-003 vs audit-002):
 
 ### F-008 *(carry-over from audit-002)*: c0020 — watchdog_timer_0/Primitives 26 LUTs / 20 DFFs not surfaced even after r6_s25 hier CSV ingest
 - Severity: MAJOR — **unchanged**
-- Status: With `spark1_r6_s25_closure/hier_resources_summary.md` now in corpus, the hierarchical CSV columns are present, but the specific row for `watchdog_timer_0/Primitives` with 26 LUTs / 20 DFFs is not in the top-50 head or the top-30 longest rows that the summary captured. May require inspecting full CSV (1,418 rows) or adjusting the summary script's row selection to favor watchdog_timer_0 row inclusion.
+- Status: With `ws1_r6_s25_closure/hier_resources_summary.md` now in corpus, the hierarchical CSV columns are present, but the specific row for `watchdog_timer_0/Primitives` with 26 LUTs / 20 DFFs is not in the top-50 head or the top-30 longest rows that the summary captured. May require inspecting full CSV (1,418 rows) or adjusting the summary script's row selection to favor watchdog_timer_0 row inclusion.
 - Suggested action: Re-run hier CSV summary with explicit pattern filter for `watchdog_timer_0`, or augment the existing summary in `closure/closure_resources_summary.md` (which already exists from Stage 1) with the same data.
 
 ### F-009 *(carry-over)*: c0039 — PLL OUT3 50 MHz / +1.177 ns row not corroborated

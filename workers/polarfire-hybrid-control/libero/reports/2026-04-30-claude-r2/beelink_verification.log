@@ -13,10 +13,10 @@ and the repository exists.
 Bee
 [2026-04-30T12:10:47-0400] pushing branch claude/corpus-verification to origin (best effort)
 Everything up-to-date
-[2026-04-30T12:10:47-0400] remote checkout via spark1 remote
+[2026-04-30T12:10:47-0400] remote checkout via ws1 remote
 D	libero/reports/2026-04-29-recovered/MPFS_ICICLE_KIT_BASE_DESIGN.srr
 D	libero/reports/2026-04-29-recovered/MPFS_ICICLE_KIT_BASE_DESIGN_compile_netlist_hier_resources.csv
-branch 'claude/corpus-verification' set up to track 'spark1/claude/corpus-verification'.
+branch 'claude/corpus-verification' set up to track 'ws1/claude/corpus-verification'.
 [2026-04-30T12:10:51-0400] remote SmartHLS sw_run
 [1m[33m> 'Source Code and/or Project Settings' is more recent than 'Compile Software' step.[39m[0m
   Enter 'Y' (yes) to run the following step(s) automatically before continuing to 'Run Software'.

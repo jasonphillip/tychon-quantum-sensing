@@ -2,7 +2,7 @@
 
 On-silicon execution of the Linux/Yocto MSS path (decision DLOG-053) against the seed_7
 hybrid-PID + CoreVectorBlox-V250 bitstream already programmed on the Production MPFS250T
-(rung A, DLOG-054). Host: spark1 (flash + orchestration). Target reached over SSH at
+(rung A, DLOG-054). Host: ws1 (flash + orchestration). Target reached over SSH at
 `192.168.x.x` (eth0, DHCP) and the CP2108 serial console on bee.
 
 ## Summary
@@ -22,7 +22,7 @@ Linux/Yocto path itself is validated end-to-end.
 ## Rung C — Boot Linux from SD — PASS
 
 - Image: `mchp-base-image-mpfs-icicle-kit.rootfs-20260430113402.wic` (linux4microchip-2026.04),
-  flashed to the microSD on spark1 (`dd`, 653 MB, gz sha256 `87bde545…c430d` verified pre- and post-pull).
+  flashed to the microSD on ws1 (`dd`, 653 MB, gz sha256 `87bde545…c430d` verified pre- and post-pull).
 - Boot chain (from `boot_capture_cold_2026-06-15.log`):
   `HSS 0.99.40-v2024.02` → `Trying to get boot image via MMC … Attempting to select SDCARD … Passed`
   → `U-Boot 2025.07-linux4microchip-2026.04` → FIT kernel → `Linux 6.18.17-linux4microchip-2026.04.1`.
@@ -121,7 +121,7 @@ symptom (START latched, no RUNNING ever) tells the design fix exactly what to cl
 ## Reproduce
 
 ```
-# host (spark1): flash already done; tools pre-staged at /root/bringup on the SD
+# host (ws1): flash already done; tools pre-staged at /root/bringup on the SD
 ssh -i ~/.ssh/id_ed25519 root@192.168.x.x
 cd /root/bringup
 dtc -@ -O dtb -o seed7_vbx_pid.dtbo seed7_vbx_pid.dtso -Wno-reg_format -Wno-avoid_default_addr_size

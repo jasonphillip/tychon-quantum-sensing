@@ -30,15 +30,15 @@ verdict table in the morning report.
 
 ## 1. Hardware placement
 
-- **spark1:** 2 concurrent runs. **spark2:** 2 concurrent runs (verified 2026-07-02
+- **ws1:** 2 concurrent runs. **ws2:** 2 concurrent runs (verified 2026-07-02
   ~16:45 ET: GPU 0% util, only the Qwen3 embedding service resident — it MUST stay up;
   do not touch port 8000).
-- **Contention test before committing (15 min):** launch runs A+B on spark1, measure
+- **Contention test before committing (15 min):** launch runs A+B on ws1, measure
   s/epoch for ~10 epochs. If per-run s/epoch > 1.7× the solo 59 s, fall back to 1 run per
   Spark (wave 1 = 2×2 sub-waves; still ≈2× faster than serial).
-- **spark2 setup:** clone from the nas mirror (`/mnt/nas/projects/git/odmr-vector-tracking.git`)
-  or push spark1→spark2 directly; **copy the 2.9 GB dataset to spark2 LOCAL disk**
-  (rsync from spark1's canonical path over the 10GbE LAN) and point `data/sequence_train_v2`
+- **ws2 setup:** clone from the nas mirror (`/mnt/nas/projects/git/odmr-vector-tracking.git`)
+  or push ws1→ws2 directly; **copy the 2.9 GB dataset to ws2 LOCAL disk**
+  (rsync from ws1's canonical path over the 10GbE LAN) and point `data/sequence_train_v2`
   at the LOCAL copy. Env: verify `python -c "import torch; print(torch.cuda.is_available(),
   torch.cuda.get_device_name(0))"` prints True on BOTH Sparks and log device placement in
   each run's own stdout (global rule; silent CPU fallback = bug).

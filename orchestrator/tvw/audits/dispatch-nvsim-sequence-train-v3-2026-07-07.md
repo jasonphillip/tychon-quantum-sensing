@@ -1,6 +1,6 @@
 # Dispatch — nv-sim `sequence_train_v3`: angular/magnitude field-coverage lineage + fieldcone eval
 
-**Target session:** `~/projects/nv-sensor-sim/` on **spark2** (all compute local).
+**Target session:** `~/projects/nv-sensor-sim/` on **ws2** (all compute local).
 **Issued:** 2026-07-07, from the increment-5 coverage finding (odmr `docs/increment5_results.md`
 + `experiments/increment5_coverage_split.py`, main dde2a74) and TVW
 `audit-dwell-program-2026-07-07.md`.

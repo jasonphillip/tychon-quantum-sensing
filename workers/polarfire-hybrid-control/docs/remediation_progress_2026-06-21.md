@@ -80,20 +80,20 @@ Append raw commands and key outputs here as work proceeds.
 ### Demo Portability Prep - 2026-06-22
 
 - CONFIRMED: copied the live Spark working tree for `~/projects/fpga-demo-dashboard`
-  to the Mac at `~/projects/fpga-demo-dashboard`. This was a working-tree sync
+  to the Mac at `~phillip/projects/fpga-demo-dashboard`. This was a working-tree sync
   rather than a normal Git clone because the dashboard repo has uncommitted demo changes that are not
   present in `nas/main`.
 - CONFIRMED: the copied Mac tree includes the built frontend at `frontend/dist/index.html` and
   backend demo data including `backend/data/v250_pid_rows.csv`.
 - CONFIRMED: Mac backend dependencies were installed into
-  `~/projects/fpga-demo-dashboard/.venv`.
+  `~phillip/projects/fpga-demo-dashboard/.venv`.
 - CONFIRMED: added dashboard backend dependency
   `eval_type_backport>=0.2.0; python_version < "3.10"` so the FastAPI/Pydantic app can run on the
   Mac's system Python 3.9 while using the dashboard's current `str | None` annotations.
 - CONFIRMED: Mac local smoke with the FPGA unplugged passed:
 
 ```bash
-cd ~/projects/fpga-demo-dashboard
+cd ~phillip/projects/fpga-demo-dashboard
 PORT=18077 KIT_BITSTREAM=idfix2 ALLOW_IDFIX2_M0=1 KIT_HOST=icicle ./run_demo.sh
 curl -fsS http://127.0.0.1:18077/api/health
 ```

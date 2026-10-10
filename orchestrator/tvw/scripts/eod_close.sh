@@ -52,7 +52,7 @@ REPOS=(
 
 # Internal-mirror remotes that can be pushed without per-action approval
 # (per global CLAUDE.md autonomous authorities + TVW CLAUDE.md).
-INTERNAL_REMOTES_REGEX='^(nas|spark2)$'
+INTERNAL_REMOTES_REGEX='^(nas|ws2)$'
 
 # Secret-like filename patterns to scan for in unpushed commits
 SECRET_REGEX='\.env|\.key|\.pem|secret|credential|password|token'
@@ -108,7 +108,7 @@ for entry in "${REPOS[@]}"; do
         remotes_with=$(git for-each-ref --format='%(refname:short)' refs/remotes/ 2>/dev/null | \
                        awk -F/ -v b="$b" '$NF==b {print $1}' | sort -u)
         # 2026-08-19 fix: the old any-remote gate (--not --remotes) read 0 once Phase 2
-        # auto-pushed nas/spark2, hiding GitHub-unpushed branches. Check every remote.
+        # auto-pushed nas/ws2, hiding GitHub-unpushed branches. Check every remote.
         if :; then
             # For each configured remote, check if branch is up-to-date there
             for r in $(git remote 2>/dev/null); do

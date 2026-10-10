@@ -7,7 +7,7 @@ wins the vector estimate through adversarial crossings but loses to CV-KF + Hung
 
 **Status of this document: research memo, not a plan.** No implementation is proposed or
 authorized here — it exists so the candidate levers are on the shelf when the v2 wave
-(`v2_gated_linear_snr10_s20260711` on spark1, `_s20260721` on spark2) lands and we decide 2c.
+(`v2_gated_linear_snr10_s20260711` on ws1, `_s20260721` on ws2) lands and we decide 2c.
 
 **Method.** A fan-out web sweep (104 agents, 110 extracted claims, 3-vote adversarial
 verification per claim; 59 survived at high confidence, 16 refuted) plus a manual full-text

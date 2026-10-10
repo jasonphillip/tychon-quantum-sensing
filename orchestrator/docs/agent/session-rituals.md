@@ -14,16 +14,16 @@
 
 ## Pre-flight before any Stage that touches corpora
 ```
-curl -sf http://spark2:8000/health
+curl -sf http://ws2:8000/health
 ```
 Failure means abort — silent fallback to 768-d Ollama corrupts the sqlite-vec index.
-Embedder: the Qwen3-Embedding-4B service on spark2 :8000 (Hard rule 2; NIM embedding containers
+Embedder: the Qwen3-Embedding-4B service on ws2 :8000 (Hard rule 2; NIM embedding containers
 fail on ARM64 Blackwell).
 
 ## End-of-day close
 When the user signals end-of-day wrap-up intent ("wrapping up", "done for the day", "closing out",
 "EOD", etc.), proactively ask whether to run `tvw/scripts/eod_close.sh`. The script sweeps all 5
-Tychon repos (TVW + 4 implementation), auto-pushes internal mirrors (NAS, spark2; spark1 removed
+Tychon repos (TVW + 4 implementation), auto-pushes internal mirrors (NAS, ws2; ws1 removed
 from `eod_close.sh` INTERNAL_REMOTES_REGEX 2026-07-10 — decommissioned 2026-07-05), runs a secrets
 sweep, and gates the GitHub push behind a single yes/N approval. Don't run without explicit yes;
 don't re-ask in the same session if declined. Full behavioral rule: memory entry

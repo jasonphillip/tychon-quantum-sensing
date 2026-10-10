@@ -97,8 +97,8 @@ exit: `setsid nohup … </dev/null & disown`):
 - Soak/daemon start (kit UTC): **2026-07-02T11:14:16Z**, daemon pid 516, heartbeat pid 527.
 - First heartbeat sample 11:14:34Z: row=57386, axi=0xdf1eb, wd=0x170, daemon_t_ns=17.24e9,
   MemFree=1446 MB.
-- **Disconnected window:** the host (spark1) issued NO ssh/scp to the kit from **11:15:28Z**
-  to **11:28:53Z** (**13.4 min**, spark1 clock — no ssh command was run against the kit in
+- **Disconnected window:** the host (ws1) issued NO ssh/scp to the kit from **11:15:28Z**
+  to **11:28:53Z** (**13.4 min**, ws1 clock — no ssh command was run against the kit in
   that interval). During the window the daemon ran standalone and the on-kit heartbeat logged
   autonomously to eMMC `heartbeat.log` (~26 samples, 30 s cadence, wall-clock stamped),
   independent of any SSH session. On reconnect both processes were still alive (daemon pid

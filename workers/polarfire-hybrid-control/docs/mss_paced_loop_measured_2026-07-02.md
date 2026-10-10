@@ -63,7 +63,7 @@ window (`heartbeat.log`, 30 samples, 30 s cadence):
 - **Sustained rate 3329.8 Hz**, per-sample 3321.4–3338.1 Hz (**±0.5 %**) — steady, no droop.
 - **2 911 944 steps**, `row` strictly monotonic; `Δaxi_write_count = 8 735 832 = 3 × steps`
   **exactly** (the "not wall-clock inference" guarantee).
-- **Laptop-disconnected:** the host (spark1) issued zero ssh/scp to the kit for 13.4 min
+- **Laptop-disconnected:** the host (ws1) issued zero ssh/scp to the kit for 13.4 min
   (11:15:28Z→11:28:53Z); the loop advanced ~2.75 M iterations standalone and the on-kit
   heartbeat logged ~26 autonomous, wall-clock-stamped samples to eMMC in that window; both
   daemon and heartbeat were still alive on reconnect. Continuity proven from monotonic

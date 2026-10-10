@@ -38,12 +38,12 @@ fi
 log "pushing branch ${LOCAL_BRANCH} to origin (best effort)"
 git push origin "${LOCAL_BRANCH}" 2>&1 | tee -a "${LOG}" || true
 
-# Beelink fetches from the `spark2` remote (ssh://badwillhunt@spark2/...) so
-# we don't need GitHub SSH on Beelink. Fall back to origin if spark2 isn't
-# configured. (Was `spark1` until 2026-07-10; spark1 decommissioned 2026-07-05.)
-log "remote checkout via spark2 remote"
-REMOTE_FETCH_CMD="(git fetch spark2 ${LOCAL_BRANCH}:refs/remotes/spark2/${LOCAL_BRANCH} 2>/dev/null || git fetch origin ${LOCAL_BRANCH}:refs/remotes/origin/${LOCAL_BRANCH})"
-REMOTE_TRACK_REF="refs/remotes/spark2/${LOCAL_BRANCH}"
+# Beelink fetches from the `ws2` remote (ssh://badwillhunt@ws2/...) so
+# we don't need GitHub SSH on Beelink. Fall back to origin if ws2 isn't
+# configured. (Was `ws1` until 2026-07-10; ws1 decommissioned 2026-07-05.)
+log "remote checkout via ws2 remote"
+REMOTE_FETCH_CMD="(git fetch ws2 ${LOCAL_BRANCH}:refs/remotes/ws2/${LOCAL_BRANCH} 2>/dev/null || git fetch origin ${LOCAL_BRANCH}:refs/remotes/origin/${LOCAL_BRANCH})"
+REMOTE_TRACK_REF="refs/remotes/ws2/${LOCAL_BRANCH}"
 ssh "${BEE}" "bash -lc 'cd ${BEE_REPO} && ${REMOTE_FETCH_CMD} && git checkout -B ${LOCAL_BRANCH} ${REMOTE_TRACK_REF} 2>/dev/null || git checkout -B ${LOCAL_BRANCH} refs/remotes/origin/${LOCAL_BRANCH}'" 2>&1 | tee -a "${LOG}"
 if [[ ${PIPESTATUS[0]} -ne 0 ]]; then
     log "FAIL: branch ${LOCAL_BRANCH} not reachable on ${BEE}"

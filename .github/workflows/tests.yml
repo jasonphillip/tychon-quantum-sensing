@@ -41,9 +41,9 @@ jobs:
       - name: Test fpga-demo-dashboard
         working-directory: demo/fpga-demo-dashboard
         run: python -m pytest -q -p no:cacheprovider
-      - name: Test orchestrator claim evaluation
+      - name: Test orchestrator claim evaluation and critic independence
         working-directory: orchestrator
-        run: python -m pytest -q -p no:cacheprovider tvw/scripts/tests/test_claim_eval.py
+        run: python -m pytest -q -p no:cacheprovider tvw/scripts/tests/test_claim_eval.py tvw/scripts/tests/test_critic_independence.py
       - name: Test orchestrator dispatch
         working-directory: orchestrator
         run: bash tvw/scripts/tests/test_dispatch.sh

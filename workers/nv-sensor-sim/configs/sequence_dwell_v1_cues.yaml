@@ -24,7 +24,7 @@
 #     --config configs/sequence_dwell_v1_cues.yaml \
 #     --output-dir artifacts/datasets/sequence_dwell_v1_cues/
 
-v1_manifest: ~/archives/spark1-projects-2026-07-05/nv-sensor-sim/artifacts/datasets/sequence_train_v1/manifest.json
+v1_manifest: ~/archives/ws1-projects-2026-07-05/nv-sensor-sim/artifacts/datasets/sequence_train_v1/manifest.json
 
 # Same seed + same dwell config as sequence_dwell_v1 (seed-paired).
 master_seed: 20260707

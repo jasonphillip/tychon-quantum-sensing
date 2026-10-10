@@ -82,7 +82,7 @@ The weakest artifact is "stream a CSV, plot vs a synthetic baseline." Upgrade it
 1. **Closed-loop in software (Risk 3).** Feed `pid_poke`/`vnnx_smoke` actuator output back
    through a host-side ODMR plant model so the error trace **converges** (the loop closes),
    and overlay **PID-only vs PID+NN** so the NN's value is legible. This is the
-   CartPole/F1TENTH-shaped story (a closed loop, not a replay). Host harness on spark1;
+   CartPole/F1TENTH-shaped story (a closed loop, not a replay). Host harness on ws1;
    `tools/compare_corrections.py` produces the convergence + RMS-deviation plot.
 2. **Safety stunt (Risk 5).** Make the sector-bound *demonstrable*, not asserted:
    - inject an out-of-sector / oversized NN output → show the **±5 % clamp + slew limiter
@@ -93,7 +93,7 @@ The weakest artifact is "stream a CSV, plot vs a synthetic baseline." Upgrade it
    Pair with an honest caveat card listing the 6 open RPOs as the funded-work roadmap.
 
 UART flow control for the stream: firmware/host echoes each row after inference; the
-spark1 harness blocks on echo (prevents silent RX overrun).
+ws1 harness blocks on echo (prevents silent RX overrun).
 
 ---
 

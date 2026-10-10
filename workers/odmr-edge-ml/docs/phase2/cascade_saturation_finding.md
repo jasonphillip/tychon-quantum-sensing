@@ -7,7 +7,7 @@ Phase IIa work below.
 **Date:** 2026-05-02
 **Branch / commit:** `feature/op-set-check-and-fcnnv2-docstring` @ `889bb21`
 (orchestrator), `386c4ef` (validation script)
-**Evidence files (gitignored, on spark1):**
+**Evidence files (gitignored, on ws1):**
 - `exports/cascade_v1/cascade_manifest.json`
 - `exports/cascade_v1/cascade_eval_report.json`
 - `exports/cascade_v1/deployed_cascade_validation.json`
@@ -117,4 +117,4 @@ python scripts/validate_deployed_cascade.py \
   --cascade exports/cascade_v1/ --dataset production_50k_v2_aic
 ```
 
-Wall time on GB10 (spark1, bf16 + torch.compile): 8 m 28 s end-to-end.
+Wall time on GB10 (ws1, bf16 + torch.compile): 8 m 28 s end-to-end.

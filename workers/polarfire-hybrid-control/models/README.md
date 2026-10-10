@@ -27,13 +27,13 @@ vnnx_compile -c V250 -t <model>_integer_quant.tflite -o <model>.vnnx
 | Size | 12,832 bytes (~12.5 KB) — matches Final Report load-bearing claim |
 | SHA-256 | `6c5cd21ae9d4ce9793f8bc143c2c53d564140bde3df1fda1ec08a5a1602512eb` |
 | Built | 2026-05-17 (DLOG-048) |
-| Source TFLite | `~/projects/odmr-edge-ml/exports/fcnn_v2_residual_dataset_a_int8.tflite` on spark1 (7,656 bytes, INT8) |
-| Source ONNX | `~/projects/odmr-edge-ml/exports/fcnn_v2_residual_dataset_a.onnx` on spark1 (reference; not the build input) |
+| Source TFLite | `~/projects/odmr-edge-ml/exports/fcnn_v2_residual_dataset_a_int8.tflite` on ws1 (7,656 bytes, INT8) |
+| Source ONNX | `~/projects/odmr-edge-ml/exports/fcnn_v2_residual_dataset_a.onnx` on ws1 (reference; not the build input) |
 
 **Build commands (reproducible):**
 
 ```bash
-# 1. Copy TFLite from spark1 to Beelink Windows side
+# 1. Copy TFLite from ws1 to Beelink Windows side
 scp ~/projects/odmr-edge-ml/exports/fcnn_v2_residual_dataset_a_int8.tflite \
     bee:~/fcnn_v2_residual_dataset_a_int8.tflite
 
@@ -75,7 +75,7 @@ the WSL python path is wired through it.
 3. Verify size + SHA-256 match. Mismatches indicate one of:
    - VectorBlox SDK version drift (`pip show vbx` inside the venv —
      expect 2.0.3).
-   - TFLite source file changes (compare upstream sha256 on spark1).
+   - TFLite source file changes (compare upstream sha256 on ws1).
    - Compile-time flag changes (`vnnx_compile` defaults vary by SDK
      rev — pin to `-c V250`).
 

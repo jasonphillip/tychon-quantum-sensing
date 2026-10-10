@@ -59,7 +59,7 @@
     },
     {
       "corpus": "tychon-claude-history",
-      "query": "Setting up repo 3 on spark1",
+      "query": "Setting up repo 3 on ws1",
       "expected_prefixes": [
         "web_export/sbir-fasttrack/conversations/"
       ],

@@ -13,7 +13,7 @@ ls "$NAS_BACKUPS" >/dev/null 2>&1 || { echo "NAS not reachable — leaving cron 
 
 # Tier 1 archive
 SRC1="$HOME/archives/harness-snapshots/$STAMP"
-DST1="$NAS_BACKUPS/spark2-harness-snapshots/$STAMP"
+DST1="$NAS_BACKUPS/ws2-harness-snapshots/$STAMP"
 if [ -d "$SRC1" ]; then
   mkdir -p "$DST1"
   rsync -a "$SRC1/" "$DST1/"
@@ -23,7 +23,7 @@ fi
 
 # Tier 3 genome capsule (dedicated place)
 SRC3="$HOME/archives/tvw-genome-$STAMP"
-DST3="$NAS_BACKUPS/spark2-tvw-genome-$STAMP"
+DST3="$NAS_BACKUPS/ws2-tvw-genome-$STAMP"
 if [ -d "$SRC3" ]; then
   mkdir -p "$DST3"
   rsync -a "$SRC3/" "$DST3/"

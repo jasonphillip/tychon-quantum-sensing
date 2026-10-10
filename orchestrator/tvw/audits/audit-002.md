@@ -1,7 +1,7 @@
 # Audit 002 — Tychon Phase I Final Report (re-audit with Beelink/Microchip artifacts)
 
 - Date: 2026-05-01
-- Auditor: critic_loop ensemble (`qwen3-coder:30b` + `nemotron-mini:latest`) via Ollama on spark1, plus carry-over Pass 1 structure findings from audit-001
+- Auditor: critic_loop ensemble (`qwen3-coder:30b` + `nemotron-mini:latest`) via Ollama on ws1, plus carry-over Pass 1 structure findings from audit-001
 - Source under audit: `~/.corpus/tychon-docs/raw/report/Tychon_Phase_I_Final_Report_2026-04-30.md` (1,450 lines, .docx-derived) — **same** as audit-001
 - Corpus delta vs audit-001: tychon-docs **+74 chunks** (from `/mnt/nas/projects/tychon-artifacts/`: 10 final_report_data + 9 libero_reports + 3 April 2 markdown), tychon-claude-history +181 chunks (Beelink session logs, used for retrieval but not authoritative)
 - Claims processed: 97 (same set as audit-001 — no re-extraction)

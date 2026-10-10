@@ -1,6 +1,6 @@
 # Dispatch 7 — odmr-vector-tracking: adopt v6 as deployable default (policy re-selection first)
 
-**Target session:** `~/projects/odmr-vector-tracking/` on **spark2**.
+**Target session:** `~/projects/odmr-vector-tracking/` on **ws2**.
 **Issued:** 2026-07-08, from the increment-6 SUCCESS verdict and the TVW deploy ruling
 (`audit-dwell-program-2026-07-07.md` Addendum D). No retrain, no new data — decode-policy
 re-selection + default flip + documentation. Zero-retrain, evaluation-and-config only.

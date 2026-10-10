@@ -271,7 +271,7 @@ Alternative resolution path (preferred if Libero exposes ES-specific data):
 
 | Date | Phase | Outcome |
 |---|---|---|
-| 2026-05-02 | HW-04a sync | 18 files (17 PDCs + README) imported from Beelink to spark1 |
+| 2026-05-02 | HW-04a sync | 18 files (17 PDCs + README) imported from Beelink to ws1 |
 | 2026-05-02 | HW-04b partial audit | 120 set_io declarations parsed; intra-bundle conflicts identified; recommended PDC subset selected; all rows tagged MAP_TBD pending UG0726 / Libero DB resolution |
 | (TBD) | HW-04b full audit | Complete MAP_OK/REROUTE/DROP verdicts after fetching ball-matrix data |
 | (TBD) | HW-04c | Populate `libero/constraints/pinout.pdc` from audited bundle (re-triggers P&R) |

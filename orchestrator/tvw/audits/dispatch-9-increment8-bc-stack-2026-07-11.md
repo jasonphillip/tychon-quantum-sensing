@@ -20,8 +20,8 @@
 > Naming: **dispatch-9 executes increment-8.** Increment-8 is the reliability-at-fixed-capacity
 > increment (B+C stack), NOT the capacity bump (that idea moves to increment-9+ if ever needed).
 
-**Target session:** `~/projects/odmr-vector-tracking/` on **spark2** (training executes on AWS
-via `~/projects/gpu-fanout`; evals + verdict run locally — cloud trains, spark2 judges).
+**Target session:** `~/projects/odmr-vector-tracking/` on **ws2** (training executes on AWS
+via `~/projects/gpu-fanout`; evals + verdict run locally — cloud trains, ws2 judges).
 **Grounding:** TVW options audit `increment8-options-audit-2026-07-11.md`; all method papers
 ETL'd in `~/.corpus/odmr-pnt-nv-docs` (search-corpus topic `odmr-pnt-nv-docs`).
 **Mode (when issued):** end-to-end; keep-what-survives; stop-and-report.
@@ -43,7 +43,7 @@ State in `docs/increment8_results.md`: (i) FP32/no-INT8 status unchanged (same p
 increment-7 §0); (ii) **training executes on AWS g6.xlarge (L4/x86)** — not bitwise-comparable
 to GB10/ARM, therefore **all verdict comparisons use the in-environment baseline arm** (below),
 and every run's `run_manifest.json` (torch/CUDA/GPU, commit SHAs, dataset sha256) is preserved
-under `artifacts/increment8/` + NAS; (iii) eval sets and verdict never leave spark2.
+under `artifacts/increment8/` + NAS; (iii) eval sets and verdict never leave ws2.
 
 ## Arms (train on AWS; 5 seeds each: 20260701/11/21/31/41 — n widened from 3 per
 Picard/Bouthillier; every-seed at n=5 is a materially stronger reliability claim)
@@ -110,8 +110,8 @@ weights unchanged, ensemble averaging method, logit-standardization form)
   can run in wave 1 if quota allows); (3) bc ×5 + bc_sam ×5 (need teachers + trunk staged
   back into the bundle). Matrix file: `gpu-fanout/configs/increment8-matrix.yaml` (update the
   draft to match this dispatch). ~26 GPU runs ≈ **$105–160 in credits** at g6.xlarge caps.
-- Checkpoints/logs sync back via `collect_results.sh`; evals + verdict + soup on spark2;
-  artifacts to `artifacts/increment8/` + NAS backup `spark2-odmr-increment8`.
+- Checkpoints/logs sync back via `collect_results.sh`; evals + verdict + soup on ws2;
+  artifacts to `artifacts/increment8/` + NAS backup `ws2-odmr-increment8`.
 - Outward material untouched; banned numbers stay banned (16/16, 0.811, DR ~5 mT); IP hold
   stands. Strategic next-steps route UP to TVW.
 

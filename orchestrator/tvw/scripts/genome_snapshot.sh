@@ -2,7 +2,7 @@
 # genome_snapshot.sh — Tier 3: the reproduction capsule ("genome").
 # Everything needed to reconstruct this repo AND the environment that makes it
 # behave the way it does, staged locally for later push to the NAS dedicated
-# location (/mnt/nas/backups/spark2-tvw-genome-<date>/).
+# location (/mnt/nas/backups/ws2-tvw-genome-<date>/).
 set -euo pipefail
 STAMP=$(date +%Y-%m-%d)
 STAGE="$HOME/archives/tvw-genome-$STAMP"

@@ -2,7 +2,7 @@
 
 **Dispatch:** `tychon-verification-workbench/tvw/audits/dispatch-nvsim-sequence-train-v3-2026-07-07.md`
 (approved with four amendments; Amendment 1 committed to **Option A — angle-stratified widening**).
-**Session:** nv-sensor-sim on spark2, 2026-07-07.
+**Session:** nv-sensor-sim on ws2, 2026-07-07.
 **Branch:** `feat/sequence-train-v3-coverage` (created from `cec6591` = `feat/dwell-identity-lineage` HEAD).
 
 ## Motivation (measured)
@@ -16,7 +16,7 @@ same v1 contract; `sequence_eval_fieldcone_v1` is the held-out boundary eval (De
 
 ## Environment
 
-spark2 conda base: numpy 2.4.2, simos 0.2.3, qutip 5.2.3 (match the archived v1 lineage). All
+ws2 conda base: numpy 2.4.2, simos 0.2.3, qutip 5.2.3 (match the archived v1 lineage). All
 local compute. Test suite green throughout: **215 passed, 4 skipped** (188 dwell baseline + 27 new).
 
 ## Design — angle-stratified widening (Amendment 1, Option A)

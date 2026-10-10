@@ -13,7 +13,7 @@
 > Naming note: **dispatch-8 executes increment-7.** Dispatch and increment numbers diverged at
 > dispatch-7 (a zero-retrain policy flip, no increment). Verdict script is `increment7_verdict.py`.
 
-**Target session:** `~/projects/odmr-vector-tracking/` on **spark2**.
+**Target session:** `~/projects/odmr-vector-tracking/` on **ws2**.
 **Drafted:** 2026-07-08, from the increment-6 SUCCESS verdict (`audit-dwell-program-2026-07-07.md`
 Addendum D / DLOG-060) and the external red-team review intake (Addendum E).
 **Mode (when issued):** run end-to-end without user assistance; keep-what-survives; stop-and-report.

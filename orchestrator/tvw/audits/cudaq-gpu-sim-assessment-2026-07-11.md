@@ -10,11 +10,11 @@ nv-sensor-sim is a worker-lane dispatch after Jason picks.
 ## Headline answers
 
 1. **CUDA-Q works on our hardware TODAY — empirically proven, not just docs-verified.** The
-   agent pip-installed `cuda-quantum-cu13` (0.15.0, 2026-07-02) + `cupy-cuda13x` on spark2
+   agent pip-installed `cuda-quantum-cu13` (0.15.0, 2026-07-02) + `cupy-cuda13x` on ws2
    (GB10, aarch64, sm_121, driver 580.159.03, Py3.13) and ran batched 3-level Lindblad
    evolution: **batch 128 × 201 steps = 1.39 s; batch 1024 = 4.51 s** (sub-linear — batching
    amortizes). Benchmark script preserved: `cudaq-batched-dynamics-benchmark-2026-07-11.py`.
-   NOTE: cudaq 0.15.0 is now installed in spark2's base conda env (session side-effect, benign).
+   NOTE: cudaq 0.15.0 is now installed in ws2's base conda env (session side-effect, benign).
 2. **nv-sensor-sim already anticipated this.** `adapters/cudaq_adapter.py` is a stub
    (NotImplementedError) whose docstring cites the NVIDIA NV+P1 demo ("64% runtime reduction
    on Blackwell"). The primary backend is SimOS (CPU; arXiv:2501.05922). So the question was

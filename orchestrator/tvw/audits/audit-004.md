@@ -1,7 +1,7 @@
 # Audit 004 — Tychon Phase I Final Report v3.1 (revised)
 
 - Date: 2026-05-01
-- Auditor: critic_loop ensemble (`qwen3-coder:30b` + `nemotron-mini:latest`) via Ollama on spark1, plus Pass 1 structural review of audit-001/002/003 CRITICAL findings
+- Auditor: critic_loop ensemble (`qwen3-coder:30b` + `nemotron-mini:latest`) via Ollama on ws1, plus Pass 1 structural review of audit-001/002/003 CRITICAL findings
 - Source under audit: `~/.corpus/tychon-docs/raw/report/Tychon_Phase_I_Final_Report_v3.1_2026-05-01.md` (649 lines, **NEW** — copied from `~/Desktop/Shared/Tychon_Phase_I_Final_Report_v3.1_2026-05-01.md`, revised after audit-001/002/003 by a separate Claude session)
 - Corpus delta: tychon-docs **+23 chunks** for v3.1 ingest (no other changes); 469 → 492 chunks total
 - Claims processed: **114** (vs 97 in audit-001/002/003 — §5.1–5.3 now populated, References appendix populated, plus a Change Log section bring the count up)

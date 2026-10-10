@@ -57,7 +57,7 @@ AIC_PID = Path(
     "~/projects/tychon-shared-data/production_50k_v2_aic/pid_residuals.npz"
 )
 SWEEP_NPZ = Path(
-    "~/Desktop/Shared/codex-review/spark1_projects/"
+    "~/Desktop/Shared/codex-review/ws1_projects/"
     "tychon-odmr-ml/experiments/heading_sweep_results.npz"
 )
 _TAG = _os.environ.get("PHASE_C_TAG", "v2_dataset_a")

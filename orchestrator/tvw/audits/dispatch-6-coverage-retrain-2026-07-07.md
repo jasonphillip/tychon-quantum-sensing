@@ -1,6 +1,6 @@
 # Dispatch 6 — odmr-vector-tracking: v3 coverage retrain + tri-eval (increment-6)
 
-**Target session:** `~/projects/odmr-vector-tracking/` on **spark2**.
+**Target session:** `~/projects/odmr-vector-tracking/` on **ws2**.
 **Issued:** 2026-07-07 from TVW `audit-dwell-program-2026-07-07.md`; successor to the ratified
 increment-5 (`docs/increment5_results.md`, main dde2a74).
 **Trigger:** CONDITIONAL — execute the retrain (§2) only when the nv-sim v3 handoff lands in

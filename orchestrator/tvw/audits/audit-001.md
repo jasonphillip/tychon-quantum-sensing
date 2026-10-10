@@ -1,7 +1,7 @@
 # Audit 001 — Tychon Phase I Final Report
 
 - Date: 2026-05-01
-- Auditor: critic_loop ensemble (`qwen3-coder:30b` + `nemotron-mini:latest`) via Ollama on spark1, plus manual Pass 1 structure review
+- Auditor: critic_loop ensemble (`qwen3-coder:30b` + `nemotron-mini:latest`) via Ollama on ws1, plus manual Pass 1 structure review
 - Source under audit: `~/.corpus/tychon-docs/raw/report/Tychon_Phase_I_Final_Report_2026-04-30.md` (1,450 lines, .docx-derived)
 - Claims processed: 97
 - Total runtime: 6.2 minutes (374s) — Pass 2 ensemble critic loop only

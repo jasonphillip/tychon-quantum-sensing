@@ -24,7 +24,7 @@ no reprogram performed.
   `vbx-overlay.service active`, `uio2=vbx@60030000`, udmabuf `0xc8000000`/32 MiB.
 
 ### Rung E — M1 (pid_csr) CLEAN; M0 (gains) read-path DEFECT (CONFIRMED)
-Built + deployed `pid_ctl` (kit sha256 `161211c1…`, from spark1 `pid_ctl.c` `fdabd192…` via bee
+Built + deployed `pid_ctl` (kit sha256 `161211c1…`, from ws1 `pid_ctl.c` `fdabd192…` via bee
 cross-gcc; controlled per-file copy, no bee branch switch/pull).
 - **M1 `pid_csr` @ 0x60040800: reads COMPLETE cleanly.** `pid_ctl r 0x60040804` → `0x00010000`
   (csr_version). The SLAVE3 crossbar slot decodes + completes — the clean two-slot integration is

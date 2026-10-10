@@ -27,7 +27,7 @@ log = logging.getLogger(__name__)
 
 VAL_NPZ = Path("~/projects/odmr-edge-ml/data/production_50k/pid_residuals.npz")
 SWEEP_NPZ = Path(
-    "~/Desktop/Shared/codex-review/spark1_projects/"
+    "~/Desktop/Shared/codex-review/ws1_projects/"
     "tychon-odmr-ml/experiments/heading_sweep_results.npz"
 )
 OUT_PNG = (

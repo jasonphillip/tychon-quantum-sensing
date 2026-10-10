@@ -53,7 +53,7 @@ Goal: knock out as many items as possible from:
 - `docs/remediation_roadmap.md`
 - `~/Desktop/Shared/fpga_demo/10_remediation_roadmap_2026-06-20.md`
 
-This is not just dashboard work. The dashboard is a top priority, but the work spans the kit, bee/Libero/SmartHLS/FlashPro, spark1/ML, and report/documentation cleanup.
+This is not just dashboard work. The dashboard is a top priority, but the work spans the kit, bee/Libero/SmartHLS/FlashPro, ws1/ML, and report/documentation cleanup.
 
 Use Codex-native workflow. Do not assume Claude-only features such as `/search-corpus`, Claude Plan Mode, Claude skills, or Claude memories. If the current Codex session has useful skills/tools, use them, but otherwise use the repo, local corpora, shell, web search when required, and the live machines.
 
@@ -110,7 +110,7 @@ Bee:
 - `ssh bee` works.
 - Bee repo at inventory time:
   - `~/dev/projects/polarfire-hybrid-control`
-  - branch `bringup/2026-05-18-real-silicon...spark1/bringup/2026-05-18-real-silicon [behind 3]`
+  - branch `bringup/2026-05-18-real-silicon...ws1/bringup/2026-05-18-real-silicon [behind 3]`
   - HEAD `f46bbea`
 - Job files found on bee:
   - `~/libero_seedsweep/seed7_vbx201_v250/export/polarfire_hybrid_control_two_slot_demo.job`
@@ -123,7 +123,7 @@ Bee:
 
 Spark1:
 
-- `ssh spark1` works.
+- `ssh ws1` works.
 - GPU visible as `NVIDIA GB10`.
 - `~/projects/odmr-edge-ml` has untracked vector-v1 files. Do not overwrite unrelated work.
 - `~/projects/fpga-demo-dashboard` and `~/projects/polarfire-hybrid-control` exist there too.

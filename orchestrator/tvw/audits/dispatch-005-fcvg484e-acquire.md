@@ -29,7 +29,7 @@ A new corpus skeleton already exists at:
     └── meta/            (acquisition.log target)
 
 Pre-flight: confirm the embedding service is healthy before any ingest:
-  curl -sf http://spark2:8000/health
+  curl -sf http://ws2:8000/health
 
 TASK — three phases:
 
@@ -75,7 +75,7 @@ PHASE 2: Acquire the manifest with the `acquire-corpus` skill.
 
 PHASE 3: Process the corpus with `process-corpus`.
   Corpus name: tychon-fpga-mpfs250t-fcvg484e
-  Embedding service: http://spark2:8000  (Qwen3-Embedding-4B, 2560-d)
+  Embedding service: http://ws2:8000  (Qwen3-Embedding-4B, 2560-d)
   Output: ~/.corpus/tychon-fpga-mpfs250t-fcvg484e/processed/chunks.db
   Update manifest.json with the final `sources` array.
 

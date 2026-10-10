@@ -94,7 +94,7 @@ agents and corroborated by direct measurement. Evidence scripts: `evidence-2026-
 
 - **D1.** Both running sessions had built-in approval gates (plan-mode; dry-run go-ahead) — injections landed without killing either session. Keep designing dispatch prompts with gates.
 - **D2.** The artifact bar survived two sessions and an honest-inventory pass because no report asserted the instrument sanity invariant (lock fraction) and no control separated "fails at the hard part" from "fails everywhere." Lesson filed: `wiki/lessons/benchmark-sanity-invariants.md`.
-- **D3.** GPU: training runs on spark1 GB10 (torch 2.11 cu130 verified); generator is CPU/qutip single-process — adequate (5-min full run); levers if lineages grow: multiprocessing → batched `torch.linalg.eigh`. Two-Spark leverage = parallel experiment matrix (config-addressable runs, ssh+nohup+pidfile dispatch), not memory.
+- **D3.** GPU: training runs on ws1 GB10 (torch 2.11 cu130 verified); generator is CPU/qutip single-process — adequate (5-min full run); levers if lineages grow: multiprocessing → batched `torch.linalg.eigh`. Two-Spark leverage = parallel experiment matrix (config-addressable runs, ssh+nohup+pidfile dispatch), not memory.
 - **D4.** external outreach (+48h window) lists "Increment-2a tracker result" as a deck item — **only post-re-baseline claim language may ship**; the retracted numbers must not appear in any outbound material.
 - **D5.** INVENTORY.md §5 corrected via Addendum 2 (both copies). nv-sim & odmr-edge-ml still GitHub-only remotes (nas mirrors recommended, carried from daily log).
 

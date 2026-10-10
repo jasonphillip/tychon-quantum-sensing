@@ -70,7 +70,7 @@ The reshaped C–G plan (Linux-based) is authored separately for review.
 
 ### 2026-06-15 — On-target rungs C / D / E / F executed (full evidence: `firmware/linux/reports/2026-06-15-bringup/`)
 
-SD flashed on spark1 (image gz sha256 `87bde545…c430d`); tools pre-staged at `/root/bringup`;
+SD flashed on ws1 (image gz sha256 `87bde545…c430d`); tools pre-staged at `/root/bringup`;
 target booted and reached over SSH (`192.168.x.x`) + CP2108 serial on bee. The **Linux/Yocto
 path (DLOG-053) is validated end-to-end** — SD boot, MSS↔fabric AXI access, `generic-uio` +
 `/dev/udmabuf-ddr-nc0`, and the V250 control plane all work on real silicon.
@@ -203,7 +203,7 @@ The original concern (staged reference bundle is FCVG484-keyed but silicon is FC
 
 ### HW-04a — Bundle synced
 
-Done 2026-05-02. The 17 reference PDC files plus README from `polarfire-soc/icicle-kit-reference-design@fd0aebb` now live at `libero/constraints/icicle_reference/` on spark1.
+Done 2026-05-02. The 17 reference PDC files plus README from `polarfire-soc/icicle-kit-reference-design@fd0aebb` now live at `libero/constraints/icicle_reference/` on ws1.
 
 ### HW-04b — Package-cross-mapping audit (FCVG484 → FCSG536e) — OBSOLETED 2026-05-03
 
