@@ -42,7 +42,7 @@ DS_AIC = Path(
     "~/projects/tychon-shared-data/production_50k_v2_aic/dataset.h5"
 )
 CKPT = Path(
-    "~/Desktop/Shared/codex-review/ws1_projects/"
+    "~/shared/codex-review/ws1_projects/"
     "tychon-odmr-ml/experiments/scalar_residual/fcnn/checkpoints/best_model.pt"
 )
 OUT_NPZ = Path(__file__).resolve().parent / "dataset_a_eval_results.npz"

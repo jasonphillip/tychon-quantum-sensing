@@ -3,7 +3,7 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-DEST_DIR="~/Desktop/Shared/tychon-nv-sim-repos"
+DEST_DIR="~/shared/tychon-nv-sim-repos"
 DATE_STAMP=$(date +%Y-%m-%d)
 DEST_FILE="${DEST_DIR}/repo2-status-snapshot-${DATE_STAMP}.md"
 PREV_SHA=""

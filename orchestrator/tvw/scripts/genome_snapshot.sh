@@ -40,7 +40,7 @@ it act the way they do. To reconstruct on a fresh machine:
    capsule — re-authenticate normally.
 4. Memory: copy each `harness/memory/<project-slug>/` to
    `~/.claude/projects/<project-slug>/memory/`.
-5. Wiki: extract `harness/wiki.tar.gz` to `~/Desktop/Shared/` (Syncthing share).
+5. Wiki: extract `harness/wiki.tar.gz` to `~/shared/` (Syncthing share).
 6. Plugins/MCP: install the plugin list recorded in `harness/MANIFEST.txt`;
    MCP servers launch via mcp-env-run with keys from `~/.openclaw/.env`
    (not included — secrets never travel in this capsule).

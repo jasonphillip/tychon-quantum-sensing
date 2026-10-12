@@ -1,5 +1,9 @@
 # Claude Code Session Log — 2026-04-02 (Beelink)
 
+> **Note added 2026-10-12.** Verbatim export of the coding-agent session of 2026-04-02 on the Windows build host: the attempt to put the SmartHLS PID block into the Icicle Kit reference design in Libero.
+> Nothing was removed. Machine home paths were shortened to `~` for publication.
+> The readable companion, with a dated note on what later changed, is [`beelink-claude-session-2026-04-02-EST.md`](beelink-claude-session-2026-04-02-EST.md).
+
 Session ID: 78595586-ee3b-45dc-8cf4-5a9aee136ed0
 
 ---

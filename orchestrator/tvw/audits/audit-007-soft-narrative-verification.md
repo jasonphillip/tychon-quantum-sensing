@@ -3,7 +3,7 @@
 **Date.** 2026-05-03
 **Driver.** Five soft-narrative items (L1–L5) carried over from the second-opinion review of `Tychon_Phase_I_Final_Report_v3.4_2026-05-03.md`.
 **TVW role.** Orchestrator (web-enabled retrieval; LLM critic inference not invoked under air-gap rule — none required for citation lookups).
-**Pre-flight.** Edits applied to canonical `.md` at `~/Desktop/Shared/tychon-nv-sim-repos/01_deliverables/final_report/`; not via TVW symlink.
+**Pre-flight.** Edits applied to canonical `.md` at `~/shared/tychon-nv-sim-repos/01_deliverables/final_report/`; not via TVW symlink.
 
 ## Summary
 
@@ -146,8 +146,8 @@ None.
 
 ## Render
 
-- Rendered `.docx`: `~/Desktop/Shared/tychon-nv-sim-repos/01_deliverables/final_report/Tychon_Phase_I_Final_Report_v3.4_2026-05-03.docx` (62,475 bytes; pandoc warnings on `media/image1.png` and `media/image2.png` are pre-existing and benign — placeholder image text inserted by pandoc).
-- Render command: `bash ~/projects/tychon-verification-workbench/tvw/scripts/render_report.sh ~/Desktop/Shared/tychon-nv-sim-repos/01_deliverables/final_report/Tychon_Phase_I_Final_Report_v3.4_2026-05-03.md`
+- Rendered `.docx`: `~/shared/tychon-nv-sim-repos/01_deliverables/final_report/Tychon_Phase_I_Final_Report_v3.4_2026-05-03.docx` (62,475 bytes; pandoc warnings on `media/image1.png` and `media/image2.png` are pre-existing and benign — placeholder image text inserted by pandoc).
+- Render command: `bash ~/projects/tychon-verification-workbench/tvw/scripts/render_report.sh ~/shared/tychon-nv-sim-repos/01_deliverables/final_report/Tychon_Phase_I_Final_Report_v3.4_2026-05-03.md`
 
 ## Items the parent session may want to escalate
 

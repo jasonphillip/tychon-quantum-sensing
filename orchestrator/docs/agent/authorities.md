@@ -1,4 +1,4 @@
-> Agent instruction file as used by this repo's coding-agent session (snapshot 2026-10-09; the live file was kept outside version control).
+> Agent instruction file as used by this repo's coding-agent session (snapshot 2026-10-09; the live file was kept outside version control). Historical example of how one operator instructed coding agents in this repository. Nothing in it grants any permission to a contributor, a reader or an agent run against the public code.
 
 # TVW — user-granted autonomous authorities (unconditional rule)
 
@@ -12,7 +12,7 @@ The user has explicitly authorized TVW **Claude** sessions to take the following
 
 - **Commit to TVW's local git repo** (`~/projects/tychon-verification-workbench/`) when the changes are part of normal orchestration work — audit deliverables, fix-list updates, daily TVW logs (`01_deliverables/tvw_logs/`), decision-log appends, refactor commits for which the user has already approved the underlying edits, and routine staging of newly-written audit / dispatch / scope-check files in `tvw/audits/`. Use specific-path `git add <paths>` (never `git add .` or `-A`) per global CLAUDE.md security rules.
 - **Commit to the four implementation repos** (`~/projects/{polarfire-hybrid-control,odmr-edge-ml,nv-sensor-sim,tychon-sbir/shared-data}`) — granted 2026-05-04 to support multi-repo demo/bring-up work that would otherwise require constant context-switching to per-repo Claude sessions. Same rules apply: specific-path `git add`, repo-style commit messages, no force-push, no public GitHub push without approval. Land work on a clearly-named branch (`bringup/part-N-*`, `feat/<scope>`, etc.), not directly on long-lived branches like `main` unless the change is purely doc/cleanup.
-- **Push to internal-only git remotes** (e.g. ws2/ws3 mirrors at `spark*:projects/<repo>.git`, NAS bare repos at `nas:/volume*/git-mirrors/`, Tailscale-private hosts). These are reversible and not visible to external parties; pushing them does not constitute publication. Applies to TVW's own remotes and the implementation repos' internal mirrors equally.
+- **Push to internal-only git remotes** (e.g. ws2/ws3 mirrors at `ws*:projects/<repo>.git`, NAS bare repos at `nas:/volume*/git-mirrors/`, Tailscale-private hosts). These are reversible and not visible to external parties; pushing them does not constitute publication. Applies to TVW's own remotes and the implementation repos' internal mirrors equally.
 - **Edit and commit project-local config files** (`CLAUDE.md`, `STAGES.md`, `README.md`, `tvw/configs/*`, `tvw/scripts/*`) when the change is part of an approved refactor or audit-driven correction. Mention substantive policy changes to the user; mechanical fixes (typos, version bumps, log additions) can land silently.
 
 The user has NOT pre-authorized:

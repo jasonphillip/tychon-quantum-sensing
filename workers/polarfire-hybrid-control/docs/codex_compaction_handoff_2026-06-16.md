@@ -27,10 +27,10 @@ checkpoint, rollback, or a clear discriminator.
 - `docs/agent_ground_truth_contract.md`
   - Added claim labels, source priority, conclusion gate, current FIC2/MPU
     cautionary example, and the autonomous debug envelope.
-- `~/Desktop/Shared/wiki/CLAUDE.md`
+- `~/shared/wiki/CLAUDE.md`
   - Added operational-debugging evidence discipline and autonomous operational
     debugging envelope.
-- `~/Desktop/Shared/wiki/CHANGELOG.md`
+- `~/shared/wiki/CHANGELOG.md`
   - Added 2026-06-16 schema entries for the evidence discipline and autonomous
     operational-debugging envelope.
 - Other repo docs were refreshed earlier in this Codex thread:
@@ -130,8 +130,8 @@ When Claude or a future agent resumes:
    - `docs/fpga_reproducibility_inventory_2026-06-16.md`
    - top-level `README.md`
    - `firmware/linux/README.md`
-   - `~/Desktop/Shared/wiki/projects/polarfire-hybrid-control/README.md`
-   - `~/Desktop/Shared/wiki/CHANGELOG.md`
+   - `~/shared/wiki/projects/polarfire-hybrid-control/README.md`
+   - `~/shared/wiki/CHANGELOG.md`
 
 If the target still does not come back over Ethernet, check serial/MMUART and
 DHCP/mDNS before assuming a bitstream failure.

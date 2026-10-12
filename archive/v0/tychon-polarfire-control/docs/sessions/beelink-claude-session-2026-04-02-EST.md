@@ -1,5 +1,12 @@
 # Beelink Claude Session — 2026-04-02 (EST)
 
+> **Historical note (added 2026-10-12).** This summary records what was believed on 2026-04-02, after a Libero integration session on the Windows build host. Later work changed several of its conclusions. The text below is unchanged.
+> - **Target silicon.** The build set the die to production `MPFS250T` because Libero 2025.2 had no package data for the `MPFS250T_ES` engineering-sample die. The kit on the bench carried ES silicon, and programming a production-target image failed on 2026-05-18 with an IDCODE class mismatch (branches `polarfire/bringup/part-A-FAILED-2026-05-18` and `polarfire/bringup/part-A-FAILED-2026-05-18-attempt-2`). A production kit replaced it, and the package designator was corrected to FCVG484E. See [`silicon_production_confirmed_2026-06-02.md`](../../../../../workers/polarfire-hybrid-control/docs/silicon_production_confirmed_2026-06-02.md) and [`orchestrator/INVENTORY.md`](../../../../../orchestrator/INVENTORY.md), section 2.
+> - **VectorBlox size.** "No need to downsize to V250" did not hold. The programmed images went V500 (rung A, 2026-06-15) and then V250 (the shipped image). See [`rung_f_v250_on_silicon_results_2026-06-16.md`](../../../../../workers/polarfire-hybrid-control/docs/rung_f_v250_on_silicon_results_2026-06-16.md).
+> - **PID placement.** Five attempts to attach the PID to the FIC_0 interconnect failed here, so the PID went to the top level. The two-slot design of 2026-06-17 made the PID registers reachable from the MSS over the fabric bus (M0 gains slave and M1 `pid_csr`, read and written bit-exact on silicon). See [`two_slot_demo_scope_2026-06-18.md`](../../../../../workers/polarfire-hybrid-control/docs/two_slot_demo_scope_2026-06-18.md).
+> - **Timing and clocks.** The +0.165 ns worst slack and the 100 MHz / 200 MHz clocks describe this 2026-04-02 design only. The shipped two-slot image runs the PID at 125 MHz and the V250 at 200 MHz with about +1 ns of slack on each clock. See `orchestrator/INVENTORY.md`, section 4.1.
+> - **Next steps.** The list at the end was superseded by the bring-up record in [`track0_bringup_runbook.md`](../../../../../workers/polarfire-hybrid-control/docs/track0_bringup_runbook.md) and by [`docs/case-study.md`](../../../../../docs/case-study.md).
+
 ## Goal
 Libero SmartDesign integration: MSS + CoreVectorBlox + SmartHLS PID controller on MPFS250T Icicle Kit, targeting synthesis/P&R reports for Phase I SBIR deliverable.
 

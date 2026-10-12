@@ -25,7 +25,7 @@ DT_S = 1.0
 # Source: original adev_results.npz from the tychon-odmr-ml workspace.
 # (odmr-edge-ml is the public-scrubbed mirror; the .npz is gitignored.)
 SRC_NPZ = Path(
-    "~/Desktop/Shared/codex-review/ws1_projects/"
+    "~/shared/codex-review/ws1_projects/"
     "tychon-odmr-ml/experiments/adev_results.npz"
 )
 OUT_NPZ = Path(__file__).resolve().parent / "adev_results_exact.npz"

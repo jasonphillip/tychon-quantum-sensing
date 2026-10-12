@@ -4,7 +4,7 @@
 
 **Role**: WORKER lane (NV-diamond magnetometer ODMR simulator). Upstream data source for `odmr-vector-tracking` (dwell-sweep eval; strain/cross-relaxation identity-cue lineage). Work arrives as TVW dispatches — this lane does NOT issue cross-program dispatches. Strategic next-steps go UP to a TVW session as a ready-to-paste prompt; only mechanical handoffs (copy a dataset, push a mirror) go sibling-to-sibling.
 
-**State lives elsewhere, not here** (this file is rules only): current status in `~/Desktop/Shared/wiki/projects/nv-sensor-sim/README.md` (auto-refreshed) and the auto-injected NOW.md. Code conventions: `CONTRIBUTING.md`.
+**State lives elsewhere, not here** (this file is rules only): current status in `~/shared/wiki/projects/nv-sensor-sim/README.md` (auto-refreshed) and the auto-injected NOW.md. Code conventions: `CONTRIBUTING.md`.
 
 ## Incoming dispatches from TVW (manual, file-based)
 TVW queues work as files in `.dispatch/inbox/` (untracked). When Jason says "check your dispatch inbox":

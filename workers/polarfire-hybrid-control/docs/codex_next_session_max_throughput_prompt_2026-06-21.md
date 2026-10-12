@@ -51,7 +51,7 @@ Continue work in:
 Goal: knock out as many items as possible from:
 
 - `docs/remediation_roadmap.md`
-- `~/Desktop/Shared/fpga_demo/10_remediation_roadmap_2026-06-20.md`
+- `~/shared/fpga_demo/10_remediation_roadmap_2026-06-20.md`
 
 This is not just dashboard work. The dashboard is a top priority, but the work spans the kit, bee/Libero/SmartHLS/FlashPro, ws1/ML, and report/documentation cleanup.
 

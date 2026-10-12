@@ -4,7 +4,7 @@
 
 **Role**: WORKER lane (ML NV vector tracker, learned data-association). Consumes `nv-sensor-sim` datasets; its trained policies feed `polarfire-hybrid-control` (V250 NPU). Work arrives as TVW dispatches — this lane does NOT issue cross-program dispatches. Strategic next-steps (what to build/request next) go UP to a TVW session as a ready-to-paste prompt; only mechanical handoffs (copy a dataset, push a mirror) go sibling-to-sibling.
 
-**State lives elsewhere, not here** (this file is rules only): current status in `~/Desktop/Shared/wiki/projects/odmr-vector-tracking/README.md` (auto-refreshed) and the auto-injected NOW.md; per-increment evidence in `docs/increment*_results.md`.
+**State lives elsewhere, not here** (this file is rules only): current status in `~/shared/wiki/projects/odmr-vector-tracking/README.md` (auto-refreshed) and the auto-injected NOW.md; per-increment evidence in `docs/increment*_results.md`.
 
 ## Incoming dispatches from TVW (manual, file-based)
 TVW queues work as files in `.dispatch/inbox/` (untracked). When Jason says "check your dispatch inbox":

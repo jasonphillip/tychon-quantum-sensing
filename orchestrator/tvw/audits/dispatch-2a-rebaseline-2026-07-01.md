@@ -100,7 +100,7 @@ honest PID, all under identical detector/init/metric conventions.
 - `docs/increment2a_results.md`: retitle (not "beats the classical bar"); corrected
   table = honest-PID + CV-KF + your variants + oracle floor, identical conventions;
   state the Increment-1 retraction explicitly.
-- `~/Desktop/Shared/wiki/projects/odmr-vector-tracking/README.md` (you wrote it today):
+- `~/shared/wiki/projects/odmr-vector-tracking/README.md` (you wrote it today):
   the Increment-1 bullet must state the bar was retracted as a detector artifact; the
   2a bullet must use the corrected claim language; remove the DR sentence.
 - Your session memories recording "beats the classical bar on every metric" — update

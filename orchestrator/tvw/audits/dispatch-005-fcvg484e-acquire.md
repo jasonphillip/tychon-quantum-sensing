@@ -100,7 +100,7 @@ REPORT BACK with:
 CONSTRAINT: this is acquisition only. Do NOT modify any files in
   ~/projects/tychon-verification-workbench/   (TVW is a separate session)
   ~/projects/polarfire-hybrid-control/        (TVW already applied repo corrections)
-  ~/Desktop/Shared/tychon-nv-sim-repos/       (TVW maintains the SBIR shared folder)
+  ~/shared/tychon-nv-sim-repos/       (TVW maintains the SBIR shared folder)
 Only writes go to ~/.corpus/tychon-fpga-mpfs250t-fcvg484e/ and standard
 acquire-corpus / process-corpus state directories.
 ```

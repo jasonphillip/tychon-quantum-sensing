@@ -37,11 +37,11 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 DATASET_H5 = Path("~/projects/odmr-edge-ml/data/production_50k/dataset.h5")
 PID_NPZ = Path("~/projects/odmr-edge-ml/data/production_50k/pid_residuals.npz")
 SWEEP_NPZ = Path(
-    "~/Desktop/Shared/codex-review/ws1_projects/"
+    "~/shared/codex-review/ws1_projects/"
     "tychon-odmr-ml/experiments/heading_sweep_results.npz"
 )
 CKPT_PATH = Path(
-    "~/Desktop/Shared/codex-review/ws1_projects/"
+    "~/shared/codex-review/ws1_projects/"
     "tychon-odmr-ml/experiments/scalar_residual/fcnn/checkpoints/best_model.pt"
 )
 OUT_PNG = Path(__file__).resolve().parent / "figures" / "orientation_binned_comparison.png"

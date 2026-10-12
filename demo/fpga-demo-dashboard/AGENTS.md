@@ -4,7 +4,7 @@
 
 Live demo dashboard for the PolarFire SoC Icicle Kit (MPFS250T + CoreVectorBlox V250).
 Developed on the Spark fleet (originally ws1, decommissioned 2026-07-05; now maintained on ws2); runs **offline** on the Mac for a live demo. Plan/design live in
-`~/Desktop/Shared/fpga_demo/` (06 = implementation plan, 07 = M0 fix investigation).
+`~/shared/fpga_demo/` (06 = implementation plan, 07 = M0 fix investigation).
 
 ## Stack
 - `backend/` Python FastAPI + SSE. `KitLink` wraps `ssh icicle pid_ctl repl`; `FakeKit` is the

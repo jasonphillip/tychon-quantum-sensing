@@ -12,7 +12,7 @@ model-deploy workflow without rediscovering the whole bring-up history?
 - Model provenance: `models/README.md`.
 - External decision ledger: `~/projects/tychon-sbir/docs/03_phase1_planning/decision_log/tychon_phase1_decision_log_v1.3_2026-05-02.md`
   through DLOG-055.
-- Shared wiki project state: `~/Desktop/Shared/wiki/projects/polarfire-hybrid-control/README.md`.
+- Shared wiki project state: `~/shared/wiki/projects/polarfire-hybrid-control/README.md`.
 
 ## Known-Good Programmed Bitstream
 

@@ -318,11 +318,11 @@ Current v3.4 prose (per the audit-006 trigger spec) cites `+0.728 ns` as if it w
 
 > Post-place-and-route worst-slack on the 125 MHz fabric CCC OUT0 user clock (fed by MSS FIC_0_CLK), evaluated at the slow_lv_ht corner against FCVG484 STD-grade Production-silicon switching tables (DS00004248 rev E, Tables 5-30 and 5-46): **+0.634 ns** measured against the current synthesized netlist (sha256 `44917cd6322b57b567e0381e487064d0e97aa6fd399bb2fc91aace4caa0de0e9`, Synplify Pro `W-2025.03M-SP1-1, Build 183R`, Libero 2025.2.0.14, run 2026-05-03). Two prior closure runs against earlier netlists of the same RTL + constraints reported **+0.906 ns** (`r7_s26.rpt`, 2026-04-30) and **+0.728 ns** (`r6_s25.rpt`, 2026-04-29) — the cross-run variability is driven by Synplify Pro's day-to-day non-determinism (audit-006 §2.2 confirmed via re-synth sha256 mismatch), not by placement seed (audit-006 §2.3 confirmed Libero PLACEROUTE is bit-identical for fixed inputs). The binding path is internal to the integrated PID compute datapath (`nv_pid_top` block), as expected. The +0.634 ns current-state slack represents 7.9% of the 8 ns clock period, comfortably within the FCVG484 STD-grade FFABRICAXICLK = 250 MHz fabric-interface ceiling (Table 5-30, line 2179). Phase II RT PolarFire SoC SEE-mitigated synthesis (TMR routing) with seed-controlled placement (Multi-Pass batch mode, deferred research item from audit-006) is the appropriate context to refine this margin to a board-measured timing budget.
 
-**Footnote citation to add to v3.4:** `Audit-006 — FPGA Timing Claim Re-Validation, 2026-05-03, ~/Desktop/Shared/tychon-nv-sim-repos/01_deliverables/audits/audit-006-fpga-timing-claim-revalidation.md`.
+**Footnote citation to add to v3.4:** `Audit-006 — FPGA Timing Claim Re-Validation, 2026-05-03, ~/shared/tychon-nv-sim-repos/01_deliverables/audits/audit-006-fpga-timing-claim-revalidation.md`.
 
 **Section-by-section v3.4 substitution:** any §1.1 / §1.2 / §7.5 / §8.5 / §8.6 / §10.1 reference to "+0.728 ns" should be replaced with **"+0.634 ns" (current closure)**, with the cross-run range "+0.634 to +0.906 ns" cited where it strengthens defensibility (e.g., §7.5 closure summary, §10.1 risk discussion). Keep the "+0.728 ns" historical figure only if the surrounding prose contextualizes it as a 2026-04-29 measurement against a now-superseded netlist.
 
-**Citation footnote to add:** `Audit-006 — FPGA Timing Claim Re-Validation, 2026-05-03, ~/Desktop/Shared/tychon-nv-sim-repos/01_deliverables/audits/audit-006-fpga-timing-claim-revalidation.md`.
+**Citation footnote to add:** `Audit-006 — FPGA Timing Claim Re-Validation, 2026-05-03, ~/shared/tychon-nv-sim-repos/01_deliverables/audits/audit-006-fpga-timing-claim-revalidation.md`.
 
 ---
 

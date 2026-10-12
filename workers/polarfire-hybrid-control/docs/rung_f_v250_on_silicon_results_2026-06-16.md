@@ -120,7 +120,7 @@ The V250 inference path does not use PCIe, so disabling the fabric PCIe node let
 
 ## 5. Access + method reference (this session)
 - **Kit:** `ssh icicle` → `mpfs-icicle-kit.local` = **192.168.x.x**, eth0 MAC `00:04:a3:xx:xx:xx`,
-  kernel `6.18.17-linux4microchip-2026.04.1`. (Creds/serial map: `~/Desktop/Shared/fpga-icicle-access.md`.)
+  kernel `6.18.17-linux4microchip-2026.04.1`. (Creds/serial map: `~/shared/fpga-icicle-access.md`.)
 - **bee serial:** COM8/HSS/MMUART0 = `/dev/ttyS7`; COM10/Linux/MMUART1 = `/dev/ttyS9`; 115200 8N1.
   Read/write with `stty raw 115200 -echo` on a single read-write fd (Windows COM = exclusive-open).
 - **HSS CLI** is reachable post-boot on COM8 (Enter → `>>`): `BOOT RESET HELP VERSION UPTIME DEBUG …`;

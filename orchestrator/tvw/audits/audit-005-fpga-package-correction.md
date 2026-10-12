@@ -27,7 +27,7 @@
    — `SUPERSEDED 2026-05-03` banner added; all 120 pins reclassified `MAP_OK`.
 3. `~/projects/polarfire-hybrid-control/libero/constraints/icicle_reference/README.md`
    — "Package mismatch" decision branch closed (RESOLVED, not open question).
-4. `~/Desktop/Shared/tychon-nv-sim-repos/07_technical_references/tychon_microchip_toolchain_reference_2026-03-20.md`
+4. `~/shared/tychon-nv-sim-repos/07_technical_references/tychon_microchip_toolchain_reference_2026-03-20.md`
    — line 282 corrected with inline `Correction 2026-05-03` marker.
 5. `~/.corpus/tychon-fpga-mpfs250t-fcvg484e/` — new corpus skeleton
    created (`raw/`, `processed/`, `meta/`, `CONTEXT.md`, `manifest.json`).
