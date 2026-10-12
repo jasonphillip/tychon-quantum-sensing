@@ -2,6 +2,8 @@ cff-version: 1.2.0
 message: "If you refer to this work, please cite it as below."
 type: software
 title: "Tychon quantum sensing: an agent-orchestrated NV-magnetometer build"
+version: 1.0.0
+date-released: "2026-10-12"
 abstract: >-
   Software for NV-diamond quantum magnetometers built with coding agents:
   a physics simulator, INT8 edge machine learning, PID plus neural-network
