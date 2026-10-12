@@ -1,6 +1,6 @@
 # Tychon quantum sensing: an agent-orchestrated NV-magnetometer build
 
-[![CPU benchmark](https://github.com/jasonphillip/tychon-quantum-sensing/actions/workflows/bench.yml/badge.svg)](https://github.com/jasonphillip/tychon-quantum-sensing/actions/workflows/bench.yml) [![Tests](https://github.com/jasonphillip/tychon-quantum-sensing/actions/workflows/tests.yml/badge.svg)](https://github.com/jasonphillip/tychon-quantum-sensing/actions/workflows/tests.yml)
+[![CPU benchmark](https://github.com/jasonphillip/tychon-quantum-sensing/actions/workflows/bench.yml/badge.svg)](https://github.com/jasonphillip/tychon-quantum-sensing/actions/workflows/bench.yml) [![Tests](https://github.com/jasonphillip/tychon-quantum-sensing/actions/workflows/tests.yml/badge.svg)](https://github.com/jasonphillip/tychon-quantum-sensing/actions/workflows/tests.yml) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23323384.svg)](https://doi.org/10.5281/zenodo.23323384)
 
 I proposed this work to an AFWERX SBIR Phase I topic on 5 August 2025. The government shutdown that autumn stalled the program, and the decision slipped into 2026. Rather than wait for funding to hire the people on the proposal, I built it myself. The commit history starts in March 2026. The proposal was not selected on 12 May 2026, and I kept building. There was never a contract or government funding. Files that say Phase I, KPP or deliverable follow the plan and report I wrote for it.
 
