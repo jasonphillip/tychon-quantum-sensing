@@ -10,10 +10,6 @@ I proposed this work to an AFWERX SBIR Phase I topic on 5 August 2025. The gover
 
 Since 2024 I've taken three space programs from physics simulation to a small model running on the chip it was built for. The first was a star tracker, then a spectrum monitor, and most recently the controls for a quantum sensor. LLMs wrote the code on the first one, and by the last they were running the FPGA tools too. My job is to direct the work and catch where it fails, and every claim has to trace to a file, a commit or a log.
 
-- Star tracker centroid error 77% lower than with the conventional method
-- Spectrum monitor classifier with 94% fewer parameters, sized for an FPGA
-- Quantum sensor controller from a dev kit to a live demo on the chip in 47 days
-
 [tychonai.com](https://tychonai.com/) · [LinkedIn](https://www.linkedin.com/in/jasonphillip/) · [X](https://x.com/jasonphillip)
 
 I used coding agents to build the software for NV-diamond quantum magnetometers. One orchestrator session handed out the tasks, and each worker repository had its own agent session. The orchestration was human-mediated: until the dispatch tool existed in July 2026, I carried the prompts between the planning chat and the repository sessions by hand. Together they produced a physics simulator, edge ML models, PID plus neural-network control on a PolarFire SoC FPGA, a field-vector tracker and a live demo dashboard, which make up a sensor-to-actuator loop at the small end of physical AI. I planned the work, wrote the specs and reviewed what came back. The agents wrote most of the code.
