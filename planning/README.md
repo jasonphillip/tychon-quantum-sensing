@@ -11,5 +11,5 @@ I'd start with the technology watch and read down the list.
 - [docs/decision-log.md](docs/decision-log.md): dated decisions with their rationale and the alternatives considered
 - [docs/gemini-integration-tracker-2026-04-04.md](docs/gemini-integration-tracker-2026-04-04.md): which Gemini findings led to code changes and which were deferred
 - [docs/repo-migration-record-2026-04-03.md](docs/repo-migration-record-2026-04-03.md): why I archived the first attempts and restarted in clean repositories
-- [excerpts/](excerpts/): four short, verbatim excerpts of the planning chat writing prompts for repo sessions and reviewing their replies
+- [excerpts/](excerpts/): five short excerpts of the planning chat writing prompts for repo sessions and reviewing their replies. Start with [05, research and verification](excerpts/05-research-and-verification.md), the annotated selection. The other four are verbatim with marked cuts
 - [conversations-index.md](conversations-index.md): all 86 project conversations by date, with four that show the orchestration loop best

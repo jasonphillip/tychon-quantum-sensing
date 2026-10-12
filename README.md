@@ -111,6 +111,7 @@ The diagram shows how the parts connect, not one deployed system, so the table b
 |---|---|
 | Understand the project | [docs/case-study.md](docs/case-study.md), 5 minutes, then [the timeline](#timeline) |
 | Inspect the evidence | [orchestrator/INVENTORY.md, section 6](orchestrator/INVENTORY.md#6-weakest-claims--what-would-not-survive-a-sharp-reviewer) for the claims I'd challenge first, and [workers/polarfire-hybrid-control/README.md](workers/polarfire-hybrid-control/README.md) for the hardware results |
+| Inspect decisions and agent contributions | [Three engineering decisions](docs/engineering-decisions.md), then [selected conversation evidence](planning/excerpts/05-research-and-verification.md) |
 | Run the benchmark | `make bench`. What it needs, the numbers to expect and its synthetic-data scope are in [bench/README.md](bench/README.md) |
 
 <details>

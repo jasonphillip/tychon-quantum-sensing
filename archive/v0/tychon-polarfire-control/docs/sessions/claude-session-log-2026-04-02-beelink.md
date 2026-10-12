@@ -1,8 +1,8 @@
 # Claude Code Session Log — 2026-04-02 (Beelink)
 
-> **Note added 2026-10-12.** Verbatim export of the coding-agent session of 2026-04-02 on the Windows build host: the attempt to put the SmartHLS PID block into the Icicle Kit reference design in Libero.
-> Nothing was removed. Machine home paths were shortened to `~` for publication.
-> The readable companion, with a dated note on what later changed, is [`beelink-claude-session-2026-04-02-EST.md`](beelink-claude-session-2026-04-02-EST.md).
+> **Historical reading note (2026-10-12).** Published message export of an April 2, 2026 Claude Code session on the Windows build host. Jason operated the toolchain and requested research, second opinions and handoff records; agents proposed and wrote the technical fixes. Personal paths were normalized and marked redactions appear in the export.
+> **Evidence scope.** Tool calls are abbreviated and referenced screenshots are not embedded. This session did not demonstrate a functioning bus-integrated PID controller. Its ES-silicon compatibility and resource-preservation claims are historical agent assertions, not current verified results.
+> **Read with the corrections.** Start with the [curated exchanges](../../../../../planning/excerpts/05-research-and-verification.md) and the [dated companion](beelink-claude-session-2026-04-02-EST.md). The [April 29 audit](../../../../../planning/excerpts/04-fixing-claims-and-pausing-a-plan.md) records later pruning and trigger-wiring concerns; the [October 9 tests](../../../../../workers/polarfire-hybrid-control/docs/watchdog_fallback_test_plan.md) state the measured fallback behavior and remaining limits.
 
 Session ID: 78595586-ee3b-45dc-8cf4-5a9aee136ed0
 

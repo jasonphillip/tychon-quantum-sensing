@@ -4,6 +4,8 @@ Between March and October 2026 I planned and built five connected repositories f
 
 The scope comes from a technical plan I wrote in August 2025 for an AFWERX SBIR Phase I proposal (FX255-PCS02-0044), which was not selected in May 2026; the work had no contract and no government funding. I turned it into a 90-day build plan in March 2026 and kept building through September. The public history holds about 400 commits between 2026-03-26 and 2026-10-08, counting a week of first attempts in three repos I later archived.
 
+Three decisions with their evidence and attribution: [engineering-decisions.md](engineering-decisions.md). Selected conversation evidence: [research and verification](../planning/excerpts/05-research-and-verification.md).
+
 ## How I ran it
 
 I did the planning in one claude.ai project that held the original technical plan and research reports next to a 90-day execution playbook. The playbook lists four deliverables (a sensor model, a trained INT8 network, an FPGA analysis and a final report) sized for one person with two NVIDIA DGX Spark desktops. Major choices went into a decision log with its date, trigger, rationale and the alternative I turned down. Early on I rejected an AI-generated plan to scaffold all three repos on day one and built them in sequence instead, simulator first, then ML, then FPGA, because each stage's output is the next stage's input.

@@ -1,10 +1,13 @@
-# How the orchestration loop worked, in the chat's own words
+# Conversation evidence: decisions, reviews and corrections
 
-I kept one long-running project chat as the planning layer and ran a separate coding-agent session for each repository. The four conversations here follow the same loop. Claude, in the project chat, turns a plan or a batch of findings into a prompt for one repo session, and I paste the prompt in. The repo session replies, usually with a plan or a test summary, and that reply goes back into the project chat. Claude then judges it, says what is wrong or missing, and writes the next prompt. Each pass ends with tests, a commit or a corrected claim.
+The planning layer was a long-running Claude project chat, with a separate coding-agent session for each repository. Jason carried prompts and replies between them. The selections below show proposed plans, worker feedback and corrections; implementation and measured outcomes are linked separately. A technical passage inside a Jason/User turn may be pasted agent output.
 
-The excerpts are verbatim. Cuts are marked "[…]", and every redaction is marked in brackets.
+Quotes preserve the published wording and spelling. Cuts are marked `[…]`; redactions are marked in brackets. The April 1 and April 29 selections already contain omissions. The archived April 2 message export includes abbreviated tool-call descriptions and references to screenshots that are not embedded.
 
-- 01-build-order-and-interfaces.md: build order for three repos, a snapshot review, and the first planning prompt for repo 2.
-- 02-ou-noise-wiring-prompt-and-review.md: a plan-mode prompt, the session's plan, a flaw in the premise, and the decision.
-- 03-external-review-to-repo-prompts.md: an external review file turned into audit prompts, then fix prompts per repo.
-- 04-fixing-claims-and-pausing-a-plan.md: a tied-off signal found in an FPGA build, a fix prompt, and a session that pushes back.
+Start with [research and verification](05-research-and-verification.md), then [the three engineering decisions](../../docs/engineering-decisions.md). The [full April 2 export](../../archive/v0/tychon-polarfire-control/docs/sessions/claude-session-log-2026-04-02-beelink.md) is a historical appendix; its [companion summary](../../archive/v0/tychon-polarfire-control/docs/sessions/beelink-claude-session-2026-04-02-EST.md) links later corrections.
+
+- [01 — Build order and interfaces](01-build-order-and-interfaces.md): dataset readiness, downstream contract and thread handoff.
+- [02 — OU noise plan and worker feedback](02-ou-noise-wiring-prompt-and-review.md): an agent catches a flaw in the planning model's premise.
+- [03 — External review to repository prompts](03-external-review-to-repo-prompts.md): audit findings become implementation work.
+- [04 — Correct claims and pause a plan](04-fixing-claims-and-pausing-a-plan.md): trigger wiring, pruning concerns and an audit-first instruction.
+- [05 — Research and verification](05-research-and-verification.md): three annotated sequences with attribution and later evidence.

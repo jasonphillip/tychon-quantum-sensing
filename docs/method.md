@@ -51,6 +51,10 @@ NotebookLM citations point into the uploaded source. That let me check an answer
 
 NotebookLM kept my saved notes but not the chat turns, so the questions are gone and no transcript is in this repo.
 
+### When a source-grounded answer was not enough
+
+In the [April 2 exchange](../planning/excerpts/05-research-and-verification.md#1-stop-speculative-patching-and-ask-for-research), the second model explicitly said that its sources did not cover the exact SmartDesign Tcl commands and that parts of its advice came from general knowledge requiring independent verification. The coding agent still treated that answer as actionable guidance. A source-grounded interface therefore did not make every proposed fix source-supported. That gap belongs in the record alongside the request for research and the later verification work.
+
 ### One saved answer
 
 This is one saved answer from the PolarFire notebook, from August or September 2025, trimmed. Judging by the answer, the question was whether an unformatted SD card could be imaged by putting it in the Icicle kit and exposing it to a Windows PC.
