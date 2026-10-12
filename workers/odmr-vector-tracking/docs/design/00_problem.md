@@ -32,13 +32,13 @@ direction is unrecoverable":
   it is the function that justifies a learned block alongside the FPGA PID (the model does
   association/estimation; the PID does the fast loop; a safety layer bounds the model).
 
-## The originating insight (collaborator, anonymized)
+## The originating insight
 
-The framing came from a domain expert: conventionally the per-axis ODMR degeneracy is lifted by a
+The framing is Jason Phillip's own: conventionally the per-axis ODMR degeneracy is lifted by a
 bias field and tracked with lock-in + PID; a large external field can shift the signatures until
 they overlap again, at which point lock-in + PID cannot track the individual signatures and the
 loop breaks; the obvious fix (bigger bias) carries hardware risk and limits conops; **using ML to
-track through the overlaps is not something they had heard others consider.** A literature +
+track through the overlaps was not something he had seen others consider.** A literature +
 prior-art sweep (see `01_research_findings.md`, `../landscape_ip.md`) confirms that read: the
 failure mode is recognized, but every published remedy is classical, and no ML through-crossing
 tracker exists.
