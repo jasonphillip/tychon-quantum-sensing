@@ -14,7 +14,7 @@ Since 2024 I've taken three space programs from physics simulation to a small mo
 
 I used coding agents to build the software for NV-diamond quantum magnetometers. One orchestrator session handed out the tasks, and each worker repository had its own agent session. The orchestration was human-mediated: until the dispatch tool existed in July 2026, I carried the prompts between the planning chat and the repository sessions by hand. Together they produced a physics simulator, edge ML models, PID plus neural-network control on a PolarFire SoC FPGA, a field-vector tracker and a live demo dashboard, which make up a sensor-to-actuator loop at the small end of physical AI. I planned the work, wrote the specs and reviewed what came back. The agents wrote most of the code.
 
-When two local LLM critics checked my technical report, they agreed 10 times out of 10 on the first pass, and I counted that as a failed independence test. A May 2026 paper found the same problem in a bigger panel, where nine frontier LLM judges gave about two independent votes ([arXiv 2605.29800](https://arxiv.org/abs/2605.29800)). This script checks agreement and independence for any verdict CSV. It runs in under a second and doesn't need a model or a GPU.
+When two local LLM critics checked my technical report, they agreed 10 times out of 10 on the first pass, and I counted that as a failed independence test. A May 2026 paper found the same problem in a bigger panel, where nine frontier LLM judges gave about two independent votes ([arXiv 2605.29800](https://arxiv.org/abs/2605.29800)). This script reports agreement, chance-corrected agreement and the effective number of independent votes for any verdict CSV. With a reference answer key (`--truth`) it also correlates the critics' errors, as the paper does. Without one it only measures how often they agree. It runs in under a second and doesn't need a model or a GPU.
 
 ```bash
 python3 orchestrator/tvw/scripts/critic_independence.py orchestrator/tvw/audits/stage-4.7-verdicts.csv
@@ -30,6 +30,15 @@ GitHub Actions runs the tests on CPU runners for every push, and in the 2026-10-
 
 ## Results at a glance
 
+| Result | Limit |
+|---|---|
+| On PolarFire SoC silicon, the watchdog trip time was a median 2.000 ms over 120 trips on 2026-07-01, an 8-hour soak ran 95.7 M steps at 3,319 Hz on 2026-07-02, and after a timeout control passed to plain PID within one update on 2026-10-09 | Paced by software on the SoC's processor, replayed ODMR input, no live diamond |
+| `make bench` on a CPU runner gives 10.53 µT mean field error on 200 synthetic test spectra, against 12.26 µT for a constant baseline and 25.93 µT for a PID proxy | Synthetic data, FP32. The INT8 model on the kit isn't in this number |
+| Two local critics agreed 10 of 10 on the first pass, which I counted as a failed independence test. With a third, stronger critic and all three required to agree, false acceptances fell from 27 to 10 on a 60-claim test set. After a design review I retracted my tracker baseline numbers | The three-critic setup abstained on 58 % of claims |
+
+<details>
+<summary>All results, with limits</summary>
+
 | Part | Result | Limit |
 |---|---|---|
 | FPGA watchdog | Trip time measured on PolarFire SoC silicon on 2026-07-01: median 2.000 ms over 120 trips | One dev kit |
@@ -40,6 +49,8 @@ GitHub Actions runs the tests on CPU runners for every push, and in the 2026-10-
 | Vector tracker | Follows the field vector through spectral line crossings, reliable to about 30 to 40° off the bias axis. With the association losses taken out of training, field-cone error fell in all three seeds I ran. RMSE dropped by 0.46, 0.17 and 0.17 mT and mean angular error by 10.4, 3.7 and 8.6°, with every 95 % interval below zero. Identity switches on the dwell set went down in all three too | FP32 simulation only, with no INT8 export or on-target run. I've since turned the association losses off in the default training config. Apart from these three seeds, the tracker hasn't been retrained with that setting |
 | Simulator | Against four public ODMR datasets, the default simulated lines are 2 to 11 times narrower than measured. When I fit line width and contrast per spectrum, the simulated widths match the measured ones, 2.3 to 7.3 MHz | The fit is in-sample, since the same rows were used to choose the values. With one shared setting the zero-field lines are still narrower than measured |
 | Claim checks | Audits of my technical report on 2026-05-01, up to 114 claims per pass through two local critic models. A manual structure review found three critical errors, all fixed in the corrected report. On a 60-claim test set with 30 deliberately altered claims, I added a stronger local model (DeepSeek-V4-Flash on a second workstation) and required all three critics to agree. False acceptances fell from 27 to 10 | On the first run the two critics agreed 10 times out of 10, which I counted as a failed independence test. The three-critic setup abstained on 58 % of claims, 62.5 % of the claims it accepted weren't supported, and on a rerun of 10 claims the stronger model gave a different verdict on 2 |
+
+</details>
 
 Where I'd push back on these results myself: [the weakest claims](orchestrator/INVENTORY.md#6-weakest-claims--what-would-not-survive-a-sharp-reviewer), my own list. What review caught: [tracker baseline numbers I retracted](docs/case-study.md#what-the-reviews-caught) and [errors in agent output](orchestrator/README.md#checking-the-agents-as-well-as-the-report).
 
@@ -85,7 +96,25 @@ flowchart TD
   O -. hard questions .-> R
 ```
 
+The diagram shows how the parts connect, not one deployed system, so the table below gives the demonstrated state of each part.
+
+| Part | Demonstrated state |
+|---|---|
+| Simulator and synthetic datasets | Implemented. Against four public ODMR datasets the default lines are 2 to 11 times narrower than measured. When I fit line width and contrast per spectrum, the widths match, in-sample only |
+| Scalar ML and FPGA control | Trained and exported to INT8. The model and the control loop run on the PolarFire development kit with replayed ODMR input, paced by software on the SoC's processor. No live diamond sensor in the loop |
+| Vector tracker | FP32 simulation only. Not connected to the FPGA loop, and no INT8 export |
+| Claim checker | An experimental review aid. On a 60-claim test set the three-critic setup abstained on 58 % of claims, and 62.5 % of the claims it accepted weren't supported |
+
 ## Where to look first
+
+| To | Open |
+|---|---|
+| Understand the project | [docs/case-study.md](docs/case-study.md), 5 minutes, then [the timeline](#timeline) |
+| Inspect the evidence | [orchestrator/INVENTORY.md, section 6](orchestrator/INVENTORY.md#6-weakest-claims--what-would-not-survive-a-sharp-reviewer) for the claims I'd challenge first, and [workers/polarfire-hybrid-control/README.md](workers/polarfire-hybrid-control/README.md) for the hardware results |
+| Run the benchmark | `make bench`. What it needs, the numbers to expect and its synthetic-data scope are in [bench/README.md](bench/README.md) |
+
+<details>
+<summary>Full index</summary>
 
 | If you have | Open |
 |---|---|
@@ -107,6 +136,8 @@ flowchart TD
 | a terminal and 10 minutes | [demo/fpga-demo-dashboard/run_demo.sh](demo/fpga-demo-dashboard/run_demo.sh): the demo dashboard in DRY-RUN mode, its default, which drives a software model of the kit, so no board is needed. Needs Python 3 and Node.js with npm; the first run builds a virtual environment and the frontend, then serves http://localhost:8077 |
 | the plan and its decisions | [planning/docs/90-day-execution-playbook-v4.md](planning/docs/90-day-execution-playbook-v4.md) and [planning/docs/decision-log.md](planning/docs/decision-log.md) |
 | the agents' own instructions | [orchestrator/AGENTS.md](orchestrator/AGENTS.md) and `workers/*/AGENTS.md` |
+
+</details>
 
 ## How the agents were used
 
