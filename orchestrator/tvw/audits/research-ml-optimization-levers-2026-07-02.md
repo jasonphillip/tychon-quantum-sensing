@@ -4,7 +4,7 @@
 MOT/association; deployable sequence models + training knobs; NV/ODMR domain 2024–26),
 synthesized against the repo's actual configs (`train_increment2a.yaml`, `model.yaml`,
 `docs/increment2a_results.md` at 60c4491). All items carry citations in the agent reports;
-key ones repeated here. Evidence preserved: `research-2026-07-02/wang_suppl.{pdf,txt}`.
+key ones repeated here. Evidence: Wang et al., doi:10.1063/5.0310526, supplementary material (held privately, not in this repository).
 **Consumption:** Tier 0 is a polarfire-lane dispatch (safe during the soak — Beelink-only);
 Tiers 1–2 feed the NEXT tracking dispatch (post-B3 report); Tier 3 feeds Increment 3;
 Tier 5 feeds the next nv-sim lineage; Tier 4 items are doc/corpus chores TVW can drive.
@@ -124,8 +124,8 @@ odmr-edge-ml compile failures — the test settles it.)
 - Corpus ingestion list (odmr-pnt-nv-docs): the CR set (1505.02253, 2301.09666,
   2207.13899, Lazda PRB 103,134104), Haim 2409.12820 + 2502.06070, Lönard 2504.20750,
   Espinós 2512.13835, Meneses 2502.14683, Stone 2405.18648, Yamauchi 2605.23455,
-  Mongelos 2602.12090, US10921394B2, PRA 110,052417, Wang abstract+supplement (files in
-  `research-2026-07-02/`).
+  Mongelos 2602.12090, US10921394B2, PRA 110,052417, Wang abstract+supplement (doi:10.1063/5.0310526; held
+  privately, not in this repository).
 
 ## Tier 5 — simulator/physics features (next nv-sim lineage)
 

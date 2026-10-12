@@ -18,7 +18,7 @@ pandoc "$SRC" -o "$OUT_DIR/${BASE}.docx" \
   "${REF_ARG[@]}" \
   --from=markdown+yaml_metadata_block+pipe_tables+grid_tables+citations+raw_html \
   --to=docx --toc --toc-depth=3 --number-sections \
-  --metadata title="Tychon AI — SBIR Phase I Final Technical Report" \
+  --metadata title="Tychon AI — NV Sensor Technical Report (SBIR Phase I final-report format; proposal not selected)" \
   --metadata author="Jason Phillip" \
   --metadata date="$(date -u +%Y-%m-%d)"
 
