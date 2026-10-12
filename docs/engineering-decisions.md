@@ -10,7 +10,7 @@ This project used coding agents for implementation, review and experiment execut
 
 **Agent contribution.** The design-review record reports three audit agents, two independently reproducing the key defect. The correction was dispatched to the tracker repository's agent session, and the implementation commit contains the detector, baseline, metric and test changes. That commit carries Jason's git identity and no agent co-author trailer, so the code's authorship rests on the dispatch record, not on the commit metadata.
 
-**Human contribution documented.** The project's case study records Jason commissioning the review and retracting the invalid headline. A private session record, checked on 2026-10-12 and not published, shows his request on 2026-07-01 as a broad instruction to critique all aspects of the tracker work and look for mistakes. The review that found the defect and the dispatch that withdrew the headline are agent-written. The public documents do not provide his firsthand reasoning for the retraction.
+**Human contribution documented.** The project's case study records Jason commissioning the review and retracting the invalid headline. The public documents do not provide his complete original instruction or his firsthand reasoning for that choice.
 
 **Measured outcome.** On the corrected 16-sequence sanity set, the Kalman baseline had 0/16 lock losses, 1.000 post-crossing association and 0.978 in-collision association. The corrected PID baseline lost lock on 11/16. The learned gated tracker also had 0/16 losses and 1.000 post-crossing association from cold acquisition, but its in-collision association was 0.781. The table states the classical ground-truth initialization versus learned cold acquisition.
 
@@ -26,7 +26,7 @@ Evidence: [review](../orchestrator/tvw/audits/design-review-odmr-vector-2026-07-
 
 **Agent contribution.** The firmware, test tooling and evidence-capture changes are in a commit co-authored by Claude. The shared trip-start helper and a host unit test are present. The board evidence includes commands, binary hashes, control logs and the corrected raw-check summaries.
 
-**Human contribution documented.** The report explicitly attributes the software choice to Jason. A private session record, checked on 2026-10-12 and not published, shows him selecting the software fix from the options the agent listed, without a stated reason. No published excerpt shows his comparison of a software rule with a sticky hardware trip bit.
+**Human contribution documented.** The report explicitly attributes the software choice to Jason. The reviewed public conversation excerpts do not show his original comparison of software intervention with a sticky hardware trip bit.
 
 **Measured outcome.** With the correction, the short-timeout case fell back 20/20 times, with 908–998 recorded PID-only updates. After a one-second process pause, 10/10 cases were PID-only after resume; nine had a forced start after resume and one was already PID-only before the pause.
 
@@ -42,7 +42,7 @@ Evidence: [test plan and before/after results](../workers/polarfire-hybrid-contr
 
 **Agent contribution.** The records contain the experiment driver, training commands, per-run results and paired comparisons. Three new runs used 7.98 GPU-hours against a ten-hour cap. The later configuration-change commit is co-authored by Claude.
 
-**Human contribution documented.** Adoption is visible in the configuration and commit. A private session record, checked on 2026-10-12 and not published, shows the ablation and the three-seed rerun proposed within the agent-run planning workflow, and Jason approving the default change on 2026-10-10 by accepting a plan whose first item turned the association losses off. The public logs do not record who chose the acceptance criteria. His own reasons require his firsthand account.
+**Human contribution documented.** Adoption is visible in the configuration and commit. These reviewed public logs do not establish who first requested the ablation, chose its acceptance criteria or approved the final default change. Those decisions require the original instruction or Jason's firsthand account.
 
 **Measured outcome.** In each within-seed comparison, field-cone RMSE fell: −0.456, −0.167 and −0.172 mT. Mean angular error fell by 10.4°, 3.7° and 8.6°. All six corresponding 95% sequence-bootstrap intervals were below zero. Dwell identity-switch rates also fell in all three seeds.
 
