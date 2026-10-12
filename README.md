@@ -113,6 +113,7 @@ The diagram shows how the parts connect, not one deployed system, so the table b
 | Inspect the evidence | [orchestrator/INVENTORY.md, section 6](orchestrator/INVENTORY.md#6-weakest-claims--what-would-not-survive-a-sharp-reviewer) for the claims I'd challenge first, and [workers/polarfire-hybrid-control/README.md](workers/polarfire-hybrid-control/README.md) for the hardware results |
 | Inspect decisions and agent contributions | [Three engineering decisions](docs/engineering-decisions.md), then [selected conversation evidence](planning/excerpts/05-research-and-verification.md) |
 | Run the benchmark | `make bench`. What it needs, the numbers to expect and its synthetic-data scope are in [bench/README.md](bench/README.md) |
+| Take your own model to the V250 | [docs/model-to-v250.md](docs/model-to-v250.md): from a TFLite file to a running inference on the kit, every command cited to a file |
 
 <details>
 <summary>Full index</summary>
