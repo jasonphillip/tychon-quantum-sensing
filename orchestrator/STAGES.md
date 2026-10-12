@@ -23,7 +23,7 @@ Each stage produces a working artifact and a verifiable stop-gate.
 | 6 | multi-agent-chatbot fork | "200 MHz timing claim?" returns grounded answer citing both corpora + a code symbol | pending |
 | 7 | txt2kg claim graph (optional) | .graphml exported; orphan-claim count documented | pending |
 | 8 | nemo-automodel fine-tune | beats base on held-out Tychon Q&A; checkpoint reusable as NIM service | pending |
-| 9 | publish-repo Dist A scrub | zero matches for `FX255-PCS02-0044` + sponsor names; metadata stripped | pending |
+| 9 | publish-repo scrub | sponsor and customer names, a named advisor, a copied supplement, personal paths and a vendor e-mail: zero in tree and history (scan 2026-10-12, `RESULT: PASS`); proposal number kept by decision | done 2026-10-12 |
 
 Natural quitting points: after Stage 1 (searchable docs), Stage 4 (audited punch list), Stage 6 (chat workbench), or Stage 8 (Tychon-owned model).
 
