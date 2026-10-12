@@ -1,6 +1,8 @@
 # Tychon NV stack: an agent-orchestrated quantum-sensing build
 
-[![CPU benchmark](https://github.com/jasonphillip/tychon-nv-stack/actions/workflows/bench.yml/badge.svg)](https://github.com/jasonphillip/tychon-nv-stack/actions/workflows/bench.yml) [![Tests](https://github.com/jasonphillip/tychon-nv-stack/actions/workflows/tests.yml/badge.svg)](https://github.com/jasonphillip/tychon-nv-stack/actions/workflows/tests.yml)
+[![CPU benchmark](https://github.com/jasonphillip/tychon-quantum-sensing/actions/workflows/bench.yml/badge.svg)](https://github.com/jasonphillip/tychon-quantum-sensing/actions/workflows/bench.yml) [![Tests](https://github.com/jasonphillip/tychon-quantum-sensing/actions/workflows/tests.yml/badge.svg)](https://github.com/jasonphillip/tychon-quantum-sensing/actions/workflows/tests.yml)
+
+I proposed this work to an AFWERX SBIR Phase I topic on 5 August 2025. The government shutdown that autumn stalled the program, and the decision slipped into 2026. Rather than wait for funding to hire the people on the proposal, I built it myself. The commit history starts in March 2026. The proposal was not selected on 12 May 2026, and I kept building. There was never a contract or government funding. Files that say Phase I, KPP or deliverable follow the plan and report I wrote for it.
 
 I used coding agents to build the software for NV-diamond quantum magnetometers. One orchestrator session handed out the tasks, and each worker repository had its own agent session. The orchestration was human-mediated: until the dispatch tool existed in July 2026, I carried the prompts between the planning chat and the repository sessions by hand. Together they produced a physics simulator, edge ML models, PID plus neural-network control on a PolarFire SoC FPGA, a field-vector tracker and a live demo dashboard, which make up a sensor-to-actuator loop at the small end of physical AI. I planned the work, wrote the specs and reviewed what came back. The agents wrote most of the code.
 
@@ -109,11 +111,13 @@ By rule, the orchestrator session sends a written dispatch with a goal and an ac
 | When | What |
 |---|---|
 | 2025-08 | First technical plan for ML-on-FPGA NV-diamond magnetometry, with research merged across two models |
+| 2025-08-05 | Proposal FX255-PCS02-0044 submitted to AFWERX SBIR Phase I topic AFX25S-PCS02 |
 | 2026-03-04 | Planning starts in a claude.ai project: technology watch, then the 90-day playbook and a dated decision log |
 | 2026-03-26 | First attempts in three repositories ([archive/v0](archive/v0)) |
 | 2026-04-01 to 04-04 | Gemini Deep Think reviews the designs; findings become per-repository prompts |
 | 2026-04-03 | Restart in clean repositories: simulator, edge ML, FPGA control |
 | 2026-05-01 | Orchestrator repository starts with a full claim audit of the technical report |
+| 2026-05-12 | Proposal not selected: no contract, no government funding; building continued |
 | 2026-06 | PolarFire SoC silicon brought up on the dev kit; demo dashboard built for a live demo |
 | 2026-06-29 | The orchestrator starts a fourth worker, the vector tracker |
 | 2026-07 | Busiest month: dispatches, retraining rounds and watchdog measurements on silicon |

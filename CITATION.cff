@@ -11,7 +11,7 @@ authors:
   - family-names: Phillip
     given-names: Jason
     website: "https://tychonai.com/"
-repository-code: "https://github.com/jasonphillip/tychon-nv-stack"
+repository-code: "https://github.com/jasonphillip/tychon-quantum-sensing"
 keywords:
   - quantum sensing
   - NV diamond

@@ -2,7 +2,7 @@
 
 Between March and October 2026 I planned and built five connected repositories for AI-assisted control of NV-diamond quantum magnetometers: a physics simulator, an edge-ML training and export pipeline, a PID plus neural-network controller on production PolarFire SoC silicon (paced by software on the SoC's processor, with replayed ODMR input), a learned vector tracker (FP32 simulation only), and a workbench that checks written claims against evidence. Claude Code and Codex wrote the code from written specs and data contracts. I ran the planning, the cross-model reviews and the claim checks, and I reviewed what came back.
 
-The scope comes from a technical plan I wrote in August 2025. I turned it into a 90-day build plan in March 2026 and kept building through September. The public history holds about 400 commits between 2026-03-26 and 2026-10-08, counting a week of first attempts in three repos I later archived.
+The scope comes from a technical plan I wrote in August 2025 for an AFWERX SBIR Phase I proposal (FX255-PCS02-0044), which was not selected in May 2026; the work had no contract and no government funding. I turned it into a 90-day build plan in March 2026 and kept building through September. The public history holds about 400 commits between 2026-03-26 and 2026-10-08, counting a week of first attempts in three repos I later archived.
 
 ## How I ran it
 

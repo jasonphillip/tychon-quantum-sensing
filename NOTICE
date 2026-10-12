@@ -56,3 +56,5 @@ workers/polarfire-hybrid-control/libero/reports/MPFS_ICICLE_KIT_BASE_DESIGN_timi
 workers/polarfire-hybrid-control/libero/reports/MPFS_ICICLE_KIT_BASE_DESIGN_timing_violations_max_r1_s1.rpt
 workers/polarfire-hybrid-control/libero/reports/MPFS_ICICLE_KIT_BASE_DESIGN_timing_violations_min_r1_s1.rpt
 workers/polarfire-hybrid-control/libero/reports/place_and_route_jitter_report.txt
+
+Data. The 25 CSV files in workers/nv-sensor-sim/data/experimental/zenodo_odmr/, and the identical copies in archive/v0/tychon-nv-sim/data/experimental/zenodo_odmr/, are extracted from Zenodo record 10.5281/zenodo.7233869 (Sengottuvel, Mrózek, Sawczak et al., Sci Rep 12:17997, 2022). The provenance file records that record as CC-BY-4.0. These files are not covered by the Apache-2.0 license. See workers/nv-sensor-sim/data/experimental/DATA-PROVENANCE.md.
