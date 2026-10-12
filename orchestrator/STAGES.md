@@ -1,6 +1,6 @@
 # TVW Stage Roadmap
 
-> **Active plan (2026-10-09):** `tvw/plans/portfolio-review-plan-2026-10-09.md` — public portfolio monorepo; outside-review fixes. A new thread starts there.
+> **Active plan (2026-10-12):** pre-publication fixes before the public switch (plan files are kept outside the published tree). Previous: outside-review fixes, 2026-10-09.
 
 
 Each stage produces a working artifact and a verifiable stop-gate.
