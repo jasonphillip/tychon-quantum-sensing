@@ -15,4 +15,4 @@ Orchestration session for the Tychon SBIR Phase I deliverables and the active fo
 - **Current stage and stop-gates:** see `STAGES.md`.
 - **Reusable infrastructure (libs + skills):** lives in `~/projects/skills/`, not duplicated here.
 
-The audit pipeline's LLM critics resolve only to local endpoints (`localhost` / `spark*` / `192.168.*`) under the project's CUI risk posture. The base Claude model running TVW itself is cloud-hosted — that's the harness, not a critic.
+The audit pipeline's LLM critics resolve only to local endpoints (`localhost` / `spark*` / `192.168.*`) under the project's data-handling rule. The base Claude model running TVW itself is cloud-hosted — that's the harness, not a critic.
