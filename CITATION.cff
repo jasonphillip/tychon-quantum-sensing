@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you refer to this work, please cite it as below."
 type: software
-title: "Tychon NV stack: an agent-orchestrated quantum-sensing build"
+title: "Tychon quantum sensing: an agent-orchestrated NV-magnetometer build"
 abstract: >-
   Software for NV-diamond quantum magnetometers built with coding agents:
   a physics simulator, INT8 edge machine learning, PID plus neural-network

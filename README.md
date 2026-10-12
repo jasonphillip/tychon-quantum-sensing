@@ -1,4 +1,4 @@
-# Tychon NV stack: an agent-orchestrated quantum-sensing build
+# Tychon quantum sensing: an agent-orchestrated NV-magnetometer build
 
 [![CPU benchmark](https://github.com/jasonphillip/tychon-quantum-sensing/actions/workflows/bench.yml/badge.svg)](https://github.com/jasonphillip/tychon-quantum-sensing/actions/workflows/bench.yml) [![Tests](https://github.com/jasonphillip/tychon-quantum-sensing/actions/workflows/tests.yml/badge.svg)](https://github.com/jasonphillip/tychon-quantum-sensing/actions/workflows/tests.yml)
 
