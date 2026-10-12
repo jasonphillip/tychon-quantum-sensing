@@ -53,6 +53,10 @@ Where I'd push back on these results myself: [the weakest claims](orchestrator/I
 
 *Measured on hardware [HW]: 120 clear-to-trip events on the dev kit on 2026-07-01, from `workers/polarfire-hybrid-control/libero/reports/2026-07-01-watchdog-trip/watchdog_trip_run1.log`. The dashboard below is the software model.*
 
+![The PolarFire SoC Icicle Kit in its enclosure, with the MPFS250T under the centre of the board](docs/media/icicle-kit-in-enclosure.jpg)
+
+*The board every [HW] number was measured on: a Microchip PolarFire SoC Icicle Kit (MPFS250T) in a vented enclosure, powered and on the bench network.*
+
 ![The FPGA demo dashboard in dry-run mode: a live trace of the final actuator value and the AI correction through three scripted scenarios, a clamp trip, a watchdog fallback and a clean run](docs/media/dashboard-demo.gif)
 
 This recording is the dashboard in dry-run mode. Every value in it, including the PASS and LIVE badges, comes from the dashboard's software model of the kit, not from hardware. In live mode the same screens read the kit over SSH. Source: [demo/fpga-demo-dashboard](demo/fpga-demo-dashboard/).
