@@ -14,6 +14,7 @@ Supports three noise modes:
 
 from __future__ import annotations
 
+import argparse
 import dataclasses
 import datetime
 import hashlib
@@ -23,6 +24,7 @@ import subprocess
 from pathlib import Path
 
 import numpy as np
+import yaml
 
 from nv_sensor_sim.adapters.simos_adapter import SimOSAdapter
 from nv_sensor_sim.config import FieldSampling, NoiseMode, OUNoiseConfig, SimulationConfig
@@ -761,5 +763,66 @@ def generate_dataset(
     return output_path
 
 
+_GENERATOR_KEYS = frozenset(inspect.signature(generate_dataset).parameters) - {
+    "output_dir", "ou_noise_config",
+}
+# Match the range conversion used by scripts/generate_vector_dataset.py.
+_FLOAT_RANGE_KEYS = frozenset({
+    "freq_range_Hz", "p1_range_ppm", "temp_range_K", "b1_gradient_range",
+    "b_perp_range_T", "bz_range_T", "b_mag_range_T", "bias_B0_range_T",
+    "test_p1_range_ppm", "test_temp_range_K", "test_b1_gradient_range",
+    "test_b_perp_range_T", "bias_direction_uvw",
+})
+
+
+def _load_batch_config(path: Path) -> dict:
+    """Map the existing batch YAML schema to generate_dataset arguments."""
+    cfg = yaml.safe_load(path.read_text())
+    if not isinstance(cfg, dict):
+        raise ValueError("Batch config must be a YAML mapping")
+    unknown = set(cfg) - _GENERATOR_KEYS - {"ou_noise", "include_nitrogen", "use_optics"}
+    if unknown:
+        raise ValueError(f"Unsupported batch config keys: {sorted(unknown)}")
+
+    # These are fixed in generate_dataset's SimulationConfig construction.
+    for key in ("include_nitrogen", "use_optics"):
+        if key in cfg and cfg.pop(key) is not False:
+            raise ValueError(f"{key} must be false for batch generation")
+
+    if "ou_noise" in cfg:
+        noise = cfg.pop("ou_noise")
+        if not isinstance(noise, dict):
+            raise ValueError("ou_noise must be a YAML mapping")
+        fields = {field.name for field in dataclasses.fields(OUNoiseConfig)}
+        unknown_noise = set(noise) - fields
+        if unknown_noise:
+            raise ValueError(f"Unsupported ou_noise keys: {sorted(unknown_noise)}")
+        for key, value in noise.items():
+            if key.startswith("enable_"):
+                if not isinstance(value, bool):
+                    raise ValueError(f"ou_noise.{key} must be boolean")
+            else:
+                noise[key] = float(value)
+        cfg["ou_noise_config"] = OUNoiseConfig(**noise)
+
+    for key in _FLOAT_RANGE_KEYS & cfg.keys():
+        if cfg[key] is not None:
+            cfg[key] = tuple(float(value) for value in cfg[key])
+    return cfg
+
+
+def main(argv: list[str] | None = None) -> None:
+    parser = argparse.ArgumentParser(description="Generate a batch ODMR dataset.")
+    parser.add_argument("--config", type=Path, help="Batch dataset YAML config")
+    parser.add_argument("--output-dir", type=Path, help="Destination for dataset and manifest")
+    args = parser.parse_args(argv)
+    if args.config is None and args.output_dir is None:
+        generate_dataset("./data/synthetic_v1")
+        return
+    if args.config is None or args.output_dir is None:
+        parser.error("--config and --output-dir must be supplied together")
+    generate_dataset(output_dir=str(args.output_dir), **_load_batch_config(args.config))
+
+
 if __name__ == "__main__":
-    generate_dataset("./data/synthetic_v1")
+    main()
