@@ -3,6 +3,8 @@
 **Learned tracking of NV-diamond ODMR resonances through frequency-space crossings — to extend
 vector-magnetometer dynamic range without a larger bias field.**
 
+Part of [Tychon quantum sensing](../../README.md), as the fourth worker (started 2026-06-29). It trains on time-series datasets from [`nv-sensor-sim`](../nv-sensor-sim/README.md) ([synthetic-data walkthrough](../../docs/synthetic-data.md)) and produces FP32 PyTorch checkpoints and evaluation reports in [`docs/`](docs/). It works in simulation only and is not connected to the FPGA loop.
+
 ## The problem in one paragraph
 
 A nitrogen-vacancy (NV) ensemble magnetometer reads a full 3-component **B** by resolving the
@@ -30,9 +32,21 @@ the model does association/estimation, the PID does the fast loop, a safety laye
 | `polarfire-hybrid-control` | `vnnx_compile -c V250`; PID + NPU hybrid on MPFS250T silicon. This tracker has not been compiled or run there |
 | `odmr-edge-ml` | sibling ML repo — the static scalar-residual regressor |
 
+## Quick start
+
+Run from `workers/odmr-vector-tracking`, with Python 3.11 or later:
+
+```bash
+cd workers/odmr-vector-tracking
+make install      # pip install -e ".[dev]"
+make test-unit
+```
+
+Training and evaluation scripts in `experiments/` read sequence datasets from `data/<name>` (gitignored). Generate them with the simulator's `scripts/generate_sequence_dataset.py` and the `sequence_*.yaml` configs.
+
 ## Status
 
-Inception (2026-06-29). Research-grade; the founding literature + prior-art sweep and the build
+Started 2026-06-29. Research-grade; the founding literature + prior-art sweep and the build
 plan are in [`docs/`](docs/). Honest ceilings: ESLAC ~51 mT, GSLAC ~102.4 mT — target regime
 ~few mT → ~50 mT.
 
