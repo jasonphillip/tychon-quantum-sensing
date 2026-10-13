@@ -6,7 +6,7 @@ Hybrid PID + neural network control system for RT PolarFire SoC. SmartHLS C++ im
 
 | | |
 |---|---|
-| Purpose | Run a PID (proportional-integral-derivative) controller with a neural-network correction on a PolarFire SoC Icicle Kit, with a fabric watchdog that falls back to plain PID |
+| Purpose | Run a PID (proportional-integral-derivative) controller with a neural-network correction on a PolarFire SoC Icicle Kit, with a fabric watchdog whose timeout triggers a software-mediated fallback to plain PID. The fallback runs in the controller software, so a frozen processor cannot perform it until it resumes |
 | Takes in | The INT8 TFLite model from [`odmr-edge-ml`](../odmr-edge-ml/README.md), compiled here for the CoreVectorBlox V250 neural-network engine, and replayed rows taken from held-out synthetic test spectra ([firmware notes](firmware/linux/README.md)) |
 | Produces | The Libero FPGA design and SmartHLS PID, kit software in `firmware/`, and dated measurement reports in `docs/` and `libero/reports/` |
 | Status | Measured on one kit: watchdog trip time (2026-07-01), an 8-hour soak (2026-07-02) and fallback to plain PID (2026-10-09), listed in What This Does below. The loop is paced by software on the SoC's processor, not in the fabric. Its input is replayed, with no live diamond sensor. The vector tracker is not in this loop |
