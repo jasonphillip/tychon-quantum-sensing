@@ -1,0 +1,32 @@
+# CPU quick-start example of the batch_stochastic.yaml dataset family.
+# Run: python -m nv_sensor_sim.pipelines.batch_generate --config configs/quickstart_tiny.yaml --output-dir /tmp/nv-sensor-sim-tiny
+noise_mode: stochastic
+n_freq_points: 2000
+freq_range_Hz: [2.82e9, 2.92e9]
+p1_range_ppm: [1.0, 300.0]
+b1_gradient_range: [0.05, 0.30]
+b_perp_range_T: [0.0, 50.0e-6]
+bz_range_T: [0.005, 0.015]
+field_sampling: spherical
+b_mag_range_T: [20.0e-6, 70.0e-6]
+ou_noise:
+  theta_T: 1.0e-3
+  mu_T: 293.15
+  sigma_T: 0.05
+  theta_B1: 10.0
+  mu_B1: 1.0
+  sigma_B1: 0.006
+  trajectory_dt_s: 1.0
+  enable_thermal_noise: true
+  enable_mw_noise: true
+  alpha_B1: -0.0035
+  T_mean_C: 20.0
+  delta_T_orb_C: 15.0
+  tau_orb_s: 5400.0
+  B1_nominal: 1.0
+n_train: 2
+n_val: 1
+n_test: 1
+master_seed: 42
+include_nitrogen: false
+use_optics: false
