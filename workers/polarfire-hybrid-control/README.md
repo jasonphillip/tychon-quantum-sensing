@@ -1,6 +1,16 @@
 # PolarFire Hybrid Control
 
-Hybrid PID + neural network control system for RT PolarFire SoC. SmartHLS C++ implementation with bounded safety architecture and CoreVectorBlox integration.
+Hybrid PID + neural network control system for RT PolarFire SoC. SmartHLS C++ implementation with bounded safety architecture and CoreVectorBlox integration. Part of [Tychon quantum sensing](../../README.md).
+
+## Where this fits
+
+| | |
+|---|---|
+| Purpose | Run a PID (proportional-integral-derivative) controller with a neural-network correction on a PolarFire SoC Icicle Kit, with a fabric watchdog whose timeout triggers a software-mediated fallback to plain PID. The fallback runs in the controller software, so a frozen processor cannot perform it until it resumes |
+| Takes in | The INT8 TFLite model from [`odmr-edge-ml`](../odmr-edge-ml/README.md), compiled here for the CoreVectorBlox V250 neural-network engine, and replayed rows taken from held-out synthetic test spectra ([firmware notes](firmware/linux/README.md)) |
+| Produces | The Libero FPGA design and SmartHLS PID, kit software in `firmware/`, and dated measurement reports in `docs/` and `libero/reports/` |
+| Status | Measured on one kit: watchdog trip time (2026-07-01), an 8-hour soak (2026-07-02) and fallback to plain PID (2026-10-09), listed in What This Does below. The loop is paced by software on the SoC's processor, not in the fabric. Its input is replayed, with no live diamond sensor. The vector tracker is not in this loop |
+| Try it without a kit | `python3 tools/rung_g_replay.py --dry-run --out /tmp/rung_g_dry` writes replay telemetry from a software model, or run the [demo dashboard](../../demo/fpga-demo-dashboard/README.md) in dry-run mode. Building needs Libero SoC, SmartHLS and the VectorBlox SDK on an x86 host; running needs the kit |
 
 ## What This Does
 
@@ -88,6 +98,12 @@ source libero/scripts/04_synth_pnr.tcl
   measurement is still open.)
 
 ## Current Hardware State
+
+![Histogram of 120 watchdog trip times measured on the MPFS250T silicon: median 2.000 ms, range 1.978 to 2.032 ms](docs/figures/watchdog_trip_hist.png)
+
+*Measured on hardware [HW]: 120 clear-to-trip events on the dev kit on 2026-07-01, from `libero/reports/2026-07-01-watchdog-trip/watchdog_trip_run1.log`.*
+
+Note added 2026-10-13: the status anchor below dates from 2026-06-21. Later measurements (watchdog trip time 2026-07-01, soak 2026-07-02, fallback 2026-10-09) are listed in What This Does above.
 
 As of 2026-06-21, the dashboard remediation pass is the current status anchor:
 `docs/remediation_status_2026-06-21.md` and `docs/remediation_progress_2026-06-21.md`.
@@ -192,7 +208,7 @@ These mechanisms make the AI feedforward path **sector-bounded by design within 
 
 ## Power Analysis
 
-SmartPower synthesis reports are generated on the Beelink build host and archived on the NAS (`/mnt/nas/projects/polarfire-hybrid-control/reports/`). The numbers below are **default-toggle estimates** (activity-factor heuristic, no VCD): preliminary until workload-driven SmartPower is run with a representative input trace.
+SmartPower synthesis reports are generated on the Beelink build host and archived outside this repository. The numbers below are **default-toggle estimates** (activity-factor heuristic, no VCD): preliminary until workload-driven SmartPower is run with a representative input trace.
 
 | Component | Power (SmartPower, two-slot r12_s31 netlist, 2026-07-01) |
 |-----------|-------|
