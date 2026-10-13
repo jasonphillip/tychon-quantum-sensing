@@ -109,6 +109,8 @@ for entry in "${REPOS[@]}"; do
                        awk -F/ -v b="$b" '$NF==b {print $1}' | sort -u)
         # 2026-08-19 fix: the old any-remote gate (--not --remotes) read 0 once Phase 2
         # auto-pushed nas/ws2, hiding GitHub-unpushed branches. Check every remote.
+        # Commit count of the branch, used when a remote lacks the branch entirely.
+        unpushed_count=$(git rev-list --count "$b" 2>/dev/null || echo 0)
         if :; then
             # For each configured remote, check if branch is up-to-date there
             for r in $(git remote 2>/dev/null); do
