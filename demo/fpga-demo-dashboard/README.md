@@ -3,9 +3,18 @@
 Live demo control panel for the **PolarFire SoC Icicle Kit** (MPFS250T + CoreVectorBlox V250).
 Runs fully offline on a Mac/Linux laptop; talks to the kit over SSH.
 
+Part of [Tychon quantum sensing](../../README.md). It shows the FPGA control loop from
+[`polarfire-hybrid-control`](../../workers/polarfire-hybrid-control/README.md). The default mode is
+**DRY-RUN**: every value, including the PASS and LIVE badges, then comes from a software model of
+the kit, not from hardware. LIVE mode reads the kit, whose input is replayed synthetic spectra, not
+a live diamond sensor.
+
 The design notes and implementation plan behind this dashboard are kept in a private planning folder and are not part of this repository.
 
 ## Quick start
+Needs Python 3 and Node.js with npm. The first run builds a virtual environment and the frontend.
+`run_demo.sh` finds its own folder, so `demo/fpga-demo-dashboard/run_demo.sh` also works from the
+repository root.
 ```bash
 ./run_demo.sh                                                # http://localhost:8077
 KIT_BITSTREAM=idfix2 ALLOW_IDFIX2_M0=1 ./run_demo.sh         # LIVE idfix2 actuator path
@@ -39,7 +48,9 @@ Open http://localhost:8077.
 cd frontend && npm run dev      # Vite :5173, proxies /api -> :8077
 PYTHONPATH=. .venv/bin/uvicorn backend.main:app --port 8077
 ```
-Regenerate Tier-3 snapshots (needs h5py + the odmr eval JSONs): `python /tmp/extract_context.py`.
+The Tier-3 snapshots in `backend/data/` were made by a one-off script (`/tmp/extract_context.py`,
+needs h5py and the odmr eval JSONs) that is not in this repository, so they cannot be regenerated
+from it.
 
 ## Offline checklist (before the demo)
 - [ ] `./run_demo.sh` launches with **Wi-Fi OFF**
