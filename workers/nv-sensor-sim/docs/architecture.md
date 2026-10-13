@@ -29,6 +29,8 @@ SimOS NVSystem provides the 7-level photophysics model (GS triplet + ES triplet 
 
 Ornstein-Uhlenbeck stochastic processes for T(t) and B1(t) injected at the Hamiltonian level via SimOS StochasticLiouvilleParameters — parameter perturbation upstream of the spectrum computation, not output post-processing. NOTE: the production spectrum path computes spectra by Hamiltonian eigenvalue diagonalization + phenomenological Lorentzian lineshape (see `simos_adapter.generate_odmr_spectrum`); it does not solve the Lindblad master equation, so state-mixing enters only through the perturbed Hamiltonian eigenstructure.
 
+Note added 2026-10-13: batch generation does not call this injector. In `noise_mode: stochastic` it samples (T, B1) pairs from OU trajectories (`sample_ou_trajectory_pair`) and passes them to the eigenvalue path. That path builds a spin-only `NVSystem(optics=False)`, so the Layer 1 photophysics model is not used for dataset spectra. Walkthrough: [`docs/synthetic-data.md`](../../../docs/synthetic-data.md) at the monorepo root.
+
 ### Layer 3 — Published Parameters
 `physics/parameters.py`
 
