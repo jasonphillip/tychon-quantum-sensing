@@ -73,7 +73,7 @@ The pipeline is in [orchestrator/pipeline](../orchestrator/pipeline/README.md). 
 
 ## Agent orchestration
 
-The roles (a planning project, an orchestrator session, one worker session per repository, and second-opinion models) are on the [front page](../README.md). The tables there are the reference, so I do not repeat them.
+The roles (a planning project, an orchestrator session, one worker session per repository, and second-opinion models) are in the [case study](case-study.md#tools-and-roles). The table there is the reference, so I do not repeat it.
 
 Who decided what is in the [case study](case-study.md). I set the plan, wrote the specs and reviewed the results. The agents wrote most of the code.
 
@@ -115,7 +115,7 @@ I came to this from machine learning and star-tracker work, not from NV physics 
 | 2026-02-06 | First Claude Code session | The orchestrator and most worker sessions |
 | 2026-03-26 | First simulator commit, in the first attempts | [archive/v0](../archive/v0), then the clean restart on 2026-04-03 |
 | 2026-06-15 | First program of production PolarFire SoC silicon | [workers/polarfire-hybrid-control](../workers/polarfire-hybrid-control) |
-| 2026-07-01 | Watchdog trip time measured on silicon: median 2.000 ms over 120 trips | The results table on the [front page](../README.md) |
+| 2026-07-01 | Watchdog trip time measured on silicon: median 2.000 ms over 120 trips | The results table in the [case study](case-study.md#results-and-limits) |
 
 From the first NV question to the first measurement on silicon took just under a year. The build itself, from the first simulator commit to that measurement, took about three months.
 

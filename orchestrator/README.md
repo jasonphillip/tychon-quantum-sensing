@@ -32,6 +32,16 @@ All four ran on 2026-05-01.
 
 Diffs between the passes: [001 vs 002](tvw/audits/audit-001-vs-002-diff.md), [002 vs 003](tvw/audits/audit-002-vs-003-diff.md), [003 vs 004](tvw/audits/audit-003-vs-004-summary.md).
 
+## Critic independence
+
+When two local LLM critics checked my technical report, they agreed 10 times out of 10 on the first pass, and I counted that as a failed independence test. A May 2026 paper found the same problem in a bigger panel, where nine frontier LLM judges gave about two independent votes ([arXiv 2605.29800](https://arxiv.org/abs/2605.29800)). [critic_independence.py](tvw/scripts/critic_independence.py) reports agreement, chance-corrected agreement and the effective number of independent votes for any verdict CSV. With a reference answer key (`--truth`) it also correlates the critics' errors, as the paper does. Without one it only measures how often they agree. It runs in under a second and doesn't need a model or a GPU.
+
+```bash
+python3 orchestrator/tvw/scripts/critic_independence.py orchestrator/tvw/audits/stage-4.7-verdicts.csv
+```
+
+Run it from the repository root. That file holds a 114-claim pass, and 93 of the claims have a verdict from both critics. On those, the script reports 90 % raw agreement but a chance-corrected agreement (Fleiss' kappa) of -0.04, because one critic marks 91 % of the claims SUPPORTED and the other 99 %.
+
 ## Checking the agents as well as the report
 
 - **2026-07-01.** A design review of the vector tracker, with three audit agents in parallel, found that the classical baseline's peak detector returned zero peaks in every frame. I retracted that baseline's headline numbers ([design review](tvw/audits/design-review-odmr-vector-2026-07-01.md), [case study](../docs/case-study.md)).

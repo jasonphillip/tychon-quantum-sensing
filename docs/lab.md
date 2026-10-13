@@ -4,6 +4,10 @@ I built a small home lab to develop, train and check the software in this repo, 
 
 <!-- photo: rack, to be added -->
 
+![The PolarFire SoC Icicle Kit in its enclosure, with the MPFS250T under the centre of the board](media/icicle-kit-in-enclosure.jpg)
+
+*The board every [HW] number was measured on: a Microchip PolarFire SoC Icicle Kit (MPFS250T) in a vented enclosure, powered and on the bench network.*
+
 ## At a glance
 
 | Host | Hardware | What it did in this project | Since |
