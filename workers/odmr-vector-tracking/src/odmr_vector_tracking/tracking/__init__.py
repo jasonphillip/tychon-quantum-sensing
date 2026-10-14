@@ -29,7 +29,14 @@ from odmr_vector_tracking.tracking.learned import (
     v250_targeted_modules,
 )
 
+from odmr_vector_tracking.tracking.exact_inversion_baseline import ExactInversionTracker, invert_axis
+from odmr_vector_tracking.tracking.acquisition import TrackState, acquire_centers
+
 __all__ = [
+    "ExactInversionTracker",
+    "invert_axis",
+    "TrackState",
+    "acquire_centers",
     "ClassicalTracker",
     "ClassicalTrackResult",
     "AssociationHead",
