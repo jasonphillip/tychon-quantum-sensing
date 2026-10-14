@@ -39,8 +39,8 @@ Chain (pfkit from `polarfire-agent-skills`, tools host = Beelink WSL `vbx-env`, 
 
 ```bash
 pfkit inspect model.tflite --run-dir R
-pfkit compile model.tflite --output R/model.vnnx --config ~/.config/pfkit/toolshost-bee.yaml --run-dir R
-pfkit sim R/model.vnnx --input R/input.int8.npy --output R/sim.npz --config ~/.config/pfkit/toolshost-bee.yaml --run-dir R
+pfkit compile model.tflite --output R/model.vnnx --config ~/.config/pfkit/toolshost.yaml --run-dir R
+pfkit sim R/model.vnnx --input R/input.int8.npy --output R/sim.npz --config ~/.config/pfkit/toolshost.yaml --run-dir R
 pfkit infer R/model.vnnx --input R/input.int8.npy --output R/hw.bin --json R/hw.json --config ~/.config/pfkit/kit-private.yaml --run-dir R
 PYTHONPATH=src python3 experiments/deployed_model_on_kit.py --evaluate --run .scratch/kit-run-2026-10-14
 ```
