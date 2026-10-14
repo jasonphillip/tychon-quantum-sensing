@@ -37,8 +37,8 @@ Therefore, merely improving the residual model within the fixed clamp cannot mat
 
 ## Provenance
 
-- Dataset: `~/projects/tychon-shared-data/production_50k_v2_aic`.
-- Saved kit evaluation: `~/projects/portfolio-publication/wt/odmr-edge-ml-s3-recipe/.scratch/kit-run-2026-10-14`.
+- Dataset: `<data-root>/production_50k_v2_aic`.
+- Saved kit evaluation: `.scratch/kit-run-2026-10-14`.
 - Dataset HDF5 SHA256: `92dd4a53f66920676a076232644860501216f5b59503557900ad02dd7d90ef4b`.
 - Selected labels NPZ SHA256: `544194b51d1e1875935f079f8ec280e10fe5e715a192b2cd1d903b6bb062d765`.
 - Selected truth float64 payload SHA256: `65e4ed88d7e07b713e94f2ca4f022a14bcb9ab510b9f417d32d6328824444405`.
