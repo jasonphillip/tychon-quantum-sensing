@@ -97,7 +97,7 @@ Expect 2.0.3, and compile with the command from the same file.
 vnnx_compile -c V250 -t <model>_integer_quant.tflite -o <model>.vnnx
 ```
 
-The example input `fcnn_v2_residual_dataset_a_int8.tflite` compiles to a 12,832-byte `.vnnx` with SHA-256 `6c5cd21ae9d4ce9793f8bc143c2c53d564140bde3df1fda1ec08a5a1602512eb`. If your build of that same input differs in size or hash, suspect SDK drift first (`workers/polarfire-hybrid-control/models/README.md`).
+The example input `fcnn_v2_residual_dataset_a_int8.tflite` compiles to a 12,832-byte `.vnnx` with SHA-256 `6c5cd21ae9d4ce9793f8bc143c2c53d564140bde3df1fda1ec08a5a1602512eb`. A build on 2026-10-14 with the tools host's current `vbx` 2.0.0 gave the same size and SHA-256 `55bf88b72725c7b252ab48107436cd31427fb86da81a207fc19ab0afad06f5b9`: same size, different bytes, bit-exact against the TFLite on the simulator and on the kit. If your build differs in size, or in hash from both, suspect SDK drift first (`workers/polarfire-hybrid-control/models/README.md`).
 
 Watch the compile output for the string `VECTORBLOX ERROR`. `run_vnnx_compile` in `workers/odmr-edge-ml/src/odmr_edge_ml/validation/tflite_ops.py` raises on it. No `.vnnx` file is committed in this repo, so keep yours out of git too.
 
@@ -233,7 +233,7 @@ out[0] len=1 scale=0.022873 zp=1: -2.9506
 
 For timing, `vnnx_latency` takes a model, a sample count and a warmup count (`workers/polarfire-hybrid-control/firmware/linux/vnnx_latency.c`). My run used 1,000 samples and 20 warmups, and start plus poll had a median of 32 µs and a p99 of 33 µs (`workers/polarfire-hybrid-control/libero/reports/2026-06-21-latency/vnnx_latency_2026-06-21.txt`). The report header shows `rdcycle=0`, `rdtime=1` and a 1 MHz timebase, so the number is an on-kit API bound at 1 µs resolution and says nothing about V250 core cycles (`workers/polarfire-hybrid-control/libero/reports/2026-06-21-latency/README.md`).
 
-Accuracy needs a separate check. My float-versus-INT8 harness runs the TFLite file on a CPU, and with it I measured an INT8-versus-float mean absolute error of 0.0346 µT on the test split (`workers/odmr-edge-ml/README.md`). The kit's output on the same inputs is a second comparison, and you have to run that one yourself.
+Accuracy needs a separate check. My float-versus-INT8 harness runs the TFLite file on a CPU, and with it I measured an INT8-versus-float mean absolute error of 0.0346 µT on the test split (`workers/odmr-edge-ml/README.md`). I ran the kit comparison on 2026-10-14 on 512 held-out spectra: the kit output equals the INT8 TFLite output bit for bit (0 LSB through the simulator and on silicon), and the final field after the ±2.25 µT clamp has MAE 14.474 µT on the kit against 14.467 µT for the float model and 15.209 µT for PID alone, with a median NPU time of 0.038 ms per sample (`workers/odmr-edge-ml/docs/deployed_model_on_kit_2026-10.md`).
 
 I write every run to a report folder, and that habit paid off. Each bring-up run in this repo has its own folder under `workers/polarfire-hybrid-control/libero/reports/`, named by date, with logs, the hashes of the binaries and a README that states what the numbers do and don't prove. The 2026-06-21 latency folder is a small example of the shape, and `workers/polarfire-hybrid-control/tools/audit_libero_reports.py` audits such a folder.
 
