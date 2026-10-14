@@ -1,0 +1,193 @@
+{
+  "dataset": "production_50k_v2_aic",
+  "date": "2026-10-14",
+  "source_symlink": "~/projects/portfolio-publication/wt/odmr-edge-ml-s3-recipe/data/production_50k_v2_aic",
+  "source_symlink_target": "../../tychon-sbir/shared-data/production_50k_v2_aic",
+  "source_directory_used": "~/projects/tychon-shared-data/production_50k_v2_aic",
+  "source_files": {
+    "dataset.h5": {
+      "size_bytes": 43615072,
+      "md5": "f5fa38ba4c1a29c6b4229d63b370fb90"
+    },
+    "manifest.json": {
+      "size_bytes": 1315553,
+      "md5": "e1500fedb7d041e68dbfb7479354c034"
+    },
+    "pid_residuals.npz": {
+      "size_bytes": 1603136,
+      "md5": "c7f9de949022da34a7b8d65f250dac06"
+    }
+  },
+  "config": {
+    "config_hash": "cfec5b0afe89",
+    "splits": {
+      "train": 40000,
+      "val": 5000,
+      "test": 5000
+    },
+    "n_freq_points": 100,
+    "freq_range_Hz": [
+      2820000000.0,
+      2920000000.0
+    ],
+    "p1_range_ppm": [
+      1.0,
+      300.0
+    ],
+    "temp_range_K": [
+      274.7958980337503,
+      311.50410196624966
+    ],
+    "b1_gradient_range": [
+      0.05,
+      0.3
+    ],
+    "b_perp_range_T": [
+      0.0,
+      0.0
+    ],
+    "field_sampling": "spherical",
+    "b_mag_range_T": [
+      2e-05,
+      7e-05
+    ],
+    "noise_mode": "stochastic",
+    "ou_noise": {
+      "theta_T": 0.001,
+      "mu_T": 300.0,
+      "sigma_T": 0.05,
+      "theta_B1": 10.0,
+      "mu_B1": 1.0,
+      "sigma_B1": 0.006,
+      "trajectory_dt_s": 1.0,
+      "enable_thermal_noise": true,
+      "enable_mw_noise": true,
+      "alpha_B1": -0.0035,
+      "T_mean_C": 20.0,
+      "delta_T_orb_C": 15.0,
+      "tau_orb_s": 5400.0,
+      "B1_nominal": 1.0
+    },
+    "shift_test_ranges": true,
+    "test_p1_range_ppm": [
+      0.0,
+      348.7125
+    ],
+    "test_temp_range_K": [
+      307.7688276405004,
+      351.8186723594996
+    ],
+    "test_b1_gradient_range": [
+      0.046875,
+      0.346875
+    ],
+    "test_b_perp_range_T": null,
+    "use_optics": false,
+    "include_nitrogen": false
+  },
+  "seed": 42,
+  "original_nv_sensor_sim_commit": "1120c776bc11d878d3809751e1278953488569ef",
+  "nv_sensor_sim_commit_used": "9df6dd161719b369e90c0e284cbef0bae39a0612",
+  "generated_config_hash": "cfec5b0afe89",
+  "generation_mode": "full",
+  "generated_directory": "~/projects/portfolio-publication/wt/odmr-edge-ml-s3-recipe/.scratch/production_50k_v2_aic_verified",
+  "per_split_md5": {
+    "train": {
+      "existing": "a021a214ab8565561c4e7645c4965b1c",
+      "regenerated": "a021a214ab8565561c4e7645c4965b1c",
+      "arrays": {
+        "corruption_params": {
+          "existing_md5": "1b1d8c4298f07486017c2b0acd49ba62",
+          "regenerated_md5": "1b1d8c4298f07486017c2b0acd49ba62",
+          "match": true
+        },
+        "frequencies": {
+          "existing_md5": "ea8d994d446e2e7c488426de48dabaad",
+          "regenerated_md5": "ea8d994d446e2e7c488426de48dabaad",
+          "match": true
+        },
+        "labels": {
+          "existing_md5": "96e6d4969554e84cb8dc3ccd07d2d0b7",
+          "regenerated_md5": "96e6d4969554e84cb8dc3ccd07d2d0b7",
+          "match": true
+        },
+        "seeds": {
+          "existing_md5": "1ecb6646549c0674f7c91a70166c9d01",
+          "regenerated_md5": "1ecb6646549c0674f7c91a70166c9d01",
+          "match": true
+        },
+        "spectra": {
+          "existing_md5": "be9a31676779e7523364c3dcd0cc193e",
+          "regenerated_md5": "be9a31676779e7523364c3dcd0cc193e",
+          "match": true
+        }
+      }
+    },
+    "val": {
+      "existing": "00763d8808422e6a664ccef91f1c7206",
+      "regenerated": "00763d8808422e6a664ccef91f1c7206",
+      "arrays": {
+        "corruption_params": {
+          "existing_md5": "862e72c579f9235f5a92a7fd67b09555",
+          "regenerated_md5": "862e72c579f9235f5a92a7fd67b09555",
+          "match": true
+        },
+        "frequencies": {
+          "existing_md5": "20ac615d95be6c602d1d813c10d5e0dc",
+          "regenerated_md5": "20ac615d95be6c602d1d813c10d5e0dc",
+          "match": true
+        },
+        "labels": {
+          "existing_md5": "d41735972341ec1eb670d993a6e43b14",
+          "regenerated_md5": "d41735972341ec1eb670d993a6e43b14",
+          "match": true
+        },
+        "seeds": {
+          "existing_md5": "e080f93e9e754429eeeba6d9d591cba2",
+          "regenerated_md5": "e080f93e9e754429eeeba6d9d591cba2",
+          "match": true
+        },
+        "spectra": {
+          "existing_md5": "bc2ed4ef7f5ecb193836dae0331f0d1a",
+          "regenerated_md5": "bc2ed4ef7f5ecb193836dae0331f0d1a",
+          "match": true
+        }
+      }
+    },
+    "test": {
+      "existing": "b350320066a4c6a4553f05cd1f469704",
+      "regenerated": "b350320066a4c6a4553f05cd1f469704",
+      "arrays": {
+        "corruption_params": {
+          "existing_md5": "bd55c9a2eca70f8362f7a5e02e47602a",
+          "regenerated_md5": "bd55c9a2eca70f8362f7a5e02e47602a",
+          "match": true
+        },
+        "frequencies": {
+          "existing_md5": "0a84a3328db57c915ae273ca34571817",
+          "regenerated_md5": "0a84a3328db57c915ae273ca34571817",
+          "match": true
+        },
+        "labels": {
+          "existing_md5": "e8de1051cdab2abff2663497a8d6928e",
+          "regenerated_md5": "e8de1051cdab2abff2663497a8d6928e",
+          "match": true
+        },
+        "seeds": {
+          "existing_md5": "fa6c8c3db1b30be3fab9ffd9dd15a64f",
+          "regenerated_md5": "fa6c8c3db1b30be3fab9ffd9dd15a64f",
+          "match": true
+        },
+        "spectra": {
+          "existing_md5": "59ca95fccb62afa18492e4db1e338621",
+          "regenerated_md5": "59ca95fccb62afa18492e4db1e338621",
+          "match": true
+        }
+      }
+    }
+  },
+  "reproduced": true,
+  "first_difference": null,
+  "md5_method": "For each HDF5 array: key + dtype + shape + contiguous bytes; split hash uses sorted array keys.",
+  "auxiliary_note": "pid_residuals.npz is an existing derived file; the simulator recipe regenerates dataset.h5 only."
+}
