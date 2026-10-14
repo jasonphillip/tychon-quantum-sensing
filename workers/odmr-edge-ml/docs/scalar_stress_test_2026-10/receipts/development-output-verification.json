@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "numerical_comparisons": 59,
+  "discrepancies": [],
+  "saved_prediction_hashes_verified": true,
+  "raw_data_accesses": 0,
+  "model_inferences": 0,
+  "scope": "Development diagnostics only"
+}

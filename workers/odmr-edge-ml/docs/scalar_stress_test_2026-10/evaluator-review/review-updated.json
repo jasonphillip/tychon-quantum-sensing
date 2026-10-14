@@ -1,0 +1,52 @@
+{
+  "evaluator_sha256": "db0922faff51bcaea18bb40300773e3adeae73cab32c2462c9430c35b8fa3c6a",
+  "date": "2026-10-14",
+  "status": "previous material review findings resolved in inspected revision",
+  "tests_passed": 12,
+  "evidence": "guard-test-evidence.json",
+  "resolved": [
+    {
+      "id": "R1",
+      "lines": [
+        87,
+        122,
+        147,
+        149
+      ],
+      "fix": "Metadata-only preflight; exclusive receipt precedes first payload hash."
+    },
+    {
+      "id": "R2",
+      "lines": [
+        60,
+        69,
+        90,
+        120,
+        235,
+        236
+      ],
+      "fix": "Resolved CLI roots are frozen; actual source map and existing receipt are checked before imports."
+    },
+    {
+      "id": "R3",
+      "lines": [
+        33,
+        45,
+        46
+      ],
+      "fix": "Direct export hash is checked against original exports receipt."
+    },
+    {
+      "id": "R4",
+      "lines": [
+        138
+      ],
+      "fix": "Checkpoint sigma below FP32 minimum is rejected before data access."
+    }
+  ],
+  "limits": [
+    "No end-to-end model/data evaluation.",
+    "Synthetic candidate receipts cannot establish real artifact provenance.",
+    "Sigma guard rejects values below 0.1; it does not explicitly reject NaN. No real checkpoint values were inspected."
+  ]
+}

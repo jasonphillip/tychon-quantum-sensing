@@ -1,0 +1,80 @@
+[
+  {
+    "partition": "dev",
+    "command": [
+      "<path>",
+      "<experiment-dir>/generate_stress_data.py",
+      "--sim-repo",
+      "<path>",
+      "--original-manifest",
+      "<data-root>/production_50k_v2_aic/manifest.json",
+      "--prior-predictions",
+      "<path>",
+      "--protocol",
+      "<experiment-dir>/PROTOCOL.md",
+      "--out",
+      "<experiment-dir>/data",
+      "--partition",
+      "dev"
+    ],
+    "started_utc": "2026-10-14T22:29:35.893106+00:00",
+    "status": "sealed_and_verified",
+    "returncode": 0,
+    "elapsed_seconds": 1.1702867290005088,
+    "ended_utc": "2026-10-14T22:29:37.063493+00:00",
+    "log_path": "<experiment-dir>/sealing/dev-generation.log",
+    "manifest_sha256": "bcc4faca60f5edb7617149961849b704b4bf863a5cec48644934892e71d9193b"
+  },
+  {
+    "partition": "val",
+    "command": [
+      "<path>",
+      "<experiment-dir>/generate_stress_data.py",
+      "--sim-repo",
+      "<path>",
+      "--original-manifest",
+      "<data-root>/production_50k_v2_aic/manifest.json",
+      "--prior-predictions",
+      "<path>",
+      "--protocol",
+      "<experiment-dir>/PROTOCOL.md",
+      "--out",
+      "<experiment-dir>/data",
+      "--partition",
+      "val"
+    ],
+    "started_utc": "2026-10-14T22:29:52.352397+00:00",
+    "status": "sealed_and_verified",
+    "returncode": 0,
+    "elapsed_seconds": 2.4274729100288823,
+    "ended_utc": "2026-10-14T22:29:54.780006+00:00",
+    "log_path": "<experiment-dir>/sealing/val-generation.log",
+    "manifest_sha256": "1e02b26c5313dffbe631aec2dcecd693acc672d76e5820d15b897bd9eccf2f3f"
+  },
+  {
+    "partition": "final",
+    "command": [
+      "<path>",
+      "<experiment-dir>/generate_stress_data.py",
+      "--sim-repo",
+      "<path>",
+      "--original-manifest",
+      "<data-root>/production_50k_v2_aic/manifest.json",
+      "--prior-predictions",
+      "<path>",
+      "--protocol",
+      "<experiment-dir>/PROTOCOL.md",
+      "--out",
+      "<experiment-dir>/data",
+      "--partition",
+      "final"
+    ],
+    "started_utc": "2026-10-14T22:30:11.702761+00:00",
+    "status": "sealed_and_verified",
+    "returncode": 0,
+    "elapsed_seconds": 3.725677489070222,
+    "ended_utc": "2026-10-14T22:30:15.428585+00:00",
+    "log_path": "<experiment-dir>/sealing/final-generation.log",
+    "manifest_sha256": "6ce3db6ee01687d17b3015e773e75303c3f5e8877f5a05a385a4eca21f438e41"
+  }
+]
