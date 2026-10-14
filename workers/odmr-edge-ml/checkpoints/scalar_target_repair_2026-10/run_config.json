@@ -1,0 +1,51 @@
+{
+  "arms": [
+    "A_clipped",
+    "B_full_residual",
+    "C_direct"
+  ],
+  "seeds": [
+    42,
+    20261014,
+    20261015
+  ],
+  "epochs": 100,
+  "val_every": 10,
+  "dtype": "FP32",
+  "qat": "canonical symmetric per-tensor INT8 fake quantization",
+  "device": "cuda",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.4.2",
+  "python": "3.13.11",
+  "source_hashes": {
+    "src/odmr_edge_ml/models/fcnn_v2.py": "99b32b1761bb51aa94d7faf909393d600020d9074ce081f12363d250d4f3195c",
+    "src/odmr_edge_ml/training/qat.py": "7dddc33e57098b5916868d0a730ee0a4c3d1884092e15a4df9587c487a35cd78",
+    "experiments/scalar_residual_v2.py": "c066f584f25a02208e39b1564c9e3bf71d915e421935d5a0940a65fe1b22ecb5",
+    "src/odmr_edge_ml/cascade/train_stage.py": "034498f19a9fc6e5a58af53f924b1a6214c833777a0edb8b4b403d35c198c18b"
+  },
+  "data_hashes": {
+    "train": {
+      "spectra": "e15ab0d2b55b648f13528feb18b3502af37c47971f5b4dc179e6049d9bac812e",
+      "vector_labels": "af756da13c19a422f23f198d6a9a00e10fe67ba7a144dd094a0e8eafe31f5fca",
+      "pid": "633d07c97d0f9087b6287eaf40446f9fa433dd3b9cb2a613aa22523f8b019d7c",
+      "lock_bins": "9ee0678849c8fc9f3815e5f3f83529d9c34bf8b9789a9c12c81ab8be8cd8f6de",
+      "model_input": "f9c9c18cf51ddbb5c1eb2c9b7af613b4dea1a7d2dd6add7eade5db1ec864b31b",
+      "sample_seeds": "8aaaa9032df3bab75e6db5394f3e31e6d6bcf289a1983e7ce4228f5abdde0d6e"
+    },
+    "val": {
+      "spectra": "74a28229d281d699e67d75a96df32fb14549bb8672e6b8bffa71132b09f751b7",
+      "vector_labels": "7401255d78ed399d669a3d4f8c06e114580fdee68aea527fc5e9d179b1c20453",
+      "pid": "c4d6867f3d4e6408d478c2da477750facf4c9529e905a5faba4947e6b254d107",
+      "lock_bins": "e2efdff65fdfbf85aa2a395d86a339233911ededa387bbeaf496747b17d8491a",
+      "model_input": "6010c0738809ceb7f3b2960fda37ac13c45dd86a60a7ec7e378a27b6cd7bd310",
+      "sample_seeds": "f20536bb0cfadd3b003e64092181ce6dc0bec4f63e3249aaa92fea85446129f6"
+    }
+  },
+  "runner_sha256": "385ad474bf3d22673e2c9d1dab69c50cfe5cde444c36857e2dc5a2421534981b",
+  "protocol_sha256": "51eb930dac7eaa5fc9ff21c941237ec08c03de5cf586cee8d9911ac1165b049a",
+  "pilot_seconds_per_step": 0.0024367682193405927,
+  "estimated_training_seconds": 1781.8867603928084,
+  "global_cap_seconds": 3600,
+  "train_mean_uT": 45.064080128749545,
+  "train_median_uT": 44.90404360960018
+}

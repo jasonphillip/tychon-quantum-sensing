@@ -1,0 +1,31 @@
+{
+  "fresh_holdout_accessed": true,
+  "first_read_utc": "2026-10-14T21:06:17.746088+00:00",
+  "frozen_choices_sha256": "38e6b05fe9b78516d4c33a427583b847e42380314c274b1260090b0b1a5c9991",
+  "holdout_hashes": {
+    "dataset.h5": "45d7a6f9affff9878d6c00b72942332221bdb1deb0bcfe7d425a0092ce800796",
+    "pid_residuals.npz": "4f7dc70adb2fdda60cb4450abbe5015bca5172a36226b631d4c0831a698b4505",
+    "manifest.json": "94fc5094e903978ebfaf4829cf2e03b5f0b6df27ebb4e3acafbbd21607c5aa9f"
+  },
+  "evaluation_script_sha256": "bfd12dcea07c11177826555cbe67feb7261b27d4aefa86ea9318025a5b166ca5",
+  "status": "complete",
+  "baseline_peek_disclosed": true,
+  "baseline_peek_scope": "coordinator printed PID MAE and label distribution before model freeze; no model prediction was evaluated",
+  "completed_utc": "2026-10-14T21:06:22.223149+00:00",
+  "evaluation_seconds": 7.315599235007539,
+  "deployed_checkpoint_sha256": "e0c314265017a999cd57c2b0c168c2d3dc229c9edbb3c630887ffb94ff57ed0a",
+  "deployed_tflite_sha256": "e3b55da96ee633a58109007d4244304e2ad4a22853b10335fa41879e815b5371",
+  "deployed_sigma": 1.2680010795593262,
+  "equivalence_helper_sha256": "eae1316fc5dd0bd57522e75f0223d73b672fc105e2630b6253c673eb677070c3",
+  "source_hashes": {
+    "src/odmr_edge_ml/models/fcnn_v2.py": "99b32b1761bb51aa94d7faf909393d600020d9074ce081f12363d250d4f3195c",
+    "src/odmr_edge_ml/training/qat.py": "7dddc33e57098b5916868d0a730ee0a4c3d1884092e15a4df9587c487a35cd78",
+    "experiments/scalar_residual_v2.py": "c066f584f25a02208e39b1564c9e3bf71d915e421935d5a0940a65fe1b22ecb5",
+    "src/odmr_edge_ml/cascade/train_stage.py": "034498f19a9fc6e5a58af53f924b1a6214c833777a0edb8b4b403d35c198c18b"
+  },
+  "evaluation_python": "3.12.15 (main, Oct  6 2026, 23:51:47) [GCC 15.3.0]",
+  "torch": "2.11.0+cu130",
+  "all_original_seed_overlap": 0,
+  "row_count": 5000,
+  "training_seed_equals_holdout_master_seed_note": "Both contain 20261015, but use separate RNG streams for weights and simulated examples."
+}

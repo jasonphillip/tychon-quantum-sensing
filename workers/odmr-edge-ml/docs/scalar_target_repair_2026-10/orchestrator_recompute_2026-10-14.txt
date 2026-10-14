@@ -1,0 +1,45 @@
+== recomputed MAE (uT) vs RESULTS.json
+deployed__int8__bounded                             21.700023   reported: None
+deployed__fp32__bounded                             21.685164   reported: None
+training_mean                                       12.720257   reported: 12.720257325616506
+training_median                                     12.722898   reported: 12.722897618248862
+PID                                                 22.823007   reported: 22.823006687733958
+A_clipped__fp32 (mean of seed MAEs)                 21.390886   reported: {'mean_seed_mae_uT': 21.390885799477218, 'seed_mae_uT': [21.
+  A_clipped_seed42__fp32                            21.377929   reported: None
+  A_clipped_seed20261014__fp32                      21.388056   reported: None
+  A_clipped_seed20261015__fp32                      21.406673   reported: None
+A_clipped__int8 (mean of seed MAEs)                 21.400530   reported: {'mean_seed_mae_uT': 21.400530223264678, 'seed_mae_uT': [21.
+  A_clipped_seed42__int8                            21.393501   reported: None
+  A_clipped_seed20261014__int8                      21.387718   reported: None
+  A_clipped_seed20261015__int8                      21.420372   reported: None
+B_full_residual__fp32 (mean of seed MAEs)           11.131636   reported: {'mean_seed_mae_uT': 11.131636188601703, 'seed_mae_uT': [11.
+  B_full_residual_seed42__fp32                      11.159676   reported: None
+  B_full_residual_seed20261014__fp32                11.070088   reported: None
+  B_full_residual_seed20261015__fp32                11.165144   reported: None
+B_full_residual__int8 (mean of seed MAEs)           13.544071   reported: {'mean_seed_mae_uT': 13.54407098139479, 'seed_mae_uT': [13.6
+  B_full_residual_seed42__int8                      13.605371   reported: None
+  B_full_residual_seed20261014__int8                13.434084   reported: None
+  B_full_residual_seed20261015__int8                13.592758   reported: None
+C_direct__fp32 (mean of seed MAEs)                  10.870284   reported: {'mean_seed_mae_uT': 10.870283614789875, 'seed_mae_uT': [10.
+  C_direct_seed42__fp32                             10.799190   reported: None
+  C_direct_seed20261014__fp32                       10.804913   reported: None
+  C_direct_seed20261015__fp32                       11.006748   reported: None
+C_direct__int8 (mean of seed MAEs)                  10.898340   reported: {'mean_seed_mae_uT': 10.89833990454698, 'seed_mae_uT': [10.8
+  C_direct_seed42__int8                             10.859702   reported: None
+  C_direct_seed20261014__int8                       10.805597   reported: None
+  C_direct_seed20261015__int8                       11.029721   reported: None
+== paired bootstrap CIs (fp32; seed-averaged per-row errors; seed 20261014; 10,000 resamples)
+-- method integers
+B_minus_A                mean -10.259250  CI [-10.711155,  -9.800719]   reported: {}
+B_minus_training_mean    mean  -1.588621  CI [ -1.763150,  -1.415313]   reported: {}
+C_minus_B                mean  -0.261353  CI [ -0.318196,  -0.205995]   reported: {}
+C_minus_training_mean    mean  -1.849974  CI [ -2.033975,  -1.665385]   reported: {}
+-- method choice
+B_minus_A                mean -10.259250  CI [-10.711155,  -9.800719]   reported: {}
+B_minus_training_mean    mean  -1.588621  CI [ -1.763150,  -1.415313]   reported: {}
+C_minus_B                mean  -0.261353  CI [ -0.318196,  -0.205995]   reported: {}
+C_minus_training_mean    mean  -1.849974  CI [ -2.033975,  -1.665385]   reported: {}
+== B INT8 output range and endpoint occupancy
+seed 42: correction range  -18.748 ..   32.658 uT; at min 0.153, at max 0.057
+seed 20261014: correction range  -19.521 ..   34.004 uT; at min 0.154, at max 0.038
+seed 20261015: correction range  -19.048 ..   31.547 uT; at min 0.159, at max 0.068

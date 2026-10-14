@@ -1,0 +1,16 @@
+{
+  "fresh_holdout_accessed": true,
+  "first_read_utc": "2026-10-14T21:06:17.746088+00:00",
+  "frozen_choices_sha256": "38e6b05fe9b78516d4c33a427583b847e42380314c274b1260090b0b1a5c9991",
+  "holdout_hashes": {
+    "dataset.h5": "45d7a6f9affff9878d6c00b72942332221bdb1deb0bcfe7d425a0092ce800796",
+    "pid_residuals.npz": "4f7dc70adb2fdda60cb4450abbe5015bca5172a36226b631d4c0831a698b4505",
+    "manifest.json": "94fc5094e903978ebfaf4829cf2e03b5f0b6df27ebb4e3acafbbd21607c5aa9f"
+  },
+  "evaluation_script_sha256": "bfd12dcea07c11177826555cbe67feb7261b27d4aefa86ea9318025a5b166ca5",
+  "status": "complete",
+  "baseline_peek_disclosed": true,
+  "baseline_peek_scope": "coordinator printed PID MAE and label distribution before model freeze; no model prediction was evaluated",
+  "completed_utc": "2026-10-14T21:06:22.223149+00:00",
+  "evaluation_seconds": 7.315599235007539
+}
