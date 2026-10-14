@@ -6,6 +6,8 @@
 
 ---
 
+> **Snapshot note (added 2026-10-14).** This inventory records the repository state as reconstructed on 2026-07-01 and is unchanged below. Later work supersedes several of its lines: the watchdog trip time was measured on silicon (median 2.000 ms over 120 trips, 2026-07-01) and the fallback to plain PID was tested on the kit (2026-10-09); the deployed INT8 model ran on the kit on 2026-10-14 with its output bit-exact to the INT8 TFLite on 512 held-out synthetic spectra; the dataset recipe was committed and reproduced byte for byte. Where this document and a later measurement disagree, the measurement wins. Current state: the repository README, section "What is shown, and what is not", and the case study's "Results and limits".
+
 ## 0. How to read this document
 
 ### Maturity tags (exactly one per capability/number)
