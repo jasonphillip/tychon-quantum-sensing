@@ -1,0 +1,14 @@
+# gitleaks configuration for this repository (read automatically by `gitleaks detect`).
+# The default rules apply. One allowlist: the scalar target-repair bundle manifest lists file paths next to
+# their SHA-256 hashes; a path containing "ACCESS" beside a 64-hex hash trips the generic-api-key rule.
+# Those values are content hashes of files in this repository, not credentials.
+title = "tychon-quantum-sensing"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "content-hash manifests (sha256 of files in this repo)"
+paths = [
+  '''workers/odmr-edge-ml/docs/scalar_target_repair_2026-10/bundle_manifest\.json''',
+]
