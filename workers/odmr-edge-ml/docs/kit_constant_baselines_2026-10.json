@@ -1,8 +1,8 @@
 {
   "date": "2026-10-14",
   "scope": "Exploratory fixed training constants on the exact saved 512-row kit cohort; no test-based choice",
-  "dataset": "~/projects/tychon-shared-data/production_50k_v2_aic",
-  "evaluation_evidence": "~/projects/portfolio-publication/wt/odmr-edge-ml-s3-recipe/.scratch/kit-run-2026-10-14",
+  "dataset": "<data-root>/production_50k_v2_aic",
+  "evaluation_evidence": ".scratch/kit-run-2026-10-14",
   "selection": {
     "split": "test",
     "method": "first",
