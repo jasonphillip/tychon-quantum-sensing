@@ -1,0 +1,104 @@
+{
+  "date": "2026-10-14",
+  "samples": 512,
+  "dataset_md5": "b350320066a4c6a4553f05cd1f469704",
+  "model_sha256": "e3b55da96ee633a58109007d4244304e2ad4a22853b10335fa41879e815b5371",
+  "checkpoint_sha256": "e0c314265017a999cd57c2b0c168c2d3dc229c9edbb3c630887ffb94ff57ed0a",
+  "pid_only_mae_uT": 15.208567604032694,
+  "stages": {
+    "float": {
+      "residual": {
+        "mae_uT": 14.456694948530163,
+        "rmse_uT": 17.428527651335006,
+        "p90_uT": 29.044345077077562,
+        "worst_uT": 48.6944533792071,
+        "clipped_outputs": 11
+      },
+      "final_field": {
+        "mae_uT": 14.466935546180572,
+        "rmse_uT": 17.446331136983257,
+        "p90_uT": 29.044345077077562,
+        "worst_uT": 49.58333887725397,
+        "clipped_outputs": 11
+      }
+    },
+    "int8_cpu": {
+      "residual": {
+        "mae_uT": 14.464909664291078,
+        "rmse_uT": 17.442158093991534,
+        "p90_uT": 29.05585995242544,
+        "worst_uT": 48.95109547495171,
+        "clipped_outputs": 11
+      },
+      "final_field": {
+        "mae_uT": 14.474248643587522,
+        "rmse_uT": 17.456952559853825,
+        "p90_uT": 29.05585995242544,
+        "worst_uT": 49.58333887725397,
+        "clipped_outputs": 11
+      }
+    },
+    "simulator": {
+      "residual": {
+        "mae_uT": 14.464909664291078,
+        "rmse_uT": 17.442158093991534,
+        "p90_uT": 29.05585995242544,
+        "worst_uT": 48.95109547495171,
+        "clipped_outputs": 11
+      },
+      "final_field": {
+        "mae_uT": 14.474248643587522,
+        "rmse_uT": 17.456952559853825,
+        "p90_uT": 29.05585995242544,
+        "worst_uT": 49.58333887725397,
+        "clipped_outputs": 11
+      }
+    },
+    "kit": {
+      "residual": {
+        "mae_uT": 14.464909664291078,
+        "rmse_uT": 17.442158093991534,
+        "p90_uT": 29.05585995242544,
+        "worst_uT": 48.95109547495171,
+        "clipped_outputs": 11
+      },
+      "final_field": {
+        "mae_uT": 14.474248643587522,
+        "rmse_uT": 17.456952559853825,
+        "p90_uT": 29.05585995242544,
+        "worst_uT": 49.58333887725397,
+        "clipped_outputs": 11
+      }
+    }
+  },
+  "parity": {
+    "cpu_vs_simulator_max_abs_lsb": 0,
+    "simulator_vs_kit_max_abs_lsb": 0,
+    "float_vs_int8_max_abs_uT": 0.7033160328865051,
+    "float_vs_int8_mae_uT": 0.03138544675857702
+  },
+  "kit_latency": {
+    "median_ms": 0.038,
+    "p90_ms": 0.038,
+    "max_ms": 0.069
+  },
+  "criteria": {
+    "i_float_vs_int8": {
+      "status": "PASS",
+      "detail": "float vs INT8-CPU residual: max <= 5 uT and MAE <= 0.5 uT"
+    },
+    "ii_cpu_vs_simulator": {
+      "status": "PASS",
+      "detail": "INT8-CPU vs simulator: 0 LSB"
+    },
+    "iii_simulator_vs_kit": {
+      "status": "PASS",
+      "detail": "simulator vs kit: 0 LSB"
+    },
+    "iv_kit_final_field": {
+      "status": "PASS",
+      "detail": "kit final-field MAE <= float final-field MAE + 0.2 uT"
+    }
+  },
+  "chain_status": "PASS"
+}
