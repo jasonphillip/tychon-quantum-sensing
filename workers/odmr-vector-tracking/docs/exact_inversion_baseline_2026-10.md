@@ -121,8 +121,8 @@ The manifest's original generator hash predates augmentation; the HDF5 hash abov
 ## Reproduction on the measurement host
 
 ```sh
-PYTHONPATH=src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python3 -m pytest ~/projects/portfolio-publication/wt/odmr-vector-tracking-s1-comparison/tests/test_exact_inversion_baseline.py -q
-PYTHONPATH=src python3 ~/projects/portfolio-publication/wt/odmr-vector-tracking-s1-comparison/experiments/evaluate_exact_inversion_dev.py --data ~/projects/portfolio-publication/wt/odmr-vector-tracking-s1-comparison/data/comparison_test_v1/dev/clean/seed_0 --out ~/projects/portfolio-publication/work/task4-e3-dev-metrics-repaired-2026-10-14.json --cpu 0
+PYTHONPATH=src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python3 -m pytest <path> -q
+PYTHONPATH=src python3 <path> --data <path> --out <path> --cpu 0
 ```
 
 The evaluation deliberately refuses other cells and val/final paths.
