@@ -1,0 +1,107 @@
+{
+  "review_type": "bounded static scientific evaluator review",
+  "date": "2026-10-14",
+  "evaluator": "<path>",
+  "evaluator_sha256": "eb2e86c2e6d57616a8f7c838a945225b91c68fab3c7320717ee9a71dde7fb3c8",
+  "scope": {
+    "source_files_read": 6,
+    "data_or_model_scoring": false,
+    "validation_or_final_data_reads": false,
+    "checkpoint_loads": false,
+    "source_edits": false,
+    "method": "Source inspection only; no dynamic evaluator execution."
+  },
+  "sources": [
+    "work/scalar-stress-test/PROTOCOL.md",
+    "work/scalar-stress-test/evaluate_stress.py",
+    "work/scalar-stress-test/s2b/prior_aware_scalar.py",
+    "<path>",
+    "<path>",
+    "<path>"
+  ],
+  "issues": [
+    {
+      "id": "R1",
+      "status": "resolved_in_reviewed_revision",
+      "severity": "high",
+      "lines": [
+        57,
+        66,
+        73,
+        108,
+        132,
+        134,
+        138
+      ],
+      "finding": "Earlier revision hashed final archives during freeze and before the exclusive access receipt. The inspected revision performs metadata/stat checks first, creates the receipt, then hashes payloads.",
+      "fix": "Already applied by root. Preserve this order."
+    },
+    {
+      "id": "R2",
+      "status": "open",
+      "severity": "high",
+      "lines": [
+        75,
+        76,
+        99,
+        105,
+        106,
+        116,
+        117,
+        118,
+        119,
+        120,
+        131,
+        132
+      ],
+      "finding": "Final verifies the paths stored in frozen.source_hashes, but imports code using current CLI paths. It never checks that source_paths(a) equals the frozen path/hash map. Current --work also chooses the access receipt and results directory. Changing work/repo/experiment can bypass frozen-source or single-campaign identity without changing the freeze.",
+      "impact": "The code does not enforce its promised frozen execution identity. This is a static guard defect; no alternate-path campaign was executed.",
+      "fix": "Record resolved CLI roots in the freeze and require exact equality before imports. Compare the actual current source_paths(a) path/hash map to the frozen map. Anchor the exclusive consumption receipt to the frozen data/campaign identity, or enforce the frozen work path before accessing it."
+    },
+    {
+      "id": "R3",
+      "status": "open",
+      "severity": "medium",
+      "lines": [
+        31,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "finding": "C_direct INT8 exports are accepted from their current path and hashed anew. Unlike original checkpoints and repaired B exports, their hashes are not compared against the earlier export record.",
+      "impact": "Candidate creation proves current bytes are stable only after this new freeze. It does not verify they are the previously frozen direct exports required by protocol line 9. Artifact replacement is not alleged; previous export records were outside this six-file review.",
+      "fix": "Read the original direct-export receipt and compare each C_direct TFLite hash before accepting it. Save that receipt hash and exact three export hashes in the new candidate freeze."
+    },
+    {
+      "id": "R4",
+      "status": "conditional",
+      "severity": "medium",
+      "lines": [
+        125,
+        172
+      ],
+      "finding": "INT8 preprocessing receives raw state_dict sigma. FP32 OdmrFCNNv2.forward clamps sigma to min 0.1 at fcnn_v2.py:100, but helpers.preprocess uses raw sigma at fcnn_v2_int8_float_equivalence.py:68.",
+      "impact": "FP32 and INT8 input anchors differ if any frozen sigma is below 0.1. Checkpoint values were not loaded; current impact is unverified.",
+      "fix": "Apply max(0.1, sigma) to the INT8 preprocessing value. Alternatively assert all six frozen sigma values are finite and >=0.1, and record them. Preserve the exported network and its learned weights."
+    }
+  ],
+  "mechanically_consistent": [
+    "FP32 spectrum normalization matches run_experiment.py:121-124. Packed input is normalized spectrum plus lock bin; architecture builds the anchor.",
+    "C_direct outputs are interpreted as magnitudes. B_full_residual outputs are added to the same PID prediction. No old correction clamp is applied.",
+    "Failed prior fits receive the fixed training mean; every row remains in scoring and failure/support counts are saved.",
+    "Seed aggregation averages absolute errors, not predictions. Reported seed-mean MAE and paired row differences are consistent.",
+    "Paired bootstrap uses 10,000 resamples and fixed seed 202610143.",
+    "Primary criterion requires negative mean difference and negative upper paired interval against both mean and prior-aware fit in both primary cells.",
+    "INT8 endpoint counts and FP32/INT8 disagreement are obtained from the existing helper."
+  ],
+  "limitations": [
+    "Static inspection is not a passing end-to-end run.",
+    "No data, candidate checkpoints, export receipts, or generated manifests were opened.",
+    "Root owns repairs, development execution, validation, freezing, and final scoring.",
+    "The protocol uses abs(projection); the wrapper assumes a nonnegative magnitude projection and flags negative values. Existing backend nonnegativity was not re-read within the six-file cap."
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "partition": "final",
+  "first_read_utc": "2026-10-14T22:37:13.434821+00:00",
+  "status": "complete",
+  "data_manifest_sha256": "6ce3db6ee01687d17b3015e773e75303c3f5e8877f5a05a385a4eca21f438e41",
+  "evaluator_sha256": "db0922faff51bcaea18bb40300773e3adeae73cab32c2462c9430c35b8fa3c6a",
+  "protocol_sha256": "39cde896ef333889806d176e3e162af645608de9c02a59310b9884925f746072",
+  "freeze_sha256": "5e54c8f9fe223217cdd8e5566f0665724c3fa230395092b733f1a6b79f63790f",
+  "candidates": [
+    {
+      "name": "B_full_residual_seed42",
+      "arm": "B_full_residual",
+      "seed": 42,
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "9115070490b9816275ff45218add464690482402b90705f3cf91685230fce5ad",
+      "export": "<path>",
+      "export_sha256": "61196d1526edc9428914c7d05745d1baa59d3f9ed596272d84a013caff234cac"
+    },
+    {
+      "name": "C_direct_seed42",
+      "arm": "C_direct",
+      "seed": 42,
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "21f10cd359cf301086cf4eff09d45a5811e4e79f7eacd2c7b2b40ac221582a13",
+      "export": "<path>",
+      "export_sha256": "c28c1f71ba5250cff70320934d9678bdeb4783332533e04f81e24a03996c2aae"
+    },
+    {
+      "name": "B_full_residual_seed20261014",
+      "arm": "B_full_residual",
+      "seed": 20261014,
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "9fedf74e2365ba85f5f0cd1e45e8015bb1074cfcb192f8f95fe4e51f8bfaf7c0",
+      "export": "<path>",
+      "export_sha256": "377fe9081ed80bed3981b1d813bc692443611db1b9f891c78d9d9f76256f3f06"
+    },
+    {
+      "name": "C_direct_seed20261014",
+      "arm": "C_direct",
+      "seed": 20261014,
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "7de4e62a957838057fbe2c7f22f43a75ee77fb1c05887d499e77a9ffd118676e",
+      "export": "<path>",
+      "export_sha256": "f94bab2465e433f013a645ac01519dfe9ad282d40e3249e75698e9be35af8858"
+    },
+    {
+      "name": "B_full_residual_seed20261015",
+      "arm": "B_full_residual",
+      "seed": 20261015,
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "8af18ec10d561b2feed8b401f3c40c0aec8b7e89be26d7716a3ab582409972f9",
+      "export": "<path>",
+      "export_sha256": "c33de5226a7e6043a779e5387de4b201f64e0c773aed93c48aa1b97cc0dcf00f"
+    },
+    {
+      "name": "C_direct_seed20261015",
+      "arm": "C_direct",
+      "seed": 20261015,
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "635ef8cb6b0341b0e55c90bbe523186289e7eceede4d0a8ee6c2fbf2ff3cba16",
+      "export": "<path>",
+      "export_sha256": "89041957bc7b2ddad3f04187a0bd1db9d2dd141a89cc1d2f349e5d93929a61b1"
+    }
+  ],
+  "scope": "single-orientation synthetic; CPU only; no retraining",
+  "completed_utc": "2026-10-14T22:37:15.977455+00:00",
+  "seconds": 3.6883385129040107,
+  "summary_sha256": "ab41dcf13937e3f984a298d5d6aafca2fbd8739cfe192c0b611d8602556c220e"
+}

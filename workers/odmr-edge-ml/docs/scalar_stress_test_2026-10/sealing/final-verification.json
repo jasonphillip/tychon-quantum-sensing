@@ -1,0 +1,86 @@
+{
+  "partition": "final",
+  "path": "<experiment-dir>/data/final",
+  "rows_per_cell": 256,
+  "cell_count": 7,
+  "total_cell_rows": 1792,
+  "unique_sample_seed_count": 256,
+  "seed_overlap_count": 0,
+  "cross_cell_vector_mismatch_count": 0,
+  "cross_cell_nuisance_trajectory_mismatch_count": 0,
+  "cross_cell_noise_seed_mismatch_count": 0,
+  "writable_file_or_directory_count": 0,
+  "failures": [],
+  "manifest_sha256": "6ce3db6ee01687d17b3015e773e75303c3f5e8877f5a05a385a4eca21f438e41",
+  "protocol_sha256": "39cde896ef333889806d176e3e162af645608de9c02a59310b9884925f746072",
+  "generator_sha256": "44ff2d0fca79fb1ca32fa6124006eb788fd8d3e735bb2aa1b417cfbb24a590e4",
+  "source_file_count": 5,
+  "generation_seconds": 3.725677489070222,
+  "generator_reported_seconds": 3.4955014520091936,
+  "verification_seconds": 0.027322220033966005,
+  "files": [
+    {
+      "path": "<experiment-dir>/data/final/clean.npz",
+      "sha256": "3fb5a210ac5a6567257cff0c319d4232b6f667fc43e224d3a7519469d7647588",
+      "rows": 256,
+      "array_count": 6,
+      "shape_failures": 0,
+      "finiteness_failures": 0,
+      "write_bit_count": 0
+    },
+    {
+      "path": "<experiment-dir>/data/final/realistic_anchor.npz",
+      "sha256": "d7aefed6a39fa2e71092b0ffb12a15b4a3fb4f5a2c90e4b26939c083f4a56098",
+      "rows": 256,
+      "array_count": 6,
+      "shape_failures": 0,
+      "finiteness_failures": 0,
+      "write_bit_count": 0
+    },
+    {
+      "path": "<experiment-dir>/data/final/wide_lines.npz",
+      "sha256": "dd2cf71f6c3455441de9ca9f39f71b5933df4ea92272e644d9b8d08b8c11a897",
+      "rows": 256,
+      "array_count": 6,
+      "shape_failures": 0,
+      "finiteness_failures": 0,
+      "write_bit_count": 0
+    },
+    {
+      "path": "<experiment-dir>/data/final/low_snr.npz",
+      "sha256": "22e50ca07862fb2e767fc0bf7bd7616a5144e8e137242bd5b6031cbb3df6db61",
+      "rows": 256,
+      "array_count": 6,
+      "shape_failures": 0,
+      "finiteness_failures": 0,
+      "write_bit_count": 0
+    },
+    {
+      "path": "<experiment-dir>/data/final/negative_slope.npz",
+      "sha256": "5314a9f134f735ff6c1f7de3fbe02ce70524ee2949052420df2e7088dc31cd04",
+      "rows": 256,
+      "array_count": 6,
+      "shape_failures": 0,
+      "finiteness_failures": 0,
+      "write_bit_count": 0
+    },
+    {
+      "path": "<experiment-dir>/data/final/negative_offset.npz",
+      "sha256": "025930167180f4ce87f53bd2d5ff268f83bd2642e255d27dd739d664494399c5",
+      "rows": 256,
+      "array_count": 6,
+      "shape_failures": 0,
+      "finiteness_failures": 0,
+      "write_bit_count": 0
+    },
+    {
+      "path": "<experiment-dir>/data/final/higher_contrast.npz",
+      "sha256": "3f378f25f7739743c844f0eedd5ed311e2ef473a6d6ea36d6f4d13379786c231",
+      "rows": 256,
+      "array_count": 6,
+      "shape_failures": 0,
+      "finiteness_failures": 0,
+      "write_bit_count": 0
+    }
+  ]
+}

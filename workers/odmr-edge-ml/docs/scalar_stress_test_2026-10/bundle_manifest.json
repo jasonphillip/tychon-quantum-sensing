@@ -1,0 +1,216 @@
+{
+  "assembled": "2026-10-14",
+  "frozen_choices_original_sha256": "5e54c8f9fe223217cdd8e5566f0665724c3fa230395092b733f1a6b79f63790f",
+  "summary_sha256": "ab41dcf13937e3f984a298d5d6aafca2fbd8739cfe192c0b611d8602556c220e",
+  "note": "path and hash on separate lines; a hash is not a credential",
+  "files": [
+    {
+      "path": "experiments/scalar_stress_test/PROTOCOL.md",
+      "sha256": "39cde896ef333889806d176e3e162af645608de9c02a59310b9884925f746072"
+    },
+    {
+      "path": "experiments/scalar_stress_test/evaluate_stress.py",
+      "sha256": "db0922faff51bcaea18bb40300773e3adeae73cab32c2462c9430c35b8fa3c6a"
+    },
+    {
+      "path": "experiments/scalar_stress_test/generate_stress_data.py",
+      "sha256": "44ff2d0fca79fb1ca32fa6124006eb788fd8d3e735bb2aa1b417cfbb24a590e4"
+    },
+    {
+      "path": "experiments/scalar_stress_test/s2b/README.md",
+      "sha256": "c2b99c05277e105e78a28095c6165a4ada647bbd716ecf2b9abd39fd2a363957"
+    },
+    {
+      "path": "experiments/scalar_stress_test/s2b/pilot_train_only.json",
+      "sha256": "db958051eefc1e452042666fc9f2b03bbca99659759656757f6eb79b68be6b20"
+    },
+    {
+      "path": "experiments/scalar_stress_test/s2b/pilot_train_only.py",
+      "sha256": "27ad883ccae6ff093ff276098380558b47487cbe1d88a84cf98a29942763853c"
+    },
+    {
+      "path": "experiments/scalar_stress_test/s2b/prior_aware_scalar.py",
+      "sha256": "fab23c3d70fb43e9bee3e25fe524601d07cd3eae9b4ef199eecda3a1cd5d294d"
+    },
+    {
+      "path": "experiments/scalar_stress_test/s2b/test_prior_aware_scalar.py",
+      "sha256": "66a9019b075ddd643a4c26b0fd2bc28a07424f60b8ec77bcd2a1cef4f2eed446"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/FROZEN_CHOICES.public.json",
+      "sha256": "7cd48f9f0328c807e95a5954616623c3a3a39c9e644ce78d7c4992cd5fdbce35"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/calibration-repair/REPORT.md",
+      "sha256": "d7e637cc1382919756c17806461742d875d98c1e62cfbe60768f0a8d18ccfe85"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/calibration-repair/results.json",
+      "sha256": "ccd047860e3922ee2182613f86730a76661d47c415b5e5baa317547b5190c155"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/data-manifests/dev.manifest.json",
+      "sha256": "bcc4faca60f5edb7617149961849b704b4bf863a5cec48644934892e71d9193b"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/data-manifests/final.manifest.json",
+      "sha256": "6ce3db6ee01687d17b3015e773e75303c3f5e8877f5a05a385a4eca21f438e41"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/data-manifests/val.manifest.json",
+      "sha256": "1e02b26c5313dffbe631aec2dcecd693acc672d76e5820d15b897bd9eccf2f3f"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/evaluator-review/guard-test-evidence.json",
+      "sha256": "c0a3bec4f14e915b0d71a43c10fabac5d19b3bcf97146fa5d5d81cde1046af3c"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/evaluator-review/review-updated.json",
+      "sha256": "b5775469020d9e782d6a7a20cf77447b3185fc0e1d5d42284e3118aa98fe768f"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/evaluator-review/review.json",
+      "sha256": "61b78ddd8c8306c683a39452fb248e184c545c2a26cf2bbcf5ad6884c8704aee"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/evaluator-review/test_guards_synthetic.py",
+      "sha256": "ee0e2beb01a15b2261ddb10f5f17e10ce94b970f97c9397a89e02eccc30ff44d"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/independent-verification/REPORT.md",
+      "sha256": "df79944ba3ca682d0945a3c015bd4690c233990cfbecd3075ec503b4ad4af60e"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/independent-verification/VERIFICATION.json",
+      "sha256": "b242e8120378366ab08d15882397ee2144416bbaebc648ac636b2c1bbc2858e7"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/independent-verification/verify_saved_outputs.py",
+      "sha256": "88db6470aea485abde1c569320bc20f21816491c5f584a1359d956c0cbbda4cf"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/mechanism-diagnostic/REPORT.md",
+      "sha256": "0ba9cb9ffd3898511655c3165a42cad26c75a25149209842a4483cdbd214e4bf"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/mechanism-diagnostic/diagnose_mechanism.py",
+      "sha256": "f116457bdaf6e152fb3d6a30634350ef15e2ea6f100678467dc623dc2010e797"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/mechanism-diagnostic/results.json",
+      "sha256": "3c3d94a9378deca0351b8cc76d2e4b4614323f423b8028d2dbdb637593f250ca"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/orchestrator_recompute_2026-10-14.py",
+      "sha256": "e0835f95d68d04e66cb1dfa36ab978458ae8c4339bf90a749ae38de9aaad93e2"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/orchestrator_recompute_2026-10-14.txt",
+      "sha256": "73a5acba62c5a43e795a1d8191b4327dfd7f936f73fe1c5fbbe71cbc766fd074"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/receipts/DEV_ACCESS.json",
+      "sha256": "55c396e165570d4344154516e8b36d499a501f2433249abde66f6aad6fe01781"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/receipts/FINAL_ACCESS.json",
+      "sha256": "02f4388a08e01b7c966167ebbb2279ca4e55f5fec17240887967d2d463b2e09f"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/receipts/VAL_ACCESS.json",
+      "sha256": "e1822353b42906d46464ca5f57012994bb8fd84256b64c8829de72fc0b16d8e8"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/receipts/development-output-verification.json",
+      "sha256": "9949e312192d1c6b83d89af699f4004dbe3343e31d04cd4a8df47618d5c50dc8"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/results-final/SUMMARY.json",
+      "sha256": "805ca63b86df171c5794b849f540e2522321dc6ab079eb385646910e99c17054"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/results-final/clean_metrics.json",
+      "sha256": "078a0f8cda165c98cbe19de93b255e3096bb634bc2af416775c5041814bc0a31"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/results-final/clean_predictions.npz",
+      "sha256": "b0c9a739cc2cf95224db554082cc498b6ae07630dc47e801d1d2112c048d950f"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/results-final/higher_contrast_metrics.json",
+      "sha256": "76b58585ce111b3dff3baac265e1d7eb9d6f3e80e4da832f51f8801a95570c13"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/results-final/higher_contrast_predictions.npz",
+      "sha256": "1de9c236afe761ec09b06acb3f4919c4892c7e06487b2e8cf21097cc39c90092"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/results-final/low_snr_metrics.json",
+      "sha256": "7e2f6f1fc6ec8983de0bf604e81335295e118114ccc0efdbedf23f98f191b407"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/results-final/low_snr_predictions.npz",
+      "sha256": "ddc912b044a23eec9c95343be26c47f25a5becb119bb3911745fa2bcf8286879"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/results-final/negative_offset_metrics.json",
+      "sha256": "1525504737f64c4ddbfe11b4cd3025f28d95b3053dfac95c779775c4ee096389"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/results-final/negative_offset_predictions.npz",
+      "sha256": "e02a9f234c760d76eae827eb0b86066a37bff43b36b181d6537dfc7056c49e7f"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/results-final/negative_slope_metrics.json",
+      "sha256": "919b6bca543987ed3f15fe7cc56f7c21b556330ec8d0ee4bcdd7cc12bbc8fd7c"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/results-final/negative_slope_predictions.npz",
+      "sha256": "98ecae4ac6e00da916eb2a51fc3dc9eee6ab258f1132bfde103499202a069e75"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/results-final/realistic_anchor_metrics.json",
+      "sha256": "3d4441dcc3a76ff82a8d7cc671dc58b71e716becce047fc70fe2f07f4e7880c7"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/results-final/realistic_anchor_predictions.npz",
+      "sha256": "6748c4c19aeaee53546238922c9b5937ecdeb6f88a8c46def4e76a6de97354b7"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/results-final/wide_lines_metrics.json",
+      "sha256": "4a4fd02b3dc2b2281238c7bd45b80e0335f3e496c7801dbc3db811ac542b51cb"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/results-final/wide_lines_predictions.npz",
+      "sha256": "74b4a4c7ce4c357a412abaaea18e7a82200ed35621d8de647d86c67cdb30e4f7"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/sealing/REPORT.md",
+      "sha256": "3a4ecb157ebc6f03f52bd3989e2c36ba1cf9846909adf53a5ee813b07b3e17c7"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/sealing/VERIFICATION.json",
+      "sha256": "4aceba36cb92af004957f4eda83b2ede3ba29b6a2c149e1c97632883ff270a5b"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/sealing/attempts.json",
+      "sha256": "6856950bca5bbcf341e5d10fda6050c767db58f4eceaeea3aa1850991a570023"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/sealing/dev-verification.json",
+      "sha256": "c197aee2629ba4a54539bb1c6654d178d3a57ed25b8dc4135251cdb032a5568a"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/sealing/final-verification.json",
+      "sha256": "ddf0d1aa76bdd5d606c89fdeca079c49116dc17eec33e4139060c9f968647754"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/sealing/generate_and_verify.py",
+      "sha256": "eb8b2e3b847dac5b77b1822739832bc4486fd6f77e2fc9f9e7ebd05850f89666"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/sealing/val-verification.json",
+      "sha256": "a30b8de923ca29c3103c8bbd88a22972d007330b917c2a3efad29fc125927ae6"
+    }
+  ]
+}
