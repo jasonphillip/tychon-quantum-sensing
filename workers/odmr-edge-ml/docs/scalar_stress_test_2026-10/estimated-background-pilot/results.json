@@ -1,0 +1,187 @@
+{
+  "scope": "Single fixed implementable development pilot; no adoption or held-out claim",
+  "n": 16,
+  "seeds": [
+    42,
+    20261014,
+    20261015
+  ],
+  "method": {
+    "outer_bins": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99
+    ],
+    "x": "(frequency-midpoint)/(maximum-minimum)",
+    "fit": "OLS slope plus intercept",
+    "correction": "spectrum minus estimated slope*x; fitted intercept retained"
+  },
+  "model_per_seed": {
+    "42": {
+      "mae_uT": 11.553201552942545,
+      "rmse_uT": 14.215215690267978,
+      "bias_uT": -0.8193818739126602,
+      "min_uT": 11.531820297241211,
+      "max_uT": 67.15364837646484
+    },
+    "20261014": {
+      "mae_uT": 17.653900739058145,
+      "rmse_uT": 22.0414309439062,
+      "bias_uT": -11.350776504583209,
+      "min_uT": 5.108290195465088,
+      "max_uT": 63.3472785949707
+    },
+    "20261015": {
+      "mae_uT": 14.800581956777634,
+      "rmse_uT": 16.374764288883853,
+      "bias_uT": 1.0880759546090684,
+      "min_uT": 34.54781723022461,
+      "max_uT": 61.09357452392578
+    }
+  },
+  "model_mean_seed_mae_uT": 14.669228082926109,
+  "slope_diagnostic": {
+    "known_injected_slope_for_scoring_only": 0.02,
+    "estimated_min": 0.019705686050779717,
+    "estimated_max": 0.020309842934938586,
+    "mean_estimate": 0.020073834263583064,
+    "mae": 0.00014385799246003153,
+    "rmse": 0.00017595357611733438,
+    "bias": 7.383426358306298e-05
+  },
+  "PID_after_correction": {
+    "mae_uT": 103.447970776619,
+    "rmse_uT": 108.8150065911292,
+    "bias_uT": 100.19943929833711,
+    "min_uT": 36.044141096955464,
+    "max_uT": 216.26484658171577,
+    "out_of_support_0_70_count": 15,
+    "nonfinite_count": 0,
+    "lock_bin_distribution": {
+      "46": 5,
+      "47": 3,
+      "48": 3,
+      "52": 1,
+      "54": 1,
+      "55": 1,
+      "56": 1,
+      "57": 1
+    }
+  },
+  "PID_original": {
+    "mae_uT": 769.1382016609703,
+    "rmse_uT": 794.5011084839957,
+    "bias_uT": 768.1424290012476,
+    "min_uT": 54.06621164542894,
+    "max_uT": 901.103527423827,
+    "out_of_support_0_70_count": 15
+  },
+  "saved_descriptive_comparisons": {
+    "original_mean_seed_mae_uT": 37.77052961586123,
+    "known_slope_recomputed_lock_mean_seed_mae_uT": 14.775606379937166,
+    "clean_mean_seed_mae_uT": 11.400245845998873
+  },
+  "original_output_reproduction": {
+    "42": {
+      "array_equal": true,
+      "max_abs_difference_uT": 0.0
+    },
+    "20261014": {
+      "array_equal": true,
+      "max_abs_difference_uT": 0.0
+    },
+    "20261015": {
+      "array_equal": true,
+      "max_abs_difference_uT": 0.0
+    }
+  },
+  "pairing": "exact sample seed and truth equality with previous 16-row diagnostic",
+  "previous_diagnostic_hashes": {
+    "<experiment-dir>/mechanism-diagnostic/results.json": "5d702d8eec4c6f64e72e255d66f86ebc183d77e2055a376f7ea92d152f0596cd",
+    "<experiment-dir>/mechanism-diagnostic/REPORT.md": "0ba9cb9ffd3898511655c3165a42cad26c75a25149209842a4483cdbd214e4bf",
+    "<experiment-dir>/mechanism-diagnostic/predictions.npz": "d1145c21a4fe808be2b952d60e1e844ca4960f1254d19717901ce40006c5f1db",
+    "<experiment-dir>/mechanism-diagnostic/diagnose_mechanism.py": "f116457bdaf6e152fb3d6a30634350ef15e2ea6f100678467dc623dc2010e797"
+  },
+  "data_sha256": "e80fe1acd93cb7076dab2a5389eaabf794b6d2646ff2e46b9b4ec6653a70dee9",
+  "source_hashes": {
+    "experiment": "385ad474bf3d22673e2c9d1dab69c50cfe5cde444c36857e2dc5a2421534981b",
+    "architecture": "99b32b1761bb51aa94d7faf909393d600020d9074ce081f12363d250d4f3195c",
+    "pid": "d9ed24829c08c8db5ea1ea6212b08c9be99324a554cd3a1036fbc13e4708072e"
+  },
+  "checkpoint_records": [
+    {
+      "name": "C_direct_seed42",
+      "arm": "C_direct",
+      "seed": 42,
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "21f10cd359cf301086cf4eff09d45a5811e4e79f7eacd2c7b2b40ac221582a13",
+      "export": "<path>",
+      "export_sha256": "c28c1f71ba5250cff70320934d9678bdeb4783332533e04f81e24a03996c2aae"
+    },
+    {
+      "name": "C_direct_seed20261014",
+      "arm": "C_direct",
+      "seed": 20261014,
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "7de4e62a957838057fbe2c7f22f43a75ee77fb1c05887d499e77a9ffd118676e",
+      "export": "<path>",
+      "export_sha256": "f94bab2465e433f013a645ac01519dfe9ad282d40e3249e75698e9be35af8858"
+    },
+    {
+      "name": "C_direct_seed20261015",
+      "arm": "C_direct",
+      "seed": 20261015,
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "635ef8cb6b0341b0e55c90bbe523186289e7eceede4d0a8ee6c2fbf2ff3cba16",
+      "export": "<path>",
+      "export_sha256": "89041957bc7b2ddad3f04187a0bd1db9d2dd141a89cc1d2f349e5d93929a61b1"
+    }
+  ],
+  "script_sha256": "294ed37e8c44e3ef6b727464c35f6bf858be6f9c0527525425bffba22030509a",
+  "seconds": 0.33056850696448237,
+  "limits": [
+    "One fixed method and mask; no tuning, seed selection, or training.",
+    "Only 16 previously used development rows; not independent evidence.",
+    "No validation/final data or predictions opened.",
+    "Original four-variant diagnostic and evaluator remain unchanged.",
+    "Known slope is used only to measure slope-estimation error."
+  ],
+  "predictions_sha256": "c366d4f708f601fa1864dbfc110ea5177d4130665523c7d1a136d8ce43dfa982"
+}
