@@ -18,7 +18,7 @@ import tempfile
 import unittest
 from unittest import mock
 
-DEFAULT_SOURCE = Path(__file__).resolve().parents[2] / "work/task3/repo/experiments/make_comparison_test_set.py"
+DEFAULT_SOURCE = Path(__file__).resolve().parents[1] / "experiments" / "make_comparison_test_set.py"
 SOURCE = Path(os.environ.get("COMPARISON_GENERATOR", DEFAULT_SOURCE))
 spec = importlib.util.spec_from_file_location("comparison_generator", SOURCE)
 g = importlib.util.module_from_spec(spec)
