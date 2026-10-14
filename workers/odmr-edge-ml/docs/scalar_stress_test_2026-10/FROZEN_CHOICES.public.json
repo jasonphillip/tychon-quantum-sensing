@@ -1,0 +1,108 @@
+{
+  "derivative_note": "Labelled public derivative of FROZEN_CHOICES.json (paths neutralized); the original bytes are kept privately as provenance.",
+  "derived_from_sha256": "5e54c8f9fe223217cdd8e5566f0665724c3fa230395092b733f1a6b79f63790f",
+  "created_utc": "2026-10-14T22:36:53.742241+00:00",
+  "status": "frozen",
+  "candidates": [
+    {
+      "name": "B_full_residual_seed42",
+      "arm": "B_full_residual",
+      "seed": 42,
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "9115070490b9816275ff45218add464690482402b90705f3cf91685230fce5ad",
+      "export": "<calibration-dir>/run-1/B_full_residual_seed42__rank_calibrated.tflite",
+      "export_sha256": "61196d1526edc9428914c7d05745d1baa59d3f9ed596272d84a013caff234cac"
+    },
+    {
+      "name": "C_direct_seed42",
+      "arm": "C_direct",
+      "seed": 42,
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "21f10cd359cf301086cf4eff09d45a5811e4e79f7eacd2c7b2b40ac221582a13",
+      "export": "<path>",
+      "export_sha256": "c28c1f71ba5250cff70320934d9678bdeb4783332533e04f81e24a03996c2aae"
+    },
+    {
+      "name": "B_full_residual_seed20261014",
+      "arm": "B_full_residual",
+      "seed": 20261014,
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "9fedf74e2365ba85f5f0cd1e45e8015bb1074cfcb192f8f95fe4e51f8bfaf7c0",
+      "export": "<calibration-dir>/run-1/B_full_residual_seed20261014__rank_calibrated.tflite",
+      "export_sha256": "377fe9081ed80bed3981b1d813bc692443611db1b9f891c78d9d9f76256f3f06"
+    },
+    {
+      "name": "C_direct_seed20261014",
+      "arm": "C_direct",
+      "seed": 20261014,
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "7de4e62a957838057fbe2c7f22f43a75ee77fb1c05887d499e77a9ffd118676e",
+      "export": "<path>",
+      "export_sha256": "f94bab2465e433f013a645ac01519dfe9ad282d40e3249e75698e9be35af8858"
+    },
+    {
+      "name": "B_full_residual_seed20261015",
+      "arm": "B_full_residual",
+      "seed": 20261015,
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "8af18ec10d561b2feed8b401f3c40c0aec8b7e89be26d7716a3ab582409972f9",
+      "export": "<calibration-dir>/run-1/B_full_residual_seed20261015__rank_calibrated.tflite",
+      "export_sha256": "c33de5226a7e6043a779e5387de4b201f64e0c773aed93c48aa1b97cc0dcf00f"
+    },
+    {
+      "name": "C_direct_seed20261015",
+      "arm": "C_direct",
+      "seed": 20261015,
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "635ef8cb6b0341b0e55c90bbe523186289e7eceede4d0a8ee6c2fbf2ff3cba16",
+      "export": "<path>",
+      "export_sha256": "89041957bc7b2ddad3f04187a0bd1db9d2dd141a89cc1d2f349e5d93929a61b1"
+    }
+  ],
+  "bound_paths": {
+    "work": "<path>",
+    "repo": "<path>",
+    "experiment": "<path>",
+    "calibration": "<path>",
+    "data": "<experiment-dir>/data",
+    "protocol": "<experiment-dir>/PROTOCOL.md",
+    "freeze": "<experiment-dir>/FROZEN_CHOICES.json"
+  },
+  "source_hashes": {
+    "<experiment-dir>/evaluate_stress.py": "db0922faff51bcaea18bb40300773e3adeae73cab32c2462c9430c35b8fa3c6a",
+    "<experiment-dir>/PROTOCOL.md": "39cde896ef333889806d176e3e162af645608de9c02a59310b9884925f746072",
+    "<experiment-dir>/generate_stress_data.py": "44ff2d0fca79fb1ca32fa6124006eb788fd8d3e735bb2aa1b417cfbb24a590e4",
+    "<experiment-dir>/s2b/prior_aware_scalar.py": "fab23c3d70fb43e9bee3e25fe524601d07cd3eae9b4ef199eecda3a1cd5d294d",
+    "<experiment-dir>/s2b/test_prior_aware_scalar.py": "66a9019b075ddd643a4c26b0fd2bc28a07424f60b8ec77bcd2a1cef4f2eed446",
+    "<path>": "385ad474bf3d22673e2c9d1dab69c50cfe5cde444c36857e2dc5a2421534981b",
+    "<repo>/src/odmr_edge_ml/models/fcnn_v2.py": "99b32b1761bb51aa94d7faf909393d600020d9074ce081f12363d250d4f3195c",
+    "<repo>/src/odmr_edge_ml/training/qat.py": "7dddc33e57098b5916868d0a730ee0a4c3d1884092e15a4df9587c487a35cd78",
+    "<repo>/experiments/scalar_fit_baseline.py": "372e18a5c7b3d1453181f86076bebbc6ed0263f2e01bfdfdb01b9ad514b3c087",
+    "<repo>/src/odmr_edge_ml/evaluation/pid_proxy.py": "d9ed24829c08c8db5ea1ea6212b08c9be99324a554cd3a1036fbc13e4708072e",
+    "<repo>/experiments/fcnn_v2_int8_float_equivalence.py": "eae1316fc5dd0bd57522e75f0223d73b672fc105e2630b6253c673eb677070c3",
+    "<repo>/src/odmr_edge_ml/models/fcnn.py": "e4091fd4832ed7568741e6c9eb75737937bf26ec371f4c76c43b2de695a3fb75"
+  },
+  "final_manifest_sha256": "6ce3db6ee01687d17b3015e773e75303c3f5e8877f5a05a385a4eca21f438e41",
+  "data_manifest_sha256": {
+    "dev": "bcc4faca60f5edb7617149961849b704b4bf863a5cec48644934892e71d9193b",
+    "val": "1e02b26c5313dffbe631aec2dcecd693acc672d76e5820d15b897bd9eccf2f3f",
+    "final": "6ce3db6ee01687d17b3015e773e75303c3f5e8877f5a05a385a4eca21f438e41"
+  },
+  "validation_summary_sha256": "eb37e18bf0bc2a927dc7c404a2f9cb1ea7909546b613a2c332046d9c852c9543",
+  "fixed_seeds": [
+    42,
+    20261014,
+    20261015
+  ],
+  "primary_cells": [
+    "clean",
+    "realistic_anchor"
+  ],
+  "final_accessed": false,
+  "training_mean_uT": 45.064080128749545,
+  "training_median_uT": 44.90404360960018,
+  "prior_support_uT": [
+    20,
+    70
+  ]
+}

@@ -1,0 +1,12 @@
+prediction keys (clean): 27
+['failed__prior_PID', 'failed__prior_fit', 'outside__prior_PID', 'outside__prior_fit', 'pid_lock_bins', 'pred__B_full_residual_seed20261014__fp32', 'pred__B_full_residual_seed20261014__int8', 'pred__B_full_residual_seed20261015__fp32', 'pred__B_full_residual_seed20261015__int8', 'pred__B_full_residual_seed42__fp32', 'pred__B_full_residual_seed42__int8', 'pred__C_direct_seed20261014__fp32', 'pred__C_direct_seed20261014__int8', 'pred__C_direct_seed20261015__fp32', 'pred__C_direct_seed20261015__int8', 'pred__C_direct_seed42__fp32', 'pred__C_direct_seed42__int8', 'pred__PID', 'pred__prior_PID', 'pred__prior_fit', 'pred__training_mean', 'pred__training_median', 'pred__two_line_projection', 'raw_projection__prior_PID', 'raw_projection__prior_fit', 'sample_seeds', 'truth_uT']
+cell                  C_INT8    C_FP32     const prior_fit B_rankINT8       PID   | SUMMARY (C_INT8 / const / prior)
+clean                11.0956   11.0003   13.0427   10.9407     11.358   16.7458   | {}
+realistic_anchor     33.5752   38.4691   13.0427   25.0965    824.786  809.6562   | {}
+wide_lines           14.7972   14.7632   13.0427   24.9842    833.717  801.2917   | {}
+low_snr              31.8465   38.3545   13.0427   24.0023    650.352  631.0235   | {}
+negative_slope       25.7027   28.3059   13.0427   25.0140    777.236  755.1919   | {}
+negative_offset      31.8198   34.9411   13.0427   24.8709    827.919  809.5852   | {}
+higher_contrast      24.7671   25.8915   13.0427   25.0202    826.429  799.0260   | {}
+primary_criterion_passed: False
+SUMMARY clean cell keys: ['cell', 'partition', 'data', 'models', 'arm_summary', 'paired_comparisons', 'failures', 'quantization', 'timing', 'prediction_file', 'prediction_sha256']

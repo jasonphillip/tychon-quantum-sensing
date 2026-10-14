@@ -1,0 +1,287 @@
+{
+  "scope": "Exploratory paired development-only mechanism diagnostic; no deployable gain claim",
+  "n": 16,
+  "seeds": [
+    42,
+    20261014,
+    20261015
+  ],
+  "variants": {
+    "A_original_original_lock": {
+      "per_seed": {
+        "42": {
+          "mae_uT": 37.75414199367866,
+          "rmse_uT": 40.62261130837338,
+          "bias_uT": -37.75414199367866
+        },
+        "20261014": {
+          "mae_uT": 49.68447208949134,
+          "rmse_uT": 52.25259960408963,
+          "bias_uT": -49.68447208949134
+        },
+        "20261015": {
+          "mae_uT": 25.872974764413684,
+          "rmse_uT": 29.105602526638545,
+          "bias_uT": -25.872974764413684
+        }
+      },
+      "mean_seed_mae_uT": 37.77052961586123,
+      "anchor_bin_distribution": {
+        "26": 6,
+        "27": 5,
+        "28": 4,
+        "51": 1
+      },
+      "detector_for_raw_spectrum": "original",
+      "PID_out_of_support_0_70_count": 15,
+      "uses_oracle_information": false
+    },
+    "B_original_clean_lock": {
+      "per_seed": {
+        "42": {
+          "mae_uT": 59.66794640929207,
+          "rmse_uT": 62.85563418644122,
+          "bias_uT": -59.66794640929207
+        },
+        "20261014": {
+          "mae_uT": 56.633834045238345,
+          "rmse_uT": 59.80293386681457,
+          "bias_uT": -56.633834045238345
+        },
+        "20261015": {
+          "mae_uT": 48.7924387267302,
+          "rmse_uT": 50.77466017779727,
+          "bias_uT": -48.7924387267302
+        }
+      },
+      "mean_seed_mae_uT": 55.031406393753535,
+      "anchor_bin_distribution": {
+        "51": 16
+      },
+      "detector_for_raw_spectrum": "original",
+      "PID_out_of_support_0_70_count": 15,
+      "uses_oracle_information": true
+    },
+    "C_detrended_recomputed_lock": {
+      "per_seed": {
+        "42": {
+          "mae_uT": 11.784235474184305,
+          "rmse_uT": 14.576213161157975,
+          "bias_uT": -1.0347941330145278
+        },
+        "20261014": {
+          "mae_uT": 17.7324740255915,
+          "rmse_uT": 22.171131332582366,
+          "bias_uT": -11.477934013910144
+        },
+        "20261015": {
+          "mae_uT": 14.81010964003569,
+          "rmse_uT": 16.39030135813716,
+          "bias_uT": 1.0208648034860215
+        }
+      },
+      "mean_seed_mae_uT": 14.775606379937166,
+      "anchor_bin_distribution": {
+        "46": 5,
+        "47": 3,
+        "48": 3,
+        "52": 1,
+        "54": 1,
+        "55": 1,
+        "56": 1,
+        "57": 1
+      },
+      "detector_for_raw_spectrum": "detrended",
+      "PID_out_of_support_0_70_count": 15,
+      "uses_oracle_information": true
+    },
+    "D_detrended_clean_lock": {
+      "per_seed": {
+        "42": {
+          "mae_uT": 15.397673071381341,
+          "rmse_uT": 20.69224169910941,
+          "bias_uT": -12.86331544429764
+        },
+        "20261014": {
+          "mae_uT": 17.021050156113397,
+          "rmse_uT": 21.595687106556475,
+          "bias_uT": -14.699402194328158
+        },
+        "20261015": {
+          "mae_uT": 12.38267560854713,
+          "rmse_uT": 17.659011255711317,
+          "bias_uT": -9.28346447259888
+        }
+      },
+      "mean_seed_mae_uT": 14.933799612013956,
+      "anchor_bin_distribution": {
+        "51": 16
+      },
+      "detector_for_raw_spectrum": "detrended",
+      "PID_out_of_support_0_70_count": 15,
+      "uses_oracle_information": true
+    }
+  },
+  "clean_reference": {
+    "source": "saved development predictions; no clean model rerun",
+    "per_seed": {
+      "42": {
+        "mae_uT": 11.152374088994133,
+        "rmse_uT": 13.394378610930131,
+        "bias_uT": -0.3025714567373672
+      },
+      "20261014": {
+        "mae_uT": 11.19556647562133,
+        "rmse_uT": 13.46821796189367,
+        "bias_uT": -0.6511460951040664
+      },
+      "20261015": {
+        "mae_uT": 11.852796973381157,
+        "rmse_uT": 13.730853800639053,
+        "bias_uT": -0.8665985277365127
+      }
+    },
+    "mean_seed_mae_uT": 11.400245845998873
+  },
+  "detectors": {
+    "clean": {
+      "lock_bin_distribution": {
+        "51": 16
+      },
+      "PID_out_of_support_0_70_count": 1,
+      "PID_nonfinite_count": 0,
+      "PID_min_uT": 36.04414109694695,
+      "PID_max_uT": 72.08828219391093,
+      "dip_count_distribution": {
+        "1": 11,
+        "2": 5
+      }
+    },
+    "original": {
+      "lock_bin_distribution": {
+        "26": 6,
+        "27": 5,
+        "28": 4,
+        "51": 1
+      },
+      "PID_out_of_support_0_70_count": 15,
+      "PID_nonfinite_count": 0,
+      "PID_min_uT": 54.06621164542894,
+      "PID_max_uT": 901.103527423827,
+      "dip_count_distribution": {
+        "2": 16
+      }
+    },
+    "detrended": {
+      "lock_bin_distribution": {
+        "46": 5,
+        "47": 3,
+        "48": 3,
+        "52": 1,
+        "54": 1,
+        "55": 1,
+        "56": 1,
+        "57": 1
+      },
+      "PID_out_of_support_0_70_count": 15,
+      "PID_nonfinite_count": 0,
+      "PID_min_uT": 36.044141096955464,
+      "PID_max_uT": 216.26484658171577,
+      "dip_count_distribution": {
+        "2": 16
+      }
+    }
+  },
+  "A_saved_prediction_reproduction": {
+    "42": {
+      "max_abs_difference_uT": 0.0,
+      "array_equal": true
+    },
+    "20261014": {
+      "max_abs_difference_uT": 0.0,
+      "array_equal": true
+    },
+    "20261015": {
+      "max_abs_difference_uT": 0.0,
+      "array_equal": true
+    }
+  },
+  "pairing_verified": [
+    "sample_seeds",
+    "truth_vectors_T",
+    "frequencies_hz"
+  ],
+  "intervention": {
+    "slope_amplitude": 0.02,
+    "formula": ".02*(freq-midpoint)/(freqmax-freqmin)",
+    "B_D": "matched clean-row PID lock; oracle diagnostic",
+    "C_D": "known injected slope subtraction; oracle nuisance information"
+  },
+  "input_hashes": {
+    "<experiment-dir>/data/dev/clean.npz": "e461042ae7d8da0416bc30b97362267a6873d0a6ee20f6ecfff7681633f6f26b",
+    "<experiment-dir>/results-dev/clean_predictions.npz": "b7eb1810ec0eba1ef28c935df3f07d197c6e375a64936ec4d092818490228717",
+    "<experiment-dir>/data/dev/realistic_anchor.npz": "e80fe1acd93cb7076dab2a5389eaabf794b6d2646ff2e46b9b4ec6653a70dee9",
+    "<experiment-dir>/results-dev/realistic_anchor_predictions.npz": "4059aeef8e6da285585a8ce06eae0451d7177642b90bce509a01e1668dc8313a"
+  },
+  "source_hashes": {
+    "evaluator": {
+      "path": "<experiment-dir>/evaluate_stress.py",
+      "sha256": "db0922faff51bcaea18bb40300773e3adeae73cab32c2462c9430c35b8fa3c6a"
+    },
+    "generator": {
+      "path": "<experiment-dir>/generate_stress_data.py",
+      "sha256": "44ff2d0fca79fb1ca32fa6124006eb788fd8d3e735bb2aa1b417cfbb24a590e4"
+    },
+    "experiment": {
+      "path": "<path>",
+      "sha256": "385ad474bf3d22673e2c9d1dab69c50cfe5cde444c36857e2dc5a2421534981b"
+    },
+    "architecture": {
+      "path": "<repo>/src/odmr_edge_ml/models/fcnn_v2.py",
+      "sha256": "99b32b1761bb51aa94d7faf909393d600020d9074ce081f12363d250d4f3195c"
+    },
+    "pid": {
+      "path": "<repo>/src/odmr_edge_ml/evaluation/pid_proxy.py",
+      "sha256": "d9ed24829c08c8db5ea1ea6212b08c9be99324a554cd3a1036fbc13e4708072e"
+    }
+  },
+  "checkpoint_records": [
+    {
+      "name": "C_direct_seed42",
+      "arm": "C_direct",
+      "seed": 42,
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "21f10cd359cf301086cf4eff09d45a5811e4e79f7eacd2c7b2b40ac221582a13",
+      "export": "<path>",
+      "export_sha256": "c28c1f71ba5250cff70320934d9678bdeb4783332533e04f81e24a03996c2aae"
+    },
+    {
+      "name": "C_direct_seed20261014",
+      "arm": "C_direct",
+      "seed": 20261014,
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "7de4e62a957838057fbe2c7f22f43a75ee77fb1c05887d499e77a9ffd118676e",
+      "export": "<path>",
+      "export_sha256": "f94bab2465e433f013a645ac01519dfe9ad282d40e3249e75698e9be35af8858"
+    },
+    {
+      "name": "C_direct_seed20261015",
+      "arm": "C_direct",
+      "seed": 20261015,
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "635ef8cb6b0341b0e55c90bbe523186289e7eceede4d0a8ee6c2fbf2ff3cba16",
+      "export": "<path>",
+      "export_sha256": "89041957bc7b2ddad3f04187a0bd1db9d2dd141a89cc1d2f349e5d93929a61b1"
+    }
+  ],
+  "script_sha256": "f116457bdaf6e152fb3d6a30634350ef15e2ea6f100678467dc623dc2010e797",
+  "predictions_sha256": "d1145c21a4fe808be2b952d60e1e844ca4960f1254d19717901ce40006c5f1db",
+  "seconds": 0.33722469699569046,
+  "limitations": [
+    "Only 16 paired development rows and three fixed FP32 seeds.",
+    "No model selection, threshold optimization, retraining, or validation/final reads.",
+    "Clean locks use paired noiseless narrower-line spectra unavailable at deployment.",
+    "Known slope subtraction is not an estimated deployable background correction.",
+    "Residual noise, linewidth broadening, and frequency offset remain unchanged."
+  ]
+}

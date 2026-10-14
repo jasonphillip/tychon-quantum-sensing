@@ -1,0 +1,181 @@
+{
+  "schema": 1,
+  "partition": "dev",
+  "rows_per_cell": 16,
+  "master_seed": 202610140,
+  "ou_seed": 1590320388,
+  "sample_seeds": [
+    27386950,
+    1175233339,
+    1957270375,
+    1166884415,
+    1904142690,
+    2045026179,
+    1871321304,
+    1574547791,
+    1601920129,
+    308815319,
+    723769025,
+    1236865529,
+    1565605652,
+    167978092,
+    125586506,
+    1309810353
+  ],
+  "prior_seed_overlap": 0,
+  "single_orientation": true,
+  "frequency_points": 100,
+  "frequency_range_hz": [
+    2820000000.0,
+    2920000000.0
+  ],
+  "magnitude_prior_uT": [
+    20,
+    70
+  ],
+  "direction_prior": "isotropic",
+  "cells": {
+    "clean": {
+      "file": "clean.npz",
+      "sha256": "e461042ae7d8da0416bc30b97362267a6873d0a6ee20f6ecfff7681633f6f26b",
+      "rows": 16,
+      "intrinsic_fwhm_mhz": 1.5,
+      "contrast": 0.03,
+      "reference_snr": null,
+      "slope": 0.0,
+      "frequency_offset_hz": 0.0,
+      "photons_per_point": null
+    },
+    "realistic_anchor": {
+      "file": "realistic_anchor.npz",
+      "sha256": "e80fe1acd93cb7076dab2a5389eaabf794b6d2646ff2e46b9b4ec6653a70dee9",
+      "rows": 16,
+      "intrinsic_fwhm_mhz": 5.0,
+      "contrast": 0.015,
+      "reference_snr": 10.0,
+      "slope": 0.02,
+      "frequency_offset_hz": 300000.0,
+      "photons_per_point": 4938271.604938271
+    },
+    "wide_lines": {
+      "file": "wide_lines.npz",
+      "sha256": "2cbc864d0fe595e2688cfe7605f72a6db0dc0973e1318d75358443a31455a0a8",
+      "rows": 16,
+      "intrinsic_fwhm_mhz": 7.0,
+      "contrast": 0.015,
+      "reference_snr": 10.0,
+      "slope": 0.02,
+      "frequency_offset_hz": 300000.0,
+      "photons_per_point": 4938271.604938271
+    },
+    "low_snr": {
+      "file": "low_snr.npz",
+      "sha256": "a45dbcd92b0958316ea211cb0b559a83fa4e5df18b9b4084a19c58cdc9221bae",
+      "rows": 16,
+      "intrinsic_fwhm_mhz": 5.0,
+      "contrast": 0.015,
+      "reference_snr": 3.0,
+      "slope": 0.02,
+      "frequency_offset_hz": 300000.0,
+      "photons_per_point": 444444.44444444455
+    },
+    "negative_slope": {
+      "file": "negative_slope.npz",
+      "sha256": "d0022df6699a615ac7d248822fd3424f70502f9edddd3af75842592ca63fa96e",
+      "rows": 16,
+      "intrinsic_fwhm_mhz": 5.0,
+      "contrast": 0.015,
+      "reference_snr": 10.0,
+      "slope": -0.02,
+      "frequency_offset_hz": 300000.0,
+      "photons_per_point": 4938271.604938271
+    },
+    "negative_offset": {
+      "file": "negative_offset.npz",
+      "sha256": "21a7658d67538a14edb55583adf049fbbb2672ed8b12d9a63981b63d1e9352e5",
+      "rows": 16,
+      "intrinsic_fwhm_mhz": 5.0,
+      "contrast": 0.015,
+      "reference_snr": 10.0,
+      "slope": 0.02,
+      "frequency_offset_hz": -300000.0,
+      "photons_per_point": 4938271.604938271
+    },
+    "higher_contrast": {
+      "file": "higher_contrast.npz",
+      "sha256": "72f2d5189c092ece831a9f25be238d56b0879bb01b02c54e19a545480f016fcd",
+      "rows": 16,
+      "intrinsic_fwhm_mhz": 5.0,
+      "contrast": 0.03,
+      "reference_snr": 10.0,
+      "slope": 0.02,
+      "frequency_offset_hz": 300000.0,
+      "photons_per_point": 1234567.9012345679
+    }
+  },
+  "rendered_linewidths": {
+    "1.5": {
+      "intrinsic_fwhm_hz": 1500000.0,
+      "p1_ppm": 39.963461716619236,
+      "rendered_component_fwhm_hz_range": [
+        1551759.8871238376,
+        1597987.9831662327
+      ],
+      "aliasing_warning_count": 160
+    },
+    "5.0": {
+      "intrinsic_fwhm_hz": 5000000.0,
+      "p1_ppm": 148.81964716350558,
+      "rendered_component_fwhm_hz_range": [
+        5172532.957079459,
+        5326626.610554109
+      ],
+      "aliasing_warning_count": 0
+    },
+    "7.0": {
+      "intrinsic_fwhm_hz": 7000000.0,
+      "p1_ppm": 211.02318170458346,
+      "rendered_component_fwhm_hz_range": [
+        7241546.139911242,
+        7457277.254775753
+      ],
+      "aliasing_warning_count": 0
+    }
+  },
+  "noise_reference_fraction": 0.3,
+  "source_parameters": {
+    "ou": {
+      "theta_T": 0.001,
+      "mu_T": 300.0,
+      "sigma_T": 0.05,
+      "theta_B1": 10.0,
+      "mu_B1": 1.0,
+      "sigma_B1": 0.006,
+      "trajectory_dt_s": 1.0,
+      "enable_thermal_noise": true,
+      "enable_mw_noise": true,
+      "alpha_B1": -0.0035,
+      "T_mean_C": 20.0,
+      "delta_T_orb_C": 15.0,
+      "tau_orb_s": 5400.0,
+      "B1_nominal": 1.0
+    },
+    "b1_gradient_range": [
+      0.046875,
+      0.346875
+    ]
+  },
+  "generator_sha256": "44ff2d0fca79fb1ca32fa6124006eb788fd8d3e735bb2aa1b417cfbb24a590e4",
+  "protocol_sha256": "39cde896ef333889806d176e3e162af645608de9c02a59310b9884925f746072",
+  "generation_seconds": 0.8982538119889796,
+  "simulator_commit": "9df6dd161719b369e90c0e284cbef0bae39a0612",
+  "source_sha256": {
+    "adapters/simos_adapter.py": "d5985c3920fbe6334d9bb70210e21711e2d0cda14e63308df37cf126aa46e431",
+    "pipelines/batch_generate.py": "ba9365e55bbbbc0c7b2465539104461512a9c0a4c0be4dd57c35b70d8275c5db",
+    "physics/lineshape.py": "f0d2797b88556d25534872cf05a7cf2fae2c2f03c29c03080671dd07f4f63a28",
+    "physics/parameters.py": "3ad33dfb5d64e606b828173b12b372b3c7df7464d96824ad0c34ba494be01410",
+    "physics/shot_noise.py": "c3b602bb5dab7c227d9485b8145fb995d544df5e533c59a1d571621557d44c73"
+  },
+  "created_utc": "2026-10-14T22:29:36.866324+00:00",
+  "label_or_baseline_summary_disclosed": false
+}

@@ -1,0 +1,53 @@
+{
+  "partition_count": 3,
+  "cell_count_per_partition": 7,
+  "total_cell_rows": 2800,
+  "unique_sample_seed_count": 400,
+  "cross_partition_seed_overlap_count": 0,
+  "generated_npz_file_count": 21,
+  "sealed_manifest_count": 3,
+  "sealed_directory_count": 3,
+  "writable_file_or_directory_count": 0,
+  "shape_failure_count": 0,
+  "finiteness_failure_count": 0,
+  "cross_cell_vector_mismatch_count": 0,
+  "cross_cell_nuisance_trajectory_mismatch_count": 0,
+  "cross_cell_noise_seed_mismatch_count": 0,
+  "model_invocation_count": 0,
+  "prior_metric_or_truth_arrays_accessed_count": 0,
+  "failed_generation_attempt_count": 0,
+  "generation_wall_seconds_including_failures": 7.323437128099613,
+  "protocol_sha256": "39cde896ef333889806d176e3e162af645608de9c02a59310b9884925f746072",
+  "generator_sha256": "44ff2d0fca79fb1ca32fa6124006eb788fd8d3e735bb2aa1b417cfbb24a590e4",
+  "wrapper_sha256": "a339654a7ca1266422d686e4bd82383c60ece00ed68baab5cb81e2a1a2e29498",
+  "partitions": {
+    "dev": {
+      "path": "<experiment-dir>/data/dev",
+      "rows_per_cell": 16,
+      "total_cell_rows": 112,
+      "manifest_sha256": "bcc4faca60f5edb7617149961849b704b4bf863a5cec48644934892e71d9193b",
+      "generation_seconds": 1.1702867290005088
+    },
+    "val": {
+      "path": "<experiment-dir>/data/val",
+      "rows_per_cell": 128,
+      "total_cell_rows": 896,
+      "manifest_sha256": "1e02b26c5313dffbe631aec2dcecd693acc672d76e5820d15b897bd9eccf2f3f",
+      "generation_seconds": 2.4274729100288823
+    },
+    "final": {
+      "path": "<experiment-dir>/data/final",
+      "rows_per_cell": 256,
+      "total_cell_rows": 1792,
+      "manifest_sha256": "6ce3db6ee01687d17b3015e773e75303c3f5e8877f5a05a385a4eca21f438e41",
+      "generation_seconds": 3.725677489070222
+    }
+  },
+  "verification_paths": [
+    "<experiment-dir>/sealing/dev-verification.json",
+    "<experiment-dir>/sealing/val-verification.json",
+    "<experiment-dir>/sealing/final-verification.json"
+  ],
+  "attempts_path": "<experiment-dir>/sealing/attempts.json",
+  "failures": []
+}

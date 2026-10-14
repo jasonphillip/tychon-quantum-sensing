@@ -1,0 +1,65 @@
+{
+  "evaluator_sha256": "db0922faff51bcaea18bb40300773e3adeae73cab32c2462c9430c35b8fa3c6a",
+  "passed": 12,
+  "results": [
+    {
+      "test": "unchanged_paths_and_sources_accepted",
+      "status": "passed"
+    },
+    {
+      "test": "changed_work_path_refused",
+      "status": "passed"
+    },
+    {
+      "test": "changed_imported_source_refused",
+      "status": "passed"
+    },
+    {
+      "test": "changed_imported_source_set_refused",
+      "status": "passed"
+    },
+    {
+      "test": "existing_final_receipt_refused",
+      "status": "passed"
+    },
+    {
+      "evidence": "metadata_only_hash_calls",
+      "paths": [
+        "manifest.json"
+      ]
+    },
+    {
+      "test": "metadata_only_verification_never_hashes_npz",
+      "status": "passed"
+    },
+    {
+      "test": "payload_verification_hashes_npz_when_enabled",
+      "status": "passed"
+    },
+    {
+      "test": "synthetic_original_candidate_hashes_accepted",
+      "status": "passed"
+    },
+    {
+      "test": "changed_direct_export_refused",
+      "status": "passed"
+    },
+    {
+      "test": "sigma_below_fp32_clamp_refused",
+      "status": "passed"
+    },
+    {
+      "test": "sigma_at_fp32_clamp_accepted",
+      "status": "passed"
+    },
+    {
+      "test": "guard_and_receipt_precede_import_and_payload_paths",
+      "status": "passed"
+    }
+  ],
+  "method": "AST-extracted actual guard functions with temporary synthetic byte fixtures",
+  "real_datasets_opened": false,
+  "real_checkpoints_loaded": false,
+  "models_scored": false,
+  "evaluator_edited": false
+}

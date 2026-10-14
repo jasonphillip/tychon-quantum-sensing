@@ -1,0 +1,875 @@
+{
+  "status": "complete",
+  "started_at_utc": "2026-10-14T22:23:59.816885+00:00",
+  "protocol_sha256": "f420deb9ed60b3c99640c80f9dfd973a579185b2eb583f861b3e94c4610f834b",
+  "seeds": [
+    42,
+    20261014,
+    20261015
+  ],
+  "source_hashes": {
+    "<path>": "bfd12dcea07c11177826555cbe67feb7261b27d4aefa86ea9318025a5b166ca5",
+    "<path>": "385ad474bf3d22673e2c9d1dab69c50cfe5cde444c36857e2dc5a2421534981b",
+    "<repo>/src/odmr_edge_ml/models/fcnn_v2.py": "99b32b1761bb51aa94d7faf909393d600020d9074ce081f12363d250d4f3195c",
+    "<repo>/experiments/fcnn_v2_int8_float_equivalence.py": "eae1316fc5dd0bd57522e75f0223d73b672fc105e2630b6253c673eb677070c3",
+    "<repo>/src/odmr_edge_ml/models/fcnn.py": "e4091fd4832ed7568741e6c9eb75737937bf26ec371f4c76c43b2de695a3fb75",
+    "<calibration-dir>/run_calibration_repair.py": "bc19011f1be95e6d176d071160584daef401da44aa98bc38e9ac68683b1e5d3b"
+  },
+  "versions": {
+    "python": "3.12.15",
+    "numpy": "2.5.3",
+    "torch": "2.11.0+cu130",
+    "tensorflow": "2.20.0",
+    "h5py": "3.16.0"
+  },
+  "threads": {
+    "torch_intra": 2,
+    "torch_inter": 2,
+    "tensorflow_intra": 2,
+    "tensorflow_inter": 2,
+    "blas_environment": 2
+  },
+  "scope": "Original train and validation only. Frozen weights. Three one-time exports.",
+  "limitations": [
+    "Original validation selected the checkpoints; this is not fresh generalization evidence.",
+    "The calibration rule was chosen after a prior training/validation coverage diagnosis.",
+    "Training-output coverage does not guarantee future activation or output coverage.",
+    "Endpoint occupancy alone does not prove clipping; float outside-range counts are separate.",
+    "No retraining, hardware validation, original-test access, or fresh-holdout access."
+  ],
+  "models": {
+    "B_full_residual_seed42": {
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "9115070490b9816275ff45218add464690482402b90705f3cf91685230fce5ad",
+      "prefix_export": "<path>",
+      "prefix_export_sha256": "e387a594b15421aff3e8cbb85a176117fd72ae0b867693e2f26f07b70050e438",
+      "new_export": "<calibration-dir>/run-1/B_full_residual_seed42__rank_calibrated.tflite",
+      "sigma": 1.4717248678207397,
+      "train_float_range_uT": [
+        -55.66115951538086,
+        62.649383544921875
+      ],
+      "calibration_float_range_uT": [
+        -55.66115951538086,
+        62.649383544921875
+      ],
+      "selection_indices_sha256": "adaa5595b0411aec64ac104059bf81b22b436d2e43b6b506d0946964bf783cff",
+      "selection_ranks_sha256": "9e02318c9f71f8f39baa64b90bffd52e8d9b8feffdfdb0080120ed338ccf300d",
+      "training_float_outputs_sha256": "b1cbb788190d857d19142815e661d765ea31a85365a66162666ede20cc64b175",
+      "calibration_input_sha256": "9f8845fc35442b2cd218fb761703dbcd4f7a056ca92873a17ef815802b9712f4",
+      "pre_export_keras_max_abs_gap_uT": 3.0517578125e-05,
+      "calibration_lock_counts": {
+        "50": 262,
+        "51": 522,
+        "52": 216
+      },
+      "new_export_sha256": "61196d1526edc9428914c7d05745d1baa59d3f9ed596272d84a013caff234cac",
+      "exported_at_utc": "2026-10-14T22:24:00.202454+00:00",
+      "float": {
+        "field_metrics": {
+          "n": 5000,
+          "mae_uT": 10.796918908236655,
+          "rmse_uT": 13.00351305042387,
+          "median_abs_uT": 9.819719002589016,
+          "p90_abs_uT": 20.799531340554978,
+          "bias_uT": -1.2257928082594254,
+          "magnitude_bins": {
+            "20-30": {
+              "n": 939,
+              "mae_uT": 14.542770325812455
+            },
+            "30-40": {
+              "n": 1045,
+              "mae_uT": 6.410179485350256
+            },
+            "40-50": {
+              "n": 964,
+              "mae_uT": 5.3193854804046055
+            },
+            "50-60": {
+              "n": 1013,
+              "mae_uT": 10.690366330760908
+            },
+            "60-70": {
+              "n": 1039,
+              "mae_uT": 17.009689073035155
+            }
+          }
+        },
+        "residual_output_range_uT": [
+          -55.24644470214844,
+          59.142269134521484
+        ]
+      },
+      "prefix_int8": {
+        "field_metrics": {
+          "n": 5000,
+          "mae_uT": 13.87965314115127,
+          "rmse_uT": 17.678081828377486,
+          "median_abs_uT": 11.543936020835382,
+          "p90_abs_uT": 28.973109109944538,
+          "bias_uT": 3.9588209884559196,
+          "magnitude_bins": {
+            "20-30": {
+              "n": 939,
+              "mae_uT": 21.142863420878907
+            },
+            "30-40": {
+              "n": 1045,
+              "mae_uT": 12.515642744482093
+            },
+            "40-50": {
+              "n": 964,
+              "mae_uT": 9.405371120647484
+            },
+            "50-60": {
+              "n": 1013,
+              "mae_uT": 11.391961776822763
+            },
+            "60-70": {
+              "n": 1039,
+              "mae_uT": 15.264134018615627
+            }
+          }
+        },
+        "quantization_gap_vs_float": {
+          "mae_uT": 5.895261221901979,
+          "rmse_uT": 12.941072887160706,
+          "p90_abs_uT": 30.52626419067383,
+          "max_abs_uT": 36.49837303161621,
+          "bias_uT": 5.184613796715345
+        },
+        "encoding": {
+          "input": {
+            "dtype": "int8",
+            "shape": [
+              1,
+              1,
+              100,
+              2
+            ],
+            "scale": 0.007843137718737125,
+            "zero_point": -1,
+            "code_min": -128,
+            "code_max": 127,
+            "representable_range": [
+              -0.9960784902796149,
+              1.003921627998352
+            ]
+          },
+          "output": {
+            "dtype": "int8",
+            "shape": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "scale": 0.20159217715263367,
+            "zero_point": -35,
+            "code_min": -128,
+            "code_max": 127,
+            "representable_range": [
+              -18.74807247519493,
+              32.657932698726654
+            ]
+          }
+        },
+        "endpoint_occupancy": {
+          "at_min": 905,
+          "at_max": 155,
+          "fraction": 0.212
+        },
+        "float_outside_encoding": {
+          "below": 906,
+          "above": 162,
+          "fraction": 0.2136
+        },
+        "input_endpoint_counts": {
+          "at_min": 5264,
+          "at_max": 0
+        },
+        "observed_output_range_uT": [
+          -18.748071670532227,
+          32.65793228149414
+        ]
+      },
+      "rank_int8": {
+        "field_metrics": {
+          "n": 5000,
+          "mae_uT": 10.809719104739303,
+          "rmse_uT": 12.99866651780213,
+          "median_abs_uT": 9.931032759024216,
+          "p90_abs_uT": 20.711672162437228,
+          "bias_uT": -1.0283962369645552,
+          "magnitude_bins": {
+            "20-30": {
+              "n": 939,
+              "mae_uT": 14.771046136761031
+            },
+            "30-40": {
+              "n": 1045,
+              "mae_uT": 6.559645863799376
+            },
+            "40-50": {
+              "n": 964,
+              "mae_uT": 5.259511952352139
+            },
+            "50-60": {
+              "n": 1013,
+              "mae_uT": 10.592330993106561
+            },
+            "60-70": {
+              "n": 1039,
+              "mae_uT": 16.865786771437108
+            }
+          }
+        },
+        "quantization_gap_vs_float": {
+          "mae_uT": 0.5086327978654764,
+          "rmse_uT": 0.647977970952466,
+          "p90_abs_uT": 1.049397373199463,
+          "max_abs_uT": 2.8871383666992188,
+          "bias_uT": 0.19739657129487023
+        },
+        "encoding": {
+          "input": {
+            "dtype": "int8",
+            "shape": [
+              1,
+              1,
+              100,
+              2
+            ],
+            "scale": 0.007843137718737125,
+            "zero_point": -1,
+            "code_min": -128,
+            "code_max": 127,
+            "representable_range": [
+              -0.9960784902796149,
+              1.003921627998352
+            ]
+          },
+          "output": {
+            "dtype": "int8",
+            "shape": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "scale": 0.46396300196647644,
+            "zero_point": -8,
+            "code_min": -128,
+            "code_max": 127,
+            "representable_range": [
+              -55.67556023597717,
+              62.63500526547432
+            ]
+          }
+        },
+        "endpoint_occupancy": {
+          "at_min": 0,
+          "at_max": 0,
+          "fraction": 0.0
+        },
+        "float_outside_encoding": {
+          "below": 0,
+          "above": 0,
+          "fraction": 0.0
+        },
+        "input_endpoint_counts": {
+          "at_min": 5264,
+          "at_max": 0
+        },
+        "observed_output_range_uT": [
+          -55.21159744262695,
+          58.4593391418457
+        ]
+      },
+      "new_minus_prefix_field_mae_uT": -3.0699340364119667
+    },
+    "B_full_residual_seed20261014": {
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "9fedf74e2365ba85f5f0cd1e45e8015bb1074cfcb192f8f95fe4e51f8bfaf7c0",
+      "prefix_export": "<path>",
+      "prefix_export_sha256": "76b7f346bd1540d33f7990e05747ec2ce0bca3f08c35e9746b83882321d27540",
+      "new_export": "<calibration-dir>/run-1/B_full_residual_seed20261014__rank_calibrated.tflite",
+      "sigma": 1.6474040746688843,
+      "train_float_range_uT": [
+        -57.07984161376953,
+        53.55338668823242
+      ],
+      "calibration_float_range_uT": [
+        -57.07984161376953,
+        53.55338668823242
+      ],
+      "selection_indices_sha256": "2645d152cbe6565061c31cd7692241a15f36c4a52ff9dc1cbadba2a4dbe98cf0",
+      "selection_ranks_sha256": "9e02318c9f71f8f39baa64b90bffd52e8d9b8feffdfdb0080120ed338ccf300d",
+      "training_float_outputs_sha256": "e5c046b573fc3d6ead8ad03e19f15a1978c922588cdd5a6636079cbccb460ed5",
+      "calibration_input_sha256": "8916a7fb4502c866d8fa5dc9c68540458c6be96ef2899f311f14b4a73fd22cf1",
+      "pre_export_keras_max_abs_gap_uT": 3.0517578125e-05,
+      "calibration_lock_counts": {
+        "50": 253,
+        "51": 533,
+        "52": 214
+      },
+      "new_export_sha256": "377fe9081ed80bed3981b1d813bc692443611db1b9f891c78d9d9f76256f3f06",
+      "exported_at_utc": "2026-10-14T22:24:00.472639+00:00",
+      "float": {
+        "field_metrics": {
+          "n": 5000,
+          "mae_uT": 10.777380460857973,
+          "rmse_uT": 13.059080061165984,
+          "median_abs_uT": 9.69860072271932,
+          "p90_abs_uT": 20.95830353493914,
+          "bias_uT": -1.9807141562594635,
+          "magnitude_bins": {
+            "20-30": {
+              "n": 939,
+              "mae_uT": 13.962386732022642
+            },
+            "30-40": {
+              "n": 1045,
+              "mae_uT": 5.806226306020528
+            },
+            "40-50": {
+              "n": 964,
+              "mae_uT": 5.444412162098721
+            },
+            "50-60": {
+              "n": 1013,
+              "mae_uT": 11.15225268917615
+            },
+            "60-70": {
+              "n": 1039,
+              "mae_uT": 17.481298724475984
+            }
+          }
+        },
+        "residual_output_range_uT": [
+          -56.94600296020508,
+          53.32357406616211
+        ]
+      },
+      "prefix_int8": {
+        "field_metrics": {
+          "n": 5000,
+          "mae_uT": 13.708878060228793,
+          "rmse_uT": 17.46251944543378,
+          "median_abs_uT": 11.317921884063946,
+          "p90_abs_uT": 28.6192498135571,
+          "bias_uT": 3.4877337572847886,
+          "magnitude_bins": {
+            "20-30": {
+              "n": 939,
+              "mae_uT": 20.63887410371313
+            },
+            "30-40": {
+              "n": 1045,
+              "mae_uT": 12.054156009084481
+            },
+            "40-50": {
+              "n": 964,
+              "mae_uT": 9.381977887794651
+            },
+            "50-60": {
+              "n": 1013,
+              "mae_uT": 11.48431465237294
+            },
+            "60-70": {
+              "n": 1039,
+              "mae_uT": 15.293606411526696
+            }
+          }
+        },
+        "quantization_gap_vs_float": {
+          "mae_uT": 5.785715618078783,
+          "rmse_uT": 12.546149555315395,
+          "p90_abs_uT": 29.530057144165045,
+          "max_abs_uT": 37.42512893676758,
+          "bias_uT": 5.468447913544252
+        },
+        "encoding": {
+          "input": {
+            "dtype": "int8",
+            "shape": [
+              1,
+              1,
+              100,
+              2
+            ],
+            "scale": 0.007843137718737125,
+            "zero_point": -1,
+            "code_min": -128,
+            "code_max": 127,
+            "representable_range": [
+              -0.9960784902796149,
+              1.003921627998352
+            ]
+          },
+          "output": {
+            "dtype": "int8",
+            "shape": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "scale": 0.2099018692970276,
+            "zero_point": -35,
+            "code_min": -128,
+            "code_max": 127,
+            "representable_range": [
+              -19.520873844623566,
+              34.00410282611847
+            ]
+          }
+        },
+        "endpoint_occupancy": {
+          "at_min": 913,
+          "at_max": 143,
+          "fraction": 0.2112
+        },
+        "float_outside_encoding": {
+          "below": 916,
+          "above": 120,
+          "fraction": 0.2072
+        },
+        "input_endpoint_counts": {
+          "at_min": 5264,
+          "at_max": 0
+        },
+        "observed_output_range_uT": [
+          -19.5208740234375,
+          34.00410461425781
+        ]
+      },
+      "rank_int8": {
+        "field_metrics": {
+          "n": 5000,
+          "mae_uT": 10.793677715325801,
+          "rmse_uT": 13.015105274416198,
+          "median_abs_uT": 9.826221297744567,
+          "p90_abs_uT": 20.75346102512678,
+          "bias_uT": -1.4902124148810818,
+          "magnitude_bins": {
+            "20-30": {
+              "n": 939,
+              "mae_uT": 14.428421732455057
+            },
+            "30-40": {
+              "n": 1045,
+              "mae_uT": 6.252139343641812
+            },
+            "40-50": {
+              "n": 964,
+              "mae_uT": 5.3338714823392275
+            },
+            "50-60": {
+              "n": 1013,
+              "mae_uT": 10.852350425769254
+            },
+            "60-70": {
+              "n": 1039,
+              "mae_uT": 17.085016232404953
+            }
+          }
+        },
+        "quantization_gap_vs_float": {
+          "mae_uT": 0.5687374166775495,
+          "rmse_uT": 0.6803746764947958,
+          "p90_abs_uT": 1.0631062507629396,
+          "max_abs_uT": 2.7735366821289062,
+          "bias_uT": 0.4905017413783819
+        },
+        "encoding": {
+          "input": {
+            "dtype": "int8",
+            "shape": [
+              1,
+              1,
+              100,
+              2
+            ],
+            "scale": 0.007843137718737125,
+            "zero_point": -1,
+            "code_min": -128,
+            "code_max": 127,
+            "representable_range": [
+              -0.9960784902796149,
+              1.003921627998352
+            ]
+          },
+          "output": {
+            "dtype": "int8",
+            "shape": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "scale": 0.4338558316230774,
+            "zero_point": 4,
+            "code_min": -128,
+            "code_max": 127,
+            "representable_range": [
+              -57.268969774246216,
+              53.36426728963852
+            ]
+          }
+        },
+        "endpoint_occupancy": {
+          "at_min": 0,
+          "at_max": 1,
+          "fraction": 0.0002
+        },
+        "float_outside_encoding": {
+          "below": 0,
+          "above": 0,
+          "fraction": 0.0
+        },
+        "input_endpoint_counts": {
+          "at_min": 5264,
+          "at_max": 0
+        },
+        "observed_output_range_uT": [
+          -56.4012565612793,
+          53.36426544189453
+        ]
+      },
+      "new_minus_prefix_field_mae_uT": -2.915200344902992
+    },
+    "B_full_residual_seed20261015": {
+      "checkpoint": "<path>",
+      "checkpoint_sha256": "8af18ec10d561b2feed8b401f3c40c0aec8b7e89be26d7716a3ab582409972f9",
+      "prefix_export": "<path>",
+      "prefix_export_sha256": "a7305e71330f35545d908c7d9daf39c4f9b34866bf636c8019b089ff43ed0a78",
+      "new_export": "<calibration-dir>/run-1/B_full_residual_seed20261015__rank_calibrated.tflite",
+      "sigma": 1.2971076965332031,
+      "train_float_range_uT": [
+        -56.552642822265625,
+        62.70292663574219
+      ],
+      "calibration_float_range_uT": [
+        -56.552642822265625,
+        62.70292663574219
+      ],
+      "selection_indices_sha256": "7190cdec7fa654f10c12d75c5dc56314be8388216765ead33543f01c09c1595e",
+      "selection_ranks_sha256": "9e02318c9f71f8f39baa64b90bffd52e8d9b8feffdfdb0080120ed338ccf300d",
+      "training_float_outputs_sha256": "89928b90ec78e57f20af1dc436be12f36fa667e6c57b13d18e8fecaef9854383",
+      "calibration_input_sha256": "54053574e223c9d3a4ffeda797556dc35055a1c0e5bcb94a97b78244da5eace3",
+      "pre_export_keras_max_abs_gap_uT": 3.24249267578125e-05,
+      "calibration_lock_counts": {
+        "50": 263,
+        "51": 525,
+        "52": 212
+      },
+      "new_export_sha256": "c33de5226a7e6043a779e5387de4b201f64e0c773aed93c48aa1b97cc0dcf00f",
+      "exported_at_utc": "2026-10-14T22:24:00.833339+00:00",
+      "float": {
+        "field_metrics": {
+          "n": 5000,
+          "mae_uT": 10.84136188564592,
+          "rmse_uT": 13.13737225706828,
+          "median_abs_uT": 9.747918818784083,
+          "p90_abs_uT": 21.25713000331921,
+          "bias_uT": -1.939321753990983,
+          "magnitude_bins": {
+            "20-30": {
+              "n": 939,
+              "mae_uT": 13.963193897995238
+            },
+            "30-40": {
+              "n": 1045,
+              "mae_uT": 5.791323361873068
+            },
+            "40-50": {
+              "n": 964,
+              "mae_uT": 5.485507146686529
+            },
+            "50-60": {
+              "n": 1013,
+              "mae_uT": 11.20252776274745
+            },
+            "60-70": {
+              "n": 1039,
+              "mae_uT": 17.716311772652297
+            }
+          }
+        },
+        "residual_output_range_uT": [
+          -56.478416442871094,
+          58.06844711303711
+        ]
+      },
+      "prefix_int8": {
+        "field_metrics": {
+          "n": 5000,
+          "mae_uT": 13.91106129261051,
+          "rmse_uT": 17.746534586556546,
+          "median_abs_uT": 11.502743154815324,
+          "p90_abs_uT": 29.507233935175922,
+          "bias_uT": 2.938085847911743,
+          "magnitude_bins": {
+            "20-30": {
+              "n": 939,
+              "mae_uT": 20.207630099064414
+            },
+            "30-40": {
+              "n": 1045,
+              "mae_uT": 11.64414249184542
+            },
+            "40-50": {
+              "n": 964,
+              "mae_uT": 9.66859464731752
+            },
+            "50-60": {
+              "n": 1013,
+              "mae_uT": 12.080640883684259
+            },
+            "60-70": {
+              "n": 1039,
+              "mae_uT": 16.221365198138948
+            }
+          }
+        },
+        "quantization_gap_vs_float": {
+          "mae_uT": 5.79026996822441,
+          "rmse_uT": 12.610843970369984,
+          "p90_abs_uT": 30.078604507446297,
+          "max_abs_uT": 37.430912017822266,
+          "bias_uT": 4.877407601902727
+        },
+        "encoding": {
+          "input": {
+            "dtype": "int8",
+            "shape": [
+              1,
+              1,
+              100,
+              2
+            ],
+            "scale": 0.007843137718737125,
+            "zero_point": -1,
+            "code_min": -128,
+            "code_max": 127,
+            "representable_range": [
+              -0.9960784902796149,
+              1.003921627998352
+            ]
+          },
+          "output": {
+            "dtype": "int8",
+            "shape": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "scale": 0.1984114944934845,
+            "zero_point": -32,
+            "code_min": -128,
+            "code_max": 127,
+            "representable_range": [
+              -19.04750347137451,
+              31.547427624464035
+            ]
+          }
+        },
+        "endpoint_occupancy": {
+          "at_min": 945,
+          "at_max": 175,
+          "fraction": 0.224
+        },
+        "float_outside_encoding": {
+          "below": 908,
+          "above": 171,
+          "fraction": 0.2158
+        },
+        "input_endpoint_counts": {
+          "at_min": 5264,
+          "at_max": 0
+        },
+        "observed_output_range_uT": [
+          -19.047504425048828,
+          31.547428131103516
+        ]
+      },
+      "rank_int8": {
+        "field_metrics": {
+          "n": 5000,
+          "mae_uT": 10.866374436120386,
+          "rmse_uT": 13.167326417024555,
+          "median_abs_uT": 9.756651435261203,
+          "p90_abs_uT": 21.366760016886584,
+          "bias_uT": -1.9565298979128318,
+          "magnitude_bins": {
+            "20-30": {
+              "n": 939,
+              "mae_uT": 13.971682386014828
+            },
+            "30-40": {
+              "n": 1045,
+              "mae_uT": 5.790750570419823
+            },
+            "40-50": {
+              "n": 964,
+              "mae_uT": 5.529872553247127
+            },
+            "50-60": {
+              "n": 1013,
+              "mae_uT": 11.233408592059622
+            },
+            "60-70": {
+              "n": 1039,
+              "mae_uT": 17.75831379110555
+            }
+          }
+        },
+        "quantization_gap_vs_float": {
+          "mae_uT": 0.4502002428391017,
+          "rmse_uT": 0.5684521302436704,
+          "p90_abs_uT": 0.9447291374206543,
+          "max_abs_uT": 2.255666732788086,
+          "bias_uT": -0.017208143921848388
+        },
+        "encoding": {
+          "input": {
+            "dtype": "int8",
+            "shape": [
+              1,
+              1,
+              100,
+              2
+            ],
+            "scale": 0.007843137718737125,
+            "zero_point": -1,
+            "code_min": -128,
+            "code_max": 127,
+            "representable_range": [
+              -0.9960784902796149,
+              1.003921627998352
+            ]
+          },
+          "output": {
+            "dtype": "int8",
+            "shape": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "scale": 0.46766889095306396,
+            "zero_point": -7,
+            "code_min": -128,
+            "code_max": 127,
+            "representable_range": [
+              -56.58793580532074,
+              62.66763138771057
+            ]
+          }
+        },
+        "endpoint_occupancy": {
+          "at_min": 4,
+          "at_max": 0,
+          "fraction": 0.0008
+        },
+        "float_outside_encoding": {
+          "below": 0,
+          "above": 0,
+          "fraction": 0.0
+        },
+        "input_endpoint_counts": {
+          "at_min": 5264,
+          "at_max": 0
+        },
+        "observed_output_range_uT": [
+          -56.58793640136719,
+          57.990943908691406
+        ]
+      },
+      "new_minus_prefix_field_mae_uT": -3.0446868564901237
+    }
+  },
+  "accessed_arrays": [
+    "dataset.h5:train/spectra",
+    "pid_residuals.npz:train_lock_bins",
+    "dataset.h5:val/spectra",
+    "dataset.h5:val/labels",
+    "dataset.h5:val/seeds",
+    "pid_residuals.npz:val_b_pid_uT",
+    "pid_residuals.npz:val_lock_bins",
+    "pid_residuals.npz:val_b_mag_uT",
+    "pid_residuals.npz:val_delta_b_uT"
+  ],
+  "training_array_hashes": {
+    "spectra": "e15ab0d2b55b648f13528feb18b3502af37c47971f5b4dc179e6049d9bac812e",
+    "lock_bins": "9ee0678849c8fc9f3815e5f3f83529d9c34bf8b9789a9c12c81ab8be8cd8f6de"
+  },
+  "training_selection_file_sha256": "1fb0d44772c45cbc2209dc3df4e46851e5191d12f30bb1fe65106779dc74ad79",
+  "validation_array_hashes": {
+    "spectra": "74a28229d281d699e67d75a96df32fb14549bb8672e6b8bffa71132b09f751b7",
+    "truth_uT": "09a47b4763bd124f5b3a927f0f111ab3d4a99ab259c0511b8c265e5d51658e2e",
+    "pid_uT": "c4d6867f3d4e6408d478c2da477750facf4c9529e905a5faba4947e6b254d107",
+    "lock_bins": "e2efdff65fdfbf85aa2a395d86a339233911ededa387bbeaf496747b17d8491a",
+    "sample_seeds": "f20536bb0cfadd3b003e64092181ce6dc0bec4f63e3249aaa92fea85446129f6"
+  },
+  "validation_n": 5000,
+  "pid_metrics": {
+    "n": 5000,
+    "mae_uT": 23.750037429214423,
+    "rmse_uT": 29.152557702728796,
+    "median_abs_uT": 20.856882780911562,
+    "p90_abs_uT": 49.27915343130404,
+    "bias_uT": 3.3157821251546427,
+    "magnitude_bins": {
+      "20-30": {
+        "n": 939,
+        "mae_uT": 28.654656682126575
+      },
+      "30-40": {
+        "n": 1045,
+        "mae_uT": 25.084907425533654
+      },
+      "40-50": {
+        "n": 964,
+        "mae_uT": 21.328994573406337
+      },
+      "50-60": {
+        "n": 1013,
+        "mae_uT": 19.417641347695465
+      },
+      "60-70": {
+        "n": 1039,
+        "mae_uT": 24.44515380932954
+      }
+    }
+  },
+  "validation_predictions_sha256": "d6b28052108a88c2852f5e8ee077d025739268054832432868fe2f9d869c582a",
+  "summary": {
+    "float": {
+      "mae_uT": 10.805220418246849,
+      "rmse_uT": 13.066655122886045,
+      "p90_abs_uT": 21.004988292937778
+    },
+    "prefix_int8": {
+      "mae_uT": 13.833197497996858,
+      "rmse_uT": 17.629045286789275,
+      "p90_abs_uT": 29.033197619559186,
+      "mean_quantization_gap_mae_uT": 5.823748936068391,
+      "mean_endpoint_fraction": 0.21573333333333333
+    },
+    "rank_int8": {
+      "mae_uT": 10.823257085395163,
+      "rmse_uT": 13.060366069747628,
+      "p90_abs_uT": 20.94396440148353,
+      "mean_quantization_gap_mae_uT": 0.5091901524607092,
+      "mean_endpoint_fraction": 0.0003333333333333333
+    }
+  },
+  "unchanged_source_and_input_artifact_hashes_verified": true,
+  "completed_at_utc": "2026-10-14T22:24:01.777251+00:00",
+  "elapsed_seconds": 1.9682271470082924,
+  "reproduction_command": "<path> <calibration-dir>/run_calibration_repair.py --out <calibration-dir>/reproduction-run"
+}
