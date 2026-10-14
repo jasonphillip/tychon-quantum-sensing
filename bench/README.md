@@ -3,7 +3,9 @@
 From a clean checkout, run this one command at the monorepo root. It creates
 `.venv`, installs CPU PyTorch and both workers into that venv, then runs the
 benchmark. Later runs reuse the venv.
-Python 3.11 and pip access to PyPI and the PyTorch CPU wheel index are required.
+Python 3.11 or newer and pip access to PyPI and the PyTorch CPU wheel index are required
+(the Makefile uses `python3.11` when present, otherwise `python3`; override with `BENCH_PY=`).
+CI runs it on Python 3.11; the reference values in `bench/expected.json` were measured with 3.13.11.
 
 ```sh
 make bench
