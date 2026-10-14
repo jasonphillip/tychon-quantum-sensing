@@ -1,0 +1,69 @@
+{
+  "scope": "exploratory fixed train-mean/train-median baselines added after Task 6; no test-based selection",
+  "rules_fixed_before_scoring": [
+    "training mean magnitude",
+    "training median magnitude"
+  ],
+  "measurement_date": "2026-10-14",
+  "cohorts": {
+    "bench_test_200": {
+      "train_magnitude_sha256": "6db2761492f40b1f125871c5faaf64672df586a39d87746831e81975cab2be84",
+      "test_magnitude_sha256": "2acb430a38a9d163a977715691ae390ce92752b084a51de006e568789daef3ce",
+      "results": {
+        "train_mean": {
+          "prediction_uT": 45.4219475343242,
+          "n_train": 1000,
+          "n_test": 200,
+          "mae_uT": 12.262343332514801,
+          "rmse_uT": 14.2386337056776,
+          "p90_uT": 21.940247453213736,
+          "worst_uT": 25.315149496449475
+        },
+        "train_median": {
+          "prediction_uT": 45.687858418035574,
+          "n_train": 1000,
+          "n_test": 200,
+          "mae_uT": 12.277713068859049,
+          "rmse_uT": 14.250615535947231,
+          "p90_uT": 22.028569429305282,
+          "worst_uT": 25.581060380160853
+        },
+        "oracle_bounded_residual": {
+          "scope": "not an estimator: clairvoyant lower bound on MAE when correction magnitude is at most 2.25 uT",
+          "mae_lower_bound_uT": 23.741854672821578,
+          "clamp_uT": 2.25
+        }
+      }
+    },
+    "production_50k_v2_aic_test_5000": {
+      "train_magnitude_sha256": "62b224874937c4eb1439d80e4bc97644fdcc672cf37ff67c2b02c45c5560511e",
+      "test_magnitude_sha256": "684045df329f7cdefd70a47128a9956bcc6b5359bcbd8602ca8ce6c293d58500",
+      "results": {
+        "train_mean": {
+          "prediction_uT": 45.064080128749545,
+          "n_train": 40000,
+          "n_test": 5000,
+          "mae_uT": 12.333962749984462,
+          "rmse_uT": 14.320992652015248,
+          "p90_uT": 22.399308981108383,
+          "worst_uT": 25.06332229599907
+        },
+        "train_median": {
+          "prediction_uT": 44.90404360960018,
+          "n_train": 40000,
+          "n_test": 5000,
+          "mae_uT": 12.33759771321942,
+          "rmse_uT": 14.32403536799655,
+          "p90_uT": 22.465472962668223,
+          "worst_uT": 25.09243404362323
+        },
+        "oracle_bounded_residual": {
+          "scope": "not an estimator: clairvoyant lower bound on MAE when correction magnitude is at most 2.25 uT",
+          "mae_lower_bound_uT": 21.33455125586218,
+          "clamp_uT": 2.25
+        }
+      }
+    }
+  },
+  "script_sha256": "8542b1eda6ff51566836096f0ddf0d10acc08dde236e90dde3cc055c6f461cd8"
+}
