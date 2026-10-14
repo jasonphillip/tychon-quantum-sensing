@@ -5,7 +5,10 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
+import os
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -24,6 +27,22 @@ CHECKPOINT_SOURCE = Path(
     "~/projects/odmr-edge-ml/experiments/"
     "scalar_residual_v2_dataset_a/checkpoints/best_model_dataset_a.pt"
 )
+
+
+def tf_python() -> str:
+    """Pick an interpreter that can run the TFLite step."""
+    if os.environ.get("ODMR_TF_PYTHON"):
+        return os.environ["ODMR_TF_PYTHON"]
+    for module in ("tflite_runtime", "tensorflow"):
+        try:
+            if importlib.util.find_spec(module) is not None:
+                return sys.executable
+        except (ImportError, ValueError):
+            pass
+    fallback = Path("~/miniconda3/envs/tfc2/bin/python3")
+    if fallback.exists():
+        return str(fallback)
+    raise RuntimeError("no TFLite-capable interpreter; set ODMR_TF_PYTHON")
 
 
 def sha256(path: Path) -> str:
