@@ -121,8 +121,8 @@ The manifest's original generator hash predates augmentation; the HDF5 hash abov
 ## Reproduction on the measurement host
 
 ```sh
-PYTHONPATH=src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python3 -m pytest <path> -q
-PYTHONPATH=src python3 <path> --data <path> --out <path> --cpu 0
+PYTHONPATH=src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python3 -m pytest tests/test_exact_inversion_baseline.py -q
+PYTHONPATH=src python3 experiments/evaluate_exact_inversion_dev.py --data data/comparison_test_v1/dev/clean/seed_0 --out <path> --cpu 0
 ```
 
 The evaluation deliberately refuses other cells and val/final paths.
