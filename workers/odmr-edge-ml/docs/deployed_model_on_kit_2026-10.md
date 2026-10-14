@@ -45,7 +45,7 @@ pfkit infer R/model.vnnx --input R/input.int8.npy --output R/hw.bin --json R/hw.
 PYTHONPATH=src python3 experiments/deployed_model_on_kit.py --evaluate --run .scratch/kit-run-2026-10-14
 ```
 
-Compile: `model.vnnx` 12,832 bytes, sha256 `55bf88b72725c7b252ab48107436cd31427fb86da81a207fc19ab0afad06f5b9` (tools host `vbx` 2.0.0, `vnnx_compile -c V250`). The June 2026 bring-up compiled the same TFLite to a 12,832-byte `.vnnx` with sha256 `6c5cd21a…` on the SDK 2.0.3 bring-up toolchain (polarfire-hybrid-control DLOG-048): same size, different bytes, so the compiler build differs between the two dates. The new file is bit-exact against the INT8 TFLite on the simulator and on the kit (criteria 2 and 3), which is the check that matters.
+Compile: `model.vnnx` 12,832 bytes, sha256 `55bf88b72725c7b252ab48107436cd31427fb86da81a207fc19ab0afad06f5b9` (tools host `vbx` 2.0.0, `vnnx_compile -c V250`). The June 2026 bring-up compiled the same TFLite to a 12,832-byte `.vnnx` with sha256 `6c5cd21a…` on the SDK 2.0.3 bring-up toolchain (polarfire-hybrid-control DLOG-048): same size, different bytes; the compiled bytes differ and this comparison does not establish the cause (the June TFLite input's hash was not recorded, and no historical compiler build was checked). The new file is bit-exact against the INT8 TFLite on the simulator and on the kit (criteria 2 and 3), which is the check that matters.
 
 Kit: image with overlay `vbx_only`, node `vbx@60030000`; `vbx_run` completed 512 of 512, `npu_error 0`, `exit_code 0`.
 
@@ -65,7 +65,11 @@ PID-only final-field MAE: **15.2086**.
 - Kit latency per sample (NPU start to poll, quiet board): median 0.038 ms, p90 0.038 ms, max 0.069 ms.
 - All four criteria PASS. Chain: PASS.
 
-Reading: on these 512 held-out rows the kit's final field is 4.83 % better than PID alone (14.474 against 15.209 µT), against the 4.90 % reported on the full 5,000-row split in `experiments/fcnn_v2_int8_float_equivalence_2026-06-21.md`; the kit output equals the INT8 TFLite output bit for bit. The absolute error stays large (14–15 µT on 20–70 µT fields) because the model corrects at most ±2.25 µT per step; the oracle ceiling for that clamp is 9.35 % (`experiments/fcnn_v2_clamp_oracle_ceiling_2026-10-12.md`). Synthetic data; no live diamond.
+Reading: on these 512 held-out rows the kit's final field is 4.83 % better than PID alone (14.474 against 15.209 µT), against the 4.90 % reported on the full 5,000-row split in `experiments/fcnn_v2_int8_float_equivalence_2026-06-21.md`; the kit output equals the INT8 TFLite output bit for bit. The absolute error stays large (14–15 µT on 20–70 µT fields) because the model corrects at most ±2.25 µT per step; the clamp's oracle ceiling (perfect correction inside ±2.25 µT) is 9.35 % on the full 5,000-row split (`experiments/fcnn_v2_clamp_oracle_ceiling_2026-10-12.md`, PID baseline 23.536 µT there) and 14.23 % on this 512-row subset (oracle MAE 13.044 µT; independent recomputation 2026-10-14). Synthetic data; no live diamond.
+
+## Published records of this run
+
+`docs/kit-run-2026-10-14/` holds the evaluation inputs and outputs the numbers above were computed from: `labels.npz` (ΔB label, B_PID, |B_true| per row), `float_pred.npz`, `tflite_pred.npz` (dequantized residual and raw int8), `input.manifest.json` (hashes, quantization, row indices; local paths replaced by `<repo>`), `results.json` and `results.md`. The pfkit run records (`compile.json`, `sim.json`, `sim.npz`, `hw.json`, `hw.bin`, `infer.json`, `inspect.json`, the NCHW `input.int8.npy`) are in the kit repository's evidence folder; an independent re-check on 2026-10-14 recomputed parity, hashes, row counts, latency and the metrics from those files and found no discrepancy.
 
 ## Files
 
