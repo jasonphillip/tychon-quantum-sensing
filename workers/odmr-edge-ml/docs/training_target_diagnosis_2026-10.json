@@ -1,0 +1,53 @@
+{
+  "scope": "Read-only diagnosis of the existing scalar recipe and saved artifacts; no retraining or new inference.",
+  "findings": {
+    "training_target_clipping": {
+      "limit_uT": 2.25,
+      "code": "experiments/scalar_residual_v2.py",
+      "lines": [
+        99,
+        421,
+        422,
+        424,
+        425
+      ],
+      "train_rows": 40000,
+      "train_rows_outside_limit": 37998,
+      "train_fraction_outside_limit": 0.94995,
+      "train_median_abs_required_correction_uT": 20.641027593361034,
+      "train_mean_abs_required_correction_uT": 23.696891739856177,
+      "test_rows": 5000,
+      "test_fraction_outside_limit": 0.9532
+    },
+    "checkpoint": {
+      "sha256": "e0c314265017a999cd57c2b0c168c2d3dc229c9edbb3c630887ffb94ff57ed0a",
+      "epoch": 100,
+      "metadata_dataset": "production_50k_v2_aic",
+      "metadata_clamp_uT": 2.25
+    },
+    "recorded_value_context": {
+      "code": "experiments/scalar_residual_v2.py",
+      "lines": [
+        62,
+        63,
+        64,
+        65,
+        66
+      ],
+      "description": "Comment describes sector clamp as 4.5 percent of a 50 uT deployment field, and discusses INT8 resolution tradeoffs. This is recorded context, not independent validation of that engineering choice."
+    },
+    "pid_contract": {
+      "label": "total vector magnitude",
+      "estimator": "integer-bin two-minimum splitting proxy, or single-minimum displacement from fixed sweep midpoint",
+      "frequency_spacing_MHz": 1.0101010101010102,
+      "pid_splitting_increment_uT": 18.022070548476485,
+      "interpretation": "Coarse sampling and a simple splitting proxy do not generally provide accurate total field magnitude for arbitrary orientations; separate causal contributions were not measured."
+    },
+    "quantization": {
+      "saved_unclipped_float_mae_uT": 22.35257339477539,
+      "saved_unclipped_int8_mae_uT": 22.37001609802246,
+      "interpretation": "Small measured quantization difference does not explain the large scalar total-field error."
+    }
+  },
+  "conclusion": "The recipe teaches bounded small corrections and removes correction magnitude for approximately 95 percent of training examples. Removing only the runtime clamp cannot restore information absent from the targets. Broader-target retraining has not been evaluated in this diagnostic; success is not established."
+}
