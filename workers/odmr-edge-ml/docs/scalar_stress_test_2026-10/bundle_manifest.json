@@ -49,6 +49,10 @@
       "sha256": "ccd047860e3922ee2182613f86730a76661d47c415b5e5baa317547b5190c155"
     },
     {
+      "path": "docs/scalar_stress_test_2026-10/combined-report.md",
+      "sha256": "45a17fe3ec8746d36da68802db301741434e8ae6e5ab8c10c35957431207d8b4"
+    },
+    {
       "path": "docs/scalar_stress_test_2026-10/data-manifests/dev.manifest.json",
       "sha256": "bcc4faca60f5edb7617149961849b704b4bf863a5cec48644934892e71d9193b"
     },
@@ -59,6 +63,22 @@
     {
       "path": "docs/scalar_stress_test_2026-10/data-manifests/val.manifest.json",
       "sha256": "1e02b26c5313dffbe631aec2dcecd693acc672d76e5820d15b897bd9eccf2f3f"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/estimated-background-pilot/REPORT.md",
+      "sha256": "bd23cee56b2560256da4f7a5aef739b030ba2992662b4cca1e074ba04af5bc38"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/estimated-background-pilot/pilot_estimated_background.py",
+      "sha256": "294ed37e8c44e3ef6b727464c35f6bf858be6f9c0527525425bffba22030509a"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/estimated-background-pilot/predictions.npz",
+      "sha256": "c366d4f708f601fa1864dbfc110ea5177d4130665523c7d1a136d8ce43dfa982"
+    },
+    {
+      "path": "docs/scalar_stress_test_2026-10/estimated-background-pilot/results.json",
+      "sha256": "e179ebd2c25db03059eab5b62ac5f37a7c911f7bc13b9494fd6d577f14103fb6"
     },
     {
       "path": "docs/scalar_stress_test_2026-10/evaluator-review/guard-test-evidence.json",
@@ -212,5 +232,6 @@
       "path": "docs/scalar_stress_test_2026-10/sealing/val-verification.json",
       "sha256": "a30b8de923ca29c3103c8bbd88a22972d007330b917c2a3efad29fc125927ae6"
     }
-  ]
+  ],
+  "combined_report_original_sha256": "45a17fe3ec8746d36da68802db301741434e8ae6e5ab8c10c35957431207d8b4"
 }
