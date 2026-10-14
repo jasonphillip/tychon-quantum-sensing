@@ -6,6 +6,14 @@ Software for AI-assisted control of an NV-diamond magnetometer. Nitrogen-vacancy
 
 **Demonstrated state.** The controller ran on PolarFire SoC silicon with replayed synthetic spectra as input; no diamond sensor was connected. Model accuracy figures come from synthetic data. The parts are not one integrated or deployed system.
 
+**What is shown, and what is not**
+
+- Measured on silicon: watchdog trip time median 2.000 ms over 120 trips; an 8-hour soak at 3,319 Hz; fallback to plain PID within one update after a timeout (60 of 60, 20 of 20, 10 of 10) — [FPGA worker](workers/polarfire-hybrid-control/README.md), [engineering decision 2](docs/engineering-decisions.md#2-test-actual-fallback-rather-than-count-watchdog-trips).
+- Measured on silicon: the deployed INT8 model's output on the kit equals its INT8 TFLite output bit for bit on 512 held-out synthetic spectra; final-field error 14.47 µT against 15.21 µT for PID alone; 0.038 ms per sample on the NPU; the dataset recipe is committed and reproduces the data byte for byte — [deployed model on the kit](workers/odmr-edge-ml/docs/deployed_model_on_kit_2026-10.md).
+- Synthetic only: `make bench` 10.53 µT against 12.26 µT for a constant baseline ([benchmark](bench/README.md)); with a known 1 mT bias, vector models reach 75.5 µT RMS against 115.2 µT for assuming the bias ([bias-field results](workers/odmr-edge-ml/docs/vector_v1_bias_field.md)); on the field-cone set, which includes beyond-envelope probes, the learned tracker ends 108 of 120 sequences without a lock in every tested arm ([three-seed ablation](workers/odmr-vector-tracking/docs/association_loss_multiseed.md)).
+- Compared with measured data: the simulator's line widths were fitted to four public ODMR datasets, in-sample ([validation](workers/nv-sensor-sim/docs/external_validation_results.md), [fit](workers/nv-sensor-sim/docs/simulator_fit_results.md)).
+- Not shown: a live diamond; a sensitivity figure (nT/√Hz); any estimator evaluated on measured spectra; a comparison against a classical fit with exact Hamiltonian inversion (a pre-registered study is pending; see the [reviewer path](docs/start-here-reviewers.md)).
+
 I built this independently around an SBIR (Small Business Innovation Research) Phase I proposal that was not selected. It received no government funding.
 
 ## Three workstreams, one coordinator
@@ -38,6 +46,8 @@ One coordination round: [an external review turned into per-repository prompts](
 | To | Open |
 |---|---|
 | Understand the project in five minutes | [Case study](docs/case-study.md) |
+| Review the evidence in twenty minutes | [Reviewer path](docs/start-here-reviewers.md) |
+| Navigate as a visiting agent | [Repository map](AGENTS.md), [llms.txt](llms.txt) |
 | Generate synthetic spectra | [Synthetic-data walkthrough](docs/synthetic-data.md) |
 | Inspect FPGA measurements | [FPGA worker: status and evidence](workers/polarfire-hybrid-control/README.md#where-this-fits) |
 | Read the claims I would challenge first | [Weakest claims](orchestrator/INVENTORY.md#6-weakest-claims--what-would-not-survive-a-sharp-reviewer) |
@@ -51,6 +61,7 @@ One coordination round: [an external review turned into per-repository prompts](
 |---|---|---|---|
 | Watchdog trip time median 2.000 ms over 120 trips; 8-hour soak at 3,319 Hz; fallback to plain PID within one update after a timeout | Hardware measurement | Replayed input, no diamond; paced by software on the SoC processor, not in the fabric; a frozen processor gets no fallback until it resumes | [FPGA worker](workers/polarfire-hybrid-control/README.md) |
 | `make bench`: 10.53 µT mean field error on 200 test spectra, against 12.26 µT for a constant baseline | Synthetic evaluation | FP32 on a CPU; the INT8 model on the kit is not in this number | [Benchmark](bench/README.md) |
+| Deployed INT8 model on the kit: 512 held-out spectra, kit output = INT8 TFLite output bit for bit; final-field error 14.47 µT against 14.47 float and 15.21 PID alone; 0.038 ms per sample | Hardware measurement on synthetic input | Replayed synthetic spectra; the model corrects at most ±2.25 µT per step, so the error stays near PID's; dataset recipe committed and reproduced | [Deployed model on the kit](workers/odmr-edge-ml/docs/deployed_model_on_kit_2026-10.md) |
 | Default simulated lines are 2 to 11 times narrower than in four public ODMR datasets; a per-spectrum fit matches the widths | Comparison with measured data | The fit is in-sample | [Validation](workers/nv-sensor-sim/docs/external_validation_results.md), [fit](workers/nv-sensor-sim/docs/simulator_fit_results.md) |
 | Three local critics cut false acceptances from 27 to 10 on a 60-claim test set | Software experiment | Abstained on 58 % of claims; 62.5 % of the claims it accepted were unsupported | [How claims were checked](orchestrator/README.md) |
 
