@@ -25,6 +25,7 @@ artifacts/bundles/
 *.h5
 *.hdf5
 *.npz
+.scratch/
 
 # IDE
 .vscode/
