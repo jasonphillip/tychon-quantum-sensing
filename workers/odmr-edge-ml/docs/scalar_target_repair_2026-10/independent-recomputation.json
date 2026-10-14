@@ -1,0 +1,18 @@
+{
+  "status": "pass",
+  "numeric_values_recomputed": 466,
+  "saved_prediction_files_verified": 2,
+  "freeze_hash_verified": true,
+  "holdout_reopened": false,
+  "all_reload_max_abs_differences": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ]
+}
