@@ -1,0 +1,24 @@
+{
+  "scope": "recomputed from hash-verified saved predictions, no inference or retraining",
+  "clamp_uT": 2.25,
+  "model_output_range_uT": [
+    -2.950868245214224,
+    2.882243402302265
+  ],
+  "cohorts": {
+    "production_test_5000": {
+      "n": 5000,
+      "clamped_mae_uT": 22.38169889314697,
+      "unclipped_mae_uT": 22.370015643339613,
+      "mae_difference_uT": 0.011683249807358465,
+      "outputs_clipped": 369
+    },
+    "kit_rows_0_511": {
+      "n": 512,
+      "clamped_mae_uT": 14.474248641499322,
+      "unclipped_mae_uT": 14.464909662355673,
+      "mae_difference_uT": 0.00933897914364934,
+      "outputs_clipped": 11
+    }
+  }
+}
