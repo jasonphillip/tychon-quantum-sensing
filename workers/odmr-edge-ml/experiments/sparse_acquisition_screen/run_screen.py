@@ -40,7 +40,7 @@ def authorize(gate_path, cases_path):
             or not 1 <= len(cases["cases"]) <= gate["maximum_cases"]):
         raise RuntimeError("unregistered partition or case count")
     seeds = [x["noise_seed"] for x in cases["cases"]]
-    if any(type(s) is not int or not (2**40 <= s < 2**63) for s in seeds):
+    if any(type(s) is not int or not (2**63 <= s < 2**64) for s in seeds):
         raise RuntimeError("screen seeds must use the audited 64-bit development namespace")
     if len(seeds) != len(set(seeds)) or any(s in audit["excluded_seeds"] for s in seeds):
         raise RuntimeError("duplicate or consumed seed")

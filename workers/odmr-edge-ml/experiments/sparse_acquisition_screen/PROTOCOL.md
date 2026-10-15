@@ -193,7 +193,7 @@ They cannot establish a one-percent failure rate or population superiority.
 
 Root freezes the source hashes, protocol, acquisition parameters, case manifest, and seed audit.
 The seed audit must cover every consumed scalar, vector, and information-limit campaign.
-The new noise seeds must be unique integers in the audited 64-bit development namespace.
+The new noise seeds must be unique integers in the audited [2^63, 2^64) development namespace.
 The unit-test seed namespace is separate and cannot supply evaluation cases.
 
 The registered gate needs:
