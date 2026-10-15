@@ -261,11 +261,13 @@ def simulate_episode(truth, seed, policy, prior, config):
     config.validate()
     if truth.theta != 0 or truth.phi != 0 or truth.bias_uT != 250.:
         raise ValueError("screen is positive known-axis with fixed 250 uT bias only")
+    before = perf_counter()
     belief = prior.clone_prior()
+    recovery = UniformPolicy()
+    episode_setup_seconds = perf_counter()-before
     oracle = AcquisitionOracle(truth, config, seed)
     history, trace = [], []
     policy_time = update_time = 0.
-    recovery = UniformPolicy()
     certified = False
     for step in range(config.primary_actions + config.recovery_actions):
         recovered = step >= config.primary_actions
@@ -295,9 +297,10 @@ def simulate_episode(truth, seed, policy, prior, config):
         recovery_actions=sum(x.recovered for x in history),
         dwell_seconds=sum(x.dwell_seconds for x in history),
         settling_seconds=sum(x.settling_seconds for x in history),
-        incident_photon_budget=sum(x.exposure_photons for x in history),
+        normalized_exposure_photons=sum(x.exposure_photons for x in history),
         detected_photons=sum(x.count for x in history),
-        decision_seconds=policy_time, update_seconds=update_time, trace=trace)
+        decision_seconds=policy_time, update_seconds=update_time,
+        episode_setup_seconds=episode_setup_seconds, trace=trace)
     result["modeled_total_seconds"] = (result["dwell_seconds"]+result["settling_seconds"]
-        +policy_time+update_time)
+        +policy_time+update_time+episode_setup_seconds)
     return result

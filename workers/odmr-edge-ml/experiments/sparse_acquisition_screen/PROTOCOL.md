@@ -146,7 +146,7 @@ Report shared model-table construction time separately.
 Count model-table construction once in the numerical ledger.
 Publish its cost and an explicit amortization assumption before claiming deployment latency.
 
-Modeled total time equals dwell plus settling plus measured decision and estimator time.
+Modeled total time includes dwell, settling, decision time, estimator time, policy construction, and episode posterior setup.
 Simulator truth-rendering cost is excluded from modeled instrument time.
 It remains included in the numerical execution ledger.
 Source import time and process startup are also ledger costs, not instrument timing.

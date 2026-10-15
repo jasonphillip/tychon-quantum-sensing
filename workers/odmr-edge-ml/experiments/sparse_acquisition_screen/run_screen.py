@@ -122,8 +122,13 @@ def main():
     try:
         for case in cases["cases"]:
             point = Point(**case["point"])
-            for policy in (UniformPolicy(), CoarseToFinePolicy(), FisherPolicy(), BayesianPolicy()):
+            for policy_type in (UniformPolicy, CoarseToFinePolicy, FisherPolicy, BayesianPolicy):
+                before = time.perf_counter()
+                policy = policy_type()
+                policy_setup_seconds = time.perf_counter()-before
                 row = simulate_episode(point, case["noise_seed"], policy, prior, config)
+                row["policy_setup_seconds"] = policy_setup_seconds
+                row["modeled_total_seconds"] += policy_setup_seconds
                 row.update(case_id=case["case_id"], truth_uT=point.field_uT,
                     absolute_error_uT=abs(row["estimate_uT"]-point.field_uT),
                     interval_contains_truth=bool(row["lower_uT"] <= point.field_uT <= row["upper_uT"]))

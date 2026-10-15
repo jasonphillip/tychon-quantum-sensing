@@ -66,9 +66,9 @@ class SparseAcquisitionTests(unittest.TestCase):
         self.assertEqual(result["actions"],4)
         self.assertEqual(result["recovery_actions"],1)
         self.assertTrue(result["failed_precision"])
-        self.assertEqual(result["incident_photon_budget"],4*config.exposure_photons)
+        self.assertEqual(result["normalized_exposure_photons"],4*config.exposure_photons)
         expected = sum(result[k] for k in ("dwell_seconds","settling_seconds",
-                                           "decision_seconds","update_seconds"))
+                                           "decision_seconds","update_seconds","episode_setup_seconds"))
         self.assertAlmostEqual(result["modeled_total_seconds"],expected)
         self.assertEqual(len(result["trace"]),4)
 
