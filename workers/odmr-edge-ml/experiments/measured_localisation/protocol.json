@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "study": "measured-localisation-2026-10-15",
-  "status": "DRAFT_PENDING_ROOT_AND_CUSTODY",
+  "status": "FROZEN",
   "scope": "published_fitted_feature_stage_coordinate_pairs_raw_lineage_unresolved",
   "dataset_doi": "10.5281/zenodo.19855773",
   "primary_objective": "reduce_unique_calibration_positions_at_matched_position_error",
