@@ -1,0 +1,32 @@
+{
+  "independent_root_reference_nrmse": {
+    "P1-S01-beats": 1.5920754550328176,
+    "P1-S02-beats": 1.4836865067069436,
+    "P1-S03-beats": 1.3087714973812081,
+    "P1-S04-beats": 1.209587574255561,
+    "P1-S05-beats": 1.6337460621279025,
+    "P1-S06-beats": 1.3019114313946687,
+    "P1-S07-beats": 1.5902302845963552,
+    "P1-S08-beats": 1.585792987846884,
+    "P1-S09-beats": 2.6492470878912635,
+    "P1-S10-beats": 2.0420152380175707
+  },
+  "manifest_sha256": "37c9ea9348e1debe890c260cf80eef0cc9d96abf1f961fa7cddb479bec7e04b6",
+  "records": [
+    "P1-S01",
+    "P1-S02",
+    "P1-S03",
+    "P1-S04",
+    "P1-S05",
+    "P1-S06",
+    "P1-S07",
+    "P1-S08",
+    "P1-S09",
+    "P1-S10"
+  ],
+  "reference_passes": 0,
+  "scientific_status": "STOP",
+  "stage": "reference_eligibility",
+  "summary_sha256": "9ce02d515dc17b5d7640eacc8e77d6ae44e8522928e322bc31345ab4b82c638c",
+  "verified": true
+}

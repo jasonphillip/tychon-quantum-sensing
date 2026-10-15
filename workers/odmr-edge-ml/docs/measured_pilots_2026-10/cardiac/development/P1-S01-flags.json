@@ -1,0 +1,101 @@
+{
+  "recording_id": "P1-S01",
+  "participant_id": "P1",
+  "split": "development",
+  "flags": {
+    "c30": {
+      "quality_scale": 3.5191649233329936e-11,
+      "threshold": 0.011032599160726611,
+      "trigger_count": 29,
+      "beat_count": 28,
+      "yield": 0.9655172413793104,
+      "duration_seconds": 30
+    },
+    "c60": {
+      "quality_scale": 3.5191649233329936e-11,
+      "threshold": 0.011032599160726611,
+      "trigger_count": 68,
+      "beat_count": 67,
+      "yield": 0.9852941176470589,
+      "duration_seconds": 60
+    },
+    "c120": {
+      "quality_scale": 3.5191649233329936e-11,
+      "threshold": 0.011032599160726611,
+      "trigger_count": 145,
+      "beat_count": 145,
+      "yield": 1.0,
+      "duration_seconds": 120
+    },
+    "reference_a": {
+      "quality_scale": 3.180373438798141e-11,
+      "threshold": 0.005494604118972389,
+      "trigger_count": 212,
+      "beat_count": 207,
+      "yield": 0.9764150943396226,
+      "duration_seconds": 180
+    },
+    "reference_b": {
+      "quality_scale": 2.5044504316014828e-11,
+      "threshold": 0.003931670268260874,
+      "trigger_count": 220,
+      "beat_count": 217,
+      "yield": 0.9863636363636363,
+      "duration_seconds": 180
+    }
+  },
+  "reference_gate": {
+    "passes": false,
+    "error": 1.5920754550328176,
+    "a_against_b": {
+      "nrmse": 1.5920754550328176,
+      "correlation": 0.00609778558515496,
+      "amplitude_ratio": 0.9856595142647624,
+      "same_polarity": false,
+      "peak_shift_seconds": 0.1555,
+      "width_ratio": 1.38394037934634,
+      "preserves": false
+    },
+    "b_against_a": {
+      "nrmse": 1.2788323680783793,
+      "correlation": 0.00609778558515496,
+      "amplitude_ratio": 1.014549127287565,
+      "same_polarity": false,
+      "peak_shift_seconds": 0.1555,
+      "width_ratio": 0.7225744800309375,
+      "preserves": false
+    },
+    "counts": [
+      207,
+      217
+    ],
+    "yields": [
+      0.9764150943396226,
+      0.9863636363636363
+    ]
+  },
+  "timestamp_indices": [
+    {
+      "name": "candidate",
+      "start_seconds": 0.0,
+      "stop_seconds": 120.0,
+      "first_sample": 0,
+      "stop_sample_exclusive": 107936
+    },
+    {
+      "name": "reference_a",
+      "start_seconds": 180.0,
+      "stop_seconds": 360.0,
+      "first_sample": 161904,
+      "stop_sample_exclusive": 323808
+    },
+    {
+      "name": "reference_b",
+      "start_seconds": 420.0,
+      "stop_seconds": 600.0,
+      "first_sample": 377776,
+      "stop_sample_exclusive": 539680
+    }
+  ],
+  "source_member_name_sha256": "74153dad5a98b8ed5304efbae7a365cbef827e15242848f99f9f704ad22cf1e8"
+}

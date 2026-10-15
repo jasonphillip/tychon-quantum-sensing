@@ -1,0 +1,20 @@
+{
+  "source_sha256": {
+    "__init__.py": "eeac9a15a4cd4e6c90401aec1fb685f9deb446e4da08f6037fb9ecc2609c2a8c",
+    "access.py": "5a3fbeba89bb149c3b2098b1babeedd97a64ddb23bbfa669507b5a9964a97c7b",
+    "causal.py": "95a674f6aaeabd17ae6c927fa9b2a723e2478b90e35ee83502dfafeabcab6fc2",
+    "cli.py": "cba0f3be6f68b9cfa5acbaefc7886d80a4580f8105b5bf3ce4dc22b8ce6bfb83",
+    "evaluate_voltage.py": "c255c3cbf7dd2e48993c17dea1b78a17b00342f0a8eb0c0001bdd20ae9e58dc6",
+    "loader.py": "09edc50d9acbc0ebb7e2f7698630320c51cee0cc102f77ca494759f4c9a227c4",
+    "metadata.py": "ab42d7a9750266989b1989e406804e5108f3f78e632646e924c0dfcda38d58cd",
+    "qualify_timestamps.py": "92bfd4beeba442e9758e12860c4a7afe3207b95c47d5b04cb2bce03387f32bd4",
+    "verify_voltage.py": "41cae39e62db492c2322d8ad2eb86c0c29f1e0125b83a6133c9f83c77cb72ea3",
+    "waveform_io.py": "b65a323d2fc4ab27a2e2d459d946e19b2f79e913d6d2d222051b26f48e7c7ff4",
+    "waveform_methods.py": "253edeca8f66dfa8a90406e98219bb7a5b3b1554c7eec1663dc0601c97185819"
+  },
+  "protocol_sha256": "5be86a05d04f64b9ce6bd7efcdb906a8685950f56fc43dea5a79a8f39eb1e552",
+  "voltage_protocol_sha256": "ca93b1dae10a00f57b270451b29b3f934242d4bed2f08dbd03b511c0e23e0557",
+  "waveform_protocol_sha256": "0c5b64a3dd716ac9f0ba5cb481303d01ccf5320c7d9e775b313d84e02f1e0d28",
+  "manifest_sha256": "e98ebc9bf2e5d805012b6af8de952a13ba78b03a96febc141b640798fb600905",
+  "timestamp_qualification_sha256": "b109aaf7f2da8b147ecf8b32966f9665b8ddf14ea4888db578e8f6df214a01d6"
+}

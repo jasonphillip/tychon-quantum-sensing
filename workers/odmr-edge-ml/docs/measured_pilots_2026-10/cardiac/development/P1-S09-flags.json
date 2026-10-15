@@ -1,0 +1,101 @@
+{
+  "recording_id": "P1-S09",
+  "participant_id": "P1",
+  "split": "development",
+  "flags": {
+    "c30": {
+      "quality_scale": 1.1666222597884402e-10,
+      "threshold": 0.010933069707294732,
+      "trigger_count": 37,
+      "beat_count": 19,
+      "yield": 0.5135135135135135,
+      "duration_seconds": 30
+    },
+    "c60": {
+      "quality_scale": 1.1666222597884402e-10,
+      "threshold": 0.010933069707294732,
+      "trigger_count": 93,
+      "beat_count": 50,
+      "yield": 0.5376344086021505,
+      "duration_seconds": 60
+    },
+    "c120": {
+      "quality_scale": 1.1666222597884402e-10,
+      "threshold": 0.010933069707294732,
+      "trigger_count": 207,
+      "beat_count": 111,
+      "yield": 0.5362318840579711,
+      "duration_seconds": 120
+    },
+    "reference_a": {
+      "quality_scale": 1.2148622392026576e-10,
+      "threshold": 0.00757126422625503,
+      "trigger_count": 320,
+      "beat_count": 163,
+      "yield": 0.509375,
+      "duration_seconds": 180
+    },
+    "reference_b": {
+      "quality_scale": 9.008289647064392e-11,
+      "threshold": 0.010852286165212489,
+      "trigger_count": 326,
+      "beat_count": 163,
+      "yield": 0.5,
+      "duration_seconds": 180
+    }
+  },
+  "reference_gate": {
+    "passes": false,
+    "error": 2.6492470878912635,
+    "a_against_b": {
+      "nrmse": 1.4077701203114792,
+      "correlation": -0.6581355631688537,
+      "amplitude_ratio": 0.6369010594298412,
+      "same_polarity": true,
+      "peak_shift_seconds": 0.3845,
+      "width_ratio": 0.8711149546232253,
+      "preserves": false
+    },
+    "b_against_a": {
+      "nrmse": 2.6492470878912635,
+      "correlation": -0.6581355631688537,
+      "amplitude_ratio": 1.5701025853139698,
+      "same_polarity": true,
+      "peak_shift_seconds": 0.3845,
+      "width_ratio": 1.1479541186760134,
+      "preserves": false
+    },
+    "counts": [
+      163,
+      163
+    ],
+    "yields": [
+      0.509375,
+      0.5
+    ]
+  },
+  "timestamp_indices": [
+    {
+      "name": "candidate",
+      "start_seconds": 0.0,
+      "stop_seconds": 120.0,
+      "first_sample": 0,
+      "stop_sample_exclusive": 107936
+    },
+    {
+      "name": "reference_a",
+      "start_seconds": 180.0,
+      "stop_seconds": 360.0,
+      "first_sample": 161904,
+      "stop_sample_exclusive": 323808
+    },
+    {
+      "name": "reference_b",
+      "start_seconds": 420.0,
+      "stop_seconds": 600.0,
+      "first_sample": 377776,
+      "stop_sample_exclusive": 539680
+    }
+  ],
+  "source_member_name_sha256": "741012b232dd7099b1d0f48923e0dbdf8b7b541a29db8b43ff5335ef0b40b6a3"
+}

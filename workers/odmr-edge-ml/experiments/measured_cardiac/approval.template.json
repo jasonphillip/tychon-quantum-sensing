@@ -1,0 +1,15 @@
+{
+  "status": "DRAFT_ROOT_REVIEW",
+  "campaign": "nv-measured-pilots-2026-10-15",
+  "lane": "cardiac",
+  "stage": "qualification",
+  "manifest_sha256": "",
+  "source_sha256": {},
+  "allowed_recordings": [],
+  "allowed_intervals_seconds": {},
+  "note": "Root must freeze complete metadata, exact intervals, source hashes, and accounting reservation before signal access.",
+  "protocol_sha256": "",
+  "accounting_authority": "",
+  "access_mode": "waveform_values",
+  "voltage_protocol_sha256": ""
+}
