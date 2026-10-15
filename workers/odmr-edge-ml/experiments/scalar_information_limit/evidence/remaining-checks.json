@@ -1,0 +1,99 @@
+{
+  "status": "pass",
+  "checks": [
+    "registration and retained parity/analytic source binding",
+    "synthetic per-ladder validity algebra",
+    "projection-only oracle integral",
+    "nuisance, noise, replicate, nullspace and high-count Fisher checks"
+  ],
+  "implementation_sha256": {
+    "run_stage1.py": "0108e138ec585a74857826ac91cd44a34e9c9c332a2a26483d2e797de7950c94",
+    "remaining_checks.py": "d82b495d9b3984425dc5a14588e571dfdf53fc34cc6a9d3ff93b17bff15c7240",
+    "check_saved.py": "81157c2da16f9ed758cfcd968df223af91b73efc93b6232e4e96e424975fccfb",
+    "validate_stage1.py": "14663bcb6ea4d052af1c6f3cc6f3300ef22cffbb7e65cbb655f8d3d6cc420164",
+    "information.py": "00acf3962724ae12c143dbcf164a7408268755736edd05da16fb8dadef121b7e",
+    "configuration.py": "ddee909189a8f85dacf27fc8eea0280e91df5f41c04daa868dc56080f2b2485f",
+    "forward.py": "04a88c370ec9aa867e2579ad6ed849a18fdd8b865c052eef41f12c287a9ba219",
+    "stage_guard.py": "fa63e8e82319fea7986dba486bd86feaf6822533dc769a0512634edd8aeb25d5"
+  },
+  "binding": {
+    "preflight_sha256": "a470bc1b8063daf69018f880424104fa7f60a75604956226104ee5e6a32f8e53",
+    "clarification_sha256": "481d69bf6f65e8674cc331e813291940473720e1056f9886f502fe0478912219",
+    "forward_sha256": "04a88c370ec9aa867e2579ad6ed849a18fdd8b865c052eef41f12c287a9ba219",
+    "original_information_sha256": "ffb8d91de9745e52a933d620b936662e4487ae1052cd61617d37046ecb4217d1",
+    "original_status": "fail: branch classification; passing checks retained"
+  },
+  "analytic_prior": {
+    "projection_only_bayes_MAE_uT": 10.355580301936156,
+    "quadrature_MAE_uT": 10.355580301936154,
+    "constant_MAE_uT": 12.5,
+    "constant_RMSE_uT": 14.433756729740645,
+    "warning": "Reduced projection model only; not a full-physics lower bound."
+  },
+  "fisher_invariants": {
+    "fixed": {
+      "std_bound_uT": 0.00013892312066836058,
+      "identifiable": true,
+      "rank": 1,
+      "dimension": 1,
+      "singular_values": [
+        7198.225861821917
+      ],
+      "svd_relative_cutoff": 1e-10,
+      "null_target_fraction": 0.0,
+      "condition_retained": 1.0
+    },
+    "nuisance": {
+      "std_bound_uT": 0.000340934652105995,
+      "identifiable": true,
+      "rank": 2,
+      "dimension": 2,
+      "singular_values": [
+        12079.679047881951,
+        2428.139134803371
+      ],
+      "svd_relative_cutoff": 1e-10,
+      "null_target_fraction": 0.0,
+      "condition_retained": 4.974871033846319
+    },
+    "replicate": {
+      "std_bound_uT": 0.00024107720444562557,
+      "identifiable": true,
+      "rank": 2,
+      "dimension": 2,
+      "singular_values": [
+        17083.245938628777,
+        3433.9072957678
+      ],
+      "svd_relative_cutoff": 1e-10,
+      "null_target_fraction": 0.0,
+      "condition_retained": 4.974871033846321
+    },
+    "null": {
+      "std_bound_uT": null,
+      "identifiable": false,
+      "rank": 1,
+      "dimension": 2,
+      "singular_values": [
+        14142.139159264412,
+        3.714609730765419e-12
+      ],
+      "svd_relative_cutoff": 1e-10,
+      "null_target_fraction": 0.7071067811865474,
+      "condition_retained": 1.0
+    },
+    "lower_photons": {
+      "std_bound_uT": 0.0010781276081488897,
+      "identifiable": true,
+      "rank": 2,
+      "dimension": 2,
+      "singular_values": [
+        3819.938514340466,
+        767.8467418254024
+      ],
+      "svd_relative_cutoff": 1e-10,
+      "null_target_fraction": 0.0,
+      "condition_retained": 4.974871033846317
+    }
+  }
+}

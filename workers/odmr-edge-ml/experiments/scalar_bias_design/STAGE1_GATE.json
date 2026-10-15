@@ -1,0 +1,318 @@
+{
+  "stage1_decision": "APPROVE_KNOWN_AXIS_COMPARISON_ONLY",
+  "dated_utc": "2026-10-15T18:54:37.068576+00:00",
+  "owner": "root Codex",
+  "stage1_source_commit": "85b1b65717933f32ed0f92939bf3a7daf0e6854c",
+  "independent_report_sha256": "2274c44fa1f1428ecaaef0cd7cc931b4aeda951327c4bfc46fa9d5e0a3021684",
+  "whole_grid_independent_status": "FAIL; unchanged and not waived",
+  "discrepancy": "Three strict singular-value comparisons failed at point28 only, Cartesian unknown-direction, B20, cos(theta)0,phi pi/4,bias0,width7,historical,SNR10. One failure per cutoff. No rank, null decision, bound, mask, noise or nuisance monotonicity comparison failed.",
+  "known_axis_scope": "Every fixed/center/shape known-direction comparison passed independently. The primary shape bounds agree at all three SVD cutoffs. This matches the registered known-axis changed-estimand option.",
+  "interpretation": "The extra all-singular-value precision check does not invalidate the independently passed known-axis contrasts. No singular-value tolerance is relaxed. No whole-grid independent PASS is claimed.",
+  "excluded_quantitative_claims": "Do not use point28 or the64 cutoff-sensitive unknown-direction groups as precise magnitude bounds. Retain their raw diagnostics and independent failure. No all-estimator impossibility or arbitrary-direction success claim.",
+  "selection": "Use250microtesla, the smallest tested positive bias and the best worst-case shape bound at the three known-axis field grid points. Choice precedes noisy data.",
+  "primary_shape_bounds_uT": [
+    {
+      "field_uT": 20,
+      "bias_uT": 0,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 3.0714403573801428,
+          "1e-10": 3.0714403573801428,
+          "1e-12": 3.0714403573801428
+        },
+        "center": {
+          "1e-08": 3.0966353381130367,
+          "1e-10": 3.0966353381130367,
+          "1e-12": 3.0966353381130367
+        },
+        "shape": {
+          "1e-08": 7.0600573548552115,
+          "1e-10": 7.0600573548552115,
+          "1e-12": 7.0600573548552115
+        }
+      }
+    },
+    {
+      "field_uT": 20,
+      "bias_uT": 250,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.4260960561689509,
+          "1e-10": 1.4260960561689509,
+          "1e-12": 1.4260960561689509
+        },
+        "center": {
+          "1e-08": 1.4261020693995163,
+          "1e-10": 1.4261020693995163,
+          "1e-12": 1.4261020693995163
+        },
+        "shape": {
+          "1e-08": 1.4306049166113848,
+          "1e-10": 1.4306049166113848,
+          "1e-12": 1.4306049166113848
+        }
+      }
+    },
+    {
+      "field_uT": 20,
+      "bias_uT": 500,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.447197442277629,
+          "1e-10": 1.447197442277629,
+          "1e-12": 1.447197442277629
+        },
+        "center": {
+          "1e-08": 1.4472038287089992,
+          "1e-10": 1.4472038287089992,
+          "1e-12": 1.4472038287089992
+        },
+        "shape": {
+          "1e-08": 1.4474005549086335,
+          "1e-10": 1.4474005549086335,
+          "1e-12": 1.4474005549086335
+        }
+      }
+    },
+    {
+      "field_uT": 20,
+      "bias_uT": 1000,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.4493841492813104,
+          "1e-10": 1.4493841492813104,
+          "1e-12": 1.4493841492813104
+        },
+        "center": {
+          "1e-08": 1.449407508895034,
+          "1e-10": 1.449407508895034,
+          "1e-12": 1.449407508895034
+        },
+        "shape": {
+          "1e-08": 1.449413473578508,
+          "1e-10": 1.449413473578508,
+          "1e-12": 1.449413473578508
+        }
+      }
+    },
+    {
+      "field_uT": 45,
+      "bias_uT": 0,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.6235595869431203,
+          "1e-10": 1.6235595869431203,
+          "1e-12": 1.6235595869431203
+        },
+        "center": {
+          "1e-08": 1.6289407076593432,
+          "1e-10": 1.6289407076593432,
+          "1e-12": 1.6289407076593432
+        },
+        "shape": {
+          "1e-08": 2.673582025917602,
+          "1e-10": 2.673582025917602,
+          "1e-12": 2.673582025917602
+        }
+      }
+    },
+    {
+      "field_uT": 45,
+      "bias_uT": 250,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.4320779000520343,
+          "1e-10": 1.4320779000520343,
+          "1e-12": 1.4320779000520343
+        },
+        "center": {
+          "1e-08": 1.4320826926996013,
+          "1e-10": 1.4320826926996013,
+          "1e-12": 1.4320826926996013
+        },
+        "shape": {
+          "1e-08": 1.4352137065241648,
+          "1e-10": 1.4352137065241648,
+          "1e-12": 1.4352137065241648
+        }
+      }
+    },
+    {
+      "field_uT": 45,
+      "bias_uT": 500,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.4477064131401156,
+          "1e-10": 1.4477064131401156,
+          "1e-12": 1.4477064131401156
+        },
+        "center": {
+          "1e-08": 1.447713281551387,
+          "1e-10": 1.447713281551387,
+          "1e-12": 1.447713281551387
+        },
+        "shape": {
+          "1e-08": 1.4478649077751025,
+          "1e-10": 1.4478649077751025,
+          "1e-12": 1.4478649077751025
+        }
+      }
+    },
+    {
+      "field_uT": 45,
+      "bias_uT": 1000,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.4495180223666593,
+          "1e-10": 1.4495180223666593,
+          "1e-12": 1.4495180223666593
+        },
+        "center": {
+          "1e-08": 1.4495429382971394,
+          "1e-10": 1.4495429382971394,
+          "1e-12": 1.4495429382971394
+        },
+        "shape": {
+          "1e-08": 1.4495490902305057,
+          "1e-10": 1.4495490902305057,
+          "1e-12": 1.4495490902305057
+        }
+      }
+    },
+    {
+      "field_uT": 70,
+      "bias_uT": 0,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.3387847623250815,
+          "1e-10": 1.3387847623250815,
+          "1e-12": 1.3387847623250815
+        },
+        "center": {
+          "1e-08": 1.3393556752334606,
+          "1e-10": 1.3393556752334606,
+          "1e-12": 1.3393556752334606
+        },
+        "shape": {
+          "1e-08": 1.5941114578368167,
+          "1e-10": 1.5941114578368167,
+          "1e-12": 1.5941114578368167
+        }
+      }
+    },
+    {
+      "field_uT": 70,
+      "bias_uT": 250,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.4363125111068213,
+          "1e-10": 1.4363125111068213,
+          "1e-12": 1.4363125111068213
+        },
+        "center": {
+          "1e-08": 1.4363170909356926,
+          "1e-10": 1.4363170909356926,
+          "1e-12": 1.4363170909356926
+        },
+        "shape": {
+          "1e-08": 1.4385306840926622,
+          "1e-10": 1.4385306840926622,
+          "1e-12": 1.4385306840926622
+        }
+      }
+    },
+    {
+      "field_uT": 70,
+      "bias_uT": 500,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.4479844690954888,
+          "1e-10": 1.4479844690954888,
+          "1e-12": 1.4479844690954888
+        },
+        "center": {
+          "1e-08": 1.4479922919713413,
+          "1e-10": 1.4479922919713413,
+          "1e-12": 1.4479922919713413
+        },
+        "shape": {
+          "1e-08": 1.448114024085648,
+          "1e-10": 1.448114024085648,
+          "1e-12": 1.448114024085648
+        }
+      }
+    },
+    {
+      "field_uT": 70,
+      "bias_uT": 1000,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.4494236647597134,
+          "1e-10": 1.4494236647597134,
+          "1e-12": 1.4494236647597134
+        },
+        "center": {
+          "1e-08": 1.4494502168116676,
+          "1e-10": 1.4494502168116676,
+          "1e-12": 1.4494502168116676
+        },
+        "shape": {
+          "1e-08": 1.4494567334554338,
+          "1e-10": 1.4494567334554338,
+          "1e-12": 1.4494567334554338
+        }
+      }
+    }
+  ],
+  "stage2_scope": "Known positive axial field20-70microtesla; matched zero versus250microtesla bias; one frozen classical fit and constant45; no neural method, no retraining.",
+  "stopping": "No further Stage1 numerical retry. Stage2 must follow its own committed protocol and single fresh evaluation.",
+  "public_independent_report_sha256": "41a784030fd852f73c4f641d733a8112567b725a3d00055f7b3e73a9250f2f17"
+}

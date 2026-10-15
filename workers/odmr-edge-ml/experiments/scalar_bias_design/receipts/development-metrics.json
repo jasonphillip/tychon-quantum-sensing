@@ -1,0 +1,2050 @@
+{
+  "raw_receipt_sha256": "ce77ff42ffe95e7941c3e1156196ab5b6f021c9882781b45399b452520b34a08",
+  "receipt": {
+    "utc": "2026-10-15T19:11:37.601660+00:00",
+    "command": [
+      "$PRIVATE_PATH_821dc26618679eb6",
+      "$REPO/experiments/scalar_bias_design/metrics.py",
+      "--data",
+      "$WORK/development-data",
+      "--predictions",
+      "$WORK/development-predictions",
+      "--out",
+      "$WORK/development-bundle",
+      "--registration",
+      "$REPO/experiments/scalar_bias_design/registration.json",
+      "--protocol",
+      "$REPO/experiments/scalar_bias_design/PROTOCOL.md",
+      "--code-root",
+      "$REPO",
+      "--commitment",
+      "$REPO/experiments/scalar_bias_design/commitments/development.json",
+      "--commitment-revision",
+      "a83d762e5b01d703c72034a292eebabcd6d3e15c"
+    ],
+    "status": "complete",
+    "returncode": 0,
+    "stage": "scalar_bias_design:metrics",
+    "wall_seconds": 0.11564173607621342,
+    "cpu_seconds": 0.094023,
+    "peak_memory_bytes": 42758144,
+    "reserved_seconds": 30,
+    "protocol_sha256": "3278e90ac3cdc2769221a4bd619f8175cfc33bd2ffa3417a11fff71196aa9a1d",
+    "stage_before": {
+      "cpu_seconds": 4.1752345621353015,
+      "wall_seconds": 4.1752345621353015,
+      "conservative_adjustments": [
+        "$REPO/.scratch/bias_compute_ledger.jsonl:1: CPU charged at least wall",
+        "$REPO/.scratch/bias_compute_ledger.jsonl:2: CPU charged at least wall",
+        "$REPO/.scratch/bias_compute_ledger.jsonl:3: CPU charged at least wall",
+        "$REPO/.scratch/bias_compute_ledger.jsonl:4: CPU charged at least wall"
+      ]
+    },
+    "study_before": {
+      "cpu_seconds": 32.01927601103671,
+      "wall_seconds": 32.01927601103671,
+      "conservative_adjustments": [
+        "$REPO/.scratch/information_compute_ledger.jsonl:1: CPU charged at least wall",
+        "$REPO/.scratch/information_compute_ledger.jsonl:2: CPU charged at least wall",
+        "$REPO/.scratch/information_compute_ledger.jsonl:3: CPU charged at least wall",
+        "$REPO/.scratch/information_compute_ledger.jsonl:4: CPU charged at least wall",
+        "$REPO/.scratch/information_compute_ledger.jsonl:5: CPU charged at least wall",
+        "$REPO/.scratch/information_compute_ledger.jsonl:6: CPU charged at least wall",
+        "$REPO/.scratch/information_compute_ledger.jsonl:7: CPU charged at least wall",
+        "$REPO/.scratch/information_compute_ledger.jsonl:8: CPU charged at least wall",
+        "$REPO/.scratch/information_compute_ledger.jsonl:9: CPU charged at least wall",
+        "$REPO/.scratch/information_compute_ledger.jsonl:10: CPU charged at least wall",
+        "$REPO/.scratch/bias_compute_ledger.jsonl:1: CPU charged at least wall",
+        "$REPO/.scratch/bias_compute_ledger.jsonl:2: CPU charged at least wall",
+        "$REPO/.scratch/bias_compute_ledger.jsonl:3: CPU charged at least wall",
+        "$REPO/.scratch/bias_compute_ledger.jsonl:4: CPU charged at least wall"
+      ]
+    },
+    "budget_before": {
+      "cpu_seconds": 1372.943882249653,
+      "wall_seconds": 906.1075165788321,
+      "conservative_adjustments": [
+        "$PRIVATE_PATH_e230f705458e84d9",
+        "$PRIVATE_PATH_56b21a338af013b4",
+        "$PRIVATE_PATH_b5f143fe34533ffb",
+        "$PRIVATE_PATH_fa4f740cd78e9847",
+        "$PRIVATE_PATH_042cf76d6e40ded8",
+        "$PRIVATE_PATH_c18e106468bf312b",
+        "$PRIVATE_PATH_228606819bc93f3c",
+        "$PRIVATE_PATH_7626e0ca4b8ed25e",
+        "$PRIVATE_PATH_2a31dabe1e07b9c1",
+        "$PRIVATE_PATH_061b54e71115e4b8",
+        "$PRIVATE_PATH_6bdbd162a16994cf",
+        "$PRIVATE_PATH_b8be7b4f696c5189",
+        "$PRIVATE_PATH_eb817423bc564c27",
+        "$PRIVATE_PATH_d9394c715ca2ee05",
+        "$PRIVATE_PATH_5c53bf5826ff2ea2",
+        "$PRIVATE_PATH_26e19d8cfc0c8e43",
+        "$PRIVATE_PATH_a6d129c9da5ca940",
+        "$PRIVATE_PATH_7082a2462ad007c1",
+        "$PRIVATE_PATH_475b820d4e3c8628",
+        "$PRIVATE_PATH_e5edeb55e463cbd9",
+        "$PRIVATE_PATH_e70ac15ec23cb2c6",
+        "$PRIVATE_PATH_d272dc2f6dbb037c",
+        "$PRIVATE_PATH_94d978025aeb6771",
+        "$PRIVATE_PATH_ddfe1a570e81ed21",
+        "$PRIVATE_PATH_de9ce6324cf3fea4",
+        "$PRIVATE_PATH_52d9235c28b3113f",
+        "$PRIVATE_PATH_461b5ce503976589",
+        "$PRIVATE_PATH_a128b443956cc956",
+        "$PRIVATE_PATH_5fe60126573c1cb4",
+        "$PRIVATE_PATH_837bc2183117696b",
+        "$PRIVATE_PATH_790bd2e254c3599a",
+        "$PRIVATE_PATH_d7b4983423476a79",
+        "$PRIVATE_PATH_d1d0731dfc25d75a",
+        "$PRIVATE_PATH_3d283fd49b8cf2a4",
+        "$PRIVATE_PATH_9ee72aa17c1be546",
+        "$PRIVATE_PATH_76b2953adfee9ee4",
+        "$PRIVATE_PATH_5be8e5d907a0eb9c",
+        "$PRIVATE_PATH_b71876fca24484cb",
+        "$PRIVATE_PATH_37030d9bebd72e47",
+        "$PRIVATE_PATH_22321de804276741",
+        "$PRIVATE_PATH_6d678a84da6e0485",
+        "$PRIVATE_PATH_7e94c1cfb1ada8a4",
+        "$PRIVATE_PATH_8ada3cb0809e5e78",
+        "$PRIVATE_PATH_5b84a542007f4aca",
+        "$PRIVATE_PATH_aef26dfb760e597e",
+        "$PRIVATE_PATH_9e0f2f9d4a5ccd0b",
+        "$PRIVATE_PATH_c5af5cbe2ccdff08",
+        "$PRIVATE_PATH_6dd68d51ddbf6e4b",
+        "$PRIVATE_PATH_c7a226041b1fbcd3",
+        "$PRIVATE_PATH_6e5b5e048af4737e",
+        "$PRIVATE_PATH_f8932389f096f00a",
+        "$PRIVATE_PATH_357e65e020e3adb8",
+        "$PRIVATE_PATH_2a8f086578256a66",
+        "$PRIVATE_PATH_c50ae05abc016be6",
+        "$PRIVATE_PATH_a4fd6640b8a6c421",
+        "$PRIVATE_PATH_5cc362459d049817",
+        "$PRIVATE_PATH_46b81e29ffcbc314",
+        "$PRIVATE_PATH_ce2235816a7cd70d",
+        "$PRIVATE_PATH_70479b8cc6377282",
+        "$PRIVATE_PATH_4b32c40014f9019e",
+        "$PRIVATE_PATH_670ed2dd2ac62c0f",
+        "$PRIVATE_PATH_2983ab15a05aa153",
+        "$PRIVATE_PATH_902359de7737297f",
+        "$PRIVATE_PATH_50434bd3409ef4d4",
+        "$PRIVATE_PATH_fa4b46065ea34428",
+        "$PRIVATE_PATH_1c7d8bbe0f2af5ea",
+        "$PRIVATE_PATH_166eff9e56543b85",
+        "$PRIVATE_PATH_db5f4977b9d1cab1",
+        "$PRIVATE_PATH_42e67642fa9418e2",
+        "$PRIVATE_PATH_9ccbf417a0864aba",
+        "$PRIVATE_PATH_bc6a3520d384d6c0",
+        "$PRIVATE_PATH_b18593bb20ec0dfa",
+        "$PRIVATE_PATH_838129afa6a20ba1",
+        "$PRIVATE_PATH_a58e57a8b3bda201",
+        "$PRIVATE_PATH_6ed0ee95a69703d2",
+        "$PRIVATE_PATH_df1556ab2b863d78",
+        "$PRIVATE_PATH_3a89938c734d18c9",
+        "$PRIVATE_PATH_0274bc71d2537660",
+        "$PRIVATE_PATH_c52d9d95e065b7d0",
+        "$PRIVATE_PATH_d0683b1940aef670",
+        "$PRIVATE_PATH_1ea5569ffa4d1b58",
+        "$PRIVATE_PATH_7a7cd8ee27b2bce7",
+        "$PRIVATE_PATH_d90a75a6ce726122",
+        "$PRIVATE_PATH_97109adddaf1edd3",
+        "$PRIVATE_PATH_5fe086ce57a3098d",
+        "$PRIVATE_PATH_2937990fc336460e",
+        "$PRIVATE_PATH_3f65550a185000b6",
+        "$PRIVATE_PATH_3136fc9f9950a596",
+        "$PRIVATE_PATH_3d043917b9a2488e",
+        "$PRIVATE_PATH_f1d5c8133190191d",
+        "$PRIVATE_PATH_232356335a5ac5f8",
+        "$PRIVATE_PATH_81a376e29665f2ec",
+        "$PRIVATE_PATH_d7b670056d761e6b",
+        "$PRIVATE_PATH_d96de7795c364b1b",
+        "$PRIVATE_PATH_75ab0a55ae8ef18f",
+        "$PRIVATE_PATH_7222e161aeaeb343",
+        "$PRIVATE_PATH_ce2b048c2956d20e",
+        "$PRIVATE_PATH_2c4fc162dec0da8c",
+        "$PRIVATE_PATH_d6fce69c40327fc2",
+        "$PRIVATE_PATH_053ba89a9a085899",
+        "$PRIVATE_PATH_d0d58e62ab57ca57",
+        "$PRIVATE_PATH_17628883f9cdb550",
+        "$PRIVATE_PATH_cde595a4e07e7871",
+        "$PRIVATE_PATH_4fe0561b75b947a0",
+        "$PRIVATE_PATH_ec2c4af574460612",
+        "$PRIVATE_PATH_89e8defb1a0c7e23",
+        "$PRIVATE_PATH_18036468069de973",
+        "$PRIVATE_PATH_f20c25e1f51222e1",
+        "$PRIVATE_PATH_b5e6e197ba9e02be",
+        "$PRIVATE_PATH_a4ee19f67218f9c9",
+        "$PRIVATE_PATH_047391284e7582fb",
+        "$PRIVATE_PATH_01b576aa7a5ed0a6",
+        "$PRIVATE_PATH_24dad7217f6a8bb1",
+        "$PRIVATE_PATH_b00ca61b8147f9c0",
+        "$PRIVATE_PATH_00b4f46bc780cb88",
+        "$PRIVATE_PATH_a5ebdbc924f85f67",
+        "$PRIVATE_PATH_45b92f5b18dd3c65",
+        "$PRIVATE_PATH_16f7073b1ed34bd5",
+        "$PRIVATE_PATH_3181a1c113b63c4e",
+        "$PRIVATE_PATH_77412e611e86a85b",
+        "$PRIVATE_PATH_8860319011deee6d",
+        "$PRIVATE_PATH_e1c14aca02bf41f9",
+        "$PRIVATE_PATH_0f5e319f55cfcf63",
+        "$PRIVATE_PATH_d278d777e530f566",
+        "$PRIVATE_PATH_f9cd987da8be9f39",
+        "$PRIVATE_PATH_5b08dc5e9366e000",
+        "$PRIVATE_PATH_0c40159600363e29",
+        "$PRIVATE_PATH_dd8bde504b5b85b2",
+        "$PRIVATE_PATH_88799a909811d24d",
+        "$PRIVATE_PATH_1de9f690feb78b27",
+        "$PRIVATE_PATH_7da719d442e5f611",
+        "$PRIVATE_PATH_80ca099683a602c0",
+        "$PRIVATE_PATH_122f8c0f46748a5b",
+        "$PRIVATE_PATH_107d7fa7ccfd203f",
+        "$PRIVATE_PATH_e90e8aaa46c5ff2c",
+        "$PRIVATE_PATH_aa24d9e91eb5ed1c",
+        "$PRIVATE_PATH_a76a30d1c7ea2b26",
+        "$PRIVATE_PATH_2f5a4be5fb0ea5a3",
+        "$PRIVATE_PATH_13349a61c8221e2d",
+        "$PRIVATE_PATH_24057a6e60985fa0",
+        "$PRIVATE_PATH_488b6ba4341d2dd4",
+        "$PRIVATE_PATH_888a28babc0e5cbd",
+        "$PRIVATE_PATH_ed5ec0fe4af2c988",
+        "$PRIVATE_PATH_86f246df255a0976",
+        "$PRIVATE_PATH_2a8b7117889518cf",
+        "$PRIVATE_PATH_27991e7937a83d8b",
+        "$PRIVATE_PATH_c075bd82cba17f56",
+        "$PRIVATE_PATH_76b794ae509c79eb",
+        "$PRIVATE_PATH_ddacdf3b0f427f96",
+        "$PRIVATE_PATH_9c4f273fdedecc78",
+        "$PRIVATE_PATH_71a39a28e5c8ba5f",
+        "$PRIVATE_PATH_6f437540551ede99",
+        "$PRIVATE_PATH_4cbab941a037579f",
+        "$PRIVATE_PATH_77891f4580a80ba3",
+        "$PRIVATE_PATH_461fecf404474516",
+        "$PRIVATE_PATH_4537b64945e98744",
+        "$PRIVATE_PATH_92b8fdedc368b2f3",
+        "$PRIVATE_PATH_8ceea5650e98c785",
+        "$PRIVATE_PATH_eadb69741bd951ef",
+        "$PRIVATE_PATH_d9c0afc50033faf3",
+        "$PRIVATE_PATH_01987bdf67f1843b",
+        "$PRIVATE_PATH_e4048b6a0767d824",
+        "$PRIVATE_PATH_747bd52e4e5a458e",
+        "$PRIVATE_PATH_f7757d4c5a52ada7",
+        "$PRIVATE_PATH_82f1c69039edf953",
+        "$PRIVATE_PATH_d0f358a70dc6ec31",
+        "$PRIVATE_PATH_106115018b5c2bf0",
+        "$PRIVATE_PATH_501071990d5f4008",
+        "$PRIVATE_PATH_a5d1ee9d6d410550",
+        "$PRIVATE_PATH_f9193b162a6b3cbd",
+        "$PRIVATE_PATH_f7f9c195ea4681bf",
+        "$PRIVATE_PATH_589cdc62f4f2554d",
+        "$PRIVATE_PATH_fb1ebbcf43d28abb",
+        "$PRIVATE_PATH_6521a93bc4442068",
+        "$PRIVATE_PATH_0ff1f890efddc368",
+        "$PRIVATE_PATH_189557e97cbf9b5a",
+        "$PRIVATE_PATH_02984b0312c58687",
+        "$PRIVATE_PATH_0895dbd84ca2ad38",
+        "$PRIVATE_PATH_fcdc4c3fb087cf08",
+        "$PRIVATE_PATH_bf428cac6c158c7a",
+        "$PRIVATE_PATH_829804dfd295d4e7",
+        "$PRIVATE_PATH_0f2c8f23d42039c8",
+        "$PRIVATE_PATH_788a6c6d0c211910",
+        "$PRIVATE_PATH_725762f1877a43f1",
+        "$PRIVATE_PATH_a0f27cb5da88b50b",
+        "$PRIVATE_PATH_a67d071902ac29e9",
+        "$PRIVATE_PATH_659f4885414d9b14",
+        "$PRIVATE_PATH_abcb4920b2bfeec8",
+        "$PRIVATE_PATH_2a897d3f07c50f3f",
+        "$PRIVATE_PATH_fb8728ee84f57bfe",
+        "$PRIVATE_PATH_3a261dda2a8fa4a7",
+        "$PRIVATE_PATH_b2d7fcb1dd9c2a4f",
+        "$PRIVATE_PATH_33f94b377f072388",
+        "$PRIVATE_PATH_c59dd5e5d2549ffa",
+        "$PRIVATE_PATH_239936b235b23e3b",
+        "$PRIVATE_PATH_c995f7f49636640e",
+        "$PRIVATE_PATH_7f2cbca12c3cb4e9",
+        "$PRIVATE_PATH_ee357cf9964f80ff",
+        "$PRIVATE_PATH_dac55e99ff2db30e",
+        "$PRIVATE_PATH_5bae24395533f24d",
+        "$PRIVATE_PATH_bcc7ac13898334c5",
+        "$PRIVATE_PATH_98150c2cb2131841",
+        "$PRIVATE_PATH_d8f9dcfa3667ac0e",
+        "$PRIVATE_PATH_18858686a1345f1b",
+        "$PRIVATE_PATH_ecc8794715c60685",
+        "$PRIVATE_PATH_f70654c7edf7a78a",
+        "$PRIVATE_PATH_9d2c2ba886af18e6",
+        "$PRIVATE_PATH_363df9738e63695a",
+        "$PRIVATE_PATH_e98f7f5dd9098280",
+        "$PRIVATE_PATH_53f9f7de04ca883c",
+        "$PRIVATE_PATH_1b6edce15d022ccb",
+        "$PRIVATE_PATH_896c729fc7cb88e4",
+        "$PRIVATE_PATH_4c058e5a39e43c98",
+        "$PRIVATE_PATH_95150bc0a67c1931",
+        "$PRIVATE_PATH_5de6abea002a888f",
+        "$PRIVATE_PATH_85caafc7a8eccf14",
+        "$PRIVATE_PATH_98624969f9d37207",
+        "$PRIVATE_PATH_310e3d04dcc05175",
+        "$PRIVATE_PATH_22971adc7053b1ae",
+        "$PRIVATE_PATH_aed4dab938673075",
+        "$PRIVATE_PATH_4d76ced39f2947f5",
+        "$PRIVATE_PATH_ae3b28bf9935bc30",
+        "$PRIVATE_PATH_e81c0ea4a9dd6edb",
+        "$PRIVATE_PATH_4aefbe40be87617d",
+        "$PRIVATE_PATH_9f797ec87307b5ea",
+        "$PRIVATE_PATH_7d59b45d7fed348b",
+        "$PRIVATE_PATH_b6f2d66cd4232c6d",
+        "$PRIVATE_PATH_f766c36410b22c0d",
+        "$PRIVATE_PATH_f94769978e421991",
+        "$PRIVATE_PATH_424c3a2c012b128c",
+        "$PRIVATE_PATH_cdbf8ab0fe2ac40f",
+        "$PRIVATE_PATH_0fbc2d5d6b594764",
+        "$PRIVATE_PATH_53227c9aaa60fc29",
+        "$PRIVATE_PATH_219e159e4f9e3127",
+        "$PRIVATE_PATH_d1b80a04e6446bfa",
+        "$PRIVATE_PATH_19d6f97332a9829e",
+        "$PRIVATE_PATH_b10c836d870d23a6",
+        "$PRIVATE_PATH_7993956c2badb69e",
+        "$PRIVATE_PATH_5e3168cea2b83870",
+        "$PRIVATE_PATH_d384b981a045337b",
+        "$PRIVATE_PATH_1d17dd6f28110773",
+        "$PRIVATE_PATH_0821a67f08589d3a",
+        "$PRIVATE_PATH_b5ba688e58c64a4a",
+        "$PRIVATE_PATH_bf83276c2517eb23",
+        "$PRIVATE_PATH_2a19932c52763950",
+        "$PRIVATE_PATH_dc6794f8dd1e3ddf",
+        "$PRIVATE_PATH_d9af37be3fb79759",
+        "$PRIVATE_PATH_c75ac2ad0cdc9d5a",
+        "$PRIVATE_PATH_9e8f312c373ec7d5",
+        "$PRIVATE_PATH_aa60b1e81b9f9bd8",
+        "$PRIVATE_PATH_44f6f6a6eb4adccd",
+        "$PRIVATE_PATH_772e03ed7527788c",
+        "$PRIVATE_PATH_fd9875fe5f4020ea",
+        "$PRIVATE_PATH_a02c391d11e87ee6",
+        "$PRIVATE_PATH_d1f9773e98e8c59d",
+        "$PRIVATE_PATH_167a4ea73fbc03c4",
+        "$PRIVATE_PATH_68c034dad3e39420",
+        "$PRIVATE_PATH_79f2722c27e16c80",
+        "$PRIVATE_PATH_1572eb04c33bcae8",
+        "$PRIVATE_PATH_c4d637f384c2ce88",
+        "$PRIVATE_PATH_723db26d46b69281",
+        "$PRIVATE_PATH_06e7a26aa82770d5",
+        "$PRIVATE_PATH_cdedcf9fd89301be",
+        "$PRIVATE_PATH_b0d1db395c03dbe1",
+        "$PRIVATE_PATH_a56a23f216e7a6c4",
+        "$PRIVATE_PATH_ab1cae6401dfe476",
+        "$PRIVATE_PATH_a0b4f50d661f44c3",
+        "$PRIVATE_PATH_7a941345e7dc7ee6",
+        "$PRIVATE_PATH_5ba6e9e8c7448412",
+        "$PRIVATE_PATH_54210ee47ed26658",
+        "$PRIVATE_PATH_6fe47221c4dd2dad",
+        "$PRIVATE_PATH_9c5f45b2b7a4149d",
+        "$PRIVATE_PATH_b36cf35f8cd8d0d3",
+        "$PRIVATE_PATH_7cd11de37c766053",
+        "$PRIVATE_PATH_531b6832d377bf0d",
+        "$PRIVATE_PATH_02dedd49678e7e6e",
+        "$PRIVATE_PATH_e65ae0d111327e29",
+        "$PRIVATE_PATH_7424bfe67a3c162a",
+        "$PRIVATE_PATH_bcfbbbab662e2bf8",
+        "$PRIVATE_PATH_14661d69ff867666",
+        "$PRIVATE_PATH_1815e7e195b15c1c",
+        "$REPO/.scratch/information_compute_ledger.jsonl:1: CPU charged at least wall",
+        "$REPO/.scratch/information_compute_ledger.jsonl:2: CPU charged at least wall",
+        "$REPO/.scratch/information_compute_ledger.jsonl:3: CPU charged at least wall",
+        "$REPO/.scratch/information_compute_ledger.jsonl:4: CPU charged at least wall",
+        "$REPO/.scratch/information_compute_ledger.jsonl:5: CPU charged at least wall",
+        "$REPO/.scratch/information_compute_ledger.jsonl:6: CPU charged at least wall",
+        "$REPO/.scratch/information_compute_ledger.jsonl:7: CPU charged at least wall",
+        "$REPO/.scratch/information_compute_ledger.jsonl:8: CPU charged at least wall",
+        "$REPO/.scratch/information_compute_ledger.jsonl:9: CPU charged at least wall",
+        "$REPO/.scratch/information_compute_ledger.jsonl:10: CPU charged at least wall",
+        "$PRIVATE_PATH_2192a35b1d2302a2",
+        "$PRIVATE_PATH_40b3c9d0d445d270",
+        "$PRIVATE_PATH_f332ef80f4d95fe1",
+        "$PRIVATE_PATH_10065ae900bf471b",
+        "$PRIVATE_PATH_9f254506a6496bce",
+        "$PRIVATE_PATH_a56c144fbb21dc94",
+        "$PRIVATE_PATH_2c7865f3822046c5",
+        "$PRIVATE_PATH_b8df5543154f2fc9",
+        "$PRIVATE_PATH_54051ea3c3d7db97",
+        "$PRIVATE_PATH_d6dda4ddcb895c68",
+        "$PRIVATE_PATH_db56ff5240717166",
+        "$PRIVATE_PATH_6dccecb898774a79",
+        "$REPO/.scratch/bias_compute_ledger.jsonl:1: CPU charged at least wall",
+        "$REPO/.scratch/bias_compute_ledger.jsonl:2: CPU charged at least wall",
+        "$REPO/.scratch/bias_compute_ledger.jsonl:3: CPU charged at least wall",
+        "$REPO/.scratch/bias_compute_ledger.jsonl:4: CPU charged at least wall"
+      ]
+    }
+  },
+  "redactions": [
+    {
+      "json_pointer": "/command/0",
+      "original_value_sha256": "821dc26618679eb686a872cdfaa3c8ade5f6132d14fa03b1f8a85134975d4e6d",
+      "public_value": "$PRIVATE_PATH_821dc26618679eb6"
+    },
+    {
+      "json_pointer": "/command/1",
+      "original_value_sha256": "09cc9693d593e04258d7683bef22fea5a41412d9901edcc24070ee6d95571c90",
+      "public_value": "$REPO/experiments/scalar_bias_design/metrics.py"
+    },
+    {
+      "json_pointer": "/command/3",
+      "original_value_sha256": "ede2a8c77a2161ec307d37ebc462befbfd366236072bfbfd8946d61ab8741223",
+      "public_value": "$WORK/development-data"
+    },
+    {
+      "json_pointer": "/command/5",
+      "original_value_sha256": "d56f0391c403a2e98a10d68de1699e8f66f545b3aba43f826da793c862dabf74",
+      "public_value": "$WORK/development-predictions"
+    },
+    {
+      "json_pointer": "/command/7",
+      "original_value_sha256": "4eb3551f91e429c9e872eed2f748991265c41e1415dfdf59c15e1a5d17f49048",
+      "public_value": "$WORK/development-bundle"
+    },
+    {
+      "json_pointer": "/command/9",
+      "original_value_sha256": "e4fc1a8c7839176384d3310cd2010462cf36970e6423fa01a86eec4154175e80",
+      "public_value": "$REPO/experiments/scalar_bias_design/registration.json"
+    },
+    {
+      "json_pointer": "/command/11",
+      "original_value_sha256": "0b4a500ebea44640921780fb2fc30a2bfc4ce5586524d7d5da277207e26df107",
+      "public_value": "$REPO/experiments/scalar_bias_design/PROTOCOL.md"
+    },
+    {
+      "json_pointer": "/command/13",
+      "original_value_sha256": "d403f433e85f38e50864dcad7b2327995c2dd6b4b4c789677b7da973fd864ae3",
+      "public_value": "$REPO"
+    },
+    {
+      "json_pointer": "/command/15",
+      "original_value_sha256": "6dc70a490caef595048875eff3f134632ce96e618b468b8161e6e61879f2580f",
+      "public_value": "$REPO/experiments/scalar_bias_design/commitments/development.json"
+    },
+    {
+      "json_pointer": "/stage_before/conservative_adjustments/0",
+      "original_value_sha256": "9b1e6bd21dedf6f871b46e5e28ed38da3fd17ecd030b3b9ab07b46fcaae2f67b",
+      "public_value": "$REPO/.scratch/bias_compute_ledger.jsonl:1: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/stage_before/conservative_adjustments/1",
+      "original_value_sha256": "24c844aaab047cd1cd7dd676f1543ab65d19a9e1c5e99ec933037d325b98ac3c",
+      "public_value": "$REPO/.scratch/bias_compute_ledger.jsonl:2: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/stage_before/conservative_adjustments/2",
+      "original_value_sha256": "808018f2876eda1fc06933d6be8efc06828f71729c4068483ac34fa06f0fc21e",
+      "public_value": "$REPO/.scratch/bias_compute_ledger.jsonl:3: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/stage_before/conservative_adjustments/3",
+      "original_value_sha256": "ae499405fcaccbfd8acb7ff8f5db530b3d4d39a5df3a7707f7544ab8ab043dcd",
+      "public_value": "$REPO/.scratch/bias_compute_ledger.jsonl:4: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/study_before/conservative_adjustments/0",
+      "original_value_sha256": "bdc2ed2cbca6012e19278666f2429bbbe6706b160d8081878379733aeda3aeb8",
+      "public_value": "$REPO/.scratch/information_compute_ledger.jsonl:1: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/study_before/conservative_adjustments/1",
+      "original_value_sha256": "de3ca8e0aa5104fa3f50459c2975cabfecf0e1a636b8d8c1a63bccfc1aba3ce6",
+      "public_value": "$REPO/.scratch/information_compute_ledger.jsonl:2: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/study_before/conservative_adjustments/2",
+      "original_value_sha256": "d1ee9ec8db0195ca001dae3373fc5503a1f22e93bd8520de4cc09c33d0cc3d88",
+      "public_value": "$REPO/.scratch/information_compute_ledger.jsonl:3: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/study_before/conservative_adjustments/3",
+      "original_value_sha256": "7e45263532946b5f48660001b164d9131eea35fdca6c13c4474331e4376d5280",
+      "public_value": "$REPO/.scratch/information_compute_ledger.jsonl:4: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/study_before/conservative_adjustments/4",
+      "original_value_sha256": "945112122ad445caa1442fb0dab843dbc9a8d3dab467ad5bbd25c909e5f242f0",
+      "public_value": "$REPO/.scratch/information_compute_ledger.jsonl:5: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/study_before/conservative_adjustments/5",
+      "original_value_sha256": "904867da4596adc0148ca85cbea4f9b847603ed4106538f1e63929cc01136011",
+      "public_value": "$REPO/.scratch/information_compute_ledger.jsonl:6: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/study_before/conservative_adjustments/6",
+      "original_value_sha256": "b75202d840d9fd336cae502109e62749ece6860fee1d4f6a27341ff22ae24698",
+      "public_value": "$REPO/.scratch/information_compute_ledger.jsonl:7: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/study_before/conservative_adjustments/7",
+      "original_value_sha256": "6474d83b1a5b5228f7a596221df6db6cdad694d26484d45e3918a7347b217bd1",
+      "public_value": "$REPO/.scratch/information_compute_ledger.jsonl:8: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/study_before/conservative_adjustments/8",
+      "original_value_sha256": "b4a6cef78a8bdaaca94c7edf570af633d4bbafbd4445c0d824a2b68757e9aaf3",
+      "public_value": "$REPO/.scratch/information_compute_ledger.jsonl:9: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/study_before/conservative_adjustments/9",
+      "original_value_sha256": "615e392de59a84fa74792987f85e0fefb8af4e63e45472dfc4171d36c0e33f4a",
+      "public_value": "$REPO/.scratch/information_compute_ledger.jsonl:10: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/study_before/conservative_adjustments/10",
+      "original_value_sha256": "9b1e6bd21dedf6f871b46e5e28ed38da3fd17ecd030b3b9ab07b46fcaae2f67b",
+      "public_value": "$REPO/.scratch/bias_compute_ledger.jsonl:1: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/study_before/conservative_adjustments/11",
+      "original_value_sha256": "24c844aaab047cd1cd7dd676f1543ab65d19a9e1c5e99ec933037d325b98ac3c",
+      "public_value": "$REPO/.scratch/bias_compute_ledger.jsonl:2: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/study_before/conservative_adjustments/12",
+      "original_value_sha256": "808018f2876eda1fc06933d6be8efc06828f71729c4068483ac34fa06f0fc21e",
+      "public_value": "$REPO/.scratch/bias_compute_ledger.jsonl:3: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/study_before/conservative_adjustments/13",
+      "original_value_sha256": "ae499405fcaccbfd8acb7ff8f5db530b3d4d39a5df3a7707f7544ab8ab043dcd",
+      "public_value": "$REPO/.scratch/bias_compute_ledger.jsonl:4: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/0",
+      "original_value_sha256": "e230f705458e84d9aa2f054ed3412d51249944aa71ea109363d9a7e16bddf3f5",
+      "public_value": "$PRIVATE_PATH_e230f705458e84d9"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/1",
+      "original_value_sha256": "56b21a338af013b43b1024d1618da912e8fe8385b525f77c88df73750bd96198",
+      "public_value": "$PRIVATE_PATH_56b21a338af013b4"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/2",
+      "original_value_sha256": "b5f143fe34533ffbfd053d5836074529784f2d6ba12377115966e748c383ada2",
+      "public_value": "$PRIVATE_PATH_b5f143fe34533ffb"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/3",
+      "original_value_sha256": "fa4f740cd78e98470cf40342c44172aac9bb2d59cbac2a5ca5863c847bbbdfbf",
+      "public_value": "$PRIVATE_PATH_fa4f740cd78e9847"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/4",
+      "original_value_sha256": "042cf76d6e40ded8b93b94236655c85fdd216681600a82ef1d28c05f401630ce",
+      "public_value": "$PRIVATE_PATH_042cf76d6e40ded8"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/5",
+      "original_value_sha256": "c18e106468bf312beb9569d01113d7850a7505e64a1b8843ab0bb26b669eb45c",
+      "public_value": "$PRIVATE_PATH_c18e106468bf312b"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/6",
+      "original_value_sha256": "228606819bc93f3c69bb97435a3bd28ea399a435ac9e18ec5915157fe9f4216c",
+      "public_value": "$PRIVATE_PATH_228606819bc93f3c"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/7",
+      "original_value_sha256": "7626e0ca4b8ed25e72428aceb03c05c8b6e78e878b0d05fc95c8403eacff7e60",
+      "public_value": "$PRIVATE_PATH_7626e0ca4b8ed25e"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/8",
+      "original_value_sha256": "2a31dabe1e07b9c14a66c99aac4f8c35c89a43516adbe676abd0c416f7de9d94",
+      "public_value": "$PRIVATE_PATH_2a31dabe1e07b9c1"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/9",
+      "original_value_sha256": "061b54e71115e4b86d8d0a2a8f68211f60c96c15511c02bcd93bd615a33105da",
+      "public_value": "$PRIVATE_PATH_061b54e71115e4b8"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/10",
+      "original_value_sha256": "6bdbd162a16994cf1dde151701b98d3b6691ba19f3cfe31568156f69d6c3c787",
+      "public_value": "$PRIVATE_PATH_6bdbd162a16994cf"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/11",
+      "original_value_sha256": "b8be7b4f696c518991f1f885fcf1ae92bf3648de883066d2be88ce56cc8f2175",
+      "public_value": "$PRIVATE_PATH_b8be7b4f696c5189"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/12",
+      "original_value_sha256": "eb817423bc564c2793f336c0aabd12da5ca81b9d6c437cf0fbb7724e33630b90",
+      "public_value": "$PRIVATE_PATH_eb817423bc564c27"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/13",
+      "original_value_sha256": "d9394c715ca2ee05e6c217d306b2377310c6512407e5b6dfb43b067a9c80f0f6",
+      "public_value": "$PRIVATE_PATH_d9394c715ca2ee05"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/14",
+      "original_value_sha256": "5c53bf5826ff2ea2ab7fbd7206e6257f41d493a56f4e8fa2b8aa96c350e50460",
+      "public_value": "$PRIVATE_PATH_5c53bf5826ff2ea2"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/15",
+      "original_value_sha256": "26e19d8cfc0c8e4349b6fd53d649c989c653a364dc5c53198f2f586770313fd1",
+      "public_value": "$PRIVATE_PATH_26e19d8cfc0c8e43"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/16",
+      "original_value_sha256": "a6d129c9da5ca940c0313bd23873c5d352f7b1adfd624f55553387a0259cada2",
+      "public_value": "$PRIVATE_PATH_a6d129c9da5ca940"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/17",
+      "original_value_sha256": "7082a2462ad007c1b728b0df681277a7438a57bb27628911c8e2e317dfe48c80",
+      "public_value": "$PRIVATE_PATH_7082a2462ad007c1"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/18",
+      "original_value_sha256": "475b820d4e3c86289f1a6568c5994e323581895a4e111fd661f7537817b82765",
+      "public_value": "$PRIVATE_PATH_475b820d4e3c8628"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/19",
+      "original_value_sha256": "e5edeb55e463cbd913d085dd0a678ebf06c4da664aeef017adb44e855de46ccc",
+      "public_value": "$PRIVATE_PATH_e5edeb55e463cbd9"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/20",
+      "original_value_sha256": "e70ac15ec23cb2c63d9fdb063b2bc2f4ffbf11b90a35cf48391dde7181ff9ea6",
+      "public_value": "$PRIVATE_PATH_e70ac15ec23cb2c6"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/21",
+      "original_value_sha256": "d272dc2f6dbb037c651e6a6f59cdcc3eace29f0eac1a4d288c0a0aafcdd83da3",
+      "public_value": "$PRIVATE_PATH_d272dc2f6dbb037c"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/22",
+      "original_value_sha256": "94d978025aeb6771f00b4457bb2d87276f1aca9c7cd0f9f03ad303b4aaa2ad34",
+      "public_value": "$PRIVATE_PATH_94d978025aeb6771"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/23",
+      "original_value_sha256": "ddfe1a570e81ed2119166e673f07bea190bb2378bed0397ac3178991e8bb8a01",
+      "public_value": "$PRIVATE_PATH_ddfe1a570e81ed21"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/24",
+      "original_value_sha256": "de9ce6324cf3fea44a4d767508d314c3b9c5e5dadcad9cddce0d70ff56681d6e",
+      "public_value": "$PRIVATE_PATH_de9ce6324cf3fea4"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/25",
+      "original_value_sha256": "52d9235c28b3113f59f8c39f78ee09153e1ab960f65f61a39f26b859bf339744",
+      "public_value": "$PRIVATE_PATH_52d9235c28b3113f"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/26",
+      "original_value_sha256": "461b5ce503976589465cc3729b866c3afdd67b9cdb826d2e4fb17f45525f8a89",
+      "public_value": "$PRIVATE_PATH_461b5ce503976589"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/27",
+      "original_value_sha256": "a128b443956cc9562f3b8409f2875f2f53ed05073636304e669ddff1dc2b308b",
+      "public_value": "$PRIVATE_PATH_a128b443956cc956"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/28",
+      "original_value_sha256": "5fe60126573c1cb4deaf25c27d7ffaf10e9b01a42c6f51f0318253417f436536",
+      "public_value": "$PRIVATE_PATH_5fe60126573c1cb4"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/29",
+      "original_value_sha256": "837bc2183117696b88a7323f9df6dae7da322b41c9bc7713c778540b98424260",
+      "public_value": "$PRIVATE_PATH_837bc2183117696b"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/30",
+      "original_value_sha256": "790bd2e254c3599adaf4856aa2700ad7521c5a5f8006ffc3807e653510ed45b9",
+      "public_value": "$PRIVATE_PATH_790bd2e254c3599a"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/31",
+      "original_value_sha256": "d7b4983423476a793653a799fc4beae087a5d6d0a3eb0d58e3e4d9528e8718f8",
+      "public_value": "$PRIVATE_PATH_d7b4983423476a79"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/32",
+      "original_value_sha256": "d1d0731dfc25d75ae71cabaf4489575b8119f4b128d4544b98e8b8080d51f598",
+      "public_value": "$PRIVATE_PATH_d1d0731dfc25d75a"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/33",
+      "original_value_sha256": "3d283fd49b8cf2a44f48a5d39a1ae95a39a9c891b9b3db41959e8184085cf22e",
+      "public_value": "$PRIVATE_PATH_3d283fd49b8cf2a4"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/34",
+      "original_value_sha256": "9ee72aa17c1be54664885e952ede9e38c118a1f0a2dfd5977f5d8e7519a4dc24",
+      "public_value": "$PRIVATE_PATH_9ee72aa17c1be546"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/35",
+      "original_value_sha256": "76b2953adfee9ee4e9b804d0258363c45bf8ce9f6a1dcbb093c4e25b4a02952a",
+      "public_value": "$PRIVATE_PATH_76b2953adfee9ee4"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/36",
+      "original_value_sha256": "5be8e5d907a0eb9cb0817d7a50e8c33db2af3d7b279ebdcd1dfc6bde6a1dfd4c",
+      "public_value": "$PRIVATE_PATH_5be8e5d907a0eb9c"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/37",
+      "original_value_sha256": "b71876fca24484cbfebd8be92de5d2e04bbbac76d998dd8ae84fae3a5b488f23",
+      "public_value": "$PRIVATE_PATH_b71876fca24484cb"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/38",
+      "original_value_sha256": "37030d9bebd72e47437c80a9d8f1a3a584c3755f747e7fbab071524be6b693cb",
+      "public_value": "$PRIVATE_PATH_37030d9bebd72e47"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/39",
+      "original_value_sha256": "22321de804276741bf86a15e6b188aa3324055c280aff7a4b0c7bae084c8408e",
+      "public_value": "$PRIVATE_PATH_22321de804276741"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/40",
+      "original_value_sha256": "6d678a84da6e0485c5bb36a82bd3e57ae2c1a07733a7ea79d6183ce9c01a21ec",
+      "public_value": "$PRIVATE_PATH_6d678a84da6e0485"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/41",
+      "original_value_sha256": "7e94c1cfb1ada8a486e0b139b9ca3c1037c04706d6ac629fe5eb6e5fe56e6528",
+      "public_value": "$PRIVATE_PATH_7e94c1cfb1ada8a4"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/42",
+      "original_value_sha256": "8ada3cb0809e5e78ac5e1ab4c097b9863edc6b88ea89e13c0d7e2f54db1c8c7a",
+      "public_value": "$PRIVATE_PATH_8ada3cb0809e5e78"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/43",
+      "original_value_sha256": "5b84a542007f4acaa0aec8ca4fa339872045557293f21f76933f20375b5911a1",
+      "public_value": "$PRIVATE_PATH_5b84a542007f4aca"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/44",
+      "original_value_sha256": "aef26dfb760e597e82f480806dd456d16c89b11870436d394e987612d7c90279",
+      "public_value": "$PRIVATE_PATH_aef26dfb760e597e"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/45",
+      "original_value_sha256": "9e0f2f9d4a5ccd0b02bcfaa003d3a9dfeb2d0940eb9a0bd49278eae61f62ac8e",
+      "public_value": "$PRIVATE_PATH_9e0f2f9d4a5ccd0b"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/46",
+      "original_value_sha256": "c5af5cbe2ccdff085c6a4459769ccdad943df600128c873a54983153a5738a22",
+      "public_value": "$PRIVATE_PATH_c5af5cbe2ccdff08"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/47",
+      "original_value_sha256": "6dd68d51ddbf6e4b21606e40138fbd5c3ce12c6b0d1c0e130761d56d8e9f55e9",
+      "public_value": "$PRIVATE_PATH_6dd68d51ddbf6e4b"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/48",
+      "original_value_sha256": "c7a226041b1fbcd3d87b0eef3edca3a948e1826af131aa33d8e34c34c75687d0",
+      "public_value": "$PRIVATE_PATH_c7a226041b1fbcd3"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/49",
+      "original_value_sha256": "6e5b5e048af4737eabb4a721b220272a344ad61262b7a03232abeab590e58ec0",
+      "public_value": "$PRIVATE_PATH_6e5b5e048af4737e"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/50",
+      "original_value_sha256": "f8932389f096f00a8dffe57f1022927ec5449584795edf27cff6ca2726334c17",
+      "public_value": "$PRIVATE_PATH_f8932389f096f00a"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/51",
+      "original_value_sha256": "357e65e020e3adb818e1c0c8a756df529620757f96d9e799e06ed4e5ddd691ad",
+      "public_value": "$PRIVATE_PATH_357e65e020e3adb8"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/52",
+      "original_value_sha256": "2a8f086578256a66e3e57b16faa8a17cdb40c38d94f131723be93f523e21260b",
+      "public_value": "$PRIVATE_PATH_2a8f086578256a66"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/53",
+      "original_value_sha256": "c50ae05abc016be6b259513af8ad0c48592583c4034510046a04643b639d5391",
+      "public_value": "$PRIVATE_PATH_c50ae05abc016be6"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/54",
+      "original_value_sha256": "a4fd6640b8a6c421657c96fbbe492a4eb362494e8e77570340c66d7de05fafd7",
+      "public_value": "$PRIVATE_PATH_a4fd6640b8a6c421"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/55",
+      "original_value_sha256": "5cc362459d049817caf2049c31c4c09b32ff61d19bf712d4d2c2c1f8338ef6cb",
+      "public_value": "$PRIVATE_PATH_5cc362459d049817"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/56",
+      "original_value_sha256": "46b81e29ffcbc3143cc69f38e8e2d39c2f62a459e3ccb39dbf60182afb46cd55",
+      "public_value": "$PRIVATE_PATH_46b81e29ffcbc314"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/57",
+      "original_value_sha256": "ce2235816a7cd70d91cb3fdc7d567615b711d18855cdfca3cb96efae807246da",
+      "public_value": "$PRIVATE_PATH_ce2235816a7cd70d"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/58",
+      "original_value_sha256": "70479b8cc637728297a75cc50d013b10751d1f100dccedfc874112d7afb4891c",
+      "public_value": "$PRIVATE_PATH_70479b8cc6377282"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/59",
+      "original_value_sha256": "4b32c40014f9019e9a14648ff5c14d387c49499dc1d1dc0f48c02a4d67a9b1e9",
+      "public_value": "$PRIVATE_PATH_4b32c40014f9019e"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/60",
+      "original_value_sha256": "670ed2dd2ac62c0fa5f3cb197257a817d7839d67db1aa1fad017eccbe0af0af0",
+      "public_value": "$PRIVATE_PATH_670ed2dd2ac62c0f"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/61",
+      "original_value_sha256": "2983ab15a05aa15300a45f37a4d0d0cab201458100b1a861a9016d41e0952b35",
+      "public_value": "$PRIVATE_PATH_2983ab15a05aa153"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/62",
+      "original_value_sha256": "902359de7737297f1eac2dd8f88f13a82e12fffefdb864fa9d6c26bbaf639d03",
+      "public_value": "$PRIVATE_PATH_902359de7737297f"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/63",
+      "original_value_sha256": "50434bd3409ef4d4c7a450656054129633e90075d191063a75fd3fdeeea01643",
+      "public_value": "$PRIVATE_PATH_50434bd3409ef4d4"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/64",
+      "original_value_sha256": "fa4b46065ea34428b3b13ea2fac91f50e03118d9f789d3d0c61817d40dbf2d4a",
+      "public_value": "$PRIVATE_PATH_fa4b46065ea34428"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/65",
+      "original_value_sha256": "1c7d8bbe0f2af5ea23745649f07d21130c30fea84e9cc48a2112ffda2e5b6169",
+      "public_value": "$PRIVATE_PATH_1c7d8bbe0f2af5ea"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/66",
+      "original_value_sha256": "166eff9e56543b856ad5483fffbee939bedd83f65d60647ba175d2c4f0510cb8",
+      "public_value": "$PRIVATE_PATH_166eff9e56543b85"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/67",
+      "original_value_sha256": "db5f4977b9d1cab15feed1ad12e1d5d1310ff4e7a1b0549a32572978c24aca65",
+      "public_value": "$PRIVATE_PATH_db5f4977b9d1cab1"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/68",
+      "original_value_sha256": "42e67642fa9418e24b1c22d0495350e070018604f3907c5aac56f2962e5673b3",
+      "public_value": "$PRIVATE_PATH_42e67642fa9418e2"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/69",
+      "original_value_sha256": "9ccbf417a0864aba80d159653e9047fbb93cb4e8427dd98836dfed7913b64935",
+      "public_value": "$PRIVATE_PATH_9ccbf417a0864aba"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/70",
+      "original_value_sha256": "bc6a3520d384d6c089b2c84511ff6cb036c357ec2b1e42393ef6c026a4f69e6d",
+      "public_value": "$PRIVATE_PATH_bc6a3520d384d6c0"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/71",
+      "original_value_sha256": "b18593bb20ec0dfab1cfc6fcffad30261f2821e180001d6ea9042fa65054b434",
+      "public_value": "$PRIVATE_PATH_b18593bb20ec0dfa"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/72",
+      "original_value_sha256": "838129afa6a20ba15ec3546652ac355488a541c007039c090b6381f55b4f6af7",
+      "public_value": "$PRIVATE_PATH_838129afa6a20ba1"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/73",
+      "original_value_sha256": "a58e57a8b3bda20147e5414ea83257802a869a7f457abe7820fac7e18bcff34e",
+      "public_value": "$PRIVATE_PATH_a58e57a8b3bda201"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/74",
+      "original_value_sha256": "6ed0ee95a69703d2d2071325b7361da151bd049af7001d522451ee9417277126",
+      "public_value": "$PRIVATE_PATH_6ed0ee95a69703d2"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/75",
+      "original_value_sha256": "df1556ab2b863d7881b047c6625d809f732cb72ad63496ac14bea3e09c0a046b",
+      "public_value": "$PRIVATE_PATH_df1556ab2b863d78"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/76",
+      "original_value_sha256": "3a89938c734d18c915f59922d8478d44b1770f9269cbe7e0325cd7d495e53aba",
+      "public_value": "$PRIVATE_PATH_3a89938c734d18c9"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/77",
+      "original_value_sha256": "0274bc71d253766047c22433909adbe28aeefc750647da850f2fff199ce69ec7",
+      "public_value": "$PRIVATE_PATH_0274bc71d2537660"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/78",
+      "original_value_sha256": "c52d9d95e065b7d0e37466edff4bf07baa80346625f52cf4b1efc8d979b7ef2a",
+      "public_value": "$PRIVATE_PATH_c52d9d95e065b7d0"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/79",
+      "original_value_sha256": "d0683b1940aef670b2bf47ef6b379decab51aaefda7107f6e452b23342a1221b",
+      "public_value": "$PRIVATE_PATH_d0683b1940aef670"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/80",
+      "original_value_sha256": "1ea5569ffa4d1b58a15ce90345a4a41b88c7e1986820502c2f31c615aa21f3bd",
+      "public_value": "$PRIVATE_PATH_1ea5569ffa4d1b58"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/81",
+      "original_value_sha256": "7a7cd8ee27b2bce72c561654359bc21c7541122eef8f3f3e62d79ea71d6ae92a",
+      "public_value": "$PRIVATE_PATH_7a7cd8ee27b2bce7"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/82",
+      "original_value_sha256": "d90a75a6ce7261229202e4bee571500b300153b7b312147280d8eafedc920543",
+      "public_value": "$PRIVATE_PATH_d90a75a6ce726122"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/83",
+      "original_value_sha256": "97109adddaf1edd30a8dcf5c058f9871dd462f3860ea0e7c9688b5e6c927d772",
+      "public_value": "$PRIVATE_PATH_97109adddaf1edd3"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/84",
+      "original_value_sha256": "5fe086ce57a3098d17efde0b099b62c5768433a0f4f590804d37f5fd0ea73748",
+      "public_value": "$PRIVATE_PATH_5fe086ce57a3098d"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/85",
+      "original_value_sha256": "2937990fc336460e14f41109c6b9a66f283dd002d712af5e376aced7f8b28c9a",
+      "public_value": "$PRIVATE_PATH_2937990fc336460e"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/86",
+      "original_value_sha256": "3f65550a185000b605317a1cd38caf80b245168e3e9ae105139e7a40a0676d70",
+      "public_value": "$PRIVATE_PATH_3f65550a185000b6"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/87",
+      "original_value_sha256": "3136fc9f9950a59656ab92381da5697f2780040c3707c83d4b75a7f81212500e",
+      "public_value": "$PRIVATE_PATH_3136fc9f9950a596"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/88",
+      "original_value_sha256": "3d043917b9a2488e74dbf8480014bf98345ad5d38bd43f31f35546bc59d6736f",
+      "public_value": "$PRIVATE_PATH_3d043917b9a2488e"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/89",
+      "original_value_sha256": "f1d5c8133190191de7ebbbfc3d02238288ea800e338aaddfc858a909ab4ab373",
+      "public_value": "$PRIVATE_PATH_f1d5c8133190191d"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/90",
+      "original_value_sha256": "232356335a5ac5f8d1f7a843b1609fa66eb17801f854a3fbe09db0ee6451e400",
+      "public_value": "$PRIVATE_PATH_232356335a5ac5f8"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/91",
+      "original_value_sha256": "81a376e29665f2ecace87aa6786ed2f9b01b0215b6b38f1e62a94d3673ee9222",
+      "public_value": "$PRIVATE_PATH_81a376e29665f2ec"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/92",
+      "original_value_sha256": "d7b670056d761e6bf43a13fc21e30fbd6e234152406d79f4f823c64c3c7afeb5",
+      "public_value": "$PRIVATE_PATH_d7b670056d761e6b"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/93",
+      "original_value_sha256": "d96de7795c364b1bc87939a79f5c5e4d34a38c682691d7b4f4cfe1bda60fc59a",
+      "public_value": "$PRIVATE_PATH_d96de7795c364b1b"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/94",
+      "original_value_sha256": "75ab0a55ae8ef18fc260561aae686b37f3a0dae7dc69b2377fbd40ac03e99adf",
+      "public_value": "$PRIVATE_PATH_75ab0a55ae8ef18f"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/95",
+      "original_value_sha256": "7222e161aeaeb343b6ba53db30917fa4e4fe046a6226901be0c244e32363659d",
+      "public_value": "$PRIVATE_PATH_7222e161aeaeb343"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/96",
+      "original_value_sha256": "ce2b048c2956d20edd4a26aa48656764764a1461190e1e4a823de79d6aadcf6f",
+      "public_value": "$PRIVATE_PATH_ce2b048c2956d20e"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/97",
+      "original_value_sha256": "2c4fc162dec0da8cc4e17454407ebba3feb90fc7ad91b4affdd1d232c1748237",
+      "public_value": "$PRIVATE_PATH_2c4fc162dec0da8c"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/98",
+      "original_value_sha256": "d6fce69c40327fc225745371d9b75cbd10e78b26970882ec4eee1405904ecfc5",
+      "public_value": "$PRIVATE_PATH_d6fce69c40327fc2"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/99",
+      "original_value_sha256": "053ba89a9a0858992c7403a1489b9303cc1ffd6d2eb4ed3976e8e92b0ce66d93",
+      "public_value": "$PRIVATE_PATH_053ba89a9a085899"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/100",
+      "original_value_sha256": "d0d58e62ab57ca57e62b29550b7607d07b38ac1b1d458b6b233ec56361f01996",
+      "public_value": "$PRIVATE_PATH_d0d58e62ab57ca57"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/101",
+      "original_value_sha256": "17628883f9cdb550fed899b713d36ff77de71ef57a91ee05deaa7684e4a51626",
+      "public_value": "$PRIVATE_PATH_17628883f9cdb550"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/102",
+      "original_value_sha256": "cde595a4e07e7871e1609b0641c723570f74a97da6143670c606cd455b5b5aef",
+      "public_value": "$PRIVATE_PATH_cde595a4e07e7871"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/103",
+      "original_value_sha256": "4fe0561b75b947a0471f82681602e3744027b47b596c926fb831bd1e04eec3dc",
+      "public_value": "$PRIVATE_PATH_4fe0561b75b947a0"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/104",
+      "original_value_sha256": "ec2c4af5744606123d5ae862c97b4aa7fc951c865fa3338b0f3e86db533dff88",
+      "public_value": "$PRIVATE_PATH_ec2c4af574460612"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/105",
+      "original_value_sha256": "89e8defb1a0c7e23bc47b439c40dfd409cbb7b110e990fe38765076e390e5ce6",
+      "public_value": "$PRIVATE_PATH_89e8defb1a0c7e23"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/106",
+      "original_value_sha256": "18036468069de973bd6af764d8f596fd2e47b39a40a16cac6da87a28d622a04e",
+      "public_value": "$PRIVATE_PATH_18036468069de973"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/107",
+      "original_value_sha256": "f20c25e1f51222e1a72f7b2b50fd1ffc3ed13f9c6fdd129643056ec96099bb82",
+      "public_value": "$PRIVATE_PATH_f20c25e1f51222e1"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/108",
+      "original_value_sha256": "b5e6e197ba9e02bea5e3d050d6fa9f6aeba1273f95528dab2f7ad6c8c827ef63",
+      "public_value": "$PRIVATE_PATH_b5e6e197ba9e02be"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/109",
+      "original_value_sha256": "a4ee19f67218f9c9e5d12dc66de63632611a9352f738cdcca8e49cb03268c8b4",
+      "public_value": "$PRIVATE_PATH_a4ee19f67218f9c9"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/110",
+      "original_value_sha256": "047391284e7582fba5dc28ea77de797b365fab4a398c2473f8985a024f6a2e87",
+      "public_value": "$PRIVATE_PATH_047391284e7582fb"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/111",
+      "original_value_sha256": "01b576aa7a5ed0a69d5670b14d3c1d2ab49b42daa88b18445041e877363f766b",
+      "public_value": "$PRIVATE_PATH_01b576aa7a5ed0a6"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/112",
+      "original_value_sha256": "24dad7217f6a8bb15be24a0e5faa783a85bd37aba394a6f6337b35f7b45d6610",
+      "public_value": "$PRIVATE_PATH_24dad7217f6a8bb1"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/113",
+      "original_value_sha256": "b00ca61b8147f9c01506593692f1ea2ef562c9e392738576376058118b0ba9fc",
+      "public_value": "$PRIVATE_PATH_b00ca61b8147f9c0"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/114",
+      "original_value_sha256": "00b4f46bc780cb88a7ed71e0a5506b01a33ea218c307a59e9ae12e8134db9b59",
+      "public_value": "$PRIVATE_PATH_00b4f46bc780cb88"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/115",
+      "original_value_sha256": "a5ebdbc924f85f670d7dfca720d7aefc4a8a3b8a4cec22fa9305c156eca0efbe",
+      "public_value": "$PRIVATE_PATH_a5ebdbc924f85f67"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/116",
+      "original_value_sha256": "45b92f5b18dd3c656ef9f3265d40f5fac3de36f1bf008eb6d68425f752271858",
+      "public_value": "$PRIVATE_PATH_45b92f5b18dd3c65"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/117",
+      "original_value_sha256": "16f7073b1ed34bd5f721998be7b93d3a17d00fc1a629c0993cd4feaab912a707",
+      "public_value": "$PRIVATE_PATH_16f7073b1ed34bd5"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/118",
+      "original_value_sha256": "3181a1c113b63c4efe0c129f87deb6f148669b76a1ea762b2b301fffa2cbfdd3",
+      "public_value": "$PRIVATE_PATH_3181a1c113b63c4e"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/119",
+      "original_value_sha256": "77412e611e86a85b7f8ddabd97cf15fc6feed7fb899a3b671a6a9f60f1bd3d62",
+      "public_value": "$PRIVATE_PATH_77412e611e86a85b"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/120",
+      "original_value_sha256": "8860319011deee6da7ffe27de16f8b39589397ec14a38c4791de56c54b5e6337",
+      "public_value": "$PRIVATE_PATH_8860319011deee6d"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/121",
+      "original_value_sha256": "e1c14aca02bf41f90d2baf91438e982205a1b4e06e1c938a7c05c23dc24719ca",
+      "public_value": "$PRIVATE_PATH_e1c14aca02bf41f9"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/122",
+      "original_value_sha256": "0f5e319f55cfcf637f6663eabdcbf61472820e1c93e4e647c0951156c0c8af06",
+      "public_value": "$PRIVATE_PATH_0f5e319f55cfcf63"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/123",
+      "original_value_sha256": "d278d777e530f566e2d6410172fc4443678fdc939e462baedd7a076d4a18e818",
+      "public_value": "$PRIVATE_PATH_d278d777e530f566"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/124",
+      "original_value_sha256": "f9cd987da8be9f393fbfb3a5540eaf965e35aee314e14483fee4c520c8ca5ed4",
+      "public_value": "$PRIVATE_PATH_f9cd987da8be9f39"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/125",
+      "original_value_sha256": "5b08dc5e9366e0006e899d0d0b7b4cf923e3df34c50ab4e9e6ac0a76ae76394d",
+      "public_value": "$PRIVATE_PATH_5b08dc5e9366e000"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/126",
+      "original_value_sha256": "0c40159600363e29cc51b082f9799d6d8896c0f99a43caf7371e3201a1f3977e",
+      "public_value": "$PRIVATE_PATH_0c40159600363e29"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/127",
+      "original_value_sha256": "dd8bde504b5b85b2b685eea3ebb2aa206737b4f44206287fdceb5b4296e40900",
+      "public_value": "$PRIVATE_PATH_dd8bde504b5b85b2"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/128",
+      "original_value_sha256": "88799a909811d24db44c941b4052e7320183ddbd21616d82faadc84675eaa26c",
+      "public_value": "$PRIVATE_PATH_88799a909811d24d"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/129",
+      "original_value_sha256": "1de9f690feb78b273d7a4e6ea70de672b70ebac1cb13b8e88b19258af23f1c2e",
+      "public_value": "$PRIVATE_PATH_1de9f690feb78b27"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/130",
+      "original_value_sha256": "7da719d442e5f6116865132c5268b4b671e26054dfa8b711bb1dfc4a3a3a702b",
+      "public_value": "$PRIVATE_PATH_7da719d442e5f611"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/131",
+      "original_value_sha256": "80ca099683a602c0268a52617b787c37263df4adfb20bef89b79f96a75c10804",
+      "public_value": "$PRIVATE_PATH_80ca099683a602c0"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/132",
+      "original_value_sha256": "122f8c0f46748a5b1961847f83c3277953a95d4381a9c4bd23e62a8373b33beb",
+      "public_value": "$PRIVATE_PATH_122f8c0f46748a5b"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/133",
+      "original_value_sha256": "107d7fa7ccfd203f21be3b200bad92170915241da8bdc983db79994d3b8167fd",
+      "public_value": "$PRIVATE_PATH_107d7fa7ccfd203f"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/134",
+      "original_value_sha256": "e90e8aaa46c5ff2ced193964b74c4bfc3ec935ffa0fd58e8e6c58fb7ff2987b6",
+      "public_value": "$PRIVATE_PATH_e90e8aaa46c5ff2c"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/135",
+      "original_value_sha256": "aa24d9e91eb5ed1c4835ebffe20232922746678013bf993629d12a35298a257e",
+      "public_value": "$PRIVATE_PATH_aa24d9e91eb5ed1c"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/136",
+      "original_value_sha256": "a76a30d1c7ea2b264afa86125aa0337b00f0f21d905e0852b8c70c06c748b63c",
+      "public_value": "$PRIVATE_PATH_a76a30d1c7ea2b26"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/137",
+      "original_value_sha256": "2f5a4be5fb0ea5a333703c830b9ee21bdcacf72ff6062b79f30368605c26a6eb",
+      "public_value": "$PRIVATE_PATH_2f5a4be5fb0ea5a3"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/138",
+      "original_value_sha256": "13349a61c8221e2db0941ecea44dc33a75e8f61b863f32027f7ce255d116ad4a",
+      "public_value": "$PRIVATE_PATH_13349a61c8221e2d"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/139",
+      "original_value_sha256": "24057a6e60985fa08b6b81b2846ba6cc6ed515364ca3d724e42d51010da26bc6",
+      "public_value": "$PRIVATE_PATH_24057a6e60985fa0"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/140",
+      "original_value_sha256": "488b6ba4341d2dd4ce0be4a85b747f4c7922d9fc349c1d15deb11298313afb28",
+      "public_value": "$PRIVATE_PATH_488b6ba4341d2dd4"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/141",
+      "original_value_sha256": "888a28babc0e5cbd416a3af03140bed998e5b333297b87ba09250c924005e122",
+      "public_value": "$PRIVATE_PATH_888a28babc0e5cbd"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/142",
+      "original_value_sha256": "ed5ec0fe4af2c988fa039314d2a72cce7ad005cfa6a45a63c8d8a248f8d8fc10",
+      "public_value": "$PRIVATE_PATH_ed5ec0fe4af2c988"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/143",
+      "original_value_sha256": "86f246df255a0976f01578c36c45eb4c74ac5726ab438ab886c31af8d76cbd4b",
+      "public_value": "$PRIVATE_PATH_86f246df255a0976"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/144",
+      "original_value_sha256": "2a8b7117889518cf763e291b2dff9e84b8131c581830b20ad7b3411246fc701b",
+      "public_value": "$PRIVATE_PATH_2a8b7117889518cf"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/145",
+      "original_value_sha256": "27991e7937a83d8b61c61804d0ffcebbef5e6a9d8da69cd6cb33297693bce1e2",
+      "public_value": "$PRIVATE_PATH_27991e7937a83d8b"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/146",
+      "original_value_sha256": "c075bd82cba17f56e3fd93bf1dc237cb61fd44491c7baf91a5e1528ca1d585bf",
+      "public_value": "$PRIVATE_PATH_c075bd82cba17f56"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/147",
+      "original_value_sha256": "76b794ae509c79eb0e779f79c74f42465cce6376b548f2f3952cdcac23d0e78d",
+      "public_value": "$PRIVATE_PATH_76b794ae509c79eb"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/148",
+      "original_value_sha256": "ddacdf3b0f427f963fa1e93814ba8d2aa2a2ea8b34ae8b314fda079778b841b6",
+      "public_value": "$PRIVATE_PATH_ddacdf3b0f427f96"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/149",
+      "original_value_sha256": "9c4f273fdedecc7820e9bf90529e7e06ed11801070fa73909e043e049d82cf1e",
+      "public_value": "$PRIVATE_PATH_9c4f273fdedecc78"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/150",
+      "original_value_sha256": "71a39a28e5c8ba5f3a5d91dfc41c2dd867bc54401f661bad370d685d25043df6",
+      "public_value": "$PRIVATE_PATH_71a39a28e5c8ba5f"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/151",
+      "original_value_sha256": "6f437540551ede997cc8974687f314eeb410ff1483dd8dc38cb761a9d3e3f499",
+      "public_value": "$PRIVATE_PATH_6f437540551ede99"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/152",
+      "original_value_sha256": "4cbab941a037579ffa66d8dea04b777833460214394c8a64408f5a4e2e19aa68",
+      "public_value": "$PRIVATE_PATH_4cbab941a037579f"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/153",
+      "original_value_sha256": "77891f4580a80ba342dc12073e0467df2e91d0593a7f4a1436f6e9c83f02c825",
+      "public_value": "$PRIVATE_PATH_77891f4580a80ba3"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/154",
+      "original_value_sha256": "461fecf404474516feeecf11c383d5570fe1454ebbd1853839df885a5bf6f01b",
+      "public_value": "$PRIVATE_PATH_461fecf404474516"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/155",
+      "original_value_sha256": "4537b64945e987448025c6a3c3fb8871de4b1a66c986d499a5330d876343034d",
+      "public_value": "$PRIVATE_PATH_4537b64945e98744"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/156",
+      "original_value_sha256": "92b8fdedc368b2f335150678906134f2aa423e725d14fcc7223349d49bebc342",
+      "public_value": "$PRIVATE_PATH_92b8fdedc368b2f3"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/157",
+      "original_value_sha256": "8ceea5650e98c7855811e38027ad4ad8313cbaa54db3768c409eeb03f580df75",
+      "public_value": "$PRIVATE_PATH_8ceea5650e98c785"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/158",
+      "original_value_sha256": "eadb69741bd951efc9d0eaf7849073e6aa9851edbc0dc6c3683218e4c49fe609",
+      "public_value": "$PRIVATE_PATH_eadb69741bd951ef"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/159",
+      "original_value_sha256": "d9c0afc50033faf3ecf87b54f449ff927429752550b99610fd1af03c7e4cca06",
+      "public_value": "$PRIVATE_PATH_d9c0afc50033faf3"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/160",
+      "original_value_sha256": "01987bdf67f1843b09189ea25a1611a6932a69031f8bb53b0d1e0578d0a4b124",
+      "public_value": "$PRIVATE_PATH_01987bdf67f1843b"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/161",
+      "original_value_sha256": "e4048b6a0767d824a25322cfb8ed40223d37e178a4da69bf3441350a583f4637",
+      "public_value": "$PRIVATE_PATH_e4048b6a0767d824"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/162",
+      "original_value_sha256": "747bd52e4e5a458e3782685622e0e4f352f4f7ba330350e300f6621876c8c41a",
+      "public_value": "$PRIVATE_PATH_747bd52e4e5a458e"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/163",
+      "original_value_sha256": "f7757d4c5a52ada767e5727c1c2ac0280c5470dd8525b2272804085346066785",
+      "public_value": "$PRIVATE_PATH_f7757d4c5a52ada7"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/164",
+      "original_value_sha256": "82f1c69039edf953737551e2c4d821102c7c3970215c73ff4bd608840ba33056",
+      "public_value": "$PRIVATE_PATH_82f1c69039edf953"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/165",
+      "original_value_sha256": "d0f358a70dc6ec31517c68f0aec060a37514674d573ddfcebd726f263a586a81",
+      "public_value": "$PRIVATE_PATH_d0f358a70dc6ec31"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/166",
+      "original_value_sha256": "106115018b5c2bf0fc3e8a703ef3ade084e177693487fe41087395b4b481b39e",
+      "public_value": "$PRIVATE_PATH_106115018b5c2bf0"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/167",
+      "original_value_sha256": "501071990d5f400883072b5b622321b03d8afb322a46e84fd938f8c48b8c1f67",
+      "public_value": "$PRIVATE_PATH_501071990d5f4008"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/168",
+      "original_value_sha256": "a5d1ee9d6d410550fe055be699c9e7ce474234f3cbd377e4218acbf8db209ae3",
+      "public_value": "$PRIVATE_PATH_a5d1ee9d6d410550"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/169",
+      "original_value_sha256": "f9193b162a6b3cbd72bc78a57fd8dbd44a51e55559a287b45bc39f596c136f9c",
+      "public_value": "$PRIVATE_PATH_f9193b162a6b3cbd"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/170",
+      "original_value_sha256": "f7f9c195ea4681bf63b1845e785a391963d2c89ccf9b3c1d6d365978080affb9",
+      "public_value": "$PRIVATE_PATH_f7f9c195ea4681bf"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/171",
+      "original_value_sha256": "589cdc62f4f2554de0a98a4496e19a70d1fdafe694048072af122109bb36c5aa",
+      "public_value": "$PRIVATE_PATH_589cdc62f4f2554d"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/172",
+      "original_value_sha256": "fb1ebbcf43d28abbe4627972bf32d89a22aa9ed3cca1eb38d5412825ffceab79",
+      "public_value": "$PRIVATE_PATH_fb1ebbcf43d28abb"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/173",
+      "original_value_sha256": "6521a93bc4442068cc87a7e4b80cd737f5096d1a1d14ba9a02eb91460cb79890",
+      "public_value": "$PRIVATE_PATH_6521a93bc4442068"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/174",
+      "original_value_sha256": "0ff1f890efddc368eecb241ab5cab5b47392b1c1997e2760b055b42822ba2763",
+      "public_value": "$PRIVATE_PATH_0ff1f890efddc368"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/175",
+      "original_value_sha256": "189557e97cbf9b5ade13fa6af43d5ff3276292337e34d12e3776323eba51f77c",
+      "public_value": "$PRIVATE_PATH_189557e97cbf9b5a"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/176",
+      "original_value_sha256": "02984b0312c58687165172102d9b05d6bc7311bc7d42aeb9b8ed3ab33aeacf4d",
+      "public_value": "$PRIVATE_PATH_02984b0312c58687"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/177",
+      "original_value_sha256": "0895dbd84ca2ad380b4dda320bec1d0b495c9e60db253fb42c67722b5ca970f4",
+      "public_value": "$PRIVATE_PATH_0895dbd84ca2ad38"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/178",
+      "original_value_sha256": "fcdc4c3fb087cf084cdcce000bf82e28dc9120492f7ea83bf31d1548642ef133",
+      "public_value": "$PRIVATE_PATH_fcdc4c3fb087cf08"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/179",
+      "original_value_sha256": "bf428cac6c158c7a751122f6f3331a7af99613a669c449270531a32f461a2474",
+      "public_value": "$PRIVATE_PATH_bf428cac6c158c7a"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/180",
+      "original_value_sha256": "829804dfd295d4e7a2375ceba83cb87b528a6e3c8c22a2d43ee7fb23b07a1348",
+      "public_value": "$PRIVATE_PATH_829804dfd295d4e7"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/181",
+      "original_value_sha256": "0f2c8f23d42039c8cf6a873ee7b43c02b0e7e71981a67b290956c6adae8a6c0e",
+      "public_value": "$PRIVATE_PATH_0f2c8f23d42039c8"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/182",
+      "original_value_sha256": "788a6c6d0c211910a5d0cf93bea51970d41910002cfe0f257b4d2c311e32d41e",
+      "public_value": "$PRIVATE_PATH_788a6c6d0c211910"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/183",
+      "original_value_sha256": "725762f1877a43f1609b4df67f7436d5bf4a640527a2fb84b48654176a4b771a",
+      "public_value": "$PRIVATE_PATH_725762f1877a43f1"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/184",
+      "original_value_sha256": "a0f27cb5da88b50be4b6a1afcda3f60adb07fd5bad88edde7963785c352590e6",
+      "public_value": "$PRIVATE_PATH_a0f27cb5da88b50b"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/185",
+      "original_value_sha256": "a67d071902ac29e97109e3229bf8415f8063ca42ab5426fc142202b9a8a1bc91",
+      "public_value": "$PRIVATE_PATH_a67d071902ac29e9"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/186",
+      "original_value_sha256": "659f4885414d9b14c4cc53c04c44e7727900d23c7ba1185a57f677e0550d7ee5",
+      "public_value": "$PRIVATE_PATH_659f4885414d9b14"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/187",
+      "original_value_sha256": "abcb4920b2bfeec82d8f0faf58acf62840bf5ef292b863a5674866e8df842f9e",
+      "public_value": "$PRIVATE_PATH_abcb4920b2bfeec8"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/188",
+      "original_value_sha256": "2a897d3f07c50f3f80e0cf607ecd3f8aafa7ecad2d5f9ec32f79ffb62359433c",
+      "public_value": "$PRIVATE_PATH_2a897d3f07c50f3f"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/189",
+      "original_value_sha256": "fb8728ee84f57bfe6822d2a34f6d8b829513b468340073f681f58b1b84f43583",
+      "public_value": "$PRIVATE_PATH_fb8728ee84f57bfe"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/190",
+      "original_value_sha256": "3a261dda2a8fa4a77a928c92df9238a5c3e1325fd60e30bf335b1d38cef98917",
+      "public_value": "$PRIVATE_PATH_3a261dda2a8fa4a7"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/191",
+      "original_value_sha256": "b2d7fcb1dd9c2a4fbb676ceeece192415c009a29247826932ed31a078d45dec5",
+      "public_value": "$PRIVATE_PATH_b2d7fcb1dd9c2a4f"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/192",
+      "original_value_sha256": "33f94b377f072388705f37fc29e670e8f2a8cad975640417d0a4d74a91783394",
+      "public_value": "$PRIVATE_PATH_33f94b377f072388"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/193",
+      "original_value_sha256": "c59dd5e5d2549ffa9fab36b6f3a6a83a9076c8880e923636381353d9e10094c5",
+      "public_value": "$PRIVATE_PATH_c59dd5e5d2549ffa"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/194",
+      "original_value_sha256": "239936b235b23e3b9b92d67f06a0d557eb68bff29be8825eb17ffc520aaeb5ab",
+      "public_value": "$PRIVATE_PATH_239936b235b23e3b"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/195",
+      "original_value_sha256": "c995f7f49636640e0e68d46e50eae1762f9f8dd588ad6cc186775a07a9551241",
+      "public_value": "$PRIVATE_PATH_c995f7f49636640e"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/196",
+      "original_value_sha256": "7f2cbca12c3cb4e9a7ad094d638ab753e33997e196d579cdef4ee73106abe934",
+      "public_value": "$PRIVATE_PATH_7f2cbca12c3cb4e9"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/197",
+      "original_value_sha256": "ee357cf9964f80ff4b0b50340df124ed57986b4a44a7c4c664dfb87caf5e9d19",
+      "public_value": "$PRIVATE_PATH_ee357cf9964f80ff"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/198",
+      "original_value_sha256": "dac55e99ff2db30e1bb706fad5955fccdf2827c7767ed3a96127df8d0be6245d",
+      "public_value": "$PRIVATE_PATH_dac55e99ff2db30e"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/199",
+      "original_value_sha256": "5bae24395533f24d91b233ac70d2ad2d6a1fab56fe3611e3680ffe40aa56a041",
+      "public_value": "$PRIVATE_PATH_5bae24395533f24d"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/200",
+      "original_value_sha256": "bcc7ac13898334c5a1f57e57787913d30b4d036721777db397dca85f164afc81",
+      "public_value": "$PRIVATE_PATH_bcc7ac13898334c5"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/201",
+      "original_value_sha256": "98150c2cb21318417601dd25dcd27b320d277f25d906f3030bfe78f6441ca500",
+      "public_value": "$PRIVATE_PATH_98150c2cb2131841"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/202",
+      "original_value_sha256": "d8f9dcfa3667ac0e0690ee3a840558df3015cf388f3085c01dfc7f2204a2666f",
+      "public_value": "$PRIVATE_PATH_d8f9dcfa3667ac0e"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/203",
+      "original_value_sha256": "18858686a1345f1b5ea21b80afb67dc68a28c6f0d40ff6c2d4f6b93e8b89715c",
+      "public_value": "$PRIVATE_PATH_18858686a1345f1b"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/204",
+      "original_value_sha256": "ecc8794715c6068516f4772090da664561adde11a81efd5af0e78d7dd8abc61a",
+      "public_value": "$PRIVATE_PATH_ecc8794715c60685"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/205",
+      "original_value_sha256": "f70654c7edf7a78a12069081ba11b34f2f30360a7218d5ba6137bd79382e545f",
+      "public_value": "$PRIVATE_PATH_f70654c7edf7a78a"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/206",
+      "original_value_sha256": "9d2c2ba886af18e621f31a047f2eec42ca3b65a827317a6e16bc209bdc235193",
+      "public_value": "$PRIVATE_PATH_9d2c2ba886af18e6"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/207",
+      "original_value_sha256": "363df9738e63695a21c9f7dd8b828f3e0aa5d1d17a5a4e521b78b37eb7b09225",
+      "public_value": "$PRIVATE_PATH_363df9738e63695a"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/208",
+      "original_value_sha256": "e98f7f5dd9098280b8f56bfe3e52021451d58fcc4b97c72306d9a4d9cb7e2463",
+      "public_value": "$PRIVATE_PATH_e98f7f5dd9098280"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/209",
+      "original_value_sha256": "53f9f7de04ca883c86700a8e7ec3b60e3440b944bca5a8bf4e52c46a4654f6bc",
+      "public_value": "$PRIVATE_PATH_53f9f7de04ca883c"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/210",
+      "original_value_sha256": "1b6edce15d022ccb6724a7ae366090bb97cb554878670a4267a8f1ee20c13eda",
+      "public_value": "$PRIVATE_PATH_1b6edce15d022ccb"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/211",
+      "original_value_sha256": "896c729fc7cb88e41211649f2ad073a837bffcc1a79fb3b68276d1e49ddd0e27",
+      "public_value": "$PRIVATE_PATH_896c729fc7cb88e4"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/212",
+      "original_value_sha256": "4c058e5a39e43c988baf6047f187ea2f892bd1acef8daabff13e397e9e2a1b50",
+      "public_value": "$PRIVATE_PATH_4c058e5a39e43c98"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/213",
+      "original_value_sha256": "95150bc0a67c1931a4ade382c974f13402187fd237f543c2e4471821489d3f79",
+      "public_value": "$PRIVATE_PATH_95150bc0a67c1931"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/214",
+      "original_value_sha256": "5de6abea002a888f86cadde51e23f079f80669da6bf2b8f6b09a90a703eae21e",
+      "public_value": "$PRIVATE_PATH_5de6abea002a888f"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/215",
+      "original_value_sha256": "85caafc7a8eccf143421a65d0708ced215b1f55ffd84f83ed15b0b051f0cf078",
+      "public_value": "$PRIVATE_PATH_85caafc7a8eccf14"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/216",
+      "original_value_sha256": "98624969f9d37207f1c1d5fe84f15820b0d59d8655ed646b3c748ee01f1a1821",
+      "public_value": "$PRIVATE_PATH_98624969f9d37207"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/217",
+      "original_value_sha256": "310e3d04dcc0517595defd11914cd1c74203cf8188eff7b6587a1f778baf67d7",
+      "public_value": "$PRIVATE_PATH_310e3d04dcc05175"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/218",
+      "original_value_sha256": "22971adc7053b1ae5b7aa2db3b92fc8d2a99418b29d062a28f965d2dc1254335",
+      "public_value": "$PRIVATE_PATH_22971adc7053b1ae"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/219",
+      "original_value_sha256": "aed4dab938673075e03369c96842d178529efc7b7f9e84588d4e09a0dee57947",
+      "public_value": "$PRIVATE_PATH_aed4dab938673075"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/220",
+      "original_value_sha256": "4d76ced39f2947f513533821767636d61c0171cb3b39d507378125757f655e29",
+      "public_value": "$PRIVATE_PATH_4d76ced39f2947f5"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/221",
+      "original_value_sha256": "ae3b28bf9935bc304273f878a344777197aa3b7f900ff05f912f03615d32b193",
+      "public_value": "$PRIVATE_PATH_ae3b28bf9935bc30"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/222",
+      "original_value_sha256": "e81c0ea4a9dd6edbd54c8d5065bbeff907a8705bcc9dac6bcdb855db27a4cfe1",
+      "public_value": "$PRIVATE_PATH_e81c0ea4a9dd6edb"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/223",
+      "original_value_sha256": "4aefbe40be87617da9416184565e82f84d220779918c6cfb4948e40c680d69ca",
+      "public_value": "$PRIVATE_PATH_4aefbe40be87617d"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/224",
+      "original_value_sha256": "9f797ec87307b5eaf491f59afcc287c251e9100a3c7eaffcbf7620de009376d9",
+      "public_value": "$PRIVATE_PATH_9f797ec87307b5ea"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/225",
+      "original_value_sha256": "7d59b45d7fed348b1007cbd2aa54ee43d897976bca14d72ec76a360609482cc1",
+      "public_value": "$PRIVATE_PATH_7d59b45d7fed348b"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/226",
+      "original_value_sha256": "b6f2d66cd4232c6dd0900f4cc8e4bafafcd62dcf42ae44e6e066460238fc7053",
+      "public_value": "$PRIVATE_PATH_b6f2d66cd4232c6d"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/227",
+      "original_value_sha256": "f766c36410b22c0da6086f100d79328c650c78c8f7ca8ea32c3ea5eab279dfef",
+      "public_value": "$PRIVATE_PATH_f766c36410b22c0d"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/228",
+      "original_value_sha256": "f94769978e42199137e97b0d3b1fbcf02d5243fe783fcff7b3a1545353d75e73",
+      "public_value": "$PRIVATE_PATH_f94769978e421991"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/229",
+      "original_value_sha256": "424c3a2c012b128cdaf3b0a8c122da00d548d211344ec33f55726e94bd9074e3",
+      "public_value": "$PRIVATE_PATH_424c3a2c012b128c"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/230",
+      "original_value_sha256": "cdbf8ab0fe2ac40f38c452ef05d46d04a351d75e8ed90157c2dd9dab23040eeb",
+      "public_value": "$PRIVATE_PATH_cdbf8ab0fe2ac40f"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/231",
+      "original_value_sha256": "0fbc2d5d6b59476479351f2d735706af8878177bf30bffc7d0dcdb801e078522",
+      "public_value": "$PRIVATE_PATH_0fbc2d5d6b594764"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/232",
+      "original_value_sha256": "53227c9aaa60fc294b1d167b91e210e0151944cda317fc6397551c355c88b4b3",
+      "public_value": "$PRIVATE_PATH_53227c9aaa60fc29"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/233",
+      "original_value_sha256": "219e159e4f9e3127e7b7ec250d458bbaf904931e5e1686b569fe41cda676aa88",
+      "public_value": "$PRIVATE_PATH_219e159e4f9e3127"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/234",
+      "original_value_sha256": "d1b80a04e6446bfabf9890a3246573a83afd944fd0897e03307340fbe8e3dbb6",
+      "public_value": "$PRIVATE_PATH_d1b80a04e6446bfa"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/235",
+      "original_value_sha256": "19d6f97332a9829e5aa5b55ee12597de8b0b138677a03a95111ce251e8610fc8",
+      "public_value": "$PRIVATE_PATH_19d6f97332a9829e"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/236",
+      "original_value_sha256": "b10c836d870d23a6b2cdddf46c599aef7445bcfe922486ed31defa1144809537",
+      "public_value": "$PRIVATE_PATH_b10c836d870d23a6"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/237",
+      "original_value_sha256": "7993956c2badb69eac60a816354a694c06e157dba13404c881b5370bdc5285ff",
+      "public_value": "$PRIVATE_PATH_7993956c2badb69e"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/238",
+      "original_value_sha256": "5e3168cea2b83870bd9f2c75e978bd6328fd2e6446d10b2aedabbb1bb21da76a",
+      "public_value": "$PRIVATE_PATH_5e3168cea2b83870"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/239",
+      "original_value_sha256": "d384b981a045337bf3cf3ab04f7a001a78b63d0bebd998898d2af31d3ac140f7",
+      "public_value": "$PRIVATE_PATH_d384b981a045337b"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/240",
+      "original_value_sha256": "1d17dd6f28110773bef7c1ca7a56677c8ccd1acffea60e116895f8e3feb8f0ef",
+      "public_value": "$PRIVATE_PATH_1d17dd6f28110773"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/241",
+      "original_value_sha256": "0821a67f08589d3ab31525523a5c95c16d5e1c741df6b74a39a08e42d536ea40",
+      "public_value": "$PRIVATE_PATH_0821a67f08589d3a"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/242",
+      "original_value_sha256": "b5ba688e58c64a4a16468a0d956702883845c3700fa539342877dbcd7ec3843f",
+      "public_value": "$PRIVATE_PATH_b5ba688e58c64a4a"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/243",
+      "original_value_sha256": "bf83276c2517eb23744519c125c3c77f7e35a2e691be2a158e21c1a4d8517115",
+      "public_value": "$PRIVATE_PATH_bf83276c2517eb23"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/244",
+      "original_value_sha256": "2a19932c52763950de079f909235d6c6c653d23bb9dbe5002a9cc54a03486dc4",
+      "public_value": "$PRIVATE_PATH_2a19932c52763950"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/245",
+      "original_value_sha256": "dc6794f8dd1e3ddf6613242aaa797ce4b7dc4b95e81f0b47f9667eaec7cdc4a2",
+      "public_value": "$PRIVATE_PATH_dc6794f8dd1e3ddf"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/246",
+      "original_value_sha256": "d9af37be3fb79759e07ee3924d1199323f1a0a1afa198a3eb4ae45bf89b6b57c",
+      "public_value": "$PRIVATE_PATH_d9af37be3fb79759"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/247",
+      "original_value_sha256": "c75ac2ad0cdc9d5a46a3de4b63e25057304caa72b91403bd029e2750f67a24f3",
+      "public_value": "$PRIVATE_PATH_c75ac2ad0cdc9d5a"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/248",
+      "original_value_sha256": "9e8f312c373ec7d594bfa1f89303df3bccaf19fdee1db7080bccd4f97f37e3bc",
+      "public_value": "$PRIVATE_PATH_9e8f312c373ec7d5"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/249",
+      "original_value_sha256": "aa60b1e81b9f9bd847b9c58e6e41ee0a69af644b7168bf9ba5c9de0cfb93f784",
+      "public_value": "$PRIVATE_PATH_aa60b1e81b9f9bd8"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/250",
+      "original_value_sha256": "44f6f6a6eb4adccd941efc50888d16f97c93d01ef82df22b0c118cd40151511e",
+      "public_value": "$PRIVATE_PATH_44f6f6a6eb4adccd"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/251",
+      "original_value_sha256": "772e03ed7527788cef037c8f5b13e94e814ab7870a1bca9472c040c24d836a25",
+      "public_value": "$PRIVATE_PATH_772e03ed7527788c"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/252",
+      "original_value_sha256": "fd9875fe5f4020eacb58a79a779d5abee5fe6ee479e57caf754fd93e22287b2b",
+      "public_value": "$PRIVATE_PATH_fd9875fe5f4020ea"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/253",
+      "original_value_sha256": "a02c391d11e87ee6c060b1866874f3793b50487654c04e9597298b681fd8fec9",
+      "public_value": "$PRIVATE_PATH_a02c391d11e87ee6"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/254",
+      "original_value_sha256": "d1f9773e98e8c59db38a01814837c6b169821352ce04f72964c376736ea187ce",
+      "public_value": "$PRIVATE_PATH_d1f9773e98e8c59d"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/255",
+      "original_value_sha256": "167a4ea73fbc03c4e89f76485291bd6991419320a23e276124fd18d87d5598a1",
+      "public_value": "$PRIVATE_PATH_167a4ea73fbc03c4"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/256",
+      "original_value_sha256": "68c034dad3e3942014fca159193ba9ac2bfaa6723bce0d9b8869e92bd3103455",
+      "public_value": "$PRIVATE_PATH_68c034dad3e39420"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/257",
+      "original_value_sha256": "79f2722c27e16c807b71055a8f01471146dd5eeb425ef3ec461a2d0e3e3f0013",
+      "public_value": "$PRIVATE_PATH_79f2722c27e16c80"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/258",
+      "original_value_sha256": "1572eb04c33bcae8b53a0cba336fd4125ae5a850bc1957721ba7d85449ba1f48",
+      "public_value": "$PRIVATE_PATH_1572eb04c33bcae8"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/259",
+      "original_value_sha256": "c4d637f384c2ce881d24fd324e9b7456321f02f7187538f28aff911ec161a120",
+      "public_value": "$PRIVATE_PATH_c4d637f384c2ce88"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/260",
+      "original_value_sha256": "723db26d46b6928109eebed11696dd0b703df2031413b3f4930804dccba8c537",
+      "public_value": "$PRIVATE_PATH_723db26d46b69281"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/261",
+      "original_value_sha256": "06e7a26aa82770d5a8544b3104325680e07554a25202e59e386ddba9459890ac",
+      "public_value": "$PRIVATE_PATH_06e7a26aa82770d5"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/262",
+      "original_value_sha256": "cdedcf9fd89301be5fe872300642064eeb551fbcd752d7fd3ddd799ec78eef52",
+      "public_value": "$PRIVATE_PATH_cdedcf9fd89301be"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/263",
+      "original_value_sha256": "b0d1db395c03dbe10c2e91842ac069cc1b06181d7bb94ed098e2a7f681a45217",
+      "public_value": "$PRIVATE_PATH_b0d1db395c03dbe1"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/264",
+      "original_value_sha256": "a56a23f216e7a6c46469e5b9e44f8b0328f4987ee0f42bf7d8fd2bce04d89f34",
+      "public_value": "$PRIVATE_PATH_a56a23f216e7a6c4"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/265",
+      "original_value_sha256": "ab1cae6401dfe47650a467bb25b55b2ecaff795814e5b508a1ab4515a9e4e4cd",
+      "public_value": "$PRIVATE_PATH_ab1cae6401dfe476"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/266",
+      "original_value_sha256": "a0b4f50d661f44c330003b57acd7d1c3466f6a809cb5c3c5b440af66ecf853ea",
+      "public_value": "$PRIVATE_PATH_a0b4f50d661f44c3"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/267",
+      "original_value_sha256": "7a941345e7dc7ee61534f1e5b6ee4fea8f775e1c83602097dea61ef9c0ff14b0",
+      "public_value": "$PRIVATE_PATH_7a941345e7dc7ee6"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/268",
+      "original_value_sha256": "5ba6e9e8c7448412050f3b4522af054922241a6341911dfb0b6bc825b1d903a9",
+      "public_value": "$PRIVATE_PATH_5ba6e9e8c7448412"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/269",
+      "original_value_sha256": "54210ee47ed26658e288b216def251e1781b9bfd54785493de634a377100154e",
+      "public_value": "$PRIVATE_PATH_54210ee47ed26658"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/270",
+      "original_value_sha256": "6fe47221c4dd2dad840595d3d476aa1e625b8b2b37270dbdd4015e5fc2ddfb38",
+      "public_value": "$PRIVATE_PATH_6fe47221c4dd2dad"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/271",
+      "original_value_sha256": "9c5f45b2b7a4149d1172ca67ad5e17f57421480ae5e5dcb3a6a8de6a356bab82",
+      "public_value": "$PRIVATE_PATH_9c5f45b2b7a4149d"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/272",
+      "original_value_sha256": "b36cf35f8cd8d0d3e2dbcbecc4de4e774fd4af46ab5ebaa7c86794e049755f92",
+      "public_value": "$PRIVATE_PATH_b36cf35f8cd8d0d3"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/273",
+      "original_value_sha256": "7cd11de37c76605369e1307c646a6fb7d454c067dcf330e1a7bd2c6b3a227611",
+      "public_value": "$PRIVATE_PATH_7cd11de37c766053"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/274",
+      "original_value_sha256": "531b6832d377bf0d159387d2909c6fd504afcf80bef436f514ee9281ebbd410f",
+      "public_value": "$PRIVATE_PATH_531b6832d377bf0d"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/275",
+      "original_value_sha256": "02dedd49678e7e6e4640775208b049073a2c31089b64360fcc80df7108217a0f",
+      "public_value": "$PRIVATE_PATH_02dedd49678e7e6e"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/276",
+      "original_value_sha256": "e65ae0d111327e2929b64e60d6d15397a34789622c6ec0b30bd47d7a76ca322f",
+      "public_value": "$PRIVATE_PATH_e65ae0d111327e29"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/277",
+      "original_value_sha256": "7424bfe67a3c162a2e26ca5fbabf59d3c2776c3ff26f5c9ecf847bf7d62a8468",
+      "public_value": "$PRIVATE_PATH_7424bfe67a3c162a"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/278",
+      "original_value_sha256": "bcfbbbab662e2bf83a3fb56bc1885f9b40db14317cd854c1aefccec18bb6857b",
+      "public_value": "$PRIVATE_PATH_bcfbbbab662e2bf8"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/279",
+      "original_value_sha256": "14661d69ff8676668ec2099f17499f37252cd51a629a47e7b341200a95ef5b31",
+      "public_value": "$PRIVATE_PATH_14661d69ff867666"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/280",
+      "original_value_sha256": "1815e7e195b15c1c8308d336b3152a858b80f1ec64f3b0fe9f10967d6b758b94",
+      "public_value": "$PRIVATE_PATH_1815e7e195b15c1c"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/281",
+      "original_value_sha256": "bdc2ed2cbca6012e19278666f2429bbbe6706b160d8081878379733aeda3aeb8",
+      "public_value": "$REPO/.scratch/information_compute_ledger.jsonl:1: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/282",
+      "original_value_sha256": "de3ca8e0aa5104fa3f50459c2975cabfecf0e1a636b8d8c1a63bccfc1aba3ce6",
+      "public_value": "$REPO/.scratch/information_compute_ledger.jsonl:2: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/283",
+      "original_value_sha256": "d1ee9ec8db0195ca001dae3373fc5503a1f22e93bd8520de4cc09c33d0cc3d88",
+      "public_value": "$REPO/.scratch/information_compute_ledger.jsonl:3: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/284",
+      "original_value_sha256": "7e45263532946b5f48660001b164d9131eea35fdca6c13c4474331e4376d5280",
+      "public_value": "$REPO/.scratch/information_compute_ledger.jsonl:4: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/285",
+      "original_value_sha256": "945112122ad445caa1442fb0dab843dbc9a8d3dab467ad5bbd25c909e5f242f0",
+      "public_value": "$REPO/.scratch/information_compute_ledger.jsonl:5: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/286",
+      "original_value_sha256": "904867da4596adc0148ca85cbea4f9b847603ed4106538f1e63929cc01136011",
+      "public_value": "$REPO/.scratch/information_compute_ledger.jsonl:6: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/287",
+      "original_value_sha256": "b75202d840d9fd336cae502109e62749ece6860fee1d4f6a27341ff22ae24698",
+      "public_value": "$REPO/.scratch/information_compute_ledger.jsonl:7: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/288",
+      "original_value_sha256": "6474d83b1a5b5228f7a596221df6db6cdad694d26484d45e3918a7347b217bd1",
+      "public_value": "$REPO/.scratch/information_compute_ledger.jsonl:8: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/289",
+      "original_value_sha256": "b4a6cef78a8bdaaca94c7edf570af633d4bbafbd4445c0d824a2b68757e9aaf3",
+      "public_value": "$REPO/.scratch/information_compute_ledger.jsonl:9: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/290",
+      "original_value_sha256": "615e392de59a84fa74792987f85e0fefb8af4e63e45472dfc4171d36c0e33f4a",
+      "public_value": "$REPO/.scratch/information_compute_ledger.jsonl:10: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/291",
+      "original_value_sha256": "2192a35b1d2302a2bd7834e3d9dde537d73a6a838b3218b7caac26b8a9c2276b",
+      "public_value": "$PRIVATE_PATH_2192a35b1d2302a2"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/292",
+      "original_value_sha256": "40b3c9d0d445d270cdd738f31b4b0b49ab3fdf129384e65fdcfcca5e04b25a28",
+      "public_value": "$PRIVATE_PATH_40b3c9d0d445d270"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/293",
+      "original_value_sha256": "f332ef80f4d95fe1ba7a83272f49232519b32de2f24827ee08cf2c3f5222f38a",
+      "public_value": "$PRIVATE_PATH_f332ef80f4d95fe1"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/294",
+      "original_value_sha256": "10065ae900bf471b1fdcf95f8ad5632fb5c1229500384906a750ef52b7f84879",
+      "public_value": "$PRIVATE_PATH_10065ae900bf471b"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/295",
+      "original_value_sha256": "9f254506a6496bceab4683dff48dda17f951f6566bb631d960f737d5bffbcade",
+      "public_value": "$PRIVATE_PATH_9f254506a6496bce"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/296",
+      "original_value_sha256": "a56c144fbb21dc942eab16a0984846f146ff5d791e7a0db88f706cfcbe72fee5",
+      "public_value": "$PRIVATE_PATH_a56c144fbb21dc94"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/297",
+      "original_value_sha256": "2c7865f3822046c5e2a0132ce84957cafc5efc3b3c44981a42a37686d23e612e",
+      "public_value": "$PRIVATE_PATH_2c7865f3822046c5"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/298",
+      "original_value_sha256": "b8df5543154f2fc9af9cfc7ea20f59e55c5a4be91f606f9d0d84f9dad9ded171",
+      "public_value": "$PRIVATE_PATH_b8df5543154f2fc9"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/299",
+      "original_value_sha256": "54051ea3c3d7db977cc173927778bf3059f9c47dde845fe19928f94a8153b975",
+      "public_value": "$PRIVATE_PATH_54051ea3c3d7db97"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/300",
+      "original_value_sha256": "d6dda4ddcb895c689c4219aab504704f1d973c6ffaaf8529af28833d7ea251fc",
+      "public_value": "$PRIVATE_PATH_d6dda4ddcb895c68"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/301",
+      "original_value_sha256": "db56ff52407171661d074b3a020182e3a8d745303d8fdb4b891ea34b96a929d7",
+      "public_value": "$PRIVATE_PATH_db56ff5240717166"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/302",
+      "original_value_sha256": "6dccecb898774a793e0e8f81b74266b5413eb7640e4ed0ce29060ed65d3dbe07",
+      "public_value": "$PRIVATE_PATH_6dccecb898774a79"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/303",
+      "original_value_sha256": "9b1e6bd21dedf6f871b46e5e28ed38da3fd17ecd030b3b9ab07b46fcaae2f67b",
+      "public_value": "$REPO/.scratch/bias_compute_ledger.jsonl:1: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/304",
+      "original_value_sha256": "24c844aaab047cd1cd7dd676f1543ab65d19a9e1c5e99ec933037d325b98ac3c",
+      "public_value": "$REPO/.scratch/bias_compute_ledger.jsonl:2: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/305",
+      "original_value_sha256": "808018f2876eda1fc06933d6be8efc06828f71729c4068483ac34fa06f0fc21e",
+      "public_value": "$REPO/.scratch/bias_compute_ledger.jsonl:3: CPU charged at least wall"
+    },
+    {
+      "json_pointer": "/budget_before/conservative_adjustments/306",
+      "original_value_sha256": "ae499405fcaccbfd8acb7ff8f5db530b3d4d39a5df3a7707f7544ab8ab043dcd",
+      "public_value": "$REPO/.scratch/bias_compute_ledger.jsonl:4: CPU charged at least wall"
+    }
+  ],
+  "rule": "Only absolute path string fields were replaced. JSON pointers and original value hashes document each replacement. Original commands and path map remain private."
+}

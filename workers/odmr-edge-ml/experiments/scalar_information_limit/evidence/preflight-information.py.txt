@@ -1,0 +1,97 @@
+"""Local Fisher information with explicit scaled coordinates and null tests."""
+from dataclasses import replace
+import numpy as np
+from forward import forward, field_vector
+
+PARAMETERS=("field_uT","center_mhz","width_mhz","contrast","slope","theta","phi")
+SCALES=np.array([45.,1.,5.,.015,.02,1.,1.])
+CART_SCALES=np.array([45.,45.,45.,1.,5.,.015,.02])
+STEPS=(1e-4,3e-5,1e-5)
+LADDERS={"fixed":[0],"center":[0,1],"shape":[0,1,2,3,4],
+         "direction_shape":[0,1,2,3,4,5,6]}
+CUTOFFS=(1e-8,1e-10,1e-12)
+
+def finite_jacobian(p,normalization,factor,cartesian=False):
+    mu,base=forward(p,normalization,factor)
+    all_j=[];branch=False
+    vector=field_vector(p)
+    names=("bx","by","bz","center_mhz","width_mhz","contrast","slope") if cartesian else PARAMETERS
+    scales=CART_SCALES if cartesian else SCALES
+    for step in STEPS:
+        columns=[]
+        for k,name in enumerate(names):
+            h=step*scales[k]
+            if cartesian and k<3:
+                plus=vector.copy();minus=vector.copy()
+                plus[k]+=h;minus[k]-=h
+                yp,dp=forward(p,normalization,factor,plus)
+                ym,dm=forward(p,normalization,factor,minus)
+            else:
+                yp,dp=forward(replace(p,**{name:getattr(p,name)+h}),normalization,factor)
+                ym,dm=forward(replace(p,**{name:getattr(p,name)-h}),normalization,factor)
+            branch|=(dp["allowed_transitions"]!=base["allowed_transitions"] or
+                     dm["allowed_transitions"]!=base["allowed_transitions"])
+            if normalization=="historical":
+                branch|=(dp["max_bin"]!=base["max_bin"] or dm["max_bin"]!=base["max_bin"])
+            columns.append((yp-ym)/(2*step)) # derivative with respect to scaled coordinates
+        all_j.append(np.column_stack(columns))
+    errors=[]
+    for older,newer in zip(all_j[:-1],all_j[1:]):
+        difference=np.linalg.norm(newer-older,axis=0)
+        norm=np.maximum(np.linalg.norm(newer,axis=0),np.linalg.norm(older,axis=0))
+        # Absolute floor covers zero derivatives and eigensolver roundoff only.
+        errors.append(difference/np.maximum(norm,1e-8))
+    error=np.maximum(*errors)
+    stable=bool(np.all(error<=.02) and not branch)
+    return mu,all_j[-1],{"derivative_relative_error":error.tolist(),
+        "derivative_max_relative_error":float(error.max()),"derivative_stable":stable,
+        "branch_crossed":bool(branch),"coordinate_singularity":bool(abs(np.sin(p.theta))<1e-8),
+        **base}
+
+def fisher_bound(mu,jacobian,photons,target_gradient,cutoff):
+    weight=np.sqrt(photons/mu + .5/mu**2)
+    weighted=weight[:,None]*jacobian
+    _,singular,vt=np.linalg.svd(weighted,full_matrices=False)
+    threshold=cutoff*singular[0] if len(singular) and singular[0]>0 else 0.
+    keep=singular>threshold
+    g=np.asarray(target_gradient,float)
+    coordinates=vt@g
+    null_fraction=float(np.linalg.norm(coordinates[~keep])/max(np.linalg.norm(g),1e-300))
+    identifiable=bool(null_fraction<=1e-7 and np.any(keep))
+    bound=float(np.sqrt(np.sum((coordinates[keep]/singular[keep])**2))) if identifiable else None
+    return {"std_bound_uT":bound,"identifiable":identifiable,
+        "rank":int(keep.sum()),"dimension":len(g),
+        "singular_values":singular.tolist(),"svd_relative_cutoff":cutoff,
+        "null_target_fraction":null_fraction,
+        "condition_retained":float(singular[0]/singular[keep][-1]) if keep.any() else None}
+
+def point_information(p,normalization,factor,snr):
+    mu,jac,diagnostics=finite_jacobian(p,normalization,factor)
+    photons=(snr/(.30*.015))**2
+    rows=[]
+    for name,indices in LADDERS.items():
+        j=jac[:,indices];g=np.zeros(len(indices));g[0]=45.
+        for cutoff in CUTOFFS:
+            r=fisher_bound(mu,j,photons,g,cutoff)
+            r.update({"ladder":name,"coordinate_system":"spherical",**diagnostics})
+            rows.append(r)
+    cmu,cjac,cdiag=finite_jacobian(p,normalization,factor,cartesian=True)
+    target=np.zeros(7);target[:3]=45*field_vector(p)/p.field_uT
+    for cutoff in CUTOFFS:
+        r=fisher_bound(cmu,cjac,photons,target,cutoff)
+        r.update({"ladder":"direction_shape","coordinate_system":"cartesian",**cdiag})
+        rows.append(r)
+    return rows
+
+def lorentzian_profile(x,p):
+    b,s,c,d,a,e,h=p
+    u=(x-c+d/2)/h;v=(x-c-d/2)/h
+    return b+s*x-a/(1+u*u)-e/(1+v*v)
+
+def lorentzian_jacobian(x,p):
+    b,s,c,d,a,e,h=p
+    u=(x-c+d/2)/h;v=(x-c-d/2)/h
+    l,r=1+u*u,1+v*v
+    dc1=-2*a*u/(h*l*l);dc2=-2*e*v/(h*r*r)
+    return np.column_stack([np.ones_like(x),x,dc1+dc2,(-dc1+dc2)/2,
+        -1/l,-1/r,-2*(a*u*u/(l*l)+e*v*v/(r*r))/h])

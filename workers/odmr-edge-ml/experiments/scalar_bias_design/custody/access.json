@@ -1,0 +1,9 @@
+{
+  "accessed_utc": "2026-10-15T19:16:58.143416+00:00",
+  "commitment_sha256": "8db7c489783f5eb9e1370b118395b71eb459226870711c52d6a9dd011b1991dc",
+  "data_manifest_sha256": "178644fe36144845c742d97c59cfaa52cf6f3cc571649ea5648fa3b438a5e09b",
+  "freeze_sha256": "9cd53531509a5cfc2276f9c7eb0a446bac8b6a42f6bb67827148894ad2718837",
+  "protocol_sha256": "3278e90ac3cdc2769221a4bd619f8175cfc33bd2ffa3417a11fff71196aa9a1d",
+  "schema": 1,
+  "status": "authorized_once"
+}

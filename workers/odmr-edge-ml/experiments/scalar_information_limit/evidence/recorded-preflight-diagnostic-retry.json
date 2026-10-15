@@ -1,0 +1,580 @@
+{
+  "status": "fail",
+  "checks": [
+    "12 manufactured forward parity cases",
+    "analytic Lorentzian Jacobian at three steps"
+  ],
+  "implementation_sha256": {
+    "run_stage1.py": "390268f5172b0e440f4c53431b6cc9a8ce7738386586efb498f259f3431ff488",
+    "validate_stage1.py": "14663bcb6ea4d052af1c6f3cc6f3300ef22cffbb7e65cbb655f8d3d6cc420164",
+    "information.py": "ffb8d91de9745e52a933d620b936662e4487ae1052cd61617d37046ecb4217d1",
+    "forward.py": "04a88c370ec9aa867e2579ad6ed849a18fdd8b865c052eef41f12c287a9ba219",
+    "stage_guard.py": "fa63e8e82319fea7986dba486bd86feaf6822533dc769a0512634edd8aeb25d5"
+  },
+  "provenance": {
+    "pinned_simulator_sha256": {
+      "adapters/simos_adapter.py": "d5985c3920fbe6334d9bb70210e21711e2d0cda14e63308df37cf126aa46e431",
+      "pipelines/batch_generate.py": "ba9365e55bbbbc0c7b2465539104461512a9c0a4c0be4dd57c35b70d8275c5db",
+      "physics/lineshape.py": "f0d2797b88556d25534872cf05a7cf2fae2c2f03c29c03080671dd07f4f63a28",
+      "physics/parameters.py": "3ad33dfb5d64e606b828173b12b372b3c7df7464d96824ad0c34ba494be01410",
+      "physics/shot_noise.py": "c3b602bb5dab7c227d9485b8145fb995d544df5e533c59a1d571621557d44c73",
+      "physics/noise_injection.py": "f8270506ba7b05063cb7fc6e548456e2339f903de110066fc2767808e275b778"
+    },
+    "extra_simulator_sha256": {
+      "physics/hamiltonian.py": "82f6cf3917cb661d5a1dede9d23d5ba4630dd0bb288c54e11a25fb02c4b742af",
+      "config.py": "d5618f82d47347c7790d2328fac02971f5b61bd295565226a817c6081fae12ef"
+    },
+    "simos_NV_sha256": "dc5c5046e6a12313aae9dc1ae438c1507aa38b31480655e70aef8062d075fda0",
+    "simos_constants_sha256": "dc1213939c7da281d17f7aa74ee059887dda6f1284652080587aab926be052f8",
+    "versions": {
+      "numpy": "2.4.2",
+      "scipy": "1.17.1",
+      "simos": "0.2.3",
+      "qutip": "5.2.3"
+    }
+  },
+  "global_amplitude_factor": 0.9957299574916568,
+  "parity": [
+    {
+      "point": {
+        "field_uT": 45,
+        "theta": 0,
+        "phi": 0.0,
+        "bias_uT": 0,
+        "width_mhz": 5.0,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "historical",
+      "max_abs_error": 2.1094237467877974e-15
+    },
+    {
+      "point": {
+        "field_uT": 45,
+        "theta": 0,
+        "phi": 0.0,
+        "bias_uT": 0,
+        "width_mhz": 5.0,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "fixed_amplitude",
+      "max_abs_error": 2.4424906541753444e-15
+    },
+    {
+      "point": {
+        "field_uT": 45,
+        "theta": 0,
+        "phi": 0.0,
+        "bias_uT": 1000,
+        "width_mhz": 5.0,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "historical",
+      "max_abs_error": 2.220446049250313e-15
+    },
+    {
+      "point": {
+        "field_uT": 45,
+        "theta": 0,
+        "phi": 0.0,
+        "bias_uT": 1000,
+        "width_mhz": 5.0,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "fixed_amplitude",
+      "max_abs_error": 2.220446049250313e-15
+    },
+    {
+      "point": {
+        "field_uT": 20,
+        "theta": 1.5707963267948966,
+        "phi": 0,
+        "bias_uT": 0.0,
+        "width_mhz": 1.5,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "historical",
+      "max_abs_error": 2.55351295663786e-15
+    },
+    {
+      "point": {
+        "field_uT": 20,
+        "theta": 1.5707963267948966,
+        "phi": 0,
+        "bias_uT": 0.0,
+        "width_mhz": 1.5,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "fixed_amplitude",
+      "max_abs_error": 5.329070518200751e-15
+    },
+    {
+      "point": {
+        "field_uT": 70,
+        "theta": 1.5707963267948966,
+        "phi": 0.7853981633974483,
+        "bias_uT": 250,
+        "width_mhz": 7,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "historical",
+      "max_abs_error": 1.887379141862766e-15
+    },
+    {
+      "point": {
+        "field_uT": 70,
+        "theta": 1.5707963267948966,
+        "phi": 0.7853981633974483,
+        "bias_uT": 250,
+        "width_mhz": 7,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "fixed_amplitude",
+      "max_abs_error": 1.9984014443252818e-15
+    },
+    {
+      "point": {
+        "field_uT": 45,
+        "theta": 1.0471975511965976,
+        "phi": 0.7853981633974483,
+        "bias_uT": 500,
+        "width_mhz": 5.0,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "historical",
+      "max_abs_error": 7.993605777301127e-15
+    },
+    {
+      "point": {
+        "field_uT": 45,
+        "theta": 1.0471975511965976,
+        "phi": 0.7853981633974483,
+        "bias_uT": 500,
+        "width_mhz": 5.0,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "fixed_amplitude",
+      "max_abs_error": 5.10702591327572e-15
+    },
+    {
+      "point": {
+        "field_uT": 20,
+        "theta": 1.0471975511965976,
+        "phi": 0,
+        "bias_uT": 1000,
+        "width_mhz": 1.5,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "historical",
+      "max_abs_error": 2.4424906541753444e-15
+    },
+    {
+      "point": {
+        "field_uT": 20,
+        "theta": 1.0471975511965976,
+        "phi": 0,
+        "bias_uT": 1000,
+        "width_mhz": 1.5,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "fixed_amplitude",
+      "max_abs_error": 2.4424906541753444e-15
+    }
+  ],
+  "analytic_derivative_max_relative_error": 1.2271138309708246e-08,
+  "preflight_derivatives": [
+    {
+      "point": {
+        "field_uT": 45,
+        "theta": 0,
+        "phi": 0.0,
+        "bias_uT": 0,
+        "width_mhz": 5.0,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "historical",
+      "cartesian": false,
+      "derivative_relative_error": [
+        6.752986652796459e-09,
+        4.446010220644444e-09,
+        5.397390081704042e-09,
+        1.210057320195512e-09,
+        6.25822720817807e-10,
+        0.0,
+        0.0
+      ],
+      "derivative_max_relative_error": 6.752986652796459e-09,
+      "derivative_stable": true,
+      "branch_crossed": false,
+      "coordinate_singularity": true,
+      "ms0_index": 0,
+      "allowed_transitions": 2,
+      "dipole_threshold_distance": 0.4999989999999999,
+      "eigenvalue_min_gap_mhz": 2.5231460698678347,
+      "max_bin": 51,
+      "max_gap": 0.0009172033795578662,
+      "raw_max_depth": 0.02442325070135109
+    },
+    {
+      "point": {
+        "field_uT": 45,
+        "theta": 0,
+        "phi": 0.0,
+        "bias_uT": 0,
+        "width_mhz": 5.0,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "historical",
+      "cartesian": true,
+      "derivative_relative_error": [
+        0.0,
+        0.0,
+        6.752986652796459e-09,
+        4.446010220644444e-09,
+        5.397390081704042e-09,
+        1.210057320195512e-09,
+        6.25822720817807e-10
+      ],
+      "derivative_max_relative_error": 6.752986652796459e-09,
+      "derivative_stable": true,
+      "branch_crossed": false,
+      "coordinate_singularity": true,
+      "ms0_index": 0,
+      "allowed_transitions": 2,
+      "dipole_threshold_distance": 0.4999989999999999,
+      "eigenvalue_min_gap_mhz": 2.5231460698678347,
+      "max_bin": 51,
+      "max_gap": 0.0009172033795578662,
+      "raw_max_depth": 0.02442325070135109
+    },
+    {
+      "point": {
+        "field_uT": 45,
+        "theta": 0,
+        "phi": 0.0,
+        "bias_uT": 0,
+        "width_mhz": 5.0,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "fixed_amplitude",
+      "cartesian": false,
+      "derivative_relative_error": [
+        7.1415713196371025e-09,
+        2.7953269261238088e-09,
+        2.374395914764181e-09,
+        6.483866211161977e-10,
+        6.361939783124487e-10,
+        0.0,
+        0.0
+      ],
+      "derivative_max_relative_error": 7.1415713196371025e-09,
+      "derivative_stable": true,
+      "branch_crossed": false,
+      "coordinate_singularity": true,
+      "ms0_index": 0,
+      "allowed_transitions": 2,
+      "dipole_threshold_distance": 0.4999989999999999,
+      "eigenvalue_min_gap_mhz": 2.5231460698678347,
+      "max_bin": 51,
+      "max_gap": 0.0009172033795578662,
+      "raw_max_depth": 0.02442325070135109
+    },
+    {
+      "point": {
+        "field_uT": 45,
+        "theta": 0,
+        "phi": 0.0,
+        "bias_uT": 0,
+        "width_mhz": 5.0,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "fixed_amplitude",
+      "cartesian": true,
+      "derivative_relative_error": [
+        0.0,
+        0.0,
+        7.1415713196371025e-09,
+        2.7953269261238088e-09,
+        2.374395914764181e-09,
+        6.483866211161977e-10,
+        6.361939783124487e-10
+      ],
+      "derivative_max_relative_error": 7.1415713196371025e-09,
+      "derivative_stable": true,
+      "branch_crossed": false,
+      "coordinate_singularity": true,
+      "ms0_index": 0,
+      "allowed_transitions": 2,
+      "dipole_threshold_distance": 0.4999989999999999,
+      "eigenvalue_min_gap_mhz": 2.5231460698678347,
+      "max_bin": 51,
+      "max_gap": 0.0009172033795578662,
+      "raw_max_depth": 0.02442325070135109
+    },
+    {
+      "point": {
+        "field_uT": 45,
+        "theta": 0,
+        "phi": 0.0,
+        "bias_uT": 1000,
+        "width_mhz": 5.0,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "historical",
+      "cartesian": false,
+      "derivative_relative_error": [
+        8.844465140492604e-09,
+        3.09404955626601e-09,
+        2.9353389684854696e-09,
+        9.83644006716537e-10,
+        6.633110627254247e-10,
+        0.0,
+        0.0
+      ],
+      "derivative_max_relative_error": 8.844465140492604e-09,
+      "derivative_stable": true,
+      "branch_crossed": false,
+      "coordinate_singularity": true,
+      "ms0_index": 0,
+      "allowed_transitions": 2,
+      "dipole_threshold_distance": 0.4999989999999999,
+      "eigenvalue_min_gap_mhz": 58.59305873359904,
+      "max_bin": 80,
+      "max_gap": 2.0225493891148916e-07,
+      "raw_max_depth": 0.01506432530943078
+    },
+    {
+      "point": {
+        "field_uT": 45,
+        "theta": 0,
+        "phi": 0.0,
+        "bias_uT": 1000,
+        "width_mhz": 5.0,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "historical",
+      "cartesian": true,
+      "derivative_relative_error": [
+        0.0,
+        0.0,
+        8.844465140492604e-09,
+        3.09404955626601e-09,
+        2.9353389684854696e-09,
+        9.83644006716537e-10,
+        6.633110627254247e-10
+      ],
+      "derivative_max_relative_error": 8.844465140492604e-09,
+      "derivative_stable": true,
+      "branch_crossed": false,
+      "coordinate_singularity": true,
+      "ms0_index": 0,
+      "allowed_transitions": 2,
+      "dipole_threshold_distance": 0.4999989999999999,
+      "eigenvalue_min_gap_mhz": 58.59305873359904,
+      "max_bin": 80,
+      "max_gap": 2.0225493891148916e-07,
+      "raw_max_depth": 0.01506432530943078
+    },
+    {
+      "point": {
+        "field_uT": 45,
+        "theta": 0,
+        "phi": 0.0,
+        "bias_uT": 1000,
+        "width_mhz": 5.0,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "fixed_amplitude",
+      "cartesian": false,
+      "derivative_relative_error": [
+        9.11165825256434e-09,
+        3.09404955626601e-09,
+        2.910945479318241e-09,
+        9.83644006716537e-10,
+        6.633110627254247e-10,
+        0.0,
+        0.0
+      ],
+      "derivative_max_relative_error": 9.11165825256434e-09,
+      "derivative_stable": true,
+      "branch_crossed": false,
+      "coordinate_singularity": true,
+      "ms0_index": 0,
+      "allowed_transitions": 2,
+      "dipole_threshold_distance": 0.4999989999999999,
+      "eigenvalue_min_gap_mhz": 58.59305873359904,
+      "max_bin": 80,
+      "max_gap": 2.0225493891148916e-07,
+      "raw_max_depth": 0.01506432530943078
+    },
+    {
+      "point": {
+        "field_uT": 45,
+        "theta": 0,
+        "phi": 0.0,
+        "bias_uT": 1000,
+        "width_mhz": 5.0,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "fixed_amplitude",
+      "cartesian": true,
+      "derivative_relative_error": [
+        0.0,
+        0.0,
+        9.11165825256434e-09,
+        3.09404955626601e-09,
+        2.910945479318241e-09,
+        9.83644006716537e-10,
+        6.633110627254247e-10
+      ],
+      "derivative_max_relative_error": 9.11165825256434e-09,
+      "derivative_stable": true,
+      "branch_crossed": false,
+      "coordinate_singularity": true,
+      "ms0_index": 0,
+      "allowed_transitions": 2,
+      "dipole_threshold_distance": 0.4999989999999999,
+      "eigenvalue_min_gap_mhz": 58.59305873359904,
+      "max_bin": 80,
+      "max_gap": 2.0225493891148916e-07,
+      "raw_max_depth": 0.01506432530943078
+    },
+    {
+      "point": {
+        "field_uT": 20,
+        "theta": 1.5707963267948966,
+        "phi": 0,
+        "bias_uT": 0.0,
+        "width_mhz": 1.5,
+        "contrast": 0.015,
+        "center_mhz": 0.3,
+        "slope": 0.02,
+        "temperature_K": 293.15,
+        "mw_scale": 1.0,
+        "gradient": 0.196875
+      },
+      "normalization": "historical",
+      "cartesian": false,
+      "derivative_relative_error": [
+        7.170558547285211e-06,
+        2.517478056510843e-09,
+        1.8039364352836108e-08,
+        2.1787712021596977e-09,
+        6.095224474533149e-10,
+        0.0,
+        0.0
+      ],
+      "derivative_max_relative_error": 7.170558547285211e-06,
+      "derivative_stable": false,
+      "branch_crossed": true,
+      "coordinate_singularity": false,
+      "ms0_index": 0,
+      "allowed_transitions": 1,
+      "dipole_threshold_distance": 9.99999999996742e-07,
+      "eigenvalue_min_gap_mhz": 0.00010948375165753532,
+      "max_bin": 51,
+      "max_gap": 0.018610278366714503,
+      "raw_max_depth": 0.030066353602696043
+    }
+  ],
+  "error": "AssertionError: forward derivative stability"
+}

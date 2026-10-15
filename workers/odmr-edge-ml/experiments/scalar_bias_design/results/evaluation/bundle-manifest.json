@@ -1,0 +1,20 @@
+{
+  "status": "complete",
+  "files": {
+    "input-manifest.json": "178644fe36144845c742d97c59cfaa52cf6f3cc571649ea5648fa3b438a5e09b",
+    "bootstrap_indices.npy": "5e53a9fe28a4f97bde3a1c96774c86226eae4aeddf53de949048c31993231c5b",
+    "predictions.npz": "0cb6088cbf58318416da2bc118a41d35cbcdd076279e8fdb6cd10b1a8d2d24cd",
+    "metric-receipt.json": "33f5a06c31c708a9718e7dfb5b59433880c3a364356dd4ae1518d3e5e676d73b",
+    "truth.npz": "6e1f2ce7c91b48ab17d33a2e52384515b4f7a58d8a857bd490ad3600768ea4f1",
+    "inputs.npz": "26df6cf2863f143e0e9b87acc8fe9565c272ddabc259c7b5269d9361e1bf402e",
+    "prediction-commitment.json": "1dd076045f08fb5dd05e00de0b54247cdb44e850c6e469e981b7f8d64c21a0c1",
+    "metrics.json": "48626be026b77c0e8192cb286d846e62ecb41fe932458af2695bb05e53ee9180",
+    "prediction-receipt.json": "aa6408d6e690acd2bc2e03cf494e1f5cb08ace0a22fe105564ccd6ed22a6af4f",
+    "starts.json": "2d0df7afbb20e3d38f65f76584ab9273d45729987977d62a2906a90b8c61d456",
+    "seed-record.json": "018a0a830ce7bb45e33e9c24dff414aa85c863c63978639e1cafa9b965700afd"
+  },
+  "protocol_sha256": "3278e90ac3cdc2769221a4bd619f8175cfc33bd2ffa3417a11fff71196aa9a1d",
+  "input_manifest_sha256": "178644fe36144845c742d97c59cfaa52cf6f3cc571649ea5648fa3b438a5e09b",
+  "freeze_sha256": "9cd53531509a5cfc2276f9c7eb0a446bac8b6a42f6bb67827148894ad2718837",
+  "access_sha256": "95ba37cc65aff0583cb29bb4158fd334a07a9fcbbc14f6382519269c927a3079"
+}

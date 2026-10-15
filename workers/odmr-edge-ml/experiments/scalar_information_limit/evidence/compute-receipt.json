@@ -1,0 +1,124 @@
+{
+  "operations": [
+    {
+      "utc": "2026-10-15T18:19:35.990478+00:00",
+      "status": "failed",
+      "cpu_seconds": 0.9855039999999999,
+      "wall_seconds": 1.0221243608975783,
+      "peak_memory_bytes": 264613888,
+      "returncode": 1,
+      "stage": "validation",
+      "reserved_seconds": 180,
+      "operation": "initial preflight",
+      "charged_cpu_seconds": 1.0221243608975783
+    },
+    {
+      "utc": "2026-10-15T18:20:59.819715+00:00",
+      "status": "failed",
+      "cpu_seconds": 1.0378749999999999,
+      "wall_seconds": 1.072716785944067,
+      "peak_memory_bytes": 264671232,
+      "returncode": 1,
+      "stage": "validation",
+      "reserved_seconds": 180,
+      "operation": "logging-only preflight retry",
+      "charged_cpu_seconds": 1.072716785944067
+    },
+    {
+      "utc": "2026-10-15T18:28:42.118177+00:00",
+      "status": "complete",
+      "cpu_seconds": 0.24210199999999998,
+      "wall_seconds": 0.26906544796656817,
+      "peak_memory_bytes": 83570688,
+      "returncode": 0,
+      "stage": "validation",
+      "reserved_seconds": 60,
+      "operation": "previously unreached invariant checks",
+      "charged_cpu_seconds": 0.26906544796656817
+    },
+    {
+      "utc": "2026-10-15T18:29:12.176800+00:00",
+      "status": "failed",
+      "cpu_seconds": 0.9985419999999999,
+      "wall_seconds": 1.0237674519885331,
+      "peak_memory_bytes": 54763520,
+      "returncode": 1,
+      "stage": "validation",
+      "reserved_seconds": 300,
+      "operation": "first registered grid (stopped)",
+      "charged_cpu_seconds": 1.0237674519885331
+    },
+    {
+      "utc": "2026-10-15T18:38:20.712058+00:00",
+      "status": "complete",
+      "cpu_seconds": 0.07235,
+      "wall_seconds": 0.11566315300296992,
+      "peak_memory_bytes": 35569664,
+      "returncode": 0,
+      "stage": "validation",
+      "reserved_seconds": 20,
+      "operation": "new spin-matrix symmetry check",
+      "charged_cpu_seconds": 0.11566315300296992
+    },
+    {
+      "utc": "2026-10-15T18:38:43.372860+00:00",
+      "status": "complete",
+      "cpu_seconds": 2.399866,
+      "wall_seconds": 2.424836126039736,
+      "peak_memory_bytes": 85413888,
+      "returncode": 0,
+      "stage": "validation",
+      "reserved_seconds": 80,
+      "operation": "symmetry-only grid retry",
+      "charged_cpu_seconds": 2.424836126039736
+    },
+    {
+      "utc": "2026-10-15T18:39:31.425787+00:00",
+      "status": "timeout",
+      "cpu_seconds": 20.002626,
+      "wall_seconds": 20.00806806399487,
+      "peak_memory_bytes": 90611712,
+      "returncode": 124,
+      "stage": "validation",
+      "reserved_seconds": 20,
+      "operation": "saved-output checker (timeout)",
+      "charged_cpu_seconds": 20.00806806399487
+    },
+    {
+      "utc": "2026-10-15T18:40:55.302141+00:00",
+      "status": "complete",
+      "cpu_seconds": 0.744834,
+      "wall_seconds": 0.7705427079927176,
+      "peak_memory_bytes": 93126656,
+      "returncode": 0,
+      "stage": "validation",
+      "reserved_seconds": 20,
+      "operation": "cached-array saved-output checker retry",
+      "charged_cpu_seconds": 0.7705427079927176
+    }
+  ],
+  "actual_cpu_seconds": 26.483698999999998,
+  "charged_cpu_seconds": 26.70678409782704,
+  "cumulative_wall_seconds": 26.70678409782704,
+  "peak_memory_bytes": 264671232,
+  "shared_before": {
+    "cpu_seconds": 1340.924606238616,
+    "wall_seconds": 874.0882405677954
+  },
+  "raw_private_ledger_sha256": "f4eded11a998e2a01aa325b4b057c68cc3987e37462c4fd9521f650e08dbf34b",
+  "limits": {
+    "stage_cpu_seconds": 900,
+    "stage_cumulative_wall_seconds": 900,
+    "study_cpu_seconds": 5400,
+    "study_cumulative_wall_seconds": 3600,
+    "shared_cpu_seconds": 14400,
+    "shared_cumulative_wall_seconds": 7200,
+    "workers": 4,
+    "memory_GiB": 8
+  },
+  "accounting_label": "validation denotes the legacy wrapper accounting label only; no old validation data was accessed",
+  "shared_after": {
+    "cpu_seconds": 1367.631390336443,
+    "wall_seconds": 900.7950246656225
+  }
+}

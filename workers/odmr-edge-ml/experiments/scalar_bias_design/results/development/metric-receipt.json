@@ -1,0 +1,9 @@
+{
+  "status": "complete",
+  "input_manifest_sha256": "ce987666cd93962a2fa2d02fd2018d6826113b702d6d3bc7bc0e94daf5c43bee",
+  "freeze_sha256": null,
+  "access_sha256": null,
+  "prediction_commitment_sha256": "703c70434e884b61c34210b739e5439726551a8b263eb77007c43b33507590e7",
+  "prediction_commitment_revision": "a83d762e5b01d703c72034a292eebabcd6d3e15c",
+  "gate_pass": true
+}
