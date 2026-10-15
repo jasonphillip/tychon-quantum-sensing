@@ -1,0 +1,42 @@
+{
+  "approval_sha256": "ade88bcee3919fdecd5ac5932fc5c3e62aa537fbf5b178c1fd2c14c8fc4ab155",
+  "run_id": "hybrid-development-compare-9152e52",
+  "input_manifest_sha256": "01e479a25d16a79fdeb216dfe3daef21f8599e2a9674ad3359917c45899725bb",
+  "prediction_sha256": "2d26304f2eb39a0e6b3b97015008b215e611a3c2365e48224dcbac9cdf75c5c2",
+  "startup_seconds": {
+    "hybrid": 0.00023860798683017492
+  },
+  "runtime": {
+    "hostname": "spark3",
+    "machine": "aarch64",
+    "python": "3.13.9",
+    "numpy": "2.4.2",
+    "scipy": "1.17.1",
+    "threads": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1"
+    },
+    "worker_count": 1,
+    "gpu_inference": false
+  },
+  "load_average_before": [
+    0.14697265625,
+    0.09619140625,
+    0.087890625
+  ],
+  "load_average_after": [
+    0.14697265625,
+    0.09619140625,
+    0.087890625
+  ],
+  "weights_sha256": "0c23ef9c2636637075e5912c83c5c177df2abb7c3b559d27960389714710852a",
+  "reused_classical": {
+    "prediction_sha256": "7699b77bacde1562158d58fe4e794521986106d154548d363c4e2dd85a57507c",
+    "receipt_sha256": "5e822b421c5c02b097353a3f22425bb31f62dadb4b3f1d395817b0d7154988ea",
+    "qualification_sha256": "f23bc33ac831a2462322aa9e83b21ae1083d6411c28d06da5de72bf7633482c4"
+  },
+  "timing": "batch1 preprocessing, proposal, refinement, residual decision and fallback; excludes file IO; no omitted warmup rows",
+  "timing_design": "separate wall runs on identical host/runtime; saved classical timings reused",
+  "scope": "component_efficiency_only"
+}

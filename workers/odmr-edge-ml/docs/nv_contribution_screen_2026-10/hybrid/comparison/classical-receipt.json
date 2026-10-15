@@ -1,0 +1,43 @@
+{
+  "approval_sha256": "50b51956b970105dca8656eeb3525ca1aedcdba4e75798b6ab69bfa997507dba",
+  "run_id": "hybrid-classical-profile-9152e52",
+  "input_manifest_sha256": "01e479a25d16a79fdeb216dfe3daef21f8599e2a9674ad3359917c45899725bb",
+  "prediction_sha256": "7699b77bacde1562158d58fe4e794521986106d154548d363c4e2dd85a57507c",
+  "startup_seconds": {
+    "analytic_multistart": 2.783985109999776e-06,
+    "coarse_grid": 0.019697843003086746,
+    "lookup": 0.016781954996986315,
+    "fixed_single": 1.0880175977945328e-06,
+    "grid_single": 0.01662944199051708,
+    "lookup_single": 0.016597058973275125
+  },
+  "runtime": {
+    "hostname": "spark3",
+    "machine": "aarch64",
+    "python": "3.13.9",
+    "numpy": "2.4.2",
+    "scipy": "1.17.1",
+    "threads": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1"
+    },
+    "worker_count": 1,
+    "gpu_inference": false
+  },
+  "load_average_before": [
+    0.14794921875,
+    0.08203125,
+    0.0810546875
+  ],
+  "load_average_after": [
+    0.14794921875,
+    0.08203125,
+    0.0810546875
+  ],
+  "weights_sha256": null,
+  "reused_classical": null,
+  "timing": "batch1 preprocessing, proposal, refinement, residual decision and fallback; excludes file IO; no omitted warmup rows",
+  "timing_design": "randomized within-row method order in one run",
+  "scope": "component_efficiency_only"
+}

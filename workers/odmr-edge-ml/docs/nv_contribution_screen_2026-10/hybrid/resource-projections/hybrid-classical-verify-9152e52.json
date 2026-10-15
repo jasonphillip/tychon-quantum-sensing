@@ -1,0 +1,64 @@
+{
+  "record_type": "public_field_projection_not_full_original_receipt",
+  "original_receipt_sha256": "ac879d7fbd1835c584eb0f921d2d2ff8ccf7a0670c4f2043caa43598c9e5e15e",
+  "retained_fields": {
+    "job_id": "hybrid-classical-verify-9152e52",
+    "host": "spark3",
+    "spec_sha256": "9924476610c1136a52698e43621ee6d6a818a579da9c9e35b7dec1f6d6537fca",
+    "remote_worker_sha256": "44634ea1c687b2b55f9fbb117cc0a60c62aaaf28cff33de2621b0be94e2c9e7a",
+    "started_utc": "2026-10-15T20:46:49.378053+00:00",
+    "completed_utc": "2026-10-15T20:46:49.444762+00:00",
+    "status": "complete",
+    "returncode": 0,
+    "cpu_seconds": 0.063601,
+    "wall_seconds": 0.0667422009864822,
+    "charged_cpu_seconds": 0.063601,
+    "charged_wall_seconds": 0.0667422009864822,
+    "peak_memory_bytes": 36859904,
+    "supervisor_peak_memory_bytes": 13201408,
+    "legacy_drift": false,
+    "accounting_uncertain": false,
+    "stdout.txt_sha256": "5817bdd02cdb5414d701685058e562c27ccb64be651cdc48c0d184fab266ffc2",
+    "stderr.txt_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "approval_sha256": "50b51956b970105dca8656eeb3525ca1aedcdba4e75798b6ab69bfa997507dba",
+  "source_sha256": {
+    "execution-source/experiments/nv_hybrid_screen/README.md": "b2bcdac4ca054bdc78da7512d0039612f2606b4c66592ff6bf132ecda8d5c987",
+    "execution-source/experiments/nv_hybrid_screen/data.py": "1157f9b664ba422e4fdad48fc8d7ce29e08a6aa8ae57526d4e11a42a281142f8",
+    "execution-source/experiments/nv_hybrid_screen/estimators.py": "c3a3555169945d4511967384e3a06475379798a78e6f54d71f080caa4153cea8",
+    "execution-source/experiments/nv_hybrid_screen/guard.py": "f1ac82669e505a1d1236889cb04b7b8d189665e56681299311ef0eea2fffa9da",
+    "execution-source/experiments/nv_hybrid_screen/physics.py": "b1b11b00731cf89280c86657329ef2ceed74c8756b3c51a32457bb7b3b4046fb",
+    "execution-source/experiments/nv_hybrid_screen/protocol.json": "c89d73109d51b0c21073332aefce4d9460b0f45b714b3cfe1e61607d672c78d2",
+    "execution-source/experiments/nv_hybrid_screen/run.py": "f902be244a116265897b181a4d114036306e42b211a0bed76b970d0725093943",
+    "execution-source/experiments/nv_hybrid_screen/score.py": "88c193657365d0e24f1233b0d0ef456a5f78a9fb26c71d5e3a7c97c0af3646db",
+    "execution-source/experiments/nv_hybrid_screen/train.py": "c119cf3e8c53032ff87158cc435f173b456b643e0f433d46b9d58094c47031ac",
+    "execution-source/experiments/nv_hybrid_screen/verify_saved.py": "bcf19f52b2a2fa13a4032d849365eeb811539eba46fc0ddd4a304a36ffa0f998",
+    "execution-source/experiments/scalar_information_limit/forward.py": "04a88c370ec9aa867e2579ad6ed849a18fdd8b865c052eef41f12c287a9ba219",
+    "execution-source/initial-approval.json": "50b51956b970105dca8656eeb3525ca1aedcdba4e75798b6ab69bfa997507dba",
+    "execution-source/tests/test_nv_hybrid_screen.py": "1abd83b5e6106a9daf290e602123cbd1dec22501f7da75c8c765ae21cc0153b0",
+    "initial-results/classical/predictions.json": "7699b77bacde1562158d58fe4e794521986106d154548d363c4e2dd85a57507c",
+    "initial-results/classical/receipt.json": "5e822b421c5c02b097353a3f22425bb31f62dadb4b3f1d395817b0d7154988ea",
+    "initial-results/development/inputs.npz": "cb6d1883161dab5ead13a609f96777de0c385bc6ac4e1bdf159f7b4efe3d4817",
+    "initial-results/development/manifest.json": "01e479a25d16a79fdeb216dfe3daef21f8599e2a9674ad3359917c45899725bb",
+    "initial-results/development/truth.npz": "8e3f4dd5e199ce1535323349ef40dc73d23b68b73a0128e42867002f09791214",
+    "initial-results/qualification.json": "f23bc33ac831a2462322aa9e83b21ae1083d6411c28d06da5de72bf7633482c4"
+  },
+  "field_mapping": {
+    "retained_fields": "Identical named fields from the original receipt",
+    "approval_sha256": "Original environment.TYCHON_NUMERICAL_APPROVAL_SHA256",
+    "source_sha256": "Original sources values unchanged; absolute path keys replaced by documented public aliases"
+  },
+  "omitted_fields": [
+    "command",
+    "executed_command",
+    "cwd",
+    "full environment",
+    "absolute source paths"
+  ],
+  "path_aliases": {
+    "execution-source": "Pinned worker source checkout; approval bodies excluded",
+    "initial-results": "Original development/classical artifacts in this package",
+    "training-results": "Model and training manifest in this package; training arrays omitted",
+    "comparison-results": "Combined comparison artifacts in this package"
+  }
+}

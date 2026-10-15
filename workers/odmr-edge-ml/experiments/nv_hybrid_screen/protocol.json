@@ -1,0 +1,150 @@
+{
+  "status": "registered_component_scope_execution_pending_root_reservations",
+  "study": "nv-hybrid-screen-2026-10-15",
+  "source_commit": "4bb3a035ed708652af471f70114ccb4e91677d9a",
+  "task": "positive known axial field; +250 uT known bias; single 100-bin frame",
+  "priors": {
+    "field_uT": [
+      20,
+      70
+    ],
+    "temperature_K": [
+      288.15,
+      298.15
+    ],
+    "mw_scale": [
+      0.95,
+      1.05
+    ],
+    "gradient": [
+      0.046875,
+      0.346875
+    ],
+    "width_mhz": [
+      4,
+      6
+    ],
+    "contrast": [
+      0.012,
+      0.018
+    ],
+    "slope": [
+      -0.03,
+      0.03
+    ],
+    "baseline": [
+      0.98,
+      1.02
+    ]
+  },
+  "nuisance_holdout": {
+    "temperature_K": [
+      [
+        283.15,
+        288.15
+      ],
+      [
+        298.15,
+        303.15
+      ]
+    ],
+    "reason": "Unseen common resonance shifts, with otherwise matched nuisance priors; no claim about real instruments."
+  },
+  "observations": {
+    "bins": 100,
+    "start_mhz": 2820,
+    "stop_mhz": 2920,
+    "reference_snr": 10,
+    "photon_budget": "(10/(.30*.015))^2",
+    "shared_across_methods": true
+  },
+  "sizes": {
+    "train": 8192,
+    "development": 128,
+    "nuisance": 256
+  },
+  "methods": [
+    "analytic_multistart",
+    "coarse_grid",
+    "lookup",
+    "fixed_single",
+    "grid_single",
+    "lookup_single",
+    "hybrid"
+  ],
+  "network": {
+    "widths": [
+      100,
+      32,
+      16,
+      6
+    ],
+    "activation": "ReLU",
+    "parameters": 3862,
+    "epochs": 20,
+    "batch_size": 256,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "weight_decay": 0,
+    "device": "cuda",
+    "checkpoint": "fixed final epoch; no selection or architecture search"
+  },
+  "fit": {
+    "max_nfev": 80,
+    "analytic_jacobian": true,
+    "loss": "weighted least squares",
+    "fallback": "Analytic multistart uses its completed six-start search once. Every other method may add one six-start fallback. Any residual rejection returns operational 45 uT.",
+    "reduced_chi2_threshold": 2
+  },
+  "classical_grid": {
+    "field_count": 11,
+    "center_count": 9,
+    "width_values": [
+      4,
+      5,
+      6
+    ],
+    "linear_parameters": "contrast,baseline,slope solved by variable projection at grid points"
+  },
+  "proposed_gates": {
+    "classical_mae_uT": 2,
+    "classical_p90_uT": 5,
+    "failure_fraction": 0.01,
+    "p95_speedup": 2,
+    "added_mae_upper95_uT": 0.1,
+    "bootstrap_resamples": 2000
+  },
+  "deadline": {
+    "processing_deadline_ms": null,
+    "acquisition_ms": null,
+    "settling_ms": null,
+    "transfer_ms": null,
+    "recovery_ms": null,
+    "requirement_source": null,
+    "status": "Unknown; not a prerequisite for component profiling or conditional training. No system bandwidth, energy, or instrument usefulness claim."
+  },
+  "scope": "Component-efficiency software experiment. Population runs and training require root custody certificate and fleet reservations. No FPGA work or hardware access.",
+  "claim_scope": "component_efficiency_only",
+  "prospective_revision": "Before any population data: one fixed candidate may train after classical accuracy qualification; no instrument deadline prerequisite.",
+  "training_permission": "Root-approved exact report with at least one adequate classical baseline; one fixed candidate only. If none qualifies, stop acceleration study.",
+  "allocation": {
+    "cpu_seconds_max": 4800,
+    "cumulative_wall_seconds_max": 1800,
+    "candidate_count": 1,
+    "epochs": 20,
+    "training_memory_GiB_max": 32,
+    "cpu_worker_memory_GiB_max": 8,
+    "meaning": "Provisional share of existing fleet caps; no reset or standalone new budget."
+  },
+  "classical_single_start_controls": {
+    "fixed_single": "B45, observed-data common center, width5,contrast.015,baseline1,slope0",
+    "grid_single": "Best grid start only",
+    "lookup_single": "Interpolated lookup start only",
+    "refinement": "One identical analytic refinement; same residual-triggered six-start fallback"
+  },
+  "timing_comparison": "Development hybrid timing reuses all saved classical predictions/timings on identical inputs and verified same host/runtime; separate wall runs disclosed. Do not rerun classical development inference.",
+  "baseline_selection": "Choose fastest adequate among all six on development before training; root freezes exact qualification report and baseline. Confirmation may use one fresh matched all-method run, never retune.",
+  "seed_custody": "Six distinct 128-bit roots; initial certificate and immutable supplement. Prior integer seeds are below 2^63; two larger old entropies are checked separately. Torch derived seed must match the supplement.",
+  "renderer_fit_mismatch": "Generator randomizes MW scale and gradient per row. Every fit uses the nominal ten-component mixture, MW1 and gradient0.196875. These unobserved row values are not passed to any estimator; MLP learns under their registered prior.",
+  "evidence": "Save predictions, truth, flags, timings, source hashes, receipts and paired-bootstrap indices. A NumPy-only independent verifier recomputes every reported metric and gate from saved outputs."
+}

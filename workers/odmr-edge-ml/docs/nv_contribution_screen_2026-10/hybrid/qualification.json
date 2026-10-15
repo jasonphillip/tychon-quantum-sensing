@@ -1,0 +1,102 @@
+{
+  "scope": "software component screen; no sealed final adoption decision",
+  "claim_scope": "component_efficiency_only",
+  "split": "development",
+  "rows": 128,
+  "summary": {
+    "analytic_multistart": {
+      "mae_uT": 1.1484966535166263,
+      "p90_uT": 2.3019799167925923,
+      "failure_fraction": 0.0,
+      "fallback_fraction": 0.0,
+      "boundary_fraction": 0.0,
+      "false_acceptance_gt5_fraction": 0.0,
+      "mean_nfev": 39.25,
+      "latency_ms": {
+        "p50": 5.852592992596328,
+        "p95": 7.976580207468942,
+        "p99": 8.879641875973903
+      }
+    },
+    "coarse_grid": {
+      "mae_uT": 1.1485282170640891,
+      "p90_uT": 2.302007948354505,
+      "failure_fraction": 0.0,
+      "fallback_fraction": 0.0,
+      "boundary_fraction": 0.0078125,
+      "false_acceptance_gt5_fraction": 0.0,
+      "mean_nfev": 9.078125,
+      "latency_ms": {
+        "p50": 1.5186480013653636,
+        "p95": 1.831960647541564,
+        "p99": 2.1132697685970925
+      }
+    },
+    "lookup": {
+      "mae_uT": 1.1485299066141041,
+      "p90_uT": 2.3020260234323073,
+      "failure_fraction": 0.0,
+      "fallback_fraction": 0.0,
+      "boundary_fraction": 0.0078125,
+      "false_acceptance_gt5_fraction": 0.0,
+      "mean_nfev": 8.6953125,
+      "latency_ms": {
+        "p50": 1.3873760035494342,
+        "p95": 1.6948520089499652,
+        "p99": 2.07440187165048
+      }
+    },
+    "fixed_single": {
+      "mae_uT": 1.1485386654464864,
+      "p90_uT": 2.302014364746655,
+      "failure_fraction": 0.0,
+      "fallback_fraction": 0.0,
+      "boundary_fraction": 0.0,
+      "false_acceptance_gt5_fraction": 0.0,
+      "mean_nfev": 6.515625,
+      "latency_ms": {
+        "p50": 0.955935989622958,
+        "p95": 1.4192112066666596,
+        "p99": 1.5702348228660412
+      }
+    },
+    "grid_single": {
+      "mae_uT": 1.1486269528225983,
+      "p90_uT": 2.3020260234323073,
+      "failure_fraction": 0.0,
+      "fallback_fraction": 0.0,
+      "boundary_fraction": 0.0078125,
+      "false_acceptance_gt5_fraction": 0.0,
+      "mean_nfev": 4.3125,
+      "latency_ms": {
+        "p50": 0.7597199873998761,
+        "p95": 0.9106359997531399,
+        "p99": 1.1269778825226253
+      }
+    },
+    "lookup_single": {
+      "mae_uT": 1.1484164335871432,
+      "p90_uT": 2.3019065852650487,
+      "failure_fraction": 0.0,
+      "fallback_fraction": 0.0,
+      "boundary_fraction": 0.0078125,
+      "false_acceptance_gt5_fraction": 0.0,
+      "mean_nfev": 4.3828125,
+      "latency_ms": {
+        "p50": 0.7593604968860745,
+        "p95": 1.0514471970964223,
+        "p99": 1.306453217111994
+      }
+    }
+  },
+  "fastest_adequate_classical": "grid_single",
+  "classical_accuracy_qualified": true,
+  "comparison": null,
+  "bootstrap_indices_sha256": null,
+  "qualification_sha256": null,
+  "prediction_receipt_sha256": "5e822b421c5c02b097353a3f22425bb31f62dadb4b3f1d395817b0d7154988ea",
+  "data_manifest_sha256": "01e479a25d16a79fdeb216dfe3daef21f8599e2a9674ad3359917c45899725bb",
+  "approval_sha256": "50b51956b970105dca8656eeb3525ca1aedcdba4e75798b6ab69bfa997507dba",
+  "timing_design": "randomized within-row method order in one run",
+  "claim_limits": "No system bandwidth, energy, instrument usefulness, measured-sensor, or FPGA compatibility claim."
+}

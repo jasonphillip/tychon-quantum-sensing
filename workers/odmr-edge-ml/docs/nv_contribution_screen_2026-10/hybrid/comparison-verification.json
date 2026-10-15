@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "rows": 128,
+  "methods": [
+    "analytic_multistart",
+    "coarse_grid",
+    "lookup",
+    "fixed_single",
+    "grid_single",
+    "lookup_single",
+    "hybrid"
+  ],
+  "report_sha256": "d646ae6a413344836ebf9ffabb3caefd1a0a08a03fe2f0ca48cdffece42ddd28",
+  "data_manifest_sha256": "01e479a25d16a79fdeb216dfe3daef21f8599e2a9674ad3359917c45899725bb",
+  "prediction_receipt_sha256": "19ee1760944bb4ad77eafa647c7308d0b6d9c9aa23024bcdade7d05c75c07706",
+  "checks": "saved hashes, row pairing, flags, operational failures, fit limits, metrics, latency, reference selection, paired interval and gates",
+  "limits": "No inference, fresh timing, training, or proof of instrument usefulness."
+}
