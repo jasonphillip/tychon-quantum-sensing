@@ -12,34 +12,21 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 
-def sha(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+from experiments.sparse_acquisition_screen.accounting import authorize_stage, sha
 
 
 def authorize(gate_path, cases_path):
-    gate = json.loads(Path(gate_path).read_text())
-    if gate.get("status") != "ROOT_APPROVED_DEVELOPMENT_SCREEN":
-        raise RuntimeError("numerical screen is unregistered; root accounting gate required")
-    if gate.get("allow_training") is not False or gate.get("allow_final_evaluation") is not False:
-        raise RuntimeError("only classical development screening is implemented")
-    required = {
-        "experiments/sparse_acquisition_screen/core.py",
-        "experiments/sparse_acquisition_screen/run_screen.py",
-        "experiments/sparse_acquisition_screen/PROTOCOL.md",
-        "experiments/scalar_information_limit/forward.py",
-        "tests/test_sparse_acquisition_screen.py",
-    }
-    if not required.issubset(gate["source_files"]):
-        raise RuntimeError("incomplete source/protocol freeze")
-    if gate.get("maximum_cases") not in range(1, 9):
+    gate = authorize_stage(gate_path, "ROOT_APPROVED_DEVELOPMENT_SCREEN")
+    if gate.get("maximum_cases") not in range(1,9):
         raise RuntimeError("development screen is capped at eight cases")
-    if not gate.get("preflight_passed"):
-        raise RuntimeError("registered numerical preflight must pass first")
-    for relative, digest in gate["source_files"].items():
-        candidate = (ROOT / relative).resolve(strict=True)
-        candidate.relative_to(ROOT)
-        if sha(candidate) != digest:
-            raise RuntimeError("frozen source mismatch: "+relative)
+    evidence = Path(gate["qualification_verification_path"])
+    if sha(evidence) != gate["qualification_verification_sha256"]:
+        raise RuntimeError("qualification verification digest mismatch")
+    verdict = json.loads(evidence.read_text())
+    if (verdict.get("status") != "qualification_pass"
+            or verdict.get("source_files") != gate["source_files"]
+            or verdict.get("specification_sha256") != gate["qualification_spec_sha256"]):
+        raise RuntimeError("Bayesian/grid qualification absent or stale")
     if sha(cases_path) != gate["cases_sha256"]:
         raise RuntimeError("fresh-case manifest mismatch")
     audit = json.loads(Path(gate["seed_audit_path"]).read_text())
@@ -48,23 +35,6 @@ def authorize(gate_path, cases_path):
     if (audit.get("cases_sha256") != gate["cases_sha256"]
             or audit.get("all_consumed_campaigns_checked") is not True):
         raise RuntimeError("seed audit does not cover frozen cases and prior campaigns")
-    # Root owns the shared lock, campaign ledgers, and resource accounting.
-    receipt_path = os.environ.get("TYCHON_ACTIVE_NUMERICAL_CONTEXT")
-    if not receipt_path:
-        raise RuntimeError("run through the registered accounting wrapper")
-    receipt = json.loads(Path(receipt_path).read_text())
-    if (receipt.get("status") != "running" or receipt.get("parent_pid") != os.getppid()
-            or receipt.get("gate_sha256") != sha(gate_path)):
-        raise RuntimeError("accounting context does not bind this child")
-    import fcntl
-    with open(receipt["shared_lock_path"], "r+") as handle:
-        try:
-            fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
-        except BlockingIOError:
-            pass
-        else:
-            fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
-            raise RuntimeError("accounting wrapper does not hold shared numerical lock")
     cases = json.loads(Path(cases_path).read_text())
     if (cases.get("partition") != "fresh-development"
             or not 1 <= len(cases["cases"]) <= gate["maximum_cases"]):
@@ -109,6 +79,7 @@ def main():
         FisherPolicy, BayesianPolicy, Point, simulate_episode,
     )
     a.out.mkdir(parents=True, exist_ok=False)
+    (a.out/"cases.json").write_bytes(a.cases.read_bytes())
     (a.out/"started.json").write_text(json.dumps({"gate_sha256":sha(a.gate)}))
     config = Acquisition(**gate["acquisition"])
     config.validate()
@@ -136,7 +107,9 @@ def main():
                 (a.out/"partial-results.json").write_text(json.dumps(rows, indent=2)+"\n")
         result = {"status":"development-only", "setup_seconds":setup_seconds,
             "acquisition":asdict(config), "gate_sha256":sha(a.gate),
-            "cases_sha256":sha(a.cases), "rows":rows}
+            "cases_sha256":sha(a.cases), "source_commit":gate["source_commit"],
+            "source_files":gate["source_files"],
+            "qualification_verification_sha256":gate["qualification_verification_sha256"], "rows":rows}
         (a.out/"results.json").write_text(json.dumps(result, indent=2)+"\n")
     except Exception as exc:
         (a.out/"failure.json").write_text(json.dumps({"error":repr(exc),"completed_rows":len(rows)}))

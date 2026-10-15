@@ -224,8 +224,8 @@ class BayesianPolicy:
         self.nodes = np.sqrt(2.)*nodes
         self.node_weights = weights/np.sqrt(np.pi)
 
-    def utilities(self, belief, config, history):
-        """Return approximate expected variance reduction per acquisition second."""
+    def design(self, belief, config, history):
+        """Return raw design evidence for preregistered qualification."""
         exposure = config.exposure_photons
         if exposure * float(belief.rates.min()) < 1e4:
             raise ValueError("predictive quadrature only registered for high-count regime")
@@ -250,7 +250,11 @@ class BayesianPolicy:
                 expected[i] += node_weight * float(v.mean())
         last = history[-1].index if history else None
         gain = np.maximum(variance-expected, 0.)
-        return gain/belief.utility_cost(config, last)
+        return {"expected_variance_uT2":expected,
+                "utility_uT2_per_second":gain/belief.utility_cost(config, last)}
+
+    def utilities(self, belief, config, history):
+        return self.design(belief, config, history)["utility_uT2_per_second"]
 
     def choose(self, belief, config, history):
         return int(np.argmax(self.utilities(belief, config, history)))

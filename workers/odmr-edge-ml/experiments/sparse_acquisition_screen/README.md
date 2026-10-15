@@ -1,12 +1,13 @@
 # Sparse ODMR acquisition preparation
 
-Status: PREPARATION ONLY. No numerical experiment or numerical test has run.
+Status: PREREGISTERED PREPARATION. This revision has not run numerical tests or experiments.
 
 This package asks whether adaptive frequency selection saves useful time.
 It compares four classical policies using the same estimator and calibration.
 It does not propose a learned policy yet.
 
 The protocol is [PROTOCOL.md](PROTOCOL.md).
+The fixed qualification gates and staged commands are [QUALIFICATION.md](QUALIFICATION.md).
 The deliberately blocked registration is [registration.draft.json](registration.draft.json).
 The source uses the existing scalar Hamiltonian forward model.
 It never loads a consumed dataset.

@@ -1,6 +1,7 @@
 # Sparse acquisition development protocol
 
-Prepared: 2026-10-15. Status: PREPARATION ONLY.
+Prepared: 2026-10-15. Status: PREREGISTERED PREPARATION.
+The concrete qualification specification and adapter in QUALIFICATION.md supersede earlier placeholder qualification guidance below.
 Owner: Codex sparse-acquisition lane.
 Numerical registration and stopping authority: root Codex.
 Data custody and publication remain with the coordinating session.
@@ -208,16 +209,17 @@ The seed-audit file needs status pass, cases_sha256, all_consumed_campaigns_chec
 excluded_seeds, and approved_noise_seeds.
 No such approval or case file is included in this preparation.
 
-Root's existing accounting wrapper must hold the shared numerical lock.
+Root's remote supervisor must hold its per-job lock and a central Spark2 reservation.
 It must update every applicable shared ledger and enforce the tighter remaining cap.
 The child expects TYCHON_ACTIVE_NUMERICAL_CONTEXT to name a temporary JSON receipt.
-That receipt needs status running, parent_pid, gate_sha256, and shared_lock_path.
+That receipt needs status running, parent_pid, gate_sha256, and shared_lock_path, central_reservation_id, central_spec_sha256, and accounting_authority.
+The central authority is spark2-reservation-journal-v1.
 The parent PID must identify the process that launches the driver.
-The driver checks that another process holds the lock.
+The driver checks that the supervisor holds the per-job lock and binds the reservation environment.
 These checks prevent accidental unregistered use; they are not a security boundary.
 
 Do not invent a second independent numerical ledger for this lane.
-Integrate the small receipt interface with the existing registered wrapper.
+Use the new remote supervisor adapter; preserve every legacy wrapper and ledger.
 The parent must enforce CPU, wall, memory, thread, and worker limits.
 A receipt alone does not enforce these resource limits.
 
