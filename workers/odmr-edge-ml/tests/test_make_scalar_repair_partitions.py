@@ -22,8 +22,9 @@ OWN_PUBLISHED_BUNDLE = module.REPO / "docs" / "scalar_repair_cycle_2026-10"
 
 @pytest.fixture(autouse=True)
 def _exclude_own_published_bundle(monkeypatch):
-    """The cycle's own published bundle holds this generator's outputs (dev r1, dev-r2, val
-    manifests); they are not earlier consumed sets, so the seed scan in these tests ignores them."""
+    """These tests simulate the initial generation before publication. The published bundle
+    (dev r1, dev-r2 and the consumed validation manifests) did not exist then, so the seed scan in
+    these tests ignores it. Production seed scanning is unchanged."""
     original = module.manifest_paths
 
     def without_own_bundle(roots):
