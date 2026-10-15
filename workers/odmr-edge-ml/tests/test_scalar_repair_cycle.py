@@ -87,7 +87,24 @@ def custody_fixture(tmp_path,partition="val"):
     gate=tmp_path/("FREEZE1.md" if partition=="val" else "FREEZE2.md");gate.write_text("custodian approval\n")
     frozen=tmp_path/"freeze.json"
     frozen.write_text(json.dumps(dict(schema=1,stage=1 if partition=="val" else 2,
-        source_hashes=gates.source_map(),versions=gates.versions(),data_contract=gates.data_contract(manifest),evaluation_root=str(tmp_path/"evaluation"))))
+        source_hashes=gates.source_map(),versions=gates.versions(),data_contract=gates.data_contract(manifest),evaluation_root=str(tmp_path/"evaluation"),
+        model_records=[],primary_implementation="int8",claim_route="accuracy",bootstrap_seed=202610152001,
+        protocol_sha256=sha(ROOT/"experiments/scalar_repair_cycle/PROTOCOL.md"),development_manifest_sha256="development")))
+    if partition=="final":
+        child=json.loads(frozen.read_text());parent=tmp_path/"freeze1.json"
+        parent.write_text(json.dumps(dict(child,stage=1)))
+        summary=dict(status="complete",partition="val",freeze_sha256=sha(parent),manifest_sha256="validation",cells=decision_fixture())
+        summary["selection"]=decide(summary["cells"]);summary["validation_can_proceed"]=True
+        val=tmp_path/"evaluation/results-val";val.mkdir(parents=True)
+        (val/"SUMMARY.json").write_text(json.dumps(summary))
+        receipt={k:summary[k] for k in ("status","partition","freeze_sha256","manifest_sha256")}
+        receipt["summary_sha256"]=sha(val/"SUMMARY.json")
+        (val/"RECEIPT.json").write_text(json.dumps(receipt))
+        (val.parent/"VAL_EVALUATOR_ACCESS.json").write_text(json.dumps(receipt))
+        child.update(parent_freeze_reference="freeze1.json",parent_freeze_sha256=sha(parent),
+            validation_summary_sha256=sha(val/"SUMMARY.json"),validation_receipt_sha256=sha(val/"RECEIPT.json"),
+            validation_access_sha256=sha(val.parent/"VAL_EVALUATOR_ACCESS.json"),selection=summary["selection"])
+        frozen.write_text(json.dumps(child))
     gate.write_text("custodian approval "+sha(frozen)+"\n")
     manifest["gate_document_sha256"]=sha(gate)
     (root/"manifest.json").write_text(json.dumps(manifest))
@@ -265,3 +282,52 @@ def test_budget_rejection_never_launches_child(tmp_path,block):
             "-c","from pathlib import Path; Path("+repr(str(marker))+").touch()"]
         result=subprocess.run(cmd,capture_output=True)
     assert result.returncode!=0 and not marker.exists()
+
+
+@pytest.mark.parametrize("target",["parent","summary","receipt","access"])
+@pytest.mark.parametrize("mutation",["changed","missing"])
+def test_final_authorization_rechecks_parent_and_completed_evidence(tmp_path,target,mutation):
+    parts=custody_fixture(tmp_path,"final")
+    paths={"parent":tmp_path/"freeze1.json","summary":tmp_path/"evaluation/results-val/SUMMARY.json",
+        "receipt":tmp_path/"evaluation/results-val/RECEIPT.json","access":tmp_path/"evaluation/VAL_EVALUATOR_ACCESS.json"}
+    path=paths[target]
+    if mutation=="missing":path.unlink()
+    else:path.write_text(path.read_text()+" ")
+    with pytest.raises((ValueError,FileNotFoundError)):authorize_fixture(parts)
+
+def rebind_final_fixture(parts,child):
+    root,frozen,release,gate,access=parts
+    frozen.write_text(json.dumps(child))
+    gate.write_text("custody approval "+sha(frozen))
+    manifest=json.loads((root/"manifest.json").read_text());manifest["gate_document_sha256"]=sha(gate)
+    (root/"manifest.json").write_text(json.dumps(manifest))
+    a=json.loads(access.read_text());a.update(freeze_receipt_sha256=sha(frozen),data_manifest_sha256=sha(root/"manifest.json"))
+    access.write_text(json.dumps(a))
+    r=json.loads(release.read_text());r.update(freeze_receipt_sha256=sha(frozen),data_manifest_sha256=sha(root/"manifest.json"),
+        gate_document_sha256=sha(gate),exclusive_access_receipt_sha256=sha(access))
+    release.write_text(json.dumps(r))
+
+def test_final_authorization_rejects_forged_stage2_selection(tmp_path):
+    parts=custody_fixture(tmp_path,"final")
+    child=json.loads(parts[1].read_text());child["selection"]["classical"]="conditional_likelihood"
+    rebind_final_fixture(parts,child)
+    with pytest.raises(ValueError,match="selection"):authorize_fixture(parts)
+
+@pytest.mark.parametrize("reference",["/absolute/freeze1.json","./freeze1.json",""])
+def test_final_parent_reference_must_be_portable_and_normalized(tmp_path,reference):
+    parts=custody_fixture(tmp_path,"final");child=json.loads(parts[1].read_text());child["parent_freeze_reference"]=reference
+    rebind_final_fixture(parts,child)
+    with pytest.raises(ValueError,match="normalized and relative"):authorize_fixture(parts)
+
+def test_final_authorization_rejects_symlinked_parent_evidence_directory(tmp_path):
+    parts=custody_fixture(tmp_path,"final")
+    val=tmp_path/"evaluation/results-val";moved=tmp_path/"moved";val.rename(moved);val.symlink_to(moved,target_is_directory=True)
+    with pytest.raises(ValueError,match="symlinked"):authorize_fixture(parts)
+
+def test_create_freeze_two_stores_relative_parent_reference(tmp_path,monkeypatch):
+    parts=custody_fixture(tmp_path,"final");parent=tmp_path/"freeze1.json";child=tmp_path/"freeze2-created.json"
+    monkeypatch.setattr(gates,"records",lambda _:[])
+    gates.create_freeze(2,child,None,prior=parent,prior_hash=sha(parent),validation=tmp_path/"evaluation/results-val/SUMMARY.json")
+    frozen=json.loads(child.read_text())
+    assert frozen["parent_freeze_reference"]=="freeze1.json"
+    assert gates.verify_parent_chain(child,frozen)["stage"]==1

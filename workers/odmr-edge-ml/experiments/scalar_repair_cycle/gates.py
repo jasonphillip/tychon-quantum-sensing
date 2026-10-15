@@ -1,5 +1,5 @@
 """Hash-bound custody contracts. Metadata checks never open spectrum payloads."""
-import importlib.metadata,json,subprocess
+import importlib.metadata,json,subprocess,os
 from pathlib import Path
 from models import sha,records,interpreter_contract
 HERE=Path(__file__).resolve().parent
@@ -23,9 +23,14 @@ def source_map(root=ROOT):
     return {str(p.relative_to(root)):sha(p) for p in sorted(names)}
 def versions():
     return {**{p:importlib.metadata.version(p) for p in DEPENDENCIES},"int8_interpreter":interpreter_contract()}
+def reject_symlink_path(path):
+    p=Path(path)
+    if any(candidate.is_symlink() for candidate in (p,*p.parents)):
+        raise ValueError("symlinked custody evidence path")
 def read_pinned(path,expected):
     p=Path(path)
-    if p.is_symlink() or not expected or sha(p)!=expected:raise ValueError("pinned receipt hash mismatch")
+    reject_symlink_path(p)
+    if not expected or sha(p)!=expected:raise ValueError("pinned receipt hash mismatch")
     return json.loads(p.read_text())
 def verify_sources(frozen):
     if frozen.get("source_hashes")!=source_map():raise ValueError("frozen source set/hash drift")
@@ -37,6 +42,7 @@ def authorize(data,partition,freeze,freeze_hash,release,release_hash,gate_docume
     if frozen.get("schema")!=1 or frozen.get("stage")!=(1 if partition=="val" else 2):
         raise ValueError("wrong freeze stage")
     verify_sources(frozen)
+    if partition=="final":verify_parent_chain(freeze,frozen)
     manifest=json.loads((Path(data)/"manifest.json").read_text())
     if data_contract(manifest)!=frozen.get("data_contract"):raise ValueError("frozen generator/distribution drift")
     if manifest.get("gate_document_sha256")!=sha(gate_document):raise ValueError("generated manifest gate binding mismatch")
@@ -60,7 +66,7 @@ def completed_validation(previous,prior_hash,validation):
     if Path(validation).is_symlink() or Path(validation).resolve()!=canonical.resolve():
         raise ValueError("validation summary is not canonical")
     paths=[canonical,canonical.parent/"RECEIPT.json",root/"VAL_EVALUATOR_ACCESS.json"]
-    if any(p.is_symlink() for p in paths):raise ValueError("symlinked validation evidence")
+    for p in paths:reject_symlink_path(p)
     summary,receipt,access=[json.loads(p.read_text()) for p in paths]
     digest=sha(canonical)
     if receipt.get("summary_sha256")!=digest or access.get("summary_sha256")!=digest:
@@ -75,6 +81,33 @@ def completed_validation(previous,prior_hash,validation):
     if summary.get("selection")!=selection or summary.get("validation_can_proceed")!=selection["can_proceed"]:
         raise ValueError("validation selection does not match frozen decision rule")
     return summary
+
+def verify_parent_chain(freeze_path,frozen):
+    reference=frozen.get("parent_freeze_reference")
+    if not isinstance(reference,str) or not reference or Path(reference).is_absolute() or os.path.normpath(reference)!=reference:
+        raise ValueError("parent freeze reference must be normalized and relative")
+    parent_path=Path(freeze_path).parent/reference
+    prior_hash=frozen.get("parent_freeze_sha256")
+    previous=read_pinned(parent_path,prior_hash)
+    if previous.get("schema")!=1 or previous.get("stage")!=1:
+        raise ValueError("final requires pinned stage-1 parent")
+    verify_sources(previous)
+    for key in ("source_hashes","versions","model_records","primary_implementation","claim_route",
+                "bootstrap_seed","protocol_sha256","evaluation_root","data_contract","development_manifest_sha256"):
+        if key not in previous or key not in frozen or previous[key]!=frozen[key]:
+            raise ValueError("parent/child frozen contract mismatch: "+key)
+    validation=Path(previous["evaluation_root"])/"results-val"/"SUMMARY.json"
+    evidence={"validation_summary_sha256":validation,
+        "validation_receipt_sha256":validation.parent/"RECEIPT.json",
+        "validation_access_sha256":Path(previous["evaluation_root"])/"VAL_EVALUATOR_ACCESS.json"}
+    for key,path in evidence.items():
+        reject_symlink_path(path)
+        if not frozen.get(key) or sha(path)!=frozen[key]:
+            raise ValueError("Freeze 2 validation evidence hash mismatch: "+key)
+    summary=completed_validation(previous,prior_hash,validation)
+    if not summary.get("validation_can_proceed") or frozen.get("selection")!=summary.get("selection"):
+        raise ValueError("Freeze 2 selection or continuation mismatch")
+    return previous
 
 def create_freeze(stage,path,model_manifest,prior=None,prior_hash=None,validation=None,evaluation_root=None,development_manifest=None,development_manifest_hash=None):
     if Path(path).exists():raise ValueError("freeze receipt already exists")
@@ -95,9 +128,10 @@ def create_freeze(stage,path,model_manifest,prior=None,prior_hash=None,validatio
             raise ValueError("validation does not permit a final campaign")
         if v.get("freeze_sha256")!=prior_hash:raise ValueError("validation belongs to another freeze")
         if previous["model_records"]!=obj["model_records"]:raise ValueError("model set drift")
-        obj.update(development_manifest_sha256=previous["development_manifest_sha256"],data_contract=previous["data_contract"],evaluation_root=previous["evaluation_root"],parent_freeze_sha256=prior_hash,validation_summary_sha256=sha(validation),
+        obj.update(development_manifest_sha256=previous["development_manifest_sha256"],data_contract=previous["data_contract"],evaluation_root=previous["evaluation_root"],parent_freeze_reference=os.path.relpath(Path(prior).absolute(),Path(path).absolute().parent),parent_freeze_sha256=prior_hash,validation_summary_sha256=sha(validation),
             validation_receipt_sha256=sha(Path(validation).parent/"RECEIPT.json"),
             validation_access_sha256=sha(Path(previous["evaluation_root"])/"VAL_EVALUATOR_ACCESS.json"),selection=v["selection"])
+    if stage==2:verify_parent_chain(path,obj)
     with Path(path).open("x") as f:json.dump(obj,f,indent=2)
     return sha(path)
 def main():

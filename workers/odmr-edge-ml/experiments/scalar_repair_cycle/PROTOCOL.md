@@ -70,6 +70,9 @@ Validation needs a pinned JSON release and its pinned Freeze 1 receipt.
 Freeze 2 requires the canonical completed validation summary, matching result receipt and exclusive evaluator receipt.
 All three bind the same data and Freeze 1 hashes. Selection is recomputed from the frozen decision rule.
 Freeze 2 additionally binds the passing validation summary and selected policies.
+It stores a normalized relative reference to its pinned stage-1 parent.
+Final authorization rechecks that parent, all canonical validation evidence hashes, and the selected policies.
+Symlinked evidence files or ancestor directories are refused. Missing or changed evidence blocks final access.
 Final needs a pinned JSON release, Freeze 2, and the custodian's data-root exclusive-access-receipt.json.
 The evaluator creates a separate exclusive local access receipt before its first payload hash.
 Outputs must use the frozen evaluation root. A second campaign is refused, including with a different output argument.
