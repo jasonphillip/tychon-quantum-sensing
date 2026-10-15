@@ -22,27 +22,32 @@ Run from the source root with the full module path to avoid import collisions.
 
 ## Prepared commands
 
-Use explicit source, archive, manifest, and output paths. The examples below show the source checkout.
-Replace the example manifest with a custody-reviewed file before eligibility can pass.
+Set these variables to your existing absolute paths.
+The data file must be the custody-verified immutable archive.
+Use a new output path because eligibility refuses to overwrite evidence.
 
 ```sh
-cd ~/projects/portfolio-publication/wt/odmr-edge-ml-measured-cardiac-2026-10-15
-~/miniconda3/bin/python3 -m experiments.measured_cardiac.cli inventory --archive '~/projects/portfolio-publication/work/nv-measured-pilots-2026-10-15/data/cardiac/2026-6-15 Dataset MCG.zip'
-~/miniconda3/bin/python3 -m experiments.measured_cardiac.cli eligibility --manifest ~/projects/portfolio-publication/wt/odmr-edge-ml-measured-cardiac-2026-10-15/experiments/measured_cardiac/manifest.template.json --out /tmp/tychon-cardiac-template-eligibility-2026-10-15.json
+export PYTHON=/absolute/path/to/python
+export SOURCE=/absolute/path/to/source-checkout
+export DATA=/absolute/path/to/2026-6-15-dataset-mcg.zip
+export OUTPUT=/absolute/path/to/new-eligibility-output.json
+cd "$SOURCE"
+"$PYTHON" -m experiments.measured_cardiac.cli inventory --archive "$DATA"
+"$PYTHON" -m experiments.measured_cardiac.cli eligibility --manifest "$SOURCE/experiments/measured_cardiac/manifest.template.json" --out "$OUTPUT"
 ```
 
 The inventory rejects incomplete archives. It reads central-directory metadata, not scientific samples.
 Eligibility exits 2 for a documented blocker. It writes a new result and refuses an overwrite.
-The eligibility command ran against the template and returned the expected exit 2.
+The equivalent private eligibility command returned the expected exit 2 against the template.
 It reported no signal values read and no eligible capability.
 The inventory command remains prepared until custody completes.
 Syntax inspection passed. Numerical tests have not run.
 
-After root authorizes the accounting stage, run the prepared manufactured tests:
+After root authorizes the accounting stage, use the configured absolute paths for the prepared tests:
 
 ```sh
-cd ~/projects/portfolio-publication/wt/odmr-edge-ml-measured-cardiac-2026-10-15
-~/miniconda3/bin/python3 -m unittest discover -s ~/projects/portfolio-publication/wt/odmr-edge-ml-measured-cardiac-2026-10-15/experiments/measured_cardiac/tests -p 'test_*.py' -v
+cd "$SOURCE"
+"$PYTHON" -m unittest discover -s "$SOURCE/experiments/measured_cardiac/tests" -p 'test_*.py' -v
 ```
 
 The test process must run through the shared accounting supervisor. Do not launch it directly before approval.

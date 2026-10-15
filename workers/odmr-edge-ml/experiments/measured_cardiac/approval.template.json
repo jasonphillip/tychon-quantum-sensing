@@ -8,5 +8,6 @@
   "allowed_recordings": [],
   "allowed_intervals_seconds": {},
   "note": "Root must freeze complete metadata, exact intervals, source hashes, and accounting reservation before signal access.",
-  "protocol_sha256": ""
+  "protocol_sha256": "",
+  "accounting_authority": ""
 }

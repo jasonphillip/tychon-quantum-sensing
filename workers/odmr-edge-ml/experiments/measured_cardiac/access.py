@@ -45,7 +45,10 @@ def authorize(approval_path: Path, expected_approval_sha256: str, manifest_path:
         raise PermissionError("Accounting supervisor must be the parent process.")
     if context.get("gate_sha256") != expected_approval_sha256:
         raise PermissionError("Accounting gate mismatch.")
-    if context.get("accounting_authority") != "spark2-reservation-journal-v1":
+    authority = gate.get("accounting_authority")
+    if not isinstance(authority, str) or not authority.strip():
+        raise PermissionError("Approval must pin a nonempty accounting authority.")
+    if context.get("accounting_authority") != authority:
         raise PermissionError("Unrecognized accounting authority.")
     if not context.get("central_reservation_id") or not context.get("central_spec_sha256"):
         raise PermissionError("Reservation identity missing.")
