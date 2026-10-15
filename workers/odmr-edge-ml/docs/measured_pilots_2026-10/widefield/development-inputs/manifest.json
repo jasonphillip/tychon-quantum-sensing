@@ -1,0 +1,16 @@
+{
+  "accounting_run_id": "measured-widefield-a-development-inputs-20261015",
+  "approval_sha256": "754da11bd36cf5e9a93b8faaaaf8f677f908359369c194d1914e9129eeef6c11",
+  "arrays_sha256": "62ea17edff14529b6767fbdbb5d77f1d6da6738632ef51841f278b0d0480ccca",
+  "custody_sha256": "d79cab8fdfaa896713d0cd42b7520fe90c07311bf0048eae95947a8351bc361c",
+  "files": [
+    "f0.fits",
+    "f8.fits",
+    "f24.fits"
+  ],
+  "kind": "inputs",
+  "repeat": 0,
+  "rows": 384,
+  "split": "development",
+  "target_values_read": false
+}

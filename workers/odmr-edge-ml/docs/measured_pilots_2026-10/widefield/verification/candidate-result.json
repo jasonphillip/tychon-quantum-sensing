@@ -1,0 +1,43 @@
+{
+  "checks": 460,
+  "independent_root_mse": {
+    "candidate_16": 0.00011439916165592332,
+    "candidate_32": 0.00011914046656949186,
+    "candidate_64": 0.00011943058919886902,
+    "pca_wiener_16": 5.288030065340687e-05,
+    "pca_wiener_4": 5.2781869214045475e-05,
+    "pca_wiener_8": 5.288030065340687e-05,
+    "raw": 0.0002453197520956893,
+    "ridge_0.001": 0.00010839784538721334,
+    "ridge_0.01": 0.00010630604679787257,
+    "ridge_0.1": 0.00010107154961449993,
+    "robust_lorentzian": 0.00022054038306285295,
+    "savgol_11": 0.00023180141787719106,
+    "savgol_21": 0.0002297159222008605,
+    "savgol_5": 0.00023663623829815717,
+    "training_mean": 5.261394555291497e-05
+  },
+  "manifest_sha256": "5f557a7de3800e20e8eca8119d89e9d72b93817b2589985c09963c0ef4c8815d",
+  "methods": [
+    "candidate_16",
+    "candidate_32",
+    "candidate_64",
+    "pca_wiener_16",
+    "pca_wiener_4",
+    "pca_wiener_8",
+    "raw",
+    "ridge_0.001",
+    "ridge_0.01",
+    "ridge_0.1",
+    "robust_lorentzian",
+    "savgol_11",
+    "savgol_21",
+    "savgol_5",
+    "training_mean"
+  ],
+  "metrics_sha256": "18d2abebe9d53164ec621999464954363c33933f0a0cb7b39caa2579f167572a",
+  "rows": 384,
+  "scope": "Saved-output and metadata verification only; no model inference or independent field-truth validation",
+  "status": "PASS",
+  "verification_manifest_sha256": "5f557a7de3800e20e8eca8119d89e9d72b93817b2589985c09963c0ef4c8815d"
+}
