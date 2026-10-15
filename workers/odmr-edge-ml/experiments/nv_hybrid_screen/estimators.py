@@ -47,7 +47,7 @@ class Estimator:
                 return {"parameters":np.full(6,np.nan),"score":float("inf"),"success":False,
                         "nfev":0,"boundary":False,"reason":type(exc).__name__}
         results=[attempt(p) for p in starts];best=choose(results)
-        if best is None or best["score"]>2:
+        if self.method!="analytic_multistart" and (best is None or best["score"]>2):
             fallback=True;results += [attempt(p) for p in fixed_starts(y)];best=choose(results)
         accepted=best is not None and best["score"]<=2
         return {"estimate":float(best["parameters"][0]) if accepted else 45.,

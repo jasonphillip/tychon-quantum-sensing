@@ -43,7 +43,9 @@ Training is CUDA-only,20 fixed epochs, Adam lr.001, batch256, final checkpoint o
 CPU deployment uses the saved float weights through NumPy; Torch overhead is not shifted outside one method's timing.
 There is no architecture sweep, early stopping, quantization, or board claim.
 
-Every method uses the same bounded physical refinement, residual check, and full-domain six-start fallback.
+Every method uses the same bounded physical refinement and residual check.
+Analytic multistart already completes the six-start full-domain search; it never repeats those starts.
+Hybrid, grid and lookup methods may add that search once as fallback.
 A residual-rejected result returns45 µT and remains in operational metrics.
 Fallback work and all rejected rows count.
 Residual acceptance is not a calibrated confidence interval; false acceptance above5 µT is reported separately.

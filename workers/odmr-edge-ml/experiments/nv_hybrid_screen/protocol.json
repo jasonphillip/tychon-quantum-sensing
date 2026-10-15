@@ -90,7 +90,7 @@
     "max_nfev": 80,
     "analytic_jacobian": true,
     "loss": "weighted least squares",
-    "fallback": "six full-domain fixed starts; otherwise operational45",
+    "fallback": "Analytic multistart uses its completed six-start search once; hybrid/grid/lookup may add one six-start full-domain fallback. Any residual rejection returns operational45.",
     "reduced_chi2_threshold": 2
   },
   "classical_grid": {
