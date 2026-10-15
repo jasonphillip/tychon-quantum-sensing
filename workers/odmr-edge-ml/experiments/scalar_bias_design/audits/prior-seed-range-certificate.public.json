@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "purpose": "metadata-only range audit of prior seed-search roots 01/02/04 (dev-r2 audit)",
+  "generator_sha256": "082f2bdd214b5cbbde25996247abe9da42899211666fafcc0295d14be5ac8f38",
+  "rule": "make_scalar_repair_partitions._seed_values (int values under keys containing 'seed')",
+  "roots": {
+    "root-01": "root-01",
+    "root-02": "root-02",
+    "root-03": "root-03",
+    "root-04": "root-04"
+  },
+  "files": [
+    {
+      "root_label": "root-01",
+      "path": "root-01/golden/manifest.json",
+      "relative_path": "golden/manifest.json",
+      "sha256": "61628a2ee5b98e9487b52d1ef222321e927c05634f33837f7652a70bc2733327",
+      "sha256_matches_dev_r2_record": true,
+      "explicit_seed_count": 141,
+      "min": 12345,
+      "max": 2123951042,
+      "dev_r2_recorded_seed_count": 141
+    },
+    {
+      "root_label": "root-01",
+      "path": "root-01/production_50k/manifest.json",
+      "relative_path": "production_50k/manifest.json",
+      "sha256": "701a96412f266c37efe121de134cc6db8151b3f71315af7db345a49f43ed5e5b",
+      "sha256_matches_dev_r2_record": true,
+      "explicit_seed_count": 50001,
+      "min": 42,
+      "max": 2147475610,
+      "dev_r2_recorded_seed_count": 50001
+    },
+    {
+      "root_label": "root-01",
+      "path": "root-01/production_50k_v2_aic/manifest.json",
+      "relative_path": "production_50k_v2_aic/manifest.json",
+      "sha256": "3db9226f2f9f03fcb3b91ea17a14fad917c428e0d777952a18f1920f70748b3d",
+      "sha256_matches_dev_r2_record": true,
+      "explicit_seed_count": 50001,
+      "min": 42,
+      "max": 2147475610,
+      "dev_r2_recorded_seed_count": 50001
+    },
+    {
+      "root_label": "root-01",
+      "path": "root-01/production_50k_v2_aic_holdout_2026-10/manifest.json",
+      "relative_path": "production_50k_v2_aic_holdout_2026-10/manifest.json",
+      "sha256": "94fc5094e903978ebfaf4829cf2e03b5f0b6df27ebb4e3acafbbd21607c5aa9f",
+      "sha256_matches_dev_r2_record": true,
+      "explicit_seed_count": 2,
+      "min": 20261015,
+      "max": 126261134,
+      "dev_r2_recorded_seed_count": 5002,
+      "reconstructed_rows": {
+        "count": 5000,
+        "master_seed": 20261015,
+        "range_by_construction": "[0, 2^31): numpy default_rng(master_seed).choice(2**31, size=45000+row_count, replace=False)[45000:] (generator scan_used_seeds); not executed here"
+      }
+    },
+    {
+      "root_label": "root-02",
+      "path": "root-02/dev/manifest.json",
+      "relative_path": "dev/manifest.json",
+      "sha256": "bcc4faca60f5edb7617149961849b704b4bf863a5cec48644934892e71d9193b",
+      "sha256_matches_dev_r2_record": true,
+      "explicit_seed_count": 19,
+      "min": 0,
+      "max": 2045026179,
+      "dev_r2_recorded_seed_count": 19
+    },
+    {
+      "root_label": "root-02",
+      "path": "root-02/final/manifest.json",
+      "relative_path": "final/manifest.json",
+      "sha256": "6ce3db6ee01687d17b3015e773e75303c3f5e8877f5a05a385a4eca21f438e41",
+      "sha256_matches_dev_r2_record": true,
+      "explicit_seed_count": 259,
+      "min": 0,
+      "max": 3028001254,
+      "dev_r2_recorded_seed_count": 259
+    },
+    {
+      "root_label": "root-02",
+      "path": "root-02/val/manifest.json",
+      "relative_path": "val/manifest.json",
+      "sha256": "1e02b26c5313dffbe631aec2dcecd693acc672d76e5820d15b897bd9eccf2f3f",
+      "sha256_matches_dev_r2_record": true,
+      "explicit_seed_count": 131,
+      "min": 0,
+      "max": 4270781817,
+      "dev_r2_recorded_seed_count": 131
+    },
+    {
+      "root_label": "root-04",
+      "path": "root-04/comparison_test_v1.manifest.json",
+      "relative_path": "comparison_test_v1.manifest.json",
+      "sha256": "b621cafa84cb18f9efdc20da5841470f89a336410ee3a557f3baa65287b10102",
+      "sha256_matches_dev_r2_record": true,
+      "explicit_seed_count": 23,
+      "min": 14,
+      "max": 1824768751,
+      "dev_r2_recorded_seed_count": 23
+    },
+    {
+      "root_label": "root-04",
+      "path": "root-04/comparison_test_v2.manifest.json",
+      "relative_path": "comparison_test_v2.manifest.json",
+      "sha256": "544fbb190044c41ba78d076fbf7253bcc0f3d397a6a906af08b0a1951a3213ce",
+      "sha256_matches_dev_r2_record": true,
+      "explicit_seed_count": 8,
+      "min": 40,
+      "max": 1098397039,
+      "dev_r2_recorded_seed_count": 8
+    }
+  ],
+  "excluded_master_seeds": [
+    20261014,
+    20261015,
+    20261114,
+    20261214,
+    20270114,
+    202610140,
+    202610141,
+    202610142
+  ],
+  "max_explicit_seed": 4270781817,
+  "max_explicit_seed_lt_2^32": true,
+  "max_excluded_master": 202610142,
+  "all_known_bounds_lt_2^40": true,
+  "old_reserved_final": {
+    "master_seed": 202610162,
+    "proof": "reserve_seeds draws sample seeds in [0,2^31) and noise/nuisance seeds in [0,2^32) (generator lines 131-155); master < 2^28; never generated; not reconstructed"
+  },
+  "all_sha256_match": true,
+  "other_prior_masters": {
+    "repair_dev_r2": 202610163,
+    "repair_val_consumed": 202610161,
+    "repair_final_reserved_never_generated": 202610162,
+    "repair_bootstrap_namespace": [
+      202610152000,
+      202610152099
+    ],
+    "note": "all < 2^38; repair dev-r1/dev-r2/val manifests are in the published bundle docs/scalar_repair_cycle_2026-10/ (scanned as repo-docs by a new generator); their row seeds come from reserve_seeds, so < 2^32 by construction"
+  },
+  "root_03_sealing": "no *manifest*.json files (directory scanned, 0 files); consistent with the dev-r2 record, which lists no root-03 entry",
+  "created_by": "Claude coordinator session (D), 2026-10-15; metadata JSON only, no spectra, no reconstruction, no numerics",
+  "original_certificate_sha256": "6acd082f907d33f3e84e09156ed05951f720ef3495554ff5098ef5a678c6a081"
+}

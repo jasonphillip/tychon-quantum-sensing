@@ -1,0 +1,13 @@
+{
+  "private_registration_sha256": "ce6bd85d82df670431f61d65325fc129533e74b3da5dc7fa172b66d2ff470cd9",
+  "public_registration_sha256": "e2951316d1ec456f141c4ae0ea7cd041690d394cea48a4981f6c265d654c227d",
+  "removed_fields": [
+    "lock",
+    "ledger",
+    "peer_ledgers"
+  ],
+  "added_fields": [
+    "global_amplitude_reference"
+  ],
+  "addition": "Parent approved the one nominal reference before any numerical calculation."
+}

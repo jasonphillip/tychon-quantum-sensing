@@ -1,0 +1,12 @@
+{
+  "study": "scalar-information-limit-2026-10-15",
+  "dated_utc": "2026-10-15T18:32:21.974824+00:00",
+  "supersedes": "The root-imposed no-grid-retry rule, only for the proved zero-derivative implementation defect described here. Every original failed/stopped output stays immutable.",
+  "evidence": "The first grid stopped at B45, cos(theta)=0, phi=pi/4, bias0, width1.5, historical normalization. Theta convergence diagnostic was0.0288978066 against0.02. No branch event occurred.",
+  "proof": "In the Sz basis, A=Rx(pi)K maps H(Bx,By,Bz) to H(Bx,By,-Bz), preserves Sz^2 and squared Sx transition strengths. At bias0 and theta=pi/2, theta+h and theta-h therefore have identical spectra. The exact theta derivative is zero. A noisy finite-difference relative test of that zero is a numerical implementation issue, not a sensing result.",
+  "permitted_fix": "Use explicitly proved symmetry-zero derivatives, record the analytic rule and retain the raw finite-difference diagnostics. Preserve original forward formulas, all nonzero derivatives, steps, cutoffs, grid, and measurement budgets. Branch flags still make affected bounds unavailable.",
+  "validation": "An independent exact spin-matrix symmetry check is permitted as a new mathematical test. Do not repeat either old preflight or parity checks. Saved-output verification is permitted.",
+  "retry": "One changed-approach retry of the full deterministic grid is permitted after static code review. This is the only retry of that operation. No retry after another unexplained failure. No noisy data or model-selection test exists in Stage1.",
+  "caps": "The same original stage900CPU/900wall, study5400CPU/3600wall, shared14400CPU/7200wall, lock and all ledgers apply.",
+  "stage2": "Still closed until root reviews completed regular diagnostics and commits a fresh protocol."
+}

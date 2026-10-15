@@ -1,0 +1,7 @@
+{
+  "before_sha256": "81157c2da16f9ed758cfcd968df223af91b73efc93b6232e4e96e424975fccfb",
+  "after_sha256": "b8ddcf346f246d9f30e8e67f86f83cbc72eefbd1b701bb5df336b1d16e0af73d",
+  "change": "Load all NPZ arrays once before the row loop. Assertions, formulas and tolerances unchanged.",
+  "grid_outputs": "unchanged",
+  "reason": "Original checker exceeded its 20-second cap while repeatedly decompressing arrays."
+}

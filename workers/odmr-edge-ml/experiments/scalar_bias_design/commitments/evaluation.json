@@ -1,0 +1,7 @@
+{
+  "prediction_sha256": "0cb6088cbf58318416da2bc118a41d35cbcdd076279e8fdb6cd10b1a8d2d24cd",
+  "prediction_receipt_sha256": "aa6408d6e690acd2bc2e03cf494e1f5cb08ace0a22fe105564ccd6ed22a6af4f",
+  "freeze_sha256": "9cd53531509a5cfc2276f9c7eb0a446bac8b6a42f6bb67827148894ad2718837",
+  "access_sha256": "95ba37cc65aff0583cb29bb4158fd334a07a9fcbbc14f6382519269c927a3079",
+  "input_manifest_sha256": "178644fe36144845c742d97c59cfaa52cf6f3cc571649ea5648fa3b438a5e09b"
+}

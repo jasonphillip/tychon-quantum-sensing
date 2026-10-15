@@ -1,0 +1,19 @@
+{
+  "status": "complete",
+  "freeze_sha256": null,
+  "access_sha256": null,
+  "input_manifest_sha256": "ce987666cd93962a2fa2d02fd2018d6826113b702d6d3bc7bc0e94daf5c43bee",
+  "protocol_sha256": "3278e90ac3cdc2769221a4bd619f8175cfc33bd2ffa3417a11fff71196aa9a1d",
+  "runtime": {
+    "cpu": "aarch64",
+    "os": "Linux-7.0.0-1019-nvidia-aarch64-with-glibc2.39",
+    "python": "3.13.11",
+    "numpy": "2.4.2",
+    "scipy": "1.17.1",
+    "workers": 1
+  },
+  "rows": 192,
+  "prediction_sha256": "20f15abefe0c0f073c401fd9fae0912c010ae34aef2adb31dbc36aa8dba4c5e3",
+  "starts_sha256": "263a435cc2afc89c86338d7bc24ef033653825d75ae000101d2c60a2461af270",
+  "total_process_seconds": 2.604439283022657
+}

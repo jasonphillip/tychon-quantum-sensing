@@ -1,0 +1,37 @@
+{
+  "receipts": {
+    "focused-tests": {
+      "public_sha256": "5147eff219bda5693c8fcdc63811a7afb042d3f49c3f4ef284c8e0da427945ad",
+      "raw_receipt_sha256": "379f416522f158c9690a3eff4ad8facf3f99e5f0cadfc48f22f40d0e4cc828e0"
+    },
+    "development-audit": {
+      "public_sha256": "a8ce468e051f2c16731c3fe40a2214884a6513d80bc395078a1667416ee15f34",
+      "raw_receipt_sha256": "13e0bb870d40964b2f4d563f0b26872698528e444476ac9c8bf05125c4946654"
+    },
+    "development-generation": {
+      "public_sha256": "19da16b6c5e367ff8ee34e8acb5431ec978f13e092362ec4464c6e52e714b3f7",
+      "raw_receipt_sha256": "e8bcc928e124ea8aaa8a9e82731fa5931ed293cd9feb9d31ba91c0e672f50af3"
+    },
+    "development-predictions": {
+      "public_sha256": "9cac832c39d43f33006f144b9a146f5a0b0aeac0c124cc15e37f80acd9239f6f",
+      "raw_receipt_sha256": "d9624a5861945e778b70b80830bbdc62e8acd5a42966b2b1bac22318357bf03f"
+    },
+    "development-metrics": {
+      "public_sha256": "7042f3a76ab66c224ac08d6da5ec3bf787ee459391f1c157fa413758fb83590b",
+      "raw_receipt_sha256": "ce77ff42ffe95e7941c3e1156196ab5b6f021c9882781b45399b452520b34a08"
+    },
+    "evaluation-seed-audit": {
+      "public_sha256": "eef2011408912be3879963cace124e205454f6694d504266c672a4196ba993c7",
+      "raw_receipt_sha256": "1eca2fb560e0a8c3477e6ecfdf1af589400f0fc45e071832660e021f5683a0ff"
+    },
+    "evaluation-predictions": {
+      "public_sha256": "76265285dfd8cd8bd1208f7b040556028f66d58ff14e4fa6197467362227e79e",
+      "raw_receipt_sha256": "bc088d2954426ada85dee5668770a716fd9197bee6f5e5bc396676fc30977693"
+    },
+    "evaluation-metrics": {
+      "public_sha256": "dc7a3b2ffd41bb9b3230a1c5d045a9f681453fc8d34ce06a6068dc49f2ce1890",
+      "raw_receipt_sha256": "2fdee21ced45d338fb4649935b1606c78762a39ee9573d846b1f366a30cd2764"
+    }
+  },
+  "scope": "Eight executor operations only. Custodian generation, independent review, and publication accounting remain separate."
+}

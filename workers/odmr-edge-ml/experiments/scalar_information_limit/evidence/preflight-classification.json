@@ -1,0 +1,27 @@
+{
+  "study": "scalar-information-limit-2026-10-15",
+  "dated_utc": "2026-10-15T18:22:59.406021+00:00",
+  "kind": "append-only clarification before first registered grid",
+  "original_registration_sha256": "ce6bd85d82df670431f61d65325fc129533e74b3da5dc7fa172b66d2ff470cd9",
+  "diagnostic_retry_sha256": "a470bc1b8063daf69018f880424104fa7f60a75604956226104ee5e6a32f8e53",
+  "evidence": "Forward parity and analytic derivative checks passed. The failed preflight point has converged differences but crosses the source hard dipole threshold when direction changes.",
+  "point": {
+    "field_uT": 20,
+    "theta": 1.5707963267948966,
+    "phi": 0,
+    "bias_uT": 0.0,
+    "width_mhz": 1.5,
+    "contrast": 0.015,
+    "center_mhz": 0.3,
+    "slope": 0.02,
+    "temperature_K": 293.15,
+    "mw_scale": 1.0,
+    "gradient": 0.196875
+  },
+  "original_run_status": "Both preflight attempts remain failed and immutable. Do not run that operation again.",
+  "decision": "Classify source nonregularity explicitly per parameter and per nuisance ladder. All registered points remain in outputs. Mark a bound unavailable wherever its required derivatives cross a branch or fail convergence. Do not substitute a favorable pseudoinverse.",
+  "scope": "No forward formula, finite-difference step, rank cutoff, estimator candidate, spectrum, or evaluation seed changes. This is a validity-reporting clarification.",
+  "remaining_checks": "Run only previously unreached mathematical/prior checks as a separate accounted job, after static review. Do not repeat parity or analytic-Lorentzian checks.",
+  "first_grid_gate": "After root approves the validity-mask implementation and remaining checks, run the original grid ONCE. Save every point, including unavailable bounds. A newly unexplained derivative error ends the run. No grid retry.",
+  "continuation": "Stage2 remains closed until root reviews regular known-direction design results; arbitrary-direction cases cannot be silently dropped or used for broad impossibility claims."
+}

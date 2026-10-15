@@ -1,0 +1,20 @@
+{
+  "stage1": {
+    "status": "pass",
+    "points": 169,
+    "rows": 5070,
+    "regular_rows_recomputed": 4632,
+    "unavailable_rows": 438,
+    "max_relative_bound_difference": 1.4678992992068987e-15,
+    "mode": "saved-output matrix algebra only; no spectrum generation or inference"
+  },
+  "stage1-symmetry-retry": {
+    "status": "pass",
+    "points": 432,
+    "rows": 12960,
+    "regular_rows_recomputed": 11880,
+    "unavailable_rows": 1080,
+    "max_relative_bound_difference": 1.5560308201855774e-15,
+    "mode": "saved-output matrix algebra only; no spectrum generation or inference"
+  }
+}

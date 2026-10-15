@@ -1,0 +1,860 @@
+{
+  "status": "fail",
+  "mode": "saved means and Jacobians only; no experiment imports, forward calls, spectra generation or trained-model inference",
+  "independent_svd": "SciPy LAPACK gesvd; production uses NumPy default gesdd",
+  "errors": [
+    {
+      "source_line": 131,
+      "expression": "np.allclose(values,row['singular_values'],rtol=2e-9,atol=1e-14)",
+      "message": "None",
+      "context": {
+        "idx": 28,
+        "coord": "cartesian",
+        "ladder": "direction_shape",
+        "cutoff": 1e-08,
+        "snr": 10,
+        "rank": 5,
+        "null": 0.3163242067046268,
+        "condition": 245716.32185419984,
+        "value": 81100540.6023098,
+        "rel": 2.2415900709762198e-14,
+        "sd": 0.042515812902974154,
+        "k": "normalization",
+        "point": {
+          "point_index": 28,
+          "field_uT": 20,
+          "cos_theta": 0,
+          "azimuth_rad": 0.7853981633974483,
+          "bias_uT": 0,
+          "linewidth_FWHM_MHz": 7,
+          "normalization": "historical"
+        },
+        "saved_row": {
+          "point_index": 28,
+          "coordinate_system": "cartesian",
+          "ladder": "direction_shape",
+          "svd_relative_cutoff": 1e-08,
+          "reference_SNR": 10,
+          "rank": 5,
+          "identifiable": false,
+          "std_bound_uT": null,
+          "null_target_fraction": 0.31632420671277134,
+          "condition_retained": 245716.3218552566
+        }
+      }
+    },
+    {
+      "source_line": 131,
+      "expression": "np.allclose(values,row['singular_values'],rtol=2e-9,atol=1e-14)",
+      "message": "None",
+      "context": {
+        "idx": 28,
+        "coord": "cartesian",
+        "ladder": "direction_shape",
+        "cutoff": 1e-10,
+        "snr": 10,
+        "rank": 6,
+        "null": 1.1192513343176146e-09,
+        "condition": 1559598210.9217615,
+        "rel": 2.2415900709762198e-14,
+        "sd": 0.042515812902974154,
+        "k": "normalization",
+        "point": {
+          "point_index": 28,
+          "field_uT": 20,
+          "cos_theta": 0,
+          "azimuth_rad": 0.7853981633974483,
+          "bias_uT": 0,
+          "linewidth_FWHM_MHz": 7,
+          "normalization": "historical"
+        },
+        "saved_row": {
+          "point_index": 28,
+          "coordinate_system": "cartesian",
+          "ladder": "direction_shape",
+          "svd_relative_cutoff": 1e-10,
+          "reference_SNR": 10,
+          "rank": 6,
+          "identifiable": true,
+          "std_bound_uT": 171224413.81893396,
+          "null_target_fraction": 8.963334770856755e-10,
+          "condition_retained": 1559598019.0136948
+        }
+      }
+    },
+    {
+      "source_line": 131,
+      "expression": "np.allclose(values,row['singular_values'],rtol=2e-9,atol=1e-14)",
+      "message": "None",
+      "context": {
+        "idx": 28,
+        "coord": "cartesian",
+        "ladder": "direction_shape",
+        "cutoff": 1e-12,
+        "snr": 10,
+        "rank": 6,
+        "null": 1.1192513343176146e-09,
+        "condition": 1559598210.9217615,
+        "value": 171224434.88363323,
+        "rel": 1.2302390880540209e-07,
+        "sd": 0.042515812902974154,
+        "k": "normalization",
+        "point": {
+          "point_index": 28,
+          "field_uT": 20,
+          "cos_theta": 0,
+          "azimuth_rad": 0.7853981633974483,
+          "bias_uT": 0,
+          "linewidth_FWHM_MHz": 7,
+          "normalization": "historical"
+        },
+        "saved_row": {
+          "point_index": 28,
+          "coordinate_system": "cartesian",
+          "ladder": "direction_shape",
+          "svd_relative_cutoff": 1e-12,
+          "reference_SNR": 10,
+          "rank": 6,
+          "identifiable": true,
+          "std_bound_uT": 171224413.81893396,
+          "null_target_fraction": 8.963334770856755e-10,
+          "condition_retained": 1559598019.0136948
+        }
+      }
+    }
+  ],
+  "artifacts": {
+    "points.json": "10882488168341bc96e97a9a1f7cab7e9a70c18b77500b9fae6b1443ac310bf4",
+    "information.json": "2a1bed55409c486970b1ea260e6b3d6f54579db89d4314426200c623735ba59c",
+    "information.csv": "87a457eeefaf479388e2b6100d8a03a059d5e0296f00d7c6288043f233920e87",
+    "summary.json": "33d0f235e8f05de0d1c29c05e12e88383859eeadfdb0024bb1d5cbf2bbaaef06",
+    "derivatives.npz": "37197b52b521c81790678f8aaa83827f21556e68c82bcc88909d1b6534d6f653"
+  },
+  "registration_sha256": "ce6bd85d82df670431f61d65325fc129533e74b3da5dc7fa172b66d2ff470cd9",
+  "registration_binding": {
+    "mapping_sha256": "96b3450c1b4c41baaadaa748ecb7cc725fa77a82951546bdae850427cf848422",
+    "private_registration_sha256": "ce6bd85d82df670431f61d65325fc129533e74b3da5dc7fa172b66d2ff470cd9",
+    "public_registration_sha256": "e2951316d1ec456f141c4ae0ea7cd041690d394cea48a4981f6c265d654c227d",
+    "removed_fields": [
+      "lock",
+      "ledger",
+      "peer_ledgers"
+    ],
+    "added_fields": [
+      "global_amplitude_reference"
+    ],
+    "addition": "Parent approved the one nominal reference before any numerical calculation."
+  },
+  "points": 432,
+  "rows": 12960,
+  "regular_rows_recomputed": 11880,
+  "unavailable_rows": 1080,
+  "target_null_rows": 64,
+  "symmetry_column_predicates_checked": 6048,
+  "exact_zero_columns": 936,
+  "mask_reasons": {
+    "theta:branch": 108,
+    "bz:branch": 108,
+    "spherical_polar_coordinate_singularity": 864
+  },
+  "rank_counts": {
+    "spherical/fixed/1": 2592,
+    "spherical/center/2": 2592,
+    "spherical/shape/5": 2592,
+    "spherical/direction_shape/6": 832,
+    "cartesian/direction_shape/6": 832,
+    "spherical/direction_shape/5": 32,
+    "cartesian/direction_shape/5": 896,
+    "spherical/direction_shape/7": 756,
+    "cartesian/direction_shape/7": 756
+  },
+  "max_relative_bound_difference": 1.2302390880540209e-07,
+  "max_singular_relative_difference_floor_1e14": 0.8435186085435002,
+  "max_null_fraction_difference": 6.523240049854666e-09,
+  "noise_monotonicity_comparisons": 5908,
+  "nuisance_monotonicity_full_rank_comparisons": 5940,
+  "known_axis_coordinate_comparisons": 432,
+  "svd_sensitivity": {
+    "regular_groups": 3960,
+    "rank_changes": 64,
+    "identifiability_changes": 64,
+    "finite_bound_changes_over_2_percent": 0,
+    "maximum_finite_bound_ratio": 1.0,
+    "examples": [
+      {
+        "key": [
+          24,
+          3,
+          "spherical",
+          "direction_shape"
+        ],
+        "ranks": [
+          5,
+          6,
+          6
+        ],
+        "identifiable": [
+          false,
+          true,
+          true
+        ],
+        "bounds": [
+          null,
+          237861922.55473453,
+          237861922.55473453
+        ]
+      },
+      {
+        "key": [
+          24,
+          3,
+          "cartesian",
+          "direction_shape"
+        ],
+        "ranks": [
+          5,
+          6,
+          6
+        ],
+        "identifiable": [
+          false,
+          true,
+          true
+        ],
+        "bounds": [
+          null,
+          513591850.0197053,
+          513591850.0197053
+        ]
+      },
+      {
+        "key": [
+          24,
+          10,
+          "spherical",
+          "direction_shape"
+        ],
+        "ranks": [
+          5,
+          6,
+          6
+        ],
+        "identifiable": [
+          false,
+          true,
+          true
+        ],
+        "bounds": [
+          null,
+          71358613.17145331,
+          71358613.17145331
+        ]
+      },
+      {
+        "key": [
+          24,
+          10,
+          "cartesian",
+          "direction_shape"
+        ],
+        "ranks": [
+          5,
+          6,
+          6
+        ],
+        "identifiable": [
+          false,
+          true,
+          true
+        ],
+        "bounds": [
+          null,
+          154077632.1855219,
+          154077632.1855219
+        ]
+      },
+      {
+        "key": [
+          25,
+          3,
+          "spherical",
+          "direction_shape"
+        ],
+        "ranks": [
+          5,
+          6,
+          6
+        ],
+        "identifiable": [
+          false,
+          true,
+          true
+        ],
+        "bounds": [
+          null,
+          244214379.78148156,
+          244214379.78148156
+        ]
+      },
+      {
+        "key": [
+          25,
+          3,
+          "cartesian",
+          "direction_shape"
+        ],
+        "ranks": [
+          5,
+          6,
+          6
+        ],
+        "identifiable": [
+          false,
+          true,
+          true
+        ],
+        "bounds": [
+          null,
+          349331619.77846783,
+          349331619.77846783
+        ]
+      },
+      {
+        "key": [
+          25,
+          10,
+          "spherical",
+          "direction_shape"
+        ],
+        "ranks": [
+          5,
+          6,
+          6
+        ],
+        "identifiable": [
+          false,
+          true,
+          true
+        ],
+        "bounds": [
+          null,
+          73264351.35712965,
+          73264351.35712965
+        ]
+      },
+      {
+        "key": [
+          25,
+          10,
+          "cartesian",
+          "direction_shape"
+        ],
+        "ranks": [
+          5,
+          6,
+          6
+        ],
+        "identifiable": [
+          false,
+          true,
+          true
+        ],
+        "bounds": [
+          null,
+          104799540.00323533,
+          104799540.00323533
+        ]
+      },
+      {
+        "key": [
+          26,
+          3,
+          "spherical",
+          "direction_shape"
+        ],
+        "ranks": [
+          5,
+          6,
+          6
+        ],
+        "identifiable": [
+          false,
+          true,
+          true
+        ],
+        "bounds": [
+          null,
+          285922530.37320787,
+          285922530.37320787
+        ]
+      },
+      {
+        "key": [
+          26,
+          3,
+          "cartesian",
+          "direction_shape"
+        ],
+        "ranks": [
+          5,
+          6,
+          6
+        ],
+        "identifiable": [
+          false,
+          true,
+          true
+        ],
+        "bounds": [
+          null,
+          658675748.928763,
+          658675748.928763
+        ]
+      },
+      {
+        "key": [
+          26,
+          10,
+          "spherical",
+          "direction_shape"
+        ],
+        "ranks": [
+          5,
+          6,
+          6
+        ],
+        "identifiable": [
+          false,
+          true,
+          true
+        ],
+        "bounds": [
+          null,
+          85776802.95238541,
+          85776802.95238541
+        ]
+      },
+      {
+        "key": [
+          26,
+          10,
+          "cartesian",
+          "direction_shape"
+        ],
+        "ranks": [
+          5,
+          6,
+          6
+        ],
+        "identifiable": [
+          false,
+          true,
+          true
+        ],
+        "bounds": [
+          null,
+          197602828.1728256,
+          197602828.1728256
+        ]
+      }
+    ]
+  },
+  "known_direction_primary": [
+    {
+      "field_uT": 20,
+      "bias_uT": 0,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 3.0714403573801428,
+          "1e-10": 3.0714403573801428,
+          "1e-12": 3.0714403573801428
+        },
+        "center": {
+          "1e-08": 3.0966353381130367,
+          "1e-10": 3.0966353381130367,
+          "1e-12": 3.0966353381130367
+        },
+        "shape": {
+          "1e-08": 7.0600573548552115,
+          "1e-10": 7.0600573548552115,
+          "1e-12": 7.0600573548552115
+        }
+      }
+    },
+    {
+      "field_uT": 20,
+      "bias_uT": 250,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.4260960561689509,
+          "1e-10": 1.4260960561689509,
+          "1e-12": 1.4260960561689509
+        },
+        "center": {
+          "1e-08": 1.4261020693995163,
+          "1e-10": 1.4261020693995163,
+          "1e-12": 1.4261020693995163
+        },
+        "shape": {
+          "1e-08": 1.4306049166113848,
+          "1e-10": 1.4306049166113848,
+          "1e-12": 1.4306049166113848
+        }
+      }
+    },
+    {
+      "field_uT": 20,
+      "bias_uT": 500,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.447197442277629,
+          "1e-10": 1.447197442277629,
+          "1e-12": 1.447197442277629
+        },
+        "center": {
+          "1e-08": 1.4472038287089992,
+          "1e-10": 1.4472038287089992,
+          "1e-12": 1.4472038287089992
+        },
+        "shape": {
+          "1e-08": 1.4474005549086335,
+          "1e-10": 1.4474005549086335,
+          "1e-12": 1.4474005549086335
+        }
+      }
+    },
+    {
+      "field_uT": 20,
+      "bias_uT": 1000,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.4493841492813104,
+          "1e-10": 1.4493841492813104,
+          "1e-12": 1.4493841492813104
+        },
+        "center": {
+          "1e-08": 1.449407508895034,
+          "1e-10": 1.449407508895034,
+          "1e-12": 1.449407508895034
+        },
+        "shape": {
+          "1e-08": 1.449413473578508,
+          "1e-10": 1.449413473578508,
+          "1e-12": 1.449413473578508
+        }
+      }
+    },
+    {
+      "field_uT": 45,
+      "bias_uT": 0,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.6235595869431203,
+          "1e-10": 1.6235595869431203,
+          "1e-12": 1.6235595869431203
+        },
+        "center": {
+          "1e-08": 1.6289407076593432,
+          "1e-10": 1.6289407076593432,
+          "1e-12": 1.6289407076593432
+        },
+        "shape": {
+          "1e-08": 2.673582025917602,
+          "1e-10": 2.673582025917602,
+          "1e-12": 2.673582025917602
+        }
+      }
+    },
+    {
+      "field_uT": 45,
+      "bias_uT": 250,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.4320779000520343,
+          "1e-10": 1.4320779000520343,
+          "1e-12": 1.4320779000520343
+        },
+        "center": {
+          "1e-08": 1.4320826926996013,
+          "1e-10": 1.4320826926996013,
+          "1e-12": 1.4320826926996013
+        },
+        "shape": {
+          "1e-08": 1.4352137065241648,
+          "1e-10": 1.4352137065241648,
+          "1e-12": 1.4352137065241648
+        }
+      }
+    },
+    {
+      "field_uT": 45,
+      "bias_uT": 500,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.4477064131401156,
+          "1e-10": 1.4477064131401156,
+          "1e-12": 1.4477064131401156
+        },
+        "center": {
+          "1e-08": 1.447713281551387,
+          "1e-10": 1.447713281551387,
+          "1e-12": 1.447713281551387
+        },
+        "shape": {
+          "1e-08": 1.4478649077751025,
+          "1e-10": 1.4478649077751025,
+          "1e-12": 1.4478649077751025
+        }
+      }
+    },
+    {
+      "field_uT": 45,
+      "bias_uT": 1000,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.4495180223666593,
+          "1e-10": 1.4495180223666593,
+          "1e-12": 1.4495180223666593
+        },
+        "center": {
+          "1e-08": 1.4495429382971394,
+          "1e-10": 1.4495429382971394,
+          "1e-12": 1.4495429382971394
+        },
+        "shape": {
+          "1e-08": 1.4495490902305057,
+          "1e-10": 1.4495490902305057,
+          "1e-12": 1.4495490902305057
+        }
+      }
+    },
+    {
+      "field_uT": 70,
+      "bias_uT": 0,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.3387847623250815,
+          "1e-10": 1.3387847623250815,
+          "1e-12": 1.3387847623250815
+        },
+        "center": {
+          "1e-08": 1.3393556752334606,
+          "1e-10": 1.3393556752334606,
+          "1e-12": 1.3393556752334606
+        },
+        "shape": {
+          "1e-08": 1.5941114578368167,
+          "1e-10": 1.5941114578368167,
+          "1e-12": 1.5941114578368167
+        }
+      }
+    },
+    {
+      "field_uT": 70,
+      "bias_uT": 250,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.4363125111068213,
+          "1e-10": 1.4363125111068213,
+          "1e-12": 1.4363125111068213
+        },
+        "center": {
+          "1e-08": 1.4363170909356926,
+          "1e-10": 1.4363170909356926,
+          "1e-12": 1.4363170909356926
+        },
+        "shape": {
+          "1e-08": 1.4385306840926622,
+          "1e-10": 1.4385306840926622,
+          "1e-12": 1.4385306840926622
+        }
+      }
+    },
+    {
+      "field_uT": 70,
+      "bias_uT": 500,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.4479844690954888,
+          "1e-10": 1.4479844690954888,
+          "1e-12": 1.4479844690954888
+        },
+        "center": {
+          "1e-08": 1.4479922919713413,
+          "1e-10": 1.4479922919713413,
+          "1e-12": 1.4479922919713413
+        },
+        "shape": {
+          "1e-08": 1.448114024085648,
+          "1e-10": 1.448114024085648,
+          "1e-12": 1.448114024085648
+        }
+      }
+    },
+    {
+      "field_uT": 70,
+      "bias_uT": 1000,
+      "width_MHz": 5,
+      "reference_SNR": 10,
+      "normalization": "fixed_amplitude",
+      "known_direction": true,
+      "bounds": {
+        "fixed": {
+          "1e-08": 1.4494236647597134,
+          "1e-10": 1.4494236647597134,
+          "1e-12": 1.4494236647597134
+        },
+        "center": {
+          "1e-08": 1.4494502168116676,
+          "1e-10": 1.4494502168116676,
+          "1e-12": 1.4494502168116676
+        },
+        "shape": {
+          "1e-08": 1.4494567334554338,
+          "1e-10": 1.4494567334554338,
+          "1e-12": 1.4494567334554338
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Matrix recomputation does not revalidate forward-model physics or finite-difference samples.",
+    "Raw derivative convergence metadata and symmetry masking are checked for internal consistency; original perturbation spectra are not saved.",
+    "Global amplitude factor is checked as a shared positive metadata value, not regenerated.",
+    "CRLB is a local standard-deviation diagnostic for regular unbiased estimation; it is not a bound on arbitrary estimator MAE.",
+    "Noise monotonicity uses regular identifiable equal-rank pairs; nuisance monotonicity uses regular identifiable full-column-rank nested pairs."
+  ],
+  "wall_seconds": 0.5877521589864045,
+  "verification_kind": "deterministic saved-output information diagnostic; no noisy model selection",
+  "source_fingerprint_matches": {
+    "run_stage1.py": true,
+    "information.py": true,
+    "configuration.py": true,
+    "forward.py": true
+  },
+  "artifacts_unchanged_between_independent_attempts": true,
+  "scope_assessment": {
+    "whole_grid_gate": "FAIL; three original singular-value criteria fail. No tolerance was relaxed.",
+    "known_axis_scope": "No discrepancy affects known-axis spherical fixed, center or shape rows. Bounds and rank/null decisions agree at all cutoffs.",
+    "derivative_scope": "All saved derivative convergence metadata, branch masks and exact symmetry-zero columns passed internal checks. Original perturbation spectra were not saved, so independent derivative recalculation was not possible.",
+    "parity_scope": "Current forward, information, run and configuration source fingerprints match the grid summary. Forward-model parity checks were not independently repeated.",
+    "unknown_direction_scope": "64 of 3960 regular three-cutoff groups change rank and identifiability. Every sensitive group uses unknown direction and zero bias.",
+    "rank_sensitivity_categories": [
+      {
+        "coordinate_system": "spherical",
+        "normalization": "historical",
+        "bias_uT": 0,
+        "groups": 16
+      },
+      {
+        "coordinate_system": "spherical",
+        "normalization": "fixed_amplitude",
+        "bias_uT": 0,
+        "groups": 16
+      },
+      {
+        "coordinate_system": "cartesian",
+        "normalization": "historical",
+        "bias_uT": 0,
+        "groups": 16
+      },
+      {
+        "coordinate_system": "cartesian",
+        "normalization": "fixed_amplitude",
+        "bias_uT": 0,
+        "groups": 16
+      }
+    ],
+    "unknown_direction_failure": {
+      "point_index": 28,
+      "coordinate_system": "cartesian",
+      "normalization": "historical",
+      "field_uT": 20,
+      "cos_theta": 0,
+      "azimuth_rad": 0.7853981633974483,
+      "bias_uT": 0,
+      "linewidth_FWHM_MHz": 7,
+      "reference_SNR": 10,
+      "cutoffs": [
+        1e-08,
+        1e-10,
+        1e-12
+      ],
+      "criterion": "singular values: rtol=2e-9, atol=1e-14",
+      "global_status": "fail"
+    }
+  },
+  "independent_compute_receipts": [
+    {
+      "utc": "2026-10-15T18:43:51.236305+00:00",
+      "cpu_seconds": 0.360932,
+      "wall_seconds": 0.3671652420889586,
+      "peak_memory_bytes": 116711424,
+      "returncode": 1,
+      "status": "failed",
+      "reserved_seconds": 90
+    },
+    {
+      "utc": "2026-10-15T18:51:29.905789+00:00",
+      "cpu_seconds": 0.75046,
+      "wall_seconds": 0.7700921089854091,
+      "peak_memory_bytes": 124555264,
+      "returncode": 1,
+      "status": "failed",
+      "reserved_seconds": 90
+    }
+  ],
+  "independent_compute_total": {
+    "cpu_seconds": 1.111392,
+    "wall_seconds": 1.1372573510743678,
+    "maximum_memory_bytes": 124555264,
+    "attempts": 2
+  },
+  "verifier_sha256": "44f7a50a17e2f38cdf6cdf3d719a12a906b27bf11fbdd7630544ee80a928b4b8",
+  "original_failed_verifier_sha256": "1044fbed15a2d677c3e81c8b8b62676733757dc010a56d63eb248c7531a1e4c0",
+  "original_failed_report_sha256": "ea4f9dffe6828df153db40497f70924b0eed423ec533828e4a3a55758f209cde"
+}

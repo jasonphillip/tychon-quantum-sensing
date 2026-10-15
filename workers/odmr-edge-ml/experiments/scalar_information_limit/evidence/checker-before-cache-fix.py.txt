@@ -1,0 +1,69 @@
+"""Recompute diagnostics from published saved matrices, without inference or private data."""
+import argparse,csv,json,hashlib
+from pathlib import Path
+import numpy as np
+from information import LADDERS,ladder_validity
+
+def check(condition,message):
+    if not condition:raise AssertionError(message)
+def run(directory):
+    points=json.loads((directory/"points.json").read_text())
+    rows=json.loads((directory/"information.json").read_text())
+    summary=json.loads((directory/"summary.json").read_text())
+    check(summary["points"]==len(points),"point count")
+    check(summary["rows"]==len(rows),"row count")
+    if summary["status"]=="complete":
+        check(len(points)==432 and len(rows)==12960,"registered grid cardinality")
+    check(len(rows)==30*len(points),"every saved point has all ladder/SNR/cutoff rows")
+    with (directory/"information.csv").open(newline="") as stream:
+        csvrows=list(csv.DictReader(stream))
+    check(len(csvrows)==len(rows),"CSV count")
+    for actual,expected in zip(csvrows,rows):
+        for key,value in expected.items():
+            text=json.dumps(value) if isinstance(value,list) else "" if value is None else str(value)
+            check(actual[key]==text,"CSV/JSON mismatch: "+key)
+    arrays=np.load(directory/"derivatives.npz",allow_pickle=False)
+    check([json.loads(x) for x in arrays["point_keys"]]==[{k:v for k,v in p.items() if k not in ("spherical","cartesian")} for p in points],"matrix point keys")
+    largest=0.;checked=0;unavailable=0
+    for row in rows:
+        point=points[row["point_index"]];coord=row["coordinate_system"]
+        indices=LADDERS[row["ladder"]] if coord=="spherical" else list(range(7))
+        valid,reasons=ladder_validity(point[coord],indices,coord)
+        check(reasons==row["unavailable_reasons"],"validity reason mismatch")
+        if not valid:
+            unavailable+=1
+            check(row["validity"]=="unavailable" and row["std_bound_uT"] is None
+                  and row["rank"] is None and row["identifiable"] is None,"invalid bound reported")
+            continue
+        check(row["validity"]=="regular","regularity mismatch")
+        mu=arrays[coord+"_mean"][row["point_index"]]
+        jac=arrays[coord+"_jacobian"][row["point_index"]][:,indices]
+        target=np.zeros(len(indices))
+        if coord=="spherical":target[0]=45.
+        else:
+            c=point["cos_theta"];phi=point["azimuth_rad"]
+            target[:3]=45*np.array([np.sqrt(1-c*c)*np.cos(phi),np.sqrt(1-c*c)*np.sin(phi),c])
+        weighted=jac*np.sqrt(row["photons_per_bin"]/mu+.5/mu**2)[:,None]
+        _,singular,vt=np.linalg.svd(weighted,full_matrices=False)
+        keep=singular>row["svd_relative_cutoff"]*singular[0]
+        projections=vt@target
+        null_fraction=float(np.linalg.norm(projections[~keep])/np.linalg.norm(target))
+        identifiable=bool(null_fraction<=1e-7 and np.any(keep))
+        check(int(keep.sum())==row["rank"] and identifiable==row["identifiable"],"rank/null mismatch")
+        check(np.allclose(singular,row["singular_values"],rtol=1e-12,atol=1e-14),"singular value mismatch")
+        check(abs(null_fraction-row["null_target_fraction"])<1e-10,"null fraction mismatch")
+        if identifiable:
+            value=float(np.linalg.norm(projections[keep]/singular[keep]))
+            relative=abs(value-row["std_bound_uT"])/max(value,1e-100)
+            largest=max(largest,relative)
+            check(relative<1e-8,"recomputed bound mismatch")
+        else:check(row["std_bound_uT"] is None,"null direction given finite bound")
+        checked+=1
+    check(unavailable==summary["unavailable_rows"],"unavailable count")
+    result={"status":"pass","points":len(points),"rows":len(rows),"regular_rows_recomputed":checked,
+        "unavailable_rows":unavailable,"max_relative_bound_difference":largest,
+        "mode":"saved-output matrix algebra only; no spectrum generation or inference"}
+    print(json.dumps(result,indent=2));return result
+if __name__=="__main__":
+    parser=argparse.ArgumentParser();parser.add_argument("--directory",required=True,type=Path)
+    run(parser.parse_args().directory)

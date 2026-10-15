@@ -1,0 +1,15 @@
+{
+  "status": "complete",
+  "partition": "development",
+  "fields": 32,
+  "rows": 192,
+  "files": {
+    "inputs.npz": "e9bd9e068e1094fc316f4e29258cabb5347061bd54a67ebb1c59dafb6c99180a",
+    "truth.npz": "477b4162e1ab72d212deef4dc610ff4b6c0274c8a1429b20a3b0a4f8260541c0",
+    "seed-record.json": "85e75b66809b3387f5c7c0e580daca631eca996d97f07fb2ef84434c3c9bbba5"
+  },
+  "protocol_sha256": "3278e90ac3cdc2769221a4bd619f8175cfc33bd2ffa3417a11fff71196aa9a1d",
+  "registration_sha256": "7d101403fdb08b40a96e0de3f3c5ea2417cf269e2f750f3f7eed7a80821f89e8",
+  "freeze_sha256": null,
+  "commitment_sha256": null
+}
