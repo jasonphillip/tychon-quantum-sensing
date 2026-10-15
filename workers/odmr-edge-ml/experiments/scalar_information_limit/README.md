@@ -1,6 +1,7 @@
 # Scalar information diagnostic
 
-Read [the report](../../docs/scalar_information_limit_2026-10.md). This directory records a deterministic information calculation registered on 2026-10-15. Stage 2 remains closed pending independent review.
+Read [the report](../../docs/scalar_information_limit_2026-10.md). This directory records a deterministic information calculation registered on 2026-10-15. The scoped [Stage 2 comparison](../../docs/scalar_bias_design_2026-10.md) is complete and independently verified.
+Stage 1's whole-grid independent status remains **FAIL**. Its known-axis contrasts passed under the [restricted gate](../scalar_bias_design/STAGE1_GATE.json).
 
 - [Public registration](stage1-public-registration.json) fixes constants, the grid, nuisance assumptions, and caps.
 - [Registration mapping](evidence/registration-mapping.json) binds it to the original private registration.
@@ -12,7 +13,8 @@ Read [the report](../../docs/scalar_information_limit_2026-10.md). This director
 - [First-grid results](results/stage1/summary.json) preserve the original stopped grid.
 - [Compute receipt](evidence/compute-receipt.json) gives resource use and shared-budget context.
 
-Run the saved-output check from a checkout root with NumPy installed:
+Run the saved-output check from the standalone odmr-edge-ml root with NumPy installed.
+In the public monorepo, use workers/odmr-edge-ml as that root:
 
     python3 experiments/scalar_information_limit/check_saved.py \
       --directory experiments/scalar_information_limit/results/stage1-symmetry-retry

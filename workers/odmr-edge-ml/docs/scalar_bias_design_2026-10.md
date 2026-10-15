@@ -149,11 +149,14 @@ Custodian and independent-review accounting are separate from these eight execut
 
 Use Python with NumPy installed.
 SciPy, private paths, training, and inference are not required for these commands.
+CHECKOUT must identify the worker repository root, where experiments/ exists.
+For a standalone odmr-edge-ml checkout, use its root.
+For the public monorepo, use <public-checkout>/workers/odmr-edge-ml, not the monorepo root.
 Set CHECKOUT and PYTHON_BIN to absolute paths on your machine.
 The two expected hashes below are pinned independently of the downloaded bundle manifests.
 
 ```bash
-CHECKOUT=/absolute/path/to/checkout
+CHECKOUT=/absolute/path/to/public-checkout/workers/odmr-edge-ml
 PYTHON_BIN=/absolute/path/to/python
 "$PYTHON_BIN" "$CHECKOUT/experiments/scalar_bias_design/check_saved.py" \
   --bundle "$CHECKOUT/experiments/scalar_bias_design/results/development" \

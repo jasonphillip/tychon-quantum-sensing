@@ -1,6 +1,8 @@
 # Known-axis scalar bias comparison
 
-Preparation only. Registration does not authorize running tests or development without the coordinator's execution gate.
+Status: **completed and retired**. The registered primary comparison passed independent saved-output verification.
+Read [the result and saved-output reproduction commands](../../docs/scalar_bias_design_2026-10.md#recompute-metrics-from-a-fresh-checkout).
+The execution commands below record the completed campaign. They do not authorize generation, inference, or another evaluation.
 This is a new simulated known-axis task. It does not replace the old arbitrary-direction scalar result.
 Read PROTOCOL.md and STAGE1_GATE.json. The latter preserves the global independent-review failure and its restricted known-axis approval.
 
@@ -9,9 +11,11 @@ The six-start weighted least-squares fit receives no labels, nuisance states, no
 Its nominal microwave mixture approximates the unknown generated MW and gradient.
 All failed fits use45. Boundary flags use SciPy active_mask. One worker runs with one numerical thread.
 
-## Execution paths
+## Historical execution paths
 
-Set STUDY_REPO to the absolute checkout and STUDY_WORK to the private absolute study directory.
+For these historical commands, STUDY_REPO means the absolute standalone odmr-edge-ml root.
+In the public monorepo, it means the checkout's workers/odmr-edge-ml directory.
+STUDY_WORK referred to the private study directory.
 Use absolute paths for PYTHON_BIN, STAGE1_LEDGER, OLD_ESTIMATOR_LEDGER, OLD_CUSTODY_LEDGER, and NUMERICAL_LOCK.
 Every numerical command below goes inside this wrapper; do not call inference or generation directly:
 

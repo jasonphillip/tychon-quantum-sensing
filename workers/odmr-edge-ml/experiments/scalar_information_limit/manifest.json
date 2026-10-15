@@ -1,7 +1,7 @@
 {
   "scope": "Public-safe self-contained source, saved matrices and recorded diagnostic evidence. Excludes original private registration with local accounting paths.",
   "files": {
-    "experiments/scalar_information_limit/README.md": "4f1e56c567c2011a867158c3ba5e3a2059369621cd165f399290c1e5612ab1d2",
+    "experiments/scalar_information_limit/README.md": "c8808b4f0f1a4945540dec173a69210c7bd97cb0d33ab8c2c0d071f3b68619aa",
     "experiments/scalar_information_limit/check_saved.py": "b8ddcf346f246d9f30e8e67f86f83cbc72eefbd1b701bb5df336b1d16e0af73d",
     "experiments/scalar_information_limit/configuration.py": "ddee909189a8f85dacf27fc8eea0280e91df5f41c04daa868dc56080f2b2485f",
     "experiments/scalar_information_limit/evidence/checker-before-cache-fix.py.txt": "81157c2da16f9ed758cfcd968df223af91b73efc93b6232e4e96e424975fccfb",
