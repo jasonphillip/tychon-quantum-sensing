@@ -9,5 +9,7 @@
   "allowed_intervals_seconds": {},
   "note": "Root must freeze complete metadata, exact intervals, source hashes, and accounting reservation before signal access.",
   "protocol_sha256": "",
-  "accounting_authority": ""
+  "accounting_authority": "",
+  "access_mode": "waveform_values",
+  "voltage_protocol_sha256": ""
 }

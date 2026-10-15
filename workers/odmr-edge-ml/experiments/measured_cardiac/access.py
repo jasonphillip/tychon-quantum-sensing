@@ -15,8 +15,9 @@ class SignalAccess:
     allowed_intervals: dict[str, tuple[tuple[float, float], ...]]
     approval_sha256: str
     run_id: str
+    access_mode: str = "waveform_values"
 
-def authorize(approval_path: Path, expected_approval_sha256: str, manifest_path: Path) -> SignalAccess:
+def authorize(approval_path: Path, expected_approval_sha256: str, manifest_path: Path, *, timestamps_only=False) -> SignalAccess:
     if sha256(approval_path) != expected_approval_sha256:
         raise PermissionError("Approval hash mismatch.")
     gate = json.loads(approval_path.read_text())
@@ -24,12 +25,19 @@ def authorize(approval_path: Path, expected_approval_sha256: str, manifest_path:
         raise PermissionError("No root-approved cardiac gate.")
     if gate.get("stage") not in ("qualification", "development", "final"):
         raise PermissionError("Stage does not permit signal access.")
+    mode = "timestamps_only" if timestamps_only else "waveform_values"
+    if gate.get("access_mode") != mode:
+        raise PermissionError("Approval does not permit this access mode.")
+    if timestamps_only and gate.get("stage") != "qualification":
+        raise PermissionError("Timestamp preparation requires qualification approval.")
     digest = sha256(manifest_path)
     if digest != gate.get("manifest_sha256"):
         raise PermissionError("Custody metadata changed after approval.")
     package = Path(__file__).resolve().parent
     if sha256(package / "protocol.md") != gate.get("protocol_sha256"):
         raise PermissionError("Frozen protocol changed.")
+    if (package / "voltage-protocol.md").exists() and sha256(package / "voltage-protocol.md") != gate.get("voltage_protocol_sha256"):
+        raise PermissionError("Frozen voltage protocol changed.")
     expected = gate.get("source_sha256", {})
     actual_names = {p.name for p in package.glob("*.py")}
     if set(expected) != actual_names:
@@ -66,6 +74,8 @@ def authorize(approval_path: Path, expected_approval_sha256: str, manifest_path:
     records = gate.get("allowed_recordings", [])
     if not records or not all(isinstance(x, str) and x for x in records):
         raise PermissionError("Approved recording IDs missing.")
+    if timestamps_only:
+        return SignalAccess(digest, frozenset(records), {}, expected_approval_sha256, str(context["central_reservation_id"]), mode)
     intervals = gate.get("allowed_intervals_seconds", {})
     if set(intervals) != set(records):
         raise PermissionError("Every recording requires explicit approved intervals.")

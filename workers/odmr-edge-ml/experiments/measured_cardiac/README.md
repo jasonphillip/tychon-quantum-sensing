@@ -11,6 +11,16 @@ The dataset download belongs to the coordinator. Do not duplicate it.
 [Approval template](approval.template.json) cannot authorize data access.
 ECG provides timing. Separately recorded OPM data cannot serve as clean MCG truth.
 
+## Voltage-only route
+
+[Voltage protocol](voltage-protocol.md) now defines the prospective recorded-voltage study.
+[Neutral metadata](manifest.voltage.json) selects twelve raw recordings without participant names.
+Magnetic calibration is not required for this limited route.
+No pT, sensitivity, recovered-bandwidth, or absolute physiological-shape claim is permitted.
+The timestamp-only qualification requires its own root-approved gate.
+It has not run. It cannot authorize waveform-value access.
+The older v1 metadata template remains a deliberately failing magnetic-route example.
+
 ## Dependencies
 
 Metadata commands: Python 3.11+ standard library.

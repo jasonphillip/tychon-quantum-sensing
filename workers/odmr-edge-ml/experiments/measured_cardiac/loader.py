@@ -1,6 +1,7 @@
 """Bounded ZIP/text loader. Inventory never decompresses scientific arrays."""
 from __future__ import annotations
 import csv
+import hashlib
 import io
 import math
 import stat
@@ -28,7 +29,7 @@ def inventory(archive: Path) -> list[dict]:
                 raise ValueError("Links and encrypted members are unsupported.")
             if info.compress_size and info.file_size / info.compress_size > 1000:
                 raise ValueError("Unexpected archive compression ratio.")
-        return [{"member": x.filename, "bytes": x.file_size, "compressed_bytes": x.compress_size,
+        return [{"member_name_sha256": hashlib.sha256(x.filename.encode()).hexdigest(), "bytes": x.file_size, "compressed_bytes": x.compress_size,
                  "crc32": format(x.CRC, "08x"), "directory": x.is_dir()} for x in entries]
 
 def iter_rows(archive: Path, manifest_path: Path, recording_id: str, access: SignalAccess,
@@ -38,7 +39,7 @@ def iter_rows(archive: Path, manifest_path: Path, recording_id: str, access: Sig
     No resampling, interpolation, target fabrication, notebook execution, or full-array loading.
     The caller must save rejection counts and map magnetic units with the pinned calibration.
     """
-    if not isinstance(access, SignalAccess) or recording_id not in access.allowed_recordings:
+    if not isinstance(access, SignalAccess) or access.access_mode != "waveform_values" or recording_id not in access.allowed_recordings:
         raise PermissionError("Recording not authorized.")
     if sha256(manifest_path) != access.manifest_sha256:
         raise PermissionError("Manifest changed after authorization.")

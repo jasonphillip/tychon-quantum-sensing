@@ -1,7 +1,11 @@
 # Cardiac measured-data pilot protocol
 
 Prepared: 2026-10-15, EDT.
-Status: DRAFT_ROOT_REVIEW. Metadata incomplete. No signal access or numerical approval.
+Status: DRAFT_ROOT_REVIEW. No signal access or numerical approval.
+
+Voltage-only qualification is now defined in voltage-protocol.md.
+That prospective route supersedes calibration-dependent eligibility and split/window proposals below for recorded-voltage work.
+The absolute magnetic route remains blocked. Earlier proposals below remain historical, not active voltage-study instructions.
 Immutable dataset: Zenodo 20703822. Scope: retrospective software processing of public recordings.
 
 ## Question and truthful claim
