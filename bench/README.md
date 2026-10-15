@@ -6,10 +6,11 @@ benchmark. Later runs reuse the venv.
 Python 3.11 or newer and pip access to PyPI and the PyTorch CPU wheel index are required
 (the Makefile uses `python3.11` when present, otherwise `python3`; override with `BENCH_PY=`).
 CI runs it on Python 3.11; the reference values in `bench/expected.json` were measured with 3.13.11.
-Platform note: the pinned `qutip==5.2.3` and `simos==0.2.3` have binary wheels for Python 3.11 on x86-64 and
-aarch64; on other interpreter versions pip may build qutip from source and need the Python headers
-(`python3-dev`) and a C compiler. If `make bench` fails at that step, use `BENCH_PY=python3.11` or install the
-build dependencies. The committed reference and tolerances (`bench/README.md`, `bench/expected.json`) and the
+Platform note: `simos==0.2.3` is pure Python. The pinned `qutip==5.2.3` has binary wheels for Python 3.11 on
+Linux x86-64, macOS (x86-64 and arm64) and Windows, but not on Linux aarch64 (PyPI file list, checked 2026-10-15).
+There, and on other interpreter versions, pip builds qutip from source and needs the Python headers (`python3-dev`)
+and a C compiler. If `make bench` fails at that step, install those build dependencies, or on x86-64 use
+`BENCH_PY=python3.11`. The committed reference and tolerances (`bench/README.md`, `bench/expected.json`) and the
 CI run logs remain the record when a local run is not possible.
 
 ```sh
