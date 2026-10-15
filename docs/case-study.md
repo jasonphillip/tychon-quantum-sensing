@@ -2,7 +2,7 @@
 
 Between March and October 2026 I planned and built five connected repositories for AI-assisted control of NV-diamond quantum magnetometers: a physics simulator, an edge-ML training and export pipeline, a PID plus neural-network controller on production PolarFire SoC silicon (paced by software on the SoC's processor, with replayed ODMR input), a learned vector tracker (FP32 simulation only), and a workbench that checks written claims against evidence. Claude Code and Codex wrote the code from written specs and data contracts. I ran the planning, the cross-model reviews and the claim checks, and I reviewed what came back.
 
-The scope comes from a technical plan I wrote in August 2025 for an AFWERX SBIR Phase I proposal (FX255-PCS02-0044), which was not selected in May 2026; the work had no contract and no government funding. The government shutdown in autumn 2025 stalled the program and the decision slipped into 2026. Rather than wait for funding to hire the people on the proposal, I built it myself. I turned the plan into a 90-day build plan in March 2026 and kept building into October. Files that say Phase I, KPP (key performance parameter) or deliverable follow the plan and report I wrote for that proposal. The public history holds about 400 commits between 2026-03-26 and 2026-10-08, counting a week of first attempts in three repos I later archived.
+The scope comes from a technical plan I developed in July and August 2025 for an AFWERX SBIR Phase I proposal ([FX255-PCSO2-0044](proposal/README.md)), which was not selected in May 2026; the work had no contract and no government funding. The government shutdown in autumn 2025 stalled the program and the decision slipped into 2026. Rather than wait for funding to hire the people on the proposal, I built it myself. I turned the plan into a 90-day build plan in March 2026 and kept building into October. Files that say Phase I, KPP (key performance parameter) or deliverable follow the plan and report I wrote for that proposal. The public history holds about 400 commits between 2026-03-26 and 2026-10-08, counting a week of first attempts in three repos I later archived.
 
 Three decisions with their evidence and attribution: [engineering-decisions.md](engineering-decisions.md). Selected conversation evidence: [research and verification](../planning/excerpts/05-research-and-verification.md). Terms: [glossary](glossary.md). Back to the [project overview](../README.md).
 
@@ -92,8 +92,8 @@ The first three repositories below were the original workers, restarted in clean
 
 | Date | Event |
 |---|---|
-| 2025-08-04 | Research sections of the first technical plan drafted and condensed with Gemini |
-| 2025-08-05 | Proposal FX255-PCS02-0044 submitted to AFWERX SBIR Phase I topic AFX25S-PCS02 |
+| 2025-07-02 to 08-04 | Proposal origin, scope changes, and research condensed with Claude and Gemini; [eight drafting excerpts](../planning/excerpts/00-proposal-2025.md) |
+| 2025, exact submission date unverified | Proposal FX255-PCSO2-0044 submitted under topic AFX255-PCSO2; [archived technical volume and claim crosswalk](proposal/README.md) |
 | 2026-03-04 | Planning starts in a claude.ai project; execution playbook v4 is dated 2026-03-09, with a numbered decision log |
 | 2026-03-11 | Decision DLOG-017 sets the build order, simulator, then ML, then FPGA |
 | 2026-03-26 to 04-02 | First attempts in three repos (38 commits), later archived |
@@ -101,7 +101,7 @@ The first three repositories below were the original workers, restarted in clean
 | 2026-04-03 | Restart in `nv-sensor-sim`, `odmr-edge-ml` and `polarfire-hybrid-control` |
 | 2026-04-04 | Review findings turned into code changes in all three repos |
 | 2026-05-01 | Verification workbench started, with a full claim audit of my technical report the same day |
-| 2026-05-12 | Proposal not selected: no contract, no government funding; building continued |
+| 2026-05-12 | [Not-selected notice](proposal/not-selected-letter-2026-05-12-redacted.pdf): no contract, no government funding; building continued |
 | 2026-06 | Production PolarFire SoC silicon confirmed on the dev kit, then two-slot PID integration; demo dashboard built for a live demo |
 | 2026-06-29 | `odmr-vector-tracking` started |
 | 2026-07-01 to 07-02 | Per-claim inventory of every repo, plus watchdog trip time and a kit-resident paced loop measured on silicon |

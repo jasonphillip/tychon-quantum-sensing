@@ -1,5 +1,26 @@
 # Project conversation index
 
+## 2025 proposal-development records
+
+These eight source records support [excerpt 00](excerpts/00-proposal-2025.md).
+The model version is not recorded in either platform’s export. Dates come from the source records.
+Private recipients and source paths are omitted.
+
+| Date | Source | What it shows | Selected content |
+| --- | --- | --- | --- |
+| 2025-07-02 | Gemini Apps | Origin as a 20 K superconducting-qubit controller | Jason prompt and first model paragraph |
+| 2025-07-05 | Gemini Apps | Narrowing from quantum and RF to quantum payloads | Jason prompt and selected latency framing |
+| 2025-07-27 | Gemini Apps | Research pivot to a room-temperature FPGA | Jason prompt opening and revised research item 3 |
+| 2025-07-28 | Claude web, “Cryogenic AI Accelerator Proposal Refactoring” | Scope change from 77 K to room temperature | Jason turns 1 and 3, listed files, and selected power/performance reply lists |
+| 2025-08-01 | Gemini Apps | Request to find flaws and verify promised numbers | Jason prompt and opening model response |
+| 2025-08-02 | Gemini Apps | Difficulty of the complete quantum PNT system | Jason prompt and first two model paragraphs |
+| 2025-08-04 | Gemini Apps | Condense two Related Work research outputs | Jason prompt and part of the PI reply entry, with marked cuts |
+| 2025-08-04 | Email | Draft shared with a colleague before a stated deadline | Jason message; recipient omitted |
+
+The exact submission date remains unverified. [Proposal and decision documents](../docs/proposal/README.md) record the historical outcome.
+
+## 2026 build-project conversations
+
 The 86 conversations of the claude.ai project (membership as of 2026-07-23), sorted by creation date. Titles that named a person or business planning are rewritten to neutral descriptions. Transcripts are not published here.
 
 | # | Date | Title | Messages |

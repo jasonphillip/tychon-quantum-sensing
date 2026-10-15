@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "status": "redacted archival derivative; publication authorized by Jason on 2026-10-15",
+  "files": [
+    {
+      "source_sha256": "0feb30fb384b48d0f34c9b18a656000017677a4f82199754ca39f01b684c5f83",
+      "output": "technical-volume-2025-redacted.pdf",
+      "sha256": "ebb222b9123cc1701acb8ad2c927436d00dd02d0d449f28e5f37c725a5c52a53",
+      "pages": 16,
+      "bytes": 3555520
+    },
+    {
+      "source_sha256": "3b3ce2fbe2600998479c83d3d1becba9b3dcb9e7eac178912e8db1021632f1e5",
+      "output": "not-selected-letter-2026-05-12-redacted.pdf",
+      "sha256": "86e6c7b71429d3e2990bbfe023b47b83609d4bddec6097499e5c5fe3656fcaed",
+      "pages": 2,
+      "bytes": 1159600,
+      "method": "300 dpi original-page raster; sensitive pixels destroyed; OCR from redacted image; fresh PDF objects",
+      "ocr_note": "Searchable text is OCR-derived; visible page is the authoritative redacted image."
+    }
+  ],
+  "provenance": "Source hashes identify privately retained archived copies; not verified exact submission bytes.",
+  "redactions": "The cover sheet, budget, and separate certifications are excluded. Within the technical volume, the SBC ID, teammate names, personnel school names, institutional affiliations in the related-work group labels, private contact details, named customer references and discussions, prior customer-work table, commercial strategy and pricing, and certification bodies are omitted. The letter omits three officers’ names and the military email address.",
+  "export_scope": "Jason states all proposal information came from public sources and his position is that ITAR does not apply. This attribution is not an independent legal finding. The archived ITAR declaration remains within the omitted certification body."
+}

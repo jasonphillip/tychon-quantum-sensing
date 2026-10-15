@@ -15,7 +15,7 @@ Software toward AI-assisted control of an NV-diamond magnetometer, developed and
 - Compared with measured data: the simulator's line widths were fitted to four public ODMR datasets, in-sample ([validation](workers/nv-sensor-sim/docs/external_validation_results.md), [fit](workers/nv-sensor-sim/docs/simulator_fit_results.md)).
 - Not shown: a live diamond; a sensitivity figure (nT/√Hz); any estimator evaluated on measured spectra (three public measured sets were checked and none qualified for an independent field-accuracy test — [feasibility](workers/odmr-edge-ml/docs/measured_data_feasibility_2026-10.md)); a repaired scalar estimator that passes the registered improvement gate under both primary synthetic conditions; a reliable vector tracker of any kind on these synthetic sequences (the confirmed study verdict names the classical exact-inversion estimator as the reference, but it still loses 44–69 % of sequences; see the [protocol](workers/odmr-vector-tracking/docs/comparison_study_protocol_2026-10.md) and the [reviewer path](docs/start-here-reviewers.md)).
 
-I built this independently around an SBIR (Small Business Innovation Research) Phase I proposal that was not selected. It received no government funding.
+I built this independently around an [SBIR (Small Business Innovation Research) Phase I proposal that was not selected](docs/proposal/README.md). It received no government funding.
 
 ## Three workstreams, one coordinator
 
@@ -47,6 +47,7 @@ One coordination round: [an external review turned into per-repository prompts](
 | To | Open |
 |---|---|
 | Understand the project in five minutes | [Case study](docs/case-study.md) |
+| Compare the unfunded proposal with delivered work | [Proposal archive and claim crosswalk](docs/proposal/README.md), [2025 drafting excerpts](planning/excerpts/00-proposal-2025.md) |
 | Review the evidence in twenty minutes | [Reviewer path](docs/start-here-reviewers.md) |
 | Navigate as a visiting agent | [Repository map](AGENTS.md), [llms.txt](llms.txt) |
 | Generate synthetic spectra | [Synthetic-data walkthrough](docs/synthetic-data.md) |

@@ -8,6 +8,8 @@
 - [Reviewer guide](docs/start-here-reviewers.md): a 20-minute path through reproduction, results, and limitations.
 - [Repository map](AGENTS.md): component paths, available commands, and evidence boundaries.
 - [Case study](docs/case-study.md): results, limits, and project history.
+- [Unfunded proposal archive](docs/proposal/README.md): redacted historical documents, non-selection, and proposed-versus-delivered crosswalk.
+- [2025 proposal excerpts](planning/excerpts/00-proposal-2025.md): eight drafting selections with explicit attribution and limits.
 - [Engineering decisions](docs/engineering-decisions.md): a withdrawn comparison, watchdog correction, and loss ablation.
 
 ## Reproduction and evidence
