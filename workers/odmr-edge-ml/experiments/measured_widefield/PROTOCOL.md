@@ -183,6 +183,10 @@ No hardware, Beelink, paid compute, downloaded-code execution, or production-che
 Publish source, the exact source/data manifests, partitions, patch coordinates, observed/reference spectra,
 all predictions, failure flags, recorded timings, bootstrap indices, and decisions.
 A fresh public checkout must recompute the reported metrics from saved arrays without model inference.
-An independent verifier and final-public-checkout command are required before publication.
-They are not yet implemented or executed in this preparation commit.
+A NumPy-only public checker is provided in `verify_saved.py`, with an independently pinned artifact inventory.
+Publish the consumed bootstrap seed and committed bootstrap indices so every reported metric can be recomputed.
+The checker validates all artifact hashes and compares every metric, including Boolean gates.
+It requires no model inference, private approval, original FITS file, or private environment.
+The coordinator must still independently review formulas and run it on the final public checkout.
+The checker and its manufactured fixtures are authored but have not run.
 If every method fails, a reproducible limitation report is a valid result.

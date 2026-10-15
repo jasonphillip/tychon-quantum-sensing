@@ -88,3 +88,26 @@ Authored tests cover header metadata, spatial guards, repeat 0-only selection, a
 metric corruption, shape flattening, the finite classical grid, protocol mismatch, supervisor spoofing, and Torch/NumPy parity.
 None have run.
 The parity fixture performs inference only; actual candidate training remains CUDA-only.
+
+## Public saved-output verification
+
+The public checker needs NumPy and the standard library. It performs no model inference.
+It does not require private approvals, accounting environment variables, or original FITS files.
+Run it from a fresh checkout using the published verification manifest hash:
+
+```bash
+"$PYTHON" "$SOURCE/experiments/measured_widefield/verify_saved.py" --targets "$OUT/development-targets" --predictions "$OUT/classical-development" --model "$OUT/classical-model" --metrics "$OUT/classical-development-score/metrics.json" --bootstrap "$OUT/classical-development-score/bootstrap.npz" --manifest "$OUT/verification-manifest.json" --expected-manifest-sha256 "$VERIFICATION_MANIFEST_SHA256" --out "$VERIFY_OUTPUT"
+```
+
+For a candidate comparison, append all three candidate prediction directories to `--predictions`, preserving report order.
+For final verification, supply the final reference and winning-candidate bundles instead.
+The verification manifest binds every bundle manifest, array, report, bootstrap file, and verifier source file.
+Its `bootstrap_seed` publishes only the consumed bootstrap seed.
+The checker regenerates and matches all committed resampling indices.
+It checks complete row groups, observation identity, registered methods, failure flags, and the training-only shape mask.
+Every reported numeric and Boolean metric is recomputed; integers and Booleans must match exactly.
+Floating metrics allow relative tolerance 1e-12 and absolute tolerance 1e-15 for platform rounding.
+An incorrect report still fails when its artifact hash inventory is refreshed.
+The publication owner can construct the inventory with `verify_saved.publication_manifest` using explicit artifact paths and the consumed seed.
+Publish its resulting SHA256 independently beside the command; this pin is required by the checker.
+No measured verification output exists yet. The manufactured round-trip and tamper fixtures are authored but unrun.
