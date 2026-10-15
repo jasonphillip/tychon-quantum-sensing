@@ -1,0 +1,125 @@
+{
+  "study": "scalar-information-limit-2026-10-15",
+  "stage": "information_only",
+  "registered_at": "2026-10-15T18:12:50.902091+00:00",
+  "scope": "Deterministic local information diagnostics and analytic prior reference; no holdout, no inference on consumed spectra, no training.",
+  "source_base": "0e97111ccb62f42d48aea53eb03bc467f9a7ede4",
+  "electron_gamma_rad_per_s_T": -176085963023.0,
+  "nv_gamma_multiplier": 1.000357,
+  "D_Hz": 2871000000,
+  "temperature_slope_Hz_per_K": -74200,
+  "frequency_Hz": {
+    "start": 2820000000,
+    "stop": 2920000000,
+    "count": 100
+  },
+  "grid": {
+    "field_uT": [
+      20,
+      45,
+      70
+    ],
+    "cos_theta": [
+      0,
+      0.5,
+      1
+    ],
+    "azimuth_rad": [
+      0,
+      0.7853981633974483
+    ],
+    "bias_uT": [
+      0,
+      250,
+      500,
+      1000
+    ],
+    "linewidth_FWHM_MHz": [
+      1.5,
+      5,
+      7
+    ],
+    "reference_SNR": [
+      3,
+      10
+    ]
+  },
+  "fixed": {
+    "temperature_K": 293.15,
+    "contrast": 0.015,
+    "mw_scale": 1.0,
+    "mw_gradient": 0.196875,
+    "spatial_bins": 10,
+    "background_slope": 0.02,
+    "frequency_offset_MHz": 0.3
+  },
+  "likelihood": "independent Gaussian with mean mu and variance mu/P, P=(reference_SNR/(0.30*contrast))**2",
+  "normalization_cases": [
+    "historical per-spectrum sampled-depth normalization",
+    "one global factor fixed by nominal known-axis B=45 uT bias=1000 uT reference; reused for every bias and field"
+  ],
+  "nuisance_ladders": [
+    "all fixed",
+    "unknown center",
+    "unknown center,width,contrast,slope",
+    "unknown direction plus center,width,contrast,slope"
+  ],
+  "direction_rule": "For known-axis diagnostic use cos_theta=1 and explicitly label a changed estimand. For general direction use theta,phi; flag coordinate singularities and use Cartesian cross-checks. Do not treat center and temperature as independent identifiable parameters.",
+  "jacobian_steps": {
+    "relative": [
+      0.0001,
+      3e-05,
+      1e-05
+    ],
+    "requirements": "scaled coordinates; central finite differences; stable convergence within 2% for nonzero derivatives; reference analytic Lorentzian within 1e-5 relative or justified absolute floor"
+  },
+  "rank_rule": "Use scaled Jacobian SVD. Report singular values and cutoff sensitivity (1e-8,1e-10,1e-12 relative). Any target component in a null direction gives unbounded, never a favorable pseudoinverse number.",
+  "metrics": [
+    "local target standard-deviation bound in uT",
+    "known-nuisance versus nuisance-adjusted bound",
+    "rank and conditioning",
+    "derivative flags",
+    "analytic projection-only Bayes MAE and prior constant MAE/RMSE"
+  ],
+  "analytic_prior": {
+    "magnitude_uniform_uT": [
+      20,
+      70
+    ],
+    "cos_theta_uniform": [
+      -1,
+      1
+    ],
+    "perfect_projection_only_median": "sqrt(70*max(20,q))",
+    "warning": "Projection-only oracle is not an absolute bound for the full Hamiltonian."
+  },
+  "parity": "Manufactured spectra only, unchanged pinned nv-sensor-sim source and installed SimOS. Pin hashes and actual versions. Compare forward predictions to 1e-8 absolute where deterministic; flag branch/normalization/interpolation kinks.",
+  "gate": "No claim of all-estimator impossibility from CRLB. Continue to fresh bias test only after stable source parity/derivatives and an interpretable improvement at equal bin/photon and common-amplitude budgets. Root records decision before Stage 2.",
+  "limits": {
+    "stage_cpu_seconds": 900,
+    "stage_cumulative_wall_seconds": 900,
+    "study_cpu_seconds": 5400,
+    "study_cumulative_wall_seconds": 3600,
+    "shared_cpu_seconds": 14400,
+    "shared_cumulative_wall_seconds": 7200,
+    "workers": 4,
+    "memory_GiB": 8
+  },
+  "stopping_rules": [
+    "No retired spectra or seeds; no old final generation.",
+    "One registered grid only. No numerical retries except one changed approach for a diagnosed implementation fault, within caps.",
+    "Stop at derivative/parity failure, cap, lock conflict or uninterpretable rank. Save failure evidence.",
+    "No Stage 2 generation before separate frozen protocol and custody approval by root."
+  ],
+  "global_amplitude_reference": {
+    "field_uT": 45,
+    "bias_uT": 1000,
+    "theta": 0,
+    "phi": 0,
+    "linewidth_FWHM_MHz": 5,
+    "temperature_K": 293.15,
+    "mw_scale": 1,
+    "gradient": 0.196875,
+    "before_interpolation": true
+  }
+}

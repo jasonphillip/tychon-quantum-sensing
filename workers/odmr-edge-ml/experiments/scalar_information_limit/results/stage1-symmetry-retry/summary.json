@@ -1,0 +1,54 @@
+{
+  "status": "complete",
+  "registration_sha256": "e2951316d1ec456f141c4ae0ea7cd041690d394cea48a4981f6c265d654c227d",
+  "binding": {
+    "preflight_sha256": "a470bc1b8063daf69018f880424104fa7f60a75604956226104ee5e6a32f8e53",
+    "clarification_sha256": "481d69bf6f65e8674cc331e813291940473720e1056f9886f502fe0478912219",
+    "forward_sha256": "04a88c370ec9aa867e2579ad6ed849a18fdd8b865c052eef41f12c287a9ba219",
+    "original_information_sha256": "ffb8d91de9745e52a933d620b936662e4487ae1052cd61617d37046ecb4217d1",
+    "original_status": "fail: branch classification; passing checks retained"
+  },
+  "remaining_checks_sha256": "cff5b16290671890b465948f4957ea06218771ce7b7e4657da17ca83ad3f009f",
+  "implementation_sha256": {
+    "run_stage1.py": "272f978d56d86de474845f93c47fb4308a140b451739ab6c3b4e5a79d284893d",
+    "remaining_checks.py": "d82b495d9b3984425dc5a14588e571dfdf53fc34cc6a9d3ff93b17bff15c7240",
+    "symmetry_checks.py": "2df897ec4e2c75e97ab898a800a85b3db8357a6ed937763add8c648e868d4fd8",
+    "check_saved.py": "81157c2da16f9ed758cfcd968df223af91b73efc93b6232e4e96e424975fccfb",
+    "validate_stage1.py": "14663bcb6ea4d052af1c6f3cc6f3300ef22cffbb7e65cbb655f8d3d6cc420164",
+    "information.py": "0e05b18e5e756ba0e449aec20ae120edebc321f26c96d7f2ceb37aaeec99d97a",
+    "configuration.py": "ddee909189a8f85dacf27fc8eea0280e91df5f41c04daa868dc56080f2b2485f",
+    "forward.py": "04a88c370ec9aa867e2579ad6ed849a18fdd8b865c052eef41f12c287a9ba219",
+    "stage_guard.py": "fa63e8e82319fea7986dba486bd86feaf6822533dc769a0512634edd8aeb25d5"
+  },
+  "global_amplitude_factor": 0.9957299574916568,
+  "global_amplitude_reference": {
+    "field_uT": 45,
+    "bias_uT": 1000,
+    "theta": 0,
+    "phi": 0,
+    "linewidth_FWHM_MHz": 5,
+    "temperature_K": 293.15,
+    "mw_scale": 1,
+    "gradient": 0.196875,
+    "before_interpolation": true
+  },
+  "analytic_prior": {
+    "projection_only_bayes_MAE_uT": 10.355580301936156,
+    "quadrature_MAE_uT": 10.355580301936154,
+    "constant_MAE_uT": 12.5,
+    "constant_RMSE_uT": 14.433756729740645,
+    "warning": "Reduced projection model only; not a full-physics lower bound."
+  },
+  "rows": 12960,
+  "points": 432,
+  "warning": "Local variance diagnostics, not a lower bound for all estimators under MAE.",
+  "symmetry_checks_sha256": "cc6577970e58536fed82c144aacc65adb70fc0f4143180371bdc4fb7faeb2e7e",
+  "symmetry_correction_sha256": "a24fd4af564245efc45080ba0f7d13980e48f1ae5c5114645239d6a1bc0a18a6",
+  "unidentifiable_rows": 64,
+  "unavailable_rows": 1080,
+  "rank_cutoffs": [
+    1e-08,
+    1e-10,
+    1e-12
+  ]
+}
