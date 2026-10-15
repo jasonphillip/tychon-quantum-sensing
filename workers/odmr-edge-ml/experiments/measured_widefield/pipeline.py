@@ -80,10 +80,11 @@ def extract_inputs(args, approval):
 
 def extract_targets(args, approval):
     import numpy as np
-    from .io import image_map, normalize, patch_spectrum
+    from .io import image_map, normalize, patch_spectrum, validate_rows
     record, source = arrays(args.inputs, approval)
     if record["kind"] != "inputs" or record["split"] != args.split:
         raise ValueError("Input split mismatch")
+    validate_rows(source["row_key"], args.split)
     if args.split == "final":
         if not args.predictions or sha(Path(args.predictions) / "manifest.json") != approval["prediction_manifest_sha256"]:
             raise ValueError("Final prediction commitment required before reading final references")
@@ -119,6 +120,10 @@ def train_models(args, approval):
     import numpy as np
     first, inputs = arrays(args.inputs, approval)
     second, targets = arrays(args.targets, approval)
+    from .io import validate_rows
+    validate_rows(inputs["row_key"], "train")
+    if first["kind"] != "inputs" or second["kind"] != "targets" or second["inputs_manifest_sha256"] != sha(Path(args.inputs) / "manifest.json"):
+        raise ValueError("Training source manifest mismatch")
     if first["split"] != "train" or second["split"] != "train" or not np.array_equal(inputs["row_key"], targets["row_key"]):
         raise ValueError("Training rows must match and remain in train groups")
     if args.action == "fit-classical":
@@ -127,13 +132,17 @@ def train_models(args, approval):
         metadata = {"kind": "classical_model", "training_only": True}
     else:
         from .candidate import train
-        if approval.get("classical_development_gate_pass") is not True:
-            raise ValueError("Classical qualification must precede learned training")
+        if approval.get("baseline_execution_valid") is not True:
+            raise ValueError("Valid complete baseline execution must precede learned training")
         seed = approval["training_seed"]
         if type(seed) is not int or not (0 <= seed < 2 ** 63):
             raise ValueError("Audited Torch-compatible seed required")
-        fitted, losses = train(inputs["inputs"], targets["targets"][:, 0], seed)
-        metadata = {"kind": "candidate_model", "epochs": 20, "parameters": 6616, "seed": seed, "training_losses": losses}
+        width = approval["candidate_width"]
+        if type(width) is not int or width not in (16, 32, 64):
+            raise ValueError("Registered candidate width required")
+        fitted, losses = train(inputs["inputs"], targets["targets"][:, 0], seed, width)
+        metadata = {"kind": "candidate_model", "epochs": 100, "width": width, "parameters": 401 * width + 200,
+                    "seed": seed, "training_losses": losses}
     metadata.update(inputs_manifest_sha256=sha(Path(args.inputs) / "manifest.json"),
                     targets_manifest_sha256=sha(Path(args.targets) / "manifest.json"))
     write_arrays(args.out, fitted, metadata)
@@ -149,17 +158,22 @@ def predict(args, approval):
     if list(methods) != approval["methods"] or len(set(methods)) != len(methods):
         raise ValueError("Prediction methods must match frozen approval")
     model, weights = {}, {}
-    if any(method in ("ridge", "pca_wiener") for method in methods):
+    from .io import validate_rows
+    validate_rows(data["row_key"], args.split)
+    if any(method == "training_mean" or method.startswith(("ridge_", "pca_wiener_")) for method in methods):
         model_record, model = arrays(args.model, approval)
         if model_record["kind"] != "classical_model":
             raise ValueError("Wrong classical model")
-    if "candidate" in methods:
+    candidate_methods = [method for method in methods if method.startswith("candidate_")]
+    if candidate_methods:
+        if len(candidate_methods) != 1 or candidate_methods[0] not in ("candidate_16", "candidate_32", "candidate_64"):
+            raise ValueError("One registered candidate per prediction job")
         candidate_record, weights = arrays(args.weights, approval)
-        if candidate_record["kind"] != "candidate_model":
+        if candidate_record["kind"] != "candidate_model" or candidate_methods[0] != "candidate_" + str(candidate_record["width"]):
             raise ValueError("Wrong candidate model")
     values = {"row_key": data["row_key"]}
     for method in methods:
-        if method == "candidate":
+        if method in candidate_methods:
             from .candidate import predict as candidate_predict
             prediction, failed, seconds = candidate_predict(data["inputs"], weights)
             reliable = np.zeros(len(failed), dtype=bool)
@@ -180,22 +194,34 @@ def score(args, approval):
     record, target = arrays(args.targets, approval)
     if record["split"] != args.split or record["kind"] != "targets":
         raise ValueError("Target split mismatch")
+    from .io import validate_rows
+    validate_rows(target["row_key"], args.split)
+    model_record, model = arrays(args.model, approval)
+    if model_record["kind"] != "classical_model" or model_record.get("training_only") is not True:
+        raise ValueError("Training-defined shape mask requires the frozen classical model")
     if args.split == "final" and not approval.get("reference_method"):
         raise ValueError("Final scoring requires the development-frozen classical reference")
+    if args.split == "final" and approval.get("candidate_method") not in ("candidate_16", "candidate_32", "candidate_64"):
+        raise ValueError("Final scoring requires the development-frozen candidate")
     combined, manifests = {}, []
     for directory in args.prediction_bundles:
         prediction_record, saved = arrays(directory, approval)
         if prediction_record["kind"] != "predictions" or prediction_record["split"] != args.split:
             raise ValueError("Prediction split mismatch")
+        if prediction_record["inputs_manifest_sha256"] != record["inputs_manifest_sha256"]:
+            raise ValueError("Prediction/reference observation manifest mismatch")
         if not np.array_equal(saved.pop("row_key"), target["row_key"]):
             raise ValueError("Prediction/reference row mismatch")
         if set(combined) & set(saved):
             raise ValueError("Duplicate method predictions; preserve original runs")
         combined.update(saved); manifests.append(sha(Path(directory) / "manifest.json"))
     result, bootstrap = compare(target["targets"], target["row_key"], combined,
-                 approval["bootstrap_seed"], approval.get("reference_method"))
+                 approval["bootstrap_seed"], approval.get("reference_method"), model["shape_edges"],
+                 approval.get("candidate_method") if args.split == "final" else None)
     result.update(split=args.split, target_manifest_sha256=sha(Path(args.targets) / "manifest.json"),
                   prediction_manifest_sha256=manifests,
+                  classical_model_manifest_sha256=sha(Path(args.model) / "manifest.json"),
+                  shape_edges=model["shape_edges"].tolist(),
                   approval_sha256=os.environ["TYCHON_NUMERICAL_APPROVAL_SHA256"],
                   accounting_run_id=os.environ["TYCHON_NUMERICAL_RUN_ID"])
     output = output_directory(args.out)

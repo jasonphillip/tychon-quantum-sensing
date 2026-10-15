@@ -1,22 +1,27 @@
-"""One fixed residual MLP. Training requires CUDA; no architecture search."""
+"""Three prospectively fixed residual widths. CUDA training only; no added search."""
 import numpy as np
 
 
-def network():
+def network(width=16):
     import torch
-    return torch.nn.Sequential(torch.nn.Linear(200, 16), torch.nn.ReLU(), torch.nn.Linear(16, 200))
+    if width not in (16, 32, 64):
+        raise ValueError("Unregistered residual width")
+    return torch.nn.Sequential(torch.nn.Linear(200, width), torch.nn.ReLU(), torch.nn.Linear(width, 200))
 
 
-def train(inputs, targets, seed):
+def train(inputs, targets, seed, width):
+    import os
+    if os.environ.get("CUBLAS_WORKSPACE_CONFIG") != ":4096:8":
+        raise RuntimeError("Accounting must set CUBLAS_WORKSPACE_CONFIG=:4096:8 before Torch import")
     import torch
     if not torch.cuda.is_available():
-        raise RuntimeError("6616-parameter training requires CUDA; no CPU fallback")
+        raise RuntimeError("Candidate training requires CUDA; no CPU fallback")
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
     torch.use_deterministic_algorithms(True)
     torch.set_num_threads(1)
-    model = network().cuda()
-    assert sum(p.numel() for p in model.parameters()) == 6616
+    model = network(width).cuda()
+    assert sum(p.numel() for p in model.parameters()) == 401 * width + 200
     torch.nn.init.zeros_(model[-1].weight)
     torch.nn.init.zeros_(model[-1].bias)
     x = torch.as_tensor(inputs - 1, dtype=torch.float32, device="cuda")
@@ -24,7 +29,7 @@ def train(inputs, targets, seed):
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
     generator = torch.Generator(device="cuda").manual_seed(seed)
     losses = []
-    for _ in range(20):
+    for _ in range(100):
         order = torch.randperm(len(x), generator=generator, device="cuda")
         total = 0.0
         for batch in order.split(64):

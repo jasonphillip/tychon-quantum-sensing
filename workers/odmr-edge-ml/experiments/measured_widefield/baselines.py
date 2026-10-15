@@ -4,7 +4,9 @@ import numpy as np
 from scipy.optimize import least_squares
 from scipy.signal import find_peaks, savgol_filter
 
-METHODS = ("raw", "savgol", "ridge", "pca_wiener", "robust_lorentzian")
+METHODS = ("raw", "training_mean", "savgol_5", "savgol_11", "savgol_21",
+           "ridge_0.001", "ridge_0.01", "ridge_0.1",
+           "pca_wiener_4", "pca_wiener_8", "pca_wiener_16", "robust_lorentzian")
 
 
 def curve_jacobian(parameters, frequency):
@@ -82,15 +84,23 @@ def fit_linear_models(inputs, targets, target_repeat_difference):
     mean_x, mean_y = inputs.mean(axis=0), targets.mean(axis=0)
     x, y = inputs - mean_x, targets - mean_y
     covariance = x.T @ x
-    ridge = max(0.01 * float(np.trace(covariance)) / inputs.shape[1], 1e-8)
-    matrix = np.linalg.solve(covariance + ridge * np.eye(inputs.shape[1]), x.T @ y)
     _, singular, vectors = np.linalg.svd(y, full_matrices=False)
-    components = vectors[:8]
-    variance = singular[:8] ** 2 / max(len(y) - 1, 1)
-    noise = np.mean((target_repeat_difference @ components.T) ** 2, axis=0) / 2
-    shrinkage = np.maximum(variance - noise / 2, 0) / np.maximum(variance + noise / 2, 1e-12)
-    return {"mean_x": mean_x, "mean_y": mean_y, "ridge": matrix,
-            "components": components, "shrinkage": shrinkage}
+    result = {"mean_x": mean_x, "mean_y": mean_y}
+    for multiplier in (0.001, 0.01, 0.1):
+        ridge = max(multiplier * float(np.trace(covariance)) / inputs.shape[1], 1e-8)
+        result["ridge_" + str(multiplier)] = np.linalg.solve(
+            covariance + ridge * np.eye(inputs.shape[1]), x.T @ y)
+    for rank in (4, 8, 16):
+        components = vectors[:rank]
+        variance = singular[:rank] ** 2 / max(len(y) - 1, 1)
+        noise = np.mean((target_repeat_difference @ components.T) ** 2, axis=0) / 2
+        result["components_" + str(rank)] = components
+        result["shrinkage_" + str(rank)] = np.maximum(variance - noise / 2, 0) / np.maximum(variance + noise / 2, 1e-12)
+    # A fixed training-only shape diagnostic; not a mask of independently labelled resonances.
+    edge_energy = np.mean(np.diff(targets, axis=1) ** 2, axis=0)
+    result["shape_edges"] = np.sort(np.lexsort((np.arange(199), -edge_energy))[:50])
+    result["shape_edge_training_energy"] = edge_energy
+    return result
 
 
 def predict(method, inputs, frequency, model):
@@ -100,12 +110,16 @@ def predict(method, inputs, frequency, model):
         failed, reliable = False, False
         if method == "raw":
             prediction = values.copy()
-        elif method == "savgol":
-            prediction = savgol_filter(values, 11, 3)
-        elif method == "ridge":
-            prediction = model["mean_y"] + (values - model["mean_x"]) @ model["ridge"]
-        elif method == "pca_wiener":
-            prediction = model["mean_y"] + (((values - model["mean_y"]) @ model["components"].T) * model["shrinkage"]) @ model["components"]
+        elif method == "training_mean":
+            prediction = model["mean_y"].copy()
+        elif method in ("savgol_5", "savgol_11", "savgol_21"):
+            prediction = savgol_filter(values, int(method.rsplit("_", 1)[1]), 3)
+        elif method in ("ridge_0.001", "ridge_0.01", "ridge_0.1"):
+            prediction = model["mean_y"] + (values - model["mean_x"]) @ model[method]
+        elif method in ("pca_wiener_4", "pca_wiener_8", "pca_wiener_16"):
+            rank = method.rsplit("_", 1)[1]
+            components = model["components_" + rank]
+            prediction = model["mean_y"] + (((values - model["mean_y"]) @ components.T) * model["shrinkage_" + rank]) @ components
         elif method == "robust_lorentzian":
             prediction, failed, reliable, _ = robust_fit(values, frequency)
         else:

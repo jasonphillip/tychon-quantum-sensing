@@ -73,6 +73,26 @@ def image_map(path, metadata):
     return np.memmap(path, mode="r", dtype=">i2", offset=metadata["offset"], shape=tuple(metadata["shape"]))
 
 
+def validate_rows(rows, split):
+    """Reject partial groups, duplicates, bad indices, or cross-partition patches."""
+    import numpy as np
+    expected = {group: (y, x) for group, y, x in blocks(split)}
+    if rows.dtype.kind not in "iu" or rows.shape != (len(expected) * 3 * 8, 5):
+        raise ValueError("Incomplete or invalid partition row keys")
+    expected_keys = [(f, g, p) for f in range(3) for g in expected for p in range(8)]
+    if list(map(tuple, rows[:, :3])) != expected_keys:
+        raise ValueError("Unexpected partition row order or duplicate rows")
+    for file_index in range(3):
+        for group, (y, x) in expected.items():
+            coordinates = rows[(rows[:, 0] == file_index) & (rows[:, 1] == group), 3:]
+            relative = coordinates - [y + 8, x + 8]
+            if np.any(relative < 0) or np.any(relative > 44) or np.any(relative % 4):
+                raise ValueError("Patch outside registered guarded grid")
+            distance = np.max(np.abs(coordinates[:, None] - coordinates[None, :]), axis=2)
+            if np.any(distance[np.triu_indices(8, 1)] < 8):
+                raise ValueError("Patch separation differs from registered selection")
+
+
 def patch_spectrum(image, repeat, y, x):
     import numpy as np
     if repeat not in range(5) or not (0 <= y <= 1020 and 0 <= x <= 1276):
