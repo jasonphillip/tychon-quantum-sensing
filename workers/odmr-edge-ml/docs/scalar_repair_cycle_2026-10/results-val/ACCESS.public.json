@@ -1,0 +1,49 @@
+{
+  "partition": "val",
+  "freeze_sha256": "2abda4c9f48850236ef46ba39b1b0dfa94621151fc2759e90fb6ab1d237dbeac",
+  "custody_release_sha256": "2160e48c92a64ad71f72e02eb068c8fb5b7948748926696a7be3cba7cef1b236",
+  "started_utc": "2026-10-15T15:35:59.599365+00:00",
+  "manifest_sha256": "3014d4978916e05b65a9d672a37789895eefd94bf3e0e666f845c22bfa7915c2",
+  "model_records": [
+    {
+      "name": "C_direct_seed42",
+      "arm": "C_direct",
+      "seed": 42,
+      "checkpoint": "private-path/74109ecdba96201c/best_clean.pt",
+      "checkpoint_sha256": "21f10cd359cf301086cf4eff09d45a5811e4e79f7eacd2c7b2b40ac221582a13",
+      "export": "private-path/c30cf02614f9f751/C_direct_seed42.tflite",
+      "export_sha256": "c28c1f71ba5250cff70320934d9678bdeb4783332533e04f81e24a03996c2aae"
+    },
+    {
+      "name": "C_direct_seed20261014",
+      "arm": "C_direct",
+      "seed": 20261014,
+      "checkpoint": "private-path/236e8654d935f105/best_clean.pt",
+      "checkpoint_sha256": "7de4e62a957838057fbe2c7f22f43a75ee77fb1c05887d499e77a9ffd118676e",
+      "export": "private-path/435b53a1d8bddd1d/C_direct_seed20261014.tflite",
+      "export_sha256": "f94bab2465e433f013a645ac01519dfe9ad282d40e3249e75698e9be35af8858"
+    },
+    {
+      "name": "C_direct_seed20261015",
+      "arm": "C_direct",
+      "seed": 20261015,
+      "checkpoint": "private-path/719b5ccfbff9cd66/best_clean.pt",
+      "checkpoint_sha256": "635ef8cb6b0341b0e55c90bbe523186289e7eceede4d0a8ee6c2fbf2ff3cba16",
+      "export": "private-path/28cb2cb222a59f23/C_direct_seed20261015.tflite",
+      "export_sha256": "89041957bc7b2ddad3f04187a0bd1db9d2dd141a89cc1d2f349e5d93929a61b1"
+    }
+  ],
+  "scope": "synthetic scalar evaluation",
+  "warmup_manifest_sha256": "63ef0c87e56294d657d5550fe71b7cd97e03c771f8de6c43cc30e58b4d61d2e1",
+  "sources": {
+    "estimators.py": "5e8fe14620b276b1560c2f6e268a610e048c2c052bd10b96f335ef9607e8bbbf",
+    "gates.py": "86bc4bba7f65a1df4ab29b355f543d7c4db7fc1185830e61229ab08af6b00238",
+    "run_development.py": "da1bbc55c36c76f8fa9ed619dfe4ab62efead2eb823ba150e8f3f54108a4e4ab",
+    "job_receipt.py": "3ff91bac833ea138fc74e30fb345bc2dd927badcec55c8947cca47857c867579",
+    "models.py": "23ae762f6426757a7b460a600bdc53514f608f895bfebdd3cd7370e5c387b3f6",
+    "__init__.py": "38dfa371631f9bd0a4d2e35011f90dcb8c06e22cca6ebaa55cf6c78e76c242c6",
+    "profile_runtime.py": "ba71d46649731f206e00fc1879241aa413423e5e2a94d8d8adff4fd96f51c68d",
+    "decisions.py": "8d109abf5005ab506aa4fe5684a16b924288e9f8d56018ab2fea417cd88b4f3f",
+    "timing.py": "021e10dc3ce6e93142003754e2b405f03f6fac538cb14a2f9a2a16c577226658"
+  }
+}

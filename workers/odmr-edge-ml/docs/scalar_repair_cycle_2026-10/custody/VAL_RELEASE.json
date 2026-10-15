@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "partition": "val",
+  "approved": true,
+  "data_manifest_sha256": "3014d4978916e05b65a9d672a37789895eefd94bf3e0e666f845c22bfa7915c2",
+  "freeze_receipt_sha256": "2abda4c9f48850236ef46ba39b1b0dfa94621151fc2759e90fb6ab1d237dbeac",
+  "gate_document_sha256": "5dded7c18385cbdc137434c873c6f7faab195081497897226e3c0ca8d26ed6c9",
+  "exclusive_access_receipt_sha256": "0918c787b4938f5c4ca6146448af60e00cf61b28ea176f275c129943d9a54945",
+  "paths": {
+    "data_root": "../../../wt/odmr-edge-ml-s4-scalar-data/.scratch/scalar_repair_2026-10",
+    "gate_document": "FREEZE1.md",
+    "freeze_receipt": "../freeze1.json",
+    "access_receipt": "VAL_ACCESS_RECEIPT.json"
+  }
+}
