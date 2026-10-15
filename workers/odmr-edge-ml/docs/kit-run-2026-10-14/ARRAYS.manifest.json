@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "samples": 512,
+  "provenance": "original output of the 2026-10-14 13:13 EDT evaluation run of experiments/deployed_model_on_kit.py; published unchanged 2026-10-15; not regenerated",
+  "arrays": {
+    "labels.npz": {
+      "sha256": "544194b51d1e1875935f079f8ec280e10fe5e715a192b2cd1d903b6bb062d765",
+      "size_bytes": 13060,
+      "keys": {
+        "delta_b_uT": {
+          "dtype": "float64",
+          "shape": [
+            512
+          ]
+        },
+        "b_pid_uT": {
+          "dtype": "float64",
+          "shape": [
+            512
+          ]
+        },
+        "b_true_uT": {
+          "dtype": "float64",
+          "shape": [
+            512
+          ]
+        }
+      }
+    },
+    "float_pred.npz": {
+      "sha256": "caf42b8191d17e77568eef3ee1547ef5ed49220fd9ab37a32895aa8905090584",
+      "size_bytes": 2322,
+      "keys": {
+        "delta_b_uT": {
+          "dtype": "float32",
+          "shape": [
+            512
+          ]
+        }
+      }
+    },
+    "tflite_pred.npz": {
+      "sha256": "522d1bd81146a61d8022dd343769723ffa033cdd6c942a6c57cdbb7dff21965b",
+      "size_bytes": 5130,
+      "keys": {
+        "delta_b_uT": {
+          "dtype": "float64",
+          "shape": [
+            512
+          ]
+        },
+        "raw_int8": {
+          "dtype": "int8",
+          "shape": [
+            512
+          ]
+        }
+      }
+    }
+  },
+  "reference_files": {
+    "input.manifest.json": "5ca766fa077ffa434b97e745d7fe8b1dde49a5c5cc426f37b7d7de735e547491",
+    "results.json": "81a4ff049bc6fc3d7bb112d99c4936023ac1880ba693034b4df4f9e7d9d7857e",
+    "kit_constant_baselines_2026-10.json": "cd00042080598a24744d058f0b73afdb5d4050ec249ba916f195ff59680a90ac"
+  },
+  "external_kit_evidence": {
+    "repo": "https://github.com/jasonphillip/polarfire-agent-skills.git",
+    "revision": "53acad6aff3424e36662972348ef535392f4859b",
+    "files": {
+      "hw.bin": {
+        "path": "evidence/2026-10-14-deployed-fcnn/hw.bin",
+        "sha256": "080474358d3a1efeacc89cc946821e7e8446db266f84fa433cdbc0598748ec90",
+        "size_bytes": 512
+      },
+      "hw.json": {
+        "path": "evidence/2026-10-14-deployed-fcnn/hw.json",
+        "sha256": "72468c1dd6207f7f9060f926c908cb52adca153610eac92ee3128afd21c3be8f",
+        "size_bytes": 10770
+      },
+      "sim.npz": {
+        "path": "evidence/2026-10-14-deployed-fcnn/sim.npz",
+        "sha256": "efa2c2a25d90f7991a3c7c578c67f654dd8eb416adaba3efb77212629cdb4124",
+        "size_bytes": 1483,
+        "keys": {
+          "outputs": {
+            "dtype": "int8",
+            "shape": [
+              512,
+              1
+            ]
+          },
+          "input_scale": {
+            "dtype": "float64",
+            "shape": [
+              1
+            ]
+          },
+          "input_zero_point": {
+            "dtype": "int64",
+            "shape": [
+              1
+            ]
+          },
+          "output_scale": {
+            "dtype": "float64",
+            "shape": [
+              1
+            ]
+          },
+          "output_zero_point": {
+            "dtype": "int64",
+            "shape": [
+              1
+            ]
+          }
+        }
+      },
+      "sim.json": {
+        "path": "evidence/2026-10-14-deployed-fcnn/sim.json",
+        "sha256": "9abdcfcac5ae29cc147c18cdf17d000d2a4f86837add4e207bdef97765b88e22",
+        "size_bytes": 4156
+      },
+      "input.int8.npy": {
+        "path": "evidence/2026-10-14-deployed-fcnn/input.int8.npy",
+        "sha256": "f774fa0e603c43ebdb22d1423bb6248751a7b2bf2aa1d3c6fdc1fc2b22768434",
+        "size_bytes": 102528
+      }
+    }
+  }
+}

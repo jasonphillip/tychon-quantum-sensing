@@ -47,5 +47,5 @@ Therefore, merely improving the residual model within the fixed clamp cannot mat
 - Quantized input NHWC payload SHA256: `51e97e715e7845fa32fe59f45e340f6d3d608568a22b32adbee19e117ba37f33`.
 - Kit raw output SHA256: `080474358d3a1efeacc89cc946821e7e8446db266f84fa433cdbc0598748ec90`.
 
-[Machine-readable metrics, checks, and exact selection](kit-constant-baselines.json).
+[Machine-readable metrics, checks, and exact selection](kit_constant_baselines_2026-10.json).
 Prior evidence: `outputs/kit-artifact-verification/{REPORT.md,results.json,dataset-results.json}`.
