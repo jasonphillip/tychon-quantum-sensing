@@ -65,5 +65,5 @@ def evaluate_saved(labels, candidate, classical, full_classical, groups, protoco
                          "test_groups": len(np.unique(groups)) >= gate["minimum_test_spatial_blocks"]})
     result["criteria"] = criteria
     result["gate_passed"] = all(criteria.values())
-    result["scope"] = "measured_motor_stage_labels_fixed_geometry_conditional_spatial_test"
+    result["scope"] = "published_version_A_fitted_feature_stage_coordinate_pairs_conditional_spatial_test_raw_lineage_unresolved"
     return result

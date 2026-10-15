@@ -6,7 +6,9 @@ The protocol requires root approval, custody validation, and representative test
 ## Question and limits
 
 Can one compact model use fewer calibration labels without losing useful position accuracy?
-The target is the motor-stage position of a magnetic needle above a fixed sensor array.
+The target is the published motor-stage coordinate paired with a fitted feature row.
+Use only model-loaded version A. Its raw-to-fit lineage is unresolved because it differs from the saved Fig.S4 fits.
+Any result concerns these published fitted-feature/stage-coordinate pairs. It does not validate the raw acquisition pipeline.
 The source is [Zenodo 19855773](https://doi.org/10.5281/zenodo.19855773), accompanying
 [Weng et al.](https://www.nature.com/articles/s41467-026-73701-0).
 Measured needle data and COMSOL microrobot simulations must remain separate.
@@ -32,7 +34,7 @@ The 24 features are eight channel-major triplets: splitting, first resonance fit
 The source fits use GHz. The native adapter multiplies each triplet by 1000 before applying the natural logarithm.
 The saved sensor ordering is already correct. The loader does not reorder sensors again.
 Targets are motor-stage X/Y positions in micrometres.
-The extractor must prove row alignment and per-sample feature construction from the original analysis source.
+The extractor must preserve the published version-A parameter/label pairing and disclose the unresolved raw-to-fit lineage.
 It must document any original global calibration and all previously viewed values.
 
 `bundle.example.json` describes the required custody contract.
@@ -91,7 +93,8 @@ The originally published split is reproduction evidence, never a new sealed test
 `reproduce` scores paired `estimated_position.npy` and `pos_test.npy`, as loaded together by the original figure source.
 Those row IDs identify the published prediction table, not unique indices into the 819-row calibration bundle.
 The Fig.S5 split contains coordinate arrays. Repeated coordinates prevent automatic conversion into unique row indices.
-The Fig.S5 test has not been proven equivalent to the separate-day Fig.3b/c sweeps.
+Custody proved Fig.S5 test labels and Fig.3d/e `pos_test.npy` byte-identical.
+Their relationship to the separate-day Fig.3b/c sweeps remains unproved.
 It does not execute downloaded networks or retrain the published architecture.
 
 The development gate must pass before one held-group evaluation.

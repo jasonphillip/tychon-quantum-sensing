@@ -54,8 +54,12 @@ def inspect_positions(manifest_path):
         raise ValueError("license and exact original archive members required")
     if manifest.get("position_reference") != "motor_stage_xy_fixed_target_height_and_orientation":
         raise ValueError("independent stage-label reference must be explicit")
-    if manifest.get("source_row_alignment_status") != "verified_figS4_main_byte_identity":
-        raise ValueError("custody must verify the main arrays match their Fig.S4 source bytes")
+    if (manifest.get("source_row_alignment_status") != "published_version_A_pairs_raw_lineage_unresolved"
+            or manifest.get("fit_version") != "A_model_loaded"):
+        raise ValueError("declare version A and its unresolved raw lineage explicitly")
+    if (manifest.get("fit_parameters", {}).get("sha256") != "813cb6f586d2d5fa930b0bc062a5692dc1b2cb7a94dfbd82860dd844647f360f"
+            or manifest.get("fit_standard_deviations", {}).get("sha256") != "1119ad52351df79bd5f2fd6c1f029201b38a563042006cfd4b8a1defc1f7c116"):
+        raise ValueError("only the prospectively declared version-A pair is accepted")
     headers = {}
     keys = ("positions",) if "positions" in manifest else ("position_x", "position_y")
     for key in keys:

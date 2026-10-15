@@ -38,7 +38,7 @@ def test_positions_route_never_requires_feature_files(tmp_path):
     for key in ("position_x", "position_y", "sample_ids"):
         template[key]["sha256"] = sha256(tmp_path / template[key]["path"])
     template["extraction_source_sha256"] = "0" * 64
-    template["source_row_alignment_status"] = "verified_figS4_main_byte_identity"
+    template["source_row_alignment_status"] = "published_version_A_pairs_raw_lineage_unresolved"
     path = tmp_path / "bundle.json"
     path.write_text(json.dumps(template))
     values, _, metadata = bundle.positions_only(path)

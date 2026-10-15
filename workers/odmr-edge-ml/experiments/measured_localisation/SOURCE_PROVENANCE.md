@@ -4,6 +4,17 @@ Prepared 2026-10-15. This is a static source review, not a numerical result.
 The original archive and custody receipts are immutable. No original notebook or model was executed.
 No fitted feature values, prediction values, or position-array values were inspected during this preparation.
 
+Update 18:43 EDT: custody found distinct fit versions A and B.
+This update supersedes commit 45f718b's requirement that both versions match.
+Use version A only. It is loaded by the model notebooks but has no identified saving notebook.
+Version B is the output saved by the Fig.S4 fit notebook. Do not mix the versions.
+The accepted scope is published fitted-feature/stage-coordinate pairs, with unresolved raw-to-fit lineage.
+
+| Payload | Version A SHA256 | Version B SHA256 |
+|---|---|---|
+| Fitted parameters | `813cb6f586d2d5fa930b0bc062a5692dc1b2cb7a94dfbd82860dd844647f360f` | `ed2eb924fb06b65b134087d85688e6594a7af22b6617fae8c8b99891a189491f` |
+| Fit deviations | `1119ad52351df79bd5f2fd6c1f029201b38a563042006cfd4b8a1defc1f7c116` | `3e870d80f54ee63c72f0a497c439512c67574a65e9908babfd78e49e57a0d68a` |
+
 ## Exact source and feature meaning
 
 The archive SHA256 is `b5717b233590d041fb4bd752af479df7c426e37675743ca3f9d3c93ae32f7aa4`.
@@ -21,6 +32,8 @@ The fitted frequencies use 2.77–2.97 GHz. The six parameters are amplitude, ce
 The feature triplet is absolute centre separation, first centre standard deviation, second centre standard deviation.
 The saved eight-sensor order already includes the author's reordering. The adapter preserves it.
 The new adapter multiplies all triplet values by 1000 for MHz, then applies training-only scaling after logarithms.
+The original commented training cell applies `np.log` to all 24 reshaped GHz features, including both deviations.
+Our conversion and scaling are a prospective comparison transform, not reproduction of the original CNN training.
 It reads requested rows only. It does not fit raw spectra or use held-out aggregate statistics.
 
 ## Position and session provenance
@@ -33,7 +46,8 @@ However, that traversal uses unsorted `os.walk`. ZIP order does not establish it
 Repeated coordinates therefore cannot be assigned a unique acquisition session from labels alone.
 
 The requested raw-position catalog lists possible sessions for each exact coordinate.
-The main fitted arrays must match the Fig.S4 source arrays by byte hash before this catalog is accepted.
+X/Y labels match between A and B by byte hash. The fitted arrays do not match.
+The catalog therefore describes possible raw sessions at each coordinate, not proven lineage of version-A feature rows.
 No model receives filenames, sample IDs, session IDs, coordinates, or paths as features.
 All rows with the same coordinate stay together. The primary calibration budget counts unique coordinates.
 Measurement-row counts and possible cross-partition session overlaps are reported separately.
@@ -48,7 +62,9 @@ If independent acquisition is required, a connected-session partition needs sepa
 The Fig.S5 headers contain 737 training, 57 validation, and 25 test coordinate rows.
 The Fig.3d/e source contains a commented two-stage random split with random_state 42.
 This code does not prove the saved tables match that split exactly.
-Geometry-only qualification compares the saved coordinate multisets and reports overlap and ambiguity.
+Custody found `vis_pos_test.npy` byte-identical to Fig.3d/e `pos_test.npy`.
+Both have SHA256 `d497e50c5a861124904494f6ef41f5fdbeb467a290200b9745d0e076557482e2`.
+Geometry-only qualification compares the other saved coordinate multisets and reports overlap and ambiguity.
 It must not manufacture unique source-row indices when coordinates repeat.
 
 The Fig.3d/e source loads `estimated_position.npy` and `pos_test.npy` as paired saved prediction and label tables.
@@ -59,7 +75,8 @@ That relationship must remain unresolved unless new provenance establishes it.
 ## Physical comparator eligibility
 
 The reviewed source supplies frequency fits and sensor markers used for plotting.
-It does not supply a complete calibrated sensor-frame transform, target height/moment, and per-channel splitting likelihood.
+Custody's broader paper/source review reports 250 µm height, 45° tilt, and 127 µm sensor pitch.
+It reports missing needle moment, stage-to-sensor frame, per-sensor NV axes, and usable field calibration.
 The field-conversion tables in Fig.S4 do not, by themselves, establish a calibrated position inverse.
 Approximating geometry from a plot would create unsupported calibration assumptions.
 

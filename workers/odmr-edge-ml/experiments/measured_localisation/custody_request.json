@@ -161,7 +161,8 @@
     "Fig.S5 test equals separate-day Fig.3b/c measurements",
     "exact acquisition session for duplicated fitted-array coordinates",
     "stage calibration uncertainty",
-    "complete calibrated physical inverse"
+    "complete calibrated physical inverse",
+    "Raw-to-fit lineage for version A; only published parameter/label pairing is used."
   ],
   "excluded": [
     "all object arrays",
@@ -170,15 +171,11 @@
     "Fig.S8 COMSOL",
     "original notebook execution"
   ],
-  "verify_byte_identical_before_geometry": [
-    {
-      "a": "Data availability update 20260220/Fig.S4/para_list.npy",
-      "b": "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/para_list.npy"
-    },
-    {
-      "a": "Data availability update 20260220/Fig.S4/para_std_list.npy",
-      "b": "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/para_std_list.npy"
-    },
+  "revision": "2026-10-15T18:43_custody_correction_supersedes_45f718b_strict_identity_rule",
+  "declared_fit_version": "A_model_loaded",
+  "claim_scope": "published_fitted_feature_stage_coordinate_pairs_raw_lineage_unresolved",
+  "superseded_rule": "45f718b required A/B fit byte identity; custody correctly stopped when it failed. This revision accepts A only with unresolved raw-lineage disclosure.",
+  "verify_position_byte_identity_before_geometry": [
     {
       "a": "Data availability update 20260220/Fig.S4/x_pos.npy",
       "b": "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/x_pos.npy"
@@ -188,5 +185,15 @@
       "b": "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/y_pos.npy"
     }
   ],
-  "if_byte_identity_fails": "Stop and report mismatched members. Do not assume saved row order or feature/label provenance."
+  "required_pinned_fit_hashes": {
+    "fit_parameters": "813cb6f586d2d5fa930b0bc062a5692dc1b2cb7a94dfbd82860dd844647f360f",
+    "fit_standard_deviations": "1119ad52351df79bd5f2fd6c1f029201b38a563042006cfd4b8a1defc1f7c116"
+  },
+  "if_position_identity_or_pinned_A_hash_fails": "Stop; never substitute B, mix versions, infer ordering, or alter hashes.",
+  "known_AB_mismatch_must_remain_disclosed": {
+    "version_A_parameters": "813cb6f586d2d5fa930b0bc062a5692dc1b2cb7a94dfbd82860dd844647f360f",
+    "version_B_parameters": "ed2eb924fb06b65b134087d85688e6594a7af22b6617fae8c8b99891a189491f",
+    "version_A_std": "1119ad52351df79bd5f2fd6c1f029201b38a563042006cfd4b8a1defc1f7c116",
+    "version_B_std": "3e870d80f54ee63c72f0a497c439512c67574a65e9908babfd78e49e57a0d68a"
+  }
 }

@@ -1,7 +1,7 @@
 {
   "status": "DRAFT_NOT_AUTHORIZED",
   "study": "measured-localisation-2026-10-15",
-  "claim_scope": "measured_fixed_geometry_motor_stage_position",
+  "claim_scope": "published_fitted_feature_stage_coordinate_pairs_raw_lineage_unresolved",
   "accounting_authority": "REPLACE_WITH_ROOT_CAMPAIGN_AUTHORITY",
   "phases": [],
   "source_sha256": {},

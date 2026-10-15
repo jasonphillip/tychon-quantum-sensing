@@ -32,7 +32,7 @@
     "order": "paired_published_labels"
   },
   "physical_baseline_ready": false,
-  "physical_baseline_exclusion_reason": "Reviewed source supplies per-sample frequency fits and display markers, but no complete calibrated sensor-frame transform, target height/moment, and channel-specific splitting likelihood. This bounded metadata review does not exclude a future calibrated physical baseline.",
+  "physical_baseline_exclusion_reason": "Archive and paper supply 250 um height, 45 degree tilt, and 127 um pitch, but not needle moment, stage-to-sensor frame, per-sensor NV axes, or usable field calibration. An independently calibrated physical inverse is ineligible from these inputs.",
   "source_members": [
     "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/para_list.npy",
     "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/para_std_list.npy",
@@ -52,11 +52,11 @@
   "native_to_feature_factor": 1000,
   "fit_parameters": {
     "path": "fit_parameters.npy",
-    "sha256": "REPLACE_WITH_CUSTODY_SHA256"
+    "sha256": "813cb6f586d2d5fa930b0bc062a5692dc1b2cb7a94dfbd82860dd844647f360f"
   },
   "fit_standard_deviations": {
     "path": "fit_standard_deviations.npy",
-    "sha256": "REPLACE_WITH_CUSTODY_SHA256"
+    "sha256": "1119ad52351df79bd5f2fd6c1f029201b38a563042006cfd4b8a1defc1f7c116"
   },
   "position_x": {
     "path": "position_x.npy",
@@ -90,5 +90,8 @@
   },
   "session_mapping_status": "possible_sessions_from_exact_coordinate; original_os_walk_order_not_recoverable_from_archive_order",
   "supplied_split_mapping_status": "coordinates_only; no_unique_row_indices_inferred_from_duplicate_labels",
-  "source_row_alignment_status": "REQUIRES_CUSTODY_BYTE_IDENTITY"
+  "source_row_alignment_status": "published_version_A_pairs_raw_lineage_unresolved",
+  "fit_version": "A_model_loaded",
+  "raw_to_fit_lineage": "Unresolved. VersionA loaded by model notebooks differs from versionB saved by FigS4; no saving notebook forA was found.",
+  "source_label_identity_status": "x/y byte-identical acrossA/B; FigS5test and Fig3d/e pos_test byte-identical; row-session mapping unresolved"
 }

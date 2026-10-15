@@ -98,7 +98,7 @@ def make_partition(manifest_path, protocol, salt):
         "possible_session_row_counts": session_counts,
         "possible_session_overlap": overlaps,
         "rows_with_ambiguous_session_identity": sum(len(group) > 1 for group in memberships),
-        "session_assignment_status": "possible_memberships_not_exact_row_session_identity",
+        "session_assignment_status": "coordinate_catalog_memberships_only_version_A_raw_lineage_unresolved",
         "supplied_split_geometry": supplied_position_summary(manifest_path, y),
         "test_signal_values_accessed": False,
         "partition_scope": "spatial_holdout_with_test_and_validation_exclusion_gaps",

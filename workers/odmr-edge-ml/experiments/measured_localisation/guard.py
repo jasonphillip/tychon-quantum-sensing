@@ -35,7 +35,7 @@ def authorize(path, phase):
     if phase not in approval.get("phases", []):
         raise RuntimeError("phase is not authorized")
     geometry_only = phase == "partition"
-    required_scope = "position_labels_only_geometry" if geometry_only else "measured_fixed_geometry_motor_stage_position"
+    required_scope = "position_labels_only_geometry" if geometry_only else "published_fitted_feature_stage_coordinate_pairs_raw_lineage_unresolved"
     if approval.get("claim_scope") != required_scope:
         raise RuntimeError("claim scope mismatch")
     required = {str(p.relative_to(PACKAGE)) for p in PACKAGE.rglob("*.py")} | {"protocol.json"}

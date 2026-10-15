@@ -2,7 +2,7 @@
   "schema_version": 1,
   "study": "measured-localisation-2026-10-15",
   "status": "DRAFT_PENDING_ROOT_AND_CUSTODY",
-  "scope": "measured_fixed_geometry_motor_stage_position",
+  "scope": "published_fitted_feature_stage_coordinate_pairs_raw_lineage_unresolved",
   "dataset_doi": "10.5281/zenodo.19855773",
   "primary_objective": "reduce_unique_calibration_positions_at_matched_position_error",
   "calibration_fraction": 0.25,
@@ -90,7 +90,9 @@
     "native_fit_units": "GHz",
     "native_to_feature_factor": 1000,
     "source_parameters": "abs(para[:,:,1]-para[:,:,4]), para_std[:,:,1], para_std[:,:,4]",
-    "source_sensor_order": "preserve_saved_array_order; do_not_reorder_again"
+    "source_sensor_order": "preserve_saved_array_order; do_not_reorder_again",
+    "author_code_transform": "np.log applied to all 24 reshaped GHz features in the commented model training cell",
+    "prospective_transform": "All 24 native features multiplied by 1000 then logged; train-only standardization; not original CNN reproduction"
   },
   "classical_grid": {
     "mean": [
@@ -169,7 +171,7 @@
     ],
     "exclusion_reason_if_missing": "splitting_is_not_calibrated_field_magnitude_and_unknown_geometry_is_not_identifiable",
     "no_fabricated_geometry": true,
-    "metadata_review": "Reviewed Fig.S4 and Fig.3b-e source defines per-sample frequency fits and display markers, not a complete independently calibrated physical inverse.",
+    "metadata_review": "Archive and paper give 250 um height, 45 degree tilt, and 127 um pitch; needle moment, stage-to-sensor frame, per-sensor NV axes, and usable field calibration are missing.",
     "claim_limit": "No claim against all physics-based methods; no inferred calibration from plotted marker positions."
   },
   "uncertainty": {
@@ -192,7 +194,7 @@
   },
   "stopping_rules": [
     "No numerical operation without root approval and a bound accounting reservation.",
-    "Stop when custody cannot establish measured rows, independent position labels, feature semantics, units, and source hashes.",
+    "Stop unless custody pins one published version-A fitted-feature/stage-coordinate pair, feature semantics, units, and hashes; preserve the unresolved raw lineage.",
     "Stop if extraction uses COMSOL or mixes a measured sample with its simulated derivative.",
     "Stop if fixed partition or small-budget counts fail minimums; do not move the split after seeing signals.",
     "Stop on invalid features or labels; do not silently filter difficult held-out rows.",
@@ -248,5 +250,7 @@
       "device": "cuda"
     }
   ],
-  "candidate_selection": "lowest_validation_mean_error_then_fewer_parameters; apply_all_gates_once_to_winner; no_switch_after_failure"
+  "candidate_selection": "lowest_validation_mean_error_then_fewer_parameters; apply_all_gates_once_to_winner; no_switch_after_failure",
+  "dataset_version": "A_model_loaded",
+  "raw_to_fit_lineage": "unresolved_version_A_differs_from_version_B_saved_by_FigS4"
 }
