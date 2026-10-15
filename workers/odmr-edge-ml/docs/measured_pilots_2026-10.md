@@ -1,6 +1,6 @@
 # Measured-data pilots, 2026-10-15: three public datasets, all closed without a confirmed advantage
 
-Status: **all three cycles are CLOSED. No learned method showed a confirmed useful advantage.**
+Status: **all three cycles are CLOSED, with no confirmed practical advantage.**
 Widefield and localisation stopped at their registered development gates.
 Cardiac stopped earlier, at a reference-eligibility check, before any method comparison.
 Every gate was fixed before the results it judges. No final held-out data was opened after a failed gate.
@@ -28,7 +28,7 @@ It is not a magnetic-field estimate. The wire currents are setpoints, not indepe
 Current and acquisition time are confounded.
 
 The training mean had the lowest development error (MSE 5.261e-05), and the PCA–Wiener baselines were nearly equal.
-The selected neural candidate (width 16, 6,616 parameters) had about twice that error.
+The selected neural candidate (width 16, 6,616 parameters) had a mean squared error about 2.17 times the training mean's.
 Its paired MSE-ratio interval against the training mean was [1.93, 2.35]. The gate failed, and no final blocks were opened.
 The interval resamples spatial blocks within one field of view; it is not population uncertainty.
 The [widefield package](measured_pilots_2026-10/widefield/README.md) lists every registered method, the verifier, and the reassembly of the byte-split training-target archive.
@@ -69,7 +69,7 @@ See the [cardiac package](measured_pilots_2026-10/cardiac/README.md).
 
 ## What these pilots show
 
-- No learned method showed a confirmed useful advantage on any of the three measured datasets.
+- No confirmed practical advantage on any of the three measured datasets. Cardiac did not reach a learned-model comparison.
 - The localisation trade-off is development evidence only. A fresh held-out test would be needed to confirm it.
 - All three negative results are published with saved outputs and verifiers. They are not claims about the datasets' scientific value.
 
