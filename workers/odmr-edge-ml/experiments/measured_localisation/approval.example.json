@@ -10,6 +10,8 @@
   "qualification_sha256": "REQUIRED_FOR_DEVELOP",
   "selection_sha256": "REQUIRED_FOR_EVALUATE",
   "candidate_sha256": "REQUIRED_FOR_EVALUATE",
-  "random_seed": 0,
-  "partition_salt": "REPLACE_BEFORE_ANY_POSITION_PARTITION_ACCESS"
+  "random_seed": "REPLACE_WITH_RECEIPT_BOOTSTRAP_SEED",
+  "partition_salt": "REPLACE_BEFORE_ANY_POSITION_PARTITION_ACCESS",
+  "seed_receipt_path": "REPLACE_WITH_ABSOLUTE_ROOT_SEED_RECEIPT_PATH",
+  "seed_receipt_sha256": "REPLACE_WITH_IMMUTABLE_RECEIPT_SHA256"
 }

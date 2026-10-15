@@ -8,7 +8,7 @@
   ],
   "source_sha256": {},
   "bundle_sha256": "REPLACE",
-  "random_seed": 0,
+  "random_seed": "REPLACE_WITH_RECEIPT_BOOTSTRAP_SEED",
   "partition_salt": "REPLACE_BEFORE_ANY_POSITION_PARTITION_ACCESS",
   "signal_values_authorized": false,
   "model_execution_authorized": false,
@@ -24,5 +24,7 @@
   "purpose": "Inspect geometry counts and construct one proposed partition before any signal access.",
   "protocol_status_allowed": "DRAFT_PENDING_ROOT_AND_CUSTODY",
   "maximum_cpu_seconds": 120,
-  "maximum_wall_seconds": 60
+  "maximum_wall_seconds": 60,
+  "seed_receipt_path": "REPLACE_WITH_ABSOLUTE_ROOT_SEED_RECEIPT_PATH",
+  "seed_receipt_sha256": "REPLACE_WITH_IMMUTABLE_RECEIPT_SHA256"
 }

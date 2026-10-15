@@ -110,7 +110,8 @@ def develop(args, approval, protocol):
     candidate_records, candidate_states, candidate_predictions = [], [], []
     for config in protocol["candidate_grid"]:
         weights, candidate_info = train_candidate(scale.x(x), scale.y(y), scale.x(xv), yv,
-                                                   config, scale, approval["random_seed"])
+                                                   config, scale, approval["training_seeds"][str(config["hidden"])])
+        candidate_info["training_seed"] = approval["training_seeds"][str(config["hidden"])]
         prediction = scale.inverse(predict_candidate(scale.x(xv), weights))
         if not np.isfinite(prediction).all():
             raise RuntimeError("a registered candidate produced nonfinite predictions")

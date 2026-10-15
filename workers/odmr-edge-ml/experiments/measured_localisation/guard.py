@@ -79,6 +79,17 @@ def authorize(path, phase):
             raise RuntimeError("supervisor must hold its per-job lock")
     if type(approval.get("random_seed")) is not int or not 0 <= approval["random_seed"] < 2 ** 63 or not approval.get("partition_salt"):
         raise RuntimeError("registered seed and partition salt required")
+    seed_path = Path(approval.get("seed_receipt_path", ""))
+    if not seed_path.is_absolute() or sha256(seed_path) != approval.get("seed_receipt_sha256"):
+        raise RuntimeError("immutable root seed receipt is not bound")
+    seeds = read_json(seed_path)
+    training = seeds.get("training", {})
+    if (seeds.get("generated_before_signal_decoding") is not True
+            or set(training) != {"24", "48", "96"}
+            or any(type(value) is not int or not 0 <= value < 2 ** 63 for value in training.values())
+            or seeds.get("bootstrap") != approval["random_seed"]):
+        raise RuntimeError("registered width/bootstrap seed contract differs")
+    approval["training_seeds"] = training
     approval["approval_sha256"] = digest
     return approval
 
