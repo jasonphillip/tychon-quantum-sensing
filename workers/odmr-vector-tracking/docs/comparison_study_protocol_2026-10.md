@@ -148,3 +148,5 @@ v2 final (seed 20270114; 14 cells × 120 sequences; same frozen estimators, same
 ## Addendum 2026-10-15 (k): count correction to Addenda (i) and (j)
 
 Addendum (i) says E3 "also wins ten secondary cells" on v1 and Addendum (j) says "all twelve secondary cells (extrapolation included)" on v2. Both counts are wrong; the decision files are right: on **each** sealed set E3 wins **eleven of the twelve** secondary cells by the registered margins (ten one-factor cells plus extrapolation), and the one secondary cell not won is named in the respective decision file (it is the cell listed in neither decision's win list). The verdict is unchanged. Found by an independent re-run of the merge step in a second session (byte-identical to the committed v2 results), 2026-10-15.
+
+Named (same day): the secondary cell not won by E3 on either set is `realistic_baseline_slope_pct_0` (realistic conditions with zero baseline slope); on it E3 misses the registered margins against E4 while still scoring better on RMSE and lost rate — see the per-cell tables.
