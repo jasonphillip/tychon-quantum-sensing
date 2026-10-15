@@ -38,7 +38,7 @@ Reference A spans [180,360) seconds. Reference B spans [420,600) seconds.
 Each required at least 100 complete beats and 90% trigger-to-output yield.
 The gate also required correlation at least 0.8, matching peak polarity, amplitude within 20%,
 peak-time agreement within 20 ms, and energy-spread width ratios between 0.8 and 1.25 in both directions.
-NRMSE divides squared disagreement by the reference waveform's squared amplitude; zero-power references fail.
+NRMSE is the square root of `sum((estimate-reference)^2) / sum(reference^2)`; zero-power references fail.
 No session was removed and no tolerance was relaxed.
 
 ## Scope and participants
