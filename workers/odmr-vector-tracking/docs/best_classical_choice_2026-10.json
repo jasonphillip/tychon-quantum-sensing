@@ -1,0 +1,34 @@
+{
+  "partition": "val",
+  "cell": "realistic",
+  "version": 1,
+  "data_md5": "a8df954bbbdfe246a2fc2c7ddc3cbfdd",
+  "n_sequences": 42,
+  "statistic": "p90 of per-sequence angular-error p90 (deg); ties by mean sequence RMSE, then E2",
+  "values": {
+    "E2": {
+      "ae_p90_of_seq_p90_deg": 95.581038115242,
+      "rmse_mean_mT": 60.55592699831285,
+      "lost_rate": 1.0,
+      "lock_frac_mean": 0.002697172619047619,
+      "nonfinite_frames": 0,
+      "latency_us_median": 612195.2160028741
+    },
+    "E3": {
+      "ae_p90_of_seq_p90_deg": 72.82090805568222,
+      "rmse_mean_mT": 1.1950982045413567,
+      "lost_rate": 0.6904761904761905,
+      "lock_frac_mean": 0.5921688988095238,
+      "nonfinite_frames": 1498,
+      "latency_us_median": 6616.7659824714065
+    }
+  },
+  "choice": "E3",
+  "chosen_before_final_read": true,
+  "date_utc": "2026-10-15T00:16:49+00:00",
+  "runner_commit_at_choice": "a189dec",
+  "runs": [
+    "experiments/comparison_study.py --partition val --cells realistic --estimators E2",
+    "... --estimators E3"
+  ]
+}
