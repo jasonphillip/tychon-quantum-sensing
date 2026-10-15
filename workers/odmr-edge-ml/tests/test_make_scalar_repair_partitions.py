@@ -17,6 +17,21 @@ module = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(module)
 
 
+OWN_PUBLISHED_BUNDLE = module.REPO / "docs" / "scalar_repair_cycle_2026-10"
+
+
+@pytest.fixture(autouse=True)
+def _exclude_own_published_bundle(monkeypatch):
+    """The cycle's own published bundle holds this generator's outputs (dev r1, dev-r2, val
+    manifests); they are not earlier consumed sets, so the seed scan in these tests ignores them."""
+    original = module.manifest_paths
+
+    def without_own_bundle(roots):
+        return [item for item in original(roots) if OWN_PUBLISHED_BUNDLE not in item[2].parents]
+
+    monkeypatch.setattr(module, "manifest_paths", without_own_bundle)
+
+
 def test_disjoint_partition_seed_streams():
     used, _ = module.scan_used_seeds()
     streams = {}
