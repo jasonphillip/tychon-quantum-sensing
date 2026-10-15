@@ -64,9 +64,11 @@ All data paths are explicit command arguments. Payload hashes, seal permissions,
 sample seeds and paired truth identities are checked.
 Analysis seed 202610152001 belongs to the reserved analysis namespace; the custodian checks data non-overlap.
 
-Freeze 1 records every experiment source, relevant imported source, protocol, numerical dependency version,
+Freeze 1 records the source commit and every experiment source, relevant imported source, protocol, numerical dependency version,
 frozen model identity, accepted generator/distribution contract, and the one authorized evaluation-output root.
 Validation needs a pinned JSON release and its pinned Freeze 1 receipt.
+Freeze 2 requires the canonical completed validation summary, matching result receipt and exclusive evaluator receipt.
+All three bind the same data and Freeze 1 hashes. Selection is recomputed from the frozen decision rule.
 Freeze 2 additionally binds the passing validation summary and selected policies.
 Final needs a pinned JSON release, Freeze 2, and the custodian's data-root exclusive-access-receipt.json.
 The evaluator creates a separate exclusive local access receipt before its first payload hash.
@@ -88,11 +90,15 @@ Custodian release JSON schema:
 The access receipt repeats schema, partition, data_manifest_sha256 and freeze_receipt_sha256.
 Its status is authorized or in_progress. The gate document is the custodian's FREEZE1.md or FREEZE2.md.
 CLI arguments pin both the release and freeze hashes. Filename existence alone grants no access.
+The gate document contains its freeze hash before generation. The generated manifest pins that gate document hash.
+Only development partition names dev and dev-r2 are allowed, each with an explicitly pinned accepted manifest hash.
 
 ## Selection and acceptance
 
 Primary neural implementation: INT8. Primary claim route: accuracy.
 FP32, speed and quantization results remain secondary.
+Pin the selected INT8 interpreter backend and version. Backend import failures never silently switch implementations.
+Report raw FP32/INT8 disagreement per policy and seed, separately from post-fallback accuracy.
 Only clean and realistic_anchor are primary. Secondary conditions cannot rescue failure.
 
 Prediction gate: upper paired 95% MAE-difference bound below -0.5 microtesla versus each original training constant,
@@ -105,7 +111,8 @@ Neural selection uses lowest all-row realistic-anchor mean seed MAE among the tw
 Differences below 0.1 microtesla are ties: prefer lower fallback fraction, then lower complete-pipeline median latency,
 then lexical method name. Selection does not require a classical win.
 Proceed to final only if at least one selected repaired method passes the prediction gate in both primary conditions.
-If only an unselected method passes, select among passing methods first. Preserve all candidate results.
+Selection never filters by pass status. An unselected pass cannot rescue the continuation gate.
+This stricter pre-validation continuation rule was approved before any accuracy scoring. Preserve all candidate results.
 
 Final neural accuracy advantage requires the selected neural policy to pass the prediction gate,
 and its upper paired MAE-difference bound versus the selected classical reference below -0.5 microtesla in both.
@@ -121,13 +128,17 @@ Intervals condition on this generator and these fixed checkpoints.
 ## Timing and compute
 
 Use one thread and batch size one. Pause competing numerical workers before validation/final timing.
-Per condition, time the first 16 retained inputs, with the first four as warm-up.
+Per condition, time the first 16 retained inputs. Use four fixed development inputs for warm-up.
+Freeze 1 pins that development manifest and its payload hashes; held-out rows never supply warm-up.
 Time the complete path, including common quality fit, preprocessing, inference/conversion and fallback.
 Record median and p95, count, thread setting and fallback behavior.
 This is CPU timing; it supports no FPGA timing claim.
 
 Cycle cap: four CPU-hours, two cumulative numerical job wall-hours, four workers maximum, 8 GiB actual memory.
 Reserve two CPU-hours for final, capped at thirty minutes wall.
+Every numerical job holds the shared numerical lock and reads its own and explicit peer ledgers before launch.
+Reserve the requested job seconds against both cumulative limits and the final reserve.
+Failures count. Unknown CPU costs four times wall; CPU is charged at least wall for earlier undercounted jobs.
 Every numerical job appends a compute receipt with command, wall/CPU time, peak memory and status.
 This initial implementation deliverable uses at most 0.5 CPU-hours and fifteen numerical wall-minutes.
 Stop on hash drift, leakage, overlap, missing rows, cap exhaustion or a failed scientific gate.

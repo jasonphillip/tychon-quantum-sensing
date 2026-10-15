@@ -84,11 +84,13 @@ def custody_fixture(tmp_path,partition="val"):
     manifest={"partition":partition,"single_orientation":True,"frequency_grid_hz":[],"field_prior":{},
         "nuisance_distribution":{},"noise_reference_fraction":.3,"generator_sha256":"generator",
         "stress_generator_sha256":"stress","source_sha256":{},"cells":{}}
-    (root/"manifest.json").write_text(json.dumps(manifest))
     gate=tmp_path/("FREEZE1.md" if partition=="val" else "FREEZE2.md");gate.write_text("custodian approval\n")
     frozen=tmp_path/"freeze.json"
     frozen.write_text(json.dumps(dict(schema=1,stage=1 if partition=="val" else 2,
         source_hashes=gates.source_map(),versions=gates.versions(),data_contract=gates.data_contract(manifest),evaluation_root=str(tmp_path/"evaluation"))))
+    gate.write_text("custodian approval "+sha(frozen)+"\n")
+    manifest["gate_document_sha256"]=sha(gate)
+    (root/"manifest.json").write_text(json.dumps(manifest))
     access=tmp_path/("exclusive-access-receipt.json" if partition=="final" else "VAL_ACCESS.json")
     base=dict(schema=1,partition=partition,data_manifest_sha256=sha(root/"manifest.json"),
         freeze_receipt_sha256=sha(frozen))
@@ -142,11 +144,11 @@ def decision_fixture():
             for classical in ("robust_prior_fit","conditional_likelihood"):
                 summary[cell]["paired_comparisons"][policy+"_minus_"+classical]=dict(ci95_uT=[-1.2,-.8])
     return summary
-def test_validation_prefers_method_passing_both_primary_cells():
+def test_validation_never_weakens_classical_reference_for_passing_status():
     s=decision_fixture()
     s["clean"]["paired_comparisons"]["robust_prior_fit_minus_training_mean"]["ci95_uT"]=[-1,1]
     selection=decide(s)
-    assert selection["classical"]=="conditional_likelihood"
+    assert selection["classical"]=="robust_prior_fit"
     assert selection["can_proceed"]
 def test_secondary_or_single_primary_win_cannot_rescue_final():
     s=decision_fixture();selection=decide(s)
@@ -178,3 +180,88 @@ def test_generator_distribution_is_frozen_independently_of_custody_hashes(tmp_pa
     a=json.loads(access.read_text());a["data_manifest_sha256"]=sha(root/"manifest.json");access.write_text(json.dumps(a))
     r=json.loads(release.read_text());r["data_manifest_sha256"]=a["data_manifest_sha256"];r["exclusive_access_receipt_sha256"]=sha(access);release.write_text(json.dumps(r))
     with pytest.raises(ValueError,match="generator/distribution drift"):authorize_fixture(parts)
+
+
+def test_unselected_pass_cannot_rescue_validation():
+    s=decision_fixture()
+    for label in ("robust_prior_fit","edge_ols__int8"):
+        s["clean"]["paired_comparisons"][label+"_minus_training_mean"]["ci95_uT"]=[-1,1]
+    assert not decide(s)["can_proceed"]
+
+def test_development_revision_name_is_explicit(tmp_path):
+    with pytest.raises(FileNotFoundError):preflight(tmp_path/"dev-r2")
+    with pytest.raises(ValueError):preflight(tmp_path/"dev-r3")
+
+def test_create_freeze_requires_pinned_development_manifest(tmp_path,monkeypatch):
+    monkeypatch.setattr(gates,"records",lambda _:[])
+    p=tmp_path/"manifest.json";p.write_text('{"partition":"dev-r2"}')
+    with pytest.raises(ValueError,match="pinned"):
+        gates.create_freeze(1,tmp_path/"freeze",None,evaluation_root=tmp_path,development_manifest=p)
+
+def test_completed_validation_requires_canonical_matching_receipts(tmp_path):
+    summary=dict(status="complete",partition="val",freeze_sha256="f",manifest_sha256="m",cells=decision_fixture())
+    summary["selection"]=decide(summary["cells"]);summary["validation_can_proceed"]=True
+    root=tmp_path/"eval";out=root/"results-val";out.mkdir(parents=True)
+    path=out/"SUMMARY.json";path.write_text(json.dumps(summary))
+    receipt=dict(status="complete",partition="val",freeze_sha256="f",manifest_sha256="m",summary_sha256=sha(path))
+    (out/"RECEIPT.json").write_text(json.dumps(receipt));access=root/"VAL_EVALUATOR_ACCESS.json";access.write_text(json.dumps(receipt))
+    assert gates.completed_validation({"evaluation_root":str(root)},"f",path)==summary
+    other=tmp_path/"SUMMARY.json";other.write_text(path.read_text())
+    with pytest.raises(ValueError,match="canonical"):gates.completed_validation({"evaluation_root":str(root)},"f",other)
+    receipt["status"]="in_progress";access.write_text(json.dumps(receipt))
+    with pytest.raises(ValueError,match="completion"):gates.completed_validation({"evaluation_root":str(root)},"f",path)
+
+def test_budget_counts_failures_and_unknown_cpu_conservatively(tmp_path):
+    from job_receipt import usage,check_budget
+    p=tmp_path/"ledger";p.write_text(json.dumps(dict(status="failed",wall_seconds=5,cpu_seconds=None))+"\n")
+    total=usage([p]);assert total["cpu_seconds"]==20 and total["wall_seconds"]==5
+    with pytest.raises(ValueError,match="reserve"):check_budget(total,total,120,"development",cpu_cap=7300)
+    with pytest.raises(ValueError,match="development"):check_budget(total,dict(cpu_seconds=0,wall_seconds=890),20,"development")
+
+def test_timing_warms_only_on_separate_development_inputs(monkeypatch):
+    import timing
+    calls=[]
+    def fake_fit(row):
+        calls.append(float(row[0]));return FitResult(hard_invalid=True)
+    monkeypatch.setattr(timing,"robust_fit",fake_fit)
+    monkeypatch.setattr(timing,"likelihood_magnitude",lambda row,fit:{"prediction_uT":TRAIN_MEDIAN})
+    result=timing.measure(np.ones((2,100))*7,None,None,np.ones((4,100))*3,count=2)
+    assert calls==[3,3,3,3,7,7]*14
+    assert all(v["warmup_source"]=="frozen development" for v in result.values())
+
+def test_raw_accounting_does_not_hide_original_fit_failure():
+    from run_development import raw_accounting
+    pred=np.array([TRAIN_MEDIAN,TRAIN_MEDIAN,80.])
+    raw=np.array([np.nan,np.nan,80.]);proj=np.array([np.nan,80.,40.])
+    flags,valid=raw_accounting(pred,raw,np.array([True,True,False]),np.zeros(3,bool),np.zeros(3,bool),np.ones(3)*40,proj)
+    assert flags["nonfinite_raw_count"]==2 and flags["nonfinite_raw_projection_count"]==1
+    assert flags["raw_projection_support_violations"]==1 and flags["raw_output_support_violations"]==1
+    assert not valid.any() and metrics(pred,np.ones(3)*40)["n"]==3
+
+def test_freeze_two_rejects_wrong_parent_stage(tmp_path,monkeypatch):
+    monkeypatch.setattr(gates,"records",lambda _:[])
+    parent=tmp_path/"freeze.json";parent.write_text(json.dumps(dict(schema=1,stage=2,source_hashes=gates.source_map(),versions=gates.versions())))
+    with pytest.raises(ValueError,match="requires Freeze 1"):
+        gates.create_freeze(2,tmp_path/"next.json",None,prior=parent,prior_hash=sha(parent))
+
+def test_budget_standard_correction_supersedes_old_format(tmp_path):
+    from job_receipt import usage
+    p=tmp_path/"ledger"
+    rows=[dict(completed_utc="a",cpu_seconds=None,wall_seconds=5),
+        dict(job="cpu_adjustment",original_completed_utc="a",adjustment_cpu_seconds=20),
+        dict(job="cpu_adjustment",correction_of_utc="a",cpu_seconds=20,wall_seconds=0)]
+    p.write_text("".join(json.dumps(row)+"\n" for row in rows))
+    assert usage([p])["cpu_seconds"]==20
+
+@pytest.mark.parametrize("block",["budget","lock"])
+def test_budget_rejection_never_launches_child(tmp_path,block):
+    import subprocess,fcntl
+    ledger=tmp_path/"ledger";ledger.write_text(json.dumps(dict(wall_seconds=0,cpu_seconds=14400 if block=="budget" else 0))+"\n")
+    lock=tmp_path/"lock";marker=tmp_path/"launched"
+    with lock.open("a") as handle:
+        if block=="lock":fcntl.flock(handle,fcntl.LOCK_EX)
+        cmd=[sys.executable,str(ROOT/"experiments/scalar_repair_cycle/job_receipt.py"),
+            "--ledger",str(ledger),"--budget-lock",str(lock),"--seconds","1","--",sys.executable,
+            "-c","from pathlib import Path; Path("+repr(str(marker))+").touch()"]
+        result=subprocess.run(cmd,capture_output=True)
+    assert result.returncode!=0 and not marker.exists()

@@ -21,12 +21,12 @@ def dump(path,data):
     Path(path).write_text(json.dumps(clean(data),indent=2,allow_nan=False)+"\n")
 def preflight(data,partition="dev"):
     data=Path(data)
-    if data.name!=partition:raise ValueError("development runner refuses validation and final" if partition=="dev" else "partition path mismatch")
+    if data.name not in (("dev","dev-r2") if partition=="dev" else (partition,)):raise ValueError("development runner refuses validation and final" if partition=="dev" else "partition path mismatch")
     if data.is_symlink() or data.stat().st_mode&0o222:raise ValueError("development directory is not sealed")
     path=data/"manifest.json"
     if path.is_symlink() or path.stat().st_mode&0o222:raise ValueError("manifest is not sealed")
     m=json.loads(path.read_text())
-    if m.get("partition")!=partition or not m.get("single_orientation"):raise ValueError("wrong partition/cohort")
+    if m.get("partition")!=data.name or not m.get("single_orientation"):raise ValueError("wrong partition/cohort")
     if m["rows_per_cell"]!={"dev":256,"val":512,"final":1024}[partition]:raise ValueError("partition size mismatch")
     if set(m["cells"])!=set(CELLS):raise ValueError("condition set changed")
     if len(set(m["field_ids"]))!=m["rows_per_cell"]:raise ValueError("duplicate fields")
@@ -36,6 +36,25 @@ def preflight(data,partition="dev"):
         if Path(r["file"]).name!=r["file"] or p.is_symlink() or p.stat().st_mode&0o222:
             raise ValueError("unsafe or unsealed payload path")
     return m
+def raw_accounting(prediction,raw_magnitude,fallback,hard,amb,truth,raw_projection=None):
+    prediction=np.asarray(prediction);raw=np.asarray(raw_magnitude);fallback=np.asarray(fallback,bool)
+    support=np.isfinite(raw)&((raw<20)|(raw>70))
+    invalid=(~np.isfinite(raw))|support
+    projection_counts={}
+    if raw_projection is not None:
+        proj=np.asarray(raw_projection)
+        proj_bad=(~np.isfinite(proj))|((proj<0)|(proj>70))
+        invalid|=proj_bad
+        projection_counts=dict(nonfinite_raw_projection_count=int((~np.isfinite(proj)).sum()),
+            raw_projection_support_violations=int((np.isfinite(proj)&((proj<0)|(proj>70))).sum()))
+    valid=~(fallback|hard|amb|invalid)
+    result=dict(fallback_count=int(fallback.sum()),common_input_hard_invalid_count=int(hard.sum()),
+        method_invalid_count=int(invalid.sum()),nonfinite_raw_count=int((~np.isfinite(raw)).sum()),
+        raw_output_support_violations=int(support.sum()),ambiguous_count=int(amb.sum()),
+        reliable_valid_count=int(valid.sum()),n=len(raw),
+        accepted_only=metrics(prediction[valid],np.asarray(truth)[valid]) if valid.any() else None,**projection_counts)
+    return result,valid
+
 def reserve_evaluation(out,partition,manifest_hash,freeze_hash,frozen):
     expected=Path(frozen["evaluation_root"])/("results-"+partition)
     if Path(out).resolve()!=expected.resolve():raise ValueError("output differs from frozen evaluation root")
@@ -57,6 +76,17 @@ def run(a):
         if not all((a.freeze,a.freeze_sha256,a.release,a.release_sha256,a.gate_document,a.access_receipt)):
             raise ValueError("missing pinned custody arguments")
         frozen=authorize(a.data,a.mode,a.freeze,a.freeze_sha256,a.release,a.release_sha256,a.gate_document,a.access_receipt)
+    warmups={}
+    if not a.limit:
+        if not a.warmup_data or not a.warmup_manifest_sha256:raise ValueError("fixed development warm-up inputs required")
+        wm=preflight(a.warmup_data,"dev")
+        if sha(a.warmup_data/"manifest.json")!=a.warmup_manifest_sha256:raise ValueError("warm-up manifest hash mismatch")
+        if frozen and a.warmup_manifest_sha256!=frozen["development_manifest_sha256"]:
+            raise ValueError("warm-up differs from frozen development manifest")
+        for cell,record in wm["cells"].items():
+            payload=a.warmup_data/record["file"]
+            if sha(payload)!=record["sha256"]:raise ValueError("warm-up payload hash mismatch")
+            with np.load(payload,allow_pickle=False) as z:warmups[cell]=np.array(z["spectra"][:4])
     chosen=records(a.model_manifest)
     if frozen and chosen!=frozen["model_records"]:raise ValueError("candidate identities differ from frozen set")
     evaluation_access=reserve_evaluation(a.out,a.mode,a.data_manifest_sha256,a.freeze_sha256,frozen) if frozen else None
@@ -65,7 +95,7 @@ def run(a):
     a.out.mkdir(parents=True)
     receipt=dict(partition=a.mode,freeze_sha256=a.freeze_sha256,custody_release_sha256=a.release_sha256,started_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
         manifest_sha256=sha(a.data/"manifest.json"),model_records=chosen,
-        scope="synthetic scalar evaluation",sources={p.name:sha(p) for p in HERE.glob("*.py")})
+        scope="synthetic scalar evaluation",warmup_manifest_sha256=a.warmup_manifest_sha256,sources={p.name:sha(p) for p in HERE.glob("*.py")})
     with (a.out/"ACCESS.json").open("x") as stream:json.dump(receipt,stream,indent=2)
     for r in m["cells"].values():
         if sha(a.data/r["file"])!=r["sha256"]:raise ValueError("development payload hash changed")
@@ -104,17 +134,21 @@ def run(a):
             "unchanged_PID":rawpid,"robust_prior_fit":np.array([f.prediction_uT for f in fits])}
         fallback={"robust_prior_fit":hard.copy()};flags={};quant={}
         saved["raw__robust_prior_fit"]=np.array([f.raw_magnitude_uT for f in fits])
-        oldpred=[];oldbad=[];oldraw=[]
+        oldpred=[];oldbad=[];oldraw=[];oldmag=[]
         for row in spectra:
-            val=float("nan")
+            val=float("nan");magnitude=float("nan")
             try:
                 val,_=old.fit_field_magnitude(row,GRID)
-                value=prior_median(val);bad=False
+                value=prior_median(val);magnitude=value;bad=False
             except (RuntimeError,ValueError,FloatingPointError):
                 value=TRAIN_MEDIAN;bad=True
-            oldpred.append(value);oldbad.append(bad);oldraw.append(val)
+            oldpred.append(value);oldbad.append(bad);oldraw.append(val);oldmag.append(magnitude)
         predictions["original_prior_fit"]=np.array(oldpred);fallback["original_prior_fit"]=np.array(oldbad)
         saved["raw_projection_original_fit"]=np.array(oldraw)
+        saved["raw__original_prior_fit"]=np.array(oldmag)
+        saved["raw__unchanged_PID"]=rawpid
+        fallback["unchanged_PID"]=~np.isfinite(rawpid)
+        predictions["unchanged_PID"]=np.where(fallback["unchanged_PID"],TRAIN_MEDIAN,rawpid)
         grid=[]
         for row,f in zip(spectra,fits):
             t=time.perf_counter();grid.append(likelihood_magnitude(row,f));grid_seconds.append(time.perf_counter()-t)
@@ -137,16 +171,24 @@ def run(a):
         for k,v in predictions.items():
             saved["pred__"+k]=v
             if k in fallback:
-                bad=fallback[k];valid=~(bad|hard|amb)
-                saved["fallback__"+k]=bad;saved["reliable_valid__"+k]=valid
                 raw_value=saved.get("raw__"+k,v)
-                flags[k]=dict(fallback_count=int(bad.sum()),hard_invalid_count=int(hard.sum()),
-                    nonfinite_raw_count=int((~np.isfinite(raw_value)).sum()),
-                    raw_output_support_violations=int((np.isfinite(raw_value)&((raw_value<20)|(raw_value>70))).sum()),
-                    ambiguous_count=int(amb.sum()),reliable_valid_count=int(valid.sum()),n=n,
-                    accepted_only=metrics(v[valid],truth[valid]) if valid.any() else None)
+                projection=saved.get("raw_projection_original_fit") if k=="original_prior_fit" else (
+                    saved.get("raw_projection_robust_fit") if k=="robust_prior_fit" else None)
+                flags[k],valid=raw_accounting(v,raw_value,fallback[k],hard,amb,truth,projection)
+                saved["fallback__"+k]=fallback[k];saved["reliable_valid__"+k]=valid
+        disagreement={}
+        for policy in ("identity","edge_ols","joint_fit"):
+            disagreement[policy]={}
+            for seed in (42,20261014,20261015):
+                fp=saved[f"raw__{policy}__C_direct_seed{seed}__fp32"]
+                qi=saved[f"raw__{policy}__C_direct_seed{seed}__int8"]
+                finite=np.isfinite(fp)&np.isfinite(qi);delta=abs(fp[finite]-qi[finite])
+                disagreement[policy][str(seed)]=dict(finite_pairs=int(finite.sum()),n=n,
+                    mean_abs_uT=float(delta.mean()) if len(delta) else None,
+                    p95_abs_uT=float(np.quantile(delta,.95)) if len(delta) else None,
+                    max_abs_uT=float(delta.max()) if len(delta) else None)
         comparisons={}
-        pipeline_timing=measure(spectra,models,detector,count=16) if not a.limit else {}
+        pipeline_timing=measure(spectra,models,detector,warmups[cell],count=16) if not a.limit else {}
         decision_metrics={}
         losses_by_label={}
         for name in ("robust_prior_fit","conditional_likelihood"):
@@ -198,6 +240,7 @@ def run(a):
         path=a.out/(cell+"_predictions.npz");np.savez_compressed(path,**saved)
         summary[cell]=dict(n=n,metrics=scored,flags=flags,quantization=quant,paired_comparisons=comparisons,
             decision_metrics=decision_metrics,seed_gates=seed_gates,pipeline_timing=pipeline_timing,
+            fp32_int8_disagreement=disagreement,warmup_manifest_sha256=a.warmup_manifest_sha256,
             predictions_sha256=sha(path),scope=a.mode+"; conditional likelihood intervals uncalibrated")
         dump(a.out/(cell+"_fit_diagnostics.json"),[f.as_dict() for f in fits])
         dump(a.out/(cell+"_metrics.json"),summary[cell])
@@ -232,6 +275,7 @@ def main():
     p.add_argument("--freeze",type=Path);p.add_argument("--freeze-sha256")
     p.add_argument("--release",type=Path);p.add_argument("--release-sha256")
     p.add_argument("--gate-document",type=Path);p.add_argument("--access-receipt",type=Path)
+    p.add_argument("--warmup-data",type=Path);p.add_argument("--warmup-manifest-sha256")
     p.add_argument("--timing-isolated",action="store_true",help="operator confirms competing numerical workers are paused")
     a=p.parse_args()
     if any(os.environ.get(k)!="1" for k in ("OMP_NUM_THREADS","OPENBLAS_NUM_THREADS","MKL_NUM_THREADS")):

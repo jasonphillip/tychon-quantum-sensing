@@ -22,10 +22,10 @@ def decide(summary):
         ("robust_prior_fit","conditional_likelihood","edge_ols__int8","joint_fit__int8")}
     classical_labels=["robust_prior_fit","conditional_likelihood"]
     neural_labels=["edge_ols__int8","joint_fit__int8"]
-    classical=rank(summary,[k for k in classical_labels if gates[k]["passed"]] or classical_labels)
-    neural=rank(summary,[k for k in neural_labels if gates[k]["passed"]] or neural_labels)
+    classical=rank(summary,classical_labels)
+    neural=rank(summary,neural_labels)
     return dict(classical=classical,neural=neural,primary_implementation="int8",claim_route="accuracy",
-        gates=gates,can_proceed=any(g["passed"] for g in gates.values()))
+        gates=gates,can_proceed=bool(gates[classical]["passed"] or gates[neural]["passed"]))
 def final_decision(summary,selection):
     classical,neural=selection["classical"],selection["neural"]
     neural_gate=prediction_gate(summary,neural)

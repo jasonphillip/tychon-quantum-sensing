@@ -1,7 +1,7 @@
 """Hash-bound custody contracts. Metadata checks never open spectrum payloads."""
-import importlib.metadata,json
+import importlib.metadata,json,subprocess
 from pathlib import Path
-from models import sha,records
+from models import sha,records,interpreter_contract
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
 DEPENDENCIES=("numpy","scipy","torch","tensorflow")
@@ -22,7 +22,7 @@ def source_map(root=ROOT):
         root/"experiments/fcnn_v2_int8_float_equivalence.py"]
     return {str(p.relative_to(root)):sha(p) for p in sorted(names)}
 def versions():
-    return {p:importlib.metadata.version(p) for p in DEPENDENCIES}
+    return {**{p:importlib.metadata.version(p) for p in DEPENDENCIES},"int8_interpreter":interpreter_contract()}
 def read_pinned(path,expected):
     p=Path(path)
     if p.is_symlink() or not expected or sha(p)!=expected:raise ValueError("pinned receipt hash mismatch")
@@ -39,6 +39,8 @@ def authorize(data,partition,freeze,freeze_hash,release,release_hash,gate_docume
     verify_sources(frozen)
     manifest=json.loads((Path(data)/"manifest.json").read_text())
     if data_contract(manifest)!=frozen.get("data_contract"):raise ValueError("frozen generator/distribution drift")
+    if manifest.get("gate_document_sha256")!=sha(gate_document):raise ValueError("generated manifest gate binding mismatch")
+    if freeze_hash not in Path(gate_document).read_text():raise ValueError("custody gate lacks freeze hash")
     permit=read_pinned(release,release_hash)
     required={"schema":1,"partition":partition,"approved":True,
         "data_manifest_sha256":sha(Path(data)/"manifest.json"),"freeze_receipt_sha256":freeze_hash,
@@ -52,25 +54,50 @@ def authorize(data,partition,freeze,freeze_hash,release,release_hash,gate_docume
         or Path(access_receipt).resolve().parent!=Path(data).resolve().parent):
         raise ValueError("final receipt must be the data-root exclusive receipt")
     return frozen
-def create_freeze(stage,path,model_manifest,prior=None,prior_hash=None,validation=None,evaluation_root=None,development_manifest=None):
+def completed_validation(previous,prior_hash,validation):
+    root=Path(previous["evaluation_root"])
+    canonical=root/"results-val"/"SUMMARY.json"
+    if Path(validation).is_symlink() or Path(validation).resolve()!=canonical.resolve():
+        raise ValueError("validation summary is not canonical")
+    paths=[canonical,canonical.parent/"RECEIPT.json",root/"VAL_EVALUATOR_ACCESS.json"]
+    if any(p.is_symlink() for p in paths):raise ValueError("symlinked validation evidence")
+    summary,receipt,access=[json.loads(p.read_text()) for p in paths]
+    digest=sha(canonical)
+    if receipt.get("summary_sha256")!=digest or access.get("summary_sha256")!=digest:
+        raise ValueError("completed validation summary hash mismatch")
+    for obj in (summary,receipt,access):
+        if obj.get("status")!="complete" or obj.get("partition")!="val" or obj.get("freeze_sha256")!=prior_hash:
+            raise ValueError("validation completion/freeze binding mismatch")
+        if obj.get("manifest_sha256")!=summary.get("manifest_sha256") or not obj.get("manifest_sha256"):
+            raise ValueError("validation data binding mismatch")
+    from decisions import decide
+    selection=decide(summary["cells"])
+    if summary.get("selection")!=selection or summary.get("validation_can_proceed")!=selection["can_proceed"]:
+        raise ValueError("validation selection does not match frozen decision rule")
+    return summary
+
+def create_freeze(stage,path,model_manifest,prior=None,prior_hash=None,validation=None,evaluation_root=None,development_manifest=None,development_manifest_hash=None):
     if Path(path).exists():raise ValueError("freeze receipt already exists")
-    obj=dict(schema=1,stage=stage,source_hashes=source_map(),versions=versions(),
+    obj=dict(schema=1,stage=stage,source_commit=subprocess.check_output(["git","-C",str(ROOT),"rev-parse","HEAD"],text=True).strip(),source_hashes=source_map(),versions=versions(),
         evaluation_root=str(Path(evaluation_root).resolve()) if evaluation_root else None,
         model_records=records(model_manifest),primary_implementation="int8",claim_route="accuracy",
         bootstrap_seed=202610152001,protocol_sha256=sha(HERE/"PROTOCOL.md"))
     if stage==1:
         if not evaluation_root or not development_manifest:raise ValueError("Freeze 1 needs evaluation root and accepted development manifest")
-        dev=json.loads(Path(development_manifest).read_text())
-        if dev.get("partition")!="dev":raise ValueError("Freeze 1 requires development metadata")
+        dev=read_pinned(development_manifest,development_manifest_hash)
+        if dev.get("partition") not in ("dev","dev-r2"):raise ValueError("Freeze 1 requires explicit accepted development metadata")
         obj.update(data_contract=data_contract(dev),development_manifest_sha256=sha(development_manifest))
     if stage==2:
         previous=read_pinned(prior,prior_hash);verify_sources(previous)
-        v=json.loads(Path(validation).read_text())
+        if previous.get("schema")!=1 or previous.get("stage")!=1:raise ValueError("Freeze 2 requires Freeze 1")
+        v=completed_validation(previous,prior_hash,validation)
         if not v.get("validation_can_proceed") or v.get("partition")!="val":
             raise ValueError("validation does not permit a final campaign")
         if v.get("freeze_sha256")!=prior_hash:raise ValueError("validation belongs to another freeze")
         if previous["model_records"]!=obj["model_records"]:raise ValueError("model set drift")
-        obj.update(data_contract=previous["data_contract"],evaluation_root=previous["evaluation_root"],parent_freeze_sha256=prior_hash,validation_summary_sha256=sha(validation),selection=v["selection"])
+        obj.update(development_manifest_sha256=previous["development_manifest_sha256"],data_contract=previous["data_contract"],evaluation_root=previous["evaluation_root"],parent_freeze_sha256=prior_hash,validation_summary_sha256=sha(validation),
+            validation_receipt_sha256=sha(Path(validation).parent/"RECEIPT.json"),
+            validation_access_sha256=sha(Path(previous["evaluation_root"])/"VAL_EVALUATOR_ACCESS.json"),selection=v["selection"])
     with Path(path).open("x") as f:json.dump(obj,f,indent=2)
     return sha(path)
 def main():
@@ -78,7 +105,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--stage",type=int,choices=[1,2],required=True)
     p.add_argument("--out",type=Path,required=True);p.add_argument("--model-manifest",type=Path,required=True)
-    p.add_argument("--evaluation-root",type=Path);p.add_argument("--development-manifest",type=Path)
+    p.add_argument("--evaluation-root",type=Path);p.add_argument("--development-manifest",type=Path);p.add_argument("--development-manifest-sha256")
     p.add_argument("--prior",type=Path);p.add_argument("--prior-sha256");p.add_argument("--validation",type=Path)
-    a=p.parse_args();print(json.dumps(dict(path=str(a.out),sha256=create_freeze(a.stage,a.out,a.model_manifest,a.prior,a.prior_sha256,a.validation,a.evaluation_root,a.development_manifest))))
+    a=p.parse_args();print(json.dumps(dict(path=str(a.out),sha256=create_freeze(a.stage,a.out,a.model_manifest,a.prior,a.prior_sha256,a.validation,a.evaluation_root,a.development_manifest,a.development_manifest_sha256))))
 if __name__=="__main__":main()

@@ -2,9 +2,11 @@
 import time
 import numpy as np
 from estimators import GRID,TRAIN_MEDIAN,robust_fit,edge_ols,likelihood_magnitude,checked_fallback
-def measure(spectra,models,detector,count=16):
+def measure(spectra,models,detector,warmup_spectra,count=16):
     rows=np.asarray(spectra)[:count]
     if not len(rows):raise ValueError("timing requires inputs")
+    warmups=np.asarray(warmup_spectra)
+    if warmups.shape!=(4,100):raise ValueError("exactly four frozen development warm-up rows required")
     methods=["robust_prior_fit","conditional_likelihood"]+[
         f"{policy}__C_direct_seed{seed}__{precision}"
         for policy in ("edge_ols","joint_fit") for seed in (42,20261014,20261015)
@@ -21,11 +23,11 @@ def measure(spectra,models,detector,count=16):
         return float(checked_fallback([raw],[False])[0][0])
     result={}
     for label in methods:
-        for row in rows[:4]:one(label,row)
+        for row in warmups:one(label,row)
         times=[]
         for row in rows:
             start=time.perf_counter();one(label,row);times.append(time.perf_counter()-start)
         result[label]=dict(median_pipeline_seconds=float(np.median(times)),p95_pipeline_seconds=float(np.quantile(times,.95)),
-            n=len(times),warmup=min(4,len(rows)),batch_size=1,threads=1,
+            n=len(times),warmup=4,warmup_source="frozen development",batch_size=1,threads=1,
             scope="full preprocessing, common quality fit, inference/conversion, and fallback")
     return result

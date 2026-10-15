@@ -1,5 +1,5 @@
 """Reuse the released direct model and its existing INT8 preprocessing."""
-import hashlib, importlib.util, json, sys
+import hashlib, importlib.util, importlib.metadata, json, sys
 from pathlib import Path
 import numpy as np
 
@@ -19,6 +19,10 @@ def records(manifest):
         for key in ("checkpoint","export"):
             if sha(r[key])!=r[key+"_sha256"]:raise ValueError("frozen model artifact changed")
     return sorted(chosen,key=lambda r:r["seed"])
+def interpreter_contract():
+    if importlib.util.find_spec("tflite_runtime") is not None:
+        return dict(backend="tflite_runtime",version=importlib.metadata.version("tflite-runtime"))
+    return dict(backend="tensorflow",version=importlib.metadata.version("tensorflow"))
 class DirectModels:
     def __init__(self,repo,chosen):
         import torch
@@ -27,8 +31,11 @@ class DirectModels:
         self.torch=torch
         self.helpers=module("scalar_repair_export_helpers",Path(repo)/"experiments/fcnn_v2_int8_float_equivalence.py")
         arch=module("scalar_repair_arch",Path(repo)/"src/odmr_edge_ml/models/fcnn_v2.py")
-        try:from tflite_runtime.interpreter import Interpreter
-        except ImportError:from tensorflow.lite.python.interpreter import Interpreter
+        self.interpreter_contract=interpreter_contract()
+        if self.interpreter_contract["backend"]=="tflite_runtime":
+            from tflite_runtime.interpreter import Interpreter
+        else:
+            from tensorflow.lite.python.interpreter import Interpreter
         self.items=[]
         for r in chosen:
             ckpt=torch.load(r["checkpoint"],map_location="cpu",weights_only=True)

@@ -9,10 +9,15 @@ Every path below is an explicit argument. Replace placeholder roots with absolut
 
 The receipt wrapper enforces one numerical thread, a CPU deadline and an 8 GiB address-space ceiling.
 It appends CPU time, wall time, memory and exit status to a JSONL ledger.
+It locks the shared numerical campaign and reads its own and explicit peer ledgers before launch.
+It reserves the requested seconds against cumulative caps, including failed jobs and the final reserve.
+Missing CPU entries cost four times wall time. Earlier undercounted CPU entries cost at least wall time.
+Use --stage validation or --stage final when custody permits those stages.
 
 ```sh
 /path/to/python /path/to/repo/experiments/scalar_repair_cycle/job_receipt.py \
-  --ledger /path/to/work/compute_ledger.jsonl --seconds 900 -- \
+  --ledger /path/to/work/compute_ledger.jsonl --budget-ledger /path/to/peer/compute_ledger.jsonl \
+  --budget-lock /path/to/shared/numerical.lock --seconds 120 -- \
   /path/to/python -m pytest -q /path/to/repo/tests/test_scalar_repair_cycle.py
 ```
 
@@ -31,7 +36,8 @@ For development scoring, use the accepted manifest hash and a new output directo
 ```sh
 /path/to/python /path/to/repo/experiments/scalar_repair_cycle/run_development.py \
   --mode dev --data /path/to/data/dev --data-manifest-sha256 SHA256 \
-  --model-manifest /path/to/original/FROZEN_CHOICES.json --out /path/to/work/results-dev
+  --model-manifest /path/to/original/FROZEN_CHOICES.json --out /path/to/work/results-dev \
+  --warmup-data /path/to/data/dev --warmup-manifest-sha256 SHA256
 ```
 
 The historical runner filename is retained. It also supports gated validation and final modes.
@@ -43,7 +49,7 @@ Create Freeze 1 only after source review and acceptance of the corrected develop
 ```sh
 /path/to/python /path/to/repo/experiments/scalar_repair_cycle/gates.py --stage 1 \
   --model-manifest /path/to/original/FROZEN_CHOICES.json \
-  --development-manifest /path/to/data/dev/manifest.json \
+  --development-manifest /path/to/data/dev/manifest.json --development-manifest-sha256 SHA256 \
   --evaluation-root /path/to/work/evaluation --out /path/to/work/freeze1.json
 ```
 
