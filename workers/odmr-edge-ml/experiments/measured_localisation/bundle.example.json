@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "dataset_doi": "10.5281/zenodo.19855773",
+  "archive_sha256": "REPLACE_WITH_CUSTODY_ARCHIVE_SHA256",
+  "extraction_source_sha256": "REPLACE_WITH_REVIEWED_EXTRACTION_SOURCE_SHA256",
+  "license": "CC-BY-4.0",
+  "measured_only": true,
+  "positions_unit": "um",
+  "position_reference": "motor_stage_xy_fixed_target_height_and_orientation",
+  "position_calibration_uncertainty": "REQUIRES_CUSTODY_FINDING",
+  "feature_order": "channel_major_splitting_std1_std2_MHz",
+  "feature_calibration_access": "per_sample_only",
+  "operating_bounds_um": [[0, 260], [0, 1000]],
+  "operating_bounds_note": "PLACEHOLDERS: replace with actual stage-frame bounds from source metadata; do not shift labels to these defaults",
+  "features": {"path": "features.npy", "sha256": "REPLACE"},
+  "positions": {"path": "positions.npy", "sha256": "REPLACE"},
+  "sample_ids": {"path": "sample_ids.json", "sha256": "REPLACE"},
+  "acquisition_groups": {"path": "acquisition_groups.json", "sha256": "REPLACE"},
+  "supplied_splits": {"path": "supplied_splits.json", "sha256": "REPLACE"},
+  "published_test_predictions": {
+    "path": "published_test_predictions.npy",
+    "sha256": "REPLACE",
+    "units": "um",
+    "order": "supplied_test_indices"
+  },
+  "physical_baseline_ready": false,
+  "physical_baseline_exclusion_reason": "REPLACE_WITH_METADATA_BASED_FINDING; no invented geometry or field calibration",
+  "source_members": [],
+  "previously_viewed_values": [],
+  "excluded_simulation_members": []
+}

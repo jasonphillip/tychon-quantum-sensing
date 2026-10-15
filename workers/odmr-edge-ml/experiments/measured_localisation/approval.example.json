@@ -1,0 +1,15 @@
+{
+  "status": "DRAFT_NOT_AUTHORIZED",
+  "study": "measured-localisation-2026-10-15",
+  "claim_scope": "measured_fixed_geometry_motor_stage_position",
+  "accounting_authority": "REPLACE_WITH_ROOT_CAMPAIGN_AUTHORITY",
+  "phases": [],
+  "source_sha256": {},
+  "bundle_sha256": "REPLACE",
+  "partition_sha256": "REQUIRED_FOR_DEVELOP_AND_EVALUATE",
+  "qualification_sha256": "REQUIRED_FOR_DEVELOP",
+  "selection_sha256": "REQUIRED_FOR_EVALUATE",
+  "candidate_sha256": "REQUIRED_FOR_EVALUATE",
+  "random_seed": 0,
+  "partition_salt": "REPLACE_BEFORE_ANY_POSITION_PARTITION_ACCESS"
+}
