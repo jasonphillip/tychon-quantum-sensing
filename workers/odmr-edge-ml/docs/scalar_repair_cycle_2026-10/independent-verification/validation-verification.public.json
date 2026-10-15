@@ -2,7 +2,7 @@
   "status": "PASS",
   "verification_scope": "saved validation arrays only; independent formulas",
   "definition_commit": "c6229d52279af38792023de48ec0747d93d720bb",
-  "results_root": "private-path/3cf78dfd637868b4/results-val",
+  "results_root": "<private-path-30>",
   "summary_sha256": "0791673b84a8ddf2e1733979bc2a77b4469c52decc4492eab75a4e3b15a21eba",
   "receipt_sha256": "b53057c51ec1e5e645f2a2bb5997ff41853ae16e451d7a234e3170916ed1ceb4",
   "freeze_sha256": "2abda4c9f48850236ef46ba39b1b0dfa94621151fc2759e90fb6ab1d237dbeac",

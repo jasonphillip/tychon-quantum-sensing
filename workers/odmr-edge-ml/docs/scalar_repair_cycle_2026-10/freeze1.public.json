@@ -30,33 +30,33 @@
       "version": "2.20.0"
     }
   },
-  "evaluation_root": "private-path/fde7256cfada5a45/evaluation",
+  "evaluation_root": "<private-path-17>",
   "model_records": [
     {
       "name": "C_direct_seed42",
       "arm": "C_direct",
       "seed": 42,
-      "checkpoint": "private-path/74109ecdba96201c/best_clean.pt",
+      "checkpoint": "<private-path-18>",
       "checkpoint_sha256": "21f10cd359cf301086cf4eff09d45a5811e4e79f7eacd2c7b2b40ac221582a13",
-      "export": "private-path/c30cf02614f9f751/C_direct_seed42.tflite",
+      "export": "<private-path-19>",
       "export_sha256": "c28c1f71ba5250cff70320934d9678bdeb4783332533e04f81e24a03996c2aae"
     },
     {
       "name": "C_direct_seed20261014",
       "arm": "C_direct",
       "seed": 20261014,
-      "checkpoint": "private-path/236e8654d935f105/best_clean.pt",
+      "checkpoint": "<private-path-20>",
       "checkpoint_sha256": "7de4e62a957838057fbe2c7f22f43a75ee77fb1c05887d499e77a9ffd118676e",
-      "export": "private-path/435b53a1d8bddd1d/C_direct_seed20261014.tflite",
+      "export": "<private-path-21>",
       "export_sha256": "f94bab2465e433f013a645ac01519dfe9ad282d40e3249e75698e9be35af8858"
     },
     {
       "name": "C_direct_seed20261015",
       "arm": "C_direct",
       "seed": 20261015,
-      "checkpoint": "private-path/719b5ccfbff9cd66/best_clean.pt",
+      "checkpoint": "<private-path-22>",
       "checkpoint_sha256": "635ef8cb6b0341b0e55c90bbe523186289e7eceede4d0a8ee6c2fbf2ff3cba16",
-      "export": "private-path/28cb2cb222a59f23/C_direct_seed20261015.tflite",
+      "export": "<private-path-23>",
       "export_sha256": "89041957bc7b2ddad3f04187a0bd1db9d2dd141a89cc1d2f349e5d93929a61b1"
     }
   ],

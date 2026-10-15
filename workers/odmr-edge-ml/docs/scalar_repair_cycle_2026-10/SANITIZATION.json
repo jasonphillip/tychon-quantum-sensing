@@ -3,49 +3,49 @@
     {
       "original_sha256": "bc022e7650c9ef34ff123640d4d9ec659495bcc07c36252f6046c14de85dc2b0",
       "public_path": "data/manifests/dev.manifest.public.json",
-      "public_sha256": "9a06f6878866061f5c294c0b7c70ae43e2755588c265aad6f21132a0c36fc55b",
+      "public_sha256": "751644e92e629ebe3d027164c57e3f66a998b998a2faaec273a3ee05f5f14889",
       "replacement_count": 22,
-      "rule_id": "P1"
+      "rule_id": "P2"
     },
     {
       "original_sha256": "2abda4c9f48850236ef46ba39b1b0dfa94621151fc2759e90fb6ab1d237dbeac",
       "public_path": "freeze1.public.json",
-      "public_sha256": "eb5da0d4db8799e3239e52234bdf8fb59200895aa5245b6d949cf84a12cbd4c8",
+      "public_sha256": "8b95f917c4b736f69820fcf03d127b0800475efc1029a0220fe3f199772baccb",
       "replacement_count": 7,
-      "rule_id": "P1"
+      "rule_id": "P2"
     },
     {
       "original_sha256": "257faddef7b24e8acfae75b1e1a23ebdb2f3fcb85a467b96ee2e813b1771f136",
       "public_path": "independent-verification/executed-command.public.txt",
-      "public_sha256": "6cb21e2d50211a8897a3959a27bdf2777e6241c08970933d29a663066c595dac",
+      "public_sha256": "852c4600c34a51a845b536e3231ddfde5610263a35a78a14347c401b0fef400a",
       "replacement_count": 11,
-      "rule_id": "P1"
+      "rule_id": "P2"
     },
     {
       "original_sha256": "9ca5fe0347ec5ebf2bebc006f54b294443a90f793e9016859652d45a2d8e6eaf",
       "public_path": "independent-verification/validation-verification.public.json",
-      "public_sha256": "8a4c12844a9c8544e32187a675d28514367b79aa1e0ffc27d2d3bb3ba6d264fe",
+      "public_sha256": "bbd7b16d12e8c1336d3c5d427ce71cb82151c9bae77ac594814b62dd0401b405",
       "replacement_count": 1,
-      "rule_id": "P1"
+      "rule_id": "P2"
     },
     {
       "original_sha256": "9de5730ec6078906831c7147a416d135f58adbc070c68038f5953b3634598b1b",
       "public_path": "results-val/ACCESS.public.json",
-      "public_sha256": "05fecde6c41e5787f7d4a0ff5ba7c0088efb5a7068fcabc16e8969771945d651",
+      "public_sha256": "50f9c370fb8f2bf7dc965ee0e47d563a5d03e4ddb935002d83992370904dc1af",
       "replacement_count": 6,
-      "rule_id": "P1"
+      "rule_id": "P2"
     },
     {
       "original_sha256": "b53057c51ec1e5e645f2a2bb5997ff41853ae16e451d7a234e3170916ed1ceb4",
       "public_path": "results-val/RECEIPT.public.json",
-      "public_sha256": "713b6a69272a6be5235667cf8ef322fc3ccbb9fae0fbe2130384a236eb01fa2b",
+      "public_sha256": "2002a5a0a6d35bfa690a6d63191eb69f164a0d8ce133a7b45a4743b60f33eaa4",
       "replacement_count": 6,
-      "rule_id": "P1"
+      "rule_id": "P2"
     }
   ],
   "limit": "the origin hash is a provenance claim; a public reader cannot verify bytes that are not published",
-  "regex": "/(?:home|Users)/[^\"\\'\\s<>]+",
-  "replacement": "private-path/<first 16 lowercase hex of SHA256 of matched UTF-8 path>/<last slash component>",
-  "rule_id": "P1",
+  "regex": "/(?:home|Users|tmp|mnt|media|var|private|Volumes)/[^\"\\'\\s<>]+",
+  "replacement": "<private-path-NN>, assigned by first appearance across the six derivatives",
+  "rule_id": "P2",
   "schema": 1
 }

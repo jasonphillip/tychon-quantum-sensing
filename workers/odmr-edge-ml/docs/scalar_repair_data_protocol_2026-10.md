@@ -18,7 +18,9 @@ The custodian keeps data under `.scratch/scalar_repair_2026-10/{dev,val,final}`.
 
 ## Seed reservation and overlap audit
 
-The seed search reads every `*manifest*.json` in this checkout's `docs/` and `experiments/`, `~/projects/tychon-shared-data/`, `~/projects/portfolio-publication/work/scalar-stress-test/data/` and `sealing/`, and `~/projects/portfolio-publication/wt/odmr-vector-tracking-s1-comparison/docs/`. It found 16 readable manifests and 55,581 distinct used or excluded integer seeds. The target-repair holdout manifest omits row seeds; its saved `master_seed` and `row_count` reconstruct 5,000 row seeds under its saved recipe. No consumed spectrum payload was opened. Each generated manifest stores the path, hash, and seed count for every searched manifest.
+The seed search reads every `*manifest*.json` in `repo-docs`, `repo-experiments`, and `root-01` through `root-04`. It found 16 readable manifests and 55,581 distinct used or excluded integer seeds. The target-repair holdout manifest omits row seeds; its saved `master_seed` and `row_count` reconstruct 5,000 row seeds under its saved recipe. No consumed spectrum payload was opened. Each generated manifest stores the path, hash, and seed count for every searched manifest.
+
+Root legend: `repo-docs` and `repo-experiments` are this checkout's folders; `root-01` is shared simulated datasets, `root-02` scalar stress-test data, `root-03` stress-test sealing records, and `root-04` vector study docs.
 
 The coordinator excludes `20261014`, `20261114`, `20261214`, `20270114`, `202610140`, `202610141`, `202610142`, and `20261015`. The new reserved master seeds are below. NumPy `SeedSequence(master).spawn(3)` supplies separate sample, shot-noise, and nuisance streams. Sample seeds skip all used seeds. The ordered sample-seed lists are recorded in each generated partition manifest. The SHA256 values below hash compact JSON arrays of the reserved sample seeds, without whitespace.
 

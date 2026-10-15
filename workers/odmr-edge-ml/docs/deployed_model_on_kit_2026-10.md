@@ -45,7 +45,7 @@ pfkit infer R/model.vnnx --input R/input.int8.npy --output R/hw.bin --json R/hw.
 PYTHONPATH=src python3 experiments/deployed_model_on_kit.py --evaluate --run .scratch/kit-run-2026-10-14
 ```
 
-Compile: `model.vnnx` 12,832 bytes, sha256 `55bf88b72725c7b252ab48107436cd31427fb86da81a207fc19ab0afad06f5b9` (tools host `vbx` 2.0.0, `vnnx_compile -c V250`). The June 2026 bring-up compiled the same TFLite to a 12,832-byte `.vnnx` with sha256 `6c5cd21a…` on the SDK 2.0.3 bring-up toolchain (polarfire-hybrid-control DLOG-048): same size, different bytes; the compiled bytes differ and this comparison does not establish the cause (the June TFLite input's hash was not recorded, and no historical compiler build was checked). The new file is bit-exact against the INT8 TFLite on the simulator and on the kit (criteria 2 and 3), which is the check that matters.
+Compile: `model.vnnx` 12,832 bytes, sha256 `55bf88b72725c7b252ab48107436cd31427fb86da81a207fc19ab0afad06f5b9` (tools host `vbx` 2.0.0, `vnnx_compile -c V250`). The June 2026 bring-up compiled the historical model input (its hash was not recorded) to a 12,832-byte `.vnnx` with sha256 `6c5cd21a…` on the SDK 2.0.3 bring-up toolchain (polarfire-hybrid-control DLOG-048): same size, different bytes; the compiled bytes differ and this comparison does not establish the cause (the June TFLite input's hash was not recorded, and no historical compiler build was checked). The new file is bit-exact against the INT8 TFLite on the simulator and on the kit (criteria 2 and 3), which is the check that matters.
 
 Kit: image with overlay `vbx_only`, node `vbx@60030000`; `vbx_run` completed 512 of 512, `npu_error 0`, `exit_code 0`.
 
