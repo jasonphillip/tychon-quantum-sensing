@@ -1,0 +1,9 @@
+{
+  "status": "complete",
+  "input_manifest_sha256": "178644fe36144845c742d97c59cfaa52cf6f3cc571649ea5648fa3b438a5e09b",
+  "freeze_sha256": "9cd53531509a5cfc2276f9c7eb0a446bac8b6a42f6bb67827148894ad2718837",
+  "access_sha256": "95ba37cc65aff0583cb29bb4158fd334a07a9fcbbc14f6382519269c927a3079",
+  "prediction_commitment_sha256": "1dd076045f08fb5dd05e00de0b54247cdb44e850c6e469e981b7f8d64c21a0c1",
+  "prediction_commitment_revision": "d8e1698209ff97ee411e99d4a8bec768bcb7370c",
+  "gate_pass": true
+}

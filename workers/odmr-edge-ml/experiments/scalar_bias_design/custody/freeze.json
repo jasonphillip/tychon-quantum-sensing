@@ -1,0 +1,26 @@
+{
+  "code_manifest_sha256": "3de525b58e38f381b63a6617414060ffc0812bc0b4dc3d3bbeaec8cdd03d5b64",
+  "commitment_sha256": "8db7c489783f5eb9e1370b118395b71eb459226870711c52d6a9dd011b1991dc",
+  "files": {
+    "experiments/scalar_bias_design/PROTOCOL.md": "3278e90ac3cdc2769221a4bd619f8175cfc33bd2ffa3417a11fff71196aa9a1d",
+    "experiments/scalar_bias_design/STAGE1_GATE.json": "661b488f3da2bb5fd767cfdad3cd0bb35302cf14198a303d2ff6555d5dd15655",
+    "experiments/scalar_bias_design/audits/development-seeds.json": "709a761c49357e95edee1ebdd85351db8f396c4e6cf4c9333b2ce7fb29d9c60d",
+    "experiments/scalar_bias_design/audits/evaluation-prior-seed-range-certificate.public.json": "10be7af73ad9223afd7178624968b1b43ae09a836350ea53d8bb91514df58d56",
+    "experiments/scalar_bias_design/audits/evaluation-seeds.json": "e88b097ce83fb53418717a975ab051fd7f019dc76d83bfa3ca5f3af2e3feb33a",
+    "experiments/scalar_bias_design/audits/prior-seed-range-certificate.public.json": "10be7af73ad9223afd7178624968b1b43ae09a836350ea53d8bb91514df58d56",
+    "experiments/scalar_bias_design/budget.py": "83946cd9a902324b584988c97310a59cbc85619f5883ca5096bd4b516b361f5e",
+    "experiments/scalar_bias_design/check_saved.py": "889c6de5d662dcbaeec6dd4e4ea047ca50e9ca38223c7854a54c01454e55a485",
+    "experiments/scalar_bias_design/commitments/development.json": "703c70434e884b61c34210b739e5439726551a8b263eb77007c43b33507590e7",
+    "experiments/scalar_bias_design/custody.py": "1033f54dd09999ea2985cd4a696c5bc47eb6a3ba37c63d524408d68a7fd17ccf",
+    "experiments/scalar_bias_design/custody/commitment.json": "43bca2e476bbefc1a5a46e7fb45add010ef257581f1e2210cdcf6126d2c78c57",
+    "experiments/scalar_bias_design/fit.py": "5a14d4be7359d4458e92fc5291dbbc3e3bf6b2e3233d1b0c83b217f104ac6798",
+    "experiments/scalar_bias_design/generator.py": "38e87fd48ff489f9c967862f083dae038ed51ac1ce2f65c84fc506291334d32d",
+    "experiments/scalar_bias_design/metrics.py": "f4c6c1824ccfdb1fb79a13c1558150103d78868a5314d350245152f56b5bffc8",
+    "experiments/scalar_bias_design/registration.json": "7d101403fdb08b40a96e0de3f3c5ea2417cf269e2f750f3f7eed7a80821f89e8",
+    "experiments/scalar_bias_design/run_predictions.py": "709c6089e680dba2df33e60a859f76d6d4b476cb6a47e357b840940b1e96f93a",
+    "experiments/scalar_information_limit/forward.py": "04a88c370ec9aa867e2579ad6ed849a18fdd8b865c052eef41f12c287a9ba219"
+  },
+  "protocol_sha256": "3278e90ac3cdc2769221a4bd619f8175cfc33bd2ffa3417a11fff71196aa9a1d",
+  "registration_sha256": "7d101403fdb08b40a96e0de3f3c5ea2417cf269e2f750f3f7eed7a80821f89e8",
+  "schema": 1
+}

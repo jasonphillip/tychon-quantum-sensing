@@ -1,0 +1,7 @@
+{
+  "status": "complete",
+  "result_sha256": "48626be026b77c0e8192cb286d846e62ecb41fe932458af2695bb05e53ee9180",
+  "freeze_sha256": "9cd53531509a5cfc2276f9c7eb0a446bac8b6a42f6bb67827148894ad2718837",
+  "access_sha256": "95ba37cc65aff0583cb29bb4158fd334a07a9fcbbc14f6382519269c927a3079",
+  "bundle_manifest_sha256": "622b690acb502c1dc8aa38a81ed06172cc4574a17bd61fe37df5d890d57bd985"
+}

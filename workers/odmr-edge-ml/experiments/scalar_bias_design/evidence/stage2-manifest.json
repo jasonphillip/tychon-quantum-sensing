@@ -1,0 +1,7 @@
+{
+  "verifier_sha256": "970942a40d8bc24b19728d669f3eab3db477d8ef3914c9a3730f8d9f0133f3f8",
+  "report_sha256": "f61daf1aa405ab29db7d39dec998a10288fb4133f4317cf0e0e0e9cf3b6e729e",
+  "redactions": [],
+  "execution_scope": "Original study checkout. Git-history verification is not promised unchanged in the filtered public repository.",
+  "portable_check": "experiments/scalar_bias_design/check_saved.py"
+}
