@@ -56,6 +56,23 @@ def test_declared_width_parameter_counts():
         assert config["device"] == "cuda"
 
 
+def test_versioned_custody_envelopes_validate_counts(tmp_path):
+    ids = {"schema": 1, "count": 2, "source_order": "existing fitted-array row index only",
+           "ids": ["measurement_0000", "measurement_0001"]}
+    assert bundle.metadata_list(ids, "ids") == ids["ids"]
+    with pytest.raises(ValueError, match="schema/count"):
+        bundle.metadata_list(dict(ids, count=3), "ids")
+    catalog = {"schema": 1, "count": 2, "entries": [
+        {"position_um": [1., 2.], "session_id": "session01"},
+        {"position_um": [1., 2.], "session_id": "session02"}]}
+    (tmp_path / "catalog.json").write_text(json.dumps(catalog))
+    manifest = {"raw_position_catalog": {"path": "catalog.json", "sha256": sha256(tmp_path / "catalog.json")}}
+    (tmp_path / "manifest.json").write_text(json.dumps(manifest))
+    assert bundle.possible_sessions(tmp_path / "manifest.json", np.array([[1., 2.]])) == [["session01", "session02"]]
+    with pytest.raises(ValueError, match="schema/count"):
+        bundle.metadata_list(dict(catalog, count=1), "entries")
+
+
 def test_native_adapter_selects_rows_and_converts_ghz(tmp_path):
     parameters = np.zeros((2, 8, 6))
     deviations = np.ones((2, 8, 6)) * 0.002

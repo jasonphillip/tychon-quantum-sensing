@@ -8,6 +8,20 @@ import re
 from .guard import read_json, sha256
 
 
+def metadata_list(value, key):
+    """Accept custody schema 1 envelopes and legacy manufactured fixture lists."""
+    if isinstance(value, dict):
+        rows = value.get(key)
+        if (type(value.get("schema")) is not int or value["schema"] != 1
+                or type(value.get("count")) is not int
+                or not isinstance(rows, list) or value["count"] != len(rows)):
+            raise ValueError("invalid custody envelope schema/count: " + key)
+        return rows
+    if not isinstance(value, list):
+        raise ValueError("custody metadata must be a list or schema 1 envelope: " + key)
+    return value
+
+
 def checked_path(root, entry):
     rel = Path(entry["path"])
     if rel.is_absolute() or ".." in rel.parts:
@@ -68,7 +82,7 @@ def inspect_positions(manifest_path):
     expected = [n, 2] if keys == ("positions",) else [n]
     if any(headers[k]["shape"] != expected for k in keys):
         raise ValueError("expected stage positions [N,2] or separate x/y [N]")
-    ids = read_json(checked_path(path.parent, manifest["sample_ids"]))
+    ids = metadata_list(read_json(checked_path(path.parent, manifest["sample_ids"])), "ids")
     if len(ids) != n or len(set(ids)) != n or not all(isinstance(x, str) for x in ids):
         raise ValueError("unique stable sample IDs required")
     if "acquisition_groups" in manifest:
@@ -104,7 +118,7 @@ def possible_sessions(manifest_path, positions):
     """Conservative memberships; never pretend archive order proves acquisition order."""
     path = Path(manifest_path).resolve()
     manifest = read_json(path)
-    catalog = read_json(checked_path(path.parent, manifest["raw_position_catalog"]))
+    catalog = metadata_list(read_json(checked_path(path.parent, manifest["raw_position_catalog"])), "entries")
     lookup = {}
     for row in catalog:
         key = tuple(float(v) for v in row["position_um"])
