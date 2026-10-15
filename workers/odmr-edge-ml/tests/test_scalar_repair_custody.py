@@ -1,0 +1,91 @@
+"""Custody release binding and atomic access checks using manufactured spectra."""
+from __future__ import annotations
+
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+import numpy as np
+import pytest
+
+from scripts import scalar_repair_custody as custody
+
+
+def fixture(tmp_path, partition):
+    root = tmp_path / "data"
+    dest = root / partition
+    dest.mkdir(parents=True)
+    cells = {}
+    for name in custody.verify.__globals__["CELLS"]:
+        path = dest / f"{name}.npz"
+        np.savez_compressed(path, spectra=np.ones((1, 100)),
+                            truth_vectors_T=np.zeros((1, 3)), sample_seeds=[17])
+        cells[name] = {"file": path.name, "sha256": custody.sha(path), "rows": 1}
+        path.chmod(0o444)
+    frozen = tmp_path / "source-freeze.json"
+    frozen.write_text(json.dumps({"schema": 1, "stage": 1 if partition == "val" else 2}))
+    gate = tmp_path / ("FREEZE1.md" if partition == "val" else "FREEZE2.md")
+    gate.write_text(f"approved\nfreeze_receipt_sha256: {custody.sha(frozen)}\n")
+    custody.verify.__globals__["write_json"](dest / "manifest.json", {
+        "partition": partition, "cells": cells, "rows_per_cell": 1,
+        "field_ids": [f"{partition}-0"], "nuisance_group_ids": [f"{partition}-ou-0"],
+        "sample_seeds": [17], "noise_seeds": [18], "nuisance_seeds": [19],
+        "gate_document_sha256": custody.sha(gate)})
+    (dest / "manifest.json").chmod(0o444)
+    dest.chmod(0o555)
+    return root, gate, frozen
+
+
+def cli(*args, success=True):
+    result = subprocess.run([sys.executable, str(Path(custody.__file__)), *map(str, args)],
+                            text=True, capture_output=True)
+    assert (result.returncode == 0) == success, result.stderr
+    return json.loads(result.stdout) if success else result.stderr
+
+
+@pytest.mark.parametrize("partition", ["val", "final"])
+def test_cli_round_trip_and_repeat_access(tmp_path, partition):
+    root, gate, frozen = fixture(tmp_path, partition)
+    assert cli("check-gate", "--partition", partition, "--gate-doc", gate,
+               "--freeze-receipt", frozen)["gate_document_sha256"] == custody.sha(gate)
+    access = root / "exclusive-access-receipt.json" if partition == "final" else tmp_path / "val-access.json"
+    common = ("--partition", partition, "--data-root", root, "--gate-doc", gate,
+              "--freeze-receipt", frozen)
+    value = cli("access-receipt", *common, "--grantee", "Codex scalar evaluator", "--out", access)
+    assert set(value) == custody.ACCESS_KEYS
+    assert value["freeze_receipt_sha256"] == custody.sha(frozen)
+    assert "already exists" in cli("access-receipt", *common, "--grantee", "second",
+                                   "--out", access, success=False)
+    release = tmp_path / "release.json"
+    issued = cli("release", *common, "--access-receipt", access, "--out", release)
+    assert set(issued) == custody.RELEASE_KEYS | {"paths"}
+    assert cli("verify-release", "--release", release) == issued
+    manifest = root / partition / "manifest.json"
+    manifest.chmod(0o644)
+    manifest.write_text(manifest.read_text() + " ")
+    manifest.chmod(0o444)
+    assert "Exclusive access receipt binding mismatch" in cli("verify-release", "--release", release, success=False)
+
+
+def test_gate_stage_and_replacement_rejected(tmp_path):
+    root, gate, frozen = fixture(tmp_path, "val")
+    assert custody.check_gate("val", gate, frozen) == custody.sha(gate)
+    wrong = tmp_path / "wrong.json"
+    wrong.write_text(json.dumps({"schema": 1, "stage": 2}))
+    with pytest.raises(RuntimeError, match="stage"):
+        custody.check_gate("val", gate, wrong)
+    gate.write_text(f"replacement\nfreeze_receipt_sha256: {custody.sha(frozen)}\n")
+    with pytest.raises(RuntimeError, match="manifest gate"):
+        custody.access_receipt(root, "val", "evaluator", tmp_path / "access.json", gate, frozen)
+
+
+def test_access_binding_rechecked(tmp_path):
+    root, gate, frozen = fixture(tmp_path, "val")
+    access = tmp_path / "access.json"
+    custody.access_receipt(root, "val", "evaluator", access, gate, frozen)
+    value = json.loads(access.read_text())
+    value["data_manifest_sha256"] = "0" * 64
+    access.write_text(json.dumps(value))
+    with pytest.raises(RuntimeError, match="binding"):
+        custody.release("val", root, gate, frozen, tmp_path / "release.json", access)

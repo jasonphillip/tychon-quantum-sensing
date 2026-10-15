@@ -1,0 +1,1658 @@
+{
+  "status": "PASS",
+  "verification_scope": "saved validation arrays only; independent formulas",
+  "definition_commit": "c6229d52279af38792023de48ec0747d93d720bb",
+  "results_root": "private-path/3cf78dfd637868b4/results-val",
+  "summary_sha256": "0791673b84a8ddf2e1733979bc2a77b4469c52decc4492eab75a4e3b15a21eba",
+  "receipt_sha256": "b53057c51ec1e5e645f2a2bb5997ff41853ae16e451d7a234e3170916ed1ceb4",
+  "freeze_sha256": "2abda4c9f48850236ef46ba39b1b0dfa94621151fc2759e90fb6ab1d237dbeac",
+  "manifest_sha256": "3014d4978916e05b65a9d672a37789895eefd94bf3e0e666f845c22bfa7915c2",
+  "prediction_hashes": {
+    "clean_predictions.npz": "ebb4ee6284125a254b729aa011e274a30a58160130779741bfbbd75ba57af56f",
+    "realistic_anchor_predictions.npz": "1495a092fe7f350668ed2c64b8e363a704dd1d4cbc547052d3238195869d3b2a",
+    "wide_lines_predictions.npz": "cade7b9cbc4109532c9cde25ba285e52a3c514c0e2a21a69eee85ec64955f7e4",
+    "low_snr_predictions.npz": "6acec5fe07c54e19d04f350020070755878583513a355a379deff17a0e291d64",
+    "negative_slope_predictions.npz": "d6cc5b53f9c2f928ac9cc3fe9eccc30ef7b3a5bcf753e1675db3ac8758d217fe",
+    "negative_offset_predictions.npz": "ab3ab8d1d69b78f137c44a4f4d974bfb058c4851b59bab6c3f7f054ad8429e15",
+    "higher_contrast_predictions.npz": "941acc1f765819fde484719ecb3d8ff80cb1db67806dcd9829e16dbd34dbac85"
+  },
+  "rows": 3584,
+  "methods_per_cell": 24,
+  "method_condition_combinations": 168,
+  "flag_methods_per_cell": 22,
+  "primary_bootstrap_contrasts": 104,
+  "bootstrap_draws": 10000,
+  "bootstrap_seed": 202610152001,
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 1e-10,
+  "selection": {
+    "classical": "robust_prior_fit",
+    "neural": "joint_fit__int8",
+    "primary_implementation": "int8",
+    "claim_route": "accuracy",
+    "gates": {
+      "robust_prior_fit": {
+        "passed": false,
+        "conditions": {
+          "clean": false,
+          "realistic_anchor": false
+        }
+      },
+      "conditional_likelihood": {
+        "passed": false,
+        "conditions": {
+          "clean": false,
+          "realistic_anchor": false
+        }
+      },
+      "edge_ols__int8": {
+        "passed": false,
+        "conditions": {
+          "clean": true,
+          "realistic_anchor": false
+        }
+      },
+      "joint_fit__int8": {
+        "passed": false,
+        "conditions": {
+          "clean": true,
+          "realistic_anchor": false
+        }
+      }
+    },
+    "can_proceed": false
+  },
+  "cells": {
+    "clean": {
+      "n": 512,
+      "methods": 24,
+      "flag_methods": 22,
+      "decision_metrics": {
+        "robust_prior_fit": {
+          "mae_uT": 11.885353466524814,
+          "p90_abs_uT": 25.585357695353412,
+          "hard_invalid_fraction": 0.0234375,
+          "valid_fraction": 0.50390625,
+          "median_pipeline_seconds": 0.05046914343256503
+        },
+        "conditional_likelihood": {
+          "mae_uT": 11.944136720504185,
+          "p90_abs_uT": 25.479347850781252,
+          "hard_invalid_fraction": 0.0234375,
+          "valid_fraction": 0.50390625,
+          "median_pipeline_seconds": 0.0508587000076659
+        },
+        "edge_ols__fp32": {
+          "mae_uT": 10.603027676649678,
+          "p90_abs_uT": 20.791168429114155,
+          "hard_invalid_fraction": 0.026041666666666668,
+          "valid_fraction": 0.5013020833333334,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.05097148846834898
+        },
+        "edge_ols__int8": {
+          "mae_uT": 10.534269118056194,
+          "p90_abs_uT": 20.3817778767761,
+          "hard_invalid_fraction": 0.0234375,
+          "valid_fraction": 0.50390625,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.05084638033683101
+        },
+        "joint_fit__fp32": {
+          "mae_uT": 10.629736214936262,
+          "p90_abs_uT": 20.912730732555637,
+          "hard_invalid_fraction": 0.024739583333333332,
+          "valid_fraction": 0.5026041666666666,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.050722077139653265
+        },
+        "joint_fit__int8": {
+          "mae_uT": 10.588022741050036,
+          "p90_abs_uT": 20.61948246730454,
+          "hard_invalid_fraction": 0.0234375,
+          "valid_fraction": 0.50390625,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.05061092103521029
+        }
+      },
+      "paired_comparisons": {
+        "edge_ols__int8_minus_conditional_likelihood": {
+          "mean_difference_uT": -1.40986760244799,
+          "ci95_uT": [
+            -2.101218251088204,
+            -0.7311275032092227
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "robust_prior_fit_minus_training_mean": {
+          "mean_difference_uT": -0.4101291895546884,
+          "ci95_uT": [
+            -1.1489352639977342,
+            0.339572247292047
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit_seed42_int8_minus_fp32": {
+          "mean_difference_uT": -0.024534923468227887,
+          "ci95_uT": [
+            -0.12428350621753328,
+            0.07582463785337665
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols_seed20261015_int8_minus_fp32": {
+          "mean_difference_uT": -0.13089800913007982,
+          "ci95_uT": [
+            -0.3040333013618811,
+            0.014920553982022132
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols__fp32_minus_training_mean": {
+          "mean_difference_uT": -1.6924549794298245,
+          "ci95_uT": [
+            -2.244388204416475,
+            -1.141349560496721
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "conditional_likelihood_minus_training_median": {
+          "mean_difference_uT": -0.3525962208811721,
+          "ci95_uT": [
+            -1.0922571850585778,
+            0.3947410671323929
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "conditional_likelihood_minus_training_mean": {
+          "mean_difference_uT": -0.3513459355753177,
+          "ci95_uT": [
+            -1.089537803165418,
+            0.3984879797403699
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols_mean_int8_minus_fp32": {
+          "mean_difference_uT": -0.06875855859348291,
+          "ci95_uT": [
+            -0.16245830599470037,
+            0.015132555484783651
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit_seed20261014_int8_minus_fp32": {
+          "mean_difference_uT": -0.0320427146852299,
+          "ci95_uT": [
+            -0.13091224563132906,
+            0.0261647079535002
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols__fp32_minus_robust_prior_fit": {
+          "mean_difference_uT": -1.2823257898751363,
+          "ci95_uT": [
+            -1.9957829985652444,
+            -0.5829216954171761
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols__int8_minus_training_median": {
+          "mean_difference_uT": -1.762463823329162,
+          "ci95_uT": [
+            -2.301000013177103,
+            -1.2266060016562712
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit__int8_minus_training_median": {
+          "mean_difference_uT": -1.7087102003353198,
+          "ci95_uT": [
+            -2.218420928844524,
+            -1.206119606993977
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit__int8_minus_training_mean": {
+          "mean_difference_uT": -1.7074599150294651,
+          "ci95_uT": [
+            -2.2179776786486585,
+            -1.2030688840428334
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit__fp32_minus_training_mean": {
+          "mean_difference_uT": -1.6657464411432414,
+          "ci95_uT": [
+            -2.190995658551829,
+            -1.1424305542170776
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "robust_prior_fit_minus_training_median": {
+          "mean_difference_uT": -0.4113794748605428,
+          "ci95_uT": [
+            -1.1525032896886913,
+            0.3408034456640656
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols__fp32_minus_training_median": {
+          "mean_difference_uT": -1.6937052647356792,
+          "ci95_uT": [
+            -2.2415117806316993,
+            -1.1458115635229975
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols__int8_minus_training_mean": {
+          "mean_difference_uT": -1.7612135380233076,
+          "ci95_uT": [
+            -2.300865632692433,
+            -1.2263972646761614
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols__int8_minus_robust_prior_fit": {
+          "mean_difference_uT": -1.351084348468619,
+          "ci95_uT": [
+            -2.0417321828609136,
+            -0.6724825879101894
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit__int8_minus_robust_prior_fit": {
+          "mean_difference_uT": -1.2973307254747768,
+          "ci95_uT": [
+            -1.9236380671606015,
+            -0.6853773256950938
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit__fp32_minus_conditional_likelihood": {
+          "mean_difference_uT": -1.3144005055679238,
+          "ci95_uT": [
+            -1.9587400910950297,
+            -0.6799203081628608
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit_seed20261015_int8_minus_fp32": {
+          "mean_difference_uT": -0.06856278350521403,
+          "ci95_uT": [
+            -0.20403894544984538,
+            0.044975909641053864
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit_mean_int8_minus_fp32": {
+          "mean_difference_uT": -0.041713473886223915,
+          "ci95_uT": [
+            -0.13124242488387586,
+            0.03511352396515942
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols_seed42_int8_minus_fp32": {
+          "mean_difference_uT": -0.028728842163447066,
+          "ci95_uT": [
+            -0.12684176784473644,
+            0.07134863440387436
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols__fp32_minus_conditional_likelihood": {
+          "mean_difference_uT": -1.341109043854507,
+          "ci95_uT": [
+            -2.052682254498788,
+            -0.6359462607187167
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols_seed20261014_int8_minus_fp32": {
+          "mean_difference_uT": -0.04664882448692187,
+          "ci95_uT": [
+            -0.14501372114266772,
+            0.010292059250875885
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit__fp32_minus_training_median": {
+          "mean_difference_uT": -1.6669967264490957,
+          "ci95_uT": [
+            -2.188826901952266,
+            -1.1436691437815047
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit__fp32_minus_robust_prior_fit": {
+          "mean_difference_uT": -1.2556172515885533,
+          "ci95_uT": [
+            -1.9000863625321245,
+            -0.6197464603881437
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit__int8_minus_conditional_likelihood": {
+          "mean_difference_uT": -1.3561139794541477,
+          "ci95_uT": [
+            -1.982876228473521,
+            -0.7430594464528123
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        }
+      },
+      "seed_gates": {
+        "edge_ols__C_direct_seed42__fp32": {
+          "prediction_passed": true,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": -1.69957997843273,
+              "ci95_uT": [
+                -2.261750700212803,
+                -1.1364360174911299
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": -1.7008302637385846,
+              "ci95_uT": [
+                -2.2607674384463126,
+                -1.1387133994051175
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.50390625
+        },
+        "edge_ols__C_direct_seed42__int8": {
+          "prediction_passed": true,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": -1.728308820596177,
+              "ci95_uT": [
+                -2.2610564625775686,
+                -1.2047045931727092
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": -1.7295591059020317,
+              "ci95_uT": [
+                -2.260282231898566,
+                -1.2087463404928542
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.50390625
+        },
+        "edge_ols__C_direct_seed20261014__fp32": {
+          "prediction_passed": true,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": -1.736703753908344,
+              "ci95_uT": [
+                -2.29861352608556,
+                -1.1749264150690046
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": -1.7379540392141986,
+              "ci95_uT": [
+                -2.29458589619021,
+                -1.1813283674032786
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.501953125
+        },
+        "edge_ols__C_direct_seed20261014__int8": {
+          "prediction_passed": true,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": -1.783352578395266,
+              "ci95_uT": [
+                -2.35128942764779,
+                -1.2093800837010265
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": -1.7846028637011204,
+              "ci95_uT": [
+                -2.3501346658612126,
+                -1.2149705767543209
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.50390625
+        },
+        "edge_ols__C_direct_seed20261015__fp32": {
+          "prediction_passed": true,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": -1.6410812059483995,
+              "ci95_uT": [
+                -2.186426256145342,
+                -1.0892446551396207
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": -1.6423314912542541,
+              "ci95_uT": [
+                -2.185638647896838,
+                -1.0947209432354155
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.498046875
+        },
+        "edge_ols__C_direct_seed20261015__int8": {
+          "prediction_passed": true,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": -1.7719792150784794,
+              "ci95_uT": [
+                -2.309425293584452,
+                -1.2425861798509439
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": -1.7732295003843337,
+              "ci95_uT": [
+                -2.308812266343442,
+                -1.2437451304901201
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.50390625
+        },
+        "joint_fit__C_direct_seed42__fp32": {
+          "prediction_passed": true,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": -1.686650131042244,
+              "ci95_uT": [
+                -2.2211617478313594,
+                -1.1565643043119758
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": -1.6879004163480984,
+              "ci95_uT": [
+                -2.218412977324602,
+                -1.1642617134942848
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.50390625
+        },
+        "joint_fit__C_direct_seed42__int8": {
+          "prediction_passed": true,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": -1.7111850545104719,
+              "ci95_uT": [
+                -2.214732015627985,
+                -1.2209323817102455
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": -1.7124353398163263,
+              "ci95_uT": [
+                -2.2152419922457276,
+                -1.223954754315828
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.50390625
+        },
+        "joint_fit__C_direct_seed20261014__fp32": {
+          "prediction_passed": true,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": -1.5900946807239125,
+              "ci95_uT": [
+                -2.135827346405412,
+                -1.048827898351993
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": -1.591344966029767,
+              "ci95_uT": [
+                -2.1347564616420276,
+                -1.053574780002661
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.501953125
+        },
+        "joint_fit__C_direct_seed20261014__int8": {
+          "prediction_passed": true,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": -1.6221373954091427,
+              "ci95_uT": [
+                -2.1739038983659547,
+                -1.0704276984326038
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": -1.623387680714997,
+              "ci95_uT": [
+                -2.172276448929566,
+                -1.0754651318470014
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.50390625
+        },
+        "joint_fit__C_direct_seed20261015__fp32": {
+          "prediction_passed": true,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": -1.7204945116635675,
+              "ci95_uT": [
+                -2.2497919285522947,
+                -1.1856688991620774
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": -1.7217447969694217,
+              "ci95_uT": [
+                -2.2486915154439404,
+                -1.18866451482827
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.501953125
+        },
+        "joint_fit__C_direct_seed20261015__int8": {
+          "prediction_passed": true,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": -1.7890572951687815,
+              "ci95_uT": [
+                -2.2992878034928923,
+                -1.2769252216840146
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": -1.790307580474636,
+              "ci95_uT": [
+                -2.299171058934343,
+                -1.2782652820822231
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.50390625
+        }
+      },
+      "bootstrap_checked": true,
+      "bootstrap_contrasts": 52,
+      "raw_disagreement_checked": true
+    },
+    "realistic_anchor": {
+      "n": 512,
+      "methods": 24,
+      "flag_methods": 22,
+      "decision_metrics": {
+        "robust_prior_fit": {
+          "mae_uT": 12.842191578326279,
+          "p90_abs_uT": 25.183081420013522,
+          "hard_invalid_fraction": 0.076171875,
+          "valid_fraction": 0.15234375,
+          "median_pipeline_seconds": 0.00684326741611585
+        },
+        "conditional_likelihood": {
+          "mae_uT": 12.757341180343488,
+          "p90_abs_uT": 24.967908139022292,
+          "hard_invalid_fraction": 0.076171875,
+          "valid_fraction": 0.15234375,
+          "median_pipeline_seconds": 0.007026517472695559
+        },
+        "edge_ols__fp32": {
+          "mae_uT": 13.398687465296002,
+          "p90_abs_uT": 22.700565624821927,
+          "hard_invalid_fraction": 0.12174479166666667,
+          "valid_fraction": 0.14518229166666666,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.007057011340900014
+        },
+        "edge_ols__int8": {
+          "mae_uT": 13.260726943137342,
+          "p90_abs_uT": 22.568821734269836,
+          "hard_invalid_fraction": 0.11458333333333333,
+          "valid_fraction": 0.150390625,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.006912647125621636
+        },
+        "joint_fit__fp32": {
+          "mae_uT": 13.088255237924985,
+          "p90_abs_uT": 27.995106536910804,
+          "hard_invalid_fraction": 0.130859375,
+          "valid_fraction": 0.14908854166666666,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.007028602994978428
+        },
+        "joint_fit__int8": {
+          "mae_uT": 12.899962330123735,
+          "p90_abs_uT": 27.710649733499526,
+          "hard_invalid_fraction": 0.12434895833333333,
+          "valid_fraction": 0.15104166666666666,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.006875393000276138
+        }
+      },
+      "paired_comparisons": {
+        "edge_ols__int8_minus_conditional_likelihood": {
+          "mean_difference_uT": 0.5033857627938534,
+          "ci95_uT": [
+            -0.2208893902503608,
+            1.223578264280877
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "robust_prior_fit_minus_training_mean": {
+          "mean_difference_uT": 0.5467089222467757,
+          "ci95_uT": [
+            -0.17877373434749833,
+            1.291923778126765
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit_seed42_int8_minus_fp32": {
+          "mean_difference_uT": -0.18190505262589388,
+          "ci95_uT": [
+            -0.38747873225320617,
+            0.04697785349030193
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols_seed20261015_int8_minus_fp32": {
+          "mean_difference_uT": -0.2764413001266376,
+          "ci95_uT": [
+            -0.4678692467170685,
+            -0.12430949812332254
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols__fp32_minus_training_mean": {
+          "mean_difference_uT": 1.1032048092164988,
+          "ci95_uT": [
+            0.6233456715892531,
+            1.5960717565149958
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "conditional_likelihood_minus_training_median": {
+          "mean_difference_uT": 0.4606082389581318,
+          "ci95_uT": [
+            -0.2616378520890964,
+            1.202423189263987
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "conditional_likelihood_minus_training_mean": {
+          "mean_difference_uT": 0.4618585242639863,
+          "ci95_uT": [
+            -0.252241740560899,
+            1.1967114186203707
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols_mean_int8_minus_fp32": {
+          "mean_difference_uT": -0.13796052215865917,
+          "ci95_uT": [
+            -0.2329228409409136,
+            -0.059535559162152515
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit_seed20261014_int8_minus_fp32": {
+          "mean_difference_uT": -0.09085911048715413,
+          "ci95_uT": [
+            -0.17719519031862074,
+            -0.0298137546064688
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols__fp32_minus_robust_prior_fit": {
+          "mean_difference_uT": 0.5564958869697229,
+          "ci95_uT": [
+            -0.21194657766342043,
+            1.3110377867475556
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols__int8_minus_training_median": {
+          "mean_difference_uT": 0.963994001751985,
+          "ci95_uT": [
+            0.47102101015359327,
+            1.4671410292513103
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit__int8_minus_training_median": {
+          "mean_difference_uT": 0.603229388738378,
+          "ci95_uT": [
+            -0.2268750888406754,
+            1.4284251232632554
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit__int8_minus_training_mean": {
+          "mean_difference_uT": 0.6044796740442324,
+          "ci95_uT": [
+            -0.23153987874984205,
+            1.4384648251230765
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit__fp32_minus_training_mean": {
+          "mean_difference_uT": 0.7927725818454827,
+          "ci95_uT": [
+            -0.053950021906508216,
+            1.6354746811822525
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "robust_prior_fit_minus_training_median": {
+          "mean_difference_uT": 0.5454586369409214,
+          "ci95_uT": [
+            -0.18765911661430812,
+            1.2972009578078336
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols__fp32_minus_training_median": {
+          "mean_difference_uT": 1.1019545239106443,
+          "ci95_uT": [
+            0.6268807198931888,
+            1.592160363566267
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols__int8_minus_training_mean": {
+          "mean_difference_uT": 0.9652442870578395,
+          "ci95_uT": [
+            0.47185569041042363,
+            1.4710823887487317
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols__int8_minus_robust_prior_fit": {
+          "mean_difference_uT": 0.4185353648110637,
+          "ci95_uT": [
+            -0.3231086431102546,
+            1.1553075881752508
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit__int8_minus_robust_prior_fit": {
+          "mean_difference_uT": 0.05777075179745639,
+          "ci95_uT": [
+            -1.0778703329828978,
+            1.1960781123753004
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit__fp32_minus_conditional_likelihood": {
+          "mean_difference_uT": 0.3309140575814965,
+          "ci95_uT": [
+            -0.8178831490304668,
+            1.4582880814148262
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit_seed20261015_int8_minus_fp32": {
+          "mean_difference_uT": -0.29211456029070315,
+          "ci95_uT": [
+            -0.43709847183924544,
+            -0.1822401217856334
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit_mean_int8_minus_fp32": {
+          "mean_difference_uT": -0.1882929078012504,
+          "ci95_uT": [
+            -0.276118498678953,
+            -0.09546242380883689
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols_seed42_int8_minus_fp32": {
+          "mean_difference_uT": -0.05130710661362159,
+          "ci95_uT": [
+            -0.21047448628446944,
+            0.07304005148689116
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols__fp32_minus_conditional_likelihood": {
+          "mean_difference_uT": 0.6413462849525124,
+          "ci95_uT": [
+            -0.11243471296134193,
+            1.3847478464968663
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "edge_ols_seed20261014_int8_minus_fp32": {
+          "mean_difference_uT": -0.08613315973571839,
+          "ci95_uT": [
+            -0.11770594595614806,
+            -0.05715233092506611
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit__fp32_minus_training_median": {
+          "mean_difference_uT": 0.7915222965396284,
+          "ci95_uT": [
+            -0.04886065861338109,
+            1.626056841890946
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit__fp32_minus_robust_prior_fit": {
+          "mean_difference_uT": 0.24606365959870702,
+          "ci95_uT": [
+            -0.9155832794977322,
+            1.3934700876711335
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        },
+        "joint_fit__int8_minus_conditional_likelihood": {
+          "mean_difference_uT": 0.14262114978024593,
+          "ci95_uT": [
+            -0.9765395992246629,
+            1.258319871310606
+          ],
+          "groups": 512,
+          "draws": 10000,
+          "seed": 202610152001
+        }
+      },
+      "seed_gates": {
+        "edge_ols__C_direct_seed42__fp32": {
+          "prediction_passed": false,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": 0.11826916262260931,
+              "ci95_uT": [
+                -0.5562521039429108,
+                0.8070008013848106
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": 0.11701887731675492,
+              "ci95_uT": [
+                -0.5597335868332277,
+                0.809221599103872
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.14453125
+        },
+        "edge_ols__C_direct_seed42__int8": {
+          "prediction_passed": false,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": 0.06696205600898777,
+              "ci95_uT": [
+                -0.6365180112609501,
+                0.7904099955102516
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": 0.06571177070313336,
+              "ci95_uT": [
+                -0.6432021576665847,
+                0.7950924611695087
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.15234375
+        },
+        "edge_ols__C_direct_seed20261014__fp32": {
+          "prediction_passed": false,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": 1.9512832394748318,
+              "ci95_uT": [
+                1.0811971079841187,
+                2.88170348630375
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": 1.9500329541689774,
+              "ci95_uT": [
+                1.083313551482269,
+                2.8816317141217427
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.146484375
+        },
+        "edge_ols__C_direct_seed20261014__int8": {
+          "prediction_passed": false,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": 1.8651500797391134,
+              "ci95_uT": [
+                1.0060427572682324,
+                2.7818605030028474
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": 1.8638997944332587,
+              "ci95_uT": [
+                1.0063542427136858,
+                2.780894237549006
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.146484375
+        },
+        "edge_ols__C_direct_seed20261015__fp32": {
+          "prediction_passed": false,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": 1.2400620255520551,
+              "ci95_uT": [
+                0.5024501494058731,
+                1.9909783764125488
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": 1.2388117402462004,
+              "ci95_uT": [
+                0.5063815735646388,
+                1.986578994041719
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.14453125
+        },
+        "edge_ols__C_direct_seed20261015__int8": {
+          "prediction_passed": false,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": 0.9636207254254174,
+              "ci95_uT": [
+                0.2142218251250387,
+                1.7179596341650785
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": 0.962370440119563,
+              "ci95_uT": [
+                0.2161873867469308,
+                1.7152649446574337
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.15234375
+        },
+        "joint_fit__C_direct_seed42__fp32": {
+          "prediction_passed": false,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": 0.572890701435318,
+              "ci95_uT": [
+                -0.2971809912376558,
+                1.4399007113225137
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": 0.5716404161294635,
+              "ci95_uT": [
+                -0.2952885712770613,
+                1.4344631897686337
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.15234375
+        },
+        "joint_fit__C_direct_seed42__int8": {
+          "prediction_passed": false,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": 0.3909856488094241,
+              "ci95_uT": [
+                -0.4675975841824338,
+                1.2631454826011006
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": 0.3897353635035698,
+              "ci95_uT": [
+                -0.4641147252507175,
+                1.2533900667726914
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.15234375
+        },
+        "joint_fit__C_direct_seed20261014__fp32": {
+          "prediction_passed": false,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": 0.9239396338039016,
+              "ci95_uT": [
+                0.030610610111973073,
+                1.804012363640009
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": 0.9226893484980474,
+              "ci95_uT": [
+                0.037922134626453635,
+                1.797560617720582
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.1484375
+        },
+        "joint_fit__C_direct_seed20261014__int8": {
+          "prediction_passed": false,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": 0.8330805233167475,
+              "ci95_uT": [
+                -0.050689293291850956,
+                1.708212668798791
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": 0.8318302380108933,
+              "ci95_uT": [
+                -0.048743613121226624,
+                1.6987862123470663
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.1484375
+        },
+        "joint_fit__C_direct_seed20261015__fp32": {
+          "prediction_passed": false,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": 0.8814874102972283,
+              "ci95_uT": [
+                -0.05616117607633759,
+                1.8123116610080912
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": 0.880237124991374,
+              "ci95_uT": [
+                -0.051094641301518064,
+                1.806757696719418
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.146484375
+        },
+        "joint_fit__C_direct_seed20261015__int8": {
+          "prediction_passed": false,
+          "paired_constants": {
+            "training_mean": {
+              "mean_difference_uT": 0.5893728500065252,
+              "ci95_uT": [
+                -0.3429068209766632,
+                1.517763067327832
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            },
+            "training_median": {
+              "mean_difference_uT": 0.5881225647006709,
+              "ci95_uT": [
+                -0.33477554608267446,
+                1.509507986798582
+              ],
+              "groups": 512,
+              "draws": 10000,
+              "seed": 202610152001
+            }
+          },
+          "reliable_valid_fraction": 0.15234375
+        }
+      },
+      "bootstrap_checked": true,
+      "bootstrap_contrasts": 52,
+      "raw_disagreement_checked": true
+    },
+    "wide_lines": {
+      "n": 512,
+      "methods": 24,
+      "flag_methods": 22,
+      "decision_metrics": {
+        "robust_prior_fit": {
+          "mae_uT": 13.94629691055686,
+          "p90_abs_uT": 28.400678786070447,
+          "hard_invalid_fraction": 0.15625,
+          "valid_fraction": 0.025390625,
+          "median_pipeline_seconds": 0.008635553531348705
+        },
+        "conditional_likelihood": {
+          "mae_uT": 13.729630732410449,
+          "p90_abs_uT": 28.22268837748767,
+          "hard_invalid_fraction": 0.15625,
+          "valid_fraction": 0.025390625,
+          "median_pipeline_seconds": 0.00883162795798853
+        },
+        "edge_ols__fp32": {
+          "mae_uT": 14.316031410912126,
+          "p90_abs_uT": 23.303714197232907,
+          "hard_invalid_fraction": 0.21223958333333334,
+          "valid_fraction": 0.0234375,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.008837956023247292
+        },
+        "edge_ols__int8": {
+          "mae_uT": 14.281979965783469,
+          "p90_abs_uT": 23.250482134825354,
+          "hard_invalid_fraction": 0.1953125,
+          "valid_fraction": 0.025390625,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.008711671689525247
+        },
+        "joint_fit__fp32": {
+          "mae_uT": 13.047698008055516,
+          "p90_abs_uT": 26.512204553009397,
+          "hard_invalid_fraction": 0.21940104166666666,
+          "valid_fraction": 0.0234375,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.008806595190738639
+        },
+        "joint_fit__int8": {
+          "mae_uT": 12.952452729379747,
+          "p90_abs_uT": 26.27292140850833,
+          "hard_invalid_fraction": 0.21614583333333334,
+          "valid_fraction": 0.024088541666666668,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.00868419389007613
+        }
+      },
+      "bootstrap_checked": false,
+      "raw_disagreement_checked": true
+    },
+    "low_snr": {
+      "n": 512,
+      "methods": 24,
+      "flag_methods": 22,
+      "decision_metrics": {
+        "robust_prior_fit": {
+          "mae_uT": 15.079220711138177,
+          "p90_abs_uT": 31.069902150594153,
+          "hard_invalid_fraction": 0.2265625,
+          "valid_fraction": 0.412109375,
+          "median_pipeline_seconds": 0.006023521535098553
+        },
+        "conditional_likelihood": {
+          "mae_uT": 14.296944483235013,
+          "p90_abs_uT": 29.14126269544758,
+          "hard_invalid_fraction": 0.2265625,
+          "valid_fraction": 0.412109375,
+          "median_pipeline_seconds": 0.006130234512966126
+        },
+        "edge_ols__fp32": {
+          "mae_uT": 14.053364960973674,
+          "p90_abs_uT": 24.372763910357744,
+          "hard_invalid_fraction": 0.5442708333333334,
+          "valid_fraction": 0.2747395833333333,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.006185725971590728
+        },
+        "edge_ols__int8": {
+          "mae_uT": 14.089023440418234,
+          "p90_abs_uT": 24.59505404143035,
+          "hard_invalid_fraction": 0.5384114583333334,
+          "valid_fraction": 0.279296875,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.006074431507537763
+        },
+        "joint_fit__fp32": {
+          "mae_uT": 13.940059857565721,
+          "p90_abs_uT": 24.246257220838178,
+          "hard_invalid_fraction": 0.66015625,
+          "valid_fraction": 0.236328125,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.006153818976599723
+        },
+        "joint_fit__int8": {
+          "mae_uT": 13.952681368700048,
+          "p90_abs_uT": 24.133835782274815,
+          "hard_invalid_fraction": 0.6549479166666666,
+          "valid_fraction": 0.23893229166666666,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.006037321523763239
+        }
+      },
+      "bootstrap_checked": false,
+      "raw_disagreement_checked": true
+    },
+    "negative_slope": {
+      "n": 512,
+      "methods": 24,
+      "flag_methods": 22,
+      "decision_metrics": {
+        "robust_prior_fit": {
+          "mae_uT": 12.8685351723518,
+          "p90_abs_uT": 25.186518010032646,
+          "hard_invalid_fraction": 0.076171875,
+          "valid_fraction": 0.15234375,
+          "median_pipeline_seconds": 0.007028317486401647
+        },
+        "conditional_likelihood": {
+          "mae_uT": 12.78108524384973,
+          "p90_abs_uT": 24.96746802680351,
+          "hard_invalid_fraction": 0.076171875,
+          "valid_fraction": 0.15234375,
+          "median_pipeline_seconds": 0.0072217045235447586
+        },
+        "edge_ols__fp32": {
+          "mae_uT": 13.353629204394762,
+          "p90_abs_uT": 22.472193400132433,
+          "hard_invalid_fraction": 0.12369791666666667,
+          "valid_fraction": 0.14453125,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.007274237849439184
+        },
+        "edge_ols__int8": {
+          "mae_uT": 13.248508443990607,
+          "p90_abs_uT": 22.56530750738128,
+          "hard_invalid_fraction": 0.11653645833333333,
+          "valid_fraction": 0.14973958333333334,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.007123369180286924
+        },
+        "joint_fit__fp32": {
+          "mae_uT": 13.10830736738799,
+          "p90_abs_uT": 28.135574117070313,
+          "hard_invalid_fraction": 0.130859375,
+          "valid_fraction": 0.14908854166666666,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.0072171519859693944
+        },
+        "joint_fit__int8": {
+          "mae_uT": 12.96633711468019,
+          "p90_abs_uT": 27.943506505541237,
+          "hard_invalid_fraction": 0.12239583333333333,
+          "valid_fraction": 0.15104166666666666,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.007079094027479489
+        }
+      },
+      "bootstrap_checked": false,
+      "raw_disagreement_checked": true
+    },
+    "negative_offset": {
+      "n": 512,
+      "methods": 24,
+      "flag_methods": 22,
+      "decision_metrics": {
+        "robust_prior_fit": {
+          "mae_uT": 12.822352600445495,
+          "p90_abs_uT": 25.395553857631256,
+          "hard_invalid_fraction": 0.060546875,
+          "valid_fraction": 0.13671875,
+          "median_pipeline_seconds": 0.007221847947221249
+        },
+        "conditional_likelihood": {
+          "mae_uT": 12.730412210212195,
+          "p90_abs_uT": 25.11091448089489,
+          "hard_invalid_fraction": 0.060546875,
+          "valid_fraction": 0.13671875,
+          "median_pipeline_seconds": 0.007417883025482297
+        },
+        "edge_ols__fp32": {
+          "mae_uT": 13.644392577172432,
+          "p90_abs_uT": 22.34037177839088,
+          "hard_invalid_fraction": 0.09114583333333333,
+          "valid_fraction": 0.130859375,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.007471824317084004
+        },
+        "edge_ols__int8": {
+          "mae_uT": 13.61492265418298,
+          "p90_abs_uT": 22.43702405428459,
+          "hard_invalid_fraction": 0.083984375,
+          "valid_fraction": 0.13541666666666666,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.007350454805418849
+        },
+        "joint_fit__fp32": {
+          "mae_uT": 12.758989401651517,
+          "p90_abs_uT": 27.558258302419834,
+          "hard_invalid_fraction": 0.12239583333333333,
+          "valid_fraction": 0.13151041666666666,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.0075311474890137715
+        },
+        "joint_fit__int8": {
+          "mae_uT": 12.616316025904144,
+          "p90_abs_uT": 27.118701460918896,
+          "hard_invalid_fraction": 0.11848958333333333,
+          "valid_fraction": 0.1328125,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.007334830491648366
+        }
+      },
+      "bootstrap_checked": false,
+      "raw_disagreement_checked": true
+    },
+    "higher_contrast": {
+      "n": 512,
+      "methods": 24,
+      "flag_methods": 22,
+      "decision_metrics": {
+        "robust_prior_fit": {
+          "mae_uT": 12.801315403162057,
+          "p90_abs_uT": 24.962546052678064,
+          "hard_invalid_fraction": 0.0703125,
+          "valid_fraction": 0.146484375,
+          "median_pipeline_seconds": 0.006604168505873531
+        },
+        "conditional_likelihood": {
+          "mae_uT": 12.7092281317345,
+          "p90_abs_uT": 24.851209738881263,
+          "hard_invalid_fraction": 0.0703125,
+          "valid_fraction": 0.146484375,
+          "median_pipeline_seconds": 0.006838883040472865
+        },
+        "edge_ols__fp32": {
+          "mae_uT": 13.373229608775054,
+          "p90_abs_uT": 22.695796998926742,
+          "hard_invalid_fraction": 0.11588541666666667,
+          "valid_fraction": 0.140625,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.006861771204664062
+        },
+        "edge_ols__int8": {
+          "mae_uT": 13.241478722102599,
+          "p90_abs_uT": 22.465626888069913,
+          "hard_invalid_fraction": 0.10872395833333333,
+          "valid_fraction": 0.14583333333333334,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.006716404343023896
+        },
+        "joint_fit__fp32": {
+          "mae_uT": 13.139433845711084,
+          "p90_abs_uT": 28.148530989657107,
+          "hard_invalid_fraction": 0.13020833333333334,
+          "valid_fraction": 0.14322916666666666,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.006804280157666653
+        },
+        "joint_fit__int8": {
+          "mae_uT": 12.983078603209286,
+          "p90_abs_uT": 27.75915726732904,
+          "hard_invalid_fraction": 0.12369791666666667,
+          "valid_fraction": 0.14518229166666666,
+          "all_seeds_reliable": false,
+          "median_pipeline_seconds": 0.006665459814636658
+        }
+      },
+      "bootstrap_checked": false,
+      "raw_disagreement_checked": true
+    }
+  },
+  "limitations": [
+    "Recorded timing metadata supplies selection tie-breaks; no timing remeasurement.",
+    "Common quality/ambiguity flags are accepted saved inputs, not rederived from spectra.",
+    "Label provenance and payload-to-prediction correspondence remain with custody; no spectra were read.",
+    "Quantization input/endpoint counts are not reconstructed from saved magnitude predictions.",
+    "Secondary-condition bootstrap intervals and per-seed prediction gates are outside this verification.",
+    "Conditional likelihood intervals remain uncalibrated and are not opened.",
+    "Frozen source identity is the reviewed definition commit; custody verifies Freeze 1 membership."
+  ],
+  "completed_utc": "2026-10-15T15:42:08.431984+00:00",
+  "verifier_sha256": "32c0f8e339dfc47beaa9998c8804d13709885115e9c0c942d8beb036ea8e3776",
+  "checks": 8949
+}
