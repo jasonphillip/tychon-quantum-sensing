@@ -1,0 +1,202 @@
+{
+  "study": "measured-widefield-2026-10-15",
+  "status": "FROZEN",
+  "record_id": "7233869",
+  "files": {
+    "f0.fits": 0,
+    "f8.fits": 600,
+    "f24.fits": -600
+  },
+  "label": "Held-repeat endpoint-normalized fluorescence spectrum; not magnetic field",
+  "crop_yx": [
+    256,
+    384,
+    512,
+    512
+  ],
+  "block_side_pixels": 64,
+  "guard_pixels": 8,
+  "patch_side_pixels": 4,
+  "patches_per_block": 8,
+  "selection": "Repeat0 brightness only, descending mean brightness, y/x tie-break, Chebyshev patch-index spacing at least2",
+  "block_columns": {
+    "train": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "development": [
+      4,
+      5
+    ],
+    "final": [
+      6,
+      7
+    ]
+  },
+  "input_repeat": 0,
+  "target_repeats": {
+    "train": [
+      1,
+      2
+    ],
+    "development": [
+      3
+    ],
+    "final": [
+      4
+    ]
+  },
+  "normalization": "Each observed/reference spectrum divided by its own median of first10 and last10 bins",
+  "registration_shifts_yx": [
+    [
+      0,
+      0
+    ],
+    [
+      -1,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      0,
+      -1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      -2,
+      0
+    ],
+    [
+      2,
+      0
+    ],
+    [
+      0,
+      -2
+    ],
+    [
+      0,
+      2
+    ]
+  ],
+  "classical_methods": [
+    "raw",
+    "training_mean",
+    "savgol_5",
+    "savgol_11",
+    "savgol_21",
+    "ridge_0.001",
+    "ridge_0.01",
+    "ridge_0.1",
+    "pca_wiener_4",
+    "pca_wiener_8",
+    "pca_wiener_16",
+    "robust_lorentzian"
+  ],
+  "classical_selection": "Smallest development MSE; alphabetical tie-break; frozen before candidate scoring and final access",
+  "candidate": {
+    "activation": "ReLU",
+    "residual": true,
+    "epochs": 100,
+    "batch_size": 64,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "training_device": "CUDA",
+    "configurations": 3,
+    "required_preimport_environment": {
+      "CUBLAS_WORKSPACE_CONFIG": ":4096:8"
+    },
+    "architectures": [
+      [
+        200,
+        16,
+        200
+      ],
+      [
+        200,
+        32,
+        200
+      ],
+      [
+        200,
+        64,
+        200
+      ]
+    ],
+    "parameters": [
+      6616,
+      13032,
+      25864
+    ],
+    "seeds_per_configuration": 1,
+    "selection": "Lowest development full-spectrum MSE, ties by fewer parameters; then apply every quality gate, without switching after failure"
+  },
+  "primary": "Equal-spatial-block mean squared normalized-spectrum error, fixed zero shift",
+  "candidate_gate": {
+    "mse_ratio_max": 0.95,
+    "paired_bootstrap_ratio_ci_upper_max_exclusive": 1.0,
+    "p90_rmse_ratio_max": 1.02,
+    "absolute_failure_fraction_max": 0.01,
+    "failure_fraction_added_max": 0.005,
+    "every_shift_mse_ratio_max": 1.02,
+    "every_current_file_mse_ratio_max": 1.02,
+    "shape_derivative_mse_ratio_to_classical_max": 1.02,
+    "shape_derivative_mse_ratio_to_mean_null_max": 0.95
+  },
+  "bootstrap": {
+    "draws": 10000,
+    "unit": "Whole spatial block across all files and patches",
+    "seed": "Custodian supplies before first run"
+  },
+  "lane_caps": {
+    "cpu_seconds": 57600,
+    "gpu_seconds": 7200,
+    "cumulative_wall_seconds": 14400
+  },
+  "first_qualification_seconds": 600,
+  "first_candidate_seconds": 1800,
+  "memory_bytes_cpu": 8589934592,
+  "memory_bytes_gpu": 34359738368,
+  "no_hardware": true,
+  "no_numerical_execution_authorized_by_this_file": true,
+  "classical_development_diagnostic": {
+    "mse_ratio_to_raw_max": 0.98,
+    "failure_fraction_max": 0.01,
+    "shape_derivative_mse_ratio_to_mean_null_max": 0.98
+  },
+  "candidate_training_gate": "Complete valid baseline execution, verified custody, finite normalization and complete training/reference groups; classical diagnostic accuracy failure does not block the three fixed candidates",
+  "classical_parameters": {
+    "savgol_windows": [
+      5,
+      11,
+      21
+    ],
+    "savgol_order": 3,
+    "ridge_multipliers": [
+      0.001,
+      0.01,
+      0.1
+    ],
+    "ridge_floor": 1e-08,
+    "pca_ranks": [
+      4,
+      8,
+      16
+    ]
+  },
+  "shape_guard": {
+    "mask": "Top50 adjacent-frequency edges by mean squared training-reference derivative, ties by edge index; sorted before saving",
+    "edges": 50,
+    "reference": "Training-reference repeat1/2 mean only; not verified physical resonances",
+    "candidate_derivative_mse_ratio_to_classical_max": 1.02,
+    "candidate_derivative_mse_ratio_to_mean_null_max": 0.95
+  }
+}

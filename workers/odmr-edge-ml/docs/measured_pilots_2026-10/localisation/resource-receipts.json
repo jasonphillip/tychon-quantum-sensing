@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "scope": "public field projection; original central receipts remain immutable",
+  "private_fields_omitted": [
+    "absolute paths",
+    "command argv",
+    "environment",
+    "source path mappings"
+  ],
+  "note": "Scientific exit 2 retains the full reservation under conservative accounting. Actual duration is separate. These diagnostics are not an inference latency or energy benchmark.",
+  "gpu_memory_limit_note": "PyTorch allocator ceiling plus sampled process memory; CUDA context/driver and transient overshoot are not hard-contained.",
+  "jobs": {
+    "qualification": {
+      "raw_receipt_sha256": "ece5e8065e0cb646a557e3fdf2e79190518a26d9c41dd25b1238c7909f5f8558",
+      "projection": {
+        "job_id": "localisation-qualification-v1",
+        "lane": "localisation",
+        "stage": "eligibility",
+        "status": "complete",
+        "returncode": 0,
+        "started_utc": "2026-10-15T23:00:12.356874+00:00",
+        "completed_utc": "2026-10-15T23:00:12.494073+00:00",
+        "cpu_seconds": 0.140699,
+        "wall_seconds": 0.13723058497998863,
+        "peak_memory_bytes": 50642944,
+        "peak_gpu_memory_bytes_observed": null,
+        "charged_cpu_seconds": 0.140699,
+        "charged_wall_seconds": 0.13723058497998863,
+        "charged_gpu_seconds": 0.0,
+        "accounting_uncertain": false,
+        "legacy_drift": false,
+        "cpu_affinity": [
+          0
+        ],
+        "peak_threads": 1,
+        "gpu_allocator_limit_bytes": 0
+      }
+    },
+    "development": {
+      "raw_receipt_sha256": "b6b777e92d8076616339cf33151ecf991808b891e338f91a75d82dc4228c2e2b",
+      "projection": {
+        "job_id": "localisation-development-v1",
+        "lane": "localisation",
+        "stage": "development",
+        "status": "failed",
+        "returncode": 2,
+        "started_utc": "2026-10-15T23:04:59.157272+00:00",
+        "completed_utc": "2026-10-15T23:05:03.718726+00:00",
+        "cpu_seconds": 4.942852,
+        "wall_seconds": 4.561499731033109,
+        "peak_memory_bytes": 1394081792,
+        "peak_gpu_memory_bytes_observed": 341835776,
+        "charged_cpu_seconds": 1800,
+        "charged_wall_seconds": 1800,
+        "charged_gpu_seconds": 1800,
+        "accounting_uncertain": false,
+        "legacy_drift": false,
+        "cpu_affinity": [
+          0
+        ],
+        "peak_threads": 4,
+        "gpu_allocator_limit_bytes": 4294967296
+      }
+    }
+  }
+}

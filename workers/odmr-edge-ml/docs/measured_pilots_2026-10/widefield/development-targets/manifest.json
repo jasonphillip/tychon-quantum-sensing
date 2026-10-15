@@ -1,0 +1,51 @@
+{
+  "accounting_run_id": "measured-widefield-a-development-targets-20261015",
+  "approval_sha256": "85874f83a9bc0d9c565c50545d4a89cd7794f7d48e9a91aae8264c8df1cb59a3",
+  "arrays_sha256": "657e17becd032512feb9c55f5e7b2b87ac56332809549085007a97fecb44378f",
+  "custody_sha256": "d79cab8fdfaa896713d0cd42b7520fe90c07311bf0048eae95947a8351bc361c",
+  "inputs_manifest_sha256": "3c94ab005aceedd07d80b60625e3f0677af434ad5eb63fc7159fe7b9a942b091",
+  "kind": "targets",
+  "repeats": [
+    3
+  ],
+  "rows": 384,
+  "shifts_yx": [
+    [
+      0,
+      0
+    ],
+    [
+      -1,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      0,
+      -1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      -2,
+      0
+    ],
+    [
+      2,
+      0
+    ],
+    [
+      0,
+      -2
+    ],
+    [
+      0,
+      2
+    ]
+  ],
+  "split": "development"
+}

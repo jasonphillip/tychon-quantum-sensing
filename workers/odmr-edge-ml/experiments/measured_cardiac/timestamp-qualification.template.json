@@ -1,0 +1,57 @@
+{
+  "status": "DRAFT_ROOT_REVIEW",
+  "campaign": "nv-measured-pilots-2026-10-15",
+  "lane": "cardiac",
+  "stage": "qualification",
+  "access_mode": "timestamps_only",
+  "accounting_authority": "",
+  "manifest_sha256": "e98ebc9bf2e5d805012b6af8de952a13ba78b03a96febc141b640798fb600905",
+  "protocol_sha256": "5be86a05d04f64b9ce6bd7efcdb906a8685950f56fc43dea5a79a8f39eb1e552",
+  "voltage_protocol_sha256": "ca93b1dae10a00f57b270451b29b3f934242d4bed2f08dbd03b511c0e23e0557",
+  "source_sha256": {
+    "__init__.py": "eeac9a15a4cd4e6c90401aec1fb685f9deb446e4da08f6037fb9ecc2609c2a8c",
+    "access.py": "5a3fbeba89bb149c3b2098b1babeedd97a64ddb23bbfa669507b5a9964a97c7b",
+    "causal.py": "95a674f6aaeabd17ae6c927fa9b2a723e2478b90e35ee83502dfafeabcab6fc2",
+    "cli.py": "cba0f3be6f68b9cfa5acbaefc7886d80a4580f8105b5bf3ce4dc22b8ce6bfb83",
+    "loader.py": "09edc50d9acbc0ebb7e2f7698630320c51cee0cc102f77ca494759f4c9a227c4",
+    "metadata.py": "ab42d7a9750266989b1989e406804e5108f3f78e632646e924c0dfcda38d58cd",
+    "qualify_timestamps.py": "92bfd4beeba442e9758e12860c4a7afe3207b95c47d5b04cb2bce03387f32bd4"
+  },
+  "allowed_recordings": [
+    "P1-S01",
+    "P1-S02",
+    "P1-S03",
+    "P1-S04",
+    "P1-S05",
+    "P1-S06",
+    "P1-S07",
+    "P1-S08",
+    "P1-S09",
+    "P1-S10",
+    "P2-S01",
+    "P3-S01"
+  ],
+  "limits": {
+    "cpu_seconds": 600,
+    "wall_seconds": 600,
+    "memory_bytes": 1073741824,
+    "threads": 1,
+    "gpu": false
+  },
+  "scope": "Decode timestamp column only; do not numerically decode, print, preserve, or fit the signal column.",
+  "proposed_exact_windows_seconds": {
+    "candidate": [
+      0,
+      120
+    ],
+    "reference_a": [
+      180,
+      360
+    ],
+    "reference_b": [
+      420,
+      600
+    ]
+  },
+  "waveform_evaluation_authorized": false
+}

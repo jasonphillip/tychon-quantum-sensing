@@ -1,0 +1,18 @@
+{
+  "schema": "byte-preserving-archive-parts-v1",
+  "original_file": "P1-S02-beats.npz",
+  "original_bytes": 12455651,
+  "original_sha256": "dcd75f27f34c9ab56684f7850f69200e8c0331729084feecceac081c845de74c",
+  "parts": [
+    {
+      "file": "P1-S02-beats.npz.part01",
+      "bytes": 6291456,
+      "sha256": "68d817956c98955329e09fa0f1f9376d08722d7f37d9e488a72ea261eb02a71e"
+    },
+    {
+      "file": "P1-S02-beats.npz.part02",
+      "bytes": 6164195,
+      "sha256": "5fbfb50830bd911985c27fec5f27248df4369ff82ce2b2ddcb1ac154c9453cb2"
+    }
+  ]
+}

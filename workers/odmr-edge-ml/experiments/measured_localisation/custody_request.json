@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "status": "REQUEST_FOR_ROOT_TO_FORWARD_TO_CUSTODIAN_NOT_EXECUTION_APPROVAL",
+  "study": "measured-localisation-2026-10-15",
+  "archive_sha256": "b5717b233590d041fb4bd752af479df7c426e37675743ca3f9d3c93ae32f7aa4",
+  "archive_relative_path": "data/localisation/Data availability update 20260220.zip",
+  "no_download": true,
+  "never_execute_original_code": true,
+  "never_unpickle": true,
+  "output_directory_suggestion": "derived/localisation-v1",
+  "copy_only_members": [
+    {
+      "key": "fit_parameters",
+      "member": "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/para_list.npy",
+      "output": "fit_parameters.npy",
+      "expected_shape": [
+        819,
+        8,
+        6
+      ],
+      "allowed_dtype": "float64"
+    },
+    {
+      "key": "fit_standard_deviations",
+      "member": "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/para_std_list.npy",
+      "output": "fit_standard_deviations.npy",
+      "expected_shape": [
+        819,
+        8,
+        6
+      ],
+      "allowed_dtype": "float64"
+    },
+    {
+      "key": "position_x",
+      "member": "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/x_pos.npy",
+      "output": "position_x.npy",
+      "expected_shape": [
+        819
+      ],
+      "allowed_dtype": "unicode_U6"
+    },
+    {
+      "key": "position_y",
+      "member": "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/y_pos.npy",
+      "output": "position_y.npy",
+      "expected_shape": [
+        819
+      ],
+      "allowed_dtype": "unicode_U6"
+    },
+    {
+      "key": "published_test_predictions",
+      "member": "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/estimated_position.npy",
+      "output": "published_test_predictions.npy",
+      "expected_shape": [
+        25,
+        2
+      ],
+      "allowed_dtype": "float32_or_float64"
+    },
+    {
+      "key": "published_test_labels",
+      "member": "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/pos_test.npy",
+      "output": "published_test_labels.npy",
+      "expected_shape": [
+        25,
+        2
+      ],
+      "allowed_dtype": "float32_or_float64"
+    },
+    {
+      "key": "supplied_train_positions",
+      "member": "Data availability update 20260220/Fig.S5/vis_pos_train.npy",
+      "output": "supplied_train_positions.npy",
+      "expected_shape": [
+        737,
+        2
+      ],
+      "allowed_dtype": "float32_or_float64"
+    },
+    {
+      "key": "supplied_validation_positions",
+      "member": "Data availability update 20260220/Fig.S5/vis_pos_val.npy",
+      "output": "supplied_validation_positions.npy",
+      "expected_shape": [
+        57,
+        2
+      ],
+      "allowed_dtype": "float32_or_float64"
+    },
+    {
+      "key": "supplied_test_positions",
+      "member": "Data availability update 20260220/Fig.S5/vis_pos_test.npy",
+      "output": "supplied_test_positions.npy",
+      "expected_shape": [
+        25,
+        2
+      ],
+      "allowed_dtype": "float32_or_float64"
+    }
+  ],
+  "payload_rule": "Copy exact uncompressed bytes; validate NPY headers only; do not decode fitted features, saved predictions, or label values.",
+  "geometry_stage_prerequisites": [
+    "position_x.npy",
+    "position_y.npy",
+    "sample_ids.json",
+    "raw_position_catalog.json",
+    "bundle.json",
+    "supplied_train_positions.npy",
+    "supplied_validation_positions.npy",
+    "supplied_test_positions.npy",
+    "published_test_labels.npy"
+  ],
+  "feature_files_may_remain_absent_until_after_partition_freeze": true,
+  "sample_ids": {
+    "count": 819,
+    "format": "measurement_0000 through measurement_0818",
+    "source_order": "existing fitted-array row index only"
+  },
+  "raw_position_catalog": {
+    "source_members": "Fig.S4/Data/*/* raw data.npy only",
+    "fields": [
+      "position_um:[x,y] parsed from filename",
+      "session_id: neutral stable session01..session08"
+    ],
+    "rules": [
+      "Catalog each raw member without opening its payload.",
+      "Assign session IDs by lexical full folder path; record private mapping separately.",
+      "Never pass filenames, paths, coordinates, IDs, or session names as model features.",
+      "Do not assign one specific session to fitted rows by ZIP order or os.walk order.",
+      "Keep Fig.3b/c separate-day 25 raw sweeps out of this main 819-row catalog."
+    ]
+  },
+  "manifest_template": "experiments/measured_localisation/bundle.example.json",
+  "pin": [
+    "exact member byte hashes",
+    "extractor source SHA256",
+    "all copied file SHA256 values",
+    "original archive SHA256",
+    "original source notebook SHA256 values"
+  ],
+  "source_proofs": [
+    {
+      "member": "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/Fig. 3d and Fig. 3e.ipynb",
+      "sha256": "209eb1afdcc6ff56e1edd0ad264559843da108f82786fd96926aa4f8567bd0c0",
+      "cells": "1 feature construction;2 commented random split;3 paired published prediction/label loading"
+    },
+    {
+      "member": "Data availability update 20260220/Fig.S4/Fig.S2c.ipynb",
+      "sha256": "bcf583393f623f449f4fb5b9f63c46ce5798bca880ce4ac4341980a3a2f19fd3",
+      "cells": "1 unsorted os.walk;2 GHz range;3/5 per-spectrum Gaussian fits;6/7 aligned filename labels and saved parameters;8 operating bounds"
+    },
+    {
+      "member": "Data availability update 20260220/Fig.S5/Fig. sample.ipynb",
+      "sha256": "a1ca93ce3a44d36abdfb54a9c9bb44a88a079e4c56c6079038fe1bc0a370e2f8",
+      "cells": "1 loads split coordinates only; no indices or session mapping"
+    }
+  ],
+  "not_proven": [
+    "Fig.S5 test equals separate-day Fig.3b/c measurements",
+    "exact acquisition session for duplicated fitted-array coordinates",
+    "stage calibration uncertainty",
+    "complete calibrated physical inverse",
+    "Raw-to-fit lineage for version A; only published parameter/label pairing is used."
+  ],
+  "excluded": [
+    "all object arrays",
+    "all .h5 models",
+    "Fig.5 demonstrations",
+    "Fig.S8 COMSOL",
+    "original notebook execution"
+  ],
+  "revision": "2026-10-15T18:43_custody_correction_supersedes_45f718b_strict_identity_rule",
+  "declared_fit_version": "A_model_loaded",
+  "claim_scope": "published_fitted_feature_stage_coordinate_pairs_raw_lineage_unresolved",
+  "superseded_rule": "45f718b required A/B fit byte identity; custody correctly stopped when it failed. This revision accepts A only with unresolved raw-lineage disclosure.",
+  "verify_position_byte_identity_before_geometry": [
+    {
+      "a": "Data availability update 20260220/Fig.S4/x_pos.npy",
+      "b": "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/x_pos.npy"
+    },
+    {
+      "a": "Data availability update 20260220/Fig.S4/y_pos.npy",
+      "b": "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/y_pos.npy"
+    }
+  ],
+  "required_pinned_fit_hashes": {
+    "fit_parameters": "813cb6f586d2d5fa930b0bc062a5692dc1b2cb7a94dfbd82860dd844647f360f",
+    "fit_standard_deviations": "1119ad52351df79bd5f2fd6c1f029201b38a563042006cfd4b8a1defc1f7c116"
+  },
+  "if_position_identity_or_pinned_A_hash_fails": "Stop; never substitute B, mix versions, infer ordering, or alter hashes.",
+  "known_AB_mismatch_must_remain_disclosed": {
+    "version_A_parameters": "813cb6f586d2d5fa930b0bc062a5692dc1b2cb7a94dfbd82860dd844647f360f",
+    "version_B_parameters": "ed2eb924fb06b65b134087d85688e6594a7af22b6617fae8c8b99891a189491f",
+    "version_A_std": "1119ad52351df79bd5f2fd6c1f029201b38a563042006cfd4b8a1defc1f7c116",
+    "version_B_std": "3e870d80f54ee63c72f0a497c439512c67574a65e9908babfd78e49e57a0d68a"
+  }
+}

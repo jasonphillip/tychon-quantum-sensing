@@ -1,0 +1,552 @@
+{
+  "status": "PASS",
+  "stage": "timestamp_qualification_only",
+  "waveform_values_decoded": 0,
+  "manifest_sha256": "e98ebc9bf2e5d805012b6af8de952a13ba78b03a96febc141b640798fb600905",
+  "approval_sha256": "b24b579b78e4b520a9c1867a4c53a027a7c1cd5e9a5bd543077640a8f6ccdb51",
+  "archive_sha256": "b3d79874553f3d8a9434a5daba1002765c810b134f98697b1f0cb58f09232e1f",
+  "byteorder": "little",
+  "recordings": [
+    {
+      "recording_id": "P1-S01",
+      "participant_id": "P1",
+      "session_id": "P1-S01",
+      "split": "development",
+      "timestamp_only_eligible": true,
+      "errors": [],
+      "rows_per_channel": 1151316,
+      "duration_seconds": 1279.9991222871001,
+      "sample_rate_hz": 899.4654605253419,
+      "mean_interval_seconds": 0.0011117714285726324,
+      "maximum_relative_interval_deviation": 7.709883818263208e-06,
+      "maximum_chunk_rate_deviation": 4.356026650498279e-11,
+      "exported_timestamp_arrays_identical": true,
+      "full_header_sha256": "cf4977fdd0e435a2d5fd3a039194efbf34570d11442591d87493a179b8f8ce7d",
+      "timestamp_array_sha256": "b0d503dfda4ceb3677855879e87b73a27cb1a986441b2fd12aeffcb8e782f0fc",
+      "timestamp_array_encoding": "native-endian float64; host byte order recorded in run",
+      "exact_windows": [
+        {
+          "name": "candidate",
+          "start_seconds": 0.0,
+          "stop_seconds": 120.0,
+          "first_sample": 0,
+          "stop_sample_exclusive": 107936
+        },
+        {
+          "name": "reference_a",
+          "start_seconds": 180.0,
+          "stop_seconds": 360.0,
+          "first_sample": 161904,
+          "stop_sample_exclusive": 323808
+        },
+        {
+          "name": "reference_b",
+          "start_seconds": 420.0,
+          "stop_seconds": 600.0,
+          "first_sample": 377776,
+          "stop_sample_exclusive": 539680
+        }
+      ],
+      "waveform_values_decoded": 0,
+      "physical_channel_delay_verified": false,
+      "magnetic_calibration_used": false,
+      "acquisition_filter_response_known": false
+    },
+    {
+      "recording_id": "P1-S02",
+      "participant_id": "P1",
+      "session_id": "P1-S02",
+      "split": "development",
+      "timestamp_only_eligible": true,
+      "errors": [],
+      "rows_per_channel": 1151316,
+      "duration_seconds": 1279.999122289,
+      "sample_rate_hz": 899.4654605240069,
+      "mean_interval_seconds": 0.0011117714285742825,
+      "maximum_relative_interval_deviation": 7.709882333895024e-06,
+      "maximum_chunk_rate_deviation": 5.323674834301073e-11,
+      "exported_timestamp_arrays_identical": true,
+      "full_header_sha256": "bfa2d86667a8c70ec1d7e39aa0d92301e8e453ba9d63090475072b3488c982ba",
+      "timestamp_array_sha256": "02401374a9a148c827af74be45f11a23a68366ee0c69ebd6d27d8df510b754dd",
+      "timestamp_array_encoding": "native-endian float64; host byte order recorded in run",
+      "exact_windows": [
+        {
+          "name": "candidate",
+          "start_seconds": 0.0,
+          "stop_seconds": 120.0,
+          "first_sample": 0,
+          "stop_sample_exclusive": 107936
+        },
+        {
+          "name": "reference_a",
+          "start_seconds": 180.0,
+          "stop_seconds": 360.0,
+          "first_sample": 161904,
+          "stop_sample_exclusive": 323808
+        },
+        {
+          "name": "reference_b",
+          "start_seconds": 420.0,
+          "stop_seconds": 600.0,
+          "first_sample": 377776,
+          "stop_sample_exclusive": 539680
+        }
+      ],
+      "waveform_values_decoded": 0,
+      "physical_channel_delay_verified": false,
+      "magnetic_calibration_used": false,
+      "acquisition_filter_response_known": false
+    },
+    {
+      "recording_id": "P1-S03",
+      "participant_id": "P1",
+      "session_id": "P1-S03",
+      "split": "development",
+      "timestamp_only_eligible": true,
+      "errors": [],
+      "rows_per_channel": 1151315,
+      "duration_seconds": 1279.998010514,
+      "sample_rate_hz": 899.4654605265166,
+      "mean_interval_seconds": 0.0011117714285711804,
+      "maximum_relative_interval_deviation": 7.70988512410753e-06,
+      "maximum_chunk_rate_deviation": 5.6026960848498675e-11,
+      "exported_timestamp_arrays_identical": true,
+      "full_header_sha256": "7e179f2a69befdc7082bcf12d62a7f735a0b06c538bb7dc9a9d5e6086afd1124",
+      "timestamp_array_sha256": "071189690d20d86956c7a9676765d74c21a569ad6affec654b50f115120f7ef0",
+      "timestamp_array_encoding": "native-endian float64; host byte order recorded in run",
+      "exact_windows": [
+        {
+          "name": "candidate",
+          "start_seconds": 0.0,
+          "stop_seconds": 120.0,
+          "first_sample": 0,
+          "stop_sample_exclusive": 107936
+        },
+        {
+          "name": "reference_a",
+          "start_seconds": 180.0,
+          "stop_seconds": 360.0,
+          "first_sample": 161904,
+          "stop_sample_exclusive": 323808
+        },
+        {
+          "name": "reference_b",
+          "start_seconds": 420.0,
+          "stop_seconds": 600.0,
+          "first_sample": 377776,
+          "stop_sample_exclusive": 539680
+        }
+      ],
+      "waveform_values_decoded": 0,
+      "physical_channel_delay_verified": false,
+      "magnetic_calibration_used": false,
+      "acquisition_filter_response_known": false
+    },
+    {
+      "recording_id": "P1-S04",
+      "participant_id": "P1",
+      "session_id": "P1-S04",
+      "split": "development",
+      "timestamp_only_eligible": true,
+      "errors": [],
+      "rows_per_channel": 1151316,
+      "duration_seconds": 1279.999122284,
+      "sample_rate_hz": 899.4654605275206,
+      "mean_interval_seconds": 0.0011117714285699394,
+      "maximum_relative_interval_deviation": 7.709886240547803e-06,
+      "maximum_chunk_rate_deviation": 4.598255110010996e-11,
+      "exported_timestamp_arrays_identical": true,
+      "full_header_sha256": "4e3040838c5c39312399be6fd0cd6d02e92b84591faf11ccc6cb87ec5f8a46f0",
+      "timestamp_array_sha256": "ae88977028e40c8f09b7cd03c9ea9f3b4a51dc2060e82234d4241a939f722b4a",
+      "timestamp_array_encoding": "native-endian float64; host byte order recorded in run",
+      "exact_windows": [
+        {
+          "name": "candidate",
+          "start_seconds": 0.0,
+          "stop_seconds": 120.0,
+          "first_sample": 0,
+          "stop_sample_exclusive": 107936
+        },
+        {
+          "name": "reference_a",
+          "start_seconds": 180.0,
+          "stop_seconds": 360.0,
+          "first_sample": 161904,
+          "stop_sample_exclusive": 323808
+        },
+        {
+          "name": "reference_b",
+          "start_seconds": 420.0,
+          "stop_seconds": 600.0,
+          "first_sample": 377776,
+          "stop_sample_exclusive": 539680
+        }
+      ],
+      "waveform_values_decoded": 0,
+      "physical_channel_delay_verified": false,
+      "magnetic_calibration_used": false,
+      "acquisition_filter_response_known": false
+    },
+    {
+      "recording_id": "P1-S05",
+      "participant_id": "P1",
+      "session_id": "P1-S05",
+      "split": "development",
+      "timestamp_only_eligible": true,
+      "errors": [],
+      "rows_per_channel": 1151316,
+      "duration_seconds": 1279.999122281,
+      "sample_rate_hz": 899.4654605296286,
+      "mean_interval_seconds": 0.0011117714285673339,
+      "maximum_relative_interval_deviation": 7.709888584006563e-06,
+      "maximum_chunk_rate_deviation": 5.948685988244051e-11,
+      "exported_timestamp_arrays_identical": true,
+      "full_header_sha256": "170b2031e0907bbddaaa5262d51f8191ce94ccce7e0eeb970f93d5ed4a6db8b4",
+      "timestamp_array_sha256": "85efa035845bcba20bc643926e3df9ce7889dcc3b7c004725ee7e318143f6c3e",
+      "timestamp_array_encoding": "native-endian float64; host byte order recorded in run",
+      "exact_windows": [
+        {
+          "name": "candidate",
+          "start_seconds": 0.0,
+          "stop_seconds": 120.0,
+          "first_sample": 0,
+          "stop_sample_exclusive": 107936
+        },
+        {
+          "name": "reference_a",
+          "start_seconds": 180.0,
+          "stop_seconds": 360.0,
+          "first_sample": 161904,
+          "stop_sample_exclusive": 323808
+        },
+        {
+          "name": "reference_b",
+          "start_seconds": 420.0,
+          "stop_seconds": 600.0,
+          "first_sample": 377776,
+          "stop_sample_exclusive": 539680
+        }
+      ],
+      "waveform_values_decoded": 0,
+      "physical_channel_delay_verified": false,
+      "magnetic_calibration_used": false,
+      "acquisition_filter_response_known": false
+    },
+    {
+      "recording_id": "P1-S06",
+      "participant_id": "P1",
+      "session_id": "P1-S06",
+      "split": "development",
+      "timestamp_only_eligible": true,
+      "errors": [],
+      "rows_per_channel": 1233950,
+      "duration_seconds": 1371.869242513,
+      "sample_rate_hz": 899.4654605271588,
+      "mean_interval_seconds": 0.0011117714285703865,
+      "maximum_relative_interval_deviation": 7.709885838202979e-06,
+      "maximum_chunk_rate_deviation": 6.154232679023153e-11,
+      "exported_timestamp_arrays_identical": true,
+      "full_header_sha256": "f1057677116fd932c07f6a7bcbc2677b2ca0368b217a15774ac55ba41afc92be",
+      "timestamp_array_sha256": "1905e488e24d3da2bc70425a90852d599f9f7e5dc48cdda6ff336475e83cb3bc",
+      "timestamp_array_encoding": "native-endian float64; host byte order recorded in run",
+      "exact_windows": [
+        {
+          "name": "candidate",
+          "start_seconds": 0.0,
+          "stop_seconds": 120.0,
+          "first_sample": 0,
+          "stop_sample_exclusive": 107936
+        },
+        {
+          "name": "reference_a",
+          "start_seconds": 180.0,
+          "stop_seconds": 360.0,
+          "first_sample": 161904,
+          "stop_sample_exclusive": 323808
+        },
+        {
+          "name": "reference_b",
+          "start_seconds": 420.0,
+          "stop_seconds": 600.0,
+          "first_sample": 377776,
+          "stop_sample_exclusive": 539680
+        }
+      ],
+      "waveform_values_decoded": 0,
+      "physical_channel_delay_verified": false,
+      "magnetic_calibration_used": false,
+      "acquisition_filter_response_known": false
+    },
+    {
+      "recording_id": "P1-S07",
+      "participant_id": "P1",
+      "session_id": "P1-S07",
+      "split": "development",
+      "timestamp_only_eligible": true,
+      "errors": [],
+      "rows_per_channel": 1151316,
+      "duration_seconds": 1279.9991222857,
+      "sample_rate_hz": 899.4654605263258,
+      "mean_interval_seconds": 0.001111771428571416,
+      "maximum_relative_interval_deviation": 7.709884912276976e-06,
+      "maximum_chunk_rate_deviation": 4.465428027344842e-11,
+      "exported_timestamp_arrays_identical": true,
+      "full_header_sha256": "93100c941a5b446a2e29e1d514c09db705f06c16eebc5864053dc123c7294721",
+      "timestamp_array_sha256": "133044b2517239fd0d3676b4fe02c217a6b1f1bbb7d2ce9f91f1f683a5b26e91",
+      "timestamp_array_encoding": "native-endian float64; host byte order recorded in run",
+      "exact_windows": [
+        {
+          "name": "candidate",
+          "start_seconds": 0.0,
+          "stop_seconds": 120.0,
+          "first_sample": 0,
+          "stop_sample_exclusive": 107936
+        },
+        {
+          "name": "reference_a",
+          "start_seconds": 180.0,
+          "stop_seconds": 360.0,
+          "first_sample": 161904,
+          "stop_sample_exclusive": 323808
+        },
+        {
+          "name": "reference_b",
+          "start_seconds": 420.0,
+          "stop_seconds": 600.0,
+          "first_sample": 377776,
+          "stop_sample_exclusive": 539680
+        }
+      ],
+      "waveform_values_decoded": 0,
+      "physical_channel_delay_verified": false,
+      "magnetic_calibration_used": false,
+      "acquisition_filter_response_known": false
+    },
+    {
+      "recording_id": "P1-S08",
+      "participant_id": "P1",
+      "session_id": "P1-S08",
+      "split": "development",
+      "timestamp_only_eligible": true,
+      "errors": [],
+      "rows_per_channel": 1151316,
+      "duration_seconds": 1279.999122281,
+      "sample_rate_hz": 899.4654605296286,
+      "mean_interval_seconds": 0.0011117714285673339,
+      "maximum_relative_interval_deviation": 7.709888584006563e-06,
+      "maximum_chunk_rate_deviation": 5.948685988244051e-11,
+      "exported_timestamp_arrays_identical": true,
+      "full_header_sha256": "f14bb90326f8d53295dc6091e4c22ee57142b55ce8dc2ed1134677e30858ce75",
+      "timestamp_array_sha256": "5ec0e3693c2e742ab46f7b560cf07a6b38a19c6a1704730150eb0a573552f3dc",
+      "timestamp_array_encoding": "native-endian float64; host byte order recorded in run",
+      "exact_windows": [
+        {
+          "name": "candidate",
+          "start_seconds": 0.0,
+          "stop_seconds": 120.0,
+          "first_sample": 0,
+          "stop_sample_exclusive": 107936
+        },
+        {
+          "name": "reference_a",
+          "start_seconds": 180.0,
+          "stop_seconds": 360.0,
+          "first_sample": 161904,
+          "stop_sample_exclusive": 323808
+        },
+        {
+          "name": "reference_b",
+          "start_seconds": 420.0,
+          "stop_seconds": 600.0,
+          "first_sample": 377776,
+          "stop_sample_exclusive": 539680
+        }
+      ],
+      "waveform_values_decoded": 0,
+      "physical_channel_delay_verified": false,
+      "magnetic_calibration_used": false,
+      "acquisition_filter_response_known": false
+    },
+    {
+      "recording_id": "P1-S09",
+      "participant_id": "P1",
+      "session_id": "P1-S09",
+      "split": "development",
+      "timestamp_only_eligible": true,
+      "errors": [],
+      "rows_per_channel": 1151316,
+      "duration_seconds": 1279.9991222869999,
+      "sample_rate_hz": 899.4654605254124,
+      "mean_interval_seconds": 0.0011117714285725452,
+      "maximum_relative_interval_deviation": 7.709883896644953e-06,
+      "maximum_chunk_rate_deviation": 4.363864825052133e-11,
+      "exported_timestamp_arrays_identical": true,
+      "full_header_sha256": "e13ead765cea2e09c6d4255b0b2d8991f9be2d526dfa8ef371ef5f29954fd1d1",
+      "timestamp_array_sha256": "7389c47453ed5c89afd3c5602dd667446f919d789f98b77320431cebd8257e0b",
+      "timestamp_array_encoding": "native-endian float64; host byte order recorded in run",
+      "exact_windows": [
+        {
+          "name": "candidate",
+          "start_seconds": 0.0,
+          "stop_seconds": 120.0,
+          "first_sample": 0,
+          "stop_sample_exclusive": 107936
+        },
+        {
+          "name": "reference_a",
+          "start_seconds": 180.0,
+          "stop_seconds": 360.0,
+          "first_sample": 161904,
+          "stop_sample_exclusive": 323808
+        },
+        {
+          "name": "reference_b",
+          "start_seconds": 420.0,
+          "stop_seconds": 600.0,
+          "first_sample": 377776,
+          "stop_sample_exclusive": 539680
+        }
+      ],
+      "waveform_values_decoded": 0,
+      "physical_channel_delay_verified": false,
+      "magnetic_calibration_used": false,
+      "acquisition_filter_response_known": false
+    },
+    {
+      "recording_id": "P1-S10",
+      "participant_id": "P1",
+      "session_id": "P1-S10",
+      "split": "development",
+      "timestamp_only_eligible": true,
+      "errors": [],
+      "rows_per_channel": 1214278,
+      "duration_seconds": 1349.9984749757,
+      "sample_rate_hz": 899.4654605234698,
+      "mean_interval_seconds": 0.0011117714285749463,
+      "maximum_relative_interval_deviation": 7.709881736817081e-06,
+      "maximum_chunk_rate_deviation": 1.8001378165877213e-11,
+      "exported_timestamp_arrays_identical": true,
+      "full_header_sha256": "a419d3f4a4b261a629586f10518f631091bbb865186baa4e551e13439c3ac8fe",
+      "timestamp_array_sha256": "11b693a383504587dfe6a2554b138f9c563253c10221c1841febd23ab58f7d46",
+      "timestamp_array_encoding": "native-endian float64; host byte order recorded in run",
+      "exact_windows": [
+        {
+          "name": "candidate",
+          "start_seconds": 0.0,
+          "stop_seconds": 120.0,
+          "first_sample": 0,
+          "stop_sample_exclusive": 107936
+        },
+        {
+          "name": "reference_a",
+          "start_seconds": 180.0,
+          "stop_seconds": 360.0,
+          "first_sample": 161904,
+          "stop_sample_exclusive": 323808
+        },
+        {
+          "name": "reference_b",
+          "start_seconds": 420.0,
+          "stop_seconds": 600.0,
+          "first_sample": 377776,
+          "stop_sample_exclusive": 539680
+        }
+      ],
+      "waveform_values_decoded": 0,
+      "physical_channel_delay_verified": false,
+      "magnetic_calibration_used": false,
+      "acquisition_filter_response_known": false
+    },
+    {
+      "recording_id": "P2-S01",
+      "participant_id": "P2",
+      "session_id": "P2-S01",
+      "split": "validation",
+      "timestamp_only_eligible": true,
+      "errors": [],
+      "rows_per_channel": 2874696,
+      "duration_seconds": 1598.00188343,
+      "sample_rate_hz": 1798.9309210510235,
+      "mean_interval_seconds": 0.0005558857142862112,
+      "maximum_relative_interval_deviation": 1.0279848503658151e-05,
+      "maximum_chunk_rate_deviation": 2.592526193723188e-11,
+      "exported_timestamp_arrays_identical": true,
+      "full_header_sha256": "8289987b777f4ca3ae5a1e7412d327fbd825a17b4a41c16e95d18571b939da7f",
+      "timestamp_array_sha256": "598c5ef431067df12d440bd3e20c2164f1e7acfd59669eb11ec8df97bc263b67",
+      "timestamp_array_encoding": "native-endian float64; host byte order recorded in run",
+      "exact_windows": [
+        {
+          "name": "candidate",
+          "start_seconds": 0.0,
+          "stop_seconds": 120.0,
+          "first_sample": 0,
+          "stop_sample_exclusive": 215872
+        },
+        {
+          "name": "reference_a",
+          "start_seconds": 180.0,
+          "stop_seconds": 360.0,
+          "first_sample": 323808,
+          "stop_sample_exclusive": 647616
+        },
+        {
+          "name": "reference_b",
+          "start_seconds": 420.0,
+          "stop_seconds": 600.0,
+          "first_sample": 755551,
+          "stop_sample_exclusive": 1079359
+        }
+      ],
+      "waveform_values_decoded": 0,
+      "physical_channel_delay_verified": false,
+      "magnetic_calibration_used": false,
+      "acquisition_filter_response_known": false
+    },
+    {
+      "recording_id": "P3-S01",
+      "participant_id": "P3",
+      "session_id": "P3-S01",
+      "split": "held",
+      "timestamp_only_eligible": true,
+      "errors": [],
+      "rows_per_channel": 1359265,
+      "duration_seconds": 755.5954395427143,
+      "sample_rate_hz": 1798.9309210529718,
+      "mean_interval_seconds": 0.0005558857142856092,
+      "maximum_relative_interval_deviation": 1.2850834226751928e-06,
+      "maximum_chunk_rate_deviation": 9.264589095892006e-12,
+      "exported_timestamp_arrays_identical": true,
+      "full_header_sha256": "739cc4b3d879b7bc31312bd83172be683f4e9ff08c73e4618af3289067f7f078",
+      "timestamp_array_sha256": "69195920efb75303a443ec0a4c7f9b5a9cf1318a9a04b94fe5d6b0958dd7969d",
+      "timestamp_array_encoding": "native-endian float64; host byte order recorded in run",
+      "exact_windows": [
+        {
+          "name": "candidate",
+          "start_seconds": 0.0,
+          "stop_seconds": 120.0,
+          "first_sample": 0,
+          "stop_sample_exclusive": 215872
+        },
+        {
+          "name": "reference_a",
+          "start_seconds": 180.0,
+          "stop_seconds": 360.0,
+          "first_sample": 323808,
+          "stop_sample_exclusive": 647616
+        },
+        {
+          "name": "reference_b",
+          "start_seconds": 420.0,
+          "stop_seconds": 600.0,
+          "first_sample": 755551,
+          "stop_sample_exclusive": 1079359
+        }
+      ],
+      "waveform_values_decoded": 0,
+      "physical_channel_delay_verified": false,
+      "magnetic_calibration_used": false,
+      "acquisition_filter_response_known": false
+    }
+  ],
+  "scientific_waveform_comparison_authorized": false
+}

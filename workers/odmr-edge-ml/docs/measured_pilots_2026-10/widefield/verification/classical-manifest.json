@@ -1,0 +1,21 @@
+{
+  "bootstrap_seed": 4506997252173745477,
+  "files": {
+    "bootstrap": "3cb3f2fac621ea2857089d7339fe903b51d3a2c738ea0f800e85de2634094151",
+    "metrics": "61d5d8cf8428424b646f507eaead52a5d25e3ac3cfab98607067761a8b5a1e76",
+    "model_arrays": "c6593dc1b8a02471922d172e5343e5615a76afa532dbe23943934c7e41b1852b",
+    "model_manifest": "c0dc6ca9769708bdc6e14ac31ec6c8592b9acab4935ad8f1eca76c14550fe104",
+    "prediction_0_arrays": "ec7a0706acb0e60fce3f1eada47e4ec09330ad9ca7fdfbe7aaf625afe87e64c4",
+    "prediction_0_manifest": "1345b2d0cc2cb0c88eccc48bbd1ee76d58eae594099a21879561808d43ed3847",
+    "targets_arrays": "657e17becd032512feb9c55f5e7b2b87ac56332809549085007a97fecb44378f",
+    "targets_manifest": "08f677126cf22bdf4c0ac98e40b10fc71674834205da96f8f3135148fa4e5974"
+  },
+  "schema": "measured-widefield-saved-verification-v1",
+  "seed_scope": "Consumed bootstrap seed only; no unused training or evaluation seed",
+  "sources": {
+    "io.py": "47a34d8eab12bfc53c05702e7223182fd261620afa01d08c4f54e98c4db14eb1",
+    "metrics.py": "e668859a59c790a5669e9f19de87555e7388d11bbd23c12d93e03c049b161233",
+    "protocol.json": "fe60357e5b1a9e02e1417c9c0187e19eeddd60f0371a59927b3c39085842fc6b",
+    "verify_saved.py": "71b40ce33c4c700c03de457f1dfa71e2f268f9b7d6da9d65a7ab173aa11a416c"
+  }
+}

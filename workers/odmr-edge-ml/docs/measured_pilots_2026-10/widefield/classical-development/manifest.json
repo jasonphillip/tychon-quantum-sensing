@@ -1,0 +1,24 @@
+{
+  "accounting_run_id": "measured-widefield-a-classical-development-20261015",
+  "approval_sha256": "edc24c937841697c5d03c9fae48e10488b7ba00e41be187d267bc3537e03cb36",
+  "arrays_sha256": "ec7a0706acb0e60fce3f1eada47e4ec09330ad9ca7fdfbe7aaf625afe87e64c4",
+  "inputs_manifest_sha256": "3c94ab005aceedd07d80b60625e3f0677af434ad5eb63fc7159fe7b9a942b091",
+  "kind": "predictions",
+  "label_values_read": false,
+  "methods": [
+    "raw",
+    "training_mean",
+    "savgol_5",
+    "savgol_11",
+    "savgol_21",
+    "ridge_0.001",
+    "ridge_0.01",
+    "ridge_0.1",
+    "pca_wiener_4",
+    "pca_wiener_8",
+    "pca_wiener_16",
+    "robust_lorentzian"
+  ],
+  "split": "development",
+  "timing_scope": "Batch-1 normalized-spectrum processing including fallback; excludes file I/O and ROI extraction."
+}

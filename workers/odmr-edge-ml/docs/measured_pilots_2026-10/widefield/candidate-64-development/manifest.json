@@ -1,0 +1,13 @@
+{
+  "accounting_run_id": "measured-widefield-a-candidate-64-development-20261015",
+  "approval_sha256": "7f119f3bced46b1a8026500ac3faebc39ea82e7ac795e1458f0f76971796aef9",
+  "arrays_sha256": "0ba942c31fd6f8f9bbab28d2e8fe18e20ebb05e5f2842a8924bd51878260b6bd",
+  "inputs_manifest_sha256": "3c94ab005aceedd07d80b60625e3f0677af434ad5eb63fc7159fe7b9a942b091",
+  "kind": "predictions",
+  "label_values_read": false,
+  "methods": [
+    "candidate_64"
+  ],
+  "split": "development",
+  "timing_scope": "Batch-1 normalized-spectrum processing including fallback; excludes file I/O and ROI extraction."
+}

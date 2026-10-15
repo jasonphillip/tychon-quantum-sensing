@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "study": "measured-localisation-2026-10-15",
+  "status": "FROZEN",
+  "scope": "published_fitted_feature_stage_coordinate_pairs_raw_lineage_unresolved",
+  "dataset_doi": "10.5281/zenodo.19855773",
+  "primary_objective": "reduce_unique_calibration_positions_at_matched_position_error",
+  "calibration_fraction": 0.25,
+  "validation_fraction_of_available_calibration": 0.1,
+  "primary_metric": "mean_euclidean_position_error_um",
+  "primary_gate": {
+    "maximum_candidate_to_classical_mean_ratio": 0.9,
+    "maximum_one_sided_95pct_block_bootstrap_ratio": 1.0,
+    "maximum_candidate_to_classical_p95_ratio": 1.1,
+    "maximum_candidate_to_full_classical_mean_ratio": 1.05,
+    "maximum_one_sided_95pct_full_classical_ratio": 1.05,
+    "maximum_small_to_full_label_budget_ratio": 0.5,
+    "minimum_test_spatial_blocks": 6,
+    "minimum_test_samples": 30,
+    "minimum_training_samples": 32,
+    "minimum_validation_samples": 16,
+    "minimum_test_coverage": 1.0
+  },
+  "partition": {
+    "grid": [
+      12,
+      12
+    ],
+    "test_cells": [
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        5
+      ],
+      [
+        1,
+        9
+      ],
+      [
+        5,
+        1
+      ],
+      [
+        5,
+        5
+      ],
+      [
+        5,
+        9
+      ],
+      [
+        9,
+        1
+      ],
+      [
+        9,
+        5
+      ],
+      [
+        9,
+        9
+      ]
+    ],
+    "test_exclusion_chebyshev_cells": 1,
+    "coordinate_bounds_source": "custody_declared_operating_bounds_um",
+    "validation_grouping": "complete_spatial_cell",
+    "validation_exclusion_chebyshev_cells": 1,
+    "within_available_pool_order": "sha256_of_registered_salt_and_sample_or_group_id",
+    "duplicate_position_policy": "same_partition",
+    "supplied_paper_splits": "reproduction_only_never_new_confirmation",
+    "claim_limit": "spatial_generalization_within_available_acquisitions_not_new_subject_or_sensor",
+    "acquisition_policy": "spatial_within_represented_sessions_disclose_possible_overlap",
+    "geometry_status": "DRAFT_NO_POSITION_VALUES_INSPECTED_NO_COUNTS_ASSUMED",
+    "row_session_identity": "unsorted_original_os_walk_prevents_exact_assignment_of_repeated_coordinates"
+  },
+  "feature_contract": {
+    "shape": [
+      null,
+      24
+    ],
+    "meaning": "8_measured_channels_each_with_splitting_and_two_fit_standard_deviations",
+    "units": "MHz_before_natural_log",
+    "order": "channel_major_triplets",
+    "transform": "natural_log_then_training_only_standardization",
+    "invalid_nonpositive_policy": "fail_qualification_no_row_dropping",
+    "positions": "N_by_2_motor_stage_xy_um",
+    "native_fit_units": "GHz",
+    "native_to_feature_factor": 1000,
+    "source_parameters": "abs(para[:,:,1]-para[:,:,4]), para_std[:,:,1], para_std[:,:,4]",
+    "source_sensor_order": "preserve_saved_array_order; do_not_reorder_again",
+    "author_code_transform": "np.log applied to all 24 reshaped GHz features in the commented model training cell",
+    "prospective_transform": "All 24 native features multiplied by 1000 then logged; train-only standardization; not original CNN reproduction"
+  },
+  "classical_grid": {
+    "mean": [
+      {}
+    ],
+    "ridge": [
+      {
+        "alpha": 0.001
+      },
+      {
+        "alpha": 0.1
+      },
+      {
+        "alpha": 10.0
+      }
+    ],
+    "knn": [
+      {
+        "k": 1
+      },
+      {
+        "k": 3
+      },
+      {
+        "k": 5
+      },
+      {
+        "k": 9
+      }
+    ],
+    "rbf": [
+      {
+        "smoothing": 0.01
+      },
+      {
+        "smoothing": 0.1
+      },
+      {
+        "smoothing": 1.0
+      }
+    ],
+    "gp": [
+      {
+        "length": 0.5,
+        "noise": 0.01
+      },
+      {
+        "length": 0.5,
+        "noise": 0.1
+      },
+      {
+        "length": 1.0,
+        "noise": 0.01
+      },
+      {
+        "length": 1.0,
+        "noise": 0.1
+      },
+      {
+        "length": 2.0,
+        "noise": 0.01
+      },
+      {
+        "length": 2.0,
+        "noise": 0.1
+      }
+    ]
+  },
+  "physical_baseline": {
+    "status": "metadata_qualification_required",
+    "requires": [
+      "sensor_xyz_um_in_label_frame",
+      "fixed_target_height_um",
+      "independent_sensor_magnitude_calibration",
+      "fixed_target_profile_and_orientation"
+    ],
+    "exclusion_reason_if_missing": "splitting_is_not_calibrated_field_magnitude_and_unknown_geometry_is_not_identifiable",
+    "no_fabricated_geometry": true,
+    "metadata_review": "Archive and paper give 250 um height, 45 degree tilt, and 127 um pitch; needle moment, stage-to-sensor frame, per-sensor NV axes, and usable field calibration are missing.",
+    "claim_limit": "No claim against all physics-based methods; no inferred calibration from plotted marker positions."
+  },
+  "uncertainty": {
+    "bootstrap_unit": "whole_test_spatial_cell",
+    "bootstrap_replicates": 2000,
+    "interval": "one_sided_percentile_95",
+    "interpretation": "conditional_spatial_block_uncertainty_not_population_or_independent_session_uncertainty"
+  },
+  "limits": {
+    "cpu_seconds": 57600,
+    "gpu_seconds": 7200,
+    "cumulative_numerical_wall_seconds": 14400,
+    "numerical_threads": 1,
+    "baseline_fits": 34,
+    "candidate_training_runs": 3,
+    "final_test_evaluations": 1,
+    "training_samples_maximum": 512,
+    "first_candidate_job_wall_seconds": 1800,
+    "candidate_epochs_per_configuration": 200
+  },
+  "stopping_rules": [
+    "No numerical operation without root approval and a bound accounting reservation.",
+    "Stop unless custody pins one published version-A fitted-feature/stage-coordinate pair, feature semantics, units, and hashes; preserve the unresolved raw lineage.",
+    "Stop if extraction uses COMSOL or mixes a measured sample with its simulated derivative.",
+    "Stop if fixed partition or small-budget counts fail minimums; do not move the split after seeing signals.",
+    "Stop on invalid features or labels; do not silently filter difficult held-out rows.",
+    "Three predeclared MLP widths, one seed each; choose by validation error, then one gate and one frozen final evaluation. No switching after failure.",
+    "No hardware, vnnx, paid compute, service changes, or live-sensor/clinical/novelty claim."
+  ],
+  "calibration_budget_unit": "unique_stage_xy_positions_including_validation",
+  "minimum_count_unit": "unique_stage_xy_positions_except_spatial_blocks",
+  "candidate_grid": [
+    {
+      "name": "fixed_compact_mlp",
+      "input": 24,
+      "hidden": 24,
+      "output": 2,
+      "parameters": 650,
+      "epochs": 200,
+      "learning_rate": 0.01,
+      "weight_decay": 0.01,
+      "loss": "mean_squared_standardized_xy",
+      "checkpoint": "lowest_validation_mean_euclidean_error",
+      "restarts": 1,
+      "architecture_search": "three_predeclared_widths_only",
+      "device": "cuda"
+    },
+    {
+      "name": "fixed_compact_mlp",
+      "input": 24,
+      "hidden": 48,
+      "output": 2,
+      "parameters": 1298,
+      "epochs": 200,
+      "learning_rate": 0.01,
+      "weight_decay": 0.01,
+      "loss": "mean_squared_standardized_xy",
+      "checkpoint": "lowest_validation_mean_euclidean_error",
+      "restarts": 1,
+      "architecture_search": "three_predeclared_widths_only",
+      "device": "cuda"
+    },
+    {
+      "name": "fixed_compact_mlp",
+      "input": 24,
+      "hidden": 96,
+      "output": 2,
+      "parameters": 2594,
+      "epochs": 200,
+      "learning_rate": 0.01,
+      "weight_decay": 0.01,
+      "loss": "mean_squared_standardized_xy",
+      "checkpoint": "lowest_validation_mean_euclidean_error",
+      "restarts": 1,
+      "architecture_search": "three_predeclared_widths_only",
+      "device": "cuda"
+    }
+  ],
+  "candidate_selection": "lowest_validation_mean_error_then_fewer_parameters; apply_all_gates_once_to_winner; no_switch_after_failure",
+  "dataset_version": "A_model_loaded",
+  "raw_to_fit_lineage": "unresolved_version_A_differs_from_version_B_saved_by_FigS4"
+}

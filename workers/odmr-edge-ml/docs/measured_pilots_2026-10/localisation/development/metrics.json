@@ -1,0 +1,41 @@
+{
+  "candidate": {
+    "mean_error_um": 112.38392026525463,
+    "median_error_um": 111.26121505711035,
+    "p95_error_um": 188.10479163332087,
+    "count": 44,
+    "coverage": 1.0
+  },
+  "classical_small": {
+    "mean_error_um": 134.0465549247098,
+    "median_error_um": 108.31857480009299,
+    "p95_error_um": 364.0541036855842,
+    "count": 44,
+    "coverage": 1.0
+  },
+  "classical_full": {
+    "mean_error_um": 99.47728375242455,
+    "median_error_um": 69.19619851973377,
+    "p95_error_um": 206.04705647933477,
+    "count": 44,
+    "coverage": 1.0
+  },
+  "small_label_budget": 83,
+  "full_label_budget": 248,
+  "label_budget_unit": "unique_stage_xy_positions_including_validation",
+  "evaluated_measurement_rows": 44,
+  "evaluated_unique_stage_positions": 34,
+  "candidate_to_classical_mean_ratio": 0.8383946930107793,
+  "candidate_to_classical_p95_ratio": 0.5166946059088454,
+  "candidate_to_full_classical_mean_ratio": 1.1297445610291454,
+  "label_budget_ratio": 0.3346774193548387,
+  "spatial_block_count": 7,
+  "criteria": {
+    "same_budget_useful_advantage": true,
+    "tail_safeguard": true,
+    "matched_full_pool_quality": false,
+    "label_reduction": true
+  },
+  "gate_passed": false,
+  "scope": "published_version_A_fitted_feature_stage_coordinate_pairs_conditional_spatial_test_raw_lineage_unresolved"
+}

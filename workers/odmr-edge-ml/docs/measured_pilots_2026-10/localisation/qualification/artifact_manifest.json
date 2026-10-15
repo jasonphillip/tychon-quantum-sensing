@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "study": "measured-localisation-2026-10-15",
+  "approval_sha256": "b1010856823c96a49bf854bfe875bdd22605c62a367dc18f3865baf410f1a0de",
+  "source_sha256": {
+    "__init__.py": "29a6dba6675e30f13ffba6f961ee5da2c2a587a64ef4d9abb6541e9924a9ec9f",
+    "bundle.py": "054e9935b1c080041a93325ffb2ea0cb0e0359e62bce17f8baa96c5f5e60d36e",
+    "guard.py": "3fe4db1de858a28181db6caaff0fc3578b2afffddf0733fd6467ca76e0acaaf7",
+    "metrics.py": "9a5f6291f8eccfb7ec5c040d87536a9da21006e7811cfd4bd2a89d4fe4d39024",
+    "models.py": "e48c5536086367bf697a2b6b72167402fa3e7b681163b96cff27e1f39d812557",
+    "partition.py": "19c131238b6364fcae5b1561f703795a026338703dd09f8ccee92e9aef634575",
+    "run.py": "065006b79b237c6da106ed99038fb8ff9d21d9d71d957864e412bf69a49d4364",
+    "tests/test_contracts.py": "8716761f461bff1be5226c46e7165f31e676e5f81223a14d61124b00c5feba1f",
+    "verify_saved.py": "15c59f00c8307cf2f2489ccb88eac35963cbe71f522d7e756f7596020ce0ec3d",
+    "protocol.json": "b363e887f4880a42da8a93e900d0c2e0db1ce26af2ee7de7bf4de42f8207e94f"
+  },
+  "inputs": {
+    "bundle_sha256": "60890e6b99aec4174fbfe8b938552edd56b064a1f87cee6b80801717b49adfb3",
+    "partition_sha256": "c84699ec43f73406e901d75e33b76f9f0ac94545a337b1711a86fa213bf523da"
+  },
+  "files": {
+    "qualification.json": "60d14ebf3f865795c3e7652519183cefb92b3a5825cc8147ed1137cb2aba3296"
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "dataset_doi": "10.5281/zenodo.19855773",
+  "archive_sha256": "b5717b233590d041fb4bd752af479df7c426e37675743ca3f9d3c93ae32f7aa4",
+  "extraction_source_sha256": "REPLACE_WITH_REVIEWED_EXTRACTION_SOURCE_SHA256",
+  "license": "CC-BY-4.0",
+  "measured_only": true,
+  "positions_unit": "um",
+  "position_reference": "motor_stage_xy_fixed_target_height_and_orientation",
+  "position_calibration_uncertainty": "unverified",
+  "feature_order": "channel_major_splitting_std1_std2_MHz",
+  "feature_calibration_access": "per_sample_only",
+  "operating_bounds_um": [
+    [
+      1305,
+      1565
+    ],
+    [
+      1200,
+      2200
+    ]
+  ],
+  "operating_bounds_note": "Declared by Fig.S4 source cell8; geometry-only qualification must confirm every saved label lies inside.",
+  "sample_ids": {
+    "path": "sample_ids.json",
+    "sha256": "REPLACE"
+  },
+  "published_test_predictions": {
+    "path": "published_test_predictions.npy",
+    "sha256": "REPLACE_WITH_CUSTODY_SHA256",
+    "units": "um",
+    "order": "paired_published_labels"
+  },
+  "physical_baseline_ready": false,
+  "physical_baseline_exclusion_reason": "Archive and paper supply 250 um height, 45 degree tilt, and 127 um pitch, but not needle moment, stage-to-sensor frame, per-sensor NV axes, or usable field calibration. An independently calibrated physical inverse is ineligible from these inputs.",
+  "source_members": [
+    "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/para_list.npy",
+    "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/para_std_list.npy",
+    "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/x_pos.npy",
+    "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/y_pos.npy",
+    "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/estimated_position.npy",
+    "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/pos_test.npy",
+    "Data availability update 20260220/Fig.S5/vis_pos_train.npy",
+    "Data availability update 20260220/Fig.S5/vis_pos_val.npy",
+    "Data availability update 20260220/Fig.S5/vis_pos_test.npy"
+  ],
+  "previously_viewed_values": [],
+  "excluded_simulation_members": [
+    "Fig.S8/**"
+  ],
+  "native_fit_units": "GHz",
+  "native_to_feature_factor": 1000,
+  "fit_parameters": {
+    "path": "fit_parameters.npy",
+    "sha256": "813cb6f586d2d5fa930b0bc062a5692dc1b2cb7a94dfbd82860dd844647f360f"
+  },
+  "fit_standard_deviations": {
+    "path": "fit_standard_deviations.npy",
+    "sha256": "1119ad52351df79bd5f2fd6c1f029201b38a563042006cfd4b8a1defc1f7c116"
+  },
+  "position_x": {
+    "path": "position_x.npy",
+    "sha256": "REPLACE_WITH_CUSTODY_SHA256"
+  },
+  "position_y": {
+    "path": "position_y.npy",
+    "sha256": "REPLACE_WITH_CUSTODY_SHA256"
+  },
+  "published_test_labels": {
+    "path": "published_test_labels.npy",
+    "sha256": "REPLACE_WITH_CUSTODY_SHA256",
+    "units": "um",
+    "order": "paired_published_predictions"
+  },
+  "supplied_train_positions": {
+    "path": "supplied_train_positions.npy",
+    "sha256": "REPLACE_WITH_CUSTODY_SHA256"
+  },
+  "supplied_validation_positions": {
+    "path": "supplied_validation_positions.npy",
+    "sha256": "REPLACE_WITH_CUSTODY_SHA256"
+  },
+  "supplied_test_positions": {
+    "path": "supplied_test_positions.npy",
+    "sha256": "REPLACE_WITH_CUSTODY_SHA256"
+  },
+  "raw_position_catalog": {
+    "path": "raw_position_catalog.json",
+    "sha256": "REPLACE_WITH_CUSTODY_SHA256"
+  },
+  "session_mapping_status": "possible_sessions_from_exact_coordinate; original_os_walk_order_not_recoverable_from_archive_order",
+  "supplied_split_mapping_status": "coordinates_only; no_unique_row_indices_inferred_from_duplicate_labels",
+  "source_row_alignment_status": "published_version_A_pairs_raw_lineage_unresolved",
+  "fit_version": "A_model_loaded",
+  "raw_to_fit_lineage": "Unresolved. VersionA loaded by model notebooks differs from versionB saved by FigS4; no saving notebook forA was found.",
+  "source_label_identity_status": "x/y byte-identical acrossA/B; FigS5test and Fig3d/e pos_test byte-identical; row-session mapping unresolved"
+}
