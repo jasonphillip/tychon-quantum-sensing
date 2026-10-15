@@ -1,0 +1,525 @@
+{
+  "schema_version": 2,
+  "status": "DRAFT_ROOT_REVIEW",
+  "record_id": "20703822",
+  "license": "CC-BY-4.0",
+  "analysis_domain": "recorded_voltage",
+  "archive": {
+    "bytes": 1783355725,
+    "md5": "fa0735af9ae6d7ede58706a84b9196d3",
+    "sha256": "b3d79874553f3d8a9434a5daba1002765c810b134f98697b1f0cb58f09232e1f",
+    "custody_verified": true
+  },
+  "schema_source_sha256": "d1615c895fbc436ec1c898d7b9117e80da690f02542a52c5d1702a8314aeac2d",
+  "static_provenance_sha256": "30a662c28a04ab90287de74d4e37937fc4e72d116d926ef84d5d8698469ea7e1",
+  "selection": "All twelve raw ECG-plus-NV recordings; exclude separate OPM, gradiometer calibration, processed traces and notebooks.",
+  "recordings": [
+    {
+      "id": "P1-S01",
+      "participant_id": "P1",
+      "session_id": "P1-S01",
+      "participant_label_meaning": "neutral group from custody; no demographic/clinical inference",
+      "split": "development",
+      "header_recording_time": "2025/01/16 08:12:27",
+      "header_time_vs_filename_conflict": false,
+      "member_name_sha256": "74153dad5a98b8ed5304efbae7a365cbef827e15242848f99f9f704ad22cf1e8",
+      "member_bytes": 78202735,
+      "member_crc32": "01c79941",
+      "header_sha256": null,
+      "header_prefix_metadata": {
+        "lines_seen": 6,
+        "device_group": "D1"
+      },
+      "format": {
+        "kind": "sequential_two_channel_blocks",
+        "header_lines": 7,
+        "delimiter": ";",
+        "time_column": 0,
+        "signal_column": 1,
+        "timestamp_unit": "seconds",
+        "signal_unit": "volts"
+      },
+      "channels": [
+        {
+          "block": 0,
+          "role": "ecg_trigger_only"
+        },
+        {
+          "block": 1,
+          "role": "nv_recorded_voltage"
+        }
+      ],
+      "role_evidence": "Custody static-provenance-findings C1-C2; published analysis assigns block1 ECG and block2 NV.",
+      "group_evidence": "Custody static-provenance-findings C5; neutral group identities and header times.",
+      "acquisition_filter_response": "unknown",
+      "physical_channel_group_delay": "unknown",
+      "magnetic_calibration": "not used; applicability and units unresolved",
+      "noise_reference": "none verified"
+    },
+    {
+      "id": "P1-S02",
+      "participant_id": "P1",
+      "session_id": "P1-S02",
+      "participant_label_meaning": "neutral group from custody; no demographic/clinical inference",
+      "split": "development",
+      "header_recording_time": "2025/01/16 10:37:01",
+      "header_time_vs_filename_conflict": false,
+      "member_name_sha256": "6cf32a7b3fcbd71da3b2e183f8bc59f788a0afefef5795d53dc75e934fa6aa3c",
+      "member_bytes": 78085253,
+      "member_crc32": "0ff7f9f6",
+      "header_sha256": null,
+      "header_prefix_metadata": {
+        "lines_seen": 6,
+        "device_group": "D1"
+      },
+      "format": {
+        "kind": "sequential_two_channel_blocks",
+        "header_lines": 7,
+        "delimiter": ";",
+        "time_column": 0,
+        "signal_column": 1,
+        "timestamp_unit": "seconds",
+        "signal_unit": "volts"
+      },
+      "channels": [
+        {
+          "block": 0,
+          "role": "ecg_trigger_only"
+        },
+        {
+          "block": 1,
+          "role": "nv_recorded_voltage"
+        }
+      ],
+      "role_evidence": "Custody static-provenance-findings C1-C2; published analysis assigns block1 ECG and block2 NV.",
+      "group_evidence": "Custody static-provenance-findings C5; neutral group identities and header times.",
+      "acquisition_filter_response": "unknown",
+      "physical_channel_group_delay": "unknown",
+      "magnetic_calibration": "not used; applicability and units unresolved",
+      "noise_reference": "none verified"
+    },
+    {
+      "id": "P1-S03",
+      "participant_id": "P1",
+      "session_id": "P1-S03",
+      "participant_label_meaning": "neutral group from custody; no demographic/clinical inference",
+      "split": "development",
+      "header_recording_time": "2025/01/16 12:52:47",
+      "header_time_vs_filename_conflict": false,
+      "member_name_sha256": "7e75881cb4ea75a636cc12d675fe8b9450e0fbbf20c13a711dd317ee2e236745",
+      "member_bytes": 78150881,
+      "member_crc32": "7106f7b3",
+      "header_sha256": null,
+      "header_prefix_metadata": {
+        "lines_seen": 6,
+        "device_group": "D1"
+      },
+      "format": {
+        "kind": "sequential_two_channel_blocks",
+        "header_lines": 7,
+        "delimiter": ";",
+        "time_column": 0,
+        "signal_column": 1,
+        "timestamp_unit": "seconds",
+        "signal_unit": "volts"
+      },
+      "channels": [
+        {
+          "block": 0,
+          "role": "ecg_trigger_only"
+        },
+        {
+          "block": 1,
+          "role": "nv_recorded_voltage"
+        }
+      ],
+      "role_evidence": "Custody static-provenance-findings C1-C2; published analysis assigns block1 ECG and block2 NV.",
+      "group_evidence": "Custody static-provenance-findings C5; neutral group identities and header times.",
+      "acquisition_filter_response": "unknown",
+      "physical_channel_group_delay": "unknown",
+      "magnetic_calibration": "not used; applicability and units unresolved",
+      "noise_reference": "none verified"
+    },
+    {
+      "id": "P1-S04",
+      "participant_id": "P1",
+      "session_id": "P1-S04",
+      "participant_label_meaning": "neutral group from custody; no demographic/clinical inference",
+      "split": "development",
+      "header_recording_time": "2025/01/16 14:57:11",
+      "header_time_vs_filename_conflict": false,
+      "member_name_sha256": "8b747125c510729cab52d77dac3ff3d0a0fe2a8460831555d6cb7a1f6ebba24b",
+      "member_bytes": 78230029,
+      "member_crc32": "931e7c5a",
+      "header_sha256": null,
+      "header_prefix_metadata": {
+        "lines_seen": 6,
+        "device_group": "D1"
+      },
+      "format": {
+        "kind": "sequential_two_channel_blocks",
+        "header_lines": 7,
+        "delimiter": ";",
+        "time_column": 0,
+        "signal_column": 1,
+        "timestamp_unit": "seconds",
+        "signal_unit": "volts"
+      },
+      "channels": [
+        {
+          "block": 0,
+          "role": "ecg_trigger_only"
+        },
+        {
+          "block": 1,
+          "role": "nv_recorded_voltage"
+        }
+      ],
+      "role_evidence": "Custody static-provenance-findings C1-C2; published analysis assigns block1 ECG and block2 NV.",
+      "group_evidence": "Custody static-provenance-findings C5; neutral group identities and header times.",
+      "acquisition_filter_response": "unknown",
+      "physical_channel_group_delay": "unknown",
+      "magnetic_calibration": "not used; applicability and units unresolved",
+      "noise_reference": "none verified"
+    },
+    {
+      "id": "P1-S05",
+      "participant_id": "P1",
+      "session_id": "P1-S05",
+      "participant_label_meaning": "neutral group from custody; no demographic/clinical inference",
+      "split": "development",
+      "header_recording_time": "2025/01/17 08:12:39",
+      "header_time_vs_filename_conflict": false,
+      "member_name_sha256": "fa077c04444cc0784fc6c9b6ffb57f86797e7b9fbce69f05abfbad175a4d309e",
+      "member_bytes": 78169356,
+      "member_crc32": "531fe53f",
+      "header_sha256": null,
+      "header_prefix_metadata": {
+        "lines_seen": 6,
+        "device_group": "D1"
+      },
+      "format": {
+        "kind": "sequential_two_channel_blocks",
+        "header_lines": 7,
+        "delimiter": ";",
+        "time_column": 0,
+        "signal_column": 1,
+        "timestamp_unit": "seconds",
+        "signal_unit": "volts"
+      },
+      "channels": [
+        {
+          "block": 0,
+          "role": "ecg_trigger_only"
+        },
+        {
+          "block": 1,
+          "role": "nv_recorded_voltage"
+        }
+      ],
+      "role_evidence": "Custody static-provenance-findings C1-C2; published analysis assigns block1 ECG and block2 NV.",
+      "group_evidence": "Custody static-provenance-findings C5; neutral group identities and header times.",
+      "acquisition_filter_response": "unknown",
+      "physical_channel_group_delay": "unknown",
+      "magnetic_calibration": "not used; applicability and units unresolved",
+      "noise_reference": "none verified"
+    },
+    {
+      "id": "P1-S06",
+      "participant_id": "P1",
+      "session_id": "P1-S06",
+      "participant_label_meaning": "neutral group from custody; no demographic/clinical inference",
+      "split": "development",
+      "header_recording_time": "2025/01/17 09:39:18",
+      "header_time_vs_filename_conflict": false,
+      "member_name_sha256": "cff87931048903e520c1a6a30a655d9f451e08cbafa4e3ced69908d0774a453d",
+      "member_bytes": 83623407,
+      "member_crc32": "ec6b24e4",
+      "header_sha256": null,
+      "header_prefix_metadata": {
+        "lines_seen": 6,
+        "device_group": "D1"
+      },
+      "format": {
+        "kind": "sequential_two_channel_blocks",
+        "header_lines": 7,
+        "delimiter": ";",
+        "time_column": 0,
+        "signal_column": 1,
+        "timestamp_unit": "seconds",
+        "signal_unit": "volts"
+      },
+      "channels": [
+        {
+          "block": 0,
+          "role": "ecg_trigger_only"
+        },
+        {
+          "block": 1,
+          "role": "nv_recorded_voltage"
+        }
+      ],
+      "role_evidence": "Custody static-provenance-findings C1-C2; published analysis assigns block1 ECG and block2 NV.",
+      "group_evidence": "Custody static-provenance-findings C5; neutral group identities and header times.",
+      "acquisition_filter_response": "unknown",
+      "physical_channel_group_delay": "unknown",
+      "magnetic_calibration": "not used; applicability and units unresolved",
+      "noise_reference": "none verified"
+    },
+    {
+      "id": "P1-S07",
+      "participant_id": "P1",
+      "session_id": "P1-S07",
+      "participant_label_meaning": "neutral group from custody; no demographic/clinical inference",
+      "split": "development",
+      "header_recording_time": "2025/01/17 10:59:04",
+      "header_time_vs_filename_conflict": false,
+      "member_name_sha256": "eb1d84d4b355cc681d06d47ba46a7900cfc1fe709785f8f1199b8497d6a69e5e",
+      "member_bytes": 78084800,
+      "member_crc32": "eed14097",
+      "header_sha256": null,
+      "header_prefix_metadata": {
+        "lines_seen": 6,
+        "device_group": "D1"
+      },
+      "format": {
+        "kind": "sequential_two_channel_blocks",
+        "header_lines": 7,
+        "delimiter": ";",
+        "time_column": 0,
+        "signal_column": 1,
+        "timestamp_unit": "seconds",
+        "signal_unit": "volts"
+      },
+      "channels": [
+        {
+          "block": 0,
+          "role": "ecg_trigger_only"
+        },
+        {
+          "block": 1,
+          "role": "nv_recorded_voltage"
+        }
+      ],
+      "role_evidence": "Custody static-provenance-findings C1-C2; published analysis assigns block1 ECG and block2 NV.",
+      "group_evidence": "Custody static-provenance-findings C5; neutral group identities and header times.",
+      "acquisition_filter_response": "unknown",
+      "physical_channel_group_delay": "unknown",
+      "magnetic_calibration": "not used; applicability and units unresolved",
+      "noise_reference": "none verified"
+    },
+    {
+      "id": "P1-S08",
+      "participant_id": "P1",
+      "session_id": "P1-S08",
+      "participant_label_meaning": "neutral group from custody; no demographic/clinical inference",
+      "split": "development",
+      "header_recording_time": "2025/01/17 11:52:14",
+      "header_time_vs_filename_conflict": false,
+      "member_name_sha256": "449c51ac494c42685ea02a24cf19e81370d4c288f3fbb2724c39a28b5394592e",
+      "member_bytes": 78671020,
+      "member_crc32": "aad3caf0",
+      "header_sha256": null,
+      "header_prefix_metadata": {
+        "lines_seen": 6,
+        "device_group": "D1"
+      },
+      "format": {
+        "kind": "sequential_two_channel_blocks",
+        "header_lines": 7,
+        "delimiter": ";",
+        "time_column": 0,
+        "signal_column": 1,
+        "timestamp_unit": "seconds",
+        "signal_unit": "volts"
+      },
+      "channels": [
+        {
+          "block": 0,
+          "role": "ecg_trigger_only"
+        },
+        {
+          "block": 1,
+          "role": "nv_recorded_voltage"
+        }
+      ],
+      "role_evidence": "Custody static-provenance-findings C1-C2; published analysis assigns block1 ECG and block2 NV.",
+      "group_evidence": "Custody static-provenance-findings C5; neutral group identities and header times.",
+      "acquisition_filter_response": "unknown",
+      "physical_channel_group_delay": "unknown",
+      "magnetic_calibration": "not used; applicability and units unresolved",
+      "noise_reference": "none verified"
+    },
+    {
+      "id": "P1-S09",
+      "participant_id": "P1",
+      "session_id": "P1-S09",
+      "participant_label_meaning": "neutral group from custody; no demographic/clinical inference",
+      "split": "development",
+      "header_recording_time": "2025/01/17 13:03:20",
+      "header_time_vs_filename_conflict": false,
+      "member_name_sha256": "741012b232dd7099b1d0f48923e0dbdf8b7b541a29db8b43ff5335ef0b40b6a3",
+      "member_bytes": 77991476,
+      "member_crc32": "82aa583d",
+      "header_sha256": null,
+      "header_prefix_metadata": {
+        "lines_seen": 6,
+        "device_group": "D1"
+      },
+      "format": {
+        "kind": "sequential_two_channel_blocks",
+        "header_lines": 7,
+        "delimiter": ";",
+        "time_column": 0,
+        "signal_column": 1,
+        "timestamp_unit": "seconds",
+        "signal_unit": "volts"
+      },
+      "channels": [
+        {
+          "block": 0,
+          "role": "ecg_trigger_only"
+        },
+        {
+          "block": 1,
+          "role": "nv_recorded_voltage"
+        }
+      ],
+      "role_evidence": "Custody static-provenance-findings C1-C2; published analysis assigns block1 ECG and block2 NV.",
+      "group_evidence": "Custody static-provenance-findings C5; neutral group identities and header times.",
+      "acquisition_filter_response": "unknown",
+      "physical_channel_group_delay": "unknown",
+      "magnetic_calibration": "not used; applicability and units unresolved",
+      "noise_reference": "none verified"
+    },
+    {
+      "id": "P1-S10",
+      "participant_id": "P1",
+      "session_id": "P1-S10",
+      "participant_label_meaning": "neutral group from custody; no demographic/clinical inference",
+      "split": "development",
+      "header_recording_time": "2025/01/18 12:43:11",
+      "header_time_vs_filename_conflict": false,
+      "member_name_sha256": "1e7ede21f33639e45541d4bb864b7a07cb21eddac0542903b0d0972e4c507a7e",
+      "member_bytes": 82176546,
+      "member_crc32": "2482a4ef",
+      "header_sha256": null,
+      "header_prefix_metadata": {
+        "lines_seen": 6,
+        "device_group": "D1"
+      },
+      "format": {
+        "kind": "sequential_two_channel_blocks",
+        "header_lines": 7,
+        "delimiter": ";",
+        "time_column": 0,
+        "signal_column": 1,
+        "timestamp_unit": "seconds",
+        "signal_unit": "volts"
+      },
+      "channels": [
+        {
+          "block": 0,
+          "role": "ecg_trigger_only"
+        },
+        {
+          "block": 1,
+          "role": "nv_recorded_voltage"
+        }
+      ],
+      "role_evidence": "Custody static-provenance-findings C1-C2; published analysis assigns block1 ECG and block2 NV.",
+      "group_evidence": "Custody static-provenance-findings C5; neutral group identities and header times.",
+      "acquisition_filter_response": "unknown",
+      "physical_channel_group_delay": "unknown",
+      "magnetic_calibration": "not used; applicability and units unresolved",
+      "noise_reference": "none verified"
+    },
+    {
+      "id": "P2-S01",
+      "participant_id": "P2",
+      "session_id": "P2-S01",
+      "participant_label_meaning": "neutral group from custody; no demographic/clinical inference",
+      "split": "validation",
+      "header_recording_time": "2024/11/22 17:19:01",
+      "header_time_vs_filename_conflict": false,
+      "member_name_sha256": "b676873b32db795b3b0e45ccb0af0cf9fa95feb98f9792b29cbdb89a3b5aa39b",
+      "member_bytes": 191649573,
+      "member_crc32": "0445d265",
+      "header_sha256": null,
+      "header_prefix_metadata": {
+        "lines_seen": 6,
+        "device_group": "D2"
+      },
+      "format": {
+        "kind": "sequential_two_channel_blocks",
+        "header_lines": 7,
+        "delimiter": ";",
+        "time_column": 0,
+        "signal_column": 1,
+        "timestamp_unit": "seconds",
+        "signal_unit": "volts"
+      },
+      "channels": [
+        {
+          "block": 0,
+          "role": "ecg_trigger_only"
+        },
+        {
+          "block": 1,
+          "role": "nv_recorded_voltage"
+        }
+      ],
+      "role_evidence": "Custody static-provenance-findings C1-C2; published analysis assigns block1 ECG and block2 NV.",
+      "group_evidence": "Custody static-provenance-findings C5; neutral group identities and header times.",
+      "acquisition_filter_response": "unknown",
+      "physical_channel_group_delay": "unknown",
+      "magnetic_calibration": "not used; applicability and units unresolved",
+      "noise_reference": "none verified"
+    },
+    {
+      "id": "P3-S01",
+      "participant_id": "P3",
+      "session_id": "P3-S01",
+      "participant_label_meaning": "neutral group from custody; no demographic/clinical inference",
+      "split": "held",
+      "header_recording_time": "2024/11/28 16:25:39",
+      "header_time_vs_filename_conflict": true,
+      "member_name_sha256": "f9a728b5ead61e7e4cfc833888e22d2689fa929d240264c7f6db41d9998a84b7",
+      "member_bytes": 90761590,
+      "member_crc32": "d4c2378b",
+      "header_sha256": null,
+      "header_prefix_metadata": {
+        "lines_seen": 6,
+        "device_group": "D2"
+      },
+      "format": {
+        "kind": "sequential_two_channel_blocks",
+        "header_lines": 7,
+        "delimiter": ";",
+        "time_column": 0,
+        "signal_column": 1,
+        "timestamp_unit": "seconds",
+        "signal_unit": "volts"
+      },
+      "channels": [
+        {
+          "block": 0,
+          "role": "ecg_trigger_only"
+        },
+        {
+          "block": 1,
+          "role": "nv_recorded_voltage"
+        }
+      ],
+      "role_evidence": "Custody static-provenance-findings C1-C2; published analysis assigns block1 ECG and block2 NV.",
+      "group_evidence": "Custody static-provenance-findings C5; neutral group identities and header times.",
+      "acquisition_filter_response": "unknown",
+      "physical_channel_group_delay": "unknown",
+      "magnetic_calibration": "not used; applicability and units unresolved",
+      "noise_reference": "none verified"
+    }
+  ],
+  "qualification_requires_all_records": true,
+  "physical_field_metrics_permitted": false,
+  "clinical_or_physiological_truth_claim_permitted": false
+}
