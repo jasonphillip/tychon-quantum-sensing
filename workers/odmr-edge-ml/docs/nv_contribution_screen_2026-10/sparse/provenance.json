@@ -1,0 +1,40 @@
+{
+  "schema": "tychon-sparse-qualification-provenance-v1",
+  "scientific_source_revision": "e91cb0b5d69230b1eff160f4d2bec05f909ec237",
+  "corrected_verifier_revision": "8fa719d9fb7365ed41513b333cace3162256d710",
+  "qualification_spec_sha256": "dde02a005136c7724312e3ee00b4fdb74ec0ed50623d61c4610df5e816c7cff5",
+  "qualification_artifact_sha256": "05789109d7252cc858c17696510c2149de2ba499e4f611cf1a67086a39f8a661",
+  "verdict_v2_sha256": "6727c79fd2eb558893b1f404b12b0a4bd43d3c55d96dc7396067ac674161c46a",
+  "verifier_sources": {
+    "v1": {
+      "path": "experiments/sparse_acquisition_screen/verify_saved.py",
+      "sha256": "35418574f2e709af74202ddb94755706df3a893917fa386eca9a689612f08dd1"
+    },
+    "v2": {
+      "path": "experiments/sparse_acquisition_screen/verify_saved_v2.py",
+      "sha256": "785e45cce59bdc8ece445c85f82d467923f7570db7903397d1aa65d617f3f06c"
+    }
+  },
+  "scientific_artifacts": "Every file under qualification/ and verification/qualification-verdict-v2.json is an exact byte copy of the original saved output.",
+  "receipts": {
+    "qualification": {
+      "original_receipt_sha256": "13f5ff413364900afdb93e87aa13ee3ac73f6533ffaf175567cad74f7e4ea2ba",
+      "public_projection": "receipts/qualification-projection.json"
+    },
+    "verification-v1": {
+      "original_receipt_sha256": "e7a9de36701c57beacfa878bf5275faecdbacc47ac42da78baf8f041384326a8",
+      "public_projection": "receipts/verification-v1-projection.json"
+    },
+    "verification-v2": {
+      "original_receipt_sha256": "83d7ef4b508733c681e64fd9d580f39465704af2dbf2a069fba9301b9fd33f82",
+      "public_projection": "receipts/verification-v2-projection.json"
+    }
+  },
+  "v1_stderr": {
+    "original_sha256": "d06652040223f581ebb22d10a1ef3582ba91103cbcca5964e122fd6a1925bc6a",
+    "public_file": "verification/v1-stderr-redacted.txt",
+    "transformation": "Private absolute workspace prefix replaced by <pinned-source>/; error, relative source path, line numbers, and stack text otherwise unchanged."
+  },
+  "private_custody": "Original receipts, original stderr, approvals, and custody metadata remain preserved privately.",
+  "unused_data": "No development case manifest, noise seeds, latent seed, reserved final seed, or custody certificate is included."
+}

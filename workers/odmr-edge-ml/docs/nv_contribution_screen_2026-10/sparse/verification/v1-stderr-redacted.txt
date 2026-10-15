@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "<pinned-source>/experiments/sparse_acquisition_screen/verify_saved.py", line 286, in <module>
+    main()
+    ~~~~^^
+  File "<pinned-source>/experiments/sparse_acquisition_screen/verify_saved.py", line 276, in main
+    verdict=verify_qualification(args.input) if args.kind=="qualification" else verify_development(args.input)
+            ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "<pinned-source>/experiments/sparse_acquisition_screen/verify_saved.py", line 160, in verify_qualification
+    near(actual,check,"utility")
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<pinned-source>/experiments/sparse_acquisition_screen/verify_saved.py", line 26, in near
+    require(abs(actual-expected) <= absolute + relative*abs(expected), label+": mismatch")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<pinned-source>/experiments/sparse_acquisition_screen/verify_saved.py", line 21, in require
+    raise ValueError(message)
+ValueError: utility: mismatch
