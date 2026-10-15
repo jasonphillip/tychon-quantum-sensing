@@ -14,4 +14,12 @@ paths = [
   # 2026-10-15: the scalar repair custody release binds the access receipt by its sha256
   # (key "exclusive_access_receipt_sha256"); the value is the hash of custody/VAL_ACCESS_RECEIPT.json.
   '''workers/odmr-edge-ml/docs/scalar_repair_cycle_2026-10/custody/VAL_RELEASE\.json''',
+  # 2026-10-15: the known-axis bias comparison publishes its one-time evaluation entropy after retirement
+  # (key "secret_hex"); sha256 of those bytes equals the commitment made before generation (8db7c489...).
+  '''workers/odmr-edge-ml/experiments/scalar_bias_design/custody/reveal\.json''',
+]
+# 2026-10-15: ten custody and result records bind the access receipt by its sha256 (key "access_sha256");
+# the value is the content hash of experiments/scalar_bias_design/custody/access.json. Exact value only.
+regexes = [
+  '''95ba37cc65aff0583cb29bb4158fd334a07a9fcbbc14f6382519269c927a3079''',
 ]

@@ -89,6 +89,8 @@ The saved label and prediction arrays of that run are in this checkout ([`docs/k
 Read the [scalar repair decision record](../workers/odmr-edge-ml/docs/scalar_repair_cycle_2026-10.md). A bounded repair of the scalar estimators was frozen before a single read of a fresh sealed validation set. The registered rule required a repaired method to pass its prediction gate (lower error than both training constants by at least 0.5 µT at 95 % confidence, and a 90th-percentile error of at most 25 µT) under both primary synthetic conditions; none did, so the cycle stopped and the final set was never generated. This is a recorded negative result: the repair removes the realistic-condition failure of the unchanged direct models, but no repaired method beats the training constant there.
 To check it yourself, run the record's offline checker on the published predictions; it recomputes the metrics, the intervals and the stop decision without inference or network access.
 
+Optional follow-on: the [known-axis bias comparison](../workers/odmr-edge-ml/docs/scalar_bias_design_2026-10.md) is a separate, changed task (field along one known axis, classical fit only). Its record gives two NumPy-only commands that recompute the development and sealed-evaluation metrics from the saved arrays; set `CHECKOUT` to the `workers/odmr-edge-ml` folder of this checkout.
+
 ## Minutes 19–20: resolve terms and record open questions
 
 Use the [glossary](glossary.md) for ODMR, FP32, INT8, PID, VectorBlox and V250.

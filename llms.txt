@@ -21,6 +21,8 @@
 - [Benchmark runs](https://github.com/jasonphillip/tychon-quantum-sensing/actions/workflows/bench.yml): execution logs tied to individual commits.
 - [Test commands](.github/workflows/tests.yml): dependencies and per-component test invocations.
 - [Deployed scalar model on the kit](workers/odmr-edge-ml/docs/deployed_model_on_kit_2026-10.md): dataset recipe, model contract, stage comparisons, synthetic-label errors, and kit timing.
+- [Known-axis scalar bias comparison](workers/odmr-edge-ml/docs/scalar_bias_design_2026-10.md): classical measurement-design comparison on a sealed synthetic set, field along one known NV axis; NumPy-only saved-output checker; not a network result.
+- [Scalar information diagnostic](workers/odmr-edge-ml/docs/scalar_information_limit_2026-10.md): local information bounds behind the bias choice; keeps a recorded independent FAIL at one unknown-direction point.
 - [Kit run artifacts](https://github.com/jasonphillip/polarfire-agent-skills/tree/53acad6/evidence/2026-10-14-deployed-fcnn): separate repository evidence for the deployed scalar model run.
 - [Vector loss ablation](workers/odmr-vector-tracking/docs/association_loss_multiseed.md): matched training seeds, synthetic results, and remaining lock failures.
 - [Simulator comparison with measured data](workers/nv-sensor-sim/docs/external_validation_results.md): discrepancies between default simulation and measured spectra.
