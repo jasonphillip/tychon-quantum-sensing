@@ -27,6 +27,8 @@ All technical demonstrations are complete. The April 29, 2026 r6_s25 closure on 
 
 ## KPP Scorecard (r6_s25)
 
+**Note added 2026-10-15:** This scorecard is the April 30 snapshot. The 96.1 % ADEV figure holds only at tau = 2,700 s. The 5.2 W estimate covers FPGA and MSS only, excluding the rest of the payload; see the [later qualifications](../excerpts/building-additional-selections-2026.md#b3).
+
 | # | Metric | Target | Achieved | Status |
 |---|---|---|---|---|
 | 1 | Heading Error Reduction | >50% | 54.3% (val) / 96.1% ADEV at τ=2700s | **PASS** |

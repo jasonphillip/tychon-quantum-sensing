@@ -1,4 +1,5 @@
 > Original: claude.ai project document, created 2026-03-09. Edited for publication: names of other people and business details removed.
+> Conversation: [how the playbook was created and reviewed](../excerpts/playbook-creation-2026-03.md).
 
 **TYCHON AI**
 

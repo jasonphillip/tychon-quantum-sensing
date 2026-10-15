@@ -126,3 +126,35 @@ Each pairs a planning step with a spec, work handed to a separate repo session, 
    It shows the one-to-many dispatch pattern and the explicit "does this repo need another prompt" check.
 4. **2026-04-29, "Testing Codex for project planning" (81 messages).** The review loop with a second coding agent: the project chat critiques a Codex-written closeout plan, turns audit findings into fix prompts, and tracks the open items across repo sessions.
    It shows audits feeding back into corrections, which is the closing step of the loop.
+
+## Other sources quoted in the conversation record
+
+Dates follow source turn timestamps. Titles are source titles unless marked editorial.
+Private exports and source paths are not published. The 86-chat table above remains unchanged.
+
+| Date | Platform | Title | Selection |
+| --- | --- | --- | --- |
+| 2025-08-14 | ChatGPT | Fpga setup for cnn | [A1](excerpts/learning-and-waiting-2025-26.md#a1) |
+| 2025-09-26 | Gemini Apps | Can you find out if Claude is better at fpga design and implementation than othe | [A2](excerpts/learning-and-waiting-2025-26.md#a2) |
+| 2025-11-18 | ChatGPT | SBIR priorities and MVP | [A3](excerpts/learning-and-waiting-2025-26.md#a3) |
+| 2026-01-05 | ChatGPT | NV Diamond Magnetometer Operation | [A4](excerpts/learning-and-waiting-2025-26.md#a4) |
+| 2026-03-04 | Claude (claude.ai project) | SBIR report analysis and feedback | [P1](excerpts/playbook-creation-2026-03.md#p1) |
+| 2026-03-05 | Gemini Apps | You are reviewing the technical physics and mathematics of a 90-day SBIR Phase I | [P2](excerpts/playbook-creation-2026-03.md#p2) |
+| 2026-03-05 | Claude (claude.ai project) | FPGA and VectorBlox version strategy for SBIR deliverables | [P3](excerpts/playbook-creation-2026-03.md#p3) |
+| 2026-03-05 | Gemini Apps | This is a follow-up to your previous physics review of this execution playbook. | [P4](excerpts/playbook-creation-2026-03.md#p4) |
+| 2026-03-08 | Claude (claude.ai project) | FPGA specification in SBIR proposal | [P5](excerpts/playbook-creation-2026-03.md#p5) |
+| 2026-03-08 | Gemini Apps | Deep Think Prompt: Physics & Engineering Analysis — Quantum Sensor AI Control Pl | [P6](excerpts/playbook-creation-2026-03.md#p6) |
+| 2026-03-09 | Gemini Apps | Gemini Deep Think Follow-Up: Interface Specifications, Safety Architecture & CSA | [P7](excerpts/playbook-creation-2026-03.md#p7) |
+| 2026-03-09 | Claude (claude.ai project) | FPGA specification in SBIR proposal | [P8](excerpts/playbook-creation-2026-03.md#p8) |
+| 2026-03-11 | Claude (claude.ai project) | Repository structure for ChatGPT Pro5.4 project | [P9](excerpts/playbook-creation-2026-03.md#p9) |
+| 2026-04-27 | Claude (claude.ai project) | Comparing LLM analysis across repositories | [B4. Jason corrects the model’s assumption](excerpts/building-additional-selections-2026.md#b4) |
+| 2026-05-01 | Claude (claude.ai project) | Cascading errors requiring manual review | [B1. Stop trusting the AI as verifier](excerpts/building-additional-selections-2026.md#b1) |
+| 2026-05-01 | Claude Code | Verification workbench session: timing cross-check (editorial title) | [B2. A report figure fails a check against its source](excerpts/building-additional-selections-2026.md#b2) |
+| 2026-05-31 | Claude (claude.ai) | Verify numerical accuracy | [What the models could not do, item 5](excerpts/what-the-models-could-not-do.md) |
+| 2026-06-01 | Claude (claude.ai project) | Verify numerical accuracy | [B3. Qualifying the April scorecard](excerpts/building-additional-selections-2026.md#b3) |
+| 2026-07-03 | Claude Code | Research before changing a presentation (editorial title) | [Human steering: ask for push-back](excerpts/human-steering.md#push-back) |
+| 2026-10-09 | Claude Code | How prominently to present learning (editorial title) | [Human steering: learning story](excerpts/human-steering.md#learning-story) |
+| 2026-10-12 | Claude Code | Verification workbench session: review corrections (editorial title) | [C4. Another LLM’s review, checked against the record](excerpts/orchestration-and-publication-2026.md#c4) |
+| 2026-10-14 | Codex | Protocol amendment coordination (editorial title) | [C1. Verify the protocol before the experiments](excerpts/orchestration-and-publication-2026.md#c1) |
+| 2026-10-14 | Claude Code | Verification workbench session: integration contract (editorial title) | [C2. Codex catches an error in Claude’s contract](excerpts/orchestration-and-publication-2026.md#c2) |
+| 2026-10-14 | Claude Code | Verification workbench session: scalar stress result (editorial title) | [C3. A failed criterion goes into the headline](excerpts/orchestration-and-publication-2026.md#c3) |

@@ -8,7 +8,7 @@ Three decisions with their evidence and attribution: [engineering-decisions.md](
 
 ## How I ran it
 
-I did the planning in one claude.ai project that held the original technical plan and research reports next to a 90-day execution playbook. The playbook lists four deliverables (a sensor model, a trained INT8 network, an FPGA analysis and a final report) sized for one person with two NVIDIA DGX Spark desktops. Major choices went into a decision log with its date, trigger, rationale and the alternative I turned down. Early on I rejected an AI-generated plan to scaffold all three repos on day one and built them in sequence instead, simulator first, then ML, then FPGA, because each stage's output is the next stage's input.
+I did the planning in one claude.ai project that held the original technical plan and research reports next to a 90-day execution playbook. The playbook lists five deliverables (a sensor model, a trained INT8 network, an FPGA analysis, Draft ICD and CONOPS, and a final report) sized for one person with two NVIDIA DGX Spark desktops. The Draft ICD and CONOPS deliverable is not in this repository; the playbook specifies it, and the report outline only lists a planned diagram. Major choices went into a decision log with its date, trigger, rationale and the alternative I turned down. Early on I rejected an AI-generated plan to scaffold all three repos on day one and built them in sequence instead, simulator first, then ML, then FPGA, because each stage's output is the next stage's input.
 
 Claude produced the designs and Gemini Deep Think reviewed them as a second model. Claude then sorted the review items into those to act on and those to defer or close, and I logged the outcome in an integration tracker.
 
@@ -94,7 +94,7 @@ The first three repositories below were the original workers, restarted in clean
 |---|---|
 | 2025-07-02 to 08-04 | Proposal origin, scope changes, and research condensed with Claude and Gemini; [eight drafting excerpts](../planning/excerpts/00-proposal-2025.md) |
 | 2025, exact submission date unverified | Proposal FX255-PCSO2-0044 submitted under topic AFX255-PCSO2; [archived technical volume and claim crosswalk](proposal/README.md) |
-| 2026-03-04 | Planning starts in a claude.ai project; execution playbook v4 is dated 2026-03-09, with a numbered decision log |
+| 2026-03-04 | [Planning starts in a claude.ai project](../planning/excerpts/playbook-creation-2026-03.md); execution playbook v4 is dated 2026-03-09, with a numbered decision log |
 | 2026-03-11 | Decision DLOG-017 sets the build order, simulator, then ML, then FPGA |
 | 2026-03-26 to 04-02 | First attempts in three repos (38 commits), later archived |
 | 2026-04-01 to 04-02 | Gemini Deep Think review of the training-loop and dataset designs, then of the draft report |

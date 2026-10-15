@@ -48,6 +48,7 @@ One coordination round: [an external review turned into per-repository prompts](
 |---|---|
 | Understand the project in five minutes | [Case study](docs/case-study.md) |
 | Compare the unfunded proposal with delivered work | [Proposal archive and claim crosswalk](docs/proposal/README.md), [2025 drafting excerpts](planning/excerpts/00-proposal-2025.md) |
+| See how LLM conversations shaped the work | [Conversation record](planning/excerpts/README.md), [What the models could not do](planning/excerpts/what-the-models-could-not-do.md) |
 | Review the evidence in twenty minutes | [Reviewer path](docs/start-here-reviewers.md) |
 | Navigate as a visiting agent | [Repository map](AGENTS.md), [llms.txt](llms.txt) |
 | Generate synthetic spectra | [Synthetic-data walkthrough](docs/synthetic-data.md) |

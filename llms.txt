@@ -10,6 +10,8 @@
 - [Case study](docs/case-study.md): results, limits, and project history.
 - [Unfunded proposal archive](docs/proposal/README.md): redacted historical documents, non-selection, and proposed-versus-delivered crosswalk.
 - [2025 proposal excerpts](planning/excerpts/00-proposal-2025.md): eight drafting selections with explicit attribution and limits.
+- [Conversation record](planning/excerpts/README.md): proposal, learning, planning, building, and review exchanges with source attribution.
+- [What the models could not do](planning/excerpts/what-the-models-could-not-do.md): observed limits and corrections from this project.
 - [Engineering decisions](docs/engineering-decisions.md): a withdrawn comparison, watchdog correction, and loss ablation.
 
 ## Reproduction and evidence

@@ -136,7 +136,10 @@ The following entries are reconstructed from the v4 Playbook evidence table, Fas
 
 ---
 
+<a id="dlog-009"></a>
 ### DLOG-009 | Asymmetric Lineshape Generation Added (v4 Addition)
+
+**Conversation:** [review and outcome](../excerpts/playbook-creation-2026-03.md#p2).
 
 **Date:** ~Mar 2026 (v4 playbook revision)  
 **Category:** Physics / Training Data Realism  
@@ -149,7 +152,10 @@ The following entries are reconstructed from the v4 Playbook evidence table, Fas
 
 ---
 
+<a id="dlog-010"></a>
 ### DLOG-010 | CNN Reframed from "Noise Filter" to "Nonlinear Hamiltonian Inverter"
+
+**Conversation:** [review and outcome](../excerpts/playbook-creation-2026-03.md#p4).
 
 **Date:** ~Mar 2026 (v4 playbook revision)  
 **Category:** Architecture / Narrative / Technical Framing  
@@ -166,7 +172,10 @@ The following entries are reconstructed from the v4 Playbook evidence table, Fas
 
 ---
 
+<a id="dlog-011"></a>
 ### DLOG-011 | Bounded Hybrid Safety Architecture Added (v4 Addition)
+
+**Conversation:** [review and outcome](../excerpts/playbook-creation-2026-03.md#p7).
 
 **Date:** ~Mar 2026 (triggered by Gemini Deep Think analysis)  
 **Category:** Architecture / Safety / Reviewer Objection Mitigation  
@@ -201,7 +210,10 @@ The following entries are reconstructed from the v4 Playbook evidence table, Fas
 
 ---
 
+<a id="dlog-014"></a>
 ### DLOG-014 | >10× Noise Suppression Claim Scoped to Drift Band Only
+
+**Conversation:** [review and outcome](../excerpts/playbook-creation-2026-03.md#p4).
 
 **Date:** ~Mar 2026 (v4 playbook revision)  
 **Category:** Metrics / Claim Scoping  
