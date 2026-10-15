@@ -1,0 +1,44 @@
+{
+  "status": "qualification_pass",
+  "bundle_sha256": "60890e6b99aec4174fbfe8b938552edd56b064a1f87cee6b80801717b49adfb3",
+  "partition_sha256": "c84699ec43f73406e901d75e33b76f9f0ac94545a337b1711a86fa213bf523da",
+  "development_rows_checked": 268,
+  "all_development_features_finite_positive": true,
+  "all_development_labels_finite": true,
+  "small_label_budget": 83,
+  "full_label_budget": 248,
+  "physical_baseline_exclusion_reason": "Archive and paper supply 250 um height, 45 degree tilt, and 127 um pitch, but not needle moment, stage-to-sensor frame, per-sensor NV axes, or usable field calibration. An independently calibrated physical inverse is ineligible from these inputs.",
+  "held_out_signal_values_accessed": false,
+  "label_budget_unit": "unique_stage_xy_positions_including_validation",
+  "small_measurement_rows": 95,
+  "full_measurement_rows": 268,
+  "partition_unique_positions": {
+    "train": 49,
+    "full_train": 214,
+    "validation": 34,
+    "test": 36
+  },
+  "possible_session_overlap": {
+    "full_train__validation": [
+      "session02",
+      "session03",
+      "session04",
+      "session06",
+      "session07",
+      "session08"
+    ],
+    "full_train__test": [
+      "session02",
+      "session04",
+      "session06",
+      "session07"
+    ],
+    "validation__test": [
+      "session02",
+      "session04",
+      "session06",
+      "session07"
+    ]
+  },
+  "session_assignment_status": "coordinate_catalog_memberships_only_version_A_raw_lineage_unresolved"
+}
