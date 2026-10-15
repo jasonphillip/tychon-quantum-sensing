@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "study": "measured-localisation-2026-10-15",
+  "approval_sha256": "ed42e1a1ba63d60f5c04f42c1ddf50ebac81352df7992ec14a472dd4f824695a",
+  "source_sha256": {
+    "__init__.py": "29a6dba6675e30f13ffba6f961ee5da2c2a587a64ef4d9abb6541e9924a9ec9f",
+    "bundle.py": "054e9935b1c080041a93325ffb2ea0cb0e0359e62bce17f8baa96c5f5e60d36e",
+    "guard.py": "3fe4db1de858a28181db6caaff0fc3578b2afffddf0733fd6467ca76e0acaaf7",
+    "metrics.py": "9a5f6291f8eccfb7ec5c040d87536a9da21006e7811cfd4bd2a89d4fe4d39024",
+    "models.py": "e48c5536086367bf697a2b6b72167402fa3e7b681163b96cff27e1f39d812557",
+    "partition.py": "19c131238b6364fcae5b1561f703795a026338703dd09f8ccee92e9aef634575",
+    "run.py": "065006b79b237c6da106ed99038fb8ff9d21d9d71d957864e412bf69a49d4364",
+    "tests/test_contracts.py": "8716761f461bff1be5226c46e7165f31e676e5f81223a14d61124b00c5feba1f",
+    "verify_saved.py": "15c59f00c8307cf2f2489ccb88eac35963cbe71f522d7e756f7596020ce0ec3d",
+    "protocol.json": "b363e887f4880a42da8a93e900d0c2e0db1ce26af2ee7de7bf4de42f8207e94f"
+  },
+  "inputs": {
+    "bundle_sha256": "60890e6b99aec4174fbfe8b938552edd56b064a1f87cee6b80801717b49adfb3",
+    "partition_sha256": "c84699ec43f73406e901d75e33b76f9f0ac94545a337b1711a86fa213bf523da"
+  },
+  "files": {
+    "candidate.npz": "8cdb872748112c6522147fcc33a2d08adf2cb8b29918308c0a8d26778add8aec",
+    "candidate_width_24.npz": "9bf94f11fefb8bc5b71d574a6af629f2673d35301c06092d1c95fe03906a0309",
+    "candidate_width_48.npz": "7321a53a53a704426e8c5e1fa69ead188f9833a2c7f5ad0bc70e368d0f877f1c",
+    "candidate_width_96.npz": "8cdb872748112c6522147fcc33a2d08adf2cb8b29918308c0a8d26778add8aec",
+    "metrics.json": "cc842561fd5348107e00731e13337743fb953ccc129cd087bc42abbba0e3970b",
+    "partition.json": "c84699ec43f73406e901d75e33b76f9f0ac94545a337b1711a86fa213bf523da",
+    "protocol.json": "b363e887f4880a42da8a93e900d0c2e0db1ce26af2ee7de7bf4de42f8207e94f",
+    "selection.json": "8d18f13bbec64ddd60a6b2f82c942fff670162e874b59bad8a5065d952927e64",
+    "validation_predictions.npz": "325b18b524d2d3605608282ea13c40d527299a4c6d3bab2715ae41b70aedf253",
+    "validation_width_24.npz": "0f23787397fecb45b3a807358b147b69803ded314b1b12a4155c44771a3bf714",
+    "validation_width_48.npz": "395258bde1691d78ca528e15efa69cd7d6e7be53cb9c228cbe3f022a28da4260",
+    "validation_width_96.npz": "0c2bfdf81fa5c059b04e3e60807e9583dbc25f25358bc07f4522746b6d9acfd8",
+    "verification.json": "288a5dc6b4dfbd5cec54db68feb6d7da7abb54f9808637cef8c2103a886f2fa6"
+  }
+}

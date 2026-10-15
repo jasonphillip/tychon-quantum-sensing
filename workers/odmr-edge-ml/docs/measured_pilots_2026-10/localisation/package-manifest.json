@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "source_commit": "3376ab25ceac3a40a338702096e02a443fbbe4d2",
+  "evidence_scope": "closed_development_cycle_no_held_feature_scoring",
+  "independent_verification": "passed_saved_output_review_scientific_gate_failed",
+  "files": {
+    "ATTRIBUTION.md": "5666bb2ea57b9d4107820357040459c886755ce4606a33932928d59feab9b532",
+    "README.md": "290e6e045f54c54dddb1ddac43279020cab21269f3df564d91f071ef5319a5b6",
+    "data-provenance.json": "a957150055d5f4e403d51844f479e6f0e218e9d35c0d6e465e9fd8c41fa31cc9",
+    "development/artifact_manifest.json": "0bde7699437895cf548687c3e4c3b59413365ec81895ce863468597dd2978a3f",
+    "development/candidate.npz": "8cdb872748112c6522147fcc33a2d08adf2cb8b29918308c0a8d26778add8aec",
+    "development/candidate_width_24.npz": "9bf94f11fefb8bc5b71d574a6af629f2673d35301c06092d1c95fe03906a0309",
+    "development/candidate_width_48.npz": "7321a53a53a704426e8c5e1fa69ead188f9833a2c7f5ad0bc70e368d0f877f1c",
+    "development/candidate_width_96.npz": "8cdb872748112c6522147fcc33a2d08adf2cb8b29918308c0a8d26778add8aec",
+    "development/metrics.json": "cc842561fd5348107e00731e13337743fb953ccc129cd087bc42abbba0e3970b",
+    "development/partition.json": "c84699ec43f73406e901d75e33b76f9f0ac94545a337b1711a86fa213bf523da",
+    "development/protocol.json": "b363e887f4880a42da8a93e900d0c2e0db1ce26af2ee7de7bf4de42f8207e94f",
+    "development/selection.json": "8d18f13bbec64ddd60a6b2f82c942fff670162e874b59bad8a5065d952927e64",
+    "development/validation_predictions.npz": "325b18b524d2d3605608282ea13c40d527299a4c6d3bab2715ae41b70aedf253",
+    "development/validation_width_24.npz": "0f23787397fecb45b3a807358b147b69803ded314b1b12a4155c44771a3bf714",
+    "development/validation_width_48.npz": "395258bde1691d78ca528e15efa69cd7d6e7be53cb9c228cbe3f022a28da4260",
+    "development/validation_width_96.npz": "0c2bfdf81fa5c059b04e3e60807e9583dbc25f25358bc07f4522746b6d9acfd8",
+    "development/verification.json": "288a5dc6b4dfbd5cec54db68feb6d7da7abb54f9808637cef8c2103a886f2fa6",
+    "independent-verification.json": "935a314777a75c2e942508bf5a01aa82c7856dcbb5d50cffebf3009c3b49a852",
+    "qualification/artifact_manifest.json": "b6c5743057fec699996e4a14842b1f3169ce30302fd59a99081de604b3160376",
+    "qualification/qualification.json": "60d14ebf3f865795c3e7652519183cefb92b3a5825cc8147ed1137cb2aba3296",
+    "resource-receipts.json": "9fa1c9230fff98f22535d0e2a851903a3a9bd8d17e014141b7b1500d2f6da2e9"
+  }
+}

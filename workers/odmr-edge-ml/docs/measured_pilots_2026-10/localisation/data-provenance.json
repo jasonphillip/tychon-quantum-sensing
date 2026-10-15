@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "dataset_title": "Data/code availability for \"Photonic-integrated quantum sensor array for microscale magnetic localisation\", arXiv:2511.11496",
+  "dataset_creator": "Weng, Hao-Cheng",
+  "dataset_publication_date": "2026-04-28",
+  "dataset_doi": "10.5281/zenodo.19855773",
+  "dataset_url": "https://doi.org/10.5281/zenodo.19855773",
+  "license": "CC-BY-4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source_archive_filename": "Data availability update 20260220.zip",
+  "source_archive_sha256": "b5717b233590d041fb4bd752af479df7c426e37675743ca3f9d3c93ae32f7aa4",
+  "source_metadata_sha256": "659643d3a9532a5081875632b17d8a999ac21af07e139c1df9b5ca70760bf340",
+  "bundle_sha256": "60890e6b99aec4174fbfe8b938552edd56b064a1f87cee6b80801717b49adfb3",
+  "extraction_source_sha256": "09b161d07dc4e052f6055772056fb3da69e49fd613295015d955551ba5361e30",
+  "fit_version": "A_model_loaded",
+  "claim_scope": "published_fitted_feature_stage_coordinate_pairs_raw_lineage_unresolved",
+  "native_fit_parameters_sha256": "813cb6f586d2d5fa930b0bc062a5692dc1b2cb7a94dfbd82860dd844647f360f",
+  "native_fit_standard_deviations_sha256": "1119ad52351df79bd5f2fd6c1f029201b38a563042006cfd4b8a1defc1f7c116",
+  "native_position_x_sha256": "ae3d674e86f308fbef1bcd3e65d1ea94dfe2c104846bb0779ba51e2d02fd4246",
+  "native_position_y_sha256": "194d819f61755f70482fd75da3b89000d5dd46c2512bca2725f1915236286516",
+  "known_AB_mismatch": {
+    "version_A_parameters": "813cb6f586d2d5fa930b0bc062a5692dc1b2cb7a94dfbd82860dd844647f360f",
+    "version_B_parameters": "ed2eb924fb06b65b134087d85688e6594a7af22b6617fae8c8b99891a189491f",
+    "version_A_std": "1119ad52351df79bd5f2fd6c1f029201b38a563042006cfd4b8a1defc1f7c116",
+    "version_B_std": "3e870d80f54ee63c72f0a497c439512c67574a65e9908babfd78e49e57a0d68a"
+  },
+  "raw_to_fit_lineage": "Unresolved. VersionA loaded by model notebooks differs from versionB saved by FigS4; no saving notebook forA was found.",
+  "session_mapping_status": "possible_sessions_from_exact_coordinate; original_os_walk_order_not_recoverable_from_archive_order",
+  "position_reference": "motor_stage_xy_fixed_target_height_and_orientation",
+  "position_calibration_uncertainty": "unverified",
+  "physical_baseline_exclusion_reason": "Archive and paper supply 250 um height, 45 degree tilt, and 127 um pitch, but not needle moment, stage-to-sensor frame, per-sensor NV axes, or usable field calibration. An independently calibrated physical inverse is ineligible from these inputs.",
+  "not_proven": [
+    "Fig.S5 test equals separate-day Fig.3b/c measurements",
+    "exact acquisition session for duplicated fitted-array coordinates",
+    "stage calibration uncertainty",
+    "complete calibrated physical inverse",
+    "Raw-to-fit lineage for version A; only published parameter/label pairing is used."
+  ],
+  "changes": "Selected development rows; constructed 24 log features; trained three predeclared compact models; saved new predictions and metrics. No original notebook/model executed.",
+  "excluded": "COMSOL simulation, original object arrays, original HDF5 models, published prediction scoring, held-out feature scoring",
+  "attribution_scope": "Saved labels derive from the CC-BY-4.0 dataset. New predictions and analysis are by Jason Phillip / Tychon AI."
+}
