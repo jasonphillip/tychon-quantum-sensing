@@ -55,8 +55,11 @@ python3 -m venv "$work_dir/.venv"
 python_version=$("$work_dir/.venv/bin/python" -c 'import sys; print(sys.version.split()[0])')
 numpy_version=$("$work_dir/.venv/bin/python" -c 'import numpy; print(numpy.__version__)')
 worker="$checkout/workers/odmr-edge-ml"
+bundle_manifest_sha=$(sed -n 's/^BUNDLE\.manifest\.json sha256: \([0-9a-f]\{64\}\)$/\1/p' "$worker/docs/scalar_repair_cycle_2026-10.md")
+[[ $bundle_manifest_sha =~ ^[0-9a-f]{64}$ ]] || { echo 'recorded bundle manifest SHA256 missing' >&2; exit 1; }
 cmd=("$work_dir/.venv/bin/python" "$worker/scripts/recompute_published_scalar_validation.py"
-  --bundle "$worker/docs/scalar_repair_cycle_2026-10" --no-network --cross-check-truth --out "$output")
+  --bundle "$worker/docs/scalar_repair_cycle_2026-10" --no-network
+  --expected-bundle-manifest-sha256 "$bundle_manifest_sha" --cross-check-truth --out "$output")
 printf -v command_text '%q ' "${cmd[@]}"
 export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
 if flock -w 3600 "$work_dir/numerical.lock" /usr/bin/time -v "${cmd[@]}"; then

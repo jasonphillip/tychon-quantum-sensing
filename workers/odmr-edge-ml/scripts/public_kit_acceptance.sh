@@ -64,13 +64,19 @@ git clone --quiet "$kit_url" "$kit_dir"
 git -C "$kit_dir" checkout --quiet --detach "$kit_sha"
 kit_head=$(git -C "$kit_dir" rev-parse HEAD)
 [[ $kit_head == "$kit_sha" ]]
+worker="$public_dir/workers/odmr-edge-ml"
+recorded_kit_sha=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["external_kit_evidence"]["revision"])' \
+  "$worker/docs/kit-run-2026-10-14/ARRAYS.manifest.json")
+[[ $recorded_kit_sha =~ ^[0-9a-f]{40}$ && $kit_head == "$recorded_kit_sha" ]] || {
+  echo 'kit checkout revision differs from recorded evidence revision' >&2
+  exit 1
+}
 
 python3 -m venv "$work_dir/.venv"
 "$work_dir/.venv/bin/python" -m pip --disable-pip-version-check install --no-input 'numpy==2.1.3'
 python_version=$("$work_dir/.venv/bin/python" -c 'import sys; print(sys.version.split()[0])')
 numpy_version=$("$work_dir/.venv/bin/python" -c 'import numpy; print(numpy.__version__)')
 
-worker="$public_dir/workers/odmr-edge-ml"
 kit_evidence="$kit_dir/evidence/2026-10-14-deployed-fcnn"
 cmd=("$work_dir/.venv/bin/python" "$worker/scripts/recompute_published_kit_metrics.py"
   --run-dir "$worker/docs/kit-run-2026-10-14"

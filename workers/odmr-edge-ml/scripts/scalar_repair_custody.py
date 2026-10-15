@@ -7,6 +7,7 @@ import json
 import os
 import re
 import sys
+import tempfile
 import time
 from pathlib import Path
 
@@ -55,9 +56,17 @@ def check_gate(partition: str, gate_doc: Path, freeze_receipt: Path) -> str:
 
 
 def checked_partition(data_root: Path, partition: str, gate_doc: Path, freeze_receipt: Path) -> tuple[str, str, str]:
-    manifest_sha = verify(data_root, partition)["manifest_sha256"]
-    gate_sha = check_gate(partition, gate_doc, freeze_receipt)
+    expected_rows = {"val": 512, "final": 1024}[partition]
     manifest = read_json(data_root / partition / "manifest.json")
+    if manifest.get("rows_per_cell") != expected_rows or len(manifest.get("field_ids", [])) != expected_rows or \
+            len(manifest.get("cells", {})) != 7 or any(
+                entry.get("rows") != expected_rows for entry in manifest["cells"].values()):
+        raise RuntimeError("Registered partition row count mismatch")
+    verified = verify(data_root, partition)
+    if verified["rows_per_cell"] != expected_rows or verified["total_rows"] != 7 * expected_rows:
+        raise RuntimeError("Registered payload row count mismatch")
+    manifest_sha = verified["manifest_sha256"]
+    gate_sha = check_gate(partition, gate_doc, freeze_receipt)
     if manifest.get("gate_document_sha256") != gate_sha:
         raise RuntimeError("Generated manifest gate document mismatch")
     return manifest_sha, gate_sha, sha(freeze_receipt)
@@ -91,8 +100,6 @@ def access_receipt(data_root: Path, partition: str, grantee: str, out: Path,
         raise RuntimeError("Nonempty grantee required")
     manifest_sha, _, freeze_sha = checked_partition(data_root, partition, gate_doc, freeze_receipt)
     marker = reservation(data_root, partition)
-    if out.exists() or marker.exists():
-        raise RuntimeError("Exclusive access receipt already exists")
     if partition == "final" and out.resolve() != marker.resolve():
         raise RuntimeError("Final receipt must be the data-root exclusive receipt")
     if partition == "val" and out.resolve() == marker.resolve():
@@ -102,11 +109,37 @@ def access_receipt(data_root: Path, partition: str, grantee: str, out: Path,
     out.parent.mkdir(parents=True, exist_ok=True)
     data_root.mkdir(parents=True, exist_ok=True)
     payload = json.dumps(value, sort_keys=True) + "\n"
-    with marker.open("x") as stream:  # Atomic per-partition reservation.
-        stream.write(payload)
-    if out.resolve() != marker.resolve():
-        with out.open("x") as stream:
-            stream.write(payload)
+    if marker.exists():
+        if marker.is_symlink() or marker.read_text() != payload:
+            raise RuntimeError("Exclusive access receipt already exists")
+    else:
+        if out.exists() or out.is_symlink():
+            raise RuntimeError("Exclusive access receipt already exists")
+        # Publish complete bytes atomically. A failed output write leaves a
+        # matching reservation that the same grantee can finish on retry.
+        with tempfile.NamedTemporaryFile(mode="w", dir=marker.parent, delete=False) as stream:
+            temporary = Path(stream.name)
+            try:
+                stream.write(payload)
+                stream.flush()
+                os.fsync(stream.fileno())
+                os.link(temporary, marker)
+            finally:
+                temporary.unlink(missing_ok=True)
+    if out != marker:
+        if out.exists() or out.is_symlink():
+            if out.is_symlink() or out.read_text() != payload:
+                raise RuntimeError("Exclusive access receipt already exists")
+        else:
+            with tempfile.NamedTemporaryFile(mode="w", dir=out.parent, delete=False) as stream:
+                temporary = Path(stream.name)
+                try:
+                    stream.write(payload)
+                    stream.flush()
+                    os.fsync(stream.fileno())
+                    os.link(temporary, out)
+                finally:
+                    temporary.unlink(missing_ok=True)
     return value
 
 

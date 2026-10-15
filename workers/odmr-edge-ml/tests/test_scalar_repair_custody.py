@@ -12,25 +12,29 @@ import pytest
 from scripts import scalar_repair_custody as custody
 
 
-def fixture(tmp_path, partition):
+def fixture(tmp_path, partition, rows_override=None):
     root = tmp_path / "data"
     dest = root / partition
     dest.mkdir(parents=True)
+    rows = rows_override or {"val": 512, "final": 1024}[partition]
+    seeds = np.arange(17, 17 + rows)
     cells = {}
     for name in custody.verify.__globals__["CELLS"]:
         path = dest / f"{name}.npz"
-        np.savez_compressed(path, spectra=np.ones((1, 100)),
-                            truth_vectors_T=np.zeros((1, 3)), sample_seeds=[17])
-        cells[name] = {"file": path.name, "sha256": custody.sha(path), "rows": 1}
+        np.savez_compressed(path, spectra=np.zeros((rows, 100)),
+                            truth_vectors_T=np.zeros((rows, 3)), sample_seeds=seeds)
+        cells[name] = {"file": path.name, "sha256": custody.sha(path), "rows": rows}
         path.chmod(0o444)
     frozen = tmp_path / "source-freeze.json"
     frozen.write_text(json.dumps({"schema": 1, "stage": 1 if partition == "val" else 2}))
     gate = tmp_path / ("FREEZE1.md" if partition == "val" else "FREEZE2.md")
     gate.write_text(f"approved\nfreeze_receipt_sha256: {custody.sha(frozen)}\n")
     custody.verify.__globals__["write_json"](dest / "manifest.json", {
-        "partition": partition, "cells": cells, "rows_per_cell": 1,
-        "field_ids": [f"{partition}-0"], "nuisance_group_ids": [f"{partition}-ou-0"],
-        "sample_seeds": [17], "noise_seeds": [18], "nuisance_seeds": [19],
+        "partition": partition, "cells": cells, "rows_per_cell": rows,
+        "field_ids": [f"{partition}-{i}" for i in range(rows)],
+        "nuisance_group_ids": [f"{partition}-ou-{i}" for i in range(rows)],
+        "sample_seeds": seeds.tolist(), "noise_seeds": (seeds + rows).tolist(),
+        "nuisance_seeds": (seeds + 2 * rows).tolist(),
         "gate_document_sha256": custody.sha(gate)})
     (dest / "manifest.json").chmod(0o444)
     dest.chmod(0o555)
@@ -89,3 +93,34 @@ def test_access_binding_rechecked(tmp_path):
     access.write_text(json.dumps(value))
     with pytest.raises(RuntimeError, match="binding"):
         custody.release("val", root, gate, frozen, tmp_path / "release.json", access)
+
+
+@pytest.mark.parametrize("partition", ["val", "final"])
+def test_self_consistent_one_row_partition_is_rejected(tmp_path, partition):
+    root, gate, frozen = fixture(tmp_path, partition, rows_override=1)
+    out = root / "exclusive-access-receipt.json" if partition == "final" else tmp_path / "access.json"
+    with pytest.raises(RuntimeError, match="Registered partition row count mismatch"):
+        custody.access_receipt(root, partition, "evaluator", out, gate, frozen)
+    assert not out.exists()
+
+
+def test_failed_output_publish_can_retry_only_same_receipt(tmp_path, monkeypatch):
+    root, gate, frozen = fixture(tmp_path, "val")
+    out = tmp_path / "access.json"
+    link = custody.os.link
+
+    def fail_output(source, destination):
+        if Path(destination) == out:
+            raise OSError("injected receipt write failure")
+        return link(source, destination)
+
+    monkeypatch.setattr(custody.os, "link", fail_output)
+    with pytest.raises(OSError, match="injected"):
+        custody.access_receipt(root, "val", "evaluator", out, gate, frozen)
+    assert (root / "exclusive-val-access-reservation.json").exists()
+    assert not out.exists()
+    monkeypatch.setattr(custody.os, "link", link)
+    with pytest.raises(RuntimeError, match="already exists"):
+        custody.access_receipt(root, "val", "different", out, gate, frozen)
+    value = custody.access_receipt(root, "val", "evaluator", out, gate, frozen)
+    assert json.loads(out.read_text()) == value

@@ -1556,92 +1556,92 @@
     "seed_overlap": 0,
     "field_fingerprint_overlap": 0,
     "consumed_fingerprint_sources": {
-      "private-path/4d25cf7f90d77e67/manifest.json": 50000,
-      "private-path/c7a98438ad6d93ec/manifest.json": 50000,
-      "private-path/795c93e6d0fa7c47/manifest.json": 16,
-      "private-path/53b1d7cdaf231730/manifest.json": 256,
-      "private-path/010cc9328080285b/manifest.json": 128,
-      "private-path/71b4952f5da8f156/manifest.json": 5000
+      "<private-path-01>": 50000,
+      "<private-path-02>": 50000,
+      "<private-path-03>": 16,
+      "<private-path-04>": 256,
+      "<private-path-05>": 128,
+      "<private-path-06>": 5000
     }
   },
   "seed_search": [
     {
-      "path": "private-path/795c93e6d0fa7c47/manifest.json",
+      "path": "<private-path-03>",
       "sha256": "bcc4faca60f5edb7617149961849b704b4bf863a5cec48644934892e71d9193b",
       "seed_count": 19
     },
     {
-      "path": "private-path/53b1d7cdaf231730/manifest.json",
+      "path": "<private-path-04>",
       "sha256": "6ce3db6ee01687d17b3015e773e75303c3f5e8877f5a05a385a4eca21f438e41",
       "seed_count": 259
     },
     {
-      "path": "private-path/010cc9328080285b/manifest.json",
+      "path": "<private-path-05>",
       "sha256": "1e02b26c5313dffbe631aec2dcecd693acc672d76e5820d15b897bd9eccf2f3f",
       "seed_count": 131
     },
     {
-      "path": "private-path/e7211aae4c7509cb/input.manifest.json",
+      "path": "<private-path-07>",
       "sha256": "5ca766fa077ffa434b97e745d7fe8b1dde49a5c5cc426f37b7d7de735e547491",
       "seed_count": 0
     },
     {
-      "path": "private-path/68e6d74d9ac59118/production_50k_v2_aic.manifest.json",
+      "path": "<private-path-08>",
       "sha256": "26d50912837b8d4cab0a047b3c99b40cd0c422ac2177cf5ed6daedc332fc2de0",
       "seed_count": 1
     },
     {
-      "path": "private-path/477bf5f130de08a8/bundle_manifest.json",
+      "path": "<private-path-09>",
       "sha256": "fd52b59da1db3e1556cbae438ca2bc4284388517452e32049db9247a7b5c540a",
       "seed_count": 0
     },
     {
-      "path": "private-path/a24d8d6804335010/dev.manifest.json",
+      "path": "<private-path-10>",
       "sha256": "bcc4faca60f5edb7617149961849b704b4bf863a5cec48644934892e71d9193b",
       "seed_count": 19
     },
     {
-      "path": "private-path/822f12f656d03885/final.manifest.json",
+      "path": "<private-path-11>",
       "sha256": "6ce3db6ee01687d17b3015e773e75303c3f5e8877f5a05a385a4eca21f438e41",
       "seed_count": 259
     },
     {
-      "path": "private-path/f75085d9edd3cd57/val.manifest.json",
+      "path": "<private-path-12>",
       "sha256": "1e02b26c5313dffbe631aec2dcecd693acc672d76e5820d15b897bd9eccf2f3f",
       "seed_count": 131
     },
     {
-      "path": "private-path/2d7321f04235a9e9/bundle_manifest.json",
+      "path": "<private-path-13>",
       "sha256": "3507df3a3a10a2d05ea34f2660770bbc6264aa91777f3b6e3ee8a8320c09bfa7",
       "seed_count": 0
     },
     {
-      "path": "private-path/90baf13c519e9370/comparison_test_v1.manifest.json",
+      "path": "<private-path-14>",
       "sha256": "b621cafa84cb18f9efdc20da5841470f89a336410ee3a557f3baa65287b10102",
       "seed_count": 23
     },
     {
-      "path": "private-path/07f5d789976ab2bc/comparison_test_v2.manifest.json",
+      "path": "<private-path-15>",
       "sha256": "544fbb190044c41ba78d076fbf7253bcc0f3d397a6a906af08b0a1951a3213ce",
       "seed_count": 8
     },
     {
-      "path": "private-path/f82bdc1165dea686/manifest.json",
+      "path": "<private-path-16>",
       "sha256": "61628a2ee5b98e9487b52d1ef222321e927c05634f33837f7652a70bc2733327",
       "seed_count": 141
     },
     {
-      "path": "private-path/c7a98438ad6d93ec/manifest.json",
+      "path": "<private-path-02>",
       "sha256": "701a96412f266c37efe121de134cc6db8151b3f71315af7db345a49f43ed5e5b",
       "seed_count": 50001
     },
     {
-      "path": "private-path/4d25cf7f90d77e67/manifest.json",
+      "path": "<private-path-01>",
       "sha256": "3db9226f2f9f03fcb3b91ea17a14fad917c428e0d777952a18f1920f70748b3d",
       "seed_count": 50001
     },
     {
-      "path": "private-path/71b4952f5da8f156/manifest.json",
+      "path": "<private-path-06>",
       "sha256": "94fc5094e903978ebfaf4829cf2e03b5f0b6df27ebb4e3acafbbd21607c5aa9f",
       "seed_count": 5002
     }

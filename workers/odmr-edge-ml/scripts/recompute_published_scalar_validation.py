@@ -11,6 +11,7 @@ import hashlib
 import json
 import math
 import os
+import re
 from pathlib import Path
 import sys
 import traceback
@@ -110,8 +111,10 @@ def read_json(path):
     return json.loads(safe(path).read_text())
 
 
-def verify_bundle(bundle):
+def verify_bundle(bundle, expected_manifest_sha256):
     """Hash every listed file before parsing result JSON or opening an NPZ."""
+    require(digest(bundle / "BUNDLE.manifest.json") == expected_manifest_sha256,
+            "pinned bundle manifest SHA256")
     manifest = read_json(bundle / "BUNDLE.manifest.json")
     require(manifest["schema"] == 1, "bundle schema")
     listed = manifest["files"]
@@ -123,7 +126,7 @@ def verify_bundle(bundle):
         require(path.stat().st_size == item["size_bytes"], "bundle size: " + name)
         require(digest(path) == item["sha256"], "bundle SHA256: " + name)
     sanitation = read_json(bundle / "SANITIZATION.json")
-    require(sanitation["rule_id"] == "P1", "sanitization rule")
+    require(sanitation["rule_id"] == "P2", "sanitization rule")
     derivatives = sanitation["derivatives"]
     require({d["public_path"] for d in derivatives} ==
             {k for k, v in listed.items() if v["status"] == "derivative"}, "derivative inventory")
@@ -397,7 +400,7 @@ def selection_from_recomputed(cells):
 
 def verify(args):
     bundle = safe(args.bundle)
-    derivatives = verify_bundle(bundle)
+    derivatives = verify_bundle(bundle, args.expected_bundle_manifest_sha256)
     root = bundle / "results-val"
     require(root.name == "results-val", "only canonical validation output directory supported")
     require(digest(root / "SUMMARY.json") == SUMMARY_SHA256, "pinned summary hash")
@@ -474,8 +477,12 @@ def main():
     p.add_argument("--bundle", required=True)
     p.add_argument("--out", required=True)
     p.add_argument("--no-network", action="store_true", required=True)
+    p.add_argument("--expected-bundle-manifest-sha256", required=True,
+                   help="Recorded SHA256 of BUNDLE.manifest.json")
     p.add_argument("--cross-check-truth", action="store_true")
     a = p.parse_args()
+    require(bool(re.fullmatch(r"[0-9a-f]{64}", a.expected_bundle_manifest_sha256)),
+            "expected bundle manifest SHA256 must be lowercase hex")
     output = validate_output(a.out, [a.bundle])
     output.parent.mkdir(parents=True, exist_ok=True)
     for var in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS"):
