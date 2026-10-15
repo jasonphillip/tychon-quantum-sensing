@@ -76,6 +76,28 @@ def safe(path):
     return p
 
 
+def checkout_root(path):
+    """Return the nearest checkout containing a resolved input path, if any."""
+    resolved = Path(path).resolve()
+    for parent in (resolved, *resolved.parents):
+        if (parent / ".git").exists():
+            return parent
+    return None
+
+
+def validate_output(out, input_directories):
+    output = safe(out).resolve()
+    inputs = [Path(__file__).resolve(), *(safe(path).resolve() for path in input_directories)]
+    protected = [*input_directories, *(root for path in inputs
+                                    if (root := checkout_root(path)) is not None)]
+    for directory in protected:
+        root = Path(directory).resolve()
+        require(output != root and root not in output.parents,
+                "verification output must be outside input directories and checkouts: " + str(root))
+    require(not output.exists(), "refuse overwrite of verification report: " + str(output))
+    return output
+
+
 def digest(path):
     h = hashlib.sha256()
     with safe(path).open("rb") as f:
@@ -454,9 +476,7 @@ def main():
     p.add_argument("--no-network", action="store_true", required=True)
     p.add_argument("--cross-check-truth", action="store_true")
     a = p.parse_args()
-    output = safe(a.out)
-    require(safe(a.bundle) not in output.parents, "verification output must be outside bundle")
-    require(not output.exists(), "refuse overwrite of verification report")
+    output = validate_output(a.out, [a.bundle])
     output.parent.mkdir(parents=True, exist_ok=True)
     for var in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS"):
         require(os.environ.get(var) == "1", "one-thread wrapper required: " + var)

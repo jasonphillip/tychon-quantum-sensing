@@ -27,16 +27,53 @@ class PublicScalarValidationTest(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
-        self.bundle = self.root / "bundle"
+        self.checkout = self.root / "checkout"
+        self.checkout.mkdir()
+        (self.checkout / ".git").mkdir()
+        self.bundle = self.checkout / "docs/bundle"
         shutil.copytree(BUNDLE, self.bundle)
 
-    def run_checker(self):
+    def run_checker_raw(self, out):
         env = dict(os.environ, OMP_NUM_THREADS="1", MKL_NUM_THREADS="1", OPENBLAS_NUM_THREADS="1")
-        out = self.root / "receipt.json"
-        proc = subprocess.run([sys.executable, str(CHECKER), "--bundle", str(self.bundle),
+        return subprocess.run([sys.executable, str(CHECKER), "--bundle", str(self.bundle),
                                "--no-network", "--cross-check-truth", "--out", str(out)],
                               capture_output=True, text=True, env=env)
+
+    def run_checker(self):
+        out = self.root / "receipt.json"
+        proc = self.run_checker_raw(out)
         return proc, json.loads(out.read_text())
+
+    def test_output_rejects_checkout_bundle_and_symlink_parent(self):
+        worker = self.checkout / "worker"
+        worker.mkdir()
+        link = self.root / "linked"
+        link.symlink_to(self.root, target_is_directory=True)
+        for out in (self.checkout / "README", worker / "receipt.json",
+                    self.bundle / "receipt.json", link / "receipt.json"):
+            with self.subTest(out=out):
+                proc = self.run_checker_raw(out)
+                self.assertNotEqual(proc.returncode, 0)
+                self.assertFalse(out.exists())
+                if out == link / "receipt.json":
+                    self.assertIn("symlink refused", proc.stderr)
+                else:
+                    self.assertIn("verification output must be outside", proc.stderr)
+
+    def test_output_refuses_existing_file_without_changes(self):
+        out = self.root / "existing.json"
+        original = b"existing report stays byte-identical\n"
+        out.write_bytes(original)
+        proc = self.run_checker_raw(out)
+        self.assertNotEqual(proc.returncode, 0)
+        self.assertIn("refuse overwrite", proc.stderr)
+        self.assertEqual(out.read_bytes(), original)
+
+    def test_fresh_outside_output_passes(self):
+        out = self.root / "outside" / "receipt.json"
+        proc = self.run_checker_raw(out)
+        self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+        self.assertEqual(json.loads(out.read_text())["status"], "PASS")
 
     def update_bundle_hash(self, relative):
         manifest_path = self.bundle / "BUNDLE.manifest.json"
