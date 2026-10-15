@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "record_id": "20703822",
+  "license": "CC-BY-4.0",
+  "status": "DRAFT_METADATA_ONLY",
+  "archive": {
+    "bytes": 1783355725,
+    "md5": "fa0735af9ae6d7ede58706a84b9196d3",
+    "sha256": "",
+    "custody_verified": false
+  },
+  "recordings": [
+    {
+      "id": "UNRESOLVED",
+      "member": "",
+      "experiment_kind": "unresolved",
+      "participant_id": null,
+      "session_id": "",
+      "acquisition_evidence": "",
+      "channel_evidence": "",
+      "group_evidence": "",
+      "duration_seconds": null,
+      "acquisition_filters": {
+        "known": false,
+        "evidence": "",
+        "highpass_hz": null,
+        "lowpass_hz": null,
+        "notch_hz": [],
+        "delay_seconds": null
+      },
+      "clock": {
+        "sample_rate_hz": null,
+        "timestamp_seconds_per_unit": null,
+        "shared_clock": false,
+        "evidence": ""
+      },
+      "format": {
+        "header_lines": null,
+        "delimiter": null,
+        "timestamp_column": null,
+        "encoding": "utf-8"
+      },
+      "channels": [
+        {
+          "id": "primary",
+          "column": null,
+          "role": "primary_magnetic",
+          "role_evidence": "",
+          "raw_unit": "V",
+          "calibration": {
+            "tesla_per_unit": null,
+            "offset_raw": null,
+            "relative_uncertainty": null,
+            "applies_to_recording": "UNRESOLVED",
+            "evidence": ""
+          }
+        },
+        {
+          "id": "ecg",
+          "column": null,
+          "role": "ecg_trigger",
+          "role_evidence": "",
+          "raw_unit": "V"
+        }
+      ]
+    }
+  ]
+}
