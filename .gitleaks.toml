@@ -11,4 +11,7 @@ useDefault = true
 description = "content-hash manifests (sha256 of files in this repo)"
 paths = [
   '''workers/odmr-edge-ml/docs/scalar_target_repair_2026-10/bundle_manifest\.json''',
+  # 2026-10-15: the scalar repair custody release binds the access receipt by its sha256
+  # (key "exclusive_access_receipt_sha256"); the value is the hash of custody/VAL_ACCESS_RECEIPT.json.
+  '''workers/odmr-edge-ml/docs/scalar_repair_cycle_2026-10/custody/VAL_RELEASE\.json''',
 ]
