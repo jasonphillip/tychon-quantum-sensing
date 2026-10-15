@@ -30,6 +30,17 @@ jobs:
         env:
           PYTHONPATH: src:../nv-sensor-sim/src
         run: python -m pytest -q -p no:cacheprovider
+      - name: Test odmr-edge-ml measured-data lanes (manufactured inputs; one process per lane; all three required)
+        # pyproject testpaths covers only tests/; the measured lanes keep their tests beside the frozen source.
+        # Each path is mandatory: a missing or filtered-out lane fails this step.
+        working-directory: workers/odmr-edge-ml
+        env:
+          PYTHONPATH: src:../nv-sensor-sim/src
+        run: |
+          set -e
+          python -m pytest -q -p no:cacheprovider experiments/measured_widefield/tests
+          python -m pytest -q -p no:cacheprovider experiments/measured_localisation/tests
+          python -m pytest -q -p no:cacheprovider experiments/measured_cardiac/tests
       - name: Test odmr-vector-tracking
         working-directory: workers/odmr-vector-tracking
         env:
