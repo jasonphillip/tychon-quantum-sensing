@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "purpose": "record only; not an input to any checker",
+  "rule": "publication filter replaces machine home-directory prefixes with ~ in all exported history",
+  "files": [
+    {
+      "path": "experiments/nv_hybrid_screen/README.md",
+      "source_sha256": "b2bcdac4ca054bdc78da7512d0039612f2606b4c66592ff6bf132ecda8d5c987",
+      "public_sha256": "3a34be33841f488788eadf656ca793b963a547ca4429949b8d7eaf5f19bf5840"
+    }
+  ]
+}
