@@ -1,0 +1,3175 @@
+{
+  "schema": 2,
+  "version": 2,
+  "seed_schedule": "Calendar months from October 2026; three months per version, ordered final/dev/val; day 14.",
+  "sequence_cap": 3000,
+  "generation_time_cap_s": 3600,
+  "planned_total_sequences": 2856,
+  "array_hash_rule": "MD5 of sorted relative dataset.h5 paths (4-byte big-endian length + path UTF-8 + raw file bytes)",
+  "partitions": {
+    "final": {
+      "master_seed": 20270114,
+      "cell_count": 14,
+      "sequences_per_cell_seed": 40,
+      "total_sequences": 1680,
+      "generation_wall_s": 641.0007100180956,
+      "array_hash_rule": "MD5 of sorted relative dataset.h5 paths (4-byte big-endian length + path UTF-8 + raw file bytes)",
+      "source_fieldcone_manifest_data_md5": "92dc06692d1975f6fcd101e70cc02d99",
+      "cells": [
+        {
+          "name": "clean",
+          "rung": "clean",
+          "config": {
+            "linewidth_MHz": 1.5,
+            "contrast_pct": 3.0,
+            "snr": null,
+            "baseline_slope_pct": 0.0,
+            "frequency_offset_MHz": 0.0
+          },
+          "seed": [
+            35785542,
+            1098397039,
+            90692189
+          ],
+          "n_sequences": 120,
+          "n_frames": 256,
+          "replicates": [
+            {
+              "index": 0,
+              "seed": 35785542,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 35785542,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 39.963461716619236,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 3.439998359680958,
+                "contrast_scale_max": 7.448264594894561,
+                "photons_per_point": null
+              }
+            },
+            {
+              "index": 1,
+              "seed": 1098397039,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 1098397039,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 39.963461716619236,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 4.268396244816269,
+                "contrast_scale_max": 7.137823410953853,
+                "photons_per_point": null
+              }
+            },
+            {
+              "index": 2,
+              "seed": 90692189,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 90692189,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 39.963461716619236,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 3.884993747780848,
+                "contrast_scale_max": 7.221908656536524,
+                "photons_per_point": null
+              }
+            }
+          ],
+          "data_md5": "b3ab854f47ff46bec5a1739db44643e6"
+        },
+        {
+          "name": "realistic",
+          "rung": "realistic",
+          "config": {
+            "linewidth_MHz": 5.0,
+            "contrast_pct": 1.5,
+            "snr": 10,
+            "baseline_slope_pct": 2.0,
+            "frequency_offset_MHz": 0.3
+          },
+          "seed": [
+            35785542,
+            1098397039,
+            90692189
+          ],
+          "n_sequences": 120,
+          "n_frames": 256,
+          "replicates": [
+            {
+              "index": 0,
+              "seed": 35785542,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 35785542,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.4241554663935214,
+                "contrast_scale_max": 3.413796359098185,
+                "photons_per_point": 4414948.542523304
+              }
+            },
+            {
+              "index": 1,
+              "seed": 1098397039,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 1098397039,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 2.0991111704257306,
+                "contrast_scale_max": 3.454281714113158,
+                "photons_per_point": 4414948.542523304
+              }
+            },
+            {
+              "index": 2,
+              "seed": 90692189,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 90692189,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.5355032856802913,
+                "contrast_scale_max": 3.5476801623999097,
+                "photons_per_point": 4414948.542523304
+              }
+            }
+          ],
+          "data_md5": "05d43d0decdd3475fc2ecc9cbf77f56b"
+        },
+        {
+          "name": "realistic_linewidth_MHz_1p5",
+          "rung": "realistic",
+          "config": {
+            "linewidth_MHz": 1.5,
+            "contrast_pct": 1.5,
+            "snr": 10,
+            "baseline_slope_pct": 2.0,
+            "frequency_offset_MHz": 0.3
+          },
+          "seed": [
+            35785542,
+            1098397039,
+            90692189
+          ],
+          "n_sequences": 120,
+          "n_frames": 256,
+          "replicates": [
+            {
+              "index": 0,
+              "seed": 35785542,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 35785542,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 39.963461716619236,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.719999179840479,
+                "contrast_scale_max": 3.7241322974472806,
+                "photons_per_point": 4391110.495833801
+              }
+            },
+            {
+              "index": 1,
+              "seed": 1098397039,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 1098397039,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 39.963461716619236,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 2.1341981224081343,
+                "contrast_scale_max": 3.5689117054769266,
+                "photons_per_point": 4391110.495833801
+              }
+            },
+            {
+              "index": 2,
+              "seed": 90692189,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 90692189,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 39.963461716619236,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.942496873890424,
+                "contrast_scale_max": 3.610954328268262,
+                "photons_per_point": 4391110.495833801
+              }
+            }
+          ],
+          "data_md5": "084ece3420efce12eb6c8af472a8f12e"
+        },
+        {
+          "name": "realistic_linewidth_MHz_3",
+          "rung": "realistic",
+          "config": {
+            "linewidth_MHz": 3.0,
+            "contrast_pct": 1.5,
+            "snr": 10,
+            "baseline_slope_pct": 2.0,
+            "frequency_offset_MHz": 0.3
+          },
+          "seed": [
+            35785542,
+            1098397039,
+            90692189
+          ],
+          "n_sequences": 120,
+          "n_frames": 256,
+          "replicates": [
+            {
+              "index": 0,
+              "seed": 35785542,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 35785542,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 86.61611262242768,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.4875000886619143,
+                "contrast_scale_max": 3.485426367325457,
+                "photons_per_point": 4613597.011908437
+              }
+            },
+            {
+              "index": 1,
+              "seed": 1098397039,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 1098397039,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 86.61611262242768,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 2.1233936059805765,
+                "contrast_scale_max": 3.524872049863436,
+                "photons_per_point": 4613597.011908437
+              }
+            },
+            {
+              "index": 2,
+              "seed": 90692189,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 90692189,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 86.61611262242768,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.655384939220123,
+                "contrast_scale_max": 3.586816795416322,
+                "photons_per_point": 4613597.011908437
+              }
+            }
+          ],
+          "data_md5": "f39c7d28de7d2380ff64b286a5746146"
+        },
+        {
+          "name": "realistic_linewidth_MHz_7",
+          "rung": "realistic",
+          "config": {
+            "linewidth_MHz": 7.0,
+            "contrast_pct": 1.5,
+            "snr": 10,
+            "baseline_slope_pct": 2.0,
+            "frequency_offset_MHz": 0.3
+          },
+          "seed": [
+            35785542,
+            1098397039,
+            90692189
+          ],
+          "n_sequences": 120,
+          "n_frames": 256,
+          "replicates": [
+            {
+              "index": 0,
+              "seed": 35785542,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 35785542,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 211.02318170458346,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.4052603541374669,
+                "contrast_scale_max": 3.3064634546911744,
+                "photons_per_point": 4076517.3377700043
+              }
+            },
+            {
+              "index": 1,
+              "seed": 1098397039,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 1098397039,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 211.02318170458346,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 2.067585526964409,
+                "contrast_scale_max": 3.3637853877616486,
+                "photons_per_point": 4076517.3377700043
+              }
+            },
+            {
+              "index": 2,
+              "seed": 90692189,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 90692189,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 211.02318170458346,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.4979300492845409,
+                "contrast_scale_max": 3.494234181697005,
+                "photons_per_point": 4076517.3377700043
+              }
+            }
+          ],
+          "data_md5": "0785fbc04e5abde35a3f2a9433106a4b"
+        },
+        {
+          "name": "realistic_contrast_pct_3",
+          "rung": "realistic",
+          "config": {
+            "linewidth_MHz": 5.0,
+            "contrast_pct": 3.0,
+            "snr": 10,
+            "baseline_slope_pct": 2.0,
+            "frequency_offset_MHz": 0.3
+          },
+          "seed": [
+            35785542,
+            1098397039,
+            90692189
+          ],
+          "n_sequences": 120,
+          "n_frames": 256,
+          "replicates": [
+            {
+              "index": 0,
+              "seed": 35785542,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 35785542,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 2.848310932787043,
+                "contrast_scale_max": 6.82759271819637,
+                "photons_per_point": 1103737.135630826
+              }
+            },
+            {
+              "index": 1,
+              "seed": 1098397039,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 1098397039,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 4.198222340851461,
+                "contrast_scale_max": 6.908563428226316,
+                "photons_per_point": 1103737.135630826
+              }
+            },
+            {
+              "index": 2,
+              "seed": 90692189,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 90692189,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 3.0710065713605825,
+                "contrast_scale_max": 7.095360324799819,
+                "photons_per_point": 1103737.135630826
+              }
+            }
+          ],
+          "data_md5": "ec6734903f358c81455f0e91140943d2"
+        },
+        {
+          "name": "realistic_snr_inf",
+          "rung": "realistic",
+          "config": {
+            "linewidth_MHz": 5.0,
+            "contrast_pct": 1.5,
+            "snr": null,
+            "baseline_slope_pct": 2.0,
+            "frequency_offset_MHz": 0.3
+          },
+          "seed": [
+            35785542,
+            1098397039,
+            90692189
+          ],
+          "n_sequences": 120,
+          "n_frames": 256,
+          "replicates": [
+            {
+              "index": 0,
+              "seed": 35785542,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 35785542,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.4241554663935214,
+                "contrast_scale_max": 3.413796359098185,
+                "photons_per_point": null
+              }
+            },
+            {
+              "index": 1,
+              "seed": 1098397039,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 1098397039,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 2.0991111704257306,
+                "contrast_scale_max": 3.454281714113158,
+                "photons_per_point": null
+              }
+            },
+            {
+              "index": 2,
+              "seed": 90692189,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 90692189,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.5355032856802913,
+                "contrast_scale_max": 3.5476801623999097,
+                "photons_per_point": null
+              }
+            }
+          ],
+          "data_md5": "124389d26a2055e009df08a05ac0591b"
+        },
+        {
+          "name": "realistic_snr_30",
+          "rung": "realistic",
+          "config": {
+            "linewidth_MHz": 5.0,
+            "contrast_pct": 1.5,
+            "snr": 30,
+            "baseline_slope_pct": 2.0,
+            "frequency_offset_MHz": 0.3
+          },
+          "seed": [
+            35785542,
+            1098397039,
+            90692189
+          ],
+          "n_sequences": 120,
+          "n_frames": 256,
+          "replicates": [
+            {
+              "index": 0,
+              "seed": 35785542,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 35785542,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.4241554663935214,
+                "contrast_scale_max": 3.413796359098185,
+                "photons_per_point": 39734536.88270973
+              }
+            },
+            {
+              "index": 1,
+              "seed": 1098397039,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 1098397039,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 2.0991111704257306,
+                "contrast_scale_max": 3.454281714113158,
+                "photons_per_point": 39734536.88270973
+              }
+            },
+            {
+              "index": 2,
+              "seed": 90692189,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 90692189,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.5355032856802913,
+                "contrast_scale_max": 3.5476801623999097,
+                "photons_per_point": 39734536.88270973
+              }
+            }
+          ],
+          "data_md5": "fae1c812f76c3a6b81fb261e966abe47"
+        },
+        {
+          "name": "realistic_snr_3",
+          "rung": "realistic",
+          "config": {
+            "linewidth_MHz": 5.0,
+            "contrast_pct": 1.5,
+            "snr": 3,
+            "baseline_slope_pct": 2.0,
+            "frequency_offset_MHz": 0.3
+          },
+          "seed": [
+            35785542,
+            1098397039,
+            90692189
+          ],
+          "n_sequences": 120,
+          "n_frames": 256,
+          "replicates": [
+            {
+              "index": 0,
+              "seed": 35785542,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 35785542,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.4241554663935214,
+                "contrast_scale_max": 3.413796359098185,
+                "photons_per_point": 397345.36882709723
+              }
+            },
+            {
+              "index": 1,
+              "seed": 1098397039,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 1098397039,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 2.0991111704257306,
+                "contrast_scale_max": 3.454281714113158,
+                "photons_per_point": 397345.36882709723
+              }
+            },
+            {
+              "index": 2,
+              "seed": 90692189,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 90692189,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.5355032856802913,
+                "contrast_scale_max": 3.5476801623999097,
+                "photons_per_point": 397345.36882709723
+              }
+            }
+          ],
+          "data_md5": "4f6ce86620ce63a70ab206b4654a4895"
+        },
+        {
+          "name": "realistic_baseline_slope_pct_0",
+          "rung": "realistic",
+          "config": {
+            "linewidth_MHz": 5.0,
+            "contrast_pct": 1.5,
+            "snr": 10,
+            "baseline_slope_pct": 0.0,
+            "frequency_offset_MHz": 0.3
+          },
+          "seed": [
+            35785542,
+            1098397039,
+            90692189
+          ],
+          "n_sequences": 120,
+          "n_frames": 256,
+          "replicates": [
+            {
+              "index": 0,
+              "seed": 35785542,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 35785542,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.4241554663935214,
+                "contrast_scale_max": 3.413796359098185,
+                "photons_per_point": 4414948.542523304
+              }
+            },
+            {
+              "index": 1,
+              "seed": 1098397039,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 1098397039,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 2.0991111704257306,
+                "contrast_scale_max": 3.454281714113158,
+                "photons_per_point": 4414948.542523304
+              }
+            },
+            {
+              "index": 2,
+              "seed": 90692189,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 90692189,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.5355032856802913,
+                "contrast_scale_max": 3.5476801623999097,
+                "photons_per_point": 4414948.542523304
+              }
+            }
+          ],
+          "data_md5": "03017f8763cb2cf0a0aa0146f80fb356"
+        },
+        {
+          "name": "realistic_baseline_slope_pct_minus2",
+          "rung": "realistic",
+          "config": {
+            "linewidth_MHz": 5.0,
+            "contrast_pct": 1.5,
+            "snr": 10,
+            "baseline_slope_pct": -2.0,
+            "frequency_offset_MHz": 0.3
+          },
+          "seed": [
+            35785542,
+            1098397039,
+            90692189
+          ],
+          "n_sequences": 120,
+          "n_frames": 256,
+          "replicates": [
+            {
+              "index": 0,
+              "seed": 35785542,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 35785542,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.4241554663935214,
+                "contrast_scale_max": 3.413796359098185,
+                "photons_per_point": 4414948.542523304
+              }
+            },
+            {
+              "index": 1,
+              "seed": 1098397039,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 1098397039,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 2.0991111704257306,
+                "contrast_scale_max": 3.454281714113158,
+                "photons_per_point": 4414948.542523304
+              }
+            },
+            {
+              "index": 2,
+              "seed": 90692189,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 90692189,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.5355032856802913,
+                "contrast_scale_max": 3.5476801623999097,
+                "photons_per_point": 4414948.542523304
+              }
+            }
+          ],
+          "data_md5": "9e25425e79225daa98024161447531a7"
+        },
+        {
+          "name": "realistic_frequency_offset_MHz_0",
+          "rung": "realistic",
+          "config": {
+            "linewidth_MHz": 5.0,
+            "contrast_pct": 1.5,
+            "snr": 10,
+            "baseline_slope_pct": 2.0,
+            "frequency_offset_MHz": 0.0
+          },
+          "seed": [
+            35785542,
+            1098397039,
+            90692189
+          ],
+          "n_sequences": 120,
+          "n_frames": 256,
+          "replicates": [
+            {
+              "index": 0,
+              "seed": 35785542,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 35785542,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.4241554663935214,
+                "contrast_scale_max": 3.413796359098185,
+                "photons_per_point": 4414948.542523304
+              }
+            },
+            {
+              "index": 1,
+              "seed": 1098397039,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 1098397039,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 2.0991111704257306,
+                "contrast_scale_max": 3.454281714113158,
+                "photons_per_point": 4414948.542523304
+              }
+            },
+            {
+              "index": 2,
+              "seed": 90692189,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 90692189,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.5355032856802913,
+                "contrast_scale_max": 3.5476801623999097,
+                "photons_per_point": 4414948.542523304
+              }
+            }
+          ],
+          "data_md5": "72c036da6eb9ec95d8c69c3446947810"
+        },
+        {
+          "name": "realistic_frequency_offset_MHz_minus0p3",
+          "rung": "realistic",
+          "config": {
+            "linewidth_MHz": 5.0,
+            "contrast_pct": 1.5,
+            "snr": 10,
+            "baseline_slope_pct": 2.0,
+            "frequency_offset_MHz": -0.3
+          },
+          "seed": [
+            35785542,
+            1098397039,
+            90692189
+          ],
+          "n_sequences": 120,
+          "n_frames": 256,
+          "replicates": [
+            {
+              "index": 0,
+              "seed": 35785542,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 35785542,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.4241554663935214,
+                "contrast_scale_max": 3.413796359098185,
+                "photons_per_point": 4414948.542523304
+              }
+            },
+            {
+              "index": 1,
+              "seed": 1098397039,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 1098397039,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 2.0991111704257306,
+                "contrast_scale_max": 3.454281714113158,
+                "photons_per_point": 4414948.542523304
+              }
+            },
+            {
+              "index": 2,
+              "seed": 90692189,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_train_v2.yaml",
+                "generator": "nv_sensor_sim.pipelines.sequence_generate.generate_sequence_dataset",
+                "generator_config": {
+                  "n_train": 0,
+                  "n_val": 0,
+                  "n_test": 40,
+                  "master_seed": 90692189,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "sweep_mode": "isotropic",
+                  "sweep_scalar_range_T": [
+                    -0.0014,
+                    0.0014
+                  ],
+                  "min_sweep_delta_T": 0.001,
+                  "min_ramp_window_frac": 0.25,
+                  "min_axis_projection_T": 0.0004,
+                  "jitter_frac": 0.05,
+                  "trajectory_family_weights": {
+                    "held": 0.5,
+                    "reversal": 0.25,
+                    "ou": 0.25
+                  },
+                  "reversal_turn_frac_range": [
+                    0.2,
+                    0.8
+                  ],
+                  "field_ou_sigma_T": 4.5e-05,
+                  "field_ou_tau_frames": 16.0,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "extra_b_perp_T": 0.0,
+                  "hyperfine": false,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "freq_margin_factor": 0.9,
+                  "aliasing_safety": 3.5
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 1.5355032856802913,
+                "contrast_scale_max": 3.5476801623999097,
+                "photons_per_point": 4414948.542523304
+              }
+            }
+          ],
+          "data_md5": "2209d98daaa7f1d0eac1239521ea8af6"
+        },
+        {
+          "name": "extrapolation",
+          "rung": "extrapolation",
+          "config": {
+            "linewidth_MHz": 5.0,
+            "contrast_pct": 1.5,
+            "snr": 10,
+            "baseline_slope_pct": 2.0,
+            "frequency_offset_MHz": 0.3
+          },
+          "seed": [
+            952037092,
+            1000214171,
+            1009727362
+          ],
+          "n_sequences": 120,
+          "n_frames": 256,
+          "replicates": [
+            {
+              "index": 0,
+              "seed": 952037092,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_eval_fieldcone_v1.yaml",
+                "generator": "nv_sensor_sim.pipelines.fieldcone_generate.generate_fieldcone_dataset",
+                "generator_config": {
+                  "master_seed": 952037092,
+                  "seqs_per_bucket": 40,
+                  "azimuth_sweep_deg": 20.0,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "min_axis_projection_T": 0.0004,
+                  "window_margin_frac": 0.02,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "axis_offsets_hz": null,
+                  "nv_density_ppm": 0.0,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "bucket_spec": [
+                    {
+                      "class": "beyond",
+                      "angle_deg": 40.0,
+                      "B_mT": 2.5
+                    }
+                  ]
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 2.2621778760584648,
+                "contrast_scale_max": 3.5734726797682606,
+                "photons_per_point": 4938271.604938271
+              }
+            },
+            {
+              "index": 1,
+              "seed": 1000214171,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_eval_fieldcone_v1.yaml",
+                "generator": "nv_sensor_sim.pipelines.fieldcone_generate.generate_fieldcone_dataset",
+                "generator_config": {
+                  "master_seed": 1000214171,
+                  "seqs_per_bucket": 40,
+                  "azimuth_sweep_deg": 20.0,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "min_axis_projection_T": 0.0004,
+                  "window_margin_frac": 0.02,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "axis_offsets_hz": null,
+                  "nv_density_ppm": 0.0,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "bucket_spec": [
+                    {
+                      "class": "beyond",
+                      "angle_deg": 40.0,
+                      "B_mT": 2.5
+                    }
+                  ]
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 2.2087296599905213,
+                "contrast_scale_max": 3.5376560720862558,
+                "photons_per_point": 4938271.604938271
+              }
+            },
+            {
+              "index": 2,
+              "seed": 1009727362,
+              "n_sequences": 40,
+              "n_frames": 256,
+              "lineage": {
+                "source_config": "~/projects/nv-sensor-sim/configs/sequence_eval_fieldcone_v1.yaml",
+                "generator": "nv_sensor_sim.pipelines.fieldcone_generate.generate_fieldcone_dataset",
+                "generator_config": {
+                  "master_seed": 1009727362,
+                  "seqs_per_bucket": 40,
+                  "azimuth_sweep_deg": 20.0,
+                  "n_timesteps": 256,
+                  "dt_s": 0.001,
+                  "p1_ppm": 148.81964716350558,
+                  "temperature_K": 300.0,
+                  "bias_B0_T": 0.005,
+                  "bias_direction_uvw": [
+                    0.2,
+                    0.1,
+                    1.0
+                  ],
+                  "min_axis_projection_T": 0.0004,
+                  "window_margin_frac": 0.02,
+                  "axis_contrast_scale": [
+                    1.0,
+                    0.85,
+                    0.7,
+                    0.55
+                  ],
+                  "axis_contrast_drift_std": 0.05,
+                  "axis_contrast_drift_tau_frames": 64.0,
+                  "collision_threshold_linewidths": 1.0,
+                  "axis_offsets_hz": null,
+                  "nv_density_ppm": 0.0,
+                  "freq_range_Hz": [
+                    2667390522.8636284,
+                    3074609477.1363726
+                  ],
+                  "n_freq_points": 951,
+                  "bucket_spec": [
+                    {
+                      "class": "beyond",
+                      "angle_deg": 40.0,
+                      "B_mT": 2.5
+                    }
+                  ]
+                }
+              },
+              "augmentation": {
+                "contrast_scale_min": 2.373887992755469,
+                "contrast_scale_max": 3.68012868695436,
+                "photons_per_point": 4938271.604938271
+              }
+            }
+          ],
+          "data_md5": "8cd4b4e74e5d18400f75987b825185d9"
+        }
+      ]
+    }
+  },
+  "attempts": [],
+  "total_sequences": 1680,
+  "generation_wall_s": 641.0007100180956
+}
