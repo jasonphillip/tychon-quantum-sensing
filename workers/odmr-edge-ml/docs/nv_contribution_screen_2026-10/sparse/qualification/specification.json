@@ -1,0 +1,327 @@
+{
+  "schema": "tychon-sparse-qualification-v1",
+  "status": "PREREGISTERED_NOT_AUTHORIZED",
+  "created": "2026-10-15",
+  "scope": "fixed-manufactured-non-evaluation-beliefs; no random draws, training, population inference, or test-set reuse",
+  "grids": {
+    "coarse": {
+      "field": [
+        20,
+        70,
+        101
+      ],
+      "center": [
+        0,
+        0.6,
+        5
+      ],
+      "width": [
+        4,
+        6,
+        3
+      ]
+    },
+    "fine": {
+      "field": [
+        20,
+        70,
+        201
+      ],
+      "center": [
+        0,
+        0.6,
+        9
+      ],
+      "width": [
+        4,
+        6,
+        5
+      ]
+    }
+  },
+  "designs": {
+    "coarse_low": {
+      "grid": "coarse",
+      "representatives": 16,
+      "nodes": 5
+    },
+    "coarse_high": {
+      "grid": "coarse",
+      "representatives": 32,
+      "nodes": 9
+    },
+    "fine_high": {
+      "grid": "fine",
+      "representatives": 32,
+      "nodes": 9
+    }
+  },
+  "acquisition": {
+    "photon_rate": 500000000,
+    "dwell_seconds": 0.01,
+    "settling_seconds": 0.0003,
+    "primary_actions": 24,
+    "recovery_actions": 8,
+    "maximum_actions": 32,
+    "credible_half_width_uT": 2
+  },
+  "tolerances": {
+    "gain_absolute_uT2": 0.0025,
+    "utility_relative": 0.1,
+    "action_regret_relative": 0.05,
+    "field_wasserstein_uT": 0.25,
+    "field_mean_uT": 0.25,
+    "field_median_uT": 0.5,
+    "interval_endpoint_uT": 0.5,
+    "variance_relative": 0.1,
+    "variance_absolute_uT2": 0.0625,
+    "posterior_reconstruction_max_abs": 1e-07
+  },
+  "budgets": {
+    "qualification": {
+      "cpu_seconds": 1200,
+      "wall_seconds": 420
+    },
+    "development": {
+      "cpu_seconds": 900,
+      "wall_seconds": 390
+    },
+    "verification": {
+      "cpu_seconds": 300,
+      "wall_seconds": 90
+    },
+    "cumulative": {
+      "cpu_seconds": 2400,
+      "wall_seconds": 900
+    },
+    "workers": 1,
+    "memory_bytes": 2147483648,
+    "blas_threads": 1
+  },
+  "fixed_point": {
+    "theta": 0,
+    "phi": 0,
+    "bias_uT": 250,
+    "slope": 0.02,
+    "contrast": 0.015,
+    "temperature_K": 293.15,
+    "mw_scale": 1,
+    "gradient": 0.196875
+  },
+  "beliefs": [
+    {
+      "id": "prior",
+      "truth": {
+        "field_uT": 43.25,
+        "center_mhz": 0.225,
+        "width_mhz": 4.5
+      },
+      "indices": [],
+      "residual_sigma": []
+    },
+    {
+      "id": "central_pilot",
+      "truth": {
+        "field_uT": 43.25,
+        "center_mhz": 0.225,
+        "width_mhz": 4.5
+      },
+      "indices": [
+        0,
+        10,
+        20,
+        30,
+        40,
+        50,
+        59,
+        69,
+        79,
+        89,
+        99
+      ],
+      "residual_sigma": [
+        0
+      ]
+    },
+    {
+      "id": "central_focused",
+      "truth": {
+        "field_uT": 43.25,
+        "center_mhz": 0.225,
+        "width_mhz": 4.5
+      },
+      "indices": [
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60
+      ],
+      "residual_sigma": [
+        0,
+        1,
+        -1,
+        0.5,
+        -0.5,
+        0
+      ]
+    },
+    {
+      "id": "low_edge_pilot",
+      "truth": {
+        "field_uT": 21.25,
+        "center_mhz": 0.075,
+        "width_mhz": 4.25
+      },
+      "indices": [
+        0,
+        10,
+        20,
+        30,
+        40,
+        50,
+        59,
+        69,
+        79,
+        89,
+        99
+      ],
+      "residual_sigma": [
+        1,
+        -1,
+        0
+      ]
+    },
+    {
+      "id": "high_edge_pilot",
+      "truth": {
+        "field_uT": 68.75,
+        "center_mhz": 0.525,
+        "width_mhz": 5.75
+      },
+      "indices": [
+        0,
+        10,
+        20,
+        30,
+        40,
+        50,
+        59,
+        69,
+        79,
+        89,
+        99
+      ],
+      "residual_sigma": [
+        -1,
+        1,
+        0
+      ]
+    },
+    {
+      "id": "low_interior_focused",
+      "truth": {
+        "field_uT": 30.25,
+        "center_mhz": 0.375,
+        "width_mhz": 5.25
+      },
+      "indices": [
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60
+      ],
+      "residual_sigma": [
+        1,
+        0,
+        -1,
+        0,
+        0.5,
+        -0.5
+      ]
+    },
+    {
+      "id": "high_interior_focused",
+      "truth": {
+        "field_uT": 59.75,
+        "center_mhz": 0.525,
+        "width_mhz": 5.75
+      },
+      "indices": [
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60
+      ],
+      "residual_sigma": [
+        -1,
+        0,
+        1,
+        0,
+        -0.5,
+        0.5
+      ]
+    }
+  ],
+  "failure_rule": "Every belief and every comparison must pass. Failure, budget exhaustion, missing output, or invalid arithmetic stops this Bayesian comparison and blocks all development cases. No automatic refinement, tuning, or rerun.",
+  "interpretation": "Engineering approximation tolerances, not statistical guarantees or physical validation. Passing qualifies only these representative beliefs."
+}

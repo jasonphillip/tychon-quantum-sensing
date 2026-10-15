@@ -1,0 +1,20 @@
+{
+  "gate_sha256": "a273c5c72abb0c8b12864e76108df11b7eb0c7a56ed72277bceb6b3360d7a778",
+  "source_commit": "e91cb0b5d69230b1eff160f4d2bec05f909ec237",
+  "source_files": {
+    "experiments/sparse_acquisition_screen/README.md": "55885d6d664f2ecb8164ca01a95574dea4135bdcd9ceca06b000dfa761fb2bd2",
+    "experiments/sparse_acquisition_screen/PROTOCOL.md": "7d9a4269467c3f2469fcad567d3254334f61057f6c92a61addb3b230106d9d20",
+    "experiments/sparse_acquisition_screen/accounting.py": "13c0206b1168dc90b1b7ac7a643309c6f1b39514aa8a561f29eae181bb57f4dc",
+    "experiments/sparse_acquisition_screen/__init__.py": "3a28300698a29d3bb9aa6e87d51bf39fba5bc1c212ffaddf02de2e1d304c0b71",
+    "experiments/sparse_acquisition_screen/qualification_spec.json": "dde02a005136c7724312e3ee00b4fdb74ec0ed50623d61c4610df5e816c7cff5",
+    "experiments/sparse_acquisition_screen/core.py": "add9b0028caf302a7dcca5a057fca879f72ac8be6a9a7b4b6b7eaee01a352282",
+    "experiments/sparse_acquisition_screen/run_screen.py": "2a436bdfd600a677bba67c32d98e844dd2aaeb7a99dd980297bb7f69d5698f1b",
+    "experiments/sparse_acquisition_screen/QUALIFICATION.md": "c39f34fbd319f2adf0343b493db184cdd5795d7c48f9df880e23fb874588ad21",
+    "experiments/sparse_acquisition_screen/registration.draft.json": "61c8784a244a15e4cdce03d5a18097d15a2c15634f4abe4b1c5a14c2005fa8da",
+    "experiments/sparse_acquisition_screen/verify_saved.py": "35418574f2e709af74202ddb94755706df3a893917fa386eca9a689612f08dd1",
+    "experiments/sparse_acquisition_screen/qualify.py": "cd40dfe7941966866dbcd8d93d6d31fa33e07f9ca9aa6eb8229a64631637d805",
+    "tests/test_sparse_acquisition_screen.py": "530e3af0dd5659cc8b7fefb68f8dbced8542602584669ea92e77f50b15f3b5d4",
+    "tests/test_sparse_saved_verification.py": "842ab0b9c2db9d7b30210bf31617aa9fbe211b667064ab10631dc06bf89c2fd2",
+    "experiments/scalar_information_limit/forward.py": "04a88c370ec9aa867e2579ad6ed849a18fdd8b865c052eef41f12c287a9ba219"
+  }
+}
