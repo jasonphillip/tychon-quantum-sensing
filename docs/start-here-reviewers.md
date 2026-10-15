@@ -68,7 +68,7 @@ The registered verdict: under the study's realistic synthetic conditions the cla
 For an earlier comparison correction, read
 [engineering decision 1: a broken tracking baseline](engineering-decisions.md#1-withdraw-a-comparison-after-discovering-a-broken-baseline).
 
-## Minutes 14–19: inspect the deployed scalar model evidence
+## Minutes 14–17: inspect the deployed scalar model evidence
 
 Read [the deployed model on the kit](../workers/odmr-edge-ml/docs/deployed_model_on_kit_2026-10.md).
 The report dates its run 2026-10-14.
@@ -82,6 +82,12 @@ The residual model adds a bounded correction to PID; it differs from the CPU ben
 Use the report's artifact hashes and file list to trace the chain.
 The [raw kit evidence](https://github.com/jasonphillip/polarfire-agent-skills/tree/53acad6/evidence/2026-10-14-deployed-fcnn) is in `polarfire-agent-skills`, a separate repository.
 Do not treat that external evidence listing as raw files included in this checkout.
+The saved label and prediction arrays of that run are in this checkout ([`docs/kit-run-2026-10-14/`](../workers/odmr-edge-ml/docs/kit-run-2026-10-14/)); the report's "Recompute from saved arrays" section recomputes its metrics offline against the pinned external records.
+
+## Minutes 17–19: check the scalar repair stop decision
+
+Read the [scalar repair decision record](../workers/odmr-edge-ml/docs/scalar_repair_cycle_2026-10.md). A bounded repair of the scalar estimators was frozen before a single read of a fresh sealed validation set. The registered rule required a repaired method to pass its prediction gate (lower error than both training constants by at least 0.5 µT at 95 % confidence, and a 90th-percentile error of at most 25 µT) under both primary synthetic conditions; none did, so the cycle stopped and the final set was never generated. This is a recorded negative result: the repair removes the realistic-condition failure of the unchanged direct models, but no repaired method beats the training constant there.
+To check it yourself, run the record's offline checker on the published predictions; it recomputes the metrics, the intervals and the stop decision without inference or network access.
 
 ## Minutes 19–20: resolve terms and record open questions
 
