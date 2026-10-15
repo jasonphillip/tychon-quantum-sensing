@@ -70,6 +70,8 @@ def qualify(args, approval, protocol):
               "all_development_features_finite_positive": True, "all_development_labels_finite": True,
               "small_label_budget": split["small_label_budget"], "full_label_budget": split["full_label_budget"],
               "physical_baseline_exclusion_reason": reason, "held_out_signal_values_accessed": False}
+    result.update({key: split[key] for key in ("label_budget_unit", "small_measurement_rows", "full_measurement_rows",
+                                               "partition_unique_positions", "possible_session_overlap", "session_assignment_status")})
     write_json(output / "qualification.json", result)
     save_manifest(output, approval, {"bundle_sha256": sha256(args.bundle), "partition_sha256": sha256(args.partition)})
     print(json.dumps(result, indent=2))
@@ -105,9 +107,25 @@ def develop(args, approval, protocol):
     best, pred, records = choose_classical(x, y, xv, yv, protocol)
     full, pred_full, full_records = choose_classical(xf, yf, xv, yv, protocol)
     scale = Scaling().fit(x, y)
-    weights, candidate_info = train_candidate(scale.x(x), scale.y(y), scale.x(xv), yv,
-                                               protocol["candidate"], scale, approval["random_seed"])
-    candidate = scale.inverse(predict_candidate(scale.x(xv), weights))
+    candidate_records, candidate_states, candidate_predictions = [], [], []
+    for config in protocol["candidate_grid"]:
+        weights, candidate_info = train_candidate(scale.x(x), scale.y(y), scale.x(xv), yv,
+                                                   config, scale, approval["random_seed"])
+        prediction = scale.inverse(predict_candidate(scale.x(xv), weights))
+        if not np.isfinite(prediction).all():
+            raise RuntimeError("a registered candidate produced nonfinite predictions")
+        candidate_info["saved_prediction_validation_mean_error_um"] = float(np.linalg.norm(prediction - yv, axis=1).mean())
+        candidate_info["config"] = config
+        candidate_records.append(candidate_info)
+        candidate_states.append(weights)
+        candidate_predictions.append(prediction)
+        np.savez(output / f"candidate_width_{config['hidden']}.npz", **{"weight." + k: v for k, v in weights.items()},
+                 **{"scale." + k: v for k, v in scale.saved().items()})
+        np.savez(output / f"validation_width_{config['hidden']}.npz", labels_um=yv, candidate_um=prediction,
+                 row_indices=np.asarray(split["validation"], dtype=np.int64), valid=np.ones(len(yv), dtype=bool))
+    winner = min(range(len(candidate_records)), key=lambda i: (
+        candidate_records[i]["saved_prediction_validation_mean_error_um"], candidate_records[i]["parameters"]))
+    weights, candidate_info, candidate = candidate_states[winner], candidate_records[winner], candidate_predictions[winner]
     metrics = evaluate_saved(yv, candidate, pred, pred_full, np.asarray(split["spatial_groups"])[split["validation"]],
                              protocol, split["small_label_budget"], split["full_label_budget"],
                              approval["random_seed"], confidence=False)
@@ -120,6 +138,8 @@ def develop(args, approval, protocol):
              valid=np.ones(len(yv), dtype=bool))
     selection = {"schema_version": 1, "stage": "development", "development_gate_passed": metrics["gate_passed"],
                  "candidate": candidate_info, "classical_small": best, "classical_full": full,
+                 "all_candidates": candidate_records,
+                 "candidate_selection_rule": "lowest_validation_mean_error_then_fewer_parameters_before_any_gate",
                  "all_classical_small": records, "all_classical_full": full_records,
                  "metrics": metrics, "partition_sha256": sha256(args.partition),
                  "bundle_sha256": sha256(args.bundle), "candidate_sha256": sha256(output / "candidate.npz"),
@@ -127,9 +147,11 @@ def develop(args, approval, protocol):
                  "held_out_signal_values_accessed": False,
                  "claim": "development_only_not_a_held_group_result"}
     write_json(output / "selection.json", selection)
+    write_json(output / "partition.json", split)
     write_json(output / "metrics.json", metrics)
     write_json(output / "protocol.json", protocol)
     write_json(output / "verification.json", {"stage": "development", "confidence": False,
+               "saved_partition_file": "partition.json",
                "prediction_file": "validation_predictions.npz",
                "expected_row_indices": split["validation"],
                "small_label_budget": split["small_label_budget"], "full_label_budget": split["full_label_budget"],
@@ -180,10 +202,12 @@ def evaluate(args, approval, protocol):
              classical_small_um=predictions[0], classical_full_um=predictions[1],
              row_indices=np.asarray(split["test"], dtype=np.int64), spatial_groups=groups,
              valid=np.ones(len(yt), dtype=bool))
+    write_json(output / "partition.json", split)
     write_json(output / "metrics.json", metrics)
     write_json(output / "protocol.json", protocol)
     # The seed is used by this published metric recomputation, not an unused held-out seed.
     write_json(output / "verification.json", {"stage": "held_group", "confidence": True,
+               "saved_partition_file": "partition.json",
                "prediction_file": "predictions.npz", "bootstrap_seed": approval["random_seed"],
                "expected_row_indices": split["test"],
                "small_label_budget": split["small_label_budget"], "full_label_budget": split["full_label_budget"],
@@ -198,24 +222,29 @@ def evaluate(args, approval, protocol):
 def reproduce(args, approval):
     """Score published saved predictions only; do not execute supplied models."""
     import numpy as np
-    from experiments.measured_localisation.bundle import arrays, checked_path
+    from experiments.measured_localisation.bundle import checked_path
     from experiments.measured_localisation.metrics import errors, summary
     manifest, _ = inspect_bundle(args.bundle)
     root = Path(args.bundle).resolve().parent
-    split = read_json(checked_path(root, manifest["supplied_splits"]))
     entry = manifest["published_test_predictions"]
-    if entry.get("units") != "um" or entry.get("order") != "supplied_test_indices":
+    label_entry = manifest["published_test_labels"]
+    if (entry.get("units") != "um" or entry.get("order") != "paired_published_labels"
+            or label_entry.get("units") != "um" or label_entry.get("order") != "paired_published_predictions"):
         raise ValueError("published prediction units/order must be independently established by custody")
     prediction = np.load(checked_path(root, entry), allow_pickle=False)
-    positions = np.load(checked_path(root, manifest["positions"]), allow_pickle=False, mmap_mode="r")
-    y = np.asarray(positions[split["test"]], dtype=float)
+    y = np.asarray(np.load(checked_path(root, label_entry), allow_pickle=False), dtype=float)
+    if y.ndim != 2 or y.shape[1] != 2 or prediction.shape != y.shape:
+        raise ValueError("published prediction/label shape mismatch")
+    published_rows = list(range(len(y)))
     result = {"stage": "published_split_reproduction", "metrics": summary(errors(prediction, y)),
               "new_confirmation": False, "training_or_inference_run": False,
-              "expected_row_indices": split["test"],
+              "expected_row_indices": published_rows,
+              "row_identity": "published_prediction_rows_not_new_bundle_indices",
+              "published_label_sha256": label_entry["sha256"],
               "published_prediction_sha256": entry["sha256"], "custody_bundle_sha256": sha256(args.bundle)}
     output = prepare_output(args.output)
     np.savez(output / "reproduction_predictions.npz", labels_um=y, predictions_um=prediction,
-             row_indices=np.asarray(split["test"], dtype=np.int64), valid=np.ones(len(y), dtype=bool))
+             row_indices=np.asarray(published_rows, dtype=np.int64), valid=np.ones(len(y), dtype=bool))
     write_json(output / "reproduction.json", result)
     save_manifest(output, approval, {"bundle_sha256": sha256(args.bundle)})
     print(json.dumps(result, indent=2))

@@ -30,17 +30,67 @@ def test_payload_cannot_escape_bundle(tmp_path):
         bundle.checked_path(tmp_path, {"path": "../outside.npy", "sha256": "0" * 64})
 
 
+def test_positions_route_never_requires_feature_files(tmp_path):
+    template = json.loads((PACKAGE / "bundle.example.json").read_text())
+    np.save(tmp_path / "position_x.npy", np.array(["1305.0", "1325.0"]))
+    np.save(tmp_path / "position_y.npy", np.array(["1200.0", "1220.0"]))
+    (tmp_path / "sample_ids.json").write_text('["measurement_0000", "measurement_0001"]')
+    for key in ("position_x", "position_y", "sample_ids"):
+        template[key]["sha256"] = sha256(tmp_path / template[key]["path"])
+    template["extraction_source_sha256"] = "0" * 64
+    template["source_row_alignment_status"] = "verified_figS4_main_byte_identity"
+    path = tmp_path / "bundle.json"
+    path.write_text(json.dumps(template))
+    values, _, metadata = bundle.positions_only(path)
+    assert values.tolist() == [[1305., 1200.], [1325., 1220.]]
+    assert metadata["signal_values_inspected"] is False
+    assert not (tmp_path / "fit_parameters.npy").exists()
+
+
+def test_declared_width_parameter_counts():
+    protocol = json.loads((PACKAGE / "protocol.json").read_text())
+    assert [c["hidden"] for c in protocol["candidate_grid"]] == [24, 48, 96]
+    for config in protocol["candidate_grid"]:
+        width = config["hidden"]
+        assert 24 * width + width + width * 2 + 2 == config["parameters"]
+        assert config["device"] == "cuda"
+
+
+def test_native_adapter_selects_rows_and_converts_ghz(tmp_path):
+    parameters = np.zeros((2, 8, 6))
+    deviations = np.ones((2, 8, 6)) * 0.002
+    # The unselected row is invalid. It must not enter feature validation.
+    parameters[0] = np.nan
+    parameters[1, :, 1] = 2.85
+    parameters[1, :, 4] = 2.89
+    deviations[1, :, 4] = 0.003
+    np.save(tmp_path / "p.npy", parameters)
+    np.save(tmp_path / "s.npy", deviations)
+    manifest = {"fit_parameters": {"path": "p.npy", "sha256": sha256(tmp_path / "p.npy")},
+                "fit_standard_deviations": {"path": "s.npy", "sha256": sha256(tmp_path / "s.npy")}}
+    with patch.object(bundle, "inspect_bundle", return_value=(manifest, {})):
+        with patch.object(bundle, "positions_only", return_value=(np.array([[0., 0.], [1., 2.]]), manifest, {})):
+            x, y, _, _ = bundle.arrays(tmp_path / "manifest.json", [1])
+    np.testing.assert_allclose(x.reshape(8, 3), np.tile([40., 2., 3.], (8, 1)))
+    assert y.tolist() == [[1., 2.]]
+
+
 def test_geometric_gaps_and_total_label_accounting():
     protocol = json.loads((PACKAGE / "protocol.json").read_text())
     # Whole repeated positions must stay together, even in manufactured data.
     positions = np.array([[x + .5, y + .5] for x in range(12) for y in range(12) for _ in range(4)])
     manifest = {"operating_bounds_um": [[0, 12], [0, 12]]}
-    with patch.object(partition, "arrays", return_value=(None, positions, manifest, {"manifest_sha256": "fixture"})):
-        result = partition.make_partition("unused", protocol, "fixture-only-salt")
+    protocol["partition"]["acquisition_policy"] = "spatial_within_represented_sessions_disclose_possible_overlap"
+    with patch.object(partition, "positions_only", return_value=(positions, manifest, {"manifest_sha256": "fixture"})):
+        with patch.object(partition, "possible_sessions", return_value=[["session01"] for _ in positions]):
+            with patch.object(partition, "supplied_position_summary", return_value={"fixture": True}):
+                result = partition.make_partition("unused", protocol, "fixture-only-salt")
     train, valid, test = [set(result[name]) for name in ("train", "validation", "test")]
     assert not train & valid and not train & test and not valid & test
-    assert result["small_label_budget"] == len(train) + len(valid)
-    assert result["full_label_budget"] == len(result["full_train"]) + len(valid)
+    assert result["small_label_budget"] == (len(train) + len(valid)) // 4
+    assert result["full_label_budget"] == (len(result["full_train"]) + len(valid)) // 4
+    assert result["small_measurement_rows"] == len(train) + len(valid)
+    assert result["possible_session_overlap"]["full_train__test"] == ["session01"]
     for i in result["full_train"]:
         for j in valid | test:
             assert np.max(np.abs(np.floor(positions[i]) - np.floor(positions[j]))) > 1
@@ -59,10 +109,11 @@ def test_overlap_is_rejected():
 
 
 def fixture_outputs():
-    labels = np.zeros((64, 2))
-    candidate = np.column_stack((np.ones(64), np.zeros(64)))
-    classical = candidate * 2
-    full = candidate * 1.5
+    labels = np.column_stack((np.arange(64), np.zeros(64)))
+    offset = np.column_stack((np.ones(64), np.zeros(64)))
+    candidate = labels + offset
+    classical = labels + offset * 2
+    full = labels + offset * 1.5
     groups = np.array([str(i // 8) for i in range(64)])
     return labels, candidate, classical, full, groups
 

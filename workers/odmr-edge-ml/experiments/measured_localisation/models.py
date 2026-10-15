@@ -1,4 +1,4 @@
-"""Vectorized strong references and one fixed compact candidate."""
+"""Vectorized strong references and a bounded, prospective MLP width grid."""
 import numpy as np
 from scipy import linalg
 from scipy.interpolate import RBFInterpolator
@@ -62,17 +62,28 @@ def fit_classical(name, config, x, y):
 
 
 def train_candidate(x, y, xv, yv, config, scaling, seed):
+    import os
+    import resource
+    import time
+    os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
     import torch
+    wall_start = time.perf_counter()
+    usage_start = resource.getrusage(resource.RUSAGE_SELF)
     torch.set_num_threads(1)
     torch.manual_seed(seed)
     torch.use_deterministic_algorithms(True)
-    network = torch.nn.Sequential(torch.nn.Linear(24, 24), torch.nn.ReLU(), torch.nn.Linear(24, 2))
+    width = config["hidden"]
+    network = torch.nn.Sequential(torch.nn.Linear(24, width), torch.nn.ReLU(), torch.nn.Linear(width, 2))
     count = sum(p.numel() for p in network.parameters())
     if count != config["parameters"]:
         raise RuntimeError("candidate parameter count changed")
-    device = "cuda" if count > 1000 else "cpu"
+    device = config.get("device", "cuda" if count > 1000 else "cpu")
+    if count > 1000 and device != "cuda":
+        raise RuntimeError("training above 1000 parameters requires CUDA")
     if device == "cuda" and not torch.cuda.is_available():
         raise RuntimeError("training above 1000 parameters requires CUDA")
+    if device == "cuda":
+        torch.cuda.reset_peak_memory_stats()
     network.to(device)
     tx, ty, tv = [torch.as_tensor(a, dtype=torch.float32, device=device) for a in (x, y, xv)]
     optimizer = torch.optim.AdamW(network.parameters(), lr=config["learning_rate"], weight_decay=config["weight_decay"])
@@ -90,8 +101,17 @@ def train_candidate(x, y, xv, yv, config, scaling, seed):
             best = {name: p.detach().cpu().numpy().copy() for name, p in network.state_dict().items()}
     if best is None:
         raise RuntimeError("candidate produced no finite validation checkpoint")
+    if device == "cuda":
+        torch.cuda.synchronize()
+    usage_end = resource.getrusage(resource.RUSAGE_SELF)
+    wall = time.perf_counter() - wall_start
     return best, {"validation_mean_error_um": best_loss, "epoch": best_epoch,
-                  "parameters": count, "training_device": device}
+                  "parameters": count, "hidden": width, "training_device": device,
+                  "training_wall_seconds": wall,
+                  "process_cpu_seconds_delta": usage_end.ru_utime + usage_end.ru_stime - usage_start.ru_utime - usage_start.ru_stime,
+                  "gpu_training_wall_seconds": wall if device == "cuda" else 0.0,
+                  "gpu_peak_allocated_bytes": torch.cuda.max_memory_allocated() if device == "cuda" else 0,
+                  "resource_receipt_scope": "per_configuration_diagnostic_central_job_receipt_is_authoritative"}
 
 
 def predict_candidate(x, weights):

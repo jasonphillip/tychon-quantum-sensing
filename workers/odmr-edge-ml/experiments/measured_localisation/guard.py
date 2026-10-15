@@ -34,7 +34,9 @@ def authorize(path, phase):
         raise RuntimeError("root has not approved this measured-data study")
     if phase not in approval.get("phases", []):
         raise RuntimeError("phase is not authorized")
-    if approval.get("claim_scope") != "measured_fixed_geometry_motor_stage_position":
+    geometry_only = phase == "partition"
+    required_scope = "position_labels_only_geometry" if geometry_only else "measured_fixed_geometry_motor_stage_position"
+    if approval.get("claim_scope") != required_scope:
         raise RuntimeError("claim scope mismatch")
     required = {str(p.relative_to(PACKAGE)) for p in PACKAGE.rglob("*.py")} | {"protocol.json"}
     frozen = approval.get("source_sha256", {})
@@ -44,7 +46,11 @@ def authorize(path, phase):
         relative = Path(name)
         if relative.is_absolute() or ".." in relative.parts or sha256(PACKAGE / relative) != expected:
             raise RuntimeError("source hash mismatch: " + name)
-    if read_json(PACKAGE / "protocol.json").get("status") != "FROZEN":
+    if geometry_only and (approval.get("phases") != ["partition"]
+                          or approval.get("signal_values_authorized") is not False
+                          or approval.get("model_execution_authorized") is not False):
+        raise RuntimeError("geometry approval must authorize positions only")
+    if not geometry_only and read_json(PACKAGE / "protocol.json").get("status") != "FROZEN":
         raise RuntimeError("root must freeze the protocol before numerical work")
     for key in ("OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS", "MKL_NUM_THREADS"):
         if os.environ.get(key) != "1":

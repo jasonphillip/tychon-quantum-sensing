@@ -52,6 +52,17 @@ def main(argv=None):
     if protocol != read_json(PACKAGE / "protocol.json"):
         raise ValueError("artifact protocol differs from frozen source protocol")
     context = read_json(artifact / "verification.json")
+    if "saved_partition_file" in context:
+        from experiments.measured_localisation.partition import validate_partition
+        if context["saved_partition_file"] != "partition.json" or "partition.json" not in manifest["files"]:
+            raise ValueError("unbound public partition")
+        partition = read_json(artifact / "partition.json")
+        validate_partition(partition, partition["n"], protocol)
+        stage_rows = partition["test"] if context["stage"] == "held_group" else partition["validation"]
+        if (stage_rows != context["expected_row_indices"]
+                or partition["small_label_budget"] != context["small_label_budget"]
+                or partition["full_label_budget"] != context["full_label_budget"]):
+            raise ValueError("public unique-position budgets or row selection differ")
     prediction_file = context["prediction_file"]
     if prediction_file not in ("predictions.npz", "validation_predictions.npz"):
         raise ValueError("unexpected prediction artifact")

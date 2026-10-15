@@ -1,31 +1,94 @@
 {
   "schema_version": 1,
   "dataset_doi": "10.5281/zenodo.19855773",
-  "archive_sha256": "REPLACE_WITH_CUSTODY_ARCHIVE_SHA256",
+  "archive_sha256": "b5717b233590d041fb4bd752af479df7c426e37675743ca3f9d3c93ae32f7aa4",
   "extraction_source_sha256": "REPLACE_WITH_REVIEWED_EXTRACTION_SOURCE_SHA256",
   "license": "CC-BY-4.0",
   "measured_only": true,
   "positions_unit": "um",
   "position_reference": "motor_stage_xy_fixed_target_height_and_orientation",
-  "position_calibration_uncertainty": "REQUIRES_CUSTODY_FINDING",
+  "position_calibration_uncertainty": "unverified",
   "feature_order": "channel_major_splitting_std1_std2_MHz",
   "feature_calibration_access": "per_sample_only",
-  "operating_bounds_um": [[0, 260], [0, 1000]],
-  "operating_bounds_note": "PLACEHOLDERS: replace with actual stage-frame bounds from source metadata; do not shift labels to these defaults",
-  "features": {"path": "features.npy", "sha256": "REPLACE"},
-  "positions": {"path": "positions.npy", "sha256": "REPLACE"},
-  "sample_ids": {"path": "sample_ids.json", "sha256": "REPLACE"},
-  "acquisition_groups": {"path": "acquisition_groups.json", "sha256": "REPLACE"},
-  "supplied_splits": {"path": "supplied_splits.json", "sha256": "REPLACE"},
+  "operating_bounds_um": [
+    [
+      1305,
+      1565
+    ],
+    [
+      1200,
+      2200
+    ]
+  ],
+  "operating_bounds_note": "Declared by Fig.S4 source cell8; geometry-only qualification must confirm every saved label lies inside.",
+  "sample_ids": {
+    "path": "sample_ids.json",
+    "sha256": "REPLACE"
+  },
   "published_test_predictions": {
     "path": "published_test_predictions.npy",
-    "sha256": "REPLACE",
+    "sha256": "REPLACE_WITH_CUSTODY_SHA256",
     "units": "um",
-    "order": "supplied_test_indices"
+    "order": "paired_published_labels"
   },
   "physical_baseline_ready": false,
-  "physical_baseline_exclusion_reason": "REPLACE_WITH_METADATA_BASED_FINDING; no invented geometry or field calibration",
-  "source_members": [],
+  "physical_baseline_exclusion_reason": "Reviewed source supplies per-sample frequency fits and display markers, but no complete calibrated sensor-frame transform, target height/moment, and channel-specific splitting likelihood. This bounded metadata review does not exclude a future calibrated physical baseline.",
+  "source_members": [
+    "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/para_list.npy",
+    "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/para_std_list.npy",
+    "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/x_pos.npy",
+    "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/y_pos.npy",
+    "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/estimated_position.npy",
+    "Data availability update 20260220/Fig.3 and ML model and data/Fig. 3d and Fig. 3e/pos_test.npy",
+    "Data availability update 20260220/Fig.S5/vis_pos_train.npy",
+    "Data availability update 20260220/Fig.S5/vis_pos_val.npy",
+    "Data availability update 20260220/Fig.S5/vis_pos_test.npy"
+  ],
   "previously_viewed_values": [],
-  "excluded_simulation_members": []
+  "excluded_simulation_members": [
+    "Fig.S8/**"
+  ],
+  "native_fit_units": "GHz",
+  "native_to_feature_factor": 1000,
+  "fit_parameters": {
+    "path": "fit_parameters.npy",
+    "sha256": "REPLACE_WITH_CUSTODY_SHA256"
+  },
+  "fit_standard_deviations": {
+    "path": "fit_standard_deviations.npy",
+    "sha256": "REPLACE_WITH_CUSTODY_SHA256"
+  },
+  "position_x": {
+    "path": "position_x.npy",
+    "sha256": "REPLACE_WITH_CUSTODY_SHA256"
+  },
+  "position_y": {
+    "path": "position_y.npy",
+    "sha256": "REPLACE_WITH_CUSTODY_SHA256"
+  },
+  "published_test_labels": {
+    "path": "published_test_labels.npy",
+    "sha256": "REPLACE_WITH_CUSTODY_SHA256",
+    "units": "um",
+    "order": "paired_published_predictions"
+  },
+  "supplied_train_positions": {
+    "path": "supplied_train_positions.npy",
+    "sha256": "REPLACE_WITH_CUSTODY_SHA256"
+  },
+  "supplied_validation_positions": {
+    "path": "supplied_validation_positions.npy",
+    "sha256": "REPLACE_WITH_CUSTODY_SHA256"
+  },
+  "supplied_test_positions": {
+    "path": "supplied_test_positions.npy",
+    "sha256": "REPLACE_WITH_CUSTODY_SHA256"
+  },
+  "raw_position_catalog": {
+    "path": "raw_position_catalog.json",
+    "sha256": "REPLACE_WITH_CUSTODY_SHA256"
+  },
+  "session_mapping_status": "possible_sessions_from_exact_coordinate; original_os_walk_order_not_recoverable_from_archive_order",
+  "supplied_split_mapping_status": "coordinates_only; no_unique_row_indices_inferred_from_duplicate_labels",
+  "source_row_alignment_status": "REQUIRES_CUSTODY_BYTE_IDENTITY"
 }
