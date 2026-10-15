@@ -1,0 +1,52 @@
+{
+  "accounting_run_id": "measured-widefield-a-train-targets-20261015",
+  "approval_sha256": "6f488e7dc8b1b7cc6961145e5ebbfa085ab4a686ef13d591d544910e4809571c",
+  "arrays_sha256": "4babd435225c24299cb75762ee41885ce9854ebd11921657fe8637f9e5f108d7",
+  "custody_sha256": "d79cab8fdfaa896713d0cd42b7520fe90c07311bf0048eae95947a8351bc361c",
+  "inputs_manifest_sha256": "d7943ed03532f5dddbd1ffc4d41a9a4b1c2410c8608562470ad25f8623c7c371",
+  "kind": "targets",
+  "repeats": [
+    1,
+    2
+  ],
+  "rows": 768,
+  "shifts_yx": [
+    [
+      0,
+      0
+    ],
+    [
+      -1,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      0,
+      -1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      -2,
+      0
+    ],
+    [
+      2,
+      0
+    ],
+    [
+      0,
+      -2
+    ],
+    [
+      0,
+      2
+    ]
+  ],
+  "split": "train"
+}

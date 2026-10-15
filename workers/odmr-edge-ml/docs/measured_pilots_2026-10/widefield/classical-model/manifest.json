@@ -1,0 +1,9 @@
+{
+  "accounting_run_id": "measured-widefield-a-fit-classical-20261015",
+  "approval_sha256": "810ca8a163cda4d24291d2527c26f9e3f5f199daffbf75a06f59a9bde1d03ddc",
+  "arrays_sha256": "c6593dc1b8a02471922d172e5343e5615a76afa532dbe23943934c7e41b1852b",
+  "inputs_manifest_sha256": "d7943ed03532f5dddbd1ffc4d41a9a4b1c2410c8608562470ad25f8623c7c371",
+  "kind": "classical_model",
+  "targets_manifest_sha256": "7cb001b3ab6fd2e95be953147d0bc32a35877cae01c58b8186a40b82e2cd9208",
+  "training_only": true
+}

@@ -1,0 +1,95 @@
+{
+  "archive_representations": {
+    "train-targets/arrays.npz": {
+      "original_bytes": 10565564,
+      "original_sha256": "4babd435225c24299cb75762ee41885ce9854ebd11921657fe8637f9e5f108d7",
+      "parts_manifest": "train-targets/arrays.npz.parts.json",
+      "parts_manifest_sha256": "140c9741243235913b8f4e94d12813dd6693df7de50ca21d8773e41da47a3c37",
+      "transformation": "Byte slicing only; concatenation recovers the original archive."
+    }
+  },
+  "attribution": "Sengottuvel et al., Wide-field magnetometry using nitrogen-vacancy color centers with randomly oriented micro-diamonds, Scientific Reports 12, 17997 (2022). DOI:10.1038/s41598-022-22610-5.",
+  "candidate_configurations": 3,
+  "data_custody_sha256": "d79cab8fdfaa896713d0cd42b7520fe90c07311bf0048eae95947a8351bc361c",
+  "data_scope": "Selected measured fluorescence patches from train/development spatial blocks and repeats 0,1,2,3 only; no independent magnetic-field labels.",
+  "development_gate_passed": false,
+  "epochs_each": 100,
+  "exact_copied_artifact_hashes": {
+    "candidate-16-development/arrays.npz": "3088203c1679aef29c2ea5201c31bcdf2919598727e840858cc7223e060a27bd",
+    "candidate-16-development/manifest.json": "5cf87d8eb3082b6cd22738755d691c093e8e72d35b9766eb5aefecbe263d5a9c",
+    "candidate-16-model-retry1/arrays.npz": "bfab6ba4be0a55b8e813335a5f7d15437f5429509f487e9da73fd43047cfe3cd",
+    "candidate-16-model-retry1/manifest.json": "ce05753181ded030f87f8ed2b964f1d785d63284613badee9d0caea8e0e6dd92",
+    "candidate-32-development/arrays.npz": "cc9e77e10107674aa17c050c5e6ae90cf07a6ede7af3df8f8fc2715e3449b039",
+    "candidate-32-development/manifest.json": "259f9418014e90ffa1592d959d3d59bd84d995e0cd4c101749ee7a1c8f7abb4b",
+    "candidate-32-model/arrays.npz": "bc115a480c1d2dcc676ef1aaea45cb2d7d6db37bfbfdb0ad6c3b11b73923e0f2",
+    "candidate-32-model/manifest.json": "9311e4472ebe00bbbd6ea028ae54ce00eefca3b2e00bd68f3b2a783d8b475d9b",
+    "candidate-64-development/arrays.npz": "0ba942c31fd6f8f9bbab28d2e8fe18e20ebb05e5f2842a8924bd51878260b6bd",
+    "candidate-64-development/manifest.json": "396dc366e5d70be781bf56f2d409a486bb0cf41d6207c6b7dcc404d03ee5f645",
+    "candidate-64-model/arrays.npz": "f5a35baddd1fdc53aaabdc7879f47374f82eae4e7979dff1d1a75b2408967234",
+    "candidate-64-model/manifest.json": "503a5022910fb1da013d167c501e2e3feb4d9dbba104974ec91f61392041d986",
+    "candidate-development-score/bootstrap.npz": "3cb3f2fac621ea2857089d7339fe903b51d3a2c738ea0f800e85de2634094151",
+    "candidate-development-score/metrics.json": "18d2abebe9d53164ec621999464954363c33933f0a0cb7b39caa2579f167572a",
+    "classical-development-score/bootstrap.npz": "3cb3f2fac621ea2857089d7339fe903b51d3a2c738ea0f800e85de2634094151",
+    "classical-development-score/metrics.json": "61d5d8cf8428424b646f507eaead52a5d25e3ac3cfab98607067761a8b5a1e76",
+    "classical-development/arrays.npz": "ec7a0706acb0e60fce3f1eada47e4ec09330ad9ca7fdfbe7aaf625afe87e64c4",
+    "classical-development/manifest.json": "1345b2d0cc2cb0c88eccc48bbd1ee76d58eae594099a21879561808d43ed3847",
+    "classical-model/arrays.npz": "c6593dc1b8a02471922d172e5343e5615a76afa532dbe23943934c7e41b1852b",
+    "classical-model/manifest.json": "c0dc6ca9769708bdc6e14ac31ec6c8592b9acab4935ad8f1eca76c14550fe104",
+    "development-inputs/arrays.npz": "62ea17edff14529b6767fbdbb5d77f1d6da6738632ef51841f278b0d0480ccca",
+    "development-inputs/manifest.json": "3c94ab005aceedd07d80b60625e3f0677af434ad5eb63fc7159fe7b9a942b091",
+    "development-targets/arrays.npz": "657e17becd032512feb9c55f5e7b2b87ac56332809549085007a97fecb44378f",
+    "development-targets/manifest.json": "08f677126cf22bdf4c0ac98e40b10fc71674834205da96f8f3135148fa4e5974",
+    "protocol/PROTOCOL.md": "872af9fb1f16ea0773f54f63e853253c0fd2be2a56470095732db8bef95b01ea",
+    "protocol/custody-manifest.json": "d79cab8fdfaa896713d0cd42b7520fe90c07311bf0048eae95947a8351bc361c",
+    "protocol/protocol.json": "fe60357e5b1a9e02e1417c9c0187e19eeddd60f0371a59927b3c39085842fc6b",
+    "train-inputs/arrays.npz": "506d4927ab780c0821a232972be747c70b0d813b2a7f78f945731b7f205c26ae",
+    "train-inputs/manifest.json": "d7943ed03532f5dddbd1ffc4d41a9a4b1c2410c8608562470ad25f8623c7c371",
+    "train-targets/manifest.json": "7cb001b3ab6fd2e95be953147d0bc32a35877cae01c58b8186a40b82e2cd9208"
+  },
+  "failure_correction": "The initial width16 supervisor rejected a string gpu_policy before child launch. One root-approved retry used the required nested approval object, with a fresh run ID/output. Source, seeds and epochs were unchanged. The full 900-second charge remains.",
+  "final_access": false,
+  "freeze_b_created": false,
+  "independent_verification": {
+    "final_public_checkout_verification": "pending",
+    "reports": {
+      "candidate": {
+        "checks": 460,
+        "manifest_sha256": "5f557a7de3800e20e8eca8119d89e9d72b93817b2589985c09963c0ef4c8815d",
+        "sha256": "16c134651e697aa5d121241417b345cb37d25c3f05553ed6a55e9301992cc124"
+      },
+      "classical": {
+        "checks": 355,
+        "manifest_sha256": "f6bb8f18dab00194ac93f1fea6a57ed747bf049a7819b3a89fdb3c92928f482d",
+        "sha256": "6bcca5830cba52c22563279a5f48d2351ed50234c491e60352866c07e04d508c"
+      }
+    },
+    "scope": "All saved metrics, plus independently implemented MSE for all 15 methods; no independent field labels or final-data access.",
+    "status": "PASS"
+  },
+  "license": "CC-BY-4.0",
+  "protocol_sha256": "fe60357e5b1a9e02e1417c9c0187e19eeddd60f0371a59927b3c39085842fc6b",
+  "record_url": "https://zenodo.org/records/7233869",
+  "reference": "training_mean",
+  "seed_commitment_sha256": "52218fe2c02f63b1b32bc8867365066b20f21b58a45a966b861791e4d19efdcf",
+  "seed_publication": "Only consumed bootstrap and trained-model seeds appear in artifacts. The private seed receipt and approvals are not copied.",
+  "selected_candidate": "candidate_16",
+  "source_commit": "91e24d61ddcb62e07203db4f39e872a1aa317b80",
+  "source_files": {
+    "experiments/measured_widefield/PROTOCOL.md": "872af9fb1f16ea0773f54f63e853253c0fd2be2a56470095732db8bef95b01ea",
+    "experiments/measured_widefield/README.md": "81a38b17ad8f6457ecf84e23859ce4bab663ba8b0ad7ef9d04d9debdd9a6d8f2",
+    "experiments/measured_widefield/__init__.py": "524f973e0042228508a44c7007d7aae39bfc377a05e540b98a80e18332863d9a",
+    "experiments/measured_widefield/access.py": "53bb6c22ff69f0bf23d769f7e372c63b99a16c5b0fbe33f51f3be9fe01a2cef7",
+    "experiments/measured_widefield/baselines.py": "92c8d4ae8b5ba3ed6e18c898b0bd224747ff1b588ca67f1b0fa3f50283f4909f",
+    "experiments/measured_widefield/candidate.py": "67c86c8d8446104a868f9c5b6df7c75717f5e0d821fdc07ff5eb27d747c8a00f",
+    "experiments/measured_widefield/custody-manifest.json": "d79cab8fdfaa896713d0cd42b7520fe90c07311bf0048eae95947a8351bc361c",
+    "experiments/measured_widefield/io.py": "47a34d8eab12bfc53c05702e7223182fd261620afa01d08c4f54e98c4db14eb1",
+    "experiments/measured_widefield/metrics.py": "e668859a59c790a5669e9f19de87555e7388d11bbd23c12d93e03c049b161233",
+    "experiments/measured_widefield/pipeline.py": "190c66f0d5136dff783683865b5eae27e525db25a5750feecc49c622559de6e2",
+    "experiments/measured_widefield/protocol.json": "fe60357e5b1a9e02e1417c9c0187e19eeddd60f0371a59927b3c39085842fc6b",
+    "experiments/measured_widefield/run.py": "d4f706e1e83daa9aa16d037b8380da9ae72d5512b38da417765296799e980fde",
+    "experiments/measured_widefield/tests/test_saved_verifier.py": "24be3c03f3a2a3f25f8d5ee39304336c49b84b949d3eab882d0552695555d862",
+    "experiments/measured_widefield/tests/test_widefield.py": "a70e791f341305d09213493180f2ef72cd6a7f6d313df99c6d8dd7e0e55ce0d0",
+    "experiments/measured_widefield/verify_saved.py": "71b40ce33c4c700c03de457f1dfa71e2f268f9b7d6da9d65a7ab173aa11a416c"
+  },
+  "status": "DEVELOPMENT_STOP_SAVED_OUTPUTS_INDEPENDENTLY_VERIFIED"
+}
