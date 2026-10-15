@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "path": "experiments/sparse_acquisition_screen/QUALIFICATION.md",
+      "source_sha256": "c39f34fbd319f2adf0343b493db184cdd5795d7c48f9df880e23fb874588ad21",
+      "public_sha256": "934660433b59deff47798497c3055abf745025fe599feac39dd3f97af6c7a597"
+    }
+  ]
+}
