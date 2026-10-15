@@ -1,6 +1,6 @@
 # Scalar information diagnostic, 2026-10-15
 
-This is a conditional simulator diagnostic. It is not a new scalar evaluation campaign. Stage 2 remains closed pending independent review.
+This is a conditional simulator diagnostic. **Stage 1 whole-grid independent status remains FAIL; it was not waived.** The [restricted known-axis Stage 2 comparison](scalar_bias_design_2026-10.md) is now complete, with independently verified saved evidence. The [Stage 1 gate](../experiments/scalar_bias_design/STAGE1_GATE.json) approved only that changed task. It did not approve arbitrary-direction magnitude recovery, neural advantage, or physical sensing claims.
 
 ## Model and assumptions
 
@@ -86,7 +86,7 @@ For unknown direction, consider cos(theta) = 0.5 and azimuth = pi/4. Cartesian d
 
 These four rows retain rank seven across all three registered cutoffs. Their very weak local information does not establish a universal error floor. Fixed temperature and the interpolation renderer remain material assumptions.
 
-Implementation recommendation, pending the coordinator's independent gate: consider a small known-axis biased scalar comparison under a new frozen protocol. That is a changed task. This study does not justify claims about arbitrary-direction magnitude recovery, neural advantage, or physical sensing performance. No next-stage data has been generated.
+Completed follow-up: the [known-axis biased scalar comparison](scalar_bias_design_2026-10.md) passed its registered primary gate and independent saved-evidence review. It used a separate frozen protocol and one sealed evaluation. The [Stage 1 gate](../experiments/scalar_bias_design/STAGE1_GATE.json) restricted that comparison to a known positive axial field. **Stage 1 whole-grid independent status remains FAIL.** This follow-up does not establish arbitrary-direction magnitude recovery, neural advantage, or physical sensing performance.
 
 ## Accounting and reproducibility
 
