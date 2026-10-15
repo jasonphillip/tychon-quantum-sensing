@@ -1,0 +1,17 @@
+{
+  "utc": "2026-10-15T15:42:08.447498+00:00",
+  "status": "complete",
+  "returncode": 0,
+  "cpu_seconds": 0.299577,
+  "wall_seconds": 0.3164087190525606,
+  "peak_memory_bytes": 52187136,
+  "stage": "development",
+  "reserved_seconds": 300,
+  "budget_before": {
+    "cpu_seconds": 1081.9681975195635,
+    "wall_seconds": 615.1318318487429
+  },
+  "conservative_adjustment_count": 266,
+  "report_sha256": "9ca5fe0347ec5ebf2bebc006f54b294443a90f793e9016859652d45a2d8e6eaf",
+  "verifier_sha256": "32c0f8e339dfc47beaa9998c8804d13709885115e9c0c942d8beb036ea8e3776"
+}

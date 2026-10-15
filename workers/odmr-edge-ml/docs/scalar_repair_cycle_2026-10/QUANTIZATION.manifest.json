@@ -1,0 +1,33 @@
+{
+  "models": {
+    "C_direct_seed20261014": {
+      "dtype": "int8",
+      "input_scale": 0.007843137718737125,
+      "input_zero_point": -1,
+      "metadata_status": "recorded model metadata; TFLite bytes are not public",
+      "output_scale": 0.2604145407676697,
+      "output_zero_point": -128,
+      "tflite_model_sha256": "f94bab2465e433f013a645ac01519dfe9ad282d40e3249e75698e9be35af8858"
+    },
+    "C_direct_seed20261015": {
+      "dtype": "int8",
+      "input_scale": 0.007843137718737125,
+      "input_zero_point": -1,
+      "metadata_status": "recorded model metadata; TFLite bytes are not public",
+      "output_scale": 0.2682316303253174,
+      "output_zero_point": -128,
+      "tflite_model_sha256": "89041957bc7b2ddad3f04187a0bd1db9d2dd141a89cc1d2f349e5d93929a61b1"
+    },
+    "C_direct_seed42": {
+      "dtype": "int8",
+      "input_scale": 0.007843137718737125,
+      "input_zero_point": -1,
+      "metadata_status": "recorded model metadata; TFLite bytes are not public",
+      "output_scale": 0.2635367214679718,
+      "output_zero_point": -128,
+      "tflite_model_sha256": "c28c1f71ba5250cff70320934d9678bdeb4783332533e04f81e24a03996c2aae"
+    }
+  },
+  "schema": 1,
+  "source_freeze_sha256": "2abda4c9f48850236ef46ba39b1b0dfa94621151fc2759e90fb6ab1d237dbeac"
+}

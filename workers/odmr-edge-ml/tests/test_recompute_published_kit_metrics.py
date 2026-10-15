@@ -35,17 +35,81 @@ def invoke(run: Path, kit: Path, out: Path) -> subprocess.CompletedProcess[str]:
     )
 
 
-def copy_evidence(tmp_path: Path) -> tuple[Path, Path]:
+def copy_evidence(tmp_path: Path, nested_checkout: bool = False) -> tuple[Path, Path]:
     run = tmp_path / "run"
     kit = tmp_path / "kit"
-    run.mkdir()
-    kit.mkdir()
+    run.mkdir(parents=True)
+    kit.mkdir(parents=True)
+    if not nested_checkout:
+        (run / ".git").mkdir()
+        (kit / ".git").mkdir()
     for name in ("ARRAYS.manifest.json", "labels.npz", "float_pred.npz",
                  "tflite_pred.npz", "input.manifest.json", "results.json"):
         shutil.copy2(SOURCE_RUN / name, run / name)
     for name in ("hw.bin", "hw.json", "sim.npz", "sim.json", "input.int8.npy"):
         shutil.copy2(KIT / name, kit / name)
     return run, kit
+
+
+def checkout_evidence(tmp_path: Path) -> tuple[Path, Path, Path, Path]:
+    checkout = tmp_path / "checkout"
+    worker = checkout / "workers" / "odmr-edge-ml"
+    run, kit = copy_evidence(worker, nested_checkout=True)
+    (checkout / ".git").mkdir()
+    hardware_checkout = tmp_path / "hardware-checkout"
+    hardware_checkout.mkdir()
+    (hardware_checkout / ".git").mkdir()
+    hardware_kit = hardware_checkout / "evidence" / "kit"
+    hardware_kit.parent.mkdir()
+    shutil.move(str(kit), str(hardware_kit))
+    return checkout, run, hardware_checkout, hardware_kit
+
+
+@pytest.mark.parametrize("location", ["root", "sibling", "run", "hardware", "hardware_root"])
+def test_output_inside_checkout_or_evidence_is_rejected_before_array_read(
+        tmp_path: Path, location: str) -> None:
+    checkout, run, hardware_checkout, kit = checkout_evidence(tmp_path)
+    out = {
+        "root": checkout / "README.md",
+        "sibling": checkout / "workers" / "other-worker" / "result.json",
+        "run": run / "result.json",
+        "hardware": kit / "result.json",
+        "hardware_root": hardware_checkout / "README.md",
+    }[location]
+    (run / "ARRAYS.manifest.json").unlink()
+    proc = invoke(run, kit, out)
+    assert proc.returncode != 0
+    assert "--out must be outside" in proc.stderr
+    assert not out.exists()
+
+
+def test_output_with_symlinked_parent_is_rejected(tmp_path: Path) -> None:
+    checkout, run, _, kit = checkout_evidence(tmp_path)
+    link = tmp_path / "linked-parent"
+    link.symlink_to(checkout, target_is_directory=True)
+    proc = invoke(run, kit, link / "README.md")
+    assert proc.returncode != 0
+    assert "symlinked parent" in proc.stderr
+    assert not (checkout / "README.md").exists()
+
+
+def test_existing_output_is_preserved(tmp_path: Path) -> None:
+    _, run, _, kit = checkout_evidence(tmp_path)
+    out = tmp_path / "result.json"
+    original = b"existing output\x00\xff\n"
+    out.write_bytes(original)
+    proc = invoke(run, kit, out)
+    assert proc.returncode != 0
+    assert "File exists" in proc.stderr
+    assert out.read_bytes() == original
+
+
+def test_fresh_output_outside_all_checkouts_succeeds(tmp_path: Path) -> None:
+    _, run, _, kit = checkout_evidence(tmp_path)
+    out = tmp_path / "result.json"
+    proc = invoke(run, kit, out)
+    assert proc.returncode == 0, proc.stderr
+    assert json.loads(out.read_text())["status"] == "PASS"
 
 
 def update_manifest(run: Path, section: str, name: str, path: Path) -> None:
