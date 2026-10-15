@@ -1,4 +1,13 @@
 {
+  "archive_representations": {
+    "train-targets/arrays.npz": {
+      "original_bytes": 10565564,
+      "original_sha256": "4babd435225c24299cb75762ee41885ce9854ebd11921657fe8637f9e5f108d7",
+      "parts_manifest": "train-targets/arrays.npz.parts.json",
+      "parts_manifest_sha256": "140c9741243235913b8f4e94d12813dd6693df7de50ca21d8773e41da47a3c37",
+      "transformation": "Byte slicing only; concatenation recovers the original archive."
+    }
+  },
   "attribution": "Sengottuvel et al., Wide-field magnetometry using nitrogen-vacancy color centers with randomly oriented micro-diamonds, Scientific Reports 12, 17997 (2022). DOI:10.1038/s41598-022-22610-5.",
   "candidate_configurations": 3,
   "data_custody_sha256": "d79cab8fdfaa896713d0cd42b7520fe90c07311bf0048eae95947a8351bc361c",
@@ -35,7 +44,6 @@
     "protocol/protocol.json": "fe60357e5b1a9e02e1417c9c0187e19eeddd60f0371a59927b3c39085842fc6b",
     "train-inputs/arrays.npz": "506d4927ab780c0821a232972be747c70b0d813b2a7f78f945731b7f205c26ae",
     "train-inputs/manifest.json": "d7943ed03532f5dddbd1ffc4d41a9a4b1c2410c8608562470ad25f8623c7c371",
-    "train-targets/arrays.npz": "4babd435225c24299cb75762ee41885ce9854ebd11921657fe8637f9e5f108d7",
     "train-targets/manifest.json": "7cb001b3ab6fd2e95be953147d0bc32a35877cae01c58b8186a40b82e2cd9208"
   },
   "failure_correction": "The initial width16 supervisor rejected a string gpu_policy before child launch. One root-approved retry used the required nested approval object, with a fresh run ID/output. Source, seeds and epochs were unchanged. The full 900-second charge remains.",

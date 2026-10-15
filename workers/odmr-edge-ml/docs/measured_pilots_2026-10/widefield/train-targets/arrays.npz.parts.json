@@ -1,0 +1,19 @@
+{
+  "order": "Concatenate parts in the listed order without decoding or transformation.",
+  "original_bytes": 10565564,
+  "original_file": "arrays.npz",
+  "original_sha256": "4babd435225c24299cb75762ee41885ce9854ebd11921657fe8637f9e5f108d7",
+  "parts": [
+    {
+      "bytes": 6291456,
+      "file": "arrays.npz.part01",
+      "sha256": "2419eca9f239c5d56bf5fac8b8fc46ab32287da8287a038542023df5b327b57d"
+    },
+    {
+      "bytes": 4274108,
+      "file": "arrays.npz.part02",
+      "sha256": "4abbd29ab4bdc695aa91c8ea36000523e166c6f87f11d5ed6a1b3d171749b87a"
+    }
+  ],
+  "schema": "byte-preserving-archive-parts-v1"
+}

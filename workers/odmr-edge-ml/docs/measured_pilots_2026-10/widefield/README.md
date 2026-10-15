@@ -100,8 +100,28 @@ All three candidates against the frozen classical comparison:
 
 The inventories pin every array, manifest, metric report, resampling file, and verifier source.
 The consumed bootstrap seed is public; the checker reproduces every committed resampling index.
-All original scientific artifact bytes are preserved, including the mask, fitted classical parameters, candidate weights, flags, and model seeds.
+All original scientific artifact bytes are preserved, using ordered parts for the large training-target archive, including the mask, fitted classical parameters, candidate weights, flags, and model seeds.
 The [provenance record](provenance.json) and [artifact inventory](artifact-manifest.json) bind source and copied evidence.
 Independent verification passed 355 classical checks and 460 candidate checks, including independent MSE calculations for all 15 methods.
 The exact [classical report](verification/classical-result.json) and [candidate report](verification/candidate-result.json) are included.
 Final-public-checkout acceptance remains pending. A verifier PASS confirms the saved negative result; it does not change the failed scientific gate.
+
+## Reassemble the training-target archive, if needed
+
+The original training-target archive is 10,565,564 bytes. The publication filter excludes individual files above 10 MiB.
+Two byte-preserving parts retain that archive without decoding or recompression. Each part is below 8 MiB.
+The [parts manifest](train-targets/arrays.npz.parts.json) lists the original hash, byte count, ordered parts, and part hashes.
+The unchanged training-target manifest continues to identify the reconstructed original archive.
+Both metric-check manifests use development targets. The metric commands above require no training-target reassembly.
+
+Set `REASSEMBLED_OUTPUT` to a new file in an existing directory outside the Git checkout.
+Run this optional command from a checkout. It requires only Python's standard library.
+It checks every part, uses exclusive file creation, and checks the final archive hash.
+
+```bash
+"$PYTHON" "$PACKAGE/reassemble_train_targets.py" --manifest "$PACKAGE/train-targets/arrays.npz.parts.json" --expected-manifest-sha256 140c9741243235913b8f4e94d12813dd6693df7de50ca21d8773e41da47a3c37 --out "$REASSEMBLED_OUTPUT"
+```
+
+The expected original SHA256 is `4babd435225c24299cb75762ee41885ce9854ebd11921657fe8637f9e5f108d7`.
+Byte-only checks passed for exact reassembly, existing-file refusal, checkout-output refusal, and corrupted-part refusal.
+These checks did not decode arrays, perform inference, or evaluate numerical results.
