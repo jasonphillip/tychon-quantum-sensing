@@ -51,17 +51,34 @@ The custody ledger has 279 records and sums to 930.089207 CPU-seconds and 465.33
 
 ## Reproduction
 
-From this worker directory, with NumPy 2.1.3, run the public checker under a numerical lock. Write the report outside the checkout:
+Run the public checker from a fresh clone, with only NumPy installed, and write the report outside the clone. Set `ROOT` to an empty directory and `SHA` to the public commit you want to check:
 
 ```sh
-OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 flock -w 3600 /tmp/scalar-public-numerical.lock /usr/bin/time -v /tmp/tychon-public-acceptance/.venv/bin/python /tmp/tychon-public-acceptance/public/workers/odmr-edge-ml/scripts/recompute_published_scalar_validation.py --bundle /tmp/tychon-public-acceptance/public/workers/odmr-edge-ml/docs/scalar_repair_cycle_2026-10 --no-network --cross-check-truth --out /tmp/tychon-public-acceptance/recomputed-scalar-validation.json
+ROOT=/tmp/tychon-public-acceptance
+SHA=<40-character public commit>
+git clone https://github.com/jasonphillip/tychon-quantum-sensing.git "$ROOT/public"
+git -C "$ROOT/public" checkout --detach "$SHA"
+python3 -m venv "$ROOT/.venv" && "$ROOT/.venv/bin/pip" install numpy==2.1.3
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 "$ROOT/.venv/bin/python" \
+  "$ROOT/public/workers/odmr-edge-ml/scripts/recompute_published_scalar_validation.py" \
+  --bundle "$ROOT/public/workers/odmr-edge-ml/docs/scalar_repair_cycle_2026-10" \
+  --no-network --cross-check-truth \
+  --expected-bundle-manifest-sha256 7150142ed4ffbd318ac3ba9ee8f9b87a85cf82faf8ce2c10a0c74c67a4f9b36b \
+  --out "$ROOT/recomputed-scalar-validation.json"
 ```
 
-The fresh-checkout acceptance script performs the clone, exact SHA checkout, isolated NumPy install, checker, external receipt, and clean-status check. It requires network only for clone and dependency installation; the checker itself is offline. The script has not been run against a public scalar publication commit:
+The checker refuses an output path inside the clone or an existing output file. The acceptance script performs the same steps, pins the bundle-manifest hash from this record, writes a receipt outside the clone and checks that the clone stays clean:
 
 ```sh
-/tmp/tychon-public-acceptance/public/workers/odmr-edge-ml/scripts/public_scalar_validation_acceptance.sh PUBLIC_URL EXACT_40_CHARACTER_PUBLIC_SHA /tmp/tychon-scalar-public-acceptance-empty
+workers/odmr-edge-ml/scripts/public_scalar_validation_acceptance.sh \
+  https://github.com/jasonphillip/tychon-quantum-sensing.git <40-character public commit> <empty directory>
 ```
+
+Run on 2026-10-15 against public commit `5dacae6caafcd8d739ff8a8481304bb5255c3ffc` (Python 3.13.11, NumPy 2.1.3): PASS, 12,288 checks, the STOP decision reproduced, clean clone afterwards. The report records its completion time (`completed_utc`), so its file hash differs between runs; a second run of the command above on the same commit produced a report identical in every other field.
+
+## Source provenance exception
+
+Freeze 1 pins the sha256 of 16 source files. In the public repository, 15 of them match their pinned hashes. The 16th, `experiments/fcnn_v2_int8_float_equivalence.py`, does not: its Freeze 1 (and private source) sha256 is `eae1316fc5dd0bd57522e75f0223d73b672fc105e2630b6253c673eb677070c3`, its public sha256 is `64a50a263af99c690744fc84ac9bd873b50e32d5958eceaa9e13218e7ec5e06c`. The only difference is line 166, the default value of that script's own `--dataset` command-line argument inside `main()`: the publication step replaces the private home-directory prefix of an absolute path with `~` in every tracked text file (the linux rule of the publication path scrub). The frozen evaluator never used that default. It loads the file as a module under another name (`experiments/scalar_repair_cycle/models.py:32`, `importlib.util.spec_from_file_location`), so `main()` does not run, and it calls only `preprocess` and `run_tflite` (`models.py:59-60`, `69-70`). A public reader can see the substitution in the file but cannot reproduce the pinned hash, because the original prefix is not published; for this one file the pin is a provenance claim, not something the public tree can confirm.
 
 ## Scientific limit
 
