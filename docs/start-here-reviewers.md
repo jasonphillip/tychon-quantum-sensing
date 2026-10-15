@@ -59,15 +59,14 @@ Compare a counted watchdog trip with an observed PID-only controller update.
 The decision record describes the software correction and remaining processor-freeze and recovery-step limitations.
 This is a recorded kit investigation; it does not establish physical actuator or live-sensor behavior.
 
-## Minutes 12–14: check comparison status
+## Minutes 12–14: read the pre-registered comparison study
 
-**Comparison status (2026-10-14): PENDING.** The planned study files are absent from the source snapshot, commit `a9640736dc6e`.
-There is no result from that study to inspect here.
-The CPU benchmark's baseline comparisons and earlier case-study results are separate experiments.
+The vector comparison study was registered before scoring and scored once on each of two sealed synthetic test sets. Read the [protocol](../workers/odmr-vector-tracking/docs/comparison_study_protocol_2026-10.md) (rule, margins and the dated addenda (a) to (l)), then the [first decision](../workers/odmr-vector-tracking/docs/comparison_study_decision_2026-10.md) and the [second decision](../workers/odmr-vector-tracking/docs/comparison_study_decision_2026-10_v2.md). The [case study's reference-estimator section](case-study.md#reference-estimator-for-vector-tracking) has the summary table.
 
-For an existing comparison correction, read
+The registered verdict: under the study's realistic synthetic conditions the classical per-frame fit plus exact Hamiltonian inversion beats the learned tracker by the registered margins on both sets, and on eleven of the twelve stress cells of each set. The learned tracker as trained loses 96 to 100 % of sequences in every cell. Its limits stay part of the result: everything is synthetic; the classical estimator still loses 44 to 69 % of sequences; on clean spectra the two estimators split, and the classical estimator's clean-cell angular error changed from 31° to 71° between the two sets.
+
+For an earlier comparison correction, read
 [engineering decision 1: a broken tracking baseline](engineering-decisions.md#1-withdraw-a-comparison-after-discovering-a-broken-baseline).
-Its corrected synthetic comparison does not complete the pending study.
 
 ## Minutes 14–19: inspect the deployed scalar model evidence
 
