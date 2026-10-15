@@ -22,4 +22,10 @@ paths = [
 # the value is the content hash of experiments/scalar_bias_design/custody/access.json. Exact value only.
 regexes = [
   '''95ba37cc65aff0583cb29bb4158fd334a07a9fcbbc14f6382519269c927a3079''',
+  # 2026-10-15 measured pilots: provenance/template records bind source files by sha256 (keys "access.py",
+  # "record_api_sha256"). Values verified mechanically: sha256 of experiments/measured_cardiac/access.py,
+  # of experiments/measured_widefield/access.py, and of the Zenodo 7233869 record API JSON. Exact values only.
+  '''5a3fbeba89bb149c3b2098b1babeedd97a64ddb23bbfa669507b5a9964a97c7b''',
+  '''53bb6c22ff69f0bf23d769f7e372c63b99a16c5b0fbe33f51f3be9fe01a2cef7''',
+  '''c903576ad13a86a7aa41770a7eed32ab6626b98ab17561a0150317ad833d2e8a''',
 ]
