@@ -1,11 +1,11 @@
 """Fixed classical initializers and one learned proposal share refinement/fallback."""
 import time
 import numpy as np
-from physics import LOW,HIGH,F,X,mean_jac,fixed_starts,refine,choose
+from physics import LOW,HIGH,F,X,mean_jac,fixed_starts,refine,choose,center
 class Estimator:
     def __init__(self,method,weights=None):
         self.method=method
-        if method in ("coarse_grid","lookup"):
+        if method in ("coarse_grid","lookup","grid_single","lookup_single"):
             self.points=np.array([[b,c,w,.015,1,0] for b in np.linspace(20,70,11)
                 for c in np.linspace(2868,2875,9) for w in (4,5,6)])
             means=np.stack([mean_jac(p)[0] for p in self.points])
@@ -23,10 +23,11 @@ class Estimator:
         score=np.sum((predicted-y)**2/np.clip(y,.8,1.2),axis=1)
         order=np.argsort(score)[:4];starts=self.points[order].copy()
         starts[:,3]=.015*linear[order,0];starts[:,4:]=linear[order,1:]
-        if self.method=="lookup":
+        if self.method in ("lookup","lookup_single"):
             weights=1/np.maximum(score[order],1e-12);weights/=weights.sum()
-            return [np.sum(starts*weights[:,None],axis=0),starts[0]]
-        return list(starts[:2])
+            interpolated=np.sum(starts*weights[:,None],axis=0)
+            return [interpolated] if self.method=="lookup_single" else [interpolated,starts[0]]
+        return list(starts[:1] if self.method=="grid_single" else starts[:2])
     def neural_start(self,y):
         x=(y-1)/.03
         for i in range(3):
@@ -38,7 +39,8 @@ class Estimator:
         if y.shape!=(100,) or not np.isfinite(y).all():
             return {"estimate":45.,"failed":True,"accepted":False,"fallback":False,"boundary":False,"seconds":time.perf_counter()-start,"score":None,"nfev":0}
         if self.method=="analytic_multistart":starts=fixed_starts(y)
-        elif self.method in ("coarse_grid","lookup"):starts=self.grid_starts(y)
+        elif self.method in ("coarse_grid","lookup","grid_single","lookup_single"):starts=self.grid_starts(y)
+        elif self.method=="fixed_single":starts=[np.array([45.,center(y),5.,.015,1.,0.])]
         elif self.method=="hybrid":starts=[self.neural_start(y)]
         else:raise ValueError("unknown method")
         def attempt(p):

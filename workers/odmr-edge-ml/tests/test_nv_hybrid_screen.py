@@ -40,7 +40,7 @@ class FallbackFairnessTests(unittest.TestCase):
         self.assertEqual(result["estimate"],45.)
 
     def test_other_initializers_use_one_full_domain_fallback(self):
-        for method,count in (("hybrid",1),("coarse_grid",2),("lookup",2)):
+        for method,count in (("hybrid",1),("coarse_grid",2),("lookup",2),("grid_single",1),("lookup_single",1)):
             with self.subTest(method=method):
                 initial=[object() for _ in range(count)];fallback=[object() for _ in range(6)]
                 model=Estimator.__new__(Estimator);model.method=method
@@ -54,5 +54,17 @@ class FallbackFairnessTests(unittest.TestCase):
                 self.assertEqual(result["nfev"],7*(count+6))
                 self.assertTrue(result["fallback"]);self.assertTrue(result["failed"])
                 self.assertFalse(result["accepted"]);self.assertEqual(result["estimate"],45.)
+
+    def test_fixed_single_has_one_start_and_one_fallback(self):
+        fallback=[object() for _ in range(6)]
+        model=Estimator("fixed_single")
+        with patch("estimators.center",return_value=2871.), \
+             patch("estimators.fixed_starts",return_value=fallback) as fixed, \
+             patch("estimators.refine",side_effect=lambda y,p:self.rejected_fit()) as refine:
+            result=model(np.ones(100))
+        self.assertEqual(refine.call_count,7);fixed.assert_called_once()
+        np.testing.assert_array_equal(refine.call_args_list[0].args[1],[45.,2871.,5.,.015,1.,0.])
+        self.assertEqual([c.args[1] for c in refine.call_args_list[1:]],fallback)
+        self.assertTrue(result["fallback"]);self.assertEqual(result["estimate"],45.)
 
 if __name__=="__main__":unittest.main()

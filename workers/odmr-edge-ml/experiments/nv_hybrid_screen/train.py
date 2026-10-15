@@ -2,14 +2,12 @@
 import argparse,json,os
 from pathlib import Path
 import numpy as np
-from guard import authorize,seed,sha,output,write
+from guard import authorize,seed,sha,output,write,qualification
 def main():
     p=argparse.ArgumentParser()
-    for k in ("approval","data","bottleneck","out"):p.add_argument("--"+k,required=True)
+    for k in ("approval","data","qualification","out"):p.add_argument("--"+k,required=True)
     a=p.parse_args();auth=authorize(a.approval,"train")
-    if sha(a.bottleneck)!=auth.get("approved_bottleneck_sha256"):raise RuntimeError("root must approve exact bottleneck report")
-    gate=json.loads(Path(a.bottleneck).read_text())
-    if gate.get("training_bottleneck_gate") is not True:raise RuntimeError("no useful computation bottleneck")
+    qualification(a.qualification,auth)
     out=output(a.out)
     os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG",":4096:8")
     import torch
@@ -22,9 +20,11 @@ def main():
     with np.load(data/"truth.npz",allow_pickle=False) as z:y=z["parameters"]
     from physics import LOW,HIGH
     y=np.array((y-LOW)/(HIGH-LOW),dtype=np.float32)
-    if auth["prior_seed_certificate"]["old_upper_exclusive"]>2**63:
+    if auth["prior_seed_certificate"]["old_integer_upper_exclusive"]>2**63:
         raise RuntimeError("derived Torch seed needs separate range proof")
     torch_seed=2**63+seed(auth,"training_rng")%(2**63)
+    if torch_seed!=auth.get("derived_torch_seed"):
+        raise RuntimeError("derived Torch seed must match the audited supplement")
     torch.manual_seed(torch_seed);torch.cuda.manual_seed_all(torch_seed)
     torch.use_deterministic_algorithms(True)
     net=torch.nn.Sequential(torch.nn.Linear(100,32),torch.nn.ReLU(),torch.nn.Linear(32,16),torch.nn.ReLU(),torch.nn.Linear(16,6)).cuda()
@@ -43,5 +43,5 @@ def main():
     write(out/"training.json",{"losses":losses,"epochs":20,"parameters":sum(p.numel() for p in net.parameters()),
         "torch":torch.__version__,"cuda":torch.version.cuda,"torch_seed":torch_seed,"device":torch.cuda.get_device_name(0),
         "peak_cuda_bytes":torch.cuda.max_memory_allocated(),"weights_sha256":sha(out/"initializer.npz"),
-        "approval_sha256":auth["approval_sha256"],"bottleneck_sha256":sha(a.bottleneck),"training_manifest_sha256":sha(data/"manifest.json")})
+        "approval_sha256":auth["approval_sha256"],"qualification_sha256":sha(a.qualification),"training_manifest_sha256":sha(data/"manifest.json")})
 if __name__=="__main__":main()
