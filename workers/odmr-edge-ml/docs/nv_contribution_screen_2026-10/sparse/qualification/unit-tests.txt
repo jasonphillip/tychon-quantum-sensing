@@ -1,0 +1,20 @@
+test_invalid_observation_and_budget (test_sparse_acquisition_screen.SparseAcquisitionTests.test_invalid_observation_and_budget) ... ok
+test_observation_is_counted_and_causal (test_sparse_acquisition_screen.SparseAcquisitionTests.test_observation_is_counted_and_causal) ... ok
+test_poisson_variance_scales_with_dwell (test_sparse_acquisition_screen.SparseAcquisitionTests.test_poisson_variance_scales_with_dwell) ... ok
+test_policy_interfaces_do_not_receive_truth (test_sparse_acquisition_screen.SparseAcquisitionTests.test_policy_interfaces_do_not_receive_truth) ... ok
+test_posterior_matches_poisson_likelihood (test_sparse_acquisition_screen.SparseAcquisitionTests.test_posterior_matches_poisson_likelihood) ... ok
+test_prior_is_not_mutated_between_methods (test_sparse_acquisition_screen.SparseAcquisitionTests.test_prior_is_not_mutated_between_methods) ... ok
+test_recovery_and_costs_are_included (test_sparse_acquisition_screen.SparseAcquisitionTests.test_recovery_and_costs_are_included) ... ok
+test_repeat_seed_reproduces_observations_not_wall_timing (test_sparse_acquisition_screen.SparseAcquisitionTests.test_repeat_seed_reproduces_observations_not_wall_timing) ... ok
+test_unapproved_gate_refuses_before_numerical_work (test_sparse_acquisition_screen.SparseAcquisitionTests.test_unapproved_gate_refuses_before_numerical_work) ... ok
+test_altered_saved_error_is_rejected (test_sparse_saved_verification.SparseSavedVerificationTests.test_altered_saved_error_is_rejected) ... ok
+test_percentile_matches_linear_definition (test_sparse_saved_verification.SparseSavedVerificationTests.test_percentile_matches_linear_definition) ... ok
+test_posterior_reconstructs_likelihood_ratio (test_sparse_saved_verification.SparseSavedVerificationTests.test_posterior_reconstructs_likelihood_ratio) ... ok
+test_saved_development_metrics_without_model (test_sparse_saved_verification.SparseSavedVerificationTests.test_saved_development_metrics_without_model) ... ok
+test_unpaid_recovery_is_rejected (test_sparse_saved_verification.SparseSavedVerificationTests.test_unpaid_recovery_is_rejected) ... ok
+test_wasserstein_counts_location_not_index (test_sparse_saved_verification.SparseSavedVerificationTests.test_wasserstein_counts_location_not_index) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.248s
+
+OK

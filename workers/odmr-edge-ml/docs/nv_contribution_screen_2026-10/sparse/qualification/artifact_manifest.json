@@ -1,0 +1,11 @@
+{
+  "files": {
+    "specification.json": "dde02a005136c7724312e3ee00b4fdb74ec0ed50623d61c4610df5e816c7cff5",
+    "calibration.json.gz": "ef4fd76e6a27879c24c6b252d26389a8883848e9ac7ed4d3e553b0e75871bfd4",
+    "qualification.json": "05789109d7252cc858c17696510c2149de2ba499e4f611cf1a67086a39f8a661",
+    "started.json": "9e5d302d8428829fac285d574ba03d76e8b71a8f7490b3c70e55ccdccc8871dd",
+    "unit-tests.json": "e43bf85a25389cfcce5ce8baec04b702e1d40f8c042dfac3d9e1d2ae35224c52",
+    "unit-tests.txt": "3044b7bc596ca0fcb09932663476bfc003d77094b5746d08f77311da86d5fb1b"
+  },
+  "purpose": "saved-output-only qualification verification"
+}

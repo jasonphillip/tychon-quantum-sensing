@@ -1,0 +1,11 @@
+{
+  "split": "train",
+  "rows": 8192,
+  "seed": 72956862273824247568527071610160205855,
+  "approval_sha256": "f0d571874114f848ffa815aac6f86d24a8d7e53a8b9e88ada521c9ee203792eb",
+  "files": {
+    "inputs.npz": "aba04f0866fe2beca2f2c7801daca1b7efdbb73f2b3123287f0e5b1c2e29b411",
+    "truth.npz": "6652330089a45ff905dcfb5ced3739ccebb937a48270c2204f709a6df33f5262"
+  },
+  "scope": "development only"
+}

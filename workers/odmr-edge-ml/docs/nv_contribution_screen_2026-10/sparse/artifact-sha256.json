@@ -1,0 +1,23 @@
+{
+  "algorithm": "SHA256",
+  "scope": "Every package file except this manifest; scientific artifacts retain original bytes.",
+  "files": {
+    "README.md": "963b05b0e1a5e4701be43526a82b9c8489d84668a917fd1607899ace0fb73341",
+    "provenance.json": "92cccfe392e1c7c1e4e7e30e25e5e7d4f776182022bb59a61649a51ea7b9a593",
+    "qualification/artifact_manifest.json": "352acdb997f91346345c7a552f1ca3ac44e3fece95f6918d9ecab47542f94fe4",
+    "qualification/calibration.json.gz": "ef4fd76e6a27879c24c6b252d26389a8883848e9ac7ed4d3e553b0e75871bfd4",
+    "qualification/in-progress-belief.json": "c996bbc3952e7510bfbabe0417f0f7e91f12fcb68236654ef132b60e35b906d2",
+    "qualification/partial-qualification.json": "5df1b6044cb57adf0f0c3f9606738965c0e35c03c22191e9315b969e742e0dda",
+    "qualification/progress.json": "cafff950855d5703ea51448d32467089487f97efb4f6ed8f8bc015d968b394b3",
+    "qualification/qualification.json": "05789109d7252cc858c17696510c2149de2ba499e4f611cf1a67086a39f8a661",
+    "qualification/specification.json": "dde02a005136c7724312e3ee00b4fdb74ec0ed50623d61c4610df5e816c7cff5",
+    "qualification/started.json": "9e5d302d8428829fac285d574ba03d76e8b71a8f7490b3c70e55ccdccc8871dd",
+    "qualification/unit-tests.json": "e43bf85a25389cfcce5ce8baec04b702e1d40f8c042dfac3d9e1d2ae35224c52",
+    "qualification/unit-tests.txt": "3044b7bc596ca0fcb09932663476bfc003d77094b5746d08f77311da86d5fb1b",
+    "receipts/qualification-projection.json": "a1d475dc9d6f9eea28a425a9f4cbd9b9833588a820f12ef5b9bf4ff30b1f639c",
+    "receipts/verification-v1-projection.json": "2c15ed56d8dcd7d435857f2be7312793c1824355f7cd85853a0825b36d14800b",
+    "receipts/verification-v2-projection.json": "6544babd11ec9ab0ecf2cc9d327f9ce4cc62802c1c177a71002448ed42979836",
+    "verification/qualification-verdict-v2.json": "6727c79fd2eb558893b1f404b12b0a4bd43d3c55d96dc7396067ac674161c46a",
+    "verification/v1-stderr-redacted.txt": "26da89c07e5a1f74c6caed79611ba29e4d2452f4bb877260574fe581143d8d0d"
+  }
+}

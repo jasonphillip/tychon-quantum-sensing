@@ -1,0 +1,7 @@
+{
+  "status": "PREPARATION_ONLY",
+  "numerical_execution_authorized": false,
+  "allow_training": false,
+  "allow_final_evaluation": false,
+  "reason": "Root must register accounting, fresh development cases, and screening criteria."
+}
