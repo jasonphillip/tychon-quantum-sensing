@@ -1,0 +1,21 @@
+{
+  "stage": "stage2",
+  "approved": true,
+  "protocol_sha256": "3278e90ac3cdc2769221a4bd619f8175cfc33bd2ffa3417a11fff71196aa9a1d",
+  "gate_sha256": "661b488f3da2bb5fd767cfdad3cd0bb35302cf14198a303d2ff6555d5dd15655",
+  "registered_utc": "2026-10-15T18:56:16.026167+00:00",
+  "study": "scalar-information-limit-2026-10-15",
+  "measurement_task": "known_positive_axis_magnitude",
+  "prior_seed_range_certificate_sha256": "6acd082f907d33f3e84e09156ed05951f720ef3495554ff5098ef5a678c6a081",
+  "limits": {
+    "stage_cpu_seconds": 2700,
+    "stage_cumulative_wall_seconds": 1500,
+    "publication_reserve_seconds": 120,
+    "study_cpu_seconds": 5400,
+    "study_cumulative_wall_seconds": 3600,
+    "shared_cpu_seconds": 14400,
+    "shared_cumulative_wall_seconds": 7200,
+    "workers": 1,
+    "memory_GiB": 8
+  }
+}
