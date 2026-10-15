@@ -1,0 +1,11 @@
+{
+  "split": "development",
+  "rows": 128,
+  "seed": 121323694287417884356499423552628649460,
+  "approval_sha256": "50b51956b970105dca8656eeb3525ca1aedcdba4e75798b6ab69bfa997507dba",
+  "files": {
+    "inputs.npz": "cb6d1883161dab5ead13a609f96777de0c385bc6ac4e1bdf159f7b4efe3d4817",
+    "truth.npz": "8e3f4dd5e199ce1535323349ef40dc73d23b68b73a0128e42867002f09791214"
+  },
+  "scope": "development only"
+}

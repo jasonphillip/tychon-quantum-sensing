@@ -1,0 +1,126 @@
+{
+  "scope": "software component screen; no sealed final adoption decision",
+  "claim_scope": "component_efficiency_only",
+  "split": "development",
+  "rows": 128,
+  "summary": {
+    "analytic_multistart": {
+      "mae_uT": 1.1484966535166263,
+      "p90_uT": 2.3019799167925923,
+      "failure_fraction": 0.0,
+      "fallback_fraction": 0.0,
+      "boundary_fraction": 0.0,
+      "false_acceptance_gt5_fraction": 0.0,
+      "mean_nfev": 39.25,
+      "latency_ms": {
+        "p50": 5.852592992596328,
+        "p95": 7.976580207468942,
+        "p99": 8.879641875973903
+      }
+    },
+    "coarse_grid": {
+      "mae_uT": 1.1485282170640891,
+      "p90_uT": 2.302007948354505,
+      "failure_fraction": 0.0,
+      "fallback_fraction": 0.0,
+      "boundary_fraction": 0.0078125,
+      "false_acceptance_gt5_fraction": 0.0,
+      "mean_nfev": 9.078125,
+      "latency_ms": {
+        "p50": 1.5186480013653636,
+        "p95": 1.831960647541564,
+        "p99": 2.1132697685970925
+      }
+    },
+    "lookup": {
+      "mae_uT": 1.1485299066141041,
+      "p90_uT": 2.3020260234323073,
+      "failure_fraction": 0.0,
+      "fallback_fraction": 0.0,
+      "boundary_fraction": 0.0078125,
+      "false_acceptance_gt5_fraction": 0.0,
+      "mean_nfev": 8.6953125,
+      "latency_ms": {
+        "p50": 1.3873760035494342,
+        "p95": 1.6948520089499652,
+        "p99": 2.07440187165048
+      }
+    },
+    "fixed_single": {
+      "mae_uT": 1.1485386654464864,
+      "p90_uT": 2.302014364746655,
+      "failure_fraction": 0.0,
+      "fallback_fraction": 0.0,
+      "boundary_fraction": 0.0,
+      "false_acceptance_gt5_fraction": 0.0,
+      "mean_nfev": 6.515625,
+      "latency_ms": {
+        "p50": 0.955935989622958,
+        "p95": 1.4192112066666596,
+        "p99": 1.5702348228660412
+      }
+    },
+    "grid_single": {
+      "mae_uT": 1.1486269528225983,
+      "p90_uT": 2.3020260234323073,
+      "failure_fraction": 0.0,
+      "fallback_fraction": 0.0,
+      "boundary_fraction": 0.0078125,
+      "false_acceptance_gt5_fraction": 0.0,
+      "mean_nfev": 4.3125,
+      "latency_ms": {
+        "p50": 0.7597199873998761,
+        "p95": 0.9106359997531399,
+        "p99": 1.1269778825226253
+      }
+    },
+    "lookup_single": {
+      "mae_uT": 1.1484164335871432,
+      "p90_uT": 2.3019065852650487,
+      "failure_fraction": 0.0,
+      "fallback_fraction": 0.0,
+      "boundary_fraction": 0.0078125,
+      "false_acceptance_gt5_fraction": 0.0,
+      "mean_nfev": 4.3828125,
+      "latency_ms": {
+        "p50": 0.7593604968860745,
+        "p95": 1.0514471970964223,
+        "p99": 1.306453217111994
+      }
+    },
+    "hybrid": {
+      "mae_uT": 1.148448307850681,
+      "p90_uT": 2.3021700684620523,
+      "failure_fraction": 0.0,
+      "fallback_fraction": 0.0,
+      "boundary_fraction": 0.0078125,
+      "false_acceptance_gt5_fraction": 0.0,
+      "mean_nfev": 5.1015625,
+      "latency_ms": {
+        "p50": 0.7914559973869473,
+        "p95": 0.9683352080173789,
+        "p99": 1.2494292986229993
+      }
+    }
+  },
+  "fastest_adequate_classical": "grid_single",
+  "classical_accuracy_qualified": true,
+  "comparison": {
+    "baseline": "grid_single",
+    "added_mae_uT": -0.00017864497191746875,
+    "added_mae_ci95": [
+      -0.00037958740701294345,
+      -3.9020921918411094e-05
+    ],
+    "p95_speedup": 0.9404140138801981,
+    "baseline_adequate_on_this_split": true,
+    "screen_pass": false
+  },
+  "bootstrap_indices_sha256": "051d996345bc79f663f84fb0edc8d9b42cb6c304b44084bea7a26386446e26a1",
+  "qualification_sha256": "f23bc33ac831a2462322aa9e83b21ae1083d6411c28d06da5de72bf7633482c4",
+  "prediction_receipt_sha256": "19ee1760944bb4ad77eafa647c7308d0b6d9c9aa23024bcdade7d05c75c07706",
+  "data_manifest_sha256": "01e479a25d16a79fdeb216dfe3daef21f8599e2a9674ad3359917c45899725bb",
+  "approval_sha256": "ade88bcee3919fdecd5ac5932fc5c3e62aa537fbf5b178c1fd2c14c8fc4ab155",
+  "timing_design": "separate wall runs on identical host/runtime; saved classical timings reused",
+  "claim_limits": "No system bandwidth, energy, instrument usefulness, measured-sensor, or FPGA compatibility claim."
+}
