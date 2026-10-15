@@ -36,7 +36,9 @@ class PublicScalarValidationTest(unittest.TestCase):
     def run_checker_raw(self, out):
         env = dict(os.environ, OMP_NUM_THREADS="1", MKL_NUM_THREADS="1", OPENBLAS_NUM_THREADS="1")
         return subprocess.run([sys.executable, str(CHECKER), "--bundle", str(self.bundle),
-                               "--no-network", "--cross-check-truth", "--out", str(out)],
+                               "--no-network", "--expected-bundle-manifest-sha256",
+                               sha(BUNDLE / "BUNDLE.manifest.json"),
+                               "--cross-check-truth", "--out", str(out)],
                               capture_output=True, text=True, env=env)
 
     def run_checker(self):
@@ -110,7 +112,7 @@ class PublicScalarValidationTest(unittest.TestCase):
         self.update_bundle_hash(relative)
         proc, result = self.run_checker()
         self.assertNotEqual(proc.returncode, 0)
-        self.assertIn("duplicate metric JSON equality", result["error"])
+        self.assertIn("pinned bundle manifest SHA256", result["error"])
         arrays = MODULE.load_arrays(self.bundle / "results-val/clean_predictions.npz", 512)
         quant = json.loads((self.bundle / "QUANTIZATION.manifest.json").read_text())
         with self.assertRaisesRegex(AssertionError, "clean.metrics"):
@@ -119,11 +121,11 @@ class PublicScalarValidationTest(unittest.TestCase):
     def test_derivative_public_hash_tamper_fails(self):
         relative = "freeze1.public.json"
         path = self.bundle / relative
-        path.write_text(path.read_text().replace("private-path/", "masked-path/", 1))
+        path.write_text(path.read_text().replace("<private-path-", "<masked-path-", 1))
         self.update_bundle_hash(relative)
         proc, result = self.run_checker()
         self.assertNotEqual(proc.returncode, 0)
-        self.assertIn("sanitization public SHA256", result["error"])
+        self.assertIn("pinned bundle manifest SHA256", result["error"])
 
     def test_output_endpoint_count_tamper_fails(self):
         relative = "results-val/clean_metrics.json"
@@ -134,11 +136,20 @@ class PublicScalarValidationTest(unittest.TestCase):
         self.update_bundle_hash(relative)
         proc, result = self.run_checker()
         self.assertNotEqual(proc.returncode, 0)
-        self.assertIn("duplicate metric JSON equality", result["error"])
+        self.assertIn("pinned bundle manifest SHA256", result["error"])
         arrays = MODULE.load_arrays(self.bundle / "results-val/clean_predictions.npz", 512)
         quant = json.loads((self.bundle / "QUANTIZATION.manifest.json").read_text())
         with self.assertRaisesRegex(AssertionError, "output_at_max"):
             MODULE.check_output_occupancy("clean", arrays, obj, quant, 512)
+
+    def test_fit_diagnostics_with_updated_manifest_entry_fails(self):
+        relative = "results-val/clean_fit_diagnostics.json"
+        path = self.bundle / relative
+        path.write_text(path.read_text() + " ")
+        self.update_bundle_hash(relative)
+        proc, result = self.run_checker()
+        self.assertNotEqual(proc.returncode, 0)
+        self.assertIn("pinned bundle manifest SHA256", result["error"])
 
 
 if __name__ == "__main__":
