@@ -103,13 +103,28 @@ def compare_metrics(actual: dict, expected: dict, name: str, atol: float) -> Non
                 f"{name}.clipped_outputs mismatch")
 
 
+def checkout_root(path: Path) -> Path | None:
+    for ancestor in (path, *path.parents):
+        if (ancestor / ".git").exists():
+            return ancestor
+    return None
+
+
+def output_path(path: Path, run: Path, kit: Path) -> Path:
+    require(not any(parent.is_symlink() for parent in (path.parent, *path.parent.parents)),
+            "--out cannot have a symlinked parent")
+    out = path.parent.resolve() / path.name
+    roots = {root for source in (Path(__file__).resolve(), run, kit)
+             if (root := checkout_root(source)) is not None}
+    require(not any(out.is_relative_to(root) for root in (*roots, run, kit)),
+            "--out must be outside the script, run, and hardware checkout roots and evidence directories")
+    return out
+
+
 def verify(args: argparse.Namespace) -> dict:
     run = args.run_dir.resolve()
     kit = args.hardware_evidence_dir.resolve()
-    out = args.out.resolve()
-    checkout = Path(__file__).resolve().parents[1]
-    require(not (out.is_relative_to(checkout) or out.is_relative_to(run)
-                 or out.is_relative_to(kit)), "--out must be outside the checkouts and run directory")
+    output_path(args.out, run, kit)
     require(args.atol_uT >= 0 and math.isfinite(args.atol_uT), "invalid --atol-uT")
     require(args.verify_sha256, "--verify-sha256 is required for publication acceptance")
     require(args.no_network, "--no-network is required for publication acceptance")
@@ -308,9 +323,11 @@ def main() -> int:
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
     try:
+        out = output_path(args.out, args.run_dir.resolve(), args.hardware_evidence_dir.resolve())
         result = verify(args)
-        args.out.parent.mkdir(parents=True, exist_ok=True)
-        args.out.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+        out.parent.mkdir(parents=True, exist_ok=True)
+        with out.open("x") as stream:
+            stream.write(json.dumps(result, indent=2, sort_keys=True) + "\n")
     except (OSError, ValueError, KeyError, TypeError, IndexError) as exc:
         print(f"FAIL: {exc}", file=sys.stderr)
         return 1
