@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "DRAFT_AWAITING_ROOT_FREEZE",
+  "status": "FROZEN",
   "study": "localisation-acquisition-transfer-2026-10-15",
   "scope": "conditional_single_acquisition_transfer_of_unchanged_classical_calibration_models",
   "archive_sha256": "b5717b233590d041fb4bd752af479df7c426e37675743ca3f9d3c93ae32f7aa4",
