@@ -75,6 +75,8 @@ def main():
             raise AssertionError("Manufactured numerical mismatch: " + name)
     write(args.out / "equivalence.json", {"passed": True, "tolerance": tolerance,
           "max_abs_differences": differences, "scope": "five fixed cases; roundoff check only"})
+    # Start a fresh resident engine so equivalence checks do not pre-cache calibration.
+    engine = Engine("torch", "cuda", args.dtype)
     index = np.arange(4096) % len(params)
     host_counts = reference_counts[index]
     setup_start = time.perf_counter()
