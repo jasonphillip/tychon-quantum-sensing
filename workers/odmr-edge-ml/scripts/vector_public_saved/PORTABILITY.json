@@ -17,7 +17,8 @@
     "Replace P1 Torch checkpoint deserialization with opaque exact-byte hash validation; disclose original tensor inspection is not repeated.",
     "Bind challenge frozen P1 input hashes and original source identities through the public manifest.",
     "Add public-manifest identity to verification report; preserve original-manifest identity.",
-    "Require fresh outside-checkout outputs and enabled Python assertions."
+    "Require fresh outside-checkout outputs and enabled Python assertions.",
+    "Reject output beneath the nearest enclosing Git checkout, while keeping the worker source root for verifier identity lookups; use source-root fallback only when no enclosing .git exists."
   ],
   "unchanged": [
     "All saved metric formulas and tolerances",
@@ -61,5 +62,42 @@
     "challenge_helper_functions": "AST equal",
     "challenge_data_metrics_decisions_block": "literal equal after three public provenance bindings",
     "numerical_execution": false
-  }
+  },
+  "checkout_boundary_fixtures_prepared_not_run": [
+    {
+      "arrangement": "Temporary parent/public/.git directory; source parent/public/workers/odmr-edge-ml",
+      "call": "outside_output(parent/public/docs/new-check, source)",
+      "expected": "ValueError"
+    },
+    {
+      "arrangement": "Temporary parent/public/.git file; source parent/public/workers/odmr-edge-ml",
+      "call": "outside_output(parent/public/docs/new-check, source)",
+      "expected": "ValueError"
+    },
+    {
+      "arrangement": "Same public checkout",
+      "call": "outside_output(parent/results/new-check, source)",
+      "expected": "accepted"
+    },
+    {
+      "arrangement": "Temporary source tree with no enclosing .git",
+      "call": "outside_output(source/docs/new-check, source)",
+      "expected": "ValueError; checkout_boundary(source) equals source.resolve()"
+    },
+    {
+      "arrangement": "Temporary source tree with no enclosing .git",
+      "call": "outside_output(source.parent/results/new-check, source)",
+      "expected": "accepted"
+    },
+    {
+      "arrangement": "Symlink outside checkout pointing to existing public/docs directory",
+      "call": "outside_output(symlink/new-check, source)",
+      "expected": "ValueError"
+    },
+    {
+      "arrangement": "Any source root; output already exists",
+      "call": "outside_output(existing_output, source)",
+      "expected": "ValueError"
+    }
+  ]
 }

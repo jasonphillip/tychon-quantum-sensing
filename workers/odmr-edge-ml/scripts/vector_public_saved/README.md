@@ -9,7 +9,9 @@ The byte exporter uses Python standard-library only.
 
 Set absolute paths for `PYTHON`, `SOURCE`, `ORIGINAL`, `BUNDLE`, `CONFIG`, and `OUTPUT`.
 `CONFIG` points to the unchanged `experiments/vector_direct_screen/config.json`.
-Both output directories must be new and outside the source checkout.
+Both output directories must be new and outside the entire enclosing Git checkout.
+The boundary is the nearest ancestor containing a `.git` directory or worktree pointer file.
+A source copy without any enclosing `.git` uses its source root as the documented fallback boundary.
 Use `p1` or `challenge` for `KIND`. Use the independently recorded original manifest hash.
 
 ```sh

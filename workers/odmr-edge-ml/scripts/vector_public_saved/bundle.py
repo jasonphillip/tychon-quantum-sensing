@@ -15,9 +15,17 @@ def safe_path(root,name):
     if not path.resolve().is_relative_to(root.resolve()):raise ValueError("Path escapes bundle")
     return path
 
+def checkout_boundary(source_root):
+    """Find the enclosing Git checkout, including a worktree .git pointer file."""
+    source_root=source_root.resolve()
+    for parent in (source_root,*source_root.parents):
+        marker=parent/".git"
+        if marker.is_file() or marker.is_dir():return parent
+    return source_root
+
 def outside_output(path,source_root=SOURCE_ROOT):
     if not path.is_absolute() or path.exists():raise ValueError("Output must be an unused absolute directory")
-    if path.resolve().is_relative_to(source_root.resolve()):raise ValueError("Output must be outside the source checkout")
+    if path.resolve().is_relative_to(checkout_boundary(source_root)):raise ValueError("Output must be outside the entire source checkout")
 
 def parse_args():
     if not __debug__:raise RuntimeError("Verification must run without Python -O")
