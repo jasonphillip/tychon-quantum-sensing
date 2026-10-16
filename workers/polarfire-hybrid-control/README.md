@@ -1,12 +1,14 @@
 # PolarFire Hybrid Control
 
-Hybrid PID + neural network control system for RT PolarFire SoC. SmartHLS C++ implementation with bounded safety architecture and CoreVectorBlox integration. Part of [Tychon quantum sensing](../../README.md).
+Hybrid PID + neural-network control on a commercial PolarFire SoC Icicle Kit (MPFS250T), using SmartHLS C++ and CoreVectorBlox V250. Part of [Tychon quantum sensing](../../README.md).
+
+**Hardware scope.** The recorded tests used one development kit with replayed input, not a live diamond sensor. An RT PolarFire port and space qualification remain future work; neither is demonstrated here.
 
 ## Where this fits
 
 | | |
 |---|---|
-| Purpose | Run a PID (proportional-integral-derivative) controller with a neural-network correction on a PolarFire SoC Icicle Kit, with a fabric watchdog whose timeout triggers a software-mediated fallback to plain PID. The fallback runs in the controller software, so a frozen processor cannot perform it until it resumes |
+| Purpose | Run a PID (proportional-integral-derivative) controller with a neural-network correction on a PolarFire SoC Icicle Kit, with a fabric watchdog whose timeout triggers a software-mediated fallback to plain PID. Processor software starts the fabric controller updates, so a frozen processor prevents fallback until it resumes |
 | Takes in | The INT8 TFLite model from [`odmr-edge-ml`](../odmr-edge-ml/README.md), compiled here for the CoreVectorBlox V250 neural-network engine, and replayed rows taken from held-out synthetic test spectra ([firmware notes](firmware/linux/README.md)) |
 | Produces | The Libero FPGA design and SmartHLS PID, kit software in `firmware/`, and dated measurement reports in `docs/` and `libero/reports/` |
 | Status | Measured on one kit: watchdog trip time (2026-07-01), an 8-hour soak (2026-07-02) and fallback to plain PID (2026-10-09), listed in What This Does below. The loop is paced by software on the SoC's processor, not in the fabric. Its input is replayed, with no live diamond sensor. The vector tracker is not in this loop |
@@ -14,9 +16,9 @@ Hybrid PID + neural network control system for RT PolarFire SoC. SmartHLS C++ im
 
 ## What This Does
 
-- SmartHLS C++ PID controller with bumpless AI-to-PID transfer
-- Sector saturation clamps (+/-5%) and slew-rate limiting on AI feedforward
-- Hardware watchdog infrastructure with automatic fallback to pure PID; the current demo image is a verified 2 ms fabric watchdog build — trip time **measured on silicon 2026-07-01: median 2.000 ms over 120 trips** (`docs/watchdog_trip_measured_2026-07-01.md`). Fallback at the actuator **measured on silicon 2026-10-09** (`docs/watchdog_fallback_test_plan.md`, sections Results and Fix 1a): when the next controller update sees the timeout, control passes to plain PID within one update (66–71 µs) with no jump in the actuator value, 60/60; after a software fix that starts the hand-over whenever the timeout is high, a timeout that cleared before the next update (20/20, was 0/20) and a 1 s pause of the control process (10/10 after it resumes, was 0/10) fall back as well. A processor that stays frozen gets no fallback until it resumes, and at recovery the actuator still steps by about 0.01, ten times the slew limit
+- SmartHLS C++ PID controller with AI-to-PID handover. The October 9 board test observed no output jump in its 60 ordinary handovers; recovery and limiting cases retain discontinuities ([test report](docs/watchdog_fallback_test_plan.md)).
+- An AI sector clamp with a hardcoded outer fraction of 0.045, a configurable inner bound, and slew limiting. The amplitude bound is 4.5% of the full actuator range, not 4.5% of its positive endpoint ([source](hls/src/safety_clamps.cpp), [constants](hls/include/rta_config.hpp)).
+- Fabric watchdog detection with processor-dependent fallback to pure PID; the recorded demo image has a verified 2 ms watchdog — trip time **measured on silicon 2026-07-01: median 2.000 ms over 120 trips** (`docs/watchdog_trip_measured_2026-07-01.md`). Fallback at the actuator **measured on silicon 2026-10-09** (`docs/watchdog_fallback_test_plan.md`, sections Results and Fix 1a): when the next controller update sees the timeout, control passes to plain PID within one update (66–71 µs) with no jump in the actuator value, 60/60; after a software fix that starts the hand-over whenever the timeout is high, short-timeout cases fell back 20/20 times (previously 0/20). After a 1 s control-process pause, all ten cases were PID-only after resume: nine forced recoveries and one already PID-only before the pause. This is not ten observed transitions. A processor that stays frozen gets no fallback until it resumes, and at recovery the actuator still steps by about 0.01, ten times the slew limit
 - Kit-resident **MSS-paced closed loop measured on silicon 2026-07-02**: the on-kit V250→PID daemon sustains **~3.3 kHz standalone** (proven laptop-disconnected, from distinct hardware `axi_write_count` + software step counters), and passed an **8-hour daytime soak: 95.7 M steps at 3319 Hz, zero stalls, 5 transient >2 ms scheduling stalls, each counted as a trip by the 2 ms fabric watchdog, memory flat** (a counted trip does not show that the controller fell back; the fallback measurement is the item above) (`docs/mss_paced_loop_measured_2026-07-02.md`) — the loop is MSS software (not fabric-resident) with a replayed input (not a live sensor)
 - Libero SoC project targeting MPFS250T with CoreVectorBlox V250
 - Static timing (SmartTime) and power estimation (SmartPower)
@@ -44,9 +46,7 @@ Hybrid PID + neural network control system for RT PolarFire SoC. SmartHLS C++ im
 
 Current hardware bring-up uses the Linux/Yocto userspace path on the U54 cores:
 `generic-uio` exposes the V250 control page, and `/dev/udmabuf-ddr-nc0`
-provides non-cached DDR buffers for the V250 data path. The fabric PID remains
-the real-time/safety path; Linux is supervisory and used for bring-up/runtime
-orchestration.
+provides non-cached DDR buffers for the V250 data path. The PID calculation and clamps execute in fabric. Processor software starts each controller update and handles the trip-start correction. Linux scheduling therefore affects update timing and fallback; the recorded loop is not autonomous in fabric.
 
 ## Directory Structure
 
@@ -89,13 +89,7 @@ source libero/scripts/04_synth_pnr.tcl
 - SmartHLS type: `hls::ap_fixpt<W,I>` (NOT `ap_fixed` -- that's Xilinx)
 - VectorBlox SDK **v2.0.3** (NOT v3.0) -- matches CoreVectorBlox IP v2.0.1
 - `.vnnx` compiled with `-c V250` flag; not committed to git
-- Linux/Yocto on the U54 cores for the supported CoreVectorBlox Icicle runtime;
-  the safety-critical loop lives in fabric, not Linux userspace. (The <150 us
-  loop-latency figure is a design budget. RTL-sim bound [TB]: 6 cycles = 48 ns
-  start-accept -> actuator-we, constant over 128 iterations on the real
-  two-slot RTL — `docs/fabric_latency_sim_2026-07-01.md`. On-kit API-level
-  bounds: `docs/latency_measured_2026-06-21.md`. An on-SILICON fabric-internal
-  measurement is still open.)
+- Linux/Yocto on the U54 cores runs the CoreVectorBlox Icicle runtime and starts fabric PID updates. The <150 us loop-latency figure is a design budget. RTL simulation records 6 cycles = 48 ns from start acceptance to actuator write, constant over 128 iterations ([report](docs/fabric_latency_sim_2026-07-01.md)). This excludes processor scheduling and inference. [On-kit API measurements](docs/latency_measured_2026-06-21.md) are separate; direct silicon measurement inside the fabric remains open.
 
 ## Current Hardware State
 
@@ -103,9 +97,13 @@ source libero/scripts/04_synth_pnr.tcl
 
 *Measured on hardware [HW]: 120 clear-to-trip events on the dev kit on 2026-07-01, from `libero/reports/2026-07-01-watchdog-trip/watchdog_trip_run1.log`.*
 
-Note added 2026-10-13: the status anchor below dates from 2026-06-21. Later measurements (watchdog trip time 2026-07-01, soak 2026-07-02, fallback 2026-10-09) are listed in What This Does above.
+**Recorded state, not a live inventory.** Later measurements are listed in [What This Does](#what-this-does). The source clamp repair described below has not been established as part of the programmed image.
 
-As of 2026-06-21, the dashboard remediation pass is the current status anchor:
+### Historical bring-up snapshots: June 2026
+
+The following dated observations preserve the build history. They do not relax the dashboard's M0-read prohibition or establish the kit's present power or image state.
+
+The June 21 dashboard remediation pass was recorded in:
 `docs/remediation_status_2026-06-21.md` and `docs/remediation_progress_2026-06-21.md`.
 The remaining-work execution plan is `docs/everything_else_execution_plan_2026-06-21.md`.
 The dashboard LIVE path is idfix2-aware and guarded: enable it only with
@@ -149,7 +147,7 @@ CSR access, V250 inference, guarded actuator telemetry, and watchdog clear/trip 
 cold power-cycle remains a recommended operator check, but was not needed for the captured V250
 post-program probe.
 
-Current measured bounds from 2026-06-21: V250 `vbx_cnn_model_start`+poll via `vnnx_latency` has
+Measured bounds recorded on 2026-06-21: V250 `vbx_cnn_model_start`+poll via `vnnx_latency` has
 median `32 us` and p99 `33 us` for the already-loaded model path; idfix2 M0 start pulse plus M1
 `post_clamp_out` read via `pid_latency` has median `4 us` and p99 `4 us`; the host-paced
 `tools/rung_g_replay.py --rows 120` loop has median inter-sample period `10122 us`.
@@ -157,14 +155,13 @@ Added 2026-07-01: fabric watchdog clear→trip time via `watchdog_trip` is media
 min `1.978` / max `2.032 ms` over 120 trips (tails bounded by observer poll jitter) — equal to
 the 250,000-cycle @ 125 MHz design value; evidence `libero/reports/2026-07-01-watchdog-trip/`.
 
-As of 2026-06-16, the CoreVectorBlox **2.0.1/V250** rebuild bitstream is programmed and
-**V250 inference runs to completion on Production MPFS250T silicon** (`vbx_probe` →
+The 2026-06-16 report records the CoreVectorBlox **2.0.1/V250** rebuild programmed and
+**V250 inference completing on MPFS250T silicon** (`vbx_probe` →
 INFERENCE COMPLETED, `vnnx_smoke` → `out[0]=-2.9506`; VERSION `0x60030028`=`0x20000000`).
 See `docs/rung_f_v250_on_silicon_results_2026-06-16.md`, `docs/track0_bringup_runbook.md`,
 and `docs/fpga_reproducibility_inventory_2026-06-16.md`.
 
-**As of 2026-06-18 the clean two-slot bitstream `idfix2` is programmed and FULLY FUNCTIONAL on
-Production MPFS250T silicon** (job `39c8bcf2…`, timing met +0.789 ns). All three rungs work:
+**The 2026-06-18 report records three functioning `idfix2` paths on MPFS250T silicon** (job `39c8bcf2…`, timing met +0.789 ns):
 - **V250 inference** — `vbx_probe` INFERENCE COMPLETED, `vnnx_smoke` `out[0]=-2.9506` (a cold
   power-cycle is required after any fabric program for V250 init).
 - **Clean M0/M1 CSR plane** — gains slave (M0 `0x60040000`) and `pid_csr` (M1 `0x60040800`) both
@@ -179,7 +176,7 @@ Two latent RTL bugs were fixed to get here (verified in ModelSim *and* on silico
 actuator output. Engineering log: `docs/two_slot_handoff_2026-06-17.md` (2026-06-18 sections) +
 `docs/two_slot_demo_scope_2026-06-18.md`. Rollbacks: idfix `7907a83f`, demo `a5550f9e`, V250 `4e3323e8`.
 
-Known open hardware blockers:
+Hardware blockers recorded during this bring-up:
 
 - **Fabric PCIe @ `0x3000000000` is broken in the 2.0.1/V250 rebuild** — the Linux
   `microchip-pcie` probe hangs on it (the V250/FIC path is fine). This *was* a boot-loop; it is now
@@ -197,14 +194,17 @@ Known open hardware blockers:
 
 ## Safety Architecture
 
-The AI feedforward path is bounded by three safety mechanisms:
+The safeguards remain in the source. They do not establish autonomous fail-safe operation or a complete stability proof.
 
-1. **Sector saturation clamps** -- AI output limited to +/-5% of actuator range (Lure/Circle Criterion)
-2. **Slew-rate limiter** -- Per-cycle AI output change bounded to prevent plant resonance excitation
-3. **Hardware watchdog** -- timeout triggers bumpless transfer from AI+PID to pure PID mode; the
-   current programmed image uses the verified `250000`-cycle / 2 ms fabric watchdog.
+1. **AI amplitude bound.** The hardcoded outer fraction is 0.045 of `out_max - out_min`. The configurable inner bound cannot exceed it. This actuator bound differs from the ±2.25 µT training and host-evaluation clip ([integration contract](../odmr-edge-ml/docs/scalar_target_repair_integration_contract_2026-10.md)).
+2. **Slew and final saturation.** The AI correction's change is limited to 0.001 per controller invocation. The PID sum is then saturated to the configured actuator limits. This is not a guarantee that every handover or recovery step respects the AI slew limit.
+3. **Watchdog detection and handover.** The recorded image detects a missed heartbeat after 250,000 fabric cycles, or 2 ms at 125 MHz. Processor software must start a controller update for the PID-only output to appear. A permanently frozen processor receives no recovery output.
 
-These mechanisms make the AI feedforward path **sector-bounded by design within the documented design assumptions** documented in `docs/safety_architecture.md`. They do not constitute a proof that the AI cannot destabilize the loop — that requires discharging the Residual Proof Obligations table (closable under follow-on path) in the same document (plant model identification, ZOH phase margin, transport delay bound, derivative filter SI, ReLU sector verification, workload-driven SmartPower).
+**Source repair, not verified image deployment.** The October 9 [clamp repair](https://github.com/jasonphillip/tychon-quantum-sensing/commit/541e3e7f4266cb17776f5a41733af417ea1f163e) applies the amplitude bound again after slew limiting. It handles a tightened bound immediately, even when the stored correction exceeds it. The commit and [safety analysis](docs/safety_architecture.md) record a C++ testbench check and an open synthesis check. A programmed-image deployment of this repair is not established by the published evidence.
+
+**Recorded recovery limits.** The separate [firmware trip-start correction](docs/watchdog_fallback_test_plan.md) closed the observed short-timeout hole: 20/20 short-stall cases fell back. All ten paused-process cases were PID-only after resume: nine through forced recovery and one already PID-only before the pause. Recovery medians of 0.010–0.013, with maxima up to 0.065, remained above the 0.001 slew limit. Eleven of 104 forced starts showed discontinuities in limiting or repeated-trip cases ([engineering decision](../../docs/engineering-decisions.md#2-test-actual-fallback-rather-than-count-watchdog-trips)).
+
+The AI path is **sector-bounded by design within the documented design assumptions**. Plant identification, sampled-data and delay analysis, trained-network bounds, and other [proof obligations](docs/safety_architecture.md) remain open. Neither the clamp nor the observed handovers establish safety for an attached physical plant.
 
 ## Power Analysis
 

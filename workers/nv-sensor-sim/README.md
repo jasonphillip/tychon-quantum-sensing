@@ -9,7 +9,7 @@ NV-diamond ODMR simulator for synthetic data generation: labelled spectra with c
 | Purpose | Simulate continuous-wave ODMR spectra of an NV-diamond sensor and write labelled datasets for the ML workers |
 | Takes in | YAML configs in [`configs/`](configs/): field, imperfection, noise and split settings. Public measured spectra in `data/experimental/` are used for comparison only |
 | Produces | One folder per dataset with `dataset.h5` and `manifest.json` (gitignored; regenerate them with the scripts) |
-| Status | Implemented; every model in the project was trained on its data. Against four public datasets the default lines are 2 to 11 times narrower than measured ([results](docs/external_validation_results.md)); a per-spectrum fit matches the widths, in-sample only ([fit](docs/simulator_fit_results.md)). The recipe of the deployed scalar model's dataset is not committed ([gap](../../docs/synthetic-data.md#the-deployed-scalar-models-data)) |
+| Status | Supplies synthetic data for the scalar models and vector tracker. Separate [measured-data pilots](../odmr-edge-ml/docs/measured_pilots_2026-10.md) use public acquisitions. Against four public datasets, default simulated lines are 2 to 11 times narrower than measured ([results](docs/external_validation_results.md)); the per-spectrum width fit is in-sample only ([fit](docs/simulator_fit_results.md)). The deployed scalar dataset has a [committed recipe and manifest](../../docs/synthetic-data.md#the-deployed-scalar-models-data), reproduced byte for byte |
 | Used by | [`odmr-edge-ml`](../odmr-edge-ml/README.md) (static datasets) and [`odmr-vector-tracking`](../odmr-vector-tracking/README.md) (time series) |
 
 ## What This Does

@@ -11,6 +11,12 @@ a live diamond sensor.
 
 The design notes and implementation plan behind this dashboard are kept in a private planning folder and are not part of this repository.
 
+## Dry-run recording
+
+**Software dry-run, not hardware evidence.** Every value in this recording, including the PASS and LIVE badges, comes from the dashboard's software model. The three scripted scenarios show a clamp event, watchdog fallback and a clean run.
+
+![Software dry-run dashboard with simulated controller traces and status badges](../../docs/media/dashboard-demo.gif)
+
 ## Quick start
 Needs Python 3 and Node.js with npm. The first run builds a virtual environment and the frontend.
 `run_demo.sh` finds its own folder, so `demo/fpga-demo-dashboard/run_demo.sh` also works from the

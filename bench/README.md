@@ -3,7 +3,7 @@
 From a clean checkout, run this one command at the monorepo root. It creates
 `.venv`, installs CPU PyTorch and both workers into that venv, then runs the
 benchmark. Later runs reuse the venv.
-Python 3.11 or newer and pip access to PyPI and the PyTorch CPU wheel index are required
+Python 3.11 (the CI route), 3.12 or 3.13 and pip access to PyPI and the PyTorch CPU wheel index are required
 (the Makefile uses `python3.11` when present, otherwise `python3`; override with `BENCH_PY=`).
 CI runs it on Python 3.11; the reference values in `bench/expected.json` were measured with 3.13.11.
 Platform note: `simos==0.2.3` is pure Python. The pinned `qutip==5.2.3` has binary wheels for Python 3.11 on
@@ -16,6 +16,13 @@ CI run logs remain the record when a local run is not possible.
 ```sh
 make bench
 ```
+
+For installation without training, use `make install BENCH_PY=python3.11`, then `make smoke`.
+The smoke check imports dependencies and generates four disposable spectra.
+Linux installs `torch==2.11.0+cpu`; macOS installs the official `torch==2.11.0` wheel without that suffix.
+To verify published saved metrics without training, use the separate
+[`make verify-evidence` guide](../docs/reproduce-evidence.md).
+It requires pinned public kit records and uses only NumPy and SciPy.
 
 The simulator generates 1,000 training, 200 validation, and 200 test spectra with
 master seed 12345 and a 2.866–2.874 GHz sweep. Splits have disjoint seeds and

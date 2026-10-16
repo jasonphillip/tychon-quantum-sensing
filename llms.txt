@@ -12,9 +12,12 @@
 - [Conversation record](planning/excerpts/README.md): proposal, learning, planning, building, and review exchanges with source attribution.
 - [What the models could not do](planning/excerpts/what-the-models-could-not-do.md): observed limits and corrections from this project.
 - [Engineering decisions](docs/engineering-decisions.md): a withdrawn comparison, watchdog correction, and loss ablation.
+- [Detailed results](docs/results-index.md): experiment results with their evidence and limits.
+- [Contributing](CONTRIBUTING.md): scoped reproduction, simulator-validation, and classical-comparison tasks.
 
 ## Reproduction and evidence
 
+- [Saved-evidence verification](docs/reproduce-evidence.md): platform-aware installation, smoke check, and one offline verification command with explicit pinned kit evidence. No training or inference during saved-output verification.
 - [CPU benchmark](bench/README.md): synthetic scalar benchmark, prerequisites, reference results, and tolerances. A local run creates bench/results.json.
 - [Benchmark configuration](bench/expected.json): expected metrics and tolerances, not a fresh run log.
 - [Benchmark runs](https://github.com/jasonphillip/tychon-quantum-sensing/actions/workflows/bench.yml): execution logs tied to individual commits.
@@ -39,6 +42,7 @@
 - [FPGA control](workers/polarfire-hybrid-control/): design, firmware, and board checks.
 - [Claim-checking workbench](orchestrator/README.md): local critic workflow and its measured limits.
 - [Historical audits](orchestrator/tvw/audits/): reviews and dispatch records, separate from implementation evidence.
+- [Next sensing study](docs/next-sensing-study.md): one proposed sensing task with data eligibility, independent references, grouped holdouts, and external review required before experiments.
 - [Unfunded proposal crosswalk](docs/proposal/README.md): proposed-versus-delivered comparison, with an optional redacted technical volume for historical context.
 - [Glossary](docs/glossary.md): terms and units.
 - [Citation](CITATION.cff): release and DOI metadata; later commits may differ from the archived release.

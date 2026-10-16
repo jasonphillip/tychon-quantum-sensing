@@ -5,9 +5,11 @@
 The safety design has two mechanisms.
 
 1. **Bounded AI authority.** The AI path can move the actuator only within a clamped amplitude and a slew budget. The clamp and the slew limiter sit between the AI output and the sum with the PID output.
-2. **Watchdog detection.** A watchdog detects a missed AI inference deadline. On a missed deadline, control passes to the classical PID.
+2. **Watchdog detection.** A watchdog detects a missed AI inference deadline. A controller update while the timeout is asserted can hand control to the classical PID. The recorded software-paced build requires the processor to start that update.
 
-This document does not claim that the architecture guarantees stability or safety without conditions. The stability results below hold only under the assumptions listed beside each one. The open items are in *Residual Proof Obligations*. The watchdog fallback at the actuator has not yet been tested on the board with a stalled processor.
+This document does not claim that the architecture guarantees stability or safety without conditions. The stability results below hold only under the assumptions listed beside each one. The open items are in *Residual Proof Obligations*.
+
+**Board-test correction (2026-10-16).** The [October 9 trip-start fix and retest](watchdog_fallback_test_plan.md#fix-1a-trip-start-software-retested-2026-10-09-18451900-utc) covered a one-second pause of the control process. All ten cases were PID-only after execution resumed: nine through a forced start after resume, and one already PID-only before the pause. This tests recovery after a process pause, not autonomous recovery during a processor freeze. A processor that stays frozen cannot start a new PID-only output. Recovery discontinuities also remain; see [Residual Proof Obligations](#residual-proof-obligations).
 
 ## Bounded Hybrid Simplex RTA
 
@@ -54,7 +56,7 @@ The ±30% bound is proposed as an operating point below the ±50% analytical lim
 ## Watchdog and Bumpless Transfer
 
 A hardware watchdog (`hls/src/watchdog.cpp`, `watchdog_check()`) monitors AI inference latency through a heartbeat input. The near-term hardware target is 250,000 cycles at the 125 MHz fabric clock, or 2 ms (`WATCHDOG_TIMEOUT_CYCLES`). The watchdog output stays set until the next heartbeat. On timeout:
-- The system transfers from AI+PID mode to pure PID mode.
+- On a controller update that observes the timeout, the system transfers from AI+PID mode to pure PID mode.
 - Bumpless transfer absorbs the last AI output into the PID integrator: `I_new = I_old + u_AI_old`.
 - This reduces voltage discontinuities at the actuator output during mode transitions.
 - A cooldown period holds the system in PID-only mode after timeout. It reduces high-frequency switching (chattering) between AI+PID and PID-only modes.
@@ -66,7 +68,7 @@ The watchdog detects a missed deadline, and control returns to the classical PID
 - The watchdog logic keeps running, and the heartbeat input reflects real inference completion.
 - The watchdog fires within its configured deadline, and the timeout signal reaches `nv_pid_top()`.
 - The PID path that takes over runs on logic that does not depend on the stalled processor. In the current software-paced build this condition does not hold: the core computes only when the processor starts it (`firmware/linux/v250_pid_loop.c` runs the inference, then writes `R_ACC_START`), so a stalled processor stops PID updates too. Confirmed on the board 2026-10-09 (test plan scenario (a), 10/10): during a 1 s stop of the control process the actuator register held its last value and no PID-only update occurred.
-- The fallback at the actuator takes effect only if a software start happens while the timeout is still asserted. Tested on the board 2026-10-09: a 0.54 ms timeout pulse that ended before the next start never reached the controller (scenario c1, 0/20), see the obligations table.
+- The fallback at the actuator takes effect only if a software start happens while the timeout is still asserted. Before the October 9 correction, a 0.54 ms timeout pulse could end before the next start; scenario c1 fell back 0/20 times. The trip-start correction forces a controller update before inference can clear an observed timeout; the same scenario then fell back 20/20 times. This still requires processor execution ([before/after report](watchdog_fallback_test_plan.md#fix-1a-trip-start-software-retested-2026-10-09-18451900-utc)).
 
 The cooldown length depends on the controller update period, as described in the open obligations.
 

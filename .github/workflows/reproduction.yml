@@ -1,0 +1,72 @@
+name: Reproduction
+
+"on":
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  install-smoke:
+    name: CPU install / ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-24.04, ubuntu-24.04-arm, macos-14]
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 25
+    env:
+      OMP_NUM_THREADS: 1
+      OPENBLAS_NUM_THREADS: 1
+      MKL_NUM_THREADS: 1
+      VECLIB_MAXIMUM_THREADS: 1
+      CMAKE_BUILD_PARALLEL_LEVEL: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Confirm expected runner architecture
+        env:
+          RUNNER_LABEL: ${{ matrix.runner }}
+        run: |
+          python -c 'import os,platform; label=os.environ["RUNNER_LABEL"]; expected=("arm64","aarch64") if label in ("macos-14","ubuntu-24.04-arm") else ("x86_64","AMD64"); print(platform.platform(), platform.machine()); assert platform.machine() in expected'
+      - name: Install pinned CPU environment
+        run: make install BENCH_PY=python VENV="$RUNNER_TEMP/install-env"
+      - name: Imports and four disposable spectra (no training or inference)
+        run: make smoke BENCH_PY=python VENV="$RUNNER_TEMP/install-env"
+      - name: Failure-contract tests
+        run: make test-reproduction BENCH_PY=python
+
+  saved-evidence:
+    name: Saved evidence / no inference
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: repo
+      - uses: actions/checkout@v4
+        with:
+          repository: jasonphillip/polarfire-agent-skills
+          ref: 53acad6aff3424e36662972348ef535392f4859b
+          path: kit-evidence
+          sparse-checkout: evidence/2026-10-14-deployed-fcnn
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install only saved-arithmetic dependencies
+        working-directory: repo
+        run: make install-evidence BENCH_PY=python VENV="$RUNNER_TEMP/evidence-env"
+      - name: Verify all seven named evidence checks
+        working-directory: repo
+        run: |
+          make verify-evidence VENV="$RUNNER_TEMP/evidence-env" KIT_EVIDENCE_DIR="$GITHUB_WORKSPACE/kit-evidence/evidence/2026-10-14-deployed-fcnn" EVIDENCE_OUT="$RUNNER_TEMP/evidence-results"
+          test -z "$(git status --porcelain)"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: saved-evidence-reports
+          path: ${{ runner.temp }}/evidence-results/
+          if-no-files-found: warn

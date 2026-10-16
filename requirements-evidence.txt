@@ -1,0 +1,3 @@
+# Saved-output arithmetic only. No Torch, model loading, or inference.
+numpy==2.4.2
+scipy==1.17.1
