@@ -87,4 +87,5 @@ All other files in this package are byte-exact copies.
 
 - Synthetic computational development on one host with one GPU. No hardware, bandwidth, energy or measured-sensor result.
 - One fixed learned initializer. It does not show that every learned initializer must fail.
+- The classical routes are a finite tested set, not the fastest classical implementation available. `tied12` timing is this project's PyTorch implementation; native Gpufit speed was not measured.
 - External accuracy, failure and workload requirements are unresolved. No confirmation run was authorized.

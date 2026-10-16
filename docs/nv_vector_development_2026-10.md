@@ -7,13 +7,13 @@ Both comparisons below were fixed before their results. Both are synthetic compu
 
 ## Result in one table
 
-| Comparison | Fastest adequate classical route | Neural route | Speed at batch 4096 | Accuracy gate | 2× gate |
+| Comparison | Fastest adequate classical route tested | Neural route | Speed at batch 4096 | Accuracy gate | 2× gate |
 |---|---|---|---:|---|---|
 | P1, original development comparison | `affine3` (affine start, three float64 LM steps) | `neural1` | 2.228945× | pass | **PASS** |
 | Baseline challenge, fresh data | `affine2_f64` (affine start, two float64 LM steps) | `neural1` (unchanged P1 weights) | 1.591126× | pass | **FAIL** |
 | Baseline challenge, fresh data | `affine2_f64` | `neural0` (no refinement step) | 0.063387× | **FAIL** (810 fallbacks) | **FAIL** |
 
-The P1 pass is kept as recorded. P1's classical routes did not include the fastest adequate route that the challenge later found.
+The P1 pass is kept as recorded. P1's classical routes did not include the faster adequate route that the challenge later tested.
 **Same-data control:** the challenge also reran `affine3` and `neural1` on its own 4,096 fresh cases. That gave 2.223868×, close to P1's 2.228945×.
 So the drop to 1.591126× comes from the stronger classical route (`affine2_f64`), not from the new random sample.
 P1 had omitted two-step and mixed-precision classical refinement. The challenge added those routes and changed nothing else.
@@ -32,7 +32,7 @@ The motivating workload is offline processing of large current maps. No instrume
 - **Routes:** full multistart LM; affine start plus 1, 3 or 5 LM steps; the tied-line comparator `tied12`; and the learned start plus one LM step (`neural1`).
 - **Guard:** every route passes the same float64 observed-data guard. Every rejected estimate gets the full LM fallback, and its time is counted.
 - **Accuracy:** a classical route is adequate when its mean and p95 vector error are each ≤ 1.05× full LM, with no more rejections. The neural route must be ≤ 1.05× the best adequate classical value on each.
-- **Speed gate:** ≥ 2× the fastest adequate classical route, host-to-host median at batch 4096, with a finite setup break-even.
+- **Speed gate:** ≥ 2× the fastest adequate classical route tested, host-to-host median at batch 4096, with a finite setup break-even.
 
 | Route (2,048 validation spectra) | Mean error (µT) | p95 error (µT) | Fallbacks |
 |---|---:|---:|---:|
@@ -61,7 +61,7 @@ P1's margin over 2× was small (about 2.23×). The challenge asked whether it su
 |---|---:|---:|---:|---|
 | Full LM | 1.94439 | 4.92362 | 4096 (every case is a full-LM solve) | reference |
 | `affine3` | 1.94339 | 4.90390 | 0 | adequate |
-| `affine2_f64` | 1.95420 | 4.91446 | 0 | adequate, **fastest** |
+| `affine2_f64` | 1.95420 | 4.91446 | 0 | adequate, **fastest tested** |
 | `affine2_f32` | 1.95397 | 4.92984 | 26 | adequate |
 | `affine3_f32` | 1.94400 | 4.91294 | 20 | adequate |
 | `tied12` | 1.95370 | 4.94107 | 34 | adequate |
@@ -73,7 +73,7 @@ P1's margin over 2× was small (about 2.23×). The challenge asked whether it su
 | Same 4,096 challenge cases, batch 4096 | Median host-to-host time (s) | `neural1` speedup over it |
 |---|---:|---:|
 | `affine3` (P1's selected classical route) | 0.265512 | 2.223868× |
-| `affine2_f64` (fastest adequate route in the challenge) | 0.189968 | 1.591126× |
+| `affine2_f64` (fastest adequate route tested in the challenge) | 0.189968 | 1.591126× |
 | `neural1` | 0.119392 | — |
 
 Against `affine3`, `neural1` keeps about the same margin as in P1. The two-step route `affine2_f64` removes most of it.
@@ -81,6 +81,19 @@ Against `affine3`, `neural1` keeps about the same margin as in P1. The two-step 
 `neural0` was 0.063387× (about 16× slower), because 810 of its 4,096 estimates were rejected and fell back to full LM.
 
 **Decision:** `FAIL_REGISTERED_NEURAL_CONTINUATION_GATE`. No retuning, retraining, new variants or confirmation run follows for this candidate.
+
+## Comparator limits
+
+- The classical routes form a finite, prespecified set. "Fastest" in this report means fastest among the routes tested here, not the fastest classical implementation available.
+- `tied12` timing is this project's PyTorch implementation of a tied-line comparator. Native Gpufit speed was not measured.
+- All timing is host-to-host on one GPU host. Other hardware, libraries or batch sizes can change every ratio.
+
+## Related work (no timing comparison)
+
+- Yao et al., [arXiv:2603.14728](https://arxiv.org/abs/2603.14728): a CNN initializer followed by nonlinear fitting, on a different two-line task.
+- Richards et al., [ACS Nano (PMC12513235)](https://pmc.ncbi.nlm.nih.gov/articles/PMC12513235/): native Gpufit fitting of a single-Lorentzian model, a different model and workload.
+
+Their tasks, models and hardware differ from ours. This report makes no cross-paper timing comparison and no novelty claim.
 
 ## What this shows
 
