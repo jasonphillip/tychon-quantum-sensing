@@ -106,7 +106,7 @@
   },
   "schema_version": 1,
   "study": "localisation-redesign-2026-10-15",
-  "status": "DRAFT_AWAITING_ROOT_FREEZE",
+  "status": "FROZEN",
   "scope": "published_version_A_fitted_feature_stage_coordinate_pairs_conditional_spatial_generalization",
   "dataset_doi": "10.5281/zenodo.19855773",
   "dataset_version": "A_model_loaded",
