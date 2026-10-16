@@ -76,3 +76,24 @@ def initializer(torch,model,mean,std,center,scale):
     mean,std,center,scale=[torch.as_tensor(a,dtype=torch.float64,device="cuda") for a in (mean,std,center,scale)]
     def predict(counts):return model((counts/CFG["photons_per_bin"]-mean)/std)*scale+center
     return predict
+
+
+def count_blocks(n):
+    """Predetermined rows; maximum raw int64 count array is16MiB per file."""
+    return [(start,min(start+4096,n)) for start in range(0,n,4096)]
+
+
+def save_data(data,out):
+    import json
+    np.savez_compressed(out/"data.npz",**{k:v for k,v in data.items() if not k.endswith("_counts")})
+    blocks={}
+    for split,n in (("train",TRAIN_N),("validation",VALIDATION_N)):
+        counts=data[split+"_counts"]
+        if counts.shape!=(n,512):raise ValueError("Wrong split count shape")
+        blocks[split]=[]
+        for number,(start,stop) in enumerate(count_blocks(n)):
+            filename=f"{split}-counts-{number:02d}.npz"
+            np.savez_compressed(out/filename,counts=counts[start:stop])
+            blocks[split].append({"file":filename,"start":start,"stop":stop})
+    (out/"data-schema.json").write_text(json.dumps({"schema":1,"counts_per_file_max_rows":4096,
+        "frequency_bins":512,"counts_dtype":"int64","blocks":blocks},indent=2)+"\n")

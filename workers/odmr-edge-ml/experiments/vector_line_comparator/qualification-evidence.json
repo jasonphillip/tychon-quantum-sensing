@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "status": "FROZEN_FOR_ROOT_REVIEWED_P1_INTEGRATION",
+  "scope": "manufactured qualification only; no population or native-performance claim",
+  "scientific_source_commit": "6af0015ff34f0ffac12037bfbdf8284032cc8923",
+  "protocol_sha256": "df0d2a3b2b3ee227d0b95f881cc2490338aeb60f6993ca3710354d2b845013d5",
+  "protocol_previous_sha256": "1ba6d63401c70c48d999fe9ae6f7c12555f17f3aacee62e315f768e616e0d391",
+  "receipts": {
+    "cpu_fixtures": {
+      "job_id": "adv-vector-line-fixtures-v2",
+      "sha256": "733f745febf54c102b57d977250002c647d6fe6251d745765b3408cfcbf2f508",
+      "result_sha256": "60f41d6dec79850e710e1ea275334b7dbf45a7663da0e5adbab4e200628dd67d",
+      "passed_tests": 8
+    },
+    "gpu_parity": {
+      "job_id": "adv-vector-line-parity-v1",
+      "sha256": "e4a87765c8b24e181dc2797d252ea78292de573026c25b390e80b0bc114040b4",
+      "result_sha256": "cf74588f8e2488e7f0c01950327b3c7a4add646ab85f442f3d67e74b44bae18d",
+      "arrays_sha256": "cb8c1b6b93b476ee5bb60c1f0a5c52dd7cd6c8b70cf846f45173d919ed533e93",
+      "passed_checks": 10
+    },
+    "independent_saved": {
+      "job_id": "adv-vector-line-saved-verification-v1",
+      "sha256": "128eb07032e75a614d8ab94ce093c2d14bb5a9dc7b3a41386a0f9792d137a892",
+      "result_sha256": "9041d67691c09c0c8e3978d008fd1ea8b89e50c03f3fe35a9f18a41089ff2165",
+      "script_sha256": "6bd3c3dd4eb504693a9abedca7f38196a28a55bccdadbc6efe7e19b390224163",
+      "passed_checks": 140,
+      "failures": 0
+    }
+  },
+  "limitations": [
+    "Reduced-deviance arrays had no registered pairwise numeric tolerance; verifier checks their hashes, finite/nonnegative values and existing operational <=2 guard, and reports the pairwise difference",
+    "Root owns P1 population freeze and release",
+    "Native Gpufit performance remains unmeasured"
+  ]
+}

@@ -2,7 +2,7 @@
 import numpy as np
 from experiments.vector_direct_screen.physics import CFG
 from experiments.vector_direct_screen.baseline import initialize,deviance,observed_check,full_fallback
-METHODS=("lm","affine1","affine3","affine5","neural1")
+METHODS=("lm","affine1","affine3","affine5","tied12","neural1")
 
 def refine(engine,counts,initial,steps):
     """The original LM update algebra, exactly 1/3/5 attempts, no early exit.
@@ -35,6 +35,9 @@ def refine(engine,counts,initial,steps):
 
 def policy(engine,counts,method,neural=None,chunk=1024):
     if method not in METHODS or chunk!=1024:raise ValueError("Unregistered policy")
+    if method=="tied12":
+        from experiments.vector_line_comparator.comparator import policy_device
+        return policy_device(engine,counts,chunk_size=chunk)
     e,x=engine,engine.xp;parts={k:[] for k in ("parameters","accepted","reduced_deviance","fallback","refinement_accepts")}
     for start in range(0,len(counts),chunk):
         batch=counts[start:start+chunk]

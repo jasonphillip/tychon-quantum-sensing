@@ -1,5 +1,7 @@
 """Manufactured scientific and policy contracts; no development data."""
 import unittest
+import os
+import sys
 from unittest.mock import patch
 import numpy as np
 from experiments.vector_direct_screen.physics import Engine,CFG
@@ -92,11 +94,50 @@ class Contracts(unittest.TestCase):
         s["neural1"]["rejections"]=1
         self.assertFalse(evaluation.opportunity_gate(s,t,10)["continuation_pass"])
 
-    def test_classical_tie_favors_fewer_steps_but_requires_tied_comparator(self):
+    def test_classical_tie_favors_fewer_steps_with_tied_comparator(self):
         s,t=example_gate_inputs()
         for b in evaluation.BATCHES:
             t["affine1"][str(b)]["host_to_host_seconds"]=[.31]*3
             t["affine3"][str(b)]["host_to_host_seconds"]=[.30]*3
         g=evaluation.opportunity_gate(s,t,10,{"affine1":.1})["classical_engineering_opportunity"]
-        self.assertEqual(g["selected"],"affine1");self.assertTrue(g["provisional_vs_full_lm"])
-        self.assertIsNone(g["engineering_opportunity_pass"]);self.assertFalse(g["neural_win"])
+        self.assertEqual(g["selected"],"affine1");self.assertTrue(g["full_lm_speed_pass"])
+        self.assertTrue(g["engineering_opportunity_pass"]);self.assertFalse(g["neural_win"])
+
+    def test_tied_comparator_can_block_a_false_speed_claim(self):
+        s,t=example_gate_inputs()
+        for b in evaluation.BATCHES:
+            t["affine1"][str(b)]["host_to_host_seconds"]=[.3]*3
+            t["tied12"][str(b)]["host_to_host_seconds"]=[.4]*3
+        result=evaluation.opportunity_gate(s,t,10)
+        self.assertFalse(result["classical_engineering_opportunity"]["engineering_opportunity_pass"])
+        self.assertFalse(result["continuation_pass"])
+
+    def test_inadequate_tied_comparator_remains_reported(self):
+        s,t=example_gate_inputs();s["tied12"]["p95_uT"]=5
+        result=evaluation.opportunity_gate(s,t,10)
+        self.assertNotIn("tied12",result["adequate_classical"])
+        self.assertFalse(result["classical_engineering_opportunity"]["tied12_adequate"])
+        self.assertIn("speedup_vs_tied12",result["classical_engineering_opportunity"])
+
+    def test_tied_adapter_passes_observations_and_preserves_all_flags(self):
+        from experiments.vector_line_comparator import comparator
+        expected={"parameters":object(),"line_valid":object(),"inverse_converged":object()}
+        engine=object();observations=object()
+        with patch.object(comparator,"policy_device",return_value=expected) as call:
+            self.assertIs(methods.policy(engine,observations,"tied12"),expected)
+        call.assert_called_once_with(engine,observations,chunk_size=1024)
+
+    def test_supervisor_cuda_prerequisite_is_required_and_recordable(self):
+        from experiments.vector_initializer_development.access import assert_cuda_environment
+        with patch.dict(os.environ,{"CUBLAS_WORKSPACE_CONFIG":":4096:8"},clear=True):
+            self.assertEqual(assert_cuda_environment(),":4096:8")
+        with patch.dict(os.environ,{},clear=True):
+            with self.assertRaises(RuntimeError):assert_cuda_environment()
+        with patch.dict(os.environ,{"CUBLAS_WORKSPACE_CONFIG":":16:8"},clear=True):
+            with self.assertRaises(RuntimeError):assert_cuda_environment()
+
+    def test_count_file_partitions_are_exact_and_below_file_limit(self):
+        train=learning.count_blocks(32768);validation=learning.count_blocks(2048)
+        self.assertEqual(train,[(i,i+4096) for i in range(0,32768,4096)])
+        self.assertEqual(validation,[(0,2048)])
+        self.assertTrue(all((b-a)*512*8<=16*1024**2 for a,b in train+validation))

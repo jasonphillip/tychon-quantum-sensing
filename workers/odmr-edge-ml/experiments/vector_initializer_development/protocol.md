@@ -13,7 +13,8 @@ Generic neural inversion speedup is prior art. This study claims no new algorith
 The inspectable contribution is a matched-device comparison with strong shortcuts, physical refinement, and counted fallback.
 The motivating workload is offline processing of large current maps. No instrument deadline is asserted.
 External accuracy, failure, and useful workload requirements remain unresolved before confirmation.
-The separate tied12 comparator remains mandatory before any classical opportunity or final comparison is accepted.
+The frozen tied12 comparator participates in every validation and timing comparison, even if it proves inadequate.
+It is a PyTorch mathematical comparator, not a native Gpufit speed measurement.
 
 ## Fresh data and custody
 
@@ -26,6 +27,9 @@ Never load P0 data, old tests, held confirmation, or measured spectra.
 Keep every validation case, including rejected estimates. No clipping of reported field errors.
 The existing eight-line Hamiltonian,512bins,known orientation,bias and2million photons/bin remain unchanged.
 Check32 prospectively evenly spaced means per split against the independent laboratory Hamiltonian.
+Save counts in predetermined4096-row NPZ files:8 training blocks and1 validation block.
+Each raw int64 count array is at most16MiB, below the supervisor64MiB file limit.
+Save label/check arrays separately in data.npz and exact ranges in data-schema.json. No samples change.
 Reject duplicates across or within splits. Save all counts, labels, physical-mean checks, source hashes, and seed certificate hash.
 
 ## One model and one training recipe
@@ -36,13 +40,19 @@ Floor each input standard deviation at1e-6. Never fit scaling to validation or r
 Normalize all8 true targets using frozen bound midpoint and half-range. Loss:mean squared normalized parameter error.
 Use PyTorch float32 CUDA training. Adam lr0.001,betas(0.9,0.999),epsilon1e-8,weight decay0.
 Use batch512 and exactly20epochs. Shuffle each epoch with the sole root-issued training stream.
+The approved supervisor sets CUBLAS_WORKSPACE_CONFIG=:4096:8 before its Torch import.
+Assert and record that prerequisite. Do not mutate the shared runtime or process environment.
 Use deterministic algorithms, disable TF32, no scheduler, augmentation, early stopping, checkpoint selection, architecture search, or seed sweep.
 The final epoch is the only candidate. A timeout preserves evidence and stops; no automatic resumed training.
 Save incremental loss history, latest optimizer/RNG checkpoint, final weights, feature and target scaling.
 
 ## Strong matched classical controls
 
-Methods: full original40iteration×3width LM; affine+exactly1,3,5LM attempts; learned+exactly1LM attempt.
+Methods: full original40iteration×3width LM; affine+exactly1,3,5LM attempts; tied12; learned+exactly1LM attempt.
+Tied12 uses its unchanged policy_device with the persistent float64 Engine and affine-calibration cache.
+Count tied-line fitting, nuisance-profiled precision, unknown-D inversion, validity checks, physical guard, and fallback.
+Preserve all line/inversion validity and convergence flags. Its internal per-chunk TiedLines construction remains counted.
+Do not monkeypatch frozen comparator caches, association, likelihood, bounds, precision, or solver settings.
 The refinement copies the qualified LM update algebra with fixed0.01 initial damping and unchanged acceptance/damping/bounds.
 Retain all8 initializer outputs, including width. Do not silently replace either initializer's width.
 Each short route always performs its declared steps, even after a small update. It then applies the unchanged observed-data guard.
@@ -62,6 +72,9 @@ Neural mean andp95 must each be≤1.05×the best corresponding adequate-classica
 Neural rejections must not exceed the lowest adequate-classical rejection count.
 Primary speed gate:≥2×the fastest adequate classical host-to-host median at batch4096, with finite setup amortization.
 Report batch1 and64 as diagnostics. They do not override the frozen4096 gate.
+Save each timing repeat's errors independently; chunk-wide stopping can change small-batch outputs.
+Require4096 repeated-chunk predictions to match the2048 validation outputs within1e-5 in physical parameter units.
+Small-batch diagnostics have no such equality assumption.
 For4096 timing, repeat the same2048 validation inputs twice in original order. This is timing only, not4096 independent accuracy cases.
 For1/64 timing, use the first1/64 validation observations. Do not select easy examples.
 Use three timed repeats per method/batch after one equal warmup. Save every timing and host prediction/flag array.
@@ -71,14 +84,17 @@ Report total time per million spectra and absolute time saved. Measure generatio
 Neural break-even includes all fresh generation/training/setup cost divided by saved seconds per spectrum.
 Select the classical candidate using4096 host timing. Among routes within5%of the fastest, favor fewer steps.
 Report a separate classical engineering opportunity only if it matches fullLM within5%and is≥2×faster than fullLM and every adequate tied-line comparator.
-Until tied12 is evaluated, the latter result is pending; a fullLM-only result is explicitly provisional.
+Tied12 adequacy uses the same fullLM error/rejection reference. Retain inadequate tied12 metrics and timings explicitly.
+If tied12 is adequate, a short classical route must beat it by2×to pass the classical engineering gate.
+A tied12 selection remains reported as the classical choice; it cannot masquerade as a short-refinement result.
+Among equal timing candidates, the fewer-step rule orders1,3,5,80(tied12 cap),120(fullLM cap).
 A classical result cannot be relabeled a neural win or novel algorithm. Fresh confirmation and usefulness requirements remain mandatory.
 
 ## Budget and stopping
 
 Prospective development reservation:≤1800CPU seconds and≤600GPU/wall seconds, one numerical CPU thread.
 Root must reserve≥15%of total stage resources for independent verification: proposed360CPU/120wall seconds for saved verification.
-CPU fixtures:proposed20CPU/wall seconds. They require separate root approval.
+CPU fixtures:proposed20CPU/wall seconds and8GiB memory. They require separate root approval.
 GPU policy:one PyTorch process,zero descendants/DataLoader workers,16GiB host RSS+16GiB allocator,24GiB host free-memory floor.
 No services, installs, paid compute, hardware, FPGA, or Beelink actions.
 Stop on source/custody drift, missing context, nonfinite output/loss, resource termination, or verification mismatch.

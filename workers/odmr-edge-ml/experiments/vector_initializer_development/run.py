@@ -3,7 +3,7 @@ import argparse,hashlib,json,sys,time
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:sys.path.insert(0,str(ROOT))
-from experiments.vector_initializer_development.access import authorize,source_pins
+from experiments.vector_initializer_development.access import authorize,source_pins,assert_cuda_environment
 
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def write(p,v):p.write_text(json.dumps(v,indent=2,allow_nan=False)+"\n")
@@ -12,7 +12,8 @@ def main():
     p=argparse.ArgumentParser();p.add_argument("--gate",required=True,type=Path)
     p.add_argument("--approval-sha256",required=True);p.add_argument("--out",required=True,type=Path)
     p.add_argument("--phase",required=True,choices=("p1_fixtures","p1_development"));a=p.parse_args()
-    gate,context=authorize(a.gate,a.approval_sha256,a.phase);a.out.mkdir(parents=True,exist_ok=False)
+    gate,context=authorize(a.gate,a.approval_sha256,a.phase)
+    cublas_config=assert_cuda_environment();a.out.mkdir(parents=True,exist_ok=False)
     write(a.out/"started.json",{"phase":a.phase,"approval_sha256":a.approval_sha256,
         "reservation_id":context["central_reservation_id"],"p1_source_sha256":source_pins()})
     def manifest(status):write(a.out/"manifest.json",{"status":status,"source_sha256":source_pins(),
@@ -34,7 +35,7 @@ def main():
     torch.cuda.set_per_process_memory_fraction(min(1.,16*1024**3/torch.cuda.get_device_properties(0).total_memory),0)
     torch.use_deterministic_algorithms(True);torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.allow_tf32=False
     setup_start=time.perf_counter();data=learning.generate(json.loads(certificate.read_text()))
-    np.savez_compressed(a.out/"data.npz",**data);generation_seconds=time.perf_counter()-setup_start
+    learning.save_data(data,a.out);generation_seconds=time.perf_counter()-setup_start
     manifest("data_complete")
     train_start=time.perf_counter()
     model,mean,std,center,scale,history=learning.train(torch,data,learning.seed_values(json.loads(certificate.read_text()))[-1],a.out,
@@ -81,6 +82,7 @@ def main():
                 np.savez_compressed(a.out/(name+f"-timing-{batch}.npz"),indices=indexes,
                     **{k:np.stack([r[k] for r in host_outputs]) for k in host_outputs[0]})
                 timings[name][str(batch)]={"host_to_host_seconds":host_times,"resident_seconds":resident,
+                    "host_repeat_metrics":[evaluation.metrics(r["parameters"],data["validation_parameters"][indexes],r["accepted"],r["fallback"]) for r in host_outputs],
                     "unique_validation_inputs":min(batch,len(counts)),"repeats_for_timing_only":batch>len(counts),"dtype":"float64","chunk":1024}
             write(a.out/"metrics.json",stats);write(a.out/"timings.json",timings);manifest("evaluating")
     setup["persistent_engine_calibration_seconds"]=method_setup;write(a.out/"setup.json",setup)
@@ -89,7 +91,7 @@ def main():
     write(a.out/"provenance.json",{"seed_certificate_sha256":sha(certificate),"python":sys.version,
         "numpy":np.__version__,"torch":torch.__version__,"cuda":torch.version.cuda,"gpu":torch.cuda.get_device_name(0),
         "data_counts":{"train":32768,"validation":2048},"noise":"Poisson(2000000 * frozen fluorescence)",
-        "train_dtype":"float32","inference_dtype":"float64","epochs":20,"checkpoint_selection":"final only",
+        "cublas_workspace_config":cublas_config,"train_dtype":"float32","inference_dtype":"float64","epochs":20,"checkpoint_selection":"final only",
         "all_validation_cases_retained":True,"source_sha256":source_pins(),"no_p0_inputs":True})
     manifest("complete");return 0
 

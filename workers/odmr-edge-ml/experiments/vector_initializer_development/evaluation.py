@@ -1,7 +1,7 @@
 """Prospective development metrics and timing. No confirmation or adoption."""
 import math
 import numpy as np
-METHODS=("lm","affine1","affine3","affine5","neural1")
+METHODS=("lm","affine1","affine3","affine5","tied12","neural1")
 BATCHES=(1,64,4096)
 REPEATS=3
 
@@ -32,17 +32,22 @@ def opportunity_gate(all_metrics,timings,setup_seconds,method_setup=None):
     passed=accuracy and comparisons["4096"]["speedup"]>=2 and comparisons["4096"]["break_even_spectra"] is not None
     timing4096=lambda m:float(np.median(timings[m]["4096"]["host_to_host_seconds"]))
     fastest=min(timing4096(m) for m in classical)
-    steps={"affine1":1,"affine3":3,"affine5":5,"lm":120}
+    steps={"affine1":1,"affine3":3,"affine5":5,"tied12":80,"lm":120}
     selected=min((m for m in classical if timing4096(m)<=1.05*fastest),key=lambda m:(steps[m],m))
     classic_saving=(timing4096("lm")-timing4096(selected))/4096
+    tied_adequate="tied12" in classical
+    tied_speed_pass=not tied_adequate or timing4096("tied12")>=2*timing4096(selected)
+    classical_pass=(selected in ("affine1","affine3","affine5") and timing4096("lm")>=2*timing4096(selected) and tied_speed_pass)
     classical_opportunity={"selected":selected,"selection":"4096 host timing; within5percent tie favors fewer steps",
         "speedup_vs_full_lm":timing4096("lm")/timing4096(selected),
-        "provisional_vs_full_lm":selected!="lm" and timing4096("lm")>=2*timing4096(selected),
+        "full_lm_speed_pass":selected!="lm" and timing4096("lm")>=2*timing4096(selected),
+        "tied12_adequate":tied_adequate,"speedup_vs_tied12":timing4096("tied12")/timing4096(selected),
+        "tied12_speed_requirement_pass":tied_speed_pass,
         "seconds_saved_per_million":classic_saving*1000000,
         "calibration_setup_seconds":method_setup.get(selected,0.),
         "break_even_spectra_conservative_calibration":math.ceil(method_setup.get(selected,0.)/classic_saving) if classic_saving>0 else None,
-        "adequate_tied_line_comparison":"PENDING_REQUIRED","engineering_opportunity_pass":None,
+        "adequate_tied_line_comparison":"INCLUDED","engineering_opportunity_pass":classical_pass,
         "neural_win":False,"algorithmic_novelty_claim":False}
     return {"adequate_classical":classical,"classical_engineering_opportunity":classical_opportunity,"matched_accuracy_pass":accuracy,"comparisons":comparisons,
         "continuation_pass":passed,"scope":"synthetic computational development only",
-        "practical_adoption":False,"confirmation_authorized":False,"tied12_comparator_pending":True}
+        "practical_adoption":False,"confirmation_authorized":False,"tied12_comparator_pending":False}

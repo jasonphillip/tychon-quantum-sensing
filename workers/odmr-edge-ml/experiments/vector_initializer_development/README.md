@@ -15,4 +15,4 @@ Use configured absolute paths. The supervisor launches Python directly, with no 
 Launch those commands only through the campaign accounting specification. Direct execution fails without the held supervisor context.
 The first command runs manufactured fixtures in-process. No commands have yet run for this package.
 The development package saves counts, labels, checkpoint/scaling, all predictions, flags, timings, source pins, and manifests.
-The final command checks saved outputs only. Practical adoption and the tied12 comparison remain separate prerequisites.
+The final command checks saved outputs only. The frozen tied12 comparison is included. Practical adoption and fresh confirmation remain separate prerequisites.
