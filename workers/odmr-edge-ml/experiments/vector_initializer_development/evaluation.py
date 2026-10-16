@@ -27,6 +27,7 @@ def opportunity_gate(all_metrics,timings,setup_seconds,method_setup=None):
         base,learned=median(best),median("neural1");saving=(base-learned)/batch
         comparisons[str(batch)]={"fastest_adequate_classical":best,"classical_seconds":base,
             "neural_seconds":learned,"speedup":base/learned,"seconds_saved_per_million":saving*1000000,
+            "classical_seconds_per_million":base/batch*1000000,"neural_seconds_per_million":learned/batch*1000000,
             "break_even_spectra":math.ceil(setup_seconds/saving) if saving>0 else None}
     passed=accuracy and comparisons["4096"]["speedup"]>=2 and comparisons["4096"]["break_even_spectra"] is not None
     timing4096=lambda m:float(np.median(timings[m]["4096"]["host_to_host_seconds"]))

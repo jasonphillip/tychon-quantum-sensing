@@ -77,7 +77,7 @@ A classical result cannot be relabeled a neural win or novel algorithm. Fresh co
 ## Budget and stopping
 
 Prospective development reservation:≤1800CPU seconds and≤600GPU/wall seconds, one numerical CPU thread.
-Root must reserve≥15%of total stage resources for independent verification: proposed120CPU/wall seconds for saved verification.
+Root must reserve≥15%of total stage resources for independent verification: proposed360CPU/120wall seconds for saved verification.
 CPU fixtures:proposed20CPU/wall seconds. They require separate root approval.
 GPU policy:one PyTorch process,zero descendants/DataLoader workers,16GiB host RSS+16GiB allocator,24GiB host free-memory floor.
 No services, installs, paid compute, hardware, FPGA, or Beelink actions.

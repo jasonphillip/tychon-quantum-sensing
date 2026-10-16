@@ -89,6 +89,8 @@ def main():
         ratio=med(best,batch)/med("neural1",batch);saving=(med(best,batch)-med("neural1",batch))/batch
         assert c["fastest_adequate_classical"]==best;check_close(c["speedup"],ratio)
         check_close(c["seconds_saved_per_million"],saving*1000000)
+        check_close(c["classical_seconds_per_million"],med(best,batch)/batch*1000000)
+        check_close(c["neural_seconds_per_million"],med("neural1",batch)/batch*1000000)
         assert c["break_even_spectra"]==(math.ceil(setup/saving) if saving>0 else None)
         if batch==4096:speed_ok=ratio>=2 and saving>0
     assert result["continuation_pass"]==(accuracy and speed_ok)
