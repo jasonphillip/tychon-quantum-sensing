@@ -6,7 +6,7 @@ import os
 import re
 from pathlib import Path
 
-CONTRACT = "a3683e0dafa3c422e995c960f8c38bb6160fef63b5a97f38c42e47457e0bc33f"
+CONTRACT = "878fd92378dec87b1b0021df2dabf31dd3f4c0f6b32ebfb58cd5c96efc9ec71e"
 STUDY = "widefield-redesign-2026-10-15"
 
 

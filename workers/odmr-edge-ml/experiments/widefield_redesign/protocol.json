@@ -175,7 +175,7 @@
     "bad_frame_fraction_max": 0.01,
     "failed_frame_action": "Use zero shift, retain spectrum and failure flag; never remove selected sites",
     "reference_separation": "Reference shifts affect reference targets only; no reference shift/template/scale enters repeat0 inputs",
-    "limit": "Integer global translation only; no local drift, rotation or subpixel correction; fixed +/-1-pixel target sensitivities quantify residual registration uncertainty",
+    "limit": "Global translation with bounded quadratic subpixel correction and bilinear sampling; no local drift or rotation; fixed +/-1-pixel reference sensitivity quantifies remaining registration uncertainty.",
     "subpixel": "If the best integer shift is interior, apply separable three-point parabolic correlation-peak refinement, then bilinear sampling; clamp each refinement to0.5px and require total shift within2px. Flat curvature uses zero refinement. No spectral comparison selects shifts.",
     "ambiguity": "Best/second integer margin<0.002 is reported, never by itself a failure",
     "registration_residual": "Report2*(1-correlation) after subpixel refinement; retain correlation>=0.90 gate",
