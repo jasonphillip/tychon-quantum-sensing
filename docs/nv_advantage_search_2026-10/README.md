@@ -30,4 +30,6 @@ python3 experiments/widefield_redesign/verify_saved.py --bundle ../../docs/nv_ad
 cd ../..
 python3 docs/nv_advantage_search_2026-10/check_raw_compatibility.py --bundle docs/nv_advantage_search_2026-10/localisation-raw-compatibility --protocol workers/odmr-edge-ml/experiments/localisation_raw_compatibility/protocol.json --out "$(mktemp -d)/raw-compatibility-check"
 ```
+- **Expected exit codes:** `localisation_redesign/verify_saved.py` exits with status **2** when it correctly reproduces the preserved scientific FAIL. It prints `"artifact_integrity": "pass"`, `"metric_recomputation": "pass"` and `"scientific_gate_passed": false`. Exit 2 with that output is the expected result, not a broken check; a traceback or any other output is a checker failure.
+  `widefield_redesign/verify_saved.py` exits 0 and records the preserved eligibility FAIL inside its output JSON. Its `--out` must be a new absolute path outside the repository.
 - `check_raw_compatibility.py` recomputes the 192 training-only feature comparisons and the maximum differences from the saved arrays and the frozen public protocol. It does not re-run the raw extractor, which needs the raw archive. Its arithmetic is unchanged from the independent verifier recorded in `localisation-raw-compatibility/root-verification/`; only its docstring differs.
