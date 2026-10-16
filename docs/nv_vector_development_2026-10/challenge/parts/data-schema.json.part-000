@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "n": 4096,
+  "bins": 512,
+  "counts_dtype": "int64",
+  "blocks": [
+    {
+      "file": "counts-00.npz",
+      "start": 0,
+      "stop": 4096
+    }
+  ],
+  "noise": "Poisson(2000000 * frozen fluorescence)",
+  "regime": "full_B"
+}

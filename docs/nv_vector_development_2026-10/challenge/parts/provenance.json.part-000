@@ -1,0 +1,39 @@
+{
+  "p1_frozen_commit": "c4c59ad97b78b43c6e4c936e9ff89e45b8efaf2e",
+  "frozen_input_sha256": {
+    "model-final.pt": "5278a1f6d55240ccb69596f70cadc53fdbc3219b8aa345beb84554037565f354",
+    "scaling.npz": "53a387d8207182c7aced5e17ed4732a736af007a6988527c6892ddefff6e1b1f",
+    "setup.json": "8f5a72bc0ac409a82dc583687e55133e00931dc7b490d82d6969d63d67c0f657"
+  },
+  "seed_certificate_sha256": "c6568b72add6c3b30e4a565fe2c4397bc74252f6609a00397111387fbf2f4669",
+  "challenge_source_sha256": {
+    "README.md": "ad18c8724506d9207e165890932df4af9d37ef815a80ce30008e157261daf054",
+    "__init__.py": "b396ef2392168ee74822eac0dea27b389877536a11c4eba5739f956042eb54e3",
+    "access.py": "c5dbe4882ec1c017194890bef7f78035d81239f4cf5e994b1bdbcb5b7499460e",
+    "data.py": "12bbc908bf2f95558e55ecad397ea30c2ca9d3eae139f1891204a6a10706f189",
+    "evaluation.py": "fac0a109660da6f2790010da606786fb80ca1f5969f55559db6c51c243dc5bf8",
+    "methods.py": "b59d7fe21849e2ea872bd7935bced33f05188755a9107e5ed41fa339d2d35814",
+    "protocol.md": "c9382d174efeb8b268f0c3e27cf9707795c30375efdb5a58ea96604cc1d1bbfa",
+    "run.py": "366b4b2c0580b722df8f20a6c1e558e5ef97bee3863a37835e7caa76e48dd774",
+    "test_contracts.py": "5dc4810d562561980d90c84f4a2d0fd82eff0f1194b6285d1dc92d81a8f56d02",
+    "verify_saved.py": "abc00561aa310b4bd428e774f0f340bf3a3426815a7e42858d6805ad964a1dda"
+  },
+  "cublas_workspace_config": ":4096:8",
+  "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:17:31) [GCC 11.2.0]",
+  "numpy": "2.4.2",
+  "torch": "2.11.0+cu130",
+  "cuda": "13.0",
+  "gpu": "NVIDIA GB10",
+  "new_latents": 4096,
+  "new_candidates": [
+    "affine2_f64",
+    "affine2_f32",
+    "affine3_f32",
+    "neural0"
+  ],
+  "training": false,
+  "old_p1_case_access": false,
+  "guard_dtype": "float64",
+  "fallback_dtype": "float64",
+  "no_case_exclusions": true
+}

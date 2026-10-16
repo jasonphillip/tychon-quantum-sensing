@@ -26,6 +26,7 @@
 - [Known-axis software screens](workers/odmr-edge-ml/docs/nv_contribution_screen_2026-10.md): learned initializer stopped at its speed gate; adaptive-acquisition qualification failed; saved-output checkers; negative results.
 - [Measured-data pilots](workers/odmr-edge-ml/docs/measured_pilots_2026-10.md): three public measured NV datasets (widefield, localisation, cardiac); all closed without a confirmed practical advantage; per-lane evidence packages with saved-output verifiers.
 - [Advantage search](docs/nv_advantage_search_2026-10.md): two failures and one conditional single-acquisition localisation transfer pass; evidence packages with public saved-output checks and seed provenance.
+- [Vector inversion speed](docs/nv_vector_development_2026-10.md): learned initializer passed 2x, then failed it against a stronger classical baseline (1.59x; same-data control 2.22x); split-part evidence package with public saved-only checkers.
 - [Kit run artifacts](https://github.com/jasonphillip/polarfire-agent-skills/tree/53acad6/evidence/2026-10-14-deployed-fcnn): separate repository evidence for the deployed scalar model run.
 - [Vector loss ablation](workers/odmr-vector-tracking/docs/association_loss_multiseed.md): matched training seeds, synthetic results, and remaining lock failures.
 - [Simulator comparison with measured data](workers/nv-sensor-sim/docs/external_validation_results.md): discrepancies between default simulation and measured spectra.

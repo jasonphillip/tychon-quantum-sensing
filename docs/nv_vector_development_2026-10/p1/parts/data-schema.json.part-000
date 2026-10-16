@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "counts_per_file_max_rows": 4096,
+  "frequency_bins": 512,
+  "counts_dtype": "int64",
+  "blocks": {
+    "train": [
+      {
+        "file": "train-counts-00.npz",
+        "start": 0,
+        "stop": 4096
+      },
+      {
+        "file": "train-counts-01.npz",
+        "start": 4096,
+        "stop": 8192
+      },
+      {
+        "file": "train-counts-02.npz",
+        "start": 8192,
+        "stop": 12288
+      },
+      {
+        "file": "train-counts-03.npz",
+        "start": 12288,
+        "stop": 16384
+      },
+      {
+        "file": "train-counts-04.npz",
+        "start": 16384,
+        "stop": 20480
+      },
+      {
+        "file": "train-counts-05.npz",
+        "start": 20480,
+        "stop": 24576
+      },
+      {
+        "file": "train-counts-06.npz",
+        "start": 24576,
+        "stop": 28672
+      },
+      {
+        "file": "train-counts-07.npz",
+        "start": 28672,
+        "stop": 32768
+      }
+    ],
+    "validation": [
+      {
+        "file": "validation-counts-00.npz",
+        "start": 0,
+        "stop": 2048
+      }
+    ]
+  }
+}

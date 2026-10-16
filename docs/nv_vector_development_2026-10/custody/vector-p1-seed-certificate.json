@@ -1,0 +1,13 @@
+{
+  "freshness_attestation": "ROOT_CONFIRMED_NOT_PREVIOUSLY_USED",
+  "issued_utc": "2026-10-16T02:39:07.461017+00:00",
+  "protocol_sha256": "872711a91ea25b784afacf7dca31c5210dafa80efbe21f25635024fa5bf8c64e",
+  "purpose": "vector_p1",
+  "source_commit": "c4c59ad97b78b43c6e4c936e9ff89e45b8efaf2e",
+  "status": "ISSUED",
+  "train_noise_seed": "274040220028146912109744122391957943835",
+  "train_parameter_seed": "290454943200840778447616124799221620290",
+  "training_seed": "30848355483923616521278441820984575503",
+  "validation_noise_seed": "273179734876935634647651006578243346687",
+  "validation_parameter_seed": "144286646962083243369323263699756891398"
+}

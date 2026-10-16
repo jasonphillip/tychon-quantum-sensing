@@ -1,0 +1,418 @@
+{
+  "lm": {
+    "host_to_host_seconds": [
+      9.222477992996573,
+      9.232483191997744,
+      9.23242830199888
+    ],
+    "batch": 4096,
+    "chunk": 1024,
+    "warmups": 1,
+    "repeats": 3,
+    "model_dtype": null,
+    "refinement_dtype": "float64",
+    "guard_dtype": "float64",
+    "fallback_dtype": "float64",
+    "output_dtype": "float64",
+    "service_outputs": [
+      "parameters",
+      "accepted",
+      "reduced_deviance",
+      "fallback"
+    ],
+    "includes_transfer_cast_guard_fallback": true,
+    "host_repeat_metrics": [
+      {
+        "n": 4096,
+        "mean_uT": 1.944391596999191,
+        "p95_uT": 4.923624606771243,
+        "rmse_uT": 2.427519882435024,
+        "max_uT": 10.820681805824158,
+        "rejections": 0,
+        "fallbacks": 4096
+      },
+      {
+        "n": 4096,
+        "mean_uT": 1.944391596999191,
+        "p95_uT": 4.923624606771243,
+        "rmse_uT": 2.427519882435024,
+        "max_uT": 10.820681805824158,
+        "rejections": 0,
+        "fallbacks": 4096
+      },
+      {
+        "n": 4096,
+        "mean_uT": 1.944391596999191,
+        "p95_uT": 4.923624606771243,
+        "rmse_uT": 2.427519882435024,
+        "max_uT": 10.820681805824158,
+        "rejections": 0,
+        "fallbacks": 4096
+      }
+    ]
+  },
+  "affine3": {
+    "host_to_host_seconds": [
+      0.2656145470100455,
+      0.2643011239997577,
+      0.2655120030103717
+    ],
+    "batch": 4096,
+    "chunk": 1024,
+    "warmups": 1,
+    "repeats": 3,
+    "model_dtype": null,
+    "refinement_dtype": "float64",
+    "guard_dtype": "float64",
+    "fallback_dtype": "float64",
+    "output_dtype": "float64",
+    "service_outputs": [
+      "parameters",
+      "accepted",
+      "reduced_deviance",
+      "fallback"
+    ],
+    "includes_transfer_cast_guard_fallback": true,
+    "host_repeat_metrics": [
+      {
+        "n": 4096,
+        "mean_uT": 1.9433929470906675,
+        "p95_uT": 4.9038968417939675,
+        "rmse_uT": 2.4259815032649628,
+        "max_uT": 10.828342122630273,
+        "rejections": 0,
+        "fallbacks": 0
+      },
+      {
+        "n": 4096,
+        "mean_uT": 1.9433929470906675,
+        "p95_uT": 4.9038968417939675,
+        "rmse_uT": 2.4259815032649628,
+        "max_uT": 10.828342122630273,
+        "rejections": 0,
+        "fallbacks": 0
+      },
+      {
+        "n": 4096,
+        "mean_uT": 1.9433929470906675,
+        "p95_uT": 4.9038968417939675,
+        "rmse_uT": 2.4259815032649628,
+        "max_uT": 10.828342122630273,
+        "rejections": 0,
+        "fallbacks": 0
+      }
+    ]
+  },
+  "tied12": {
+    "host_to_host_seconds": [
+      5.6253846650070045,
+      5.6293499910098035,
+      5.620343999995384
+    ],
+    "batch": 4096,
+    "chunk": 1024,
+    "warmups": 1,
+    "repeats": 3,
+    "model_dtype": null,
+    "refinement_dtype": "float64",
+    "guard_dtype": "float64",
+    "fallback_dtype": "float64",
+    "output_dtype": "float64",
+    "service_outputs": [
+      "parameters",
+      "accepted",
+      "reduced_deviance",
+      "fallback"
+    ],
+    "includes_transfer_cast_guard_fallback": true,
+    "host_repeat_metrics": [
+      {
+        "n": 4096,
+        "mean_uT": 1.953699738731503,
+        "p95_uT": 4.941069538661102,
+        "rmse_uT": 2.4443660685895705,
+        "max_uT": 12.29591342583137,
+        "rejections": 0,
+        "fallbacks": 34
+      },
+      {
+        "n": 4096,
+        "mean_uT": 1.953699738731503,
+        "p95_uT": 4.941069538661102,
+        "rmse_uT": 2.4443660685895705,
+        "max_uT": 12.29591342583137,
+        "rejections": 0,
+        "fallbacks": 34
+      },
+      {
+        "n": 4096,
+        "mean_uT": 1.953699738731503,
+        "p95_uT": 4.941069538661102,
+        "rmse_uT": 2.4443660685895705,
+        "max_uT": 12.29591342583137,
+        "rejections": 0,
+        "fallbacks": 34
+      }
+    ]
+  },
+  "neural1": {
+    "host_to_host_seconds": [
+      0.11939199399785139,
+      0.11962234499515034,
+      0.11938232998363674
+    ],
+    "batch": 4096,
+    "chunk": 1024,
+    "warmups": 1,
+    "repeats": 3,
+    "model_dtype": "float32",
+    "refinement_dtype": "float64",
+    "guard_dtype": "float64",
+    "fallback_dtype": "float64",
+    "output_dtype": "float64",
+    "service_outputs": [
+      "parameters",
+      "accepted",
+      "reduced_deviance",
+      "fallback"
+    ],
+    "includes_transfer_cast_guard_fallback": true,
+    "host_repeat_metrics": [
+      {
+        "n": 4096,
+        "mean_uT": 1.949793383542092,
+        "p95_uT": 4.955267187315901,
+        "rmse_uT": 2.4345959016738568,
+        "max_uT": 10.480067214591108,
+        "rejections": 0,
+        "fallbacks": 0
+      },
+      {
+        "n": 4096,
+        "mean_uT": 1.949793383542092,
+        "p95_uT": 4.955267187315901,
+        "rmse_uT": 2.4345959016738568,
+        "max_uT": 10.480067214591108,
+        "rejections": 0,
+        "fallbacks": 0
+      },
+      {
+        "n": 4096,
+        "mean_uT": 1.949793383542092,
+        "p95_uT": 4.955267187315901,
+        "rmse_uT": 2.4345959016738568,
+        "max_uT": 10.480067214591108,
+        "rejections": 0,
+        "fallbacks": 0
+      }
+    ]
+  },
+  "affine2_f64": {
+    "host_to_host_seconds": [
+      0.1898222879972309,
+      0.18996764800976962,
+      0.19024958400405012
+    ],
+    "batch": 4096,
+    "chunk": 1024,
+    "warmups": 1,
+    "repeats": 3,
+    "model_dtype": null,
+    "refinement_dtype": "float64",
+    "guard_dtype": "float64",
+    "fallback_dtype": "float64",
+    "output_dtype": "float64",
+    "service_outputs": [
+      "parameters",
+      "accepted",
+      "reduced_deviance",
+      "fallback"
+    ],
+    "includes_transfer_cast_guard_fallback": true,
+    "host_repeat_metrics": [
+      {
+        "n": 4096,
+        "mean_uT": 1.9542020387081256,
+        "p95_uT": 4.9144567362133875,
+        "rmse_uT": 2.43915591106074,
+        "max_uT": 10.916438310736003,
+        "rejections": 0,
+        "fallbacks": 0
+      },
+      {
+        "n": 4096,
+        "mean_uT": 1.9542020387081256,
+        "p95_uT": 4.9144567362133875,
+        "rmse_uT": 2.43915591106074,
+        "max_uT": 10.916438310736003,
+        "rejections": 0,
+        "fallbacks": 0
+      },
+      {
+        "n": 4096,
+        "mean_uT": 1.9542020387081256,
+        "p95_uT": 4.9144567362133875,
+        "rmse_uT": 2.43915591106074,
+        "max_uT": 10.916438310736003,
+        "rejections": 0,
+        "fallbacks": 0
+      }
+    ]
+  },
+  "affine2_f32": {
+    "host_to_host_seconds": [
+      2.603736883000238,
+      2.609804207982961,
+      2.6178650520159863
+    ],
+    "batch": 4096,
+    "chunk": 1024,
+    "warmups": 1,
+    "repeats": 3,
+    "model_dtype": null,
+    "refinement_dtype": "float32",
+    "guard_dtype": "float64",
+    "fallback_dtype": "float64",
+    "output_dtype": "float64",
+    "service_outputs": [
+      "parameters",
+      "accepted",
+      "reduced_deviance",
+      "fallback"
+    ],
+    "includes_transfer_cast_guard_fallback": true,
+    "host_repeat_metrics": [
+      {
+        "n": 4096,
+        "mean_uT": 1.9539663680596449,
+        "p95_uT": 4.929836761676046,
+        "rmse_uT": 2.438532073898608,
+        "max_uT": 10.922329066091336,
+        "rejections": 0,
+        "fallbacks": 26
+      },
+      {
+        "n": 4096,
+        "mean_uT": 1.9539663680596449,
+        "p95_uT": 4.929836761676046,
+        "rmse_uT": 2.438532073898608,
+        "max_uT": 10.922329066091336,
+        "rejections": 0,
+        "fallbacks": 26
+      },
+      {
+        "n": 4096,
+        "mean_uT": 1.9539663680596449,
+        "p95_uT": 4.929836761676046,
+        "rmse_uT": 2.438532073898608,
+        "max_uT": 10.922329066091336,
+        "rejections": 0,
+        "fallbacks": 26
+      }
+    ]
+  },
+  "affine3_f32": {
+    "host_to_host_seconds": [
+      2.518010358995525,
+      2.5261862110055517,
+      2.5214904860185925
+    ],
+    "batch": 4096,
+    "chunk": 1024,
+    "warmups": 1,
+    "repeats": 3,
+    "model_dtype": null,
+    "refinement_dtype": "float32",
+    "guard_dtype": "float64",
+    "fallback_dtype": "float64",
+    "output_dtype": "float64",
+    "service_outputs": [
+      "parameters",
+      "accepted",
+      "reduced_deviance",
+      "fallback"
+    ],
+    "includes_transfer_cast_guard_fallback": true,
+    "host_repeat_metrics": [
+      {
+        "n": 4096,
+        "mean_uT": 1.9440016519294157,
+        "p95_uT": 4.912940275522984,
+        "rmse_uT": 2.42640985495056,
+        "max_uT": 10.818773280539057,
+        "rejections": 0,
+        "fallbacks": 20
+      },
+      {
+        "n": 4096,
+        "mean_uT": 1.9440016519294157,
+        "p95_uT": 4.912940275522984,
+        "rmse_uT": 2.42640985495056,
+        "max_uT": 10.818773280539057,
+        "rejections": 0,
+        "fallbacks": 20
+      },
+      {
+        "n": 4096,
+        "mean_uT": 1.9440016519294157,
+        "p95_uT": 4.912940275522984,
+        "rmse_uT": 2.42640985495056,
+        "max_uT": 10.818773280539057,
+        "rejections": 0,
+        "fallbacks": 20
+      }
+    ]
+  },
+  "neural0": {
+    "host_to_host_seconds": [
+      3.0008786860271357,
+      2.9912240840203594,
+      2.996961200988153
+    ],
+    "batch": 4096,
+    "chunk": 1024,
+    "warmups": 1,
+    "repeats": 3,
+    "model_dtype": "float32",
+    "refinement_dtype": null,
+    "guard_dtype": "float64",
+    "fallback_dtype": "float64",
+    "output_dtype": "float64",
+    "service_outputs": [
+      "parameters",
+      "accepted",
+      "reduced_deviance",
+      "fallback"
+    ],
+    "includes_transfer_cast_guard_fallback": true,
+    "host_repeat_metrics": [
+      {
+        "n": 4096,
+        "mean_uT": 2.663221043176137,
+        "p95_uT": 6.545921640629755,
+        "rmse_uT": 3.241665767321225,
+        "max_uT": 13.457012181873393,
+        "rejections": 0,
+        "fallbacks": 810
+      },
+      {
+        "n": 4096,
+        "mean_uT": 2.663221043176137,
+        "p95_uT": 6.545921640629755,
+        "rmse_uT": 3.241665767321225,
+        "max_uT": 13.457012181873393,
+        "rejections": 0,
+        "fallbacks": 810
+      },
+      {
+        "n": 4096,
+        "mean_uT": 2.663221043176137,
+        "p95_uT": 6.545921640629755,
+        "rmse_uT": 3.241665767321225,
+        "max_uT": 13.457012181873393,
+        "rejections": 0,
+        "fallbacks": 810
+      }
+    ]
+  }
+}

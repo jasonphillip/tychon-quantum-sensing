@@ -1,0 +1,10 @@
+{
+  "purpose": "vector_baseline_challenge",
+  "status": "ISSUED",
+  "freshness_attestation": "ROOT_CONFIRMED_NOT_PREVIOUSLY_USED",
+  "source_commit": "869ad0f3c7ea881fd462ef1134a4159d5135bee2",
+  "protocol_sha256": "c9382d174efeb8b268f0c3e27cf9707795c30375efdb5a58ea96604cc1d1bbfa",
+  "issued_utc": "2026-10-16T03:07:48.832902+00:00",
+  "parameter_seed": "263253964155428661741771458199168386081",
+  "noise_seed": "121168913961198438018435810157418152687"
+}

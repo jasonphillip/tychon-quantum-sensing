@@ -1,0 +1,14 @@
+{
+  "generation_and_save_seconds": 11.242140919988742,
+  "training_and_checkpoint_seconds": 4.578022077999776,
+  "neural_load_scaling_seconds": 0.003738350991625339,
+  "total_candidate_setup_seconds": 15.852165243995842,
+  "persistent_engine_calibration_seconds": {
+    "lm": 0.6916858229960781,
+    "affine1": 0.004893166013062,
+    "affine3": 0.004975407005986199,
+    "affine5": 0.0051427500147838145,
+    "tied12": 0.004908591014100239,
+    "neural1": 0.00499762999243103
+  }
+}

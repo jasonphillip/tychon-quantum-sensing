@@ -57,6 +57,27 @@ jobs:
           set -e
           python docs/nv_advantage_search_2026-10/check_package.py --expected-artifacts-sha256 edf9957d309455244c2b1ffff9ac6215f4eef0bafb0a4289330514591571e4cf
           python docs/nv_advantage_search_2026-10/check_raw_compatibility.py --bundle docs/nv_advantage_search_2026-10/localisation-raw-compatibility --protocol workers/odmr-edge-ml/experiments/localisation_raw_compatibility/protocol.json --out "$RUNNER_TEMP/raw-compatibility-check"
+      - name: Test odmr-edge-ml vector lanes (manufactured fixtures; one process per lane; all six required)
+        # Same-named test modules (test_contracts.py, test_manufactured.py) exist in several lanes: never collect two lanes in one process.
+        working-directory: workers/odmr-edge-ml
+        env:
+          PYTHONPATH: src:../nv-sensor-sim/src
+        run: |
+          set -e
+          python -m pytest -q -p no:cacheprovider experiments/vector_line_comparator/test_manufactured.py
+          python -m pytest -q -p no:cacheprovider experiments/vector_direct_screen/test_manufactured.py
+          python -m pytest -q -p no:cacheprovider experiments/vector_classical_qualification/test_contracts.py
+          python -m pytest -q -p no:cacheprovider experiments/vector_noise_qualification/test_contracts.py
+          python -m pytest -q -p no:cacheprovider experiments/vector_initializer_development/test_contracts.py
+          python -m pytest -q -p no:cacheprovider experiments/vector_baseline_challenge/test_contracts.py
+      - name: Check vector development evidence package (hashes; saved-only P1 and challenge recomputation; exit 0 also when the 2x gate FAIL reproduces)
+        run: |
+          set -e
+          python docs/nv_vector_development_2026-10/check_package.py --expected-artifacts-sha256 90d07580754aaf95376f433fad84cd074c7b01b394d7eca92b28df80e39bc6b4
+          SOURCE="$GITHUB_WORKSPACE/workers/odmr-edge-ml"
+          CONFIG="$SOURCE/experiments/vector_direct_screen/config.json"
+          python "$SOURCE/scripts/vector_public_saved/verify_p1_saved.py" --bundle "$GITHUB_WORKSPACE/docs/nv_vector_development_2026-10/p1" --expected-manifest-sha256 33227a10dbb88865a4947b7eccc89822e49501f7366443150410fc983f13f22a --config "$CONFIG" --out "$RUNNER_TEMP/vector-p1-check"
+          python "$SOURCE/scripts/vector_public_saved/verify_challenge_saved.py" --bundle "$GITHUB_WORKSPACE/docs/nv_vector_development_2026-10/challenge" --expected-manifest-sha256 c2008011a48b3ce7af69f2334710317072d54f2a6a7c233d38cf2b15d98dd969 --config "$CONFIG" --out "$RUNNER_TEMP/vector-challenge-check"
       - name: Test odmr-vector-tracking
         working-directory: workers/odmr-vector-tracking
         env:

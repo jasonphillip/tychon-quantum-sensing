@@ -1,0 +1,35 @@
+{
+  "seed_certificate_sha256": "75087c1147d854b319d0ccd8b7ef39f8836b7887f5aacb979a2cc76990976422",
+  "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:17:31) [GCC 11.2.0]",
+  "numpy": "2.4.2",
+  "torch": "2.11.0+cu130",
+  "cuda": "13.0",
+  "gpu": "NVIDIA GB10",
+  "data_counts": {
+    "train": 32768,
+    "validation": 2048
+  },
+  "noise": "Poisson(2000000 * frozen fluorescence)",
+  "cublas_workspace_config": ":4096:8",
+  "train_dtype": "float32",
+  "model_dtype": "float32",
+  "input_normalization_dtype": "float32",
+  "physical_dtype": "float64",
+  "output_dtype": "float64",
+  "epochs": 20,
+  "checkpoint_selection": "final only",
+  "all_validation_cases_retained": true,
+  "source_sha256": {
+    "README.md": "9d0570d59b4aaa1b1ce71dcdb1e84baa063ac8f9e123c45a451c9fa77f070ffc",
+    "__init__.py": "9a531c961df03b83121cd27f60ba4774639b46d68380031458f6be01dc3ca991",
+    "access.py": "de88946134f3efb355ee68692d4be01ea52145da32e58bc9b3d622e758d53c56",
+    "evaluation.py": "f1612b981c628aebdabd0ab3cdeceb51ad47853b99e619f29b659b4562a03436",
+    "learning.py": "abcd2ef421cbdbe71f15da978859fd132a9909da28ad93fbb6849f8687ae760d",
+    "methods.py": "cb0bb97ec9eb2e491dbf31296d5bed5a687cdf64beac3b1707556bb8f964f2f5",
+    "protocol.md": "872711a91ea25b784afacf7dca31c5210dafa80efbe21f25635024fa5bf8c64e",
+    "run.py": "f29d598bdef0d34bd8543c0c6178c8e8b53757ce1d061f910e94db865a1b9774",
+    "test_contracts.py": "7e54a2a5760a39a9e8b9d390f5c643ad17ec7dfe445ac73fcae564320c47a3b0",
+    "verify_saved.py": "a10ed1603a4ba263d78d4012e80abf3a182b117d3d1988f5b102338b13a3f353"
+  },
+  "no_p0_inputs": true
+}

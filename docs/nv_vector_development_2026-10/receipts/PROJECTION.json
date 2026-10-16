@@ -1,0 +1,75 @@
+{
+ "schema": 1,
+ "purpose": "Public field projection of six resource receipts; raw receipts are kept privately unchanged.",
+ "rules": {
+  "string_prefix_tokens_in_order": [
+   {
+    "private_prefix_class": "campaign working directory",
+    "token": "<campaign>/"
+   },
+   {
+    "private_prefix_class": "odmr-edge-ml worktree",
+    "token": "<odmr-edge-ml checkout at the recorded source commit>"
+   },
+   {
+    "private_prefix_class": "per-job runtime cache",
+    "token": "<runtime-cache>/"
+   },
+   {
+    "private_prefix_class": "Python interpreter path",
+    "token": "<python3>"
+   }
+  ],
+  "applies_to": "every string value and every object key (for example the path keys under sources)",
+  "redacted_fields": [
+   "environment.HOME",
+   "environment.USER"
+  ],
+  "kept_unchanged": "every other field and value, including host role labels, resource figures, hashes and timestamps",
+  "serialization": "json.dumps(indent=1) plus newline; key order kept"
+ },
+ "receipts": [
+  {
+   "job": "vector-p1-fixtures-v1",
+   "original_sha256": "3ffafbd25cda0164ea6f76972f312830942dddff427c85d32ab7ce80e285f707",
+   "original_size_bytes": 14339,
+   "public_file": "vector-p1-fixtures-v1.receipt.public.json",
+   "public_sha256": "1c8f330a4904af950e3748c8ac8a7b8d306a129d747f3e4e5bd04064b663946d"
+  },
+  {
+   "job": "vector-p1-development-v1",
+   "original_sha256": "266de8eb710e1a330607fae07d5fd44371a09954c7b828238805d73390f1034c",
+   "original_size_bytes": 14852,
+   "public_file": "vector-p1-development-v1.receipt.public.json",
+   "public_sha256": "e6c4d9f73e4e5206f357c4f255beca4abb59453e805dbb57e35651112de97cac"
+  },
+  {
+   "job": "vector-p1-verification-v1",
+   "original_sha256": "58d5f8576538127a6a13c3e28bf7b7070c429073ded6f31d4fd5ef13d11925fc",
+   "original_size_bytes": 14798,
+   "public_file": "vector-p1-verification-v1.receipt.public.json",
+   "public_sha256": "c06680d22402748989776d8153c35d5e02cabecc6150e4b12967ce737aa30417"
+  },
+  {
+   "job": "vector-baseline-challenge-fixtures-v1",
+   "original_sha256": "baa47e1b58d4f6dcdbc6516e119ba140626aafcbb5faff1fce535ec7f1e7cbb1",
+   "original_size_bytes": 16596,
+   "public_file": "vector-baseline-challenge-fixtures-v1.receipt.public.json",
+   "public_sha256": "d74e23c2dc7874e6c754feb665b5489687b93d65891fa63e3ab685281f4a2838"
+  },
+  {
+   "job": "vector-baseline-challenge-development-v1",
+   "original_sha256": "1dbb93e627c7e80582cbecc360d09c9db63b69f2ddf5825e91cea13ab9d4faf1",
+   "original_size_bytes": 17751,
+   "public_file": "vector-baseline-challenge-development-v1.receipt.public.json",
+   "public_sha256": "24ba7ba42e520caf612b182bc1cd1a4cf4e505023ff31fe3735a1d5b8c385b72"
+  },
+  {
+   "job": "vector-baseline-challenge-verification-v1",
+   "original_sha256": "abb8adf7b31a9151fe4aa2bbe59586a8f9e16558e25b034c9b8f85c831745110",
+   "original_size_bytes": 17678,
+   "public_file": "vector-baseline-challenge-verification-v1.receipt.public.json",
+   "public_sha256": "37fb2d2a09c6fbb30b1f9228d589de933d029d57dcb0df1db02f331e2a520292"
+  }
+ ]
+}

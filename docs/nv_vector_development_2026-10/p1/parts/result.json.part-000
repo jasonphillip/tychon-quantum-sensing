@@ -1,0 +1,62 @@
+{
+  "adequate_classical": [
+    "lm",
+    "affine3",
+    "affine5",
+    "tied12"
+  ],
+  "classical_engineering_opportunity": {
+    "selected": "affine3",
+    "selection": "4096 host timing; within5percent tie favors fewer steps",
+    "speedup_vs_full_lm": 34.79964877563069,
+    "full_lm_speed_pass": true,
+    "tied12_adequate": true,
+    "speedup_vs_tied12": 20.48996526657249,
+    "tied12_speed_requirement_pass": true,
+    "seconds_saved_per_million": 2209.785289792876,
+    "calibration_setup_seconds": 0.004975407005986199,
+    "break_even_spectra_conservative_calibration": 3,
+    "adequate_tied_line_comparison": "INCLUDED",
+    "engineering_opportunity_pass": true,
+    "neural_win": false,
+    "algorithmic_novelty_claim": false
+  },
+  "matched_accuracy_pass": true,
+  "comparisons": {
+    "1": {
+      "fastest_adequate_classical": "affine3",
+      "classical_seconds": 0.01916956200147979,
+      "neural_seconds": 0.01027548499405384,
+      "speedup": 1.8655627459504562,
+      "seconds_saved_per_million": 8894.077007425949,
+      "classical_seconds_per_million": 19169.56200147979,
+      "neural_seconds_per_million": 10275.48499405384,
+      "break_even_spectra": 1783
+    },
+    "64": {
+      "fastest_adequate_classical": "affine3",
+      "classical_seconds": 0.019876968988683075,
+      "neural_seconds": 0.010775853006634861,
+      "speedup": 1.8445842734161755,
+      "seconds_saved_per_million": 142.20493721950334,
+      "classical_seconds_per_million": 310.57764044817304,
+      "neural_seconds_per_million": 168.3727032286697,
+      "break_even_spectra": 111510
+    },
+    "4096": {
+      "fastest_adequate_classical": "affine3",
+      "classical_seconds": 0.26779214799171314,
+      "neural_seconds": 0.12014299799920991,
+      "speedup": 2.228945110837622,
+      "seconds_saved_per_million": 36.04715575988848,
+      "classical_seconds_per_million": 65.37894238078934,
+      "neural_seconds_per_million": 29.331786620900857,
+      "break_even_spectra": 439901
+    }
+  },
+  "continuation_pass": true,
+  "scope": "synthetic computational development only",
+  "practical_adoption": false,
+  "confirmation_authorized": false,
+  "tied12_comparator_pending": false
+}

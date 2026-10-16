@@ -1,0 +1,40 @@
+{
+  "adequate_classical": [
+    "lm",
+    "affine3",
+    "tied12",
+    "affine2_f64",
+    "affine2_f32",
+    "affine3_f32"
+  ],
+  "fastest_adequate_classical": "affine2_f64",
+  "classical_host_seconds": 0.18996764800976962,
+  "classical_seconds_per_million": 46.37882031488516,
+  "neural_routes": {
+    "neural1": {
+      "matched_accuracy_pass": true,
+      "speedup": 1.5911255156119457,
+      "host_seconds": 0.11939199399785139,
+      "seconds_per_million": 29.148436034631686,
+      "seconds_saved_per_million": 17.230384280253475,
+      "setup_cost_seconds": 15.864076373021817,
+      "break_even_spectra": 920704,
+      "continuation_pass": false
+    },
+    "neural0": {
+      "matched_accuracy_pass": false,
+      "speedup": 0.06338675587362753,
+      "host_seconds": 2.996961200988153,
+      "seconds_per_million": 731.6799807099983,
+      "seconds_saved_per_million": -685.3011603951131,
+      "setup_cost_seconds": 15.861660597991431,
+      "break_even_spectra": null,
+      "continuation_pass": false
+    }
+  },
+  "any_neural_continuation": false,
+  "scope": "fresh synthetic baseline challenge only",
+  "practical_adoption": false,
+  "confirmation_authorized": false,
+  "selection_rule": "minimum median; exact timing ties use declared classical order; no post-hoc route changes"
+}

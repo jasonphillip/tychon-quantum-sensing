@@ -1,0 +1,63 @@
+{
+  "passed": true,
+  "input_manifest_sha256": "98429b2dc9cd4cbcc6854a17aed7405dca31e80f550bc4e0f2f3b61667277430",
+  "recomputed_metrics": {
+    "lm": {
+      "n": 2048,
+      "mean_uT": 1.9270838667122694,
+      "p95_uT": 4.580958782259002,
+      "rmse_uT": 2.4063455876406037,
+      "max_uT": 15.108549016343568,
+      "rejections": 0,
+      "fallbacks": 2048
+    },
+    "affine1": {
+      "n": 2048,
+      "mean_uT": 2.3533013296629344,
+      "p95_uT": 5.383801784378023,
+      "rmse_uT": 2.8538549074757293,
+      "max_uT": 15.177409790365642,
+      "rejections": 0,
+      "fallbacks": 0
+    },
+    "affine3": {
+      "n": 2048,
+      "mean_uT": 1.9287640931079175,
+      "p95_uT": 4.582594355604756,
+      "rmse_uT": 2.407373819010888,
+      "max_uT": 15.10827716098438,
+      "rejections": 0,
+      "fallbacks": 0
+    },
+    "affine5": {
+      "n": 2048,
+      "mean_uT": 1.9269314946286502,
+      "p95_uT": 4.584903547238341,
+      "rmse_uT": 2.406078608389442,
+      "max_uT": 15.051189159467304,
+      "rejections": 0,
+      "fallbacks": 0
+    },
+    "tied12": {
+      "n": 2048,
+      "mean_uT": 1.9415096076020397,
+      "p95_uT": 4.641924561489789,
+      "rmse_uT": 2.4273595068287066,
+      "max_uT": 15.148402963570598,
+      "rejections": 0,
+      "fallbacks": 13
+    },
+    "neural1": {
+      "n": 2048,
+      "mean_uT": 1.9473938811441451,
+      "p95_uT": 4.609246725212554,
+      "rmse_uT": 2.4269135485895643,
+      "max_uT": 15.22076616590082,
+      "rejections": 0,
+      "fallbacks": 0
+    }
+  },
+  "continuation_pass": true,
+  "classical_candidate": "affine3",
+  "no_inference": true
+}

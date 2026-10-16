@@ -1,0 +1,860 @@
+{
+  "lm": {
+    "1": {
+      "host_to_host_seconds": [
+        0.13963686701026745,
+        0.13999803399201483,
+        0.1394180339993909
+      ],
+      "resident_seconds": [
+        0.13966259398148395,
+        0.13808352299383841,
+        0.13918457899126224
+      ],
+      "host_repeat_metrics": [
+        {
+          "n": 1,
+          "mean_uT": 2.8126041342625117,
+          "p95_uT": 2.8126041342625117,
+          "rmse_uT": 2.8126041342625117,
+          "max_uT": 2.8126041342625117,
+          "rejections": 0,
+          "fallbacks": 1
+        },
+        {
+          "n": 1,
+          "mean_uT": 2.8126041342625117,
+          "p95_uT": 2.8126041342625117,
+          "rmse_uT": 2.8126041342625117,
+          "max_uT": 2.8126041342625117,
+          "rejections": 0,
+          "fallbacks": 1
+        },
+        {
+          "n": 1,
+          "mean_uT": 2.8126041342625117,
+          "p95_uT": 2.8126041342625117,
+          "rmse_uT": 2.8126041342625117,
+          "max_uT": 2.8126041342625117,
+          "rejections": 0,
+          "fallbacks": 1
+        }
+      ],
+      "unique_validation_inputs": 1,
+      "repeats_for_timing_only": false,
+      "model_dtype": null,
+      "physical_dtype": "float64",
+      "output_dtype": "float64",
+      "chunk": 1024
+    },
+    "64": {
+      "host_to_host_seconds": [
+        0.6425657250219956,
+        0.6498672919988167,
+        0.6462922840146348
+      ],
+      "resident_seconds": [
+        0.6467160279862583,
+        0.6445033249910921,
+        0.6477461390022654
+      ],
+      "host_repeat_metrics": [
+        {
+          "n": 64,
+          "mean_uT": 1.865630551426382,
+          "p95_uT": 3.614471842166644,
+          "rmse_uT": 2.1787609503897025,
+          "max_uT": 4.98456427017933,
+          "rejections": 0,
+          "fallbacks": 64
+        },
+        {
+          "n": 64,
+          "mean_uT": 1.865630551426382,
+          "p95_uT": 3.614471842166644,
+          "rmse_uT": 2.1787609503897025,
+          "max_uT": 4.98456427017933,
+          "rejections": 0,
+          "fallbacks": 64
+        },
+        {
+          "n": 64,
+          "mean_uT": 1.865630551426382,
+          "p95_uT": 3.614471842166644,
+          "rmse_uT": 2.1787609503897025,
+          "max_uT": 4.98456427017933,
+          "rejections": 0,
+          "fallbacks": 64
+        }
+      ],
+      "unique_validation_inputs": 64,
+      "repeats_for_timing_only": false,
+      "model_dtype": null,
+      "physical_dtype": "float64",
+      "output_dtype": "float64",
+      "chunk": 1024
+    },
+    "4096": {
+      "host_to_host_seconds": [
+        9.316737430985086,
+        9.319072694983333,
+        9.406413562013768
+      ],
+      "resident_seconds": [
+        9.317236218019389,
+        9.32252631400479,
+        9.322347290988546
+      ],
+      "host_repeat_metrics": [
+        {
+          "n": 4096,
+          "mean_uT": 1.9270838667122694,
+          "p95_uT": 4.589229533936791,
+          "rmse_uT": 2.4063455876406037,
+          "max_uT": 15.108549016343568,
+          "rejections": 0,
+          "fallbacks": 4096
+        },
+        {
+          "n": 4096,
+          "mean_uT": 1.9270838667122694,
+          "p95_uT": 4.589229533936791,
+          "rmse_uT": 2.4063455876406037,
+          "max_uT": 15.108549016343568,
+          "rejections": 0,
+          "fallbacks": 4096
+        },
+        {
+          "n": 4096,
+          "mean_uT": 1.9270838667122694,
+          "p95_uT": 4.589229533936791,
+          "rmse_uT": 2.4063455876406037,
+          "max_uT": 15.108549016343568,
+          "rejections": 0,
+          "fallbacks": 4096
+        }
+      ],
+      "unique_validation_inputs": 2048,
+      "repeats_for_timing_only": true,
+      "model_dtype": null,
+      "physical_dtype": "float64",
+      "output_dtype": "float64",
+      "chunk": 1024
+    }
+  },
+  "affine1": {
+    "1": {
+      "host_to_host_seconds": [
+        0.00982522900449112,
+        0.00950346901663579,
+        0.0093216449895408
+      ],
+      "resident_seconds": [
+        0.009117261011851951,
+        0.009141580987488851,
+        0.009078797011170536
+      ],
+      "host_repeat_metrics": [
+        {
+          "n": 1,
+          "mean_uT": 3.586038838513533,
+          "p95_uT": 3.586038838513533,
+          "rmse_uT": 3.586038838513533,
+          "max_uT": 3.586038838513533,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 1,
+          "mean_uT": 3.586038838513533,
+          "p95_uT": 3.586038838513533,
+          "rmse_uT": 3.586038838513533,
+          "max_uT": 3.586038838513533,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 1,
+          "mean_uT": 3.586038838513533,
+          "p95_uT": 3.586038838513533,
+          "rmse_uT": 3.586038838513533,
+          "max_uT": 3.586038838513533,
+          "rejections": 0,
+          "fallbacks": 0
+        }
+      ],
+      "unique_validation_inputs": 1,
+      "repeats_for_timing_only": false,
+      "model_dtype": null,
+      "physical_dtype": "float64",
+      "output_dtype": "float64",
+      "chunk": 1024
+    },
+    "64": {
+      "host_to_host_seconds": [
+        0.009871117013972253,
+        0.009818669001106173,
+        0.00976258801529184
+      ],
+      "resident_seconds": [
+        0.009487916977377608,
+        0.009339564974652603,
+        0.00948060498922132
+      ],
+      "host_repeat_metrics": [
+        {
+          "n": 64,
+          "mean_uT": 2.213434606306312,
+          "p95_uT": 4.4178942797069345,
+          "rmse_uT": 2.634552637166508,
+          "max_uT": 7.661294408394207,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 64,
+          "mean_uT": 2.213434606306312,
+          "p95_uT": 4.4178942797069345,
+          "rmse_uT": 2.634552637166508,
+          "max_uT": 7.661294408394207,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 64,
+          "mean_uT": 2.213434606306312,
+          "p95_uT": 4.4178942797069345,
+          "rmse_uT": 2.634552637166508,
+          "max_uT": 7.661294408394207,
+          "rejections": 0,
+          "fallbacks": 0
+        }
+      ],
+      "unique_validation_inputs": 64,
+      "repeats_for_timing_only": false,
+      "model_dtype": null,
+      "physical_dtype": "float64",
+      "output_dtype": "float64",
+      "chunk": 1024
+    },
+    "4096": {
+      "host_to_host_seconds": [
+        0.11790247200406156,
+        0.11666843999410048,
+        0.11611882399301976
+      ],
+      "resident_seconds": [
+        0.11454373699962161,
+        0.11432082499959506,
+        0.11498746401048265
+      ],
+      "host_repeat_metrics": [
+        {
+          "n": 4096,
+          "mean_uT": 2.3533013296629344,
+          "p95_uT": 5.390270563851211,
+          "rmse_uT": 2.8538549074757293,
+          "max_uT": 15.177409790365642,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 4096,
+          "mean_uT": 2.3533013296629344,
+          "p95_uT": 5.390270563851211,
+          "rmse_uT": 2.8538549074757293,
+          "max_uT": 15.177409790365642,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 4096,
+          "mean_uT": 2.3533013296629344,
+          "p95_uT": 5.390270563851211,
+          "rmse_uT": 2.8538549074757293,
+          "max_uT": 15.177409790365642,
+          "rejections": 0,
+          "fallbacks": 0
+        }
+      ],
+      "unique_validation_inputs": 2048,
+      "repeats_for_timing_only": true,
+      "model_dtype": null,
+      "physical_dtype": "float64",
+      "output_dtype": "float64",
+      "chunk": 1024
+    }
+  },
+  "affine3": {
+    "1": {
+      "host_to_host_seconds": [
+        0.01916956200147979,
+        0.018920937000075355,
+        0.0194473699957598
+      ],
+      "resident_seconds": [
+        0.018589001992950216,
+        0.018789656984154135,
+        0.019043657986912876
+      ],
+      "host_repeat_metrics": [
+        {
+          "n": 1,
+          "mean_uT": 2.7982004495028137,
+          "p95_uT": 2.7982004495028137,
+          "rmse_uT": 2.7982004495028137,
+          "max_uT": 2.7982004495028137,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 1,
+          "mean_uT": 2.7982004495028137,
+          "p95_uT": 2.7982004495028137,
+          "rmse_uT": 2.7982004495028137,
+          "max_uT": 2.7982004495028137,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 1,
+          "mean_uT": 2.7982004495028137,
+          "p95_uT": 2.7982004495028137,
+          "rmse_uT": 2.7982004495028137,
+          "max_uT": 2.7982004495028137,
+          "rejections": 0,
+          "fallbacks": 0
+        }
+      ],
+      "unique_validation_inputs": 1,
+      "repeats_for_timing_only": false,
+      "model_dtype": null,
+      "physical_dtype": "float64",
+      "output_dtype": "float64",
+      "chunk": 1024
+    },
+    "64": {
+      "host_to_host_seconds": [
+        0.020026312995469198,
+        0.019840441003907472,
+        0.019876968988683075
+      ],
+      "resident_seconds": [
+        0.019549672986613587,
+        0.01955117701436393,
+        0.019643896986963227
+      ],
+      "host_repeat_metrics": [
+        {
+          "n": 64,
+          "mean_uT": 1.8862655935486679,
+          "p95_uT": 3.647355422742984,
+          "rmse_uT": 2.195303542670256,
+          "max_uT": 4.953991106147931,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 64,
+          "mean_uT": 1.8862655935486679,
+          "p95_uT": 3.647355422742984,
+          "rmse_uT": 2.195303542670256,
+          "max_uT": 4.953991106147931,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 64,
+          "mean_uT": 1.8862655935486679,
+          "p95_uT": 3.647355422742984,
+          "rmse_uT": 2.195303542670256,
+          "max_uT": 4.953991106147931,
+          "rejections": 0,
+          "fallbacks": 0
+        }
+      ],
+      "unique_validation_inputs": 64,
+      "repeats_for_timing_only": false,
+      "model_dtype": null,
+      "physical_dtype": "float64",
+      "output_dtype": "float64",
+      "chunk": 1024
+    },
+    "4096": {
+      "host_to_host_seconds": [
+        0.27011878800112754,
+        0.26779214799171314,
+        0.2661564850131981
+      ],
+      "resident_seconds": [
+        0.2654078609775752,
+        0.2651693169900682,
+        0.26425920601468533
+      ],
+      "host_repeat_metrics": [
+        {
+          "n": 4096,
+          "mean_uT": 1.9287640931079175,
+          "p95_uT": 4.591029624048105,
+          "rmse_uT": 2.407373819010888,
+          "max_uT": 15.10827716098438,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 4096,
+          "mean_uT": 1.9287640931079175,
+          "p95_uT": 4.591029624048105,
+          "rmse_uT": 2.407373819010888,
+          "max_uT": 15.10827716098438,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 4096,
+          "mean_uT": 1.9287640931079175,
+          "p95_uT": 4.591029624048105,
+          "rmse_uT": 2.407373819010888,
+          "max_uT": 15.10827716098438,
+          "rejections": 0,
+          "fallbacks": 0
+        }
+      ],
+      "unique_validation_inputs": 2048,
+      "repeats_for_timing_only": true,
+      "model_dtype": null,
+      "physical_dtype": "float64",
+      "output_dtype": "float64",
+      "chunk": 1024
+    }
+  },
+  "affine5": {
+    "1": {
+      "host_to_host_seconds": [
+        0.028935350012034178,
+        0.028593174007255584,
+        0.029055477993097156
+      ],
+      "resident_seconds": [
+        0.028334406000794843,
+        0.028565173997776583,
+        0.028462389978813007
+      ],
+      "host_repeat_metrics": [
+        {
+          "n": 1,
+          "mean_uT": 2.812448661831953,
+          "p95_uT": 2.812448661831953,
+          "rmse_uT": 2.812448661831953,
+          "max_uT": 2.812448661831953,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 1,
+          "mean_uT": 2.812448661831953,
+          "p95_uT": 2.812448661831953,
+          "rmse_uT": 2.812448661831953,
+          "max_uT": 2.812448661831953,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 1,
+          "mean_uT": 2.812448661831953,
+          "p95_uT": 2.812448661831953,
+          "rmse_uT": 2.812448661831953,
+          "max_uT": 2.812448661831953,
+          "rejections": 0,
+          "fallbacks": 0
+        }
+      ],
+      "unique_validation_inputs": 1,
+      "repeats_for_timing_only": false,
+      "model_dtype": null,
+      "physical_dtype": "float64",
+      "output_dtype": "float64",
+      "chunk": 1024
+    },
+    "64": {
+      "host_to_host_seconds": [
+        0.030325813015224412,
+        0.03044923799461685,
+        0.03002942999592051
+      ],
+      "resident_seconds": [
+        0.029540902003645897,
+        0.030295429984107614,
+        0.029740742000285536
+      ],
+      "host_repeat_metrics": [
+        {
+          "n": 64,
+          "mean_uT": 1.8684113561182762,
+          "p95_uT": 3.614476067317587,
+          "rmse_uT": 2.1799796495122203,
+          "max_uT": 4.9818831513030295,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 64,
+          "mean_uT": 1.8684113561182762,
+          "p95_uT": 3.614476067317587,
+          "rmse_uT": 2.1799796495122203,
+          "max_uT": 4.9818831513030295,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 64,
+          "mean_uT": 1.8684113561182762,
+          "p95_uT": 3.614476067317587,
+          "rmse_uT": 2.1799796495122203,
+          "max_uT": 4.9818831513030295,
+          "rejections": 0,
+          "fallbacks": 0
+        }
+      ],
+      "unique_validation_inputs": 64,
+      "repeats_for_timing_only": false,
+      "model_dtype": null,
+      "physical_dtype": "float64",
+      "output_dtype": "float64",
+      "chunk": 1024
+    },
+    "4096": {
+      "host_to_host_seconds": [
+        0.41840201598824933,
+        0.4179511850234121,
+        0.41750272098579444
+      ],
+      "resident_seconds": [
+        0.41670436901040375,
+        0.41631059400970116,
+        0.4164154889876954
+      ],
+      "host_repeat_metrics": [
+        {
+          "n": 4096,
+          "mean_uT": 1.9269314946286502,
+          "p95_uT": 4.595309869095762,
+          "rmse_uT": 2.406078608389442,
+          "max_uT": 15.051189159467304,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 4096,
+          "mean_uT": 1.9269314946286502,
+          "p95_uT": 4.595309869095762,
+          "rmse_uT": 2.406078608389442,
+          "max_uT": 15.051189159467304,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 4096,
+          "mean_uT": 1.9269314946286502,
+          "p95_uT": 4.595309869095762,
+          "rmse_uT": 2.406078608389442,
+          "max_uT": 15.051189159467304,
+          "rejections": 0,
+          "fallbacks": 0
+        }
+      ],
+      "unique_validation_inputs": 2048,
+      "repeats_for_timing_only": true,
+      "model_dtype": null,
+      "physical_dtype": "float64",
+      "output_dtype": "float64",
+      "chunk": 1024
+    }
+  },
+  "tied12": {
+    "1": {
+      "host_to_host_seconds": [
+        0.05482190102338791,
+        0.05487169299158268,
+        0.05377468597725965
+      ],
+      "resident_seconds": [
+        0.053254989004926756,
+        0.053861166001297534,
+        0.053691452980274335
+      ],
+      "host_repeat_metrics": [
+        {
+          "n": 1,
+          "mean_uT": 2.806609602186909,
+          "p95_uT": 2.806609602186909,
+          "rmse_uT": 2.806609602186909,
+          "max_uT": 2.806609602186909,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 1,
+          "mean_uT": 2.806609602186909,
+          "p95_uT": 2.806609602186909,
+          "rmse_uT": 2.806609602186909,
+          "max_uT": 2.806609602186909,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 1,
+          "mean_uT": 2.806609602186909,
+          "p95_uT": 2.806609602186909,
+          "rmse_uT": 2.806609602186909,
+          "max_uT": 2.806609602186909,
+          "rejections": 0,
+          "fallbacks": 0
+        }
+      ],
+      "unique_validation_inputs": 1,
+      "repeats_for_timing_only": false,
+      "model_dtype": null,
+      "physical_dtype": "float64",
+      "output_dtype": "float64",
+      "chunk": 1024
+    },
+    "64": {
+      "host_to_host_seconds": [
+        0.9416342050244566,
+        0.9439949229999911,
+        0.9502283300098497
+      ],
+      "resident_seconds": [
+        0.9416108920122497,
+        0.9391710839990992,
+        0.9464659470249899
+      ],
+      "host_repeat_metrics": [
+        {
+          "n": 64,
+          "mean_uT": 1.9772614598230875,
+          "p95_uT": 4.041764523531821,
+          "rmse_uT": 2.3588341286912904,
+          "max_uT": 6.702522472624661,
+          "rejections": 0,
+          "fallbacks": 2
+        },
+        {
+          "n": 64,
+          "mean_uT": 1.9772614598230875,
+          "p95_uT": 4.041764523531821,
+          "rmse_uT": 2.3588341286912904,
+          "max_uT": 6.702522472624661,
+          "rejections": 0,
+          "fallbacks": 2
+        },
+        {
+          "n": 64,
+          "mean_uT": 1.9772614598230875,
+          "p95_uT": 4.041764523531821,
+          "rmse_uT": 2.3588341286912904,
+          "max_uT": 6.702522472624661,
+          "rejections": 0,
+          "fallbacks": 2
+        }
+      ],
+      "unique_validation_inputs": 64,
+      "repeats_for_timing_only": false,
+      "model_dtype": null,
+      "physical_dtype": "float64",
+      "output_dtype": "float64",
+      "chunk": 1024
+    },
+    "4096": {
+      "host_to_host_seconds": [
+        5.49163952600793,
+        5.4870518110110424,
+        5.481110496009933
+      ],
+      "resident_seconds": [
+        5.48662080601207,
+        5.476728997018654,
+        5.484264253987931
+      ],
+      "host_repeat_metrics": [
+        {
+          "n": 4096,
+          "mean_uT": 1.9415096076020397,
+          "p95_uT": 4.64595635512525,
+          "rmse_uT": 2.4273595068287066,
+          "max_uT": 15.148402963570597,
+          "rejections": 0,
+          "fallbacks": 26
+        },
+        {
+          "n": 4096,
+          "mean_uT": 1.9415096076020397,
+          "p95_uT": 4.64595635512525,
+          "rmse_uT": 2.4273595068287066,
+          "max_uT": 15.148402963570597,
+          "rejections": 0,
+          "fallbacks": 26
+        },
+        {
+          "n": 4096,
+          "mean_uT": 1.9415096076020397,
+          "p95_uT": 4.64595635512525,
+          "rmse_uT": 2.4273595068287066,
+          "max_uT": 15.148402963570597,
+          "rejections": 0,
+          "fallbacks": 26
+        }
+      ],
+      "unique_validation_inputs": 2048,
+      "repeats_for_timing_only": true,
+      "model_dtype": null,
+      "physical_dtype": "float64",
+      "output_dtype": "float64",
+      "chunk": 1024
+    }
+  },
+  "neural1": {
+    "1": {
+      "host_to_host_seconds": [
+        0.0103991330252029,
+        0.01020346800214611,
+        0.01027548499405384
+      ],
+      "resident_seconds": [
+        0.00993857200955972,
+        0.009801997017348185,
+        0.009970893006538972
+      ],
+      "host_repeat_metrics": [
+        {
+          "n": 1,
+          "mean_uT": 2.5943767537382487,
+          "p95_uT": 2.5943767537382487,
+          "rmse_uT": 2.5943767537382487,
+          "max_uT": 2.5943767537382487,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 1,
+          "mean_uT": 2.5943767537382487,
+          "p95_uT": 2.5943767537382487,
+          "rmse_uT": 2.5943767537382487,
+          "max_uT": 2.5943767537382487,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 1,
+          "mean_uT": 2.5943767537382487,
+          "p95_uT": 2.5943767537382487,
+          "rmse_uT": 2.5943767537382487,
+          "max_uT": 2.5943767537382487,
+          "rejections": 0,
+          "fallbacks": 0
+        }
+      ],
+      "unique_validation_inputs": 1,
+      "repeats_for_timing_only": false,
+      "model_dtype": "float32",
+      "physical_dtype": "float64",
+      "output_dtype": "float64",
+      "chunk": 1024
+    },
+    "64": {
+      "host_to_host_seconds": [
+        0.010775853006634861,
+        0.01062060400727205,
+        0.01141474800533615
+      ],
+      "resident_seconds": [
+        0.010211085027549416,
+        0.010199900018051267,
+        0.01029269999708049
+      ],
+      "host_repeat_metrics": [
+        {
+          "n": 64,
+          "mean_uT": 1.9218630354530284,
+          "p95_uT": 4.288300431393303,
+          "rmse_uT": 2.291586253370339,
+          "max_uT": 5.52879352009096,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 64,
+          "mean_uT": 1.9218630354530284,
+          "p95_uT": 4.288300431393303,
+          "rmse_uT": 2.291586253370339,
+          "max_uT": 5.52879352009096,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 64,
+          "mean_uT": 1.9218630354530284,
+          "p95_uT": 4.288300431393303,
+          "rmse_uT": 2.291586253370339,
+          "max_uT": 5.52879352009096,
+          "rejections": 0,
+          "fallbacks": 0
+        }
+      ],
+      "unique_validation_inputs": 64,
+      "repeats_for_timing_only": false,
+      "model_dtype": "float32",
+      "physical_dtype": "float64",
+      "output_dtype": "float64",
+      "chunk": 1024
+    },
+    "4096": {
+      "host_to_host_seconds": [
+        0.11922255100216717,
+        0.12014299799920991,
+        0.1247837170085404
+      ],
+      "resident_seconds": [
+        0.11794869400910102,
+        0.11801983101759106,
+        0.11858871000004001
+      ],
+      "host_repeat_metrics": [
+        {
+          "n": 4096,
+          "mean_uT": 1.9473938811441451,
+          "p95_uT": 4.611744627966712,
+          "rmse_uT": 2.426913548589564,
+          "max_uT": 15.22076616590082,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 4096,
+          "mean_uT": 1.9473938811441451,
+          "p95_uT": 4.611744627966712,
+          "rmse_uT": 2.426913548589564,
+          "max_uT": 15.22076616590082,
+          "rejections": 0,
+          "fallbacks": 0
+        },
+        {
+          "n": 4096,
+          "mean_uT": 1.9473938811441451,
+          "p95_uT": 4.611744627966712,
+          "rmse_uT": 2.426913548589564,
+          "max_uT": 15.22076616590082,
+          "rejections": 0,
+          "fallbacks": 0
+        }
+      ],
+      "unique_validation_inputs": 2048,
+      "repeats_for_timing_only": true,
+      "model_dtype": "float32",
+      "physical_dtype": "float64",
+      "output_dtype": "float64",
+      "chunk": 1024
+    }
+  }
+}

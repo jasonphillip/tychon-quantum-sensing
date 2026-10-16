@@ -1,0 +1,31 @@
+{
+  "decision": "FAIL_REGISTERED_NEURAL_CONTINUATION_GATE",
+  "fastest_adequate_classical": "affine2_f64",
+  "manifest_sha256": "f3fd66b295bd1dccee38dc65bb7cfb9369f74c1ea2fb61a0d5b0f7cf60df66fc",
+  "neural0": {
+    "break_even_spectra": null,
+    "continuation_pass": false,
+    "host_seconds": 2.996961200988153,
+    "matched_accuracy_pass": false,
+    "seconds_per_million": 731.6799807099983,
+    "seconds_saved_per_million": -685.3011603951131,
+    "setup_cost_seconds": 15.861660597991431,
+    "speedup": 0.06338675587362753
+  },
+  "neural1": {
+    "break_even_spectra": 920704,
+    "continuation_pass": false,
+    "host_seconds": 0.11939199399785139,
+    "matched_accuracy_pass": true,
+    "seconds_per_million": 29.148436034631686,
+    "seconds_saved_per_million": 17.230384280253475,
+    "setup_cost_seconds": 15.864076373021817,
+    "speedup": 1.5911255156119457
+  },
+  "next_authorized": "Publish reproducible development results with stronger comparison and explicit failed continuation. No retuning, retraining, more variants or confirmation of this candidate.",
+  "overall_goal": "ACTIVE; distinct useful NV contribution remains unestablished beyond narrow computational and measured benchmark evidence.",
+  "preserved_p1_result": "PASS in its original finite development comparison; stronger challenge does not satisfy2x",
+  "recorded_utc": "2026-10-16T03:13:24.622026+00:00",
+  "source_commit": "869ad0f3c7ea881fd462ef1134a4159d5135bee2",
+  "verification_sha256": "047b128f6dbca97959f77dd969c6797aeb9fe90d154fbd9aa00ee7748e9af377"
+}
