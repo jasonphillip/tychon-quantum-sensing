@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "status": "FROZEN",
+  "study": "localisation-raw-compatibility-2026-10-15",
+  "scope": "training_only_raw_to_version_A_compatibility",
+  "archive_sha256": "b5717b233590d041fb4bd752af479df7c426e37675743ca3f9d3c93ae32f7aa4",
+  "partition_sha256": "53cbd37457b18f26f6074b81e3ea52f8c02660bbc427339098aca0c530d511e7",
+  "version_A_parameters_sha256": "813cb6f586d2d5fa930b0bc062a5692dc1b2cb7a94dfbd82860dd844647f360f",
+  "version_A_std_sha256": "1119ad52351df79bd5f2fd6c1f029201b38a563042006cfd4b8a1defc1f7c116",
+  "sample_count": 8,
+  "sample_selection": "small_train_only; exactly one fitted row and one raw member per coordinate; sorted sessions round robin; sha256(raw-compatibility-v1:+position_hash) within session",
+  "sample_access": "eight selected small-training rows only; no validation, consumed confirmation or August4 raw signals",
+  "model_channel_order": [
+    15,
+    6,
+    11,
+    4,
+    13,
+    7,
+    3,
+    1
+  ],
+  "feature_order": "channel_major_splitting_std1_std2_MHz",
+  "frequency_axis_GHz": [
+    2.77,
+    2.97,
+    51
+  ],
+  "raw_shape": "C-order float64[T,16,51]; 1<=T<=10000",
+  "average": "arithmetic mean over all T repeats; no time selection",
+  "moving_average": "source convention length51 ->48, width3, omit final possible window",
+  "fit": "shared-width two-Gaussian; source initial values and bounds; scipy curve_fit trf, maxfev100000; one start",
+  "failures": "retain every channel; no retry, imputation or stale coefficients; any invalid channel fails qualification",
+  "matching_tolerances": {
+    "splitting_atol_MHz": 0.001,
+    "splitting_rtol": 0.0001,
+    "standard_error_atol_MHz": 0.0001,
+    "standard_error_rtol": 0.01
+  },
+  "tolerance_basis": "prospective numerical compatibility tolerances, not physical measurement uncertainty; per-element abs_error<=atol+rtol*abs(A); all192 elements required",
+  "pass_rule": "8of8 samples,64of64 valid channel fits,192of192 feature comparisons pass",
+  "pass_scope": "sampled numerical compatibility only; no full lineage proof or acquisition-transfer performance claim",
+  "failure_action": "close unchanged-model route; no tolerance tuning; any common raw pipeline requires new fair training approval",
+  "position_model_execution": false,
+  "test_access": false,
+  "separate_day_access": false,
+  "resources": {
+    "cpu_seconds": 600,
+    "wall_seconds": 600,
+    "memory_bytes": 4294967296,
+    "threads": 1,
+    "gpu": false
+  },
+  "original_localisation_verdict": "FAIL_preserved_36_positions_consumed",
+  "source_notebook": "Data availability update 20260220/Fig.S4/Fig.S2c.ipynb",
+  "source_notebook_sha256": "bcf583393f623f449f4fb5b9f63c46ce5798bca880ce4ac4341980a3a2f19fd3",
+  "license": "CC-BY-4.0; original dataset and notebook attribution in README",
+  "custody_sha256": "bd415df532a6600064e6474ef44299718a6d24473f9c89a9bce71a959ccdb22b"
+}
