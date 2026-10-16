@@ -4,6 +4,8 @@
 
 Software toward AI-assisted control of an NV-diamond magnetometer, developed and tested without a sensor. Nitrogen-vacancy (NV) centres in diamond reveal the magnetic field in their optically detected magnetic resonance (ODMR) spectrum. The repository holds a simulator for synthetic ODMR spectra, small neural networks that estimate the field, and a PID (proportional-integral-derivative) controller with a neural-network correction on a PolarFire SoC kit, which pairs an FPGA (field-programmable gate array) with a processor. Coding agents wrote most of the code from my specifications; I planned, relayed and reviewed the work.
 
+**Current validation limits.** This project has no live NV-diamond measurement setup. FPGA tests used replayed synthetic spectra. Separate software studies used public measured NV datasets, but incomplete reference labels, calibration records, and independent acquisitions limited the conclusions.
+
 **Demonstrated state.** The controller ran on PolarFire SoC silicon with replayed synthetic spectra as input; no diamond sensor was connected. Model accuracy figures come from synthetic data. The parts are not one integrated or deployed system.
 
 **What is shown, and what is not**
