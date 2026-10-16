@@ -1,6 +1,6 @@
 # Finite classical precision and zero-step neural challenge
 
-Dated: 2026-10-15. Status: DRAFT_ROOT_REVIEW_NOT_AUTHORIZED.
+Dated: 2026-10-15. Status: FROZEN_BASELINE_CHALLENGE.
 
 This additive protocol preserves P1 commit c4c59ad97b78b43c6e4c936e9ff89e45b8efaf2e and every earlier experiment.
 P1 is closed development. Its cases do not select these new routes.
