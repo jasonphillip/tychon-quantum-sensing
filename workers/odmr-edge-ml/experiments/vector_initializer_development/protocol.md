@@ -1,6 +1,6 @@
 # P1 speed at matched accuracy — prospective protocol
 
-Date: 2026-10-15. Status: DRAFT_ROOT_REVIEW_NOT_AUTHORIZED.
+Date: 2026-10-15. Status: FROZEN_P1_DEVELOPMENT.
 Owner: Codex vector lane. Root owns seeds, approval, accounting, and release.
 This additive study preserves every original solver, P0 source, and consumed dataset.
 This is synthetic development. It cannot establish sensing reliability, clinical value, or hardware performance.
