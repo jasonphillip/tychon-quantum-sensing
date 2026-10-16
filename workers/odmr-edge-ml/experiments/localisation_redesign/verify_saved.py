@@ -1,5 +1,6 @@
 """Recompute every saved development comparison without inference or fitting."""
 import argparse
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -18,6 +19,17 @@ def same(a, b):
     if isinstance(a, float) and isinstance(b, (int, float)):
         return math.isclose(a, b, rel_tol=1e-10, abs_tol=1e-9)
     return a == b
+
+
+def validate_label_identity(labels, rows, split):
+    if labels.ndim != 2 or labels.shape != (len(rows), 2):
+        raise ValueError("saved label count/shape differs from row count")
+    identities = [
+        hashlib.sha256(("exact_position:" + repr(tuple(float(v) for v in label))).encode()).hexdigest()
+        for label in labels
+    ]
+    if identities != [split["position_groups"][row] for row in rows]:
+        raise ValueError("saved label coordinates differ from frozen row identities")
 
 
 def verify(artifact):
@@ -45,6 +57,7 @@ def verify(artifact):
         raise ValueError("row/budget mismatch")
     with np.load(artifact / "predictions.npz", allow_pickle=False) as saved:
         labels = saved["labels_um"]
+        validate_label_identity(labels, rows, split)
         if (not np.array_equal(saved["row_indices"], rows) or len(set(rows)) != len(rows)
                 or not np.array_equal(saved["spatial_groups"], np.asarray(split["spatial_groups"])[rows])):
             raise ValueError("prediction row/group identities differ")

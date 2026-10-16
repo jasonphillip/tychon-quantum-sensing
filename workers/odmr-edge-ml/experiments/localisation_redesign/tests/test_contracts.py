@@ -1,4 +1,5 @@
 """Manufactured inputs only. Execution requires a registered root test job."""
+import hashlib
 import json
 from pathlib import Path
 import unittest
@@ -112,7 +113,7 @@ class Contracts(unittest.TestCase):
         n = 284
         split = {'n': n, 'status': 'qualified', 'train': list(range(90)), 'full_train': list(range(214)),
                  'validation': list(range(214, 248)), 'test': list(range(248, 284)),
-                 'position_groups': [str(i) for i in range(n)],
+                 'position_groups': [hashlib.sha256(('exact_position:' + repr((float(i), float(i)))).encode()).hexdigest() for i in range(n)],
                  'spatial_groups': ['0:0'] * 214 + ['3:3'] * 34 + [cell for cell in ['7:7','7:9','9:7','9:9','7:11','11:7'] for _ in range(6)],
                  'small_label_budget': 124, 'full_label_budget': 248,
                  'small_measurement_rows': 124, 'full_measurement_rows': 248,
@@ -120,7 +121,7 @@ class Contracts(unittest.TestCase):
                  'partition_unique_positions': {'train': 90, 'validation': 34, 'test': 36, 'full_train': 214},
                  'parent_partition_sha256': protocol['parent_partition_sha256'],
                  'selection_method': 'centroid_start_farthest_point_physical_um_lexicographic_ties'}
-        rows = split['test']; labels = np.column_stack((np.arange(36), np.arange(36)))
+        rows = split['test']; labels = np.column_stack((rows, rows))
         groups = np.asarray(split['spatial_groups'])[rows]
         predictions = {'candidate': labels + .1, 'small': labels + 1., 'full': labels + 1.}
         result = evaluate_saved(labels, predictions['candidate'], None, predictions['small'], predictions['full'],
@@ -164,6 +165,31 @@ class Contracts(unittest.TestCase):
         failed_neural = evaluate_saved(y, y + 2, None, y + 1, y + 1, groups, protocol, 124, 248, 3, True, True, 'NEURAL_CALIBRATION_EFFICIENCY')
         self.assertFalse(failed_neural['gate_passed'])
         self.assertEqual(failed_neural['selected_path'], 'NEURAL_CALIBRATION_EFFICIENCY')
+
+
+    def label_identity_fixture(self):
+        labels = np.array([[1.25, 3.5], [4.75, 8.0], [2.0, 9.25]])
+        hashes = [hashlib.sha256(('exact_position:' + repr(tuple(float(v) for v in row))).encode()).hexdigest() for row in labels]
+        return labels, [0, 1, 2], {'position_groups': hashes}
+
+    def test_saved_identity_rejects_shifted_labels(self):
+        from experiments.localisation_redesign.verify_saved import validate_label_identity
+        labels, rows, split = self.label_identity_fixture()
+        validate_label_identity(labels, rows, split)
+        with self.assertRaisesRegex(ValueError, 'saved label coordinates'):
+            validate_label_identity(labels + [0.25, 0.0], rows, split)
+
+    def test_saved_identity_rejects_permuted_labels(self):
+        from experiments.localisation_redesign.verify_saved import validate_label_identity
+        labels, rows, split = self.label_identity_fixture()
+        with self.assertRaisesRegex(ValueError, 'saved label coordinates'):
+            validate_label_identity(labels[[1, 0, 2]], rows, split)
+
+    def test_saved_identity_rejects_truncated_labels(self):
+        from experiments.localisation_redesign.verify_saved import validate_label_identity
+        labels, rows, split = self.label_identity_fixture()
+        with self.assertRaisesRegex(ValueError, 'saved label count/shape'):
+            validate_label_identity(labels[:-1], rows, split)
 
 
 if __name__ == '__main__':
