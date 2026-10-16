@@ -94,6 +94,8 @@ def qualify(a,args):
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('command',choices=['fixtures','qualify']);p.add_argument('--approval',required=True);p.add_argument('--out',required=True);p.add_argument('--data');p.add_argument('--custody');args=p.parse_args()
+    output=Path(args.out)
+    if not output.is_absolute() or output.resolve().is_relative_to(ROOT) or output.exists():raise ValueError('Output must be new, absolute and outside source')
     a=gate(args.approval,args.command)
     if args.command=='fixtures':
         import os

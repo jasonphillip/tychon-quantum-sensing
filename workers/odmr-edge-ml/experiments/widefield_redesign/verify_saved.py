@@ -71,5 +71,7 @@ def verify(directory,expected):
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--bundle',required=True);p.add_argument('--manifest-sha256',required=True);p.add_argument('--out',required=True);a=p.parse_args()
-    result=verify(a.bundle,a.manifest_sha256);out=Path(a.out);out.mkdir(parents=True,exist_ok=False);write_json(out/'verification.json',result);print(json.dumps(result));return 0
+    out=Path(a.out)
+    if not out.is_absolute() or out.resolve().is_relative_to(ROOT) or out.resolve().is_relative_to(Path(a.bundle).resolve()) or out.exists():raise ValueError('Output must be new, absolute and outside source/bundle')
+    result=verify(a.bundle,a.manifest_sha256);out.mkdir(parents=True,exist_ok=False);write_json(out/'verification.json',result);print(json.dumps(result));return 0
 if __name__=='__main__':raise SystemExit(main())
