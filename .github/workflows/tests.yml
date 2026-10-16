@@ -52,6 +52,11 @@ jobs:
           python -m pytest -q -p no:cacheprovider experiments/localisation_raw_compatibility/tests
           python -m pytest -q -p no:cacheprovider experiments/localisation_acquisition_transfer/tests
           python -m pytest -q -p no:cacheprovider experiments/widefield_redesign/test_redesign.py
+      - name: Check advantage-search evidence package (hashes; raw-compatibility saved-output recomputation)
+        run: |
+          set -e
+          python docs/nv_advantage_search_2026-10/check_package.py --expected-artifacts-sha256 edf9957d309455244c2b1ffff9ac6215f4eef0bafb0a4289330514591571e4cf
+          python docs/nv_advantage_search_2026-10/check_raw_compatibility.py --bundle docs/nv_advantage_search_2026-10/localisation-raw-compatibility --protocol workers/odmr-edge-ml/experiments/localisation_raw_compatibility/protocol.json --out "$RUNNER_TEMP/raw-compatibility-check"
       - name: Test odmr-vector-tracking
         working-directory: workers/odmr-vector-tracking
         env:

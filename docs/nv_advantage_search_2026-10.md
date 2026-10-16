@@ -33,7 +33,7 @@ All 10 registered criteria passed. The independent saved-output verification pas
 [Transfer package](nv_advantage_search_2026-10/localisation-transfer/) · [custody and seed provenance](nv_advantage_search_2026-10/README.md#seed-provenance-commit-and-reveal)
 
 ## Reproduce
-The [package README](nv_advantage_search_2026-10/README.md#public-saved-output-checks-no-inference-no-raw-data) lists a stdlib hash check and three saved-output verifiers. They use NumPy only, run no inference and read no raw data.
+The [package README](nv_advantage_search_2026-10/README.md#public-saved-output-checks-no-inference-no-raw-data) lists a stdlib hash check and four saved-output checks: acquisition transfer, localisation redesign, widefield redesign, and raw compatibility (192 comparisons). They use NumPy only, run no inference and read no raw data.
 Each lane's manufactured tests run in CI in a separate process.
 
 ## Data

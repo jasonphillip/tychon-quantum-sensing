@@ -16,7 +16,7 @@ Measured data, development and one single-acquisition transfer test. FAILs are l
 - Only derived features, predictions and arrays are included. No raw sweep or FITS file is republished.
 
 ## Seed provenance (commit and reveal)
-The commitment was published before any August 4 signal access: `custody/august4-bootstrap-commitment-v1.json`, commitment_sha256 `84351fe546d6ef2c92aec11ff45c862b15ac11897bba1a3391ac06864abb7cbe`. The seed was released only after the protocol freeze (odmr-edge-ml `3683e43`, protocol sha256 `4682232f…`).
+The commitment was recorded in the project's shared custody handoff before any August 4 signal access. It was not published publicly then, and there is no public timestamp; this release is its first public appearance: `custody/august4-bootstrap-commitment-v1.json`, commitment_sha256 `84351fe546d6ef2c92aec11ff45c862b15ac11897bba1a3391ac06864abb7cbe`. The seed was released only after the protocol freeze (odmr-edge-ml `3683e43`, protocol sha256 `4682232f…`).
 Check it: `sha256sum custody/august4-bootstrap-seed-v1.bin` must equal the commitment. The bootstrap integer in `localisation-transfer/seed.json` is `int.from_bytes(seed, "big")`.
 
 ## Public saved-output checks (no inference, no raw data)
@@ -27,5 +27,7 @@ cd workers/odmr-edge-ml
 python3 experiments/localisation_acquisition_transfer/verify_saved.py --result ../../docs/nv_advantage_search_2026-10/localisation-transfer --output "$(mktemp -d)/transfer-check.json"
 python3 experiments/localisation_redesign/verify_saved.py --artifact ../../docs/nv_advantage_search_2026-10/localisation-redesign
 python3 experiments/widefield_redesign/verify_saved.py --bundle ../../docs/nv_advantage_search_2026-10/widefield-redesign --manifest-sha256 0bd342c8a1fb9be4648440d1fde1b85604bad90d1c8cf80116a42e93013b5d5f --out "$(mktemp -d)/widefield-check.json"
+cd ../..
+python3 docs/nv_advantage_search_2026-10/check_raw_compatibility.py --bundle docs/nv_advantage_search_2026-10/localisation-raw-compatibility --protocol workers/odmr-edge-ml/experiments/localisation_raw_compatibility/protocol.json --out "$(mktemp -d)/raw-compatibility-check"
 ```
-- The raw-compatibility package has no public saved-output verifier: its extractor needs the raw archive. Its saved arrays are covered by the hash check, and `root-verification/` holds the independent saved-output result.
+- `check_raw_compatibility.py` recomputes the 192 training-only feature comparisons and the maximum differences from the saved arrays and the frozen public protocol. It does not re-run the raw extractor, which needs the raw archive. Its arithmetic is unchanged from the independent verifier recorded in `localisation-raw-compatibility/root-verification/`; only its docstring differs.
