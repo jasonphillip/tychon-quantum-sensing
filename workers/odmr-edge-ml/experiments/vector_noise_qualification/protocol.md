@@ -1,6 +1,6 @@
 # P0: fresh-noise and identifiability qualification
 
-Date: 2026-10-15, America/New_York. Status: DRAFT_ROOT_REVIEW_NOT_AUTHORIZED.
+Date: 2026-10-15, America/New_York. Status: FROZEN_P0_DIAGNOSTIC_ONLY.
 This diagnostic stage cannot adopt a winner or authorize training.
 The unresolved practical current-map workload does not block this qualification.
 
