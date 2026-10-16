@@ -8,7 +8,13 @@ Software toward AI-assisted control of an NV-diamond magnetometer, developed and
 
 **Demonstrated state.** The FPGA control path and model inference ran on a development kit with replayed input. Separate software evaluations used synthetic and public measured data. These parts are not one integrated sensing system. Reliable sensing and a useful neural advantage over strong classical methods remain unproven.
 
-I built this independently around an [SBIR Phase I proposal that was not selected](docs/proposal/README.md). This work received no government funding. The proposal archive is optional background; its crosswalk separates proposed targets from delivered results.
+I submitted an SBIR Phase I proposal during the first week of August 2025. The proposed team included three additional engineering specialists. I expected notification in approximately 90 days; the decision arrived on May 12, 2026, roughly nine months later. The wait spanned the federal shutdown and SBIR authorization lapse. The proposal was not selected, and this work received no government funding. [Proposal history](https://github.com/jasonphillip/tychon-quantum-sensing/blob/main/docs/proposal/README.md).
+
+Without funding for that team, I continued independently with AI agents, owning the architecture, experiments, debugging, and evidence review. I prepared a full technical report before the decision. I also extended the work into areas my technical plan had deferred to Phase II: on-board inference, controller measurements, and hierarchical INT8 model experiments.
+
+Without the planned specialists available to check the work, I built the Tychon Verification Workbench. It checks claims against project evidence. The [proposal crosswalk](https://github.com/jasonphillip/tychon-quantum-sensing/blob/main/docs/proposal/README.md#work-extended-beyond-the-phase-i-feasibility-plan) documents delivered work, extensions beyond the original feasibility effort, and objectives that remain unresolved.
+
+The project connects five workstreams: physics simulation, edge ML, FPGA control, vector tracking, and technical verification. A conservative audit of selected archived LLM records counted **1,357 submitted interactions**, **217 identified conversations and coding sessions**, and **113 distinct activity dates**, from July 2, 2025 through October 15, 2026. [Methodology and aggregate data](https://github.com/jasonphillip/tychon-quantum-sensing/blob/main/docs/workflow-retrospective.md#activity-count-methodology).
 
 ## Representative results
 
