@@ -141,3 +141,22 @@ class Contracts(unittest.TestCase):
         self.assertEqual(train,[(i,i+4096) for i in range(0,32768,4096)])
         self.assertEqual(validation,[(0,2048)])
         self.assertTrue(all((b-a)*512*8<=16*1024**2 for a,b in train+validation))
+
+    def test_neural_dtype_boundary_preserves_float64_physical_outputs(self):
+        import torch
+        class Probe(torch.nn.Module):
+            def forward(self,features):
+                self.seen_dtype=features.dtype
+                self.seen_features=features.clone()
+                return torch.full((len(features),8),.25,dtype=features.dtype,device=features.device)
+        model=Probe();mean=np.ones(512);std=np.full(512,.5)
+        center=np.asarray(CFG["nominal"],dtype=np.float64);center[3]=2870.123456789
+        scale=np.asarray(CFG["scales"],dtype=np.float64)
+        predict=learning.initializer(torch,model,mean,std,center,scale,device="cpu")
+        result=predict(torch.full((2,512),2000000.,dtype=torch.float64))
+        self.assertEqual(model.seen_dtype,torch.float32)
+        self.assertEqual(model.seen_features.dtype,torch.float32)
+        torch.testing.assert_close(model.seen_features,torch.zeros((2,512),dtype=torch.float32),rtol=0,atol=0)
+        self.assertEqual(result.dtype,torch.float64)
+        expected=torch.as_tensor(np.broadcast_to(center+.25*scale,(2,8)).copy(),dtype=torch.float64)
+        torch.testing.assert_close(result,expected,rtol=0,atol=1e-12)

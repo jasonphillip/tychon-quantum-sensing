@@ -70,11 +70,15 @@ def train(torch,data,seed,out,progress):
     np.savez_compressed(out/"scaling.npz",feature_mean=mean,feature_std=std,target_center=center,target_scale=scale)
     return model,mean,std,center,scale,history
 
-def initializer(torch,model,mean,std,center,scale):
-    # Inference/physical refinement use float64 for every compared method.
-    model=model.eval().to(device="cuda",dtype=torch.float64)
-    mean,std,center,scale=[torch.as_tensor(a,dtype=torch.float64,device="cuda") for a in (mean,std,center,scale)]
-    def predict(counts):return model((counts/CFG["photons_per_bin"]-mean)/std)*scale+center
+def initializer(torch,model,mean,std,center,scale,*,device="cuda"):
+    # Dense inference stays float32; only eight outputs cross into float64 physics.
+    model=model.eval().to(device=device,dtype=torch.float32)
+    mean,std=[torch.as_tensor(a,dtype=torch.float32,device=device) for a in (mean,std)]
+    center,scale=[torch.as_tensor(a,dtype=torch.float64,device=device) for a in (center,scale)]
+    def predict(counts):
+        features=(counts.to(dtype=torch.float32)/CFG["photons_per_bin"]-mean)/std
+        normalized=model(features)
+        return normalized.to(dtype=torch.float64)*scale+center
     return predict
 
 

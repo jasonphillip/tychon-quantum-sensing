@@ -58,8 +58,12 @@ Retain all8 initializer outputs, including width. Do not silently replace either
 Each short route always performs its declared steps, even after a small update. It then applies the unchanged observed-data guard.
 Every rejected estimate receives the original full fallback, with all costs counted. Never pass labels to a solver or guard.
 Full LM stays an accuracy reference. The deviance guard alone is not an accuracy certificate.
-All compared inference and physical calculations use float64 and chunk1024.
-Cast learned float32 weights once to float64 before inference. No precision or chunk tuning is allowed here.
+All physical refinement, guard, and fallback calculations use float64 and chunk1024.
+The single learned model and input normalization remain float32. Cast its eight normalized outputs to float64.
+Apply target unscaling only after that cast. Returned physical parameters remain float64.
+Record model_dtype=float32, physical_dtype=float64, and output_dtype=float64 in timing/provenance.
+Classical routes record model_dtype=null. Accuracy gates determine fairness; identical arithmetic is not required.
+This is the sole prospective precision choice. No precision or chunk tuning is allowed here.
 Every method may retain its Engine and affine-calibration cache equally. Count each one-time initialization separately.
 The neural route retains its one-time loaded/cast weights. No checkpoint loading is charged to every inference.
 

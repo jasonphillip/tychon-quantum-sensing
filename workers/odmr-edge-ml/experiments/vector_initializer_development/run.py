@@ -47,7 +47,7 @@ def main():
     torch.cuda.synchronize();model_setup_seconds=time.perf_counter()-model_setup_start
     setup_seconds=time.perf_counter()-setup_start
     setup={"generation_and_save_seconds":generation_seconds,"training_and_checkpoint_seconds":training_seconds,
-        "neural_cast_scaling_seconds":model_setup_seconds,"total_candidate_setup_seconds":setup_seconds}
+        "neural_load_scaling_seconds":model_setup_seconds,"total_candidate_setup_seconds":setup_seconds}
     write(a.out/"setup.json",setup);manifest("trained")
     stats={};timings={};method_setup={};counts=data["validation_counts"]
     with torch.no_grad():
@@ -83,7 +83,7 @@ def main():
                     **{k:np.stack([r[k] for r in host_outputs]) for k in host_outputs[0]})
                 timings[name][str(batch)]={"host_to_host_seconds":host_times,"resident_seconds":resident,
                     "host_repeat_metrics":[evaluation.metrics(r["parameters"],data["validation_parameters"][indexes],r["accepted"],r["fallback"]) for r in host_outputs],
-                    "unique_validation_inputs":min(batch,len(counts)),"repeats_for_timing_only":batch>len(counts),"dtype":"float64","chunk":1024}
+                    "unique_validation_inputs":min(batch,len(counts)),"repeats_for_timing_only":batch>len(counts),"model_dtype":"float32" if name=="neural1" else None,"physical_dtype":"float64","output_dtype":"float64","chunk":1024}
             write(a.out/"metrics.json",stats);write(a.out/"timings.json",timings);manifest("evaluating")
     setup["persistent_engine_calibration_seconds"]=method_setup;write(a.out/"setup.json",setup)
     result=evaluation.opportunity_gate(stats,timings,setup_seconds+method_setup["neural1"],method_setup)
@@ -91,7 +91,7 @@ def main():
     write(a.out/"provenance.json",{"seed_certificate_sha256":sha(certificate),"python":sys.version,
         "numpy":np.__version__,"torch":torch.__version__,"cuda":torch.version.cuda,"gpu":torch.cuda.get_device_name(0),
         "data_counts":{"train":32768,"validation":2048},"noise":"Poisson(2000000 * frozen fluorescence)",
-        "cublas_workspace_config":cublas_config,"train_dtype":"float32","inference_dtype":"float64","epochs":20,"checkpoint_selection":"final only",
+        "cublas_workspace_config":cublas_config,"train_dtype":"float32","model_dtype":"float32","input_normalization_dtype":"float32","physical_dtype":"float64","output_dtype":"float64","epochs":20,"checkpoint_selection":"final only",
         "all_validation_cases_retained":True,"source_sha256":source_pins(),"no_p0_inputs":True})
     manifest("complete");return 0
 

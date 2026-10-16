@@ -54,6 +54,10 @@ def main():
         "4.weight":(64,128),"4.bias":(64,),"6.weight":(8,64),"6.bias":(8,)}
     assert set(state)==set(expected)
     assert all(tuple(state[k].shape)==shape and bool(torch.isfinite(state[k]).all()) for k,shape in expected.items())
+    provenance=json.loads((a.input/"provenance.json").read_text())
+    for key,expected_dtype in (("train_dtype","float32"),("model_dtype","float32"),("input_normalization_dtype","float32"),("physical_dtype","float64"),("output_dtype","float64")):
+        assert provenance[key]==expected_dtype
+    assert all(value.dtype==torch.float32 for value in state.values())
     history=json.loads((a.input/"training-history.json").read_text())
     assert [h["epoch"] for h in history]==list(range(1,21)) and all(math.isfinite(h["train_normalized_mse"]) for h in history)
     saved=json.loads((a.input/"metrics.json").read_text());timing=json.loads((a.input/"timings.json").read_text())
@@ -61,7 +65,7 @@ def main():
     rebuilt={}
     for name in names:
         with np.load(a.input/(name+"-predictions.npz"),allow_pickle=False) as z:pred={k:z[k] for k in z.files}
-        parameters=pred["parameters"];assert parameters.shape==(2048,8) and np.isfinite(parameters).all()
+        parameters=pred["parameters"];assert parameters.dtype==np.float64 and parameters.shape==(2048,8) and np.isfinite(parameters).all()
         rates=pred["fitted_rates"];assert rates.shape==(2048,512) and np.all(rates>0)
         error=np.sqrt(np.einsum("ni,ni->n",parameters[:,:3]-truth[:,:3],parameters[:,:3]-truth[:,:3]))
         np.testing.assert_allclose(error,pred["field_error_uT"],rtol=0,atol=1e-12)
@@ -82,12 +86,13 @@ def main():
         assert set(timing[name])=={"1","64","4096"}
         for batch in (1,64,4096):
             item=timing[name][str(batch)]
-            assert item["dtype"]=="float64" and item["chunk"]==1024
+            assert item["physical_dtype"]==item["output_dtype"]=="float64" and item["chunk"]==1024
+            assert item["model_dtype"]==("float32" if name=="neural1" else None)
             for key in ("host_to_host_seconds","resident_seconds"):
                 assert len(item[key])==3 and all(math.isfinite(v) and v>0 for v in item[key])
             with np.load(a.input/(name+f"-timing-{batch}.npz"),allow_pickle=False) as z:
                 np.testing.assert_array_equal(z["indices"],np.arange(batch)%2048)
-                assert z["parameters"].shape==(3,batch,8)
+                assert z["parameters"].dtype==np.float64 and z["parameters"].shape==(3,batch,8)
                 for i in range(3):
                     delta=z["parameters"][i,:,:3]-truth[z["indices"],:3]
                     err=np.sqrt(np.einsum("ni,ni->n",delta,delta))
