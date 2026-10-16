@@ -2,7 +2,15 @@
 
 Between March and October 2026 I planned and built five connected repositories for AI-assisted control of NV-diamond quantum magnetometers: a physics simulator, an edge-ML training and export pipeline, a PID plus neural-network controller on production PolarFire SoC silicon (paced by software on the SoC's processor, with replayed ODMR input), a learned vector tracker (FP32 simulation only), and a workbench that checks written claims against evidence. Claude Code and Codex wrote the code from written specs and data contracts. I ran the planning, the cross-model reviews and the claim checks, and I reviewed what came back.
 
-The scope comes from a technical plan I developed in July and August 2025 for an AFWERX SBIR Phase I proposal ([FX255-PCSO2-0044](proposal/README.md)), which was not selected in May 2026; the work had no contract and no government funding. The government shutdown in autumn 2025 stalled the program and the decision slipped into 2026. Rather than wait for funding to hire the people on the proposal, I built it myself. I turned the plan into a 90-day build plan in March 2026 and kept building into October. Files that say Phase I, KPP (key performance parameter) or deliverable follow the plan and report I wrote for that proposal. The public history holds about 400 commits between 2026-03-26 and 2026-10-08, counting a week of first attempts in three repos I later archived.
+The scope comes from a technical plan I developed in July and August 2025 for an AFWERX SBIR Phase I proposal ([FX255-PCSO2-0044](proposal/README.md)). I recall submitting it during the first week of August 2025. That is my recollection; the precise submission day and upload receipt remain unverified.
+
+I expected notification about 90 calendar days after the August 5 closing, as the solicitation anticipated. The [AFWERX notification FAQ](https://afwerx.com/contact-faq/what-is-the-timeframe-for-select-non-select-notifications/) also states a 90-day timeframe. The archived not-selected notice is dated May 12, 2026, roughly nine months later. The wait spanned the federal shutdown and the SBIR authorization lapse. These records do not show that either one caused this delay. The proposal was not selected. It brought no award, no contract and no government funding.
+
+The proposed team included me and three additional engineering specialists: one PhD and two master's-level engineers. Without funding for the team, I continued with AI agents. I owned the architecture, the experiments, the debugging and the evidence review. I prepared a full technical report before the decision. I turned the plan into a 90-day build plan in March 2026 and kept building into October. Files that say Phase I, KPP (key performance parameter) or deliverable follow the plan and report I wrote for that proposal.
+
+Work reached beyond the Phase I feasibility plan in three areas: on-board inference measurement, board-level controller measurements and a hierarchical two-stage INT8 model. The last ended in a documented negative result. The [proposal crosswalk](proposal/README.md#work-extended-beyond-the-phase-i-feasibility-plan) gives the evidence and the limit for each. These extensions do not show that all proposal targets were met.
+
+The recorded activity is a conservative count from selected private archives. It shows over 1,300 submitted interactions in over 200 conversations and coding sessions, on over 100 dates between July 2025 and October 2026. These are not unique tasks, labor hours or a claim that I wrote every word. Rules and limits: [activity-count methodology](workflow-retrospective.md#activity-count-methodology) and the [aggregate counts](activity-counts-2026-10-16.json).
 
 Three decisions with their evidence and attribution: [engineering-decisions.md](engineering-decisions.md). Selected conversation evidence: [research and verification](../planning/excerpts/05-research-and-verification.md). Terms: [glossary](glossary.md). Back to the [project overview](../README.md).
 
@@ -12,7 +20,7 @@ I did the planning in one claude.ai project that held the original technical pla
 
 Claude produced the designs and Gemini Deep Think reviewed them as a second model. Claude then sorted the review items into those to act on and those to defer or close, and I logged the outcome in an integration tracker.
 
-The workbench started as a way to check my own work, and only later became the orchestrator. It checks the claims in my own technical report against the project's ground truth. Its critics see only the project's own files, never the web; the reasons are in [orchestrator/README.md](../orchestrator/README.md). It builds searchable corpora from the docs and code, extracts each claim and runs it past an ensemble of critic models on my own machines, with no cloud inference and a stop-gate after each stage. In the first audit on 2026-05-01 a manual structure review of the report found the abstract and body disagreeing on timing slack, an unfinished deliverable section and a missing reference list, all rated critical. All three were closed in the corrected report.
+Without the planned specialists available to check my work, I built the Tychon Verification Workbench. It later became the orchestrator. It does not replace independent subject-matter review. It checks the claims in my own technical report against the project's ground truth. Its critics see only the project's own files, never the web; the reasons are in [orchestrator/README.md](../orchestrator/README.md). It builds searchable corpora from the docs and code, extracts each claim and runs it past an ensemble of critic models on my own machines, with no cloud inference and a stop-gate after each stage. In the first audit on 2026-05-01 a manual structure review of the report found the abstract and body disagreeing on timing slack, an unfinished deliverable section and a missing reference list, all rated critical. All three were closed in the corrected report.
 
 The second audit showed the cost of a closed corpus. A critic marked a correct timing claim CONTRADICTED because the corpus held both an early timing run and the final one, and the critic read the early run. After I archived the early run, the claim came back SUPPORTED. The lesson I recorded was that evidence needs version metadata, such as which run and which design state, before a bigger critic is worth adding.
 
@@ -98,7 +106,9 @@ The first three repositories below were the original workers, restarted in clean
 | Date | Event |
 |---|---|
 | 2025-07-02 to 08-04 | Proposal origin, scope changes, and research condensed with Claude and Gemini; [eight drafting excerpts](../planning/excerpts/00-proposal-2025.md) |
-| 2025, exact submission date unverified | Proposal FX255-PCSO2-0044 submitted under topic AFX255-PCSO2; [archived technical volume and claim crosswalk](proposal/README.md) |
+| First week of August 2025 (Jason's recollection; precise day unverified) | Proposal FX255-PCSO2-0044 submitted under topic AFX255-PCSO2; [archived technical volume and claim crosswalk](proposal/README.md) |
+| 2025-08-05 | Advertised close, noon ET, per the [AFWERX opening bulletin](https://content.govdelivery.com/accounts/USAFAFWERX/bulletins/3e789fe); the bulletin is not a receipt. The solicitation anticipated notification about 90 calendar days later |
+| 2025, autumn | [Federal shutdown](https://piv.opm.gov/chcoc/latest-memos/employee-pay-leave-benefits-and-other-human-resources-programs-affected-by-the-lapse-in-appropriations/) and [SBIR authorization lapse](https://www.nist.gov/tpo/small-business-innovation-research-program-sbir) fall within the wait; neither is shown to have caused this delay |
 | 2026-03-04 | [Planning starts in a claude.ai project](../planning/excerpts/playbook-creation-2026-03.md); execution playbook v4 is dated 2026-03-09, with a numbered decision log |
 | 2026-03-11 | Decision DLOG-017 sets the build order, simulator, then ML, then FPGA |
 | 2026-03-26 to 04-02 | First attempts in three repos (38 commits), later archived |
@@ -106,7 +116,8 @@ The first three repositories below were the original workers, restarted in clean
 | 2026-04-03 | Restart in `nv-sensor-sim`, `odmr-edge-ml` and `polarfire-hybrid-control` |
 | 2026-04-04 | Review findings turned into code changes in all three repos |
 | 2026-05-01 | Verification workbench started, with a full claim audit of my technical report the same day |
-| 2026-05-12 | Not-selected notice: no award, no contract, no government funding; building continued |
+| 2026-05-03 to 05-04 | Full technical report, version 3.4, dated May 3 (cover date May 4); the document stays private. Its excerpts are in the [proposal crosswalk](proposal/README.md#historical-planning-basis) |
+| 2026-05-12 | Not-selected notice, roughly nine months after the close: no award, no contract, no government funding; building continued |
 | 2026-06 | Production PolarFire SoC silicon confirmed on the dev kit, then two-slot PID integration; demo dashboard built for a live demo |
 | 2026-06-29 | `odmr-vector-tracking` started |
 | 2026-07-01 to 07-02 | Per-claim inventory of every repo, plus watchdog trip time and a kit-resident paced loop measured on silicon |
@@ -115,6 +126,7 @@ The first three repositories below were the original workers, restarted in clean
 | 2026-08 | Loaders for five external ODMR and magnetometry datasets, plus two-sample test code to compare the simulator against them |
 | 2026-09 | Dispatch tooling hardened: atomic ID reservation, leases and an 18-group test |
 | 2026-10-09 to 10-10 | Simulator compared with four public ODMR datasets, then a line-width and contrast fit (in-sample); watchdog fallback tested on the kit |
+| 2026-10-16 | Activity audit of selected private archives; public counts and rules in the [methodology](workflow-retrospective.md#activity-count-methodology) |
 
 
 Each folder of this repository keeps the original commit history of the repository it came from, with original dates. In `workers/polarfire-hybrid-control` and `orchestrator` some planning documents and vendor tool logs were left out of the history; dates and authors are unchanged. The first attempts are in [`archive/v0`](../archive/v0) and the planning phase is in [`planning/`](../planning).
