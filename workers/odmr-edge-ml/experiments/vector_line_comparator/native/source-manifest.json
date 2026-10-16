@@ -1,0 +1,10 @@
+{
+  "upstream_commit": "960a4df49bcbed115778f07407350a18ade14c9b",
+  "license": "MIT",
+  "files": {
+    "LICENSE.Gpufit.txt": "27e4912cc250583c7fe0aa1260ebcafef7b8b7595525061c99919a91ca20765c",
+    "build-spec.prepared.json": "6e7b592985b6180a4ec1f1cc031fed70bfe809b3396daf7b16316330caef8f69",
+    "lorentz8_tied_linear.cuh": "fa4c38a2bc34738fe678413a3fd7f5f0c4b6ce49af85b271f1b5db1e2c0af3a2",
+    "upstream_lorentz8_linear.cuh": "21f4fe71d4418eea746b6e65e5f164b2aea28dade7c799246b75849adf304ac6"
+  }
+}

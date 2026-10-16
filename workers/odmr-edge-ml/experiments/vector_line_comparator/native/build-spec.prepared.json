@@ -1,0 +1,24 @@
+{
+  "status": "BLOCKED_CURRENT_SUPERVISOR_NO_EXECUTION",
+  "source_repository": "https://github.com/casparvitch/Gpufit",
+  "source_commit": "960a4df49bcbed115778f07407350a18ade14c9b",
+  "branch": "QSL",
+  "license": "MIT",
+  "maximum_threads": 4,
+  "maximum_memory_bytes": 8589934592,
+  "maximum_wall_seconds": 1800,
+  "maximum_cpu_seconds": 5400,
+  "budget_source": "existing vector allocation; not a fresh budget",
+  "blockers": [
+    "Current supervisor forbids compiler subprocess trees",
+    "Current GPU policy allows PyTorch allocator only",
+    "Full pinned upstream source not retrieved: bounded archive read exceeded 10 MiB and was aborted",
+    "Explicit architecture must be verified against GPU metadata and installed nvcc targets before configuration",
+    "Custom model registration in enum/model dispatcher/parameter count remains unimplemented"
+  ],
+  "future_commands": [
+    "/usr/bin/cmake -S \"$PINNED_PATCHED_SOURCE\" -B \"$OUT/build\" -G Ninja -DCMAKE_BUILD_TYPE=Release -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-13.0 -DCUDA_ARCHITECTURES=\"$VERIFIED_CUDA_ARCH\" -DUSE_CUBLAS=OFF -DDOUBLE_PRECISION=OFF -DBUILD_TESTING=OFF",
+    "/usr/bin/cmake --build \"$OUT/build\" --target Cpufit Gpufit --parallel 4"
+  ],
+  "retry_limit": "one changed-approach repair for a concrete failure; stop before driver/compiler installation"
+}

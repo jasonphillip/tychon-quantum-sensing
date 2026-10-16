@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "original_verifiers": {
+    "p1": {
+      "path": "experiments/vector_initializer_development/verify_saved.py",
+      "sha256": "a10ed1603a4ba263d78d4012e80abf3a182b117d3d1988f5b102338b13a3f353"
+    },
+    "challenge": {
+      "path": "experiments/vector_baseline_challenge/verify_saved.py",
+      "sha256": "abc00561aa310b4bd428e774f0f340bf3a3426815a7e42858d6805ad964a1dda"
+    }
+  },
+  "changes": [
+    "Replace private numerical authorization with explicit public-manifest hash and exact-byte payload validation.",
+    "Read unchanged configuration as JSON without importing physics or experiment modules.",
+    "Read logical original files from byte-exact parts; retain every original numerical payload.",
+    "Replace P1 Torch checkpoint deserialization with opaque exact-byte hash validation; disclose original tensor inspection is not repeated.",
+    "Bind challenge frozen P1 input hashes and original source identities through the public manifest.",
+    "Add public-manifest identity to verification report; preserve original-manifest identity.",
+    "Require fresh outside-checkout outputs and enabled Python assertions.",
+    "Reject output beneath the nearest enclosing Git checkout, while keeping the worker source root for verifier identity lookups; use source-root fallback only when no enclosing .git exists."
+  ],
+  "unchanged": [
+    "All saved metric formulas and tolerances",
+    "All Poisson-guard formulas and tolerances",
+    "All timing consistency and route selection checks",
+    "All eight training-count blocks, feature scaling, and cross-split label checks",
+    "All original frozen experiment source files"
+  ],
+  "source_dependencies": {
+    "public_python_files": [
+      "bundle.py",
+      "verify_p1_saved.py",
+      "verify_challenge_saved.py",
+      "export_bundle.py"
+    ],
+    "standard_library": [
+      "argparse",
+      "hashlib",
+      "io",
+      "json",
+      "math",
+      "pathlib",
+      "re",
+      "sys"
+    ],
+    "third_party_verification_only": [
+      "numpy",
+      "scipy.special.xlogy"
+    ],
+    "configuration": "experiments/vector_direct_screen/config.json",
+    "original_verifier_bytes_for_identity_only": [
+      "experiments/vector_initializer_development/verify_saved.py",
+      "experiments/vector_baseline_challenge/verify_saved.py"
+    ],
+    "private_imports": [],
+    "torch_imports": []
+  },
+  "static_equivalence": {
+    "p1_data_and_scaling_block": "literal equal",
+    "p1_metrics_timing_decisions_block": "literal equal after disclosed Torch state assertion removal",
+    "challenge_helper_functions": "AST equal",
+    "challenge_data_metrics_decisions_block": "literal equal after three public provenance bindings",
+    "numerical_execution": false
+  },
+  "checkout_boundary_fixtures_prepared_not_run": [
+    {
+      "arrangement": "Temporary parent/public/.git directory; source parent/public/workers/odmr-edge-ml",
+      "call": "outside_output(parent/public/docs/new-check, source)",
+      "expected": "ValueError"
+    },
+    {
+      "arrangement": "Temporary parent/public/.git file; source parent/public/workers/odmr-edge-ml",
+      "call": "outside_output(parent/public/docs/new-check, source)",
+      "expected": "ValueError"
+    },
+    {
+      "arrangement": "Same public checkout",
+      "call": "outside_output(parent/results/new-check, source)",
+      "expected": "accepted"
+    },
+    {
+      "arrangement": "Temporary source tree with no enclosing .git",
+      "call": "outside_output(source/docs/new-check, source)",
+      "expected": "ValueError; checkout_boundary(source) equals source.resolve()"
+    },
+    {
+      "arrangement": "Temporary source tree with no enclosing .git",
+      "call": "outside_output(source.parent/results/new-check, source)",
+      "expected": "accepted"
+    },
+    {
+      "arrangement": "Symlink outside checkout pointing to existing public/docs directory",
+      "call": "outside_output(symlink/new-check, source)",
+      "expected": "ValueError"
+    },
+    {
+      "arrangement": "Any source root; output already exists",
+      "call": "outside_output(existing_output, source)",
+      "expected": "ValueError"
+    }
+  ]
+}
