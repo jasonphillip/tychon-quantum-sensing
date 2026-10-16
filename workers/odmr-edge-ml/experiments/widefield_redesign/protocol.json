@@ -1,6 +1,6 @@
 {
   "study": "widefield-redesign-2026-10-15",
-  "status": "DRAFT_ROOT_REVIEW",
+  "status": "FROZEN",
   "source_parent": "ad1ba6c5ede5cd4588dce5f9c926cd0bedf823fb",
   "task": "One-scan spatial spectral-contrast reconstruction; held-repeat proxy, not magnetic-field truth",
   "files": {
