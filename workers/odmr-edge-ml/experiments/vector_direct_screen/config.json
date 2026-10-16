@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "status": "PROSPECTIVE_NO_RESULTS",
+  "parameter_order": [
+    "dBx_uT",
+    "dBy_uT",
+    "dBz_uT",
+    "D_MHz",
+    "fwhm_MHz",
+    "total_contrast",
+    "baseline",
+    "slope"
+  ],
+  "bias_uT": [
+    1600,
+    900,
+    300
+  ],
+  "gamma_MHz_per_uT": 0.02802495164,
+  "lower": [
+    -20,
+    -20,
+    -20,
+    2869.6,
+    1,
+    0.02,
+    0.98,
+    -0.01
+  ],
+  "upper": [
+    20,
+    20,
+    20,
+    2870.4,
+    3,
+    0.12,
+    1.02,
+    0.01
+  ],
+  "nominal": [
+    0,
+    0,
+    0,
+    2870,
+    2,
+    0.06,
+    1,
+    0
+  ],
+  "scales": [
+    20,
+    20,
+    20,
+    0.4,
+    1,
+    0.05,
+    0.02,
+    0.01
+  ],
+  "frequency_start_MHz": 2805,
+  "frequency_stop_MHz": 2935,
+  "frequency_bins": 512,
+  "photons_per_bin": 2000000,
+  "batch_sizes": [
+    64,
+    4096
+  ],
+  "chunk_size": 256,
+  "iterations": 40,
+  "relative_step_tolerance": 1e-06,
+  "max_reduced_deviance": 2,
+  "service_batch": 4096,
+  "service_seconds": 1,
+  "fidelity_float64_MHz": 2e-09,
+  "fidelity_float32_MHz": 0.003,
+  "jacobian_atol": 2e-07,
+  "jacobian_rtol": 0.0002,
+  "noiseless_field_tolerance_uT": 0.25,
+  "noiseless_spectrum_max_abs": 2e-05,
+  "gpu_required_for_profile": true,
+  "notes": "Ideal eight-line model only. Exact Poisson observation law. No population seeds, training or hardware authorization.",
+  "service_target_status": "illustrative_only_not_an_adoption_gate"
+}

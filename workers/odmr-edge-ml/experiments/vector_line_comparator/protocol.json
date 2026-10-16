@@ -1,0 +1,54 @@
+{
+  "status": "FROZEN",
+  "source_base": "18395df0080fb6f712eebe37a51d6ae55a09dd7f",
+  "scope": "PyTorch tied line-fit plus numerical unknown-D Hamiltonian inversion",
+  "line_parameters": [
+    "baseline",
+    "slope",
+    "FWHM_MHz",
+    "shared_amplitude",
+    "center0_minus_2870_MHz",
+    "center1_minus_2870_MHz",
+    "center2_minus_2870_MHz",
+    "center3_minus_2870_MHz",
+    "center4_minus_2870_MHz",
+    "center5_minus_2870_MHz",
+    "center6_minus_2870_MHz",
+    "center7_minus_2870_MHz"
+  ],
+  "line_iterations": 40,
+  "inverse_iterations": 40,
+  "initialization": "inherited input-only affine physical initializer; no truth",
+  "association": "known-bias nominal slots; Weyl prior envelopes must be strictly disjoint",
+  "envelope_MHz_formula": "2*(gamma*norm([20,20,20])+0.4)",
+  "line_precision": "fitted-rate expected Poisson Fisher center Schur complement over four line nuisances",
+  "minimum_precision_eigenvalue_ratio": 1e-10,
+  "D_MHz_bounds": [
+    2869.6,
+    2870.4
+  ],
+  "E_MHz": 0,
+  "gamma_MHz_per_uT": 0.02802495164,
+  "fallback": "unchanged original physical three-width fallback on observed guard or numerical failure",
+  "observed_guard": "unchanged inherited physical spectrum Poisson reduced deviance <=2 and physical bounds",
+  "limits": {
+    "training": false,
+    "population_access": false,
+    "native_build": false,
+    "gpu_execution_requires_separate_root_gate": true
+  },
+  "quality_threshold_changes": false,
+  "claim_limit": "mathematical comparator, not native Gpufit speed parity",
+  "chunk_size": 1024,
+  "allowed_profile_chunk_sizes": [
+    1024
+  ],
+  "proposed_parity": {
+    "cases": 5,
+    "dtype": "float64",
+    "scope": "fixed noiseless nominal and four prior corners; CPU/GPU complete pipeline",
+    "complete_parameter_scaled_tolerance": "existing relative_step_tolerance, unchanged",
+    "maximum_cpu_seconds": 30,
+    "maximum_wall_seconds": 30
+  }
+}
