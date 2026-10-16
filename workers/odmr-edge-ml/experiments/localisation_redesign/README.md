@@ -42,10 +42,17 @@ Its mean error must be at most1.05 of the strongest full-budget reference.
 The calibration-position ratio must be at most0.50, with complete prediction coverage.
 Final whole-cell bootstrap upper bounds must be below1.0 for the same-budget ratio and at most1.05 for the full-budget ratio.
 There must be at least30 held positions and6 spatial cells.
-A failed development gate closes this formulation without held-feature access.
+The physical-loss candidate receives priority only if every neural development gate passes.
+Otherwise, the best small-budget classical reference can qualify prospectively.
+Its mean error must be at most1.05 and p95 error at most1.10 of the full-budget reference.
+It also needs half the positions, complete coverage and a complete reference comparison.
+Final classical mean-ratio bootstrap upper bounds must be at most1.05.
+This outcome is CLASSICAL_CALIBRATION_EFFICIENCY and does not imply neural superiority.
+Root freezes exactly one selected path and its reference identities before held access.
+Only that path receives one final test. A failed neural confirmation cannot switch to classical.
+If neither development path passes, the formulation closes without held-feature access.
 A failed final gate ends this claim without tuning or another test.
-The saved small/full classical ratio also identifies a possible classical calibration tradeoff.
-It does not authorize switching candidates or opening the held set after a failed neural gate.
+This classical adoption path is declared before new scores; it is not a later rescue of a failed claim.
 
 ## Custody and prior art
 

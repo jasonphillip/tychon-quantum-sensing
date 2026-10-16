@@ -48,7 +48,10 @@ def verify(artifact):
         if (not np.array_equal(saved["row_indices"], rows) or len(set(rows)) != len(rows)
                 or not np.array_equal(saved["spatial_groups"], np.asarray(split["spatial_groups"])[rows])):
             raise ValueError("prediction row/group identities differ")
-        for name in ("candidate", "control", "small", "full"):
+        names = ("small", "full") if confidence and context["selected_path"] == "CLASSICAL_CALIBRATION_EFFICIENCY" else ("candidate", "small", "full") if confidence else ("candidate", "control", "small", "full")
+        if confidence and ("control_um" in saved or ("candidate" not in names and "candidate_um" in saved)):
+            raise ValueError("unselected model was scored on held data")
+        for name in names:
             flags = saved[name + "_valid"]
             if flags.dtype != np.bool_ or not np.array_equal(flags, validity(saved[name + "_um"], labels)):
                 raise ValueError("validity flags differ: " + name)
@@ -77,9 +80,13 @@ def verify(artifact):
             complete = all(row["valid"] for name in ("small", "full") for row in selection["all_classical_" + name])
             if complete != selection["benchmark_complete"] or complete != context["benchmark_complete"]:
                 raise ValueError("benchmark completeness differs")
-        result = evaluate_saved(labels, saved["candidate_um"], saved["control_um"], saved["small_um"], saved["full_um"],
+        result = evaluate_saved(labels, saved["candidate_um"] if "candidate_um" in saved else None,
+                                saved["control_um"] if "control_um" in saved else None, saved["small_um"], saved["full_um"],
                                 saved["spatial_groups"], protocol, split["small_label_budget"], split["full_label_budget"],
-                                context.get("bootstrap_seed", 0), confidence, context["benchmark_complete"])
+                                context.get("bootstrap_seed", 0), confidence, context["benchmark_complete"],
+                                context["selected_path"] if confidence else None)
+        if result["selected_path"] != context["selected_path"] or selection["selected_path"] != context["selected_path"]:
+            raise ValueError("saved adoption path differs")
     if not same(result, read_json(artifact / "metrics.json")):
         raise ValueError("saved metrics differ")
     return result

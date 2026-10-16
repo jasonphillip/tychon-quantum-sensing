@@ -99,9 +99,9 @@ class Contracts(unittest.TestCase):
         groups = np.repeat(np.arange(8), 5)
         result = evaluate_saved(y, y + 1., y + 2., y + 3., y + .5, groups, protocol, 124, 248, 17, False, True)
         self.assertFalse(result['gate_passed'])
-        self.assertFalse(result['criteria']['matched_full_pool_quality'])
-        self.assertTrue(result['criteria']['same_budget_useful_advantage'])
-        perfect = evaluate_saved(y, y, y, y, y, groups, protocol, 124, 248, 17, True, True)
+        self.assertFalse(result['neural_criteria']['matched_full_pool_quality'])
+        self.assertTrue(result['neural_criteria']['same_budget_useful_advantage'])
+        perfect = evaluate_saved(y, y, y, y, y, groups, protocol, 124, 248, 17, True, True, 'NEURAL_CALIBRATION_EFFICIENCY')
         self.assertFalse(perfect['gate_passed'])
 
     def test_complete_saved_only_verification_and_tampered_metric(self):
@@ -122,9 +122,9 @@ class Contracts(unittest.TestCase):
                  'selection_method': 'centroid_start_farthest_point_physical_um_lexicographic_ties'}
         rows = split['test']; labels = np.column_stack((np.arange(36), np.arange(36)))
         groups = np.asarray(split['spatial_groups'])[rows]
-        predictions = {'candidate': labels + .1, 'control': labels + .2, 'small': labels + 1., 'full': labels + 1.}
-        result = evaluate_saved(labels, predictions['candidate'], predictions['control'], predictions['small'], predictions['full'],
-                                groups, protocol, 124, 248, 19, True, True)
+        predictions = {'candidate': labels + .1, 'small': labels + 1., 'full': labels + 1.}
+        result = evaluate_saved(labels, predictions['candidate'], None, predictions['small'], predictions['full'],
+                                groups, protocol, 124, 248, 19, True, True, 'NEURAL_CALIBRATION_EFFICIENCY')
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             payload = {'labels_um': labels, 'row_indices': np.asarray(rows), 'spatial_groups': groups}
@@ -132,10 +132,10 @@ class Contracts(unittest.TestCase):
                 payload[name + '_um'] = values; payload[name + '_valid'] = np.ones(36, dtype=bool)
             np.savez(root / 'predictions.npz', **payload)
             documents = {'protocol.json': protocol, 'partition.json': split, 'metrics.json': result,
-                         'selection.json': {'stage': 'held_group'},
+                         'selection.json': {'stage': 'held_group', 'selected_path': 'NEURAL_CALIBRATION_EFFICIENCY'},
                          'verification.json': {'stage': 'held_group', 'confidence': True, 'expected_row_indices': rows,
                                                'small_label_budget': 124, 'full_label_budget': 248,
-                                               'benchmark_complete': True, 'bootstrap_seed': 19}}
+                                               'benchmark_complete': True, 'bootstrap_seed': 19, 'selected_path': 'NEURAL_CALIBRATION_EFFICIENCY'}}
             for name, value in documents.items():
                 (root / name).write_text(json.dumps(value))
             manifest = {'source_sha256': {str(f.relative_to(PACKAGE)): sha256(f) for f in PACKAGE.rglob('*.py')},
@@ -149,6 +149,21 @@ class Contracts(unittest.TestCase):
             (root / 'artifact_manifest.json').write_text(json.dumps(manifest))
             with self.assertRaisesRegex(ValueError, 'saved metrics differ'):
                 verify(root)
+
+    def test_registered_classical_route_and_no_held_switch(self):
+        protocol = json.loads((PACKAGE / 'protocol.json').read_text())
+        y = np.column_stack((np.arange(36), np.arange(36)))
+        groups = np.repeat(np.arange(6), 6)
+        development = evaluate_saved(y, y + 2, y + 1, y + 1, y + 1, groups, protocol, 124, 248, 3, False, True)
+        self.assertFalse(development['neural_gate_passed'])
+        self.assertTrue(development['classical_gate_passed'])
+        self.assertEqual(development['selected_path'], 'CLASSICAL_CALIBRATION_EFFICIENCY')
+        held = evaluate_saved(y, None, None, y + 1, y + 1, groups, protocol, 124, 248, 3, True, True, 'CLASSICAL_CALIBRATION_EFFICIENCY')
+        self.assertTrue(held['gate_passed'])
+        self.assertFalse(held['neural_gate_passed'])
+        failed_neural = evaluate_saved(y, y + 2, None, y + 1, y + 1, groups, protocol, 124, 248, 3, True, True, 'NEURAL_CALIBRATION_EFFICIENCY')
+        self.assertFalse(failed_neural['gate_passed'])
+        self.assertEqual(failed_neural['selected_path'], 'NEURAL_CALIBRATION_EFFICIENCY')
 
 
 if __name__ == '__main__':

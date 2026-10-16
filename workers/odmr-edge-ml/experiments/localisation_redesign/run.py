@@ -137,8 +137,9 @@ def save_stage(output, approval, protocol, split, labels, predictions, small_all
     rows = split["test"] if confidence else split["validation"]
     groups = np.asarray(split["spatial_groups"])[rows]
     complete = records["benchmark_complete"]
-    result = evaluate_saved(labels, predictions["candidate"], predictions["control"], predictions["small"], predictions["full"],
-                            groups, protocol, split["small_label_budget"], split["full_label_budget"], seed, confidence, complete)
+    result = evaluate_saved(labels, predictions.get("candidate"), predictions.get("control"), predictions["small"], predictions["full"],
+                            groups, protocol, split["small_label_budget"], split["full_label_budget"], seed, confidence, complete,
+                            records.get("selected_path") if confidence else None)
     arrays = {"labels_um": labels, "row_indices": np.asarray(rows, dtype=np.int64), "spatial_groups": groups}
     for name, values in predictions.items():
         arrays[name + "_um"] = values
@@ -151,11 +152,12 @@ def save_stage(output, approval, protocol, split, labels, predictions, small_all
     write_json(output / "metrics.json", result)
     write_json(output / "protocol.json", protocol)
     write_json(output / "partition.json", split)
+    records["selected_path"] = result["selected_path"]
     write_json(output / "selection.json", records)
     context = {"stage": stage, "confidence": confidence, "benchmark_complete": complete,
                "expected_row_indices": rows, "small_label_budget": split["small_label_budget"],
                "full_label_budget": split["full_label_budget"], "prediction_file": "predictions.npz",
-               "held_out_signal_values_accessed": confidence}
+               "held_out_signal_values_accessed": confidence, "selected_path": result["selected_path"]}
     if confidence:
         context["bootstrap_seed"] = seed
     write_json(output / "verification.json", context)
@@ -215,23 +217,27 @@ def evaluate(args, approval, protocol):
         raise ValueError("development source freeze changed")
     if read_json(development / "partition.json") != split or read_json(development / "protocol.json") != protocol:
         raise ValueError("development scientific contract changed")
-    if read_json(development / "metrics.json")["gate_passed"] is not True:
+    development_metrics = read_json(development / "metrics.json")
+    if development_metrics["gate_passed"] is not True:
         raise ValueError("failed development closes this formulation")
     selected = read_json(development / "selection.json")
+    if (approval.get("selected_path") != development_metrics["selected_path"]
+            or selected["selected_path"] != development_metrics["selected_path"]):
+        raise ValueError("Freeze B must bind the development-selected adoption path")
     if not selected["benchmark_complete"]:
         raise ValueError("incomplete classical comparison")
     # This is the only entry point allowed to request preserved held feature rows.
     xt, yt, _, _ = arrays(args.bundle, split["test"])
     predictions = {}
-    for name in ("candidate", "control"):
-        state, scale = load_model(development / (name + ".npz"))
-        predictions[name] = scale.inverse(predict_candidate(scale.x(xt), state))
+    if selected["selected_path"] == "NEURAL_CALIBRATION_EFFICIENCY":
+        state, scale = load_model(development / "candidate.npz")
+        predictions["candidate"] = scale.inverse(predict_candidate(scale.x(xt), state))
     for name in ("small", "full"):
         record = selected["all_classical_" + name][selected[name + "_winner"]]
         state, scale = load_model(development / record["checkpoint"])
         predictions[name] = scale.inverse(predict_classical(record["config"], state, scale.x(xt)))
     output = output_directory(args.output)
-    records = {"stage": "held_group", "benchmark_complete": True,
+    records = {"stage": "held_group", "benchmark_complete": True, "selected_path": selected["selected_path"],
                "development_manifest_sha256": sha256(development / "artifact_manifest.json"),
                "small_reference": selected["all_classical_small"][selected["small_winner"]],
                "full_reference": selected["all_classical_full"][selected["full_winner"]],

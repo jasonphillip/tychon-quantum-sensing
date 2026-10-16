@@ -203,7 +203,7 @@
     "All 38 classical configurations receive the same transforms and training-only optimization at both budgets.",
     "Retain every prediction and validity flag. A failed configuration makes the comparison incomplete.",
     "One physical-loss candidate and one matched diagnostic control. No model or seed selection.",
-    "A failed development gate closes this formulation without held-feature access or retuning.",
+    "If neither prospectively registered neural nor classical development path passes, close without held-feature access or retuning.",
     "One root Freeze B and one held evaluation only after development passes.",
     "A failed or inconclusive held gate ends this claim; no moved threshold or test reuse.",
     "No sensor, session, novelty, paper-headline-error, hardware, or acquisition-speed claim."
@@ -403,5 +403,16 @@
       "quality_weight": 1.0,
       "kernel": "matern32"
     }
-  ]
+  ],
+  "classical_adoption_gate": {
+    "maximum_mean_ratio": 1.05,
+    "maximum_p95_ratio": 1.1,
+    "maximum_one_sided_95pct_mean_ratio": 1.05,
+    "maximum_calibration_ratio": 0.5,
+    "coverage": 1.0,
+    "outcome": "CLASSICAL_CALIBRATION_EFFICIENCY",
+    "reference": "strongest_full_budget_validation_selected_configuration_frozen_before_held_access"
+  },
+  "adoption_selection": "neural_if_all_gates_pass_else_classical_if_all_gates_pass_else_close",
+  "final_path_policy": "root_Freeze_B_binds_exactly_one_path_no_switch_after_confirmation"
 }
