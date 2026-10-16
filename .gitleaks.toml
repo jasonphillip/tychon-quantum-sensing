@@ -31,4 +31,12 @@ regexes = [
   # 2026-10-15 advantage search: widefield redesign verification manifest binds experiments/widefield_redesign/access.py
   # by sha256 (key "experiments/widefield_redesign/access.py"); value verified equal to that file's sha256. Exact value only.
   '''686f0da8ed28e41900a9526d87330a9664ee86ccfde43f60c13bbe8b307168c9''',
+  # 2026-10-15 vector development: bundle manifests, provenance and receipt projections bind six source files by sha256
+  # (key "access.py"). Each value verified equal to the sha256 of workers/odmr-edge-ml/experiments/<lane>/access.py. Exact values only.
+  '''3c488f4895b4d73e8d4385334e3dafba3f5f8817a05ac5f73bd360c370ea855d''',  # vector_line_comparator/access.py
+  '''758c62a093e38f3724fd45e9b23f872a8c2421bd51b67f11f186c520d84965a5''',  # vector_direct_screen/access.py
+  '''bd345273438173f39381b60ec22ed23aac3312ec0cda2f0957936289df27c02d''',  # vector_noise_qualification/access.py
+  '''c5dbe4882ec1c017194890bef7f78035d81239f4cf5e994b1bdbcb5b7499460e''',  # vector_baseline_challenge/access.py
+  '''de88946134f3efb355ee68692d4be01ea52145da32e58bc9b3d622e758d53c56''',  # vector_initializer_development/access.py
+  '''f6ca8c7e91effa505155e0e6f1336d825f48a51af2a8d0a21ffa12ce8b8a6ba8''',  # vector_classical_qualification/access.py
 ]
