@@ -54,7 +54,6 @@ One coordination round: [an external review turned into per-repository prompts](
 | To | Open |
 |---|---|
 | Understand the project in five minutes | [Case study](docs/case-study.md) |
-| Compare the unfunded proposal with delivered work | [Proposal archive and claim crosswalk](docs/proposal/README.md), [2025 drafting excerpts](planning/excerpts/00-proposal-2025.md) |
 | See how LLM conversations shaped the work | [Conversation record](planning/excerpts/README.md), [What the models could not do](planning/excerpts/what-the-models-could-not-do.md) |
 | Review the evidence in twenty minutes | [Reviewer path](docs/start-here-reviewers.md) |
 | Navigate as a visiting agent | [Repository map](AGENTS.md), [llms.txt](llms.txt) |
@@ -64,6 +63,7 @@ One coordination round: [an external review turned into per-repository prompts](
 | See decisions and who made them | [Engineering decisions](docs/engineering-decisions.md), [conversation excerpts](planning/excerpts/) |
 | Take your own model to the V250 | [From a TFLite file to inference on the kit](docs/model-to-v250.md) |
 | Learn the physics and terms | [Primer](docs/primer.md), [glossary](docs/glossary.md) |
+| Compare the unfunded proposal with delivered work | [Proposal archive and claim crosswalk](docs/proposal/README.md), [2025 drafting excerpts](planning/excerpts/00-proposal-2025.md) |
 
 ## Representative results
 

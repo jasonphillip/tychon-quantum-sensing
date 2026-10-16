@@ -1,30 +1,11 @@
 # The 2025 proposal and the delivered state
 
 This archive records Tychon AI's **not-selected, unfunded SBIR Phase I proposal**, FX255-PCSO2-0044, under topic AFX255-PCSO2.
-The notice is dated May 12, 2026. No award or contract resulted from this proposal.
+No award, contract, or government funding resulted from this proposal.
 The software and kit work continued independently.
 
 The proposal describes intended work. Its performance promises, staffing plans, and product plans are not delivered results.
 Use the crosswalk below before reading the historical claims.
-
-## Documents and provenance
-
-- [Technical volume](technical-volume-2025-redacted.pdf): a scrubbed, 16-page derivative of a privately retained archived copy.
-- [Not-selected notice and feedback](not-selected-letter-2026-05-12-redacted.pdf): the two-page notice, with three officers' names and the military email address removed.
-- [File manifest](manifest.json): output hashes, page counts, and archived-source hashes.
-- [Eight proposal-development selections](../../planning/excerpts/00-proposal-2025.md): dated prompt/reply evidence and one email excerpt.
-
-The exact submission date is not established by these records. The archived technical copy is not verified as the exact submitted bytes.
-The decision letter establishes the proposal and topic identifiers above. The archived volume retains its original identifier typos.
-Page references below use printed page numbers; the PDF has an additional contents page.
-
-The cover sheet, budget, and separate certifications are excluded. Within the technical volume, the SBC ID, teammate names, personnel school names, institutional affiliations in the related-work group labels, private contact details, named customer references and discussions, prior customer-work table, commercial strategy and pricing, and certification bodies are omitted. The letter omits three officers’ names and the military email address.
-Original pagination is retained. Team roles, original duties, and degree fields remain; Jason stays named.
-Public researcher citations and group names are retained. Original metadata, comments, attachments, hidden content, and active links were removed.
-The letter uses redacted page images with a newly generated OCR text layer. The visible pages are authoritative.
-
-**Jason’s statement:** all proposal information came from public sources, and his position is that ITAR does not apply.
-This is Jason’s position, not an independent legal finding. The archived ITAR declaration remains within the omitted certification body.
 
 ## Proposal claims versus delivered state
 
@@ -41,7 +22,7 @@ Each evidence link states its own datasets, hardware, and limits. A result in on
 | Radiation-tolerant RT PolarFire and space-ready operation (pp. 2, 5-6) | The demonstrated board is a commercial PolarFire SoC Icicle Kit, MPFS250T. This is not radiation qualification, flight-hardware validation, or orbital testing. | [Exact kit and toolchain](../model-to-v250.md) |
 | Live quantum-state stabilization and robust sensing (pp. 2-3, 5) | No live diamond was connected. Replay parity and simulator fits do not demonstrate sensor sensitivity or live noise cancellation. | [Evidence boundaries](../../AGENTS.md#evidence-boundaries), [engineering decisions](../engineering-decisions.md) |
 | Fused navigation with IMU, clock, and star tracker; heading and mission benefits (pp. 3, 6-9, 11) | These remain proposed work. No integrated navigation system, measured navigation improvement, or mission benefit is demonstrated here. | [Scope](../../README.md), [case study](../case-study.md) |
-| A proposed team, stakeholder commitments, and follow-on phases (pp. 4, 7, 11-12) | Proposed roles do not establish employment or participation. This archive establishes no funded phase, customer commitment, or follow-on award. | [Not-selected notice](not-selected-letter-2026-05-12-redacted.pdf), [independent build history](../case-study.md#timeline) |
+| A proposed team, stakeholder commitments, and follow-on phases (pp. 4, 7, 11-12) | Proposed roles do not establish employment or participation. This archive establishes no funded phase, customer commitment, or follow-on award. | [Independent build history](../case-study.md#timeline) |
 
 The bounded scalar repair completed on October 15, 2026 and stopped at its validation gate.
 No repaired method passed both primary conditions, and no final set was generated.
@@ -49,12 +30,22 @@ That result does not establish reliable sensing or a useful neural advantage.
 The [scalar decision record](../../workers/odmr-edge-ml/docs/scalar_repair_cycle_2026-10.md) publishes the validation result and saved-output evidence.
 The earlier vector confirmation is already part of the reviewed baseline, not a new improvement from adding this archive.
 
-## Reading the feedback
+## Optional historical background
 
-The letter reports Commercialization **Acceptable**, Defense Need **Excellent**, and Technical Merit **Good**.
-It also says the feedback uses standardized language and does not reproduce proposal-specific peer-review comments.
-These ratings are not a government endorsement, technical validation of the performance claims, or an award.
-The notice does not establish a specific reason for non-selection.
+- [Technical volume](technical-volume-2025-redacted.pdf): optional reading; a scrubbed, 16-page derivative of a privately retained archived copy.
+- [File manifest](manifest.json): output hashes, page counts, and archived-source hashes.
+- [Eight proposal-development selections](../../planning/excerpts/00-proposal-2025.md): dated prompt/reply evidence and one email excerpt.
+
+The exact submission date is not established by these records. The archived technical copy is not verified as the exact submitted bytes.
+The proposal and topic identifiers above follow privately retained records. The archived volume retains its original identifier typos.
+Page references in the crosswalk use printed page numbers; the PDF has an additional contents page.
+
+The cover sheet, budget, and separate certifications are excluded. Within the technical volume, the SBC ID, teammate names, personnel school names, institutional affiliations in the related-work group labels, private contact details, named customer references and discussions, prior customer-work table, commercial strategy and pricing, and certification bodies are omitted.
+Original pagination is retained. Team roles, original duties, and degree fields remain; Jason stays named.
+Public researcher citations and group names are retained. Original metadata, comments, attachments, hidden content, and active links were removed.
+
+**Jason’s statement:** all proposal information came from public sources, and his position is that ITAR does not apply.
+This is Jason’s position, not an independent legal finding. The archived ITAR declaration remains within the omitted certification body.
 
 ## What this archive adds
 

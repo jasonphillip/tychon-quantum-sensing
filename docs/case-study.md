@@ -106,7 +106,7 @@ The first three repositories below were the original workers, restarted in clean
 | 2026-04-03 | Restart in `nv-sensor-sim`, `odmr-edge-ml` and `polarfire-hybrid-control` |
 | 2026-04-04 | Review findings turned into code changes in all three repos |
 | 2026-05-01 | Verification workbench started, with a full claim audit of my technical report the same day |
-| 2026-05-12 | [Not-selected notice](proposal/not-selected-letter-2026-05-12-redacted.pdf): no contract, no government funding; building continued |
+| 2026-05-12 | Not-selected notice: no award, no contract, no government funding; building continued |
 | 2026-06 | Production PolarFire SoC silicon confirmed on the dev kit, then two-slot PID integration; demo dashboard built for a live demo |
 | 2026-06-29 | `odmr-vector-tracking` started |
 | 2026-07-01 to 07-02 | Per-claim inventory of every repo, plus watchdog trip time and a kit-resident paced loop measured on silicon |
