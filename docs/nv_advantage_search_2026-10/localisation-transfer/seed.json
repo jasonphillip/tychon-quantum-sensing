@@ -1,0 +1,7 @@
+{
+  "study": "localisation-acquisition-transfer-2026-10-15",
+  "bootstrap": 5495974772149681282716870667036299685833456374971409297515989861082254076396,
+  "seed_commitment_sha256": "c1ee7ebd272270b77fb5de305da39caef915f90e3f4ae166f8a1347a16cb5f47",
+  "released_seed_sha256": "84351fe546d6ef2c92aec11ff45c862b15ac11897bba1a3391ac06864abb7cbe",
+  "derivation": "int.from_bytes(32bytes,big);NumPy SeedSequence"
+}

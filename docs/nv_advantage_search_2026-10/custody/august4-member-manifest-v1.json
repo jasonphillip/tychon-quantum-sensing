@@ -1,0 +1,497 @@
+{
+ "schema": 1,
+ "kind": "August 4 separate-day raw acquisition: exact member manifest (metadata only)",
+ "created_utc": "2026-10-16T01:34:48.857250+00:00",
+ "archive_sha256": "b5717b233590d041fb4bd752af479df7c426e37675743ca3f9d3c93ae32f7aa4",
+ "archive_relative_path": "work/nv-measured-pilots-2026-10-15/data/localisation/Data availability update 20260220.zip",
+ "custody_record": "custody/localisation-raw-custody-v1.json",
+ "custody_record_sha256": "bd415df532a6600064e6474ef44299718a6d24473f9c89a9bce71a959ccdb22b",
+ "folder": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW",
+ "member_count": 25,
+ "zip_datetime_span": [
+  "2025-08-04 17:58:04",
+  "2025-08-04 20:23:48"
+ ],
+ "label_source": "stage x/y in micrometres parsed from each member file name; not a calibrated position; stage calibration uncertainty unknown",
+ "header_schema": {
+  "dtype": "float64 (<f8)",
+  "shape": "[T, 16, 51]",
+  "T_range": [
+   3757,
+   4232
+  ],
+  "channel_mapping": "16 channels -> model order not established by custody"
+ },
+ "overlap_with_frozen_partition": {
+  "test": 0,
+  "validation": 0,
+  "full_train": 1
+ },
+ "members": [
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1315.0um, y=1184.0um raw data.npy",
+   "position_um": [
+    1315.0,
+    1184.0
+   ],
+   "size": 27358976,
+   "compressed": 3638222,
+   "crc32": "bd354f75",
+   "zip_datetime": "2025-08-04 20:23:48",
+   "npy_shape": [
+    4191,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1315.0um, y=1438.0um raw data.npy",
+   "position_um": [
+    1315.0,
+    1438.0
+   ],
+   "size": 27600512,
+   "compressed": 3668863,
+   "crc32": "39ea205a",
+   "zip_datetime": "2025-08-04 20:17:32",
+   "npy_shape": [
+    4228,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1315.0um, y=1692.0um raw data.npy",
+   "position_um": [
+    1315.0,
+    1692.0
+   ],
+   "size": 27626624,
+   "compressed": 3677440,
+   "crc32": "3d23af4d",
+   "zip_datetime": "2025-08-04 20:11:14",
+   "npy_shape": [
+    4232,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1315.0um, y=1946.0um raw data.npy",
+   "position_um": [
+    1315.0,
+    1946.0
+   ],
+   "size": 27352448,
+   "compressed": 3638471,
+   "crc32": "85bb7945",
+   "zip_datetime": "2025-08-04 20:04:54",
+   "npy_shape": [
+    4190,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1315.0um, y=2200.0um raw data.npy",
+   "position_um": [
+    1315.0,
+    2200.0
+   ],
+   "size": 26764928,
+   "compressed": 3557547,
+   "crc32": "8c568396",
+   "zip_datetime": "2025-08-04 19:58:38",
+   "npy_shape": [
+    4100,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1377.5um, y=1184.0um raw data.npy",
+   "position_um": [
+    1377.5,
+    1184.0
+   ],
+   "size": 26242688,
+   "compressed": 3486062,
+   "crc32": "f59acc27",
+   "zip_datetime": "2025-08-04 19:52:26",
+   "npy_shape": [
+    4020,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1377.5um, y=1438.0um raw data.npy",
+   "position_um": [
+    1377.5,
+    1438.0
+   ],
+   "size": 26112128,
+   "compressed": 3469400,
+   "crc32": "fa051f21",
+   "zip_datetime": "2025-08-04 19:46:20",
+   "npy_shape": [
+    4000,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1377.5um, y=1692.0um raw data.npy",
+   "position_um": [
+    1377.5,
+    1692.0
+   ],
+   "size": 26379776,
+   "compressed": 3490011,
+   "crc32": "62dd3690",
+   "zip_datetime": "2025-08-04 19:40:12",
+   "npy_shape": [
+    4041,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1377.5um, y=1946.0um raw data.npy",
+   "position_um": [
+    1377.5,
+    1946.0
+   ],
+   "size": 25746560,
+   "compressed": 3396827,
+   "crc32": "e3141b24",
+   "zip_datetime": "2025-08-04 19:34:04",
+   "npy_shape": [
+    3944,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1377.5um, y=2200.0um raw data.npy",
+   "position_um": [
+    1377.5,
+    2200.0
+   ],
+   "size": 25896704,
+   "compressed": 3400348,
+   "crc32": "db422e16",
+   "zip_datetime": "2025-08-04 19:28:00",
+   "npy_shape": [
+    3967,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1440.0um, y=1184.0um raw data.npy",
+   "position_um": [
+    1440.0,
+    1184.0
+   ],
+   "size": 26027264,
+   "compressed": 3412820,
+   "crc32": "dd2a4172",
+   "zip_datetime": "2025-08-04 19:21:54",
+   "npy_shape": [
+    3987,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1440.0um, y=1438.0um raw data.npy",
+   "position_um": [
+    1440.0,
+    1438.0
+   ],
+   "size": 25700864,
+   "compressed": 3347207,
+   "crc32": "1547bd43",
+   "zip_datetime": "2025-08-04 19:15:50",
+   "npy_shape": [
+    3937,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1440.0um, y=1692.0um raw data.npy",
+   "position_um": [
+    1440.0,
+    1692.0
+   ],
+   "size": 24924032,
+   "compressed": 3235131,
+   "crc32": "7f38842c",
+   "zip_datetime": "2025-08-04 19:09:46",
+   "npy_shape": [
+    3818,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1440.0um, y=1946.0um raw data.npy",
+   "position_um": [
+    1440.0,
+    1946.0
+   ],
+   "size": 25700864,
+   "compressed": 3322279,
+   "crc32": "cfd14c51",
+   "zip_datetime": "2025-08-04 19:03:50",
+   "npy_shape": [
+    3937,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1440.0um, y=2200.0um raw data.npy",
+   "position_um": [
+    1440.0,
+    2200.0
+   ],
+   "size": 24897920,
+   "compressed": 3203302,
+   "crc32": "5cd055ef",
+   "zip_datetime": "2025-08-04 18:57:46",
+   "npy_shape": [
+    3814,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1502.5um, y=1184.0um raw data.npy",
+   "position_um": [
+    1502.5,
+    1184.0
+   ],
+   "size": 24525824,
+   "compressed": 3148921,
+   "crc32": "4734de1d",
+   "zip_datetime": "2025-08-04 18:51:48",
+   "npy_shape": [
+    3757,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1502.5um, y=1438.0um raw data.npy",
+   "position_um": [
+    1502.5,
+    1438.0
+   ],
+   "size": 24591104,
+   "compressed": 3149906,
+   "crc32": "09e54c69",
+   "zip_datetime": "2025-08-04 18:45:54",
+   "npy_shape": [
+    3767,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1502.5um, y=1692.0um raw data.npy",
+   "position_um": [
+    1502.5,
+    1692.0
+   ],
+   "size": 25589888,
+   "compressed": 3272759,
+   "crc32": "c57ef5fd",
+   "zip_datetime": "2025-08-04 18:40:00",
+   "npy_shape": [
+    3920,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1502.5um, y=1946.0um raw data.npy",
+   "position_um": [
+    1502.5,
+    1946.0
+   ],
+   "size": 25178624,
+   "compressed": 3213295,
+   "crc32": "0c6779f2",
+   "zip_datetime": "2025-08-04 18:33:58",
+   "npy_shape": [
+    3857,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1502.5um, y=2200.0um raw data.npy",
+   "position_um": [
+    1502.5,
+    2200.0
+   ],
+   "size": 25550720,
+   "compressed": 3258492,
+   "crc32": "a066c633",
+   "zip_datetime": "2025-08-04 18:27:58",
+   "npy_shape": [
+    3914,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1565.0um, y=1184.0um raw data.npy",
+   "position_um": [
+    1565.0,
+    1184.0
+   ],
+   "size": 24839168,
+   "compressed": 3173322,
+   "crc32": "ba8f42df",
+   "zip_datetime": "2025-08-04 18:21:56",
+   "npy_shape": [
+    3805,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1565.0um, y=1438.0um raw data.npy",
+   "position_um": [
+    1565.0,
+    1438.0
+   ],
+   "size": 24858752,
+   "compressed": 3183198,
+   "crc32": "f48e0db4",
+   "zip_datetime": "2025-08-04 18:16:00",
+   "npy_shape": [
+    3808,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1565.0um, y=1692.0um raw data.npy",
+   "position_um": [
+    1565.0,
+    1692.0
+   ],
+   "size": 24884864,
+   "compressed": 3196904,
+   "crc32": "61000879",
+   "zip_datetime": "2025-08-04 18:10:04",
+   "npy_shape": [
+    3812,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1565.0um, y=1946.0um raw data.npy",
+   "position_um": [
+    1565.0,
+    1946.0
+   ],
+   "size": 25622528,
+   "compressed": 3312569,
+   "crc32": "7fcc2b64",
+   "zip_datetime": "2025-08-04 18:04:06",
+   "npy_shape": [
+    3925,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  },
+  {
+   "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1565.0um, y=2200.0um raw data.npy",
+   "position_um": [
+    1565.0,
+    2200.0
+   ],
+   "size": 25909760,
+   "compressed": 3367552,
+   "crc32": "f313fc26",
+   "zip_datetime": "2025-08-04 17:58:04",
+   "npy_shape": [
+    3969,
+    16,
+    51
+   ],
+   "npy_dtype": "float64"
+  }
+ ],
+ "prior_access": [
+  {
+   "when": "2026-10-15 17:48-18:15 EDT",
+   "who": "D custody",
+   "access": "whole archive downloaded and md5-verified; not extracted",
+   "signal_decoded": false
+  },
+  {
+   "when": "2026-10-15 18:16 EDT",
+   "who": "D schema",
+   "access": ".npy headers of first and last member of this folder",
+   "signal_decoded": false
+  },
+  {
+   "when": "2026-10-15",
+   "who": "Sonnet static helper",
+   "access": "notebook source cells only",
+   "signal_decoded": false
+  },
+  {
+   "when": "2026-10-15",
+   "who": "root options review",
+   "access": "file names and notebook source (stated)",
+   "signal_decoded": false
+  },
+  {
+   "when": "2026-10-15 21:17 EDT",
+   "who": "D raw custody addendum",
+   "access": "central directory, ZIP timestamps, .npy headers of all 25",
+   "signal_decoded": false
+  },
+  {
+   "when": "2026-10-15",
+   "who": "root compatibility qualification",
+   "access": "eight training-only Fig.S4 members; no August 4 signal or position model opened (root statement)",
+   "signal_decoded": false
+  }
+ ],
+ "prior_access_limits": "from records held by D and root statements; cannot exclude access that left no record",
+ "status": "SEALED_BEFORE_SIGNAL_ACCESS"
+}

@@ -1,0 +1,29 @@
+{
+ "schema": 1,
+ "corrects": "<private-path-04>",
+ "corrects_sha256": "9db196fa405945d5e3187760c40cc8d5dc985e78b53f00077e34419c851c0397",
+ "created_utc": "2026-10-16T01:27:16.492198+00:00",
+ "corrections": [
+  {
+   "field": "distinct_sessions",
+   "recorded": 1,
+   "correct": 6,
+   "cause": "certifier used path index 2 ('Data') instead of 3 (session folder)",
+   "session_folders": [
+    "2025-08-05 145046chip15 45mW",
+    "2025-08-06 093901chip15 45mW",
+    "2025-08-06 201930chip15 45mW",
+    "2025-08-07 093756chip15 45mW",
+    "2025-08-08 125712chip15 45mW",
+    "2025-08-09 104618chip15 45mW"
+   ]
+  },
+  {
+   "field": "members[*].checks.position_hash_ok",
+   "recorded": true,
+   "correct": "NOT VERIFIED",
+   "cause": "placeholder; the position_hash canonical format is not documented in the sample, so it was not recomputed; it is not part of this certification"
+  }
+ ],
+ "status_after_correction": "CERTIFIED for: archive/partition/custody/sample hashes; member presence, Fig.S4 training sessions only (no August 4), name-to-position, small_train membership, row coordinate equality, one fitted row and one raw member per coordinate, CRC/size, .npy header; no test/validation coordinate. Position hashes not verified."
+}

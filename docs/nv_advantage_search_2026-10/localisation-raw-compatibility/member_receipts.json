@@ -1,0 +1,50 @@
+[
+  {
+    "member": "Data availability update 20260220/Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=2020.0um raw data.npy",
+    "payload_sha256": "4c223159e53ff6ab0049bc493c7edec7a2097d0024f53c494d47ea4feb6f29db",
+    "zip_crc32": "4c1b7740",
+    "fitted_row": 92
+  },
+  {
+    "member": "Data availability update 20260220/Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1525.0um, y=2200.0um raw data.npy",
+    "payload_sha256": "799f25a44445d3aa47193411cefe8ca3a1ed192d55e3cc81e184e4d235feab88",
+    "zip_crc32": "2f981114",
+    "fitted_row": 205
+  },
+  {
+    "member": "Data availability update 20260220/Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1720.0um raw data.npy",
+    "payload_sha256": "1ed9e39802f67995f82709c19c3fce83f77d7217eba098da4b6e7d75a74f69ef",
+    "zip_crc32": "b1a2ab55",
+    "fitted_row": 232
+  },
+  {
+    "member": "Data availability update 20260220/Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1380.0um raw data.npy",
+    "payload_sha256": "92f0299cbacbb8633dc7b9d50225ba4555cc07ee1a8c9ccd965f5ac6bde5acfd",
+    "zip_crc32": "fad17d12",
+    "fitted_row": 317
+  },
+  {
+    "member": "Data availability update 20260220/Fig.S4/Data/2025-08-08 125712chip15 45mW/2025-08-08 125712chip15 45mW , x=1365.0um, y=1500.0um raw data.npy",
+    "payload_sha256": "99c2451655c80a15adf84e105212faca119d785de68ba48f09ed298bf2e28976",
+    "zip_crc32": "8139e365",
+    "fitted_row": 527
+  },
+  {
+    "member": "Data availability update 20260220/Fig.S4/Data/2025-08-09 104618chip15 45mW/2025-08-09 104618chip15 45mW , x=1305.0um, y=1500.0um raw data.npy",
+    "payload_sha256": "43983e285d22239fdb67fe1827329e94c20c7ec776e932b67f2cd63abad7785d",
+    "zip_crc32": "69340d40",
+    "fitted_row": 732
+  },
+  {
+    "member": "Data availability update 20260220/Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1320.0um raw data.npy",
+    "payload_sha256": "cdd09aa72a69ef3cc4a5b087650b5a1faa5b42c34f5a549bfe2bd4d235f79672",
+    "zip_crc32": "8284c2fa",
+    "fitted_row": 6
+  },
+  {
+    "member": "Data availability update 20260220/Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1525.0um, y=2160.0um raw data.npy",
+    "payload_sha256": "22e7deeb4b7e58a732404c2338cf201716e21fbc4c0d53517efc69dd76969785",
+    "zip_crc32": "6ccd7906",
+    "fitted_row": 203
+  }
+]

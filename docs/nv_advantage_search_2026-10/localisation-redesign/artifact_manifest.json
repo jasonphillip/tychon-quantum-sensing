@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "study": "localisation-redesign-2026-10-15",
+  "approval_sha256": "600cbc016b33db89f20651126868d6dac878861fd83f65f1126cbe655ee3a41e",
+  "source_sha256": {
+    "__init__.py": "6f33c510bb0fc3d78834f2ec4df1928a4a35fe03dcd44865e5eb66f06272dc93",
+    "bundle.py": "d14c7e63e0506b8e6fa7c81f992b0903144dfb064621c7ea580691fe7bdbafa0",
+    "guard.py": "12a9ace86d55b34f5f264880c57733f254cfc930ddafbc4c1cc230d232124de4",
+    "metrics.py": "dfca96574fe84488998a5a70a6d4e448e51b9b230419da20d62fc08f1502d050",
+    "models.py": "4a6aa38fb6687cb52169eb54e20b99d6faf79b237647be99546b9c7c9b501012",
+    "partition.py": "e66ad7db6265eb18fbd641fb51082355047ee70f8882cd4ff01f7b2ffab47510",
+    "protocol.json": "e6a9b855ceba43f7006a835efd64da2f4365a4df0e93da47fc1dc8766db0f17f",
+    "run.py": "b91afce2b2db4c4d71bd25f1b60cfa698b04667f25f7abd52edf4e46647f7313",
+    "tests/test_contracts.py": "427524ddbc689d5b89697a39db6e02e2a869b07ee87eaaf72af06496d33d738c",
+    "verify_saved.py": "1e64492a713e8ac03aeae968534dabaf29839b07bf41220b25980f8a48ecfa9b"
+  },
+  "inputs": {
+    "bundle_sha256": "60890e6b99aec4174fbfe8b938552edd56b064a1f87cee6b80801717b49adfb3",
+    "partition_sha256": "53cbd37457b18f26f6074b81e3ea52f8c02660bbc427339098aca0c530d511e7"
+  },
+  "files": {
+    "metrics.json": "9c943a235d2ca50e8f815f5ed94a28f16f731afc0f6d5e25ac91425555a5d404",
+    "partition.json": "53cbd37457b18f26f6074b81e3ea52f8c02660bbc427339098aca0c530d511e7",
+    "predictions.npz": "b939518944c463d9b618d991fbc2e16b2a901169ee6eb55f8a0f15b80e9635c7",
+    "protocol.json": "e6a9b855ceba43f7006a835efd64da2f4365a4df0e93da47fc1dc8766db0f17f",
+    "selection.json": "72eb6e90b62187857b3d8eb50460a50c2a0b1e2945b473ec5e1828c05fee0f44",
+    "verification.json": "943980896fee9822941b5fda647fab2ec4899e7ab564629e49dee599190d31de"
+  }
+}

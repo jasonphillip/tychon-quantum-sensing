@@ -1,0 +1,217 @@
+{
+ "schema": 1,
+ "kind": "custody certification of training-only raw compatibility sample (metadata only)",
+ "created_utc": "2026-10-16T01:27:02.325831+00:00",
+ "sample": "<private-path-03>",
+ "sample_sha256": "45ce8161dce44fa45d5da6e97895aa0e046a4ee02e56badf8b540272a55be8de",
+ "archive_sha256": "b5717b233590d041fb4bd752af479df7c426e37675743ca3f9d3c93ae32f7aa4",
+ "partition_sha256": "53cbd37457b18f26f6074b81e3ea52f8c02660bbc427339098aca0c530d511e7",
+ "custody_sha256": "bd415df532a6600064e6474ef44299718a6d24473f9c89a9bce71a959ccdb22b",
+ "global_checks": {
+  "sample_sha256": "45ce8161dce44fa45d5da6e97895aa0e046a4ee02e56badf8b540272a55be8de",
+  "sample_sha_expected": true,
+  "archive_sha256_ok": true,
+  "partition_sha256_ok": true,
+  "custody_sha256_ok": true,
+  "count_ok": true,
+  "signal_payloads_decoded_flag": false
+ },
+ "members": [
+  {
+   "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=2020.0um raw data.npy",
+   "fitted_row": 92,
+   "position_um": [
+    1565.0,
+    2020.0
+   ],
+   "checks": {
+    "member_in_archive": true,
+    "in_FigS4_Data_not_august4": true,
+    "name_position_equals_position_um": true,
+    "row_in_small_train": true,
+    "row_in_full_train": true,
+    "row_not_val_or_test": true,
+    "row_coordinate_equals_position": true,
+    "exactly_one_fitted_row_at_coordinate": true,
+    "custody_record_unambiguous_and_same_member": true,
+    "crc_size_match_archive": true,
+    "header_matches": true,
+    "coordinate_not_test_or_validation": true,
+    "position_hash_ok": true
+   },
+   "all_pass": true
+  },
+  {
+   "member": "Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1525.0um, y=2200.0um raw data.npy",
+   "fitted_row": 205,
+   "position_um": [
+    1525.0,
+    2200.0
+   ],
+   "checks": {
+    "member_in_archive": true,
+    "in_FigS4_Data_not_august4": true,
+    "name_position_equals_position_um": true,
+    "row_in_small_train": true,
+    "row_in_full_train": true,
+    "row_not_val_or_test": true,
+    "row_coordinate_equals_position": true,
+    "exactly_one_fitted_row_at_coordinate": true,
+    "custody_record_unambiguous_and_same_member": true,
+    "crc_size_match_archive": true,
+    "header_matches": true,
+    "coordinate_not_test_or_validation": true,
+    "position_hash_ok": true
+   },
+   "all_pass": true
+  },
+  {
+   "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1720.0um raw data.npy",
+   "fitted_row": 232,
+   "position_um": [
+    1465.0,
+    1720.0
+   ],
+   "checks": {
+    "member_in_archive": true,
+    "in_FigS4_Data_not_august4": true,
+    "name_position_equals_position_um": true,
+    "row_in_small_train": true,
+    "row_in_full_train": true,
+    "row_not_val_or_test": true,
+    "row_coordinate_equals_position": true,
+    "exactly_one_fitted_row_at_coordinate": true,
+    "custody_record_unambiguous_and_same_member": true,
+    "crc_size_match_archive": true,
+    "header_matches": true,
+    "coordinate_not_test_or_validation": true,
+    "position_hash_ok": true
+   },
+   "all_pass": true
+  },
+  {
+   "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1380.0um raw data.npy",
+   "fitted_row": 317,
+   "position_um": [
+    1385.0,
+    1380.0
+   ],
+   "checks": {
+    "member_in_archive": true,
+    "in_FigS4_Data_not_august4": true,
+    "name_position_equals_position_um": true,
+    "row_in_small_train": true,
+    "row_in_full_train": true,
+    "row_not_val_or_test": true,
+    "row_coordinate_equals_position": true,
+    "exactly_one_fitted_row_at_coordinate": true,
+    "custody_record_unambiguous_and_same_member": true,
+    "crc_size_match_archive": true,
+    "header_matches": true,
+    "coordinate_not_test_or_validation": true,
+    "position_hash_ok": true
+   },
+   "all_pass": true
+  },
+  {
+   "member": "Fig.S4/Data/2025-08-08 125712chip15 45mW/2025-08-08 125712chip15 45mW , x=1365.0um, y=1500.0um raw data.npy",
+   "fitted_row": 527,
+   "position_um": [
+    1365.0,
+    1500.0
+   ],
+   "checks": {
+    "member_in_archive": true,
+    "in_FigS4_Data_not_august4": true,
+    "name_position_equals_position_um": true,
+    "row_in_small_train": true,
+    "row_in_full_train": true,
+    "row_not_val_or_test": true,
+    "row_coordinate_equals_position": true,
+    "exactly_one_fitted_row_at_coordinate": true,
+    "custody_record_unambiguous_and_same_member": true,
+    "crc_size_match_archive": true,
+    "header_matches": true,
+    "coordinate_not_test_or_validation": true,
+    "position_hash_ok": true
+   },
+   "all_pass": true
+  },
+  {
+   "member": "Fig.S4/Data/2025-08-09 104618chip15 45mW/2025-08-09 104618chip15 45mW , x=1305.0um, y=1500.0um raw data.npy",
+   "fitted_row": 732,
+   "position_um": [
+    1305.0,
+    1500.0
+   ],
+   "checks": {
+    "member_in_archive": true,
+    "in_FigS4_Data_not_august4": true,
+    "name_position_equals_position_um": true,
+    "row_in_small_train": true,
+    "row_in_full_train": true,
+    "row_not_val_or_test": true,
+    "row_coordinate_equals_position": true,
+    "exactly_one_fitted_row_at_coordinate": true,
+    "custody_record_unambiguous_and_same_member": true,
+    "crc_size_match_archive": true,
+    "header_matches": true,
+    "coordinate_not_test_or_validation": true,
+    "position_hash_ok": true
+   },
+   "all_pass": true
+  },
+  {
+   "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1320.0um raw data.npy",
+   "fitted_row": 6,
+   "position_um": [
+    1545.0,
+    1320.0
+   ],
+   "checks": {
+    "member_in_archive": true,
+    "in_FigS4_Data_not_august4": true,
+    "name_position_equals_position_um": true,
+    "row_in_small_train": true,
+    "row_in_full_train": true,
+    "row_not_val_or_test": true,
+    "row_coordinate_equals_position": true,
+    "exactly_one_fitted_row_at_coordinate": true,
+    "custody_record_unambiguous_and_same_member": true,
+    "crc_size_match_archive": true,
+    "header_matches": true,
+    "coordinate_not_test_or_validation": true,
+    "position_hash_ok": true
+   },
+   "all_pass": true
+  },
+  {
+   "member": "Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1525.0um, y=2160.0um raw data.npy",
+   "fitted_row": 203,
+   "position_um": [
+    1525.0,
+    2160.0
+   ],
+   "checks": {
+    "member_in_archive": true,
+    "in_FigS4_Data_not_august4": true,
+    "name_position_equals_position_um": true,
+    "row_in_small_train": true,
+    "row_in_full_train": true,
+    "row_not_val_or_test": true,
+    "row_coordinate_equals_position": true,
+    "exactly_one_fitted_row_at_coordinate": true,
+    "custody_record_unambiguous_and_same_member": true,
+    "crc_size_match_archive": true,
+    "header_matches": true,
+    "coordinate_not_test_or_validation": true,
+    "position_hash_ok": true
+   },
+   "all_pass": true
+  }
+ ],
+ "distinct_sessions": 1,
+ "all_members_pass": true,
+ "signal_decoded_by_certifier": false,
+ "status": "CERTIFIED"
+}

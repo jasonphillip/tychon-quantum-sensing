@@ -1,0 +1,152 @@
+{
+  "stage": "held_group",
+  "benchmark_complete": true,
+  "selected_path": "CLASSICAL_CALIBRATION_EFFICIENCY",
+  "development_manifest_sha256": "fba5037073cf5e3c95a500fd496fd0ed06cc6ddc7113555cd2d7a1341b1a4771",
+  "small_reference": {
+    "index": 34,
+    "config": {
+      "family": "gp_ard",
+      "quality_weight": 0.0,
+      "kernel": "se"
+    },
+    "metrics": {
+      "mean_error_um": 51.02001426252129,
+      "median_error_um": 32.42680145471651,
+      "p95_error_um": 115.0448304150452,
+      "count": 44,
+      "invalid_rows": 0,
+      "coverage": 1.0
+    },
+    "valid": true,
+    "failure": null,
+    "checkpoint": "classical_small_34.npz",
+    "checkpoint_sha256": "7c0f8a4e7946f97875b6aea50826fe87956e1ec3d4fe604d6598d55fdac775b6",
+    "optimizer": {
+      "optimizer_starts": [
+        {
+          "axis": 0,
+          "start_length_multiplier": 0.5,
+          "start_noise": 0.01,
+          "negative_log_marginal_likelihood": -0.18837355632979325,
+          "converged": true,
+          "status": 0,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "iterations": 58,
+          "evaluations": 62
+        },
+        {
+          "axis": 0,
+          "start_length_multiplier": 2.0,
+          "start_noise": 0.1,
+          "negative_log_marginal_likelihood": -4.589921152425049,
+          "converged": true,
+          "status": 0,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "iterations": 36,
+          "evaluations": 39,
+          "selected_by_training_likelihood": true
+        },
+        {
+          "axis": 1,
+          "start_length_multiplier": 0.5,
+          "start_noise": 0.01,
+          "negative_log_marginal_likelihood": -58.74609229980665,
+          "converged": true,
+          "status": 0,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "iterations": 43,
+          "evaluations": 54
+        },
+        {
+          "axis": 1,
+          "start_length_multiplier": 2.0,
+          "start_noise": 0.1,
+          "negative_log_marginal_likelihood": -58.74609230227652,
+          "converged": true,
+          "status": 0,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "iterations": 32,
+          "evaluations": 36,
+          "selected_by_training_likelihood": true
+        }
+      ],
+      "output_kernel_policy": "independent_kernel_per_coordinate_training_likelihood_only"
+    },
+    "fit_plus_validation_wall_seconds": 0.18570802197791636
+  },
+  "full_reference": {
+    "index": 34,
+    "config": {
+      "family": "gp_ard",
+      "quality_weight": 0.0,
+      "kernel": "se"
+    },
+    "metrics": {
+      "mean_error_um": 63.71752635887537,
+      "median_error_um": 53.32957794625697,
+      "p95_error_um": 105.66489364087862,
+      "count": 44,
+      "invalid_rows": 0,
+      "coverage": 1.0
+    },
+    "valid": true,
+    "failure": null,
+    "checkpoint": "classical_full_34.npz",
+    "checkpoint_sha256": "3bd5e039f2c5a6fbb61a2e682235db65a80dddccff47d09c3c80b17f30ba562b",
+    "optimizer": {
+      "optimizer_starts": [
+        {
+          "axis": 0,
+          "start_length_multiplier": 0.5,
+          "start_noise": 0.01,
+          "negative_log_marginal_likelihood": -14.111619018263355,
+          "converged": true,
+          "status": 0,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "iterations": 54,
+          "evaluations": 61
+        },
+        {
+          "axis": 0,
+          "start_length_multiplier": 2.0,
+          "start_noise": 0.1,
+          "negative_log_marginal_likelihood": -14.111619056465202,
+          "converged": true,
+          "status": 0,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "iterations": 47,
+          "evaluations": 54,
+          "selected_by_training_likelihood": true
+        },
+        {
+          "axis": 1,
+          "start_length_multiplier": 0.5,
+          "start_noise": 0.01,
+          "negative_log_marginal_likelihood": -188.8940043225719,
+          "converged": true,
+          "status": 0,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "iterations": 55,
+          "evaluations": 63,
+          "selected_by_training_likelihood": true
+        },
+        {
+          "axis": 1,
+          "start_length_multiplier": 2.0,
+          "start_noise": 0.1,
+          "negative_log_marginal_likelihood": -188.89400426799506,
+          "converged": true,
+          "status": 0,
+          "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+          "iterations": 44,
+          "evaluations": 50
+        }
+      ],
+      "output_kernel_policy": "independent_kernel_per_coordinate_training_likelihood_only"
+    },
+    "fit_plus_validation_wall_seconds": 1.481973094982095
+  },
+  "checkpoint_refitting": false,
+  "held_out_signal_values_accessed": true
+}

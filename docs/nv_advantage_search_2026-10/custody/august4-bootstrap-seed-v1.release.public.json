@@ -1,0 +1,30 @@
+{
+ "schema": 1,
+ "kind": "August 4 bootstrap seed release (commit-reveal)",
+ "released_utc": "2026-10-16T01:47:38.911206+00:00",
+ "released_to": "<private-path-01>",
+ "released_sha256": "84351fe546d6ef2c92aec11ff45c862b15ac11897bba1a3391ac06864abb7cbe",
+ "commitment_sha256": "84351fe546d6ef2c92aec11ff45c862b15ac11897bba1a3391ac06864abb7cbe",
+ "matches_commitment": true,
+ "commitment_file_sha256": "c1ee7ebd272270b77fb5de305da39caef915f90e3f4ae166f8a1347a16cb5f47",
+ "freeze": {
+  "repo": "odmr-edge-ml",
+  "branch": "portfolio/nv-localisation-redesign-2026-10-15",
+  "commit": "3683e4385045bcbf9a3cb41005258334002a3d2c",
+  "protocol_sha256": "4682232fe5243d59da89c95e72316fd3575e94458d4f765e720ee01c4d25347b",
+  "geometry_sha256": "1e01830a70e01f90c2d7ce0d6ba076b8adc30096c543329ac4dec22fe3bcd72c",
+  "protocol_status": "FROZEN",
+  "freeze_diff": "status DRAFT_AWAITING_ROOT_FREEZE -> FROZEN only",
+  "protocol_binds_seed_sha256_and_commitment_file": true,
+  "geometry_grouping": "five_whole_y_stripes_all_x_positions_kept_together",
+  "geometry_group_count": 5,
+  "geometry_custody_sha256": "bd415df532a6600064e6474ef44299718a6d24473f9c89a9bce71a959ccdb22b",
+  "geometry_archive_sha256": "b5717b233590d041fb4bd752af479df7c426e37675743ca3f9d3c93ae32f7aa4"
+ },
+ "member_manifest_sha256": "d5b93c4425c8123a18b326657141f49d72169709957b26c286a91c6d940d11c4",
+ "pre_release_signal_access": "none recorded by custody; no August 4 signal decoded",
+ "secret_private_copy": {
+  "path": "<private-path-02>",
+  "mode": "0o400"
+ }
+}

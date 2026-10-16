@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "comparisons": 192,
+  "valid_channel_fits": 64,
+  "max_splitting_absolute_difference_MHz": 8.374055538240555e-05,
+  "max_standard_error_absolute_difference_MHz": 7.668999652654662e-05,
+  "max_tolerance_fraction": 0.008320582390894206,
+  "manifest_sha256": "e8af09f6ada231764eb004e8d00cd938ae9da71a110675e55d08e13407d46be9",
+  "scope": "Training-only numerical compatibility; no acquisition transfer or performance claim"
+}

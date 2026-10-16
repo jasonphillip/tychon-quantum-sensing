@@ -1,0 +1,27 @@
+{
+ "schema": 1,
+ "rule": "P2: absolute local paths replaced by opaque tokens; token map kept private",
+ "files": [
+  {
+   "path": "custody/august4-bootstrap-seed-v1.release.public.json",
+   "origin": "approvals/august4-bootstrap-seed-v1.release.json",
+   "origin_sha256": "b47d045e5be1ffa5da0eb6829f4f677beacaecb9ef3f5da07a7ab64c26234443",
+   "public_sha256": "364f88b9bba70f1c7de70cdf03783b3d50aa3dbbc79badf0d7fcb9d089b2593f",
+   "rule": "absolute path -> <private-path-NN> (P2)"
+  },
+  {
+   "path": "custody/localisation-raw-sample-v1-certification.public.json",
+   "origin": "custody/localisation-raw-sample-v1-certification.json",
+   "origin_sha256": "9db196fa405945d5e3187760c40cc8d5dc985e78b53f00077e34419c851c0397",
+   "public_sha256": "09d6e2a9d286faccb18df734356d305b1fd837235ed7fc20877c5fde62f118ea",
+   "rule": "absolute path -> <private-path-NN> (P2)"
+  },
+  {
+   "path": "custody/localisation-raw-sample-v1-certification.correction-1.public.json",
+   "origin": "custody/localisation-raw-sample-v1-certification.correction-1.json",
+   "origin_sha256": "23410d29e27058d1aba3bfb3dc240acb1c882ceba43fc858b960da00012e7d12",
+   "public_sha256": "063422fef428a026866de3413ceb0f1725f6ad2eb9e83628ff207b3da090c9d6",
+   "rule": "absolute path -> <private-path-NN> (P2)"
+  }
+ ]
+}

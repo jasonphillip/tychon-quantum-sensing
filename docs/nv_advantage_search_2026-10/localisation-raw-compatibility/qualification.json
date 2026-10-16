@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "claim_scope": "training_only_raw_to_version_A_compatibility",
+  "all_fits_valid": true,
+  "comparison": {
+    "all_features_match": true,
+    "splittings_match": true,
+    "standard_errors_match": true,
+    "passed_elements": 192,
+    "total_elements": 192,
+    "failed_elements": []
+  },
+  "samples": 8,
+  "raw_day_accessed": false,
+  "position_models_executed": false,
+  "raw_to_A_lineage_proved": false,
+  "meaning": "bounded numerical compatibility only; not full raw lineage or acquisition transfer",
+  "next_action": "root_review_only"
+}

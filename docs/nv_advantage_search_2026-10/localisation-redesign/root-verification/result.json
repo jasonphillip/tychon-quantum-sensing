@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "original_gate_passed": false,
+  "mean_ratio": 0.9307428896490175,
+  "p95_ratio": 0.7586021694073358,
+  "one_sided_95_upper": 1.1755427250463575,
+  "one_sided_family_98_333333_upper": 1.2319196056392414,
+  "family_claim_passed": false,
+  "rows": 48,
+  "unique_positions": 36,
+  "cells": 9,
+  "seed": 53642963,
+  "draws": 2000,
+  "freeze_b_sha256": "a9135c6e36a6ab19fb8cae16bd554b1daef32cb7b3d030223b106013486cae40",
+  "prediction_sha256": "b939518944c463d9b618d991fbc2e16b2a901169ee6eb55f8a0f15b80e9635c7",
+  "scope": "Conditional spatial-cell bootstrap only; no independent acquisition or population guarantee"
+}

@@ -1,0 +1,16 @@
+{
+ "schema": 1,
+ "kind": "August 4 acquisition-transfer bootstrap seed commitment",
+ "created_utc": "2026-10-16T01:34:48.857250+00:00",
+ "commitment_sha256": "84351fe546d6ef2c92aec11ff45c862b15ac11897bba1a3391ac06864abb7cbe",
+ "seed_derivation": "seed = int.from_bytes(secret_32_bytes, 'big') (256-bit); numpy SeedSequence(seed) recommended",
+ "bound_member_manifest_sha256": "d5b93c4425c8123a18b326657141f49d72169709957b26c286a91c6d940d11c4",
+ "archive_sha256": "b5717b233590d041fb4bd752af479df7c426e37675743ca3f9d3c93ae32f7aa4",
+ "release_rule": "secret released to root only after the acquisition-transfer source and protocol are frozen and the five y-stripe groups are fixed; before any August 4 signal access",
+ "private_location": "custody/private/august4-bootstrap-secret.bin (0400; directory 0700; not synced)",
+ "distinct_from": [
+  "scalar bias dev label entropy",
+  "scalar bias revealed evaluation secret",
+  "all NV-screen issued seeds (< 2^128)"
+ ]
+}

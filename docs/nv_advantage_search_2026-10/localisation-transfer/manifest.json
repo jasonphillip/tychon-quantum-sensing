@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "approval_sha256": "88258ab6a68a6f25727fcb9e09b733795111db5e0644fd986e0f33c97648f443",
+  "source_sha256": {
+    "README.md": "e69773bcfc73a937347285edae11cb46355f31bf0ccbf221e1829f9180a2a3c0",
+    "__init__.py": "5eb40dc3d0d67e4666283d0cf3c7cf02cea0ba9a64390b84e556e457fa151c33",
+    "contract.py": "8f2a05ddd767647ccb302f9a15b4767b9942abcc5c36879c2ea3795684d6e67d",
+    "geometry.json": "1e01830a70e01f90c2d7ce0d6ba076b8adc30096c543329ac4dec22fe3bcd72c",
+    "guard.py": "c0748a4d6ffeccabb3da9ee47540b5fb8538e0ed1f644e3f8a0cc3303b386cb5",
+    "metrics.py": "ef0b0da28fb4529334ee097001fe8e31d01505d3143f6a9128121f65f13515f5",
+    "protocol.json": "4682232fe5243d59da89c95e72316fd3575e94458d4f765e720ee01c4d25347b",
+    "run.py": "c4419f5b9e2cca15e06aad5e151befc575f8154579452ce3175435c2b96d4174",
+    "tests/test_contracts.py": "ec895393cb3c72c9ddbe325920095f96947a6e519b74933f47f0aae482c37d26",
+    "tests_entrypoint.py": "566a07295ba695b7d28d120ee66ef770a664ee9723d93c351142432f1740d7c1",
+    "verify_saved.py": "6f90cdd75819aa2ebb00d896a046f5c4da0791a87290efce79cbe05324811c65"
+  },
+  "dependency_sha256": {
+    "experiments/localisation_raw_compatibility/README.md": "a6d035fc4b54ee828b0d66f3b4362d3816e5b989c87492fa73276a3dca8e94aa",
+    "experiments/localisation_raw_compatibility/__init__.py": "bb8756235514ceb78fb1bd8cbf4c5a21a2513dc6206ab7167ba672a4bd9d11c4",
+    "experiments/localisation_raw_compatibility/extract.py": "0606817a06ec36263803751827ab818413a62d361cc9b9d3c52a9fe6dbd44261",
+    "experiments/localisation_raw_compatibility/guard.py": "2f81f874b5c7f5ba99c972119c05c33ad18a319c5875ddc993705def298b4daa",
+    "experiments/localisation_raw_compatibility/metadata.py": "9166e77805219d631ebfc05009510f724614490c38494ce269e3b603192aa353",
+    "experiments/localisation_raw_compatibility/prepare_sample.py": "712d53d8812193dcdfca04da91904975df99ae9b2c66e519ab4dec8bf57d9634",
+    "experiments/localisation_raw_compatibility/protocol.json": "3f3545f281053e39df095a1cdb66e12400f94e40fa56a49e51647eb4b9c9dbc3",
+    "experiments/localisation_raw_compatibility/qualify.py": "432f2fcb34e0a76cb6fd070b86609dc7f85f8dcc021b3a0e901070d6d1855e16",
+    "experiments/localisation_raw_compatibility/tests/test_contracts.py": "80391113b7ce2abd8985ec3f83dafe24c45c56ee342ad23391155fb0c5c12e26",
+    "experiments/localisation_raw_compatibility/tests_entrypoint.py": "1fe7d0c14202cefcc908bcbb1905faf79cdee7cd59b854bc5d2dbdc89b0702e6",
+    "experiments/localisation_redesign/__init__.py": "6f33c510bb0fc3d78834f2ec4df1928a4a35fe03dcd44865e5eb66f06272dc93",
+    "experiments/localisation_redesign/models.py": "4a6aa38fb6687cb52169eb54e20b99d6faf79b237647be99546b9c7c9b501012",
+    "experiments/localisation_redesign/metrics.py": "dfca96574fe84488998a5a70a6d4e448e51b9b230419da20d62fc08f1502d050"
+  },
+  "inputs": {
+    "archive": "b5717b233590d041fb4bd752af479df7c426e37675743ca3f9d3c93ae32f7aa4",
+    "custody": "bd415df532a6600064e6474ef44299718a6d24473f9c89a9bce71a959ccdb22b",
+    "qualification": "e8af09f6ada231764eb004e8d00cd938ae9da71a110675e55d08e13407d46be9",
+    "small_checkpoint": "7c0f8a4e7946f97875b6aea50826fe87956e1ec3d4fe604d6598d55fdac775b6",
+    "full_checkpoint": "3bd5e039f2c5a6fbb61a2e682235db65a80dddccff47d09c3c80b17f30ba562b",
+    "member_manifest": "d5b93c4425c8123a18b326657141f49d72169709957b26c286a91c6d940d11c4",
+    "seed_commitment": "c1ee7ebd272270b77fb5de305da39caef915f90e3f4ae166f8a1347a16cb5f47",
+    "seed": "84351fe546d6ef2c92aec11ff45c862b15ac11897bba1a3391ac06864abb7cbe"
+  },
+  "files": {
+    "features_MHz.npy": "31d5e3cc4456ad517b9b533c0a147968073ef7179234a87e2767d1808455d222",
+    "fit_flags.json": "4018f5fbcb1cd81e57005d02955be6996ec1369e36ebd2aaac771b86cbb9c3f7",
+    "fit_parameters.npy": "f955fcfc5f8c80dd521d78aca587327dee99f910717386b6b52514c8c3ac4c8e",
+    "fit_std.npy": "1c2a2b76b6e2278f4e6782f76ecab5c0acdc97f5ba1439bab32d5d8eda60a33a",
+    "geometry.json": "1e01830a70e01f90c2d7ce0d6ba076b8adc30096c543329ac4dec22fe3bcd72c",
+    "member_receipts.json": "9fe4bfcd4ab0f6eae9c876f73cce3f055fb2dd761c64250258e51413d1e59923",
+    "metrics.json": "97a3f7de9c34d5c887fd380c292673a19a19fb195c7e789c5a6bd527b25024d4",
+    "predictions.npz": "31ff6bea40bfb0702ebc711b8efb45b1ce06fdf8097a67b5ee786e25ae4c91f2",
+    "protocol.json": "4682232fe5243d59da89c95e72316fd3575e94458d4f765e720ee01c4d25347b",
+    "seed.json": "fe8aadb382abaa91535d15dce298faa5eb67bc9df1362c352268bd243b26ffad"
+  },
+  "position_model_refit": false,
+  "original_spatial_verdict": "FAIL"
+}

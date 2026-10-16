@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "approval_sha256": "9c96f996043403d140af54b0cf865afbfa85aabb738eb264a289bd3b3d60929e",
+  "protocol_sha256": "3f3545f281053e39df095a1cdb66e12400f94e40fa56a49e51647eb4b9c9dbc3",
+  "source_sha256": {
+    "README.md": "a6d035fc4b54ee828b0d66f3b4362d3816e5b989c87492fa73276a3dca8e94aa",
+    "__init__.py": "bb8756235514ceb78fb1bd8cbf4c5a21a2513dc6206ab7167ba672a4bd9d11c4",
+    "extract.py": "0606817a06ec36263803751827ab818413a62d361cc9b9d3c52a9fe6dbd44261",
+    "guard.py": "2f81f874b5c7f5ba99c972119c05c33ad18a319c5875ddc993705def298b4daa",
+    "metadata.py": "9166e77805219d631ebfc05009510f724614490c38494ce269e3b603192aa353",
+    "prepare_sample.py": "712d53d8812193dcdfca04da91904975df99ae9b2c66e519ab4dec8bf57d9634",
+    "protocol.json": "3f3545f281053e39df095a1cdb66e12400f94e40fa56a49e51647eb4b9c9dbc3",
+    "qualify.py": "432f2fcb34e0a76cb6fd070b86609dc7f85f8dcc021b3a0e901070d6d1855e16",
+    "tests/test_contracts.py": "80391113b7ce2abd8985ec3f83dafe24c45c56ee342ad23391155fb0c5c12e26",
+    "tests_entrypoint.py": "1fe7d0c14202cefcc908bcbb1905faf79cdee7cd59b854bc5d2dbdc89b0702e6"
+  },
+  "inputs": {
+    "archive": "b5717b233590d041fb4bd752af479df7c426e37675743ca3f9d3c93ae32f7aa4",
+    "bundle": "60890e6b99aec4174fbfe8b938552edd56b064a1f87cee6b80801717b49adfb3",
+    "partition": "53cbd37457b18f26f6074b81e3ea52f8c02660bbc427339098aca0c530d511e7",
+    "sample": "45ce8161dce44fa45d5da6e97895aa0e046a4ee02e56badf8b540272a55be8de"
+  },
+  "files": {
+    "extracted_features_MHz.npy": "0821cbe57e422e1d8fec1fa78a48bda94c60a5e72ae2236c945fdd38ad296628",
+    "fit_flags.json": "d8ab6389a4a9e441e20c00a4db316c4066a2e1238ec3ccba62fda189045a3ef1",
+    "member_receipts.json": "052f991a3a79c2538d3684c7e23d06bab0c2f316527d68eb200d29a682ac3b4c",
+    "qualification.json": "79814e33c16640fad18cf9ab833af87120ccf18fdb987542016e1d2307d59d87",
+    "raw_fit_parameters.npy": "74a88a714f41410e9d683630c246e32502e539ec755a4ef00d6a9e28cde34fdf",
+    "raw_fit_std.npy": "1a96d19fe581ddd4b73a927518139a394e2173abaf60d65a544744dc46900c77",
+    "reference_A_features_MHz.npy": "128ad9abb3d61e005a74a5609eba33a37b76ac90a5667cb9ab95099ba216f1df",
+    "sample.json": "45ce8161dce44fa45d5da6e97895aa0e046a4ee02e56badf8b540272a55be8de"
+  }
+}

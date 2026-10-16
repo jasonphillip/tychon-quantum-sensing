@@ -1,0 +1,4487 @@
+{
+ "schema": 1,
+ "archive_sha256": "b5717b233590d041fb4bd752af479df7c426e37675743ca3f9d3c93ae32f7aa4",
+ "partition_sha256": "53cbd37457b18f26f6074b81e3ea52f8c02660bbc427339098aca0c530d511e7",
+ "signal_decoded": false,
+ "method": "ZIP central directory + local headers + .npy header only",
+ "august4": {
+  "summary": {
+   "folder": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW",
+   "members": 25,
+   "zip_datetime_min": "2025-08-04 17:58:04",
+   "zip_datetime_max": "2025-08-04 20:23:48",
+   "inner_shapes_[ch,freq]": [
+    [
+     16,
+     51
+    ]
+   ]
+  },
+  "members": [
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1315.0um, y=1184.0um raw data.npy",
+    "position_um": [
+     1315.0,
+     1184.0
+    ],
+    "size": 27358976,
+    "compressed": 3638222,
+    "crc32": "bd354f75",
+    "zip_datetime": "2025-08-04 20:23:48",
+    "npy_shape": [
+     4191,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1315.0um, y=1438.0um raw data.npy",
+    "position_um": [
+     1315.0,
+     1438.0
+    ],
+    "size": 27600512,
+    "compressed": 3668863,
+    "crc32": "39ea205a",
+    "zip_datetime": "2025-08-04 20:17:32",
+    "npy_shape": [
+     4228,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1315.0um, y=1692.0um raw data.npy",
+    "position_um": [
+     1315.0,
+     1692.0
+    ],
+    "size": 27626624,
+    "compressed": 3677440,
+    "crc32": "3d23af4d",
+    "zip_datetime": "2025-08-04 20:11:14",
+    "npy_shape": [
+     4232,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1315.0um, y=1946.0um raw data.npy",
+    "position_um": [
+     1315.0,
+     1946.0
+    ],
+    "size": 27352448,
+    "compressed": 3638471,
+    "crc32": "85bb7945",
+    "zip_datetime": "2025-08-04 20:04:54",
+    "npy_shape": [
+     4190,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1315.0um, y=2200.0um raw data.npy",
+    "position_um": [
+     1315.0,
+     2200.0
+    ],
+    "size": 26764928,
+    "compressed": 3557547,
+    "crc32": "8c568396",
+    "zip_datetime": "2025-08-04 19:58:38",
+    "npy_shape": [
+     4100,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1377.5um, y=1184.0um raw data.npy",
+    "position_um": [
+     1377.5,
+     1184.0
+    ],
+    "size": 26242688,
+    "compressed": 3486062,
+    "crc32": "f59acc27",
+    "zip_datetime": "2025-08-04 19:52:26",
+    "npy_shape": [
+     4020,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1377.5um, y=1438.0um raw data.npy",
+    "position_um": [
+     1377.5,
+     1438.0
+    ],
+    "size": 26112128,
+    "compressed": 3469400,
+    "crc32": "fa051f21",
+    "zip_datetime": "2025-08-04 19:46:20",
+    "npy_shape": [
+     4000,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1377.5um, y=1692.0um raw data.npy",
+    "position_um": [
+     1377.5,
+     1692.0
+    ],
+    "size": 26379776,
+    "compressed": 3490011,
+    "crc32": "62dd3690",
+    "zip_datetime": "2025-08-04 19:40:12",
+    "npy_shape": [
+     4041,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1377.5um, y=1946.0um raw data.npy",
+    "position_um": [
+     1377.5,
+     1946.0
+    ],
+    "size": 25746560,
+    "compressed": 3396827,
+    "crc32": "e3141b24",
+    "zip_datetime": "2025-08-04 19:34:04",
+    "npy_shape": [
+     3944,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1377.5um, y=2200.0um raw data.npy",
+    "position_um": [
+     1377.5,
+     2200.0
+    ],
+    "size": 25896704,
+    "compressed": 3400348,
+    "crc32": "db422e16",
+    "zip_datetime": "2025-08-04 19:28:00",
+    "npy_shape": [
+     3967,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1440.0um, y=1184.0um raw data.npy",
+    "position_um": [
+     1440.0,
+     1184.0
+    ],
+    "size": 26027264,
+    "compressed": 3412820,
+    "crc32": "dd2a4172",
+    "zip_datetime": "2025-08-04 19:21:54",
+    "npy_shape": [
+     3987,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1440.0um, y=1438.0um raw data.npy",
+    "position_um": [
+     1440.0,
+     1438.0
+    ],
+    "size": 25700864,
+    "compressed": 3347207,
+    "crc32": "1547bd43",
+    "zip_datetime": "2025-08-04 19:15:50",
+    "npy_shape": [
+     3937,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1440.0um, y=1692.0um raw data.npy",
+    "position_um": [
+     1440.0,
+     1692.0
+    ],
+    "size": 24924032,
+    "compressed": 3235131,
+    "crc32": "7f38842c",
+    "zip_datetime": "2025-08-04 19:09:46",
+    "npy_shape": [
+     3818,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1440.0um, y=1946.0um raw data.npy",
+    "position_um": [
+     1440.0,
+     1946.0
+    ],
+    "size": 25700864,
+    "compressed": 3322279,
+    "crc32": "cfd14c51",
+    "zip_datetime": "2025-08-04 19:03:50",
+    "npy_shape": [
+     3937,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1440.0um, y=2200.0um raw data.npy",
+    "position_um": [
+     1440.0,
+     2200.0
+    ],
+    "size": 24897920,
+    "compressed": 3203302,
+    "crc32": "5cd055ef",
+    "zip_datetime": "2025-08-04 18:57:46",
+    "npy_shape": [
+     3814,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1502.5um, y=1184.0um raw data.npy",
+    "position_um": [
+     1502.5,
+     1184.0
+    ],
+    "size": 24525824,
+    "compressed": 3148921,
+    "crc32": "4734de1d",
+    "zip_datetime": "2025-08-04 18:51:48",
+    "npy_shape": [
+     3757,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1502.5um, y=1438.0um raw data.npy",
+    "position_um": [
+     1502.5,
+     1438.0
+    ],
+    "size": 24591104,
+    "compressed": 3149906,
+    "crc32": "09e54c69",
+    "zip_datetime": "2025-08-04 18:45:54",
+    "npy_shape": [
+     3767,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1502.5um, y=1692.0um raw data.npy",
+    "position_um": [
+     1502.5,
+     1692.0
+    ],
+    "size": 25589888,
+    "compressed": 3272759,
+    "crc32": "c57ef5fd",
+    "zip_datetime": "2025-08-04 18:40:00",
+    "npy_shape": [
+     3920,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1502.5um, y=1946.0um raw data.npy",
+    "position_um": [
+     1502.5,
+     1946.0
+    ],
+    "size": 25178624,
+    "compressed": 3213295,
+    "crc32": "0c6779f2",
+    "zip_datetime": "2025-08-04 18:33:58",
+    "npy_shape": [
+     3857,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1502.5um, y=2200.0um raw data.npy",
+    "position_um": [
+     1502.5,
+     2200.0
+    ],
+    "size": 25550720,
+    "compressed": 3258492,
+    "crc32": "a066c633",
+    "zip_datetime": "2025-08-04 18:27:58",
+    "npy_shape": [
+     3914,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1565.0um, y=1184.0um raw data.npy",
+    "position_um": [
+     1565.0,
+     1184.0
+    ],
+    "size": 24839168,
+    "compressed": 3173322,
+    "crc32": "ba8f42df",
+    "zip_datetime": "2025-08-04 18:21:56",
+    "npy_shape": [
+     3805,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1565.0um, y=1438.0um raw data.npy",
+    "position_um": [
+     1565.0,
+     1438.0
+    ],
+    "size": 24858752,
+    "compressed": 3183198,
+    "crc32": "f48e0db4",
+    "zip_datetime": "2025-08-04 18:16:00",
+    "npy_shape": [
+     3808,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1565.0um, y=1692.0um raw data.npy",
+    "position_um": [
+     1565.0,
+     1692.0
+    ],
+    "size": 24884864,
+    "compressed": 3196904,
+    "crc32": "61000879",
+    "zip_datetime": "2025-08-04 18:10:04",
+    "npy_shape": [
+     3812,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1565.0um, y=1946.0um raw data.npy",
+    "position_um": [
+     1565.0,
+     1946.0
+    ],
+    "size": 25622528,
+    "compressed": 3312569,
+    "crc32": "7fcc2b64",
+    "zip_datetime": "2025-08-04 18:04:06",
+    "npy_shape": [
+     3925,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   },
+   {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1565.0um, y=2200.0um raw data.npy",
+    "position_um": [
+     1565.0,
+     2200.0
+    ],
+    "size": 25909760,
+    "compressed": 3367552,
+    "crc32": "f313fc26",
+    "zip_datetime": "2025-08-04 17:58:04",
+    "npy_shape": [
+     3969,
+     16,
+     51
+    ],
+    "npy_dtype": "float64"
+   }
+  ],
+  "positions_equal_to_test": 0,
+  "positions_equal_to_validation": 0,
+  "positions_equal_to_full_train": 1
+ },
+ "main_sessions": {
+  "session01": {
+   "folder_tail": "2025-08-05 145046chip15 45mW",
+   "members": 102,
+   "zip_datetime_min": "2025-08-05 14:56:50",
+   "zip_datetime_max": "2025-08-06 01:04:52",
+   "inner_shapes_[ch,freq]": [
+    [
+     16,
+     51
+    ]
+   ]
+  },
+  "session02": {
+   "folder_tail": "2025-08-06 093901chip15 45mW",
+   "members": 104,
+   "zip_datetime_min": "2025-08-06 09:44:52",
+   "zip_datetime_max": "2025-08-06 20:10:00",
+   "inner_shapes_[ch,freq]": [
+    [
+     16,
+     51
+    ]
+   ]
+  },
+  "session03": {
+   "folder_tail": "2025-08-06 201930chip15 45mW",
+   "members": 102,
+   "zip_datetime_min": "2025-08-06 20:25:26",
+   "zip_datetime_max": "2025-08-07 06:36:56",
+   "inner_shapes_[ch,freq]": [
+    [
+     16,
+     51
+    ]
+   ]
+  },
+  "session04": {
+   "folder_tail": "2025-08-07 093756chip15 45mW",
+   "members": 204,
+   "zip_datetime_min": "2025-08-07 09:44:02",
+   "zip_datetime_max": "2025-08-08 06:25:52",
+   "inner_shapes_[ch,freq]": [
+    [
+     16,
+     51
+    ]
+   ]
+  },
+  "session05": {
+   "folder_tail": "2025-08-08 125712chip15 45mW",
+   "members": 51,
+   "zip_datetime_min": "2025-08-08 13:03:06",
+   "zip_datetime_max": "2025-08-08 18:04:56",
+   "inner_shapes_[ch,freq]": [
+    [
+     16,
+     51
+    ]
+   ]
+  },
+  "session06": {
+   "folder_tail": "2025-08-08 191042chip15 45mW",
+   "members": 52,
+   "zip_datetime_min": "2025-08-08 19:16:34",
+   "zip_datetime_max": "2025-08-09 00:29:56",
+   "inner_shapes_[ch,freq]": [
+    [
+     16,
+     51
+    ]
+   ]
+  },
+  "session07": {
+   "folder_tail": "2025-08-09 003340chip15 45mW",
+   "members": 102,
+   "zip_datetime_min": "2025-08-09 00:39:40",
+   "zip_datetime_max": "2025-08-09 10:31:22",
+   "inner_shapes_[ch,freq]": [
+    [
+     16,
+     51
+    ]
+   ]
+  },
+  "session08": {
+   "folder_tail": "2025-08-09 104618chip15 45mW",
+   "members": 102,
+   "zip_datetime_min": "2025-08-09 10:52:22",
+   "zip_datetime_max": "2025-08-09 21:01:24",
+   "inner_shapes_[ch,freq]": [
+    [
+     16,
+     51
+    ]
+   ]
+  }
+ },
+ "training_raw_candidates": {
+  "partition_key": "full_train",
+  "rows": 224,
+  "unique_positions": 214,
+  "rows_with_unambiguous_raw_member": 204,
+  "rows_with_no_raw_member": 0,
+  "note": "unambiguous = exactly one raw member at that stage coordinate across all 8 sessions; fitted-row lineage itself stays unresolved (version A)",
+  "candidates": [
+   {
+    "fitted_row": 0,
+    "position_um": [
+     1545.0,
+     1200.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1200.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "84115952",
+      "size": 25981568
+     }
+    ]
+   },
+   {
+    "fitted_row": 1,
+    "position_um": [
+     1545.0,
+     1220.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1220.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "17894e37",
+      "size": 25935872
+     }
+    ]
+   },
+   {
+    "fitted_row": 2,
+    "position_um": [
+     1545.0,
+     1240.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1240.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "2fc8b60d",
+      "size": 26059904
+     }
+    ]
+   },
+   {
+    "fitted_row": 3,
+    "position_um": [
+     1545.0,
+     1260.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1260.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "1f2fe73c",
+      "size": 26027264
+     }
+    ]
+   },
+   {
+    "fitted_row": 4,
+    "position_um": [
+     1545.0,
+     1280.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1280.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "060a04ee",
+      "size": 26131712
+     }
+    ]
+   },
+   {
+    "fitted_row": 5,
+    "position_um": [
+     1545.0,
+     1300.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1300.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "460b122f",
+      "size": 26210048
+     }
+    ]
+   },
+   {
+    "fitted_row": 6,
+    "position_um": [
+     1545.0,
+     1320.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1320.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "8284c2fa",
+      "size": 26170880
+     }
+    ]
+   },
+   {
+    "fitted_row": 7,
+    "position_um": [
+     1545.0,
+     1340.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1340.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "b28ba0aa",
+      "size": 25635584
+     }
+    ]
+   },
+   {
+    "fitted_row": 8,
+    "position_um": [
+     1545.0,
+     1360.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1360.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "27afc7b3",
+      "size": 26373248
+     }
+    ]
+   },
+   {
+    "fitted_row": 9,
+    "position_um": [
+     1545.0,
+     1380.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1380.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "8ad7ae94",
+      "size": 26412416
+     }
+    ]
+   },
+   {
+    "fitted_row": 10,
+    "position_um": [
+     1545.0,
+     1400.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1400.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "5c48f9ba",
+      "size": 26334080
+     }
+    ]
+   },
+   {
+    "fitted_row": 11,
+    "position_um": [
+     1545.0,
+     1420.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1420.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "fb8a138c",
+      "size": 26588672
+     }
+    ]
+   },
+   {
+    "fitted_row": 12,
+    "position_um": [
+     1545.0,
+     1440.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1440.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "d5f4e7eb",
+      "size": 26627840
+     }
+    ]
+   },
+   {
+    "fitted_row": 13,
+    "position_um": [
+     1545.0,
+     1460.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1460.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "447614d8",
+      "size": 26144768
+     }
+    ]
+   },
+   {
+    "fitted_row": 14,
+    "position_um": [
+     1545.0,
+     1480.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1480.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "2225768c",
+      "size": 25798784
+     }
+    ]
+   },
+   {
+    "fitted_row": 15,
+    "position_um": [
+     1545.0,
+     1500.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1500.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "f254251d",
+      "size": 26151296
+     }
+    ]
+   },
+   {
+    "fitted_row": 16,
+    "position_um": [
+     1545.0,
+     1520.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1520.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "2a7aa42a",
+      "size": 26144768
+     }
+    ]
+   },
+   {
+    "fitted_row": 17,
+    "position_um": [
+     1545.0,
+     1540.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1540.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "c2581572",
+      "size": 25505024
+     }
+    ]
+   },
+   {
+    "fitted_row": 18,
+    "position_um": [
+     1545.0,
+     1560.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1560.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "61b47f6f",
+      "size": 26027264
+     }
+    ]
+   },
+   {
+    "fitted_row": 19,
+    "position_um": [
+     1545.0,
+     1580.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1580.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "d9e69b34",
+      "size": 26405888
+     }
+    ]
+   },
+   {
+    "fitted_row": 20,
+    "position_um": [
+     1545.0,
+     1600.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1600.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "a73a2d60",
+      "size": 27084800
+     }
+    ]
+   },
+   {
+    "fitted_row": 21,
+    "position_um": [
+     1545.0,
+     1620.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1620.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "0a3a14fc",
+      "size": 27176192
+     }
+    ]
+   },
+   {
+    "fitted_row": 22,
+    "position_um": [
+     1545.0,
+     1640.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1640.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "2a808ef8",
+      "size": 26386304
+     }
+    ]
+   },
+   {
+    "fitted_row": 23,
+    "position_um": [
+     1545.0,
+     1660.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1660.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "cfece12e",
+      "size": 26294912
+     }
+    ]
+   },
+   {
+    "fitted_row": 24,
+    "position_um": [
+     1545.0,
+     1680.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1680.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "2ca2e573",
+      "size": 26549504
+     }
+    ]
+   },
+   {
+    "fitted_row": 38,
+    "position_um": [
+     1545.0,
+     1960.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1960.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "4518166b",
+      "size": 26849792
+     }
+    ]
+   },
+   {
+    "fitted_row": 39,
+    "position_um": [
+     1545.0,
+     1980.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=1980.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "a6b376bc",
+      "size": 26249216
+     }
+    ]
+   },
+   {
+    "fitted_row": 40,
+    "position_um": [
+     1545.0,
+     2000.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=2000.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "192566fe",
+      "size": 26869376
+     }
+    ]
+   },
+   {
+    "fitted_row": 41,
+    "position_um": [
+     1545.0,
+     2020.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=2020.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "d84b6d25",
+      "size": 27234944
+     }
+    ]
+   },
+   {
+    "fitted_row": 42,
+    "position_um": [
+     1545.0,
+     2040.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=2040.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "e4b422bd",
+      "size": 26020736
+     }
+    ]
+   },
+   {
+    "fitted_row": 43,
+    "position_um": [
+     1545.0,
+     2060.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=2060.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "4aa0b5b5",
+      "size": 24395264
+     }
+    ]
+   },
+   {
+    "fitted_row": 44,
+    "position_um": [
+     1545.0,
+     2080.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=2080.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "44f0b776",
+      "size": 23592320
+     }
+    ]
+   },
+   {
+    "fitted_row": 45,
+    "position_um": [
+     1545.0,
+     2100.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=2100.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "63247e51",
+      "size": 22737152
+     }
+    ]
+   },
+   {
+    "fitted_row": 46,
+    "position_um": [
+     1545.0,
+     2120.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=2120.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "40ee14fc",
+      "size": 23638016
+     }
+    ]
+   },
+   {
+    "fitted_row": 47,
+    "position_um": [
+     1545.0,
+     2140.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=2140.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "143cce3e",
+      "size": 23533568
+     }
+    ]
+   },
+   {
+    "fitted_row": 48,
+    "position_um": [
+     1545.0,
+     2160.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=2160.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "1f1121b7",
+      "size": 23722880
+     }
+    ]
+   },
+   {
+    "fitted_row": 49,
+    "position_um": [
+     1545.0,
+     2180.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=2180.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "ad1296ec",
+      "size": 23709824
+     }
+    ]
+   },
+   {
+    "fitted_row": 50,
+    "position_um": [
+     1545.0,
+     2200.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1545.0um, y=2200.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "fc887501",
+      "size": 23879552
+     }
+    ]
+   },
+   {
+    "fitted_row": 51,
+    "position_um": [
+     1565.0,
+     1200.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1200.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "b24f14a9",
+      "size": 23690240
+     }
+    ]
+   },
+   {
+    "fitted_row": 52,
+    "position_um": [
+     1565.0,
+     1220.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1220.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "4cd19ff7",
+      "size": 23905664
+     }
+    ]
+   },
+   {
+    "fitted_row": 53,
+    "position_um": [
+     1565.0,
+     1240.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1240.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "46faab0d",
+      "size": 23141888
+     }
+    ]
+   },
+   {
+    "fitted_row": 54,
+    "position_um": [
+     1565.0,
+     1260.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1260.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "a93f35d1",
+      "size": 24356096
+     }
+    ]
+   },
+   {
+    "fitted_row": 55,
+    "position_um": [
+     1565.0,
+     1280.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1280.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "73a42ab7",
+      "size": 24238592
+     }
+    ]
+   },
+   {
+    "fitted_row": 56,
+    "position_um": [
+     1565.0,
+     1300.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1300.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "d596989f",
+      "size": 24153728
+     }
+    ]
+   },
+   {
+    "fitted_row": 57,
+    "position_um": [
+     1565.0,
+     1320.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1320.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "6527185b",
+      "size": 24219008
+     }
+    ]
+   },
+   {
+    "fitted_row": 58,
+    "position_um": [
+     1565.0,
+     1340.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1340.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "6fde05da",
+      "size": 24245120
+     }
+    ]
+   },
+   {
+    "fitted_row": 59,
+    "position_um": [
+     1565.0,
+     1360.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1360.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "772362fd",
+      "size": 23886080
+     }
+    ]
+   },
+   {
+    "fitted_row": 60,
+    "position_um": [
+     1565.0,
+     1380.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1380.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "b9dd6fde",
+      "size": 24349568
+     }
+    ]
+   },
+   {
+    "fitted_row": 61,
+    "position_um": [
+     1565.0,
+     1400.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1400.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "2c884380",
+      "size": 24316928
+     }
+    ]
+   },
+   {
+    "fitted_row": 62,
+    "position_um": [
+     1565.0,
+     1420.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1420.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "991f4498",
+      "size": 24421376
+     }
+    ]
+   },
+   {
+    "fitted_row": 63,
+    "position_um": [
+     1565.0,
+     1440.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1440.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "ee80de7c",
+      "size": 24323456
+     }
+    ]
+   },
+   {
+    "fitted_row": 64,
+    "position_um": [
+     1565.0,
+     1460.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1460.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "dd7705fd",
+      "size": 24408320
+     }
+    ]
+   },
+   {
+    "fitted_row": 65,
+    "position_um": [
+     1565.0,
+     1480.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1480.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "83f55589",
+      "size": 24427904
+     }
+    ]
+   },
+   {
+    "fitted_row": 66,
+    "position_um": [
+     1565.0,
+     1500.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1500.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "3210a5a2",
+      "size": 24369152
+     }
+    ]
+   },
+   {
+    "fitted_row": 67,
+    "position_um": [
+     1565.0,
+     1520.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1520.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "d3728342",
+      "size": 24127616
+     }
+    ]
+   },
+   {
+    "fitted_row": 68,
+    "position_um": [
+     1565.0,
+     1540.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1540.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "22033004",
+      "size": 23246336
+     }
+    ]
+   },
+   {
+    "fitted_row": 69,
+    "position_um": [
+     1565.0,
+     1560.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1560.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "3a0d19b7",
+      "size": 22312832
+     }
+    ]
+   },
+   {
+    "fitted_row": 70,
+    "position_um": [
+     1565.0,
+     1580.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1580.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "e5bc5750",
+      "size": 24277760
+     }
+    ]
+   },
+   {
+    "fitted_row": 71,
+    "position_um": [
+     1565.0,
+     1600.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1600.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "df13f42e",
+      "size": 24199424
+     }
+    ]
+   },
+   {
+    "fitted_row": 72,
+    "position_um": [
+     1565.0,
+     1620.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1620.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "65b8f59a",
+      "size": 24284288
+     }
+    ]
+   },
+   {
+    "fitted_row": 73,
+    "position_um": [
+     1565.0,
+     1640.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1640.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "5641334d",
+      "size": 24564992
+     }
+    ]
+   },
+   {
+    "fitted_row": 74,
+    "position_um": [
+     1565.0,
+     1660.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1660.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "248c461e",
+      "size": 24767360
+     }
+    ]
+   },
+   {
+    "fitted_row": 75,
+    "position_um": [
+     1565.0,
+     1680.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1680.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "78f69bc5",
+      "size": 24741248
+     }
+    ]
+   },
+   {
+    "fitted_row": 89,
+    "position_um": [
+     1565.0,
+     1960.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1960.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "9907d9a8",
+      "size": 26425472
+     }
+    ]
+   },
+   {
+    "fitted_row": 90,
+    "position_um": [
+     1565.0,
+     1980.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=1980.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "8b031756",
+      "size": 26458112
+     }
+    ]
+   },
+   {
+    "fitted_row": 91,
+    "position_um": [
+     1565.0,
+     2000.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=2000.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "f81af352",
+      "size": 25302656
+     }
+    ]
+   },
+   {
+    "fitted_row": 92,
+    "position_um": [
+     1565.0,
+     2020.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=2020.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "4c1b7740",
+      "size": 25772672
+     }
+    ]
+   },
+   {
+    "fitted_row": 93,
+    "position_um": [
+     1565.0,
+     2040.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=2040.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "3ef4e487",
+      "size": 26066432
+     }
+    ]
+   },
+   {
+    "fitted_row": 94,
+    "position_um": [
+     1565.0,
+     2060.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=2060.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "57b2fc1d",
+      "size": 26157824
+     }
+    ]
+   },
+   {
+    "fitted_row": 95,
+    "position_um": [
+     1565.0,
+     2080.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=2080.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "372fe26c",
+      "size": 26072960
+     }
+    ]
+   },
+   {
+    "fitted_row": 96,
+    "position_um": [
+     1565.0,
+     2100.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=2100.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "c029bec8",
+      "size": 26934656
+     }
+    ]
+   },
+   {
+    "fitted_row": 97,
+    "position_um": [
+     1565.0,
+     2120.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=2120.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "a498eb88",
+      "size": 26079488
+     }
+    ]
+   },
+   {
+    "fitted_row": 98,
+    "position_um": [
+     1565.0,
+     2140.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=2140.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "f3c143ed",
+      "size": 26823680
+     }
+    ]
+   },
+   {
+    "fitted_row": 99,
+    "position_um": [
+     1565.0,
+     2160.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=2160.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "925a348a",
+      "size": 26595200
+     }
+    ]
+   },
+   {
+    "fitted_row": 100,
+    "position_um": [
+     1565.0,
+     2180.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=2180.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "efe26016",
+      "size": 27176192
+     }
+    ]
+   },
+   {
+    "fitted_row": 101,
+    "position_um": [
+     1565.0,
+     2200.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-05 145046chip15 45mW/2025-08-05 145046chip15 45mW , x=1565.0um, y=2200.0um raw data.npy",
+      "session_id": "session01",
+      "crc32": "3306502b",
+      "size": 25935872
+     }
+    ]
+   },
+   {
+    "fitted_row": 102,
+    "position_um": [
+     1485.0,
+     2180.0
+    ],
+    "raw_member_count": 2,
+    "unambiguous": false,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1485.0um, y=2180.0um raw data.npy",
+      "session_id": "session02",
+      "crc32": "ca16a9a5",
+      "size": 22972160
+     },
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1485.0um, y=2180.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "3b4edbd5",
+      "size": 24858752
+     }
+    ]
+   },
+   {
+    "fitted_row": 103,
+    "position_um": [
+     1485.0,
+     2200.0
+    ],
+    "raw_member_count": 2,
+    "unambiguous": false,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1485.0um, y=2200.0um raw data.npy",
+      "session_id": "session02",
+      "crc32": "8246f463",
+      "size": 25916288
+     },
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1485.0um, y=2200.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "f93c48bb",
+      "size": 24976256
+     }
+    ]
+   },
+   {
+    "fitted_row": 150,
+    "position_um": [
+     1505.0,
+     2120.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1505.0um, y=2120.0um raw data.npy",
+      "session_id": "session02",
+      "crc32": "b39fd751",
+      "size": 26699648
+     }
+    ]
+   },
+   {
+    "fitted_row": 151,
+    "position_um": [
+     1505.0,
+     2140.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1505.0um, y=2140.0um raw data.npy",
+      "session_id": "session02",
+      "crc32": "2c7f3f96",
+      "size": 26523392
+     }
+    ]
+   },
+   {
+    "fitted_row": 152,
+    "position_um": [
+     1505.0,
+     2160.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1505.0um, y=2160.0um raw data.npy",
+      "session_id": "session02",
+      "crc32": "62b0fc6f",
+      "size": 26556032
+     }
+    ]
+   },
+   {
+    "fitted_row": 153,
+    "position_um": [
+     1505.0,
+     2180.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1505.0um, y=2180.0um raw data.npy",
+      "session_id": "session02",
+      "crc32": "14fd2e3b",
+      "size": 25315712
+     }
+    ]
+   },
+   {
+    "fitted_row": 154,
+    "position_um": [
+     1505.0,
+     2200.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1505.0um, y=2200.0um raw data.npy",
+      "session_id": "session02",
+      "crc32": "1a2510f0",
+      "size": 25733504
+     }
+    ]
+   },
+   {
+    "fitted_row": 168,
+    "position_um": [
+     1525.0,
+     1460.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1525.0um, y=1460.0um raw data.npy",
+      "session_id": "session02",
+      "crc32": "5072b80e",
+      "size": 26236160
+     }
+    ]
+   },
+   {
+    "fitted_row": 169,
+    "position_um": [
+     1525.0,
+     1480.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1525.0um, y=1480.0um raw data.npy",
+      "session_id": "session02",
+      "crc32": "86013e89",
+      "size": 25864064
+     }
+    ]
+   },
+   {
+    "fitted_row": 170,
+    "position_um": [
+     1525.0,
+     1500.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1525.0um, y=1500.0um raw data.npy",
+      "session_id": "session02",
+      "crc32": "11c8e333",
+      "size": 25243904
+     }
+    ]
+   },
+   {
+    "fitted_row": 171,
+    "position_um": [
+     1525.0,
+     1520.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1525.0um, y=1520.0um raw data.npy",
+      "session_id": "session02",
+      "crc32": "18ae3376",
+      "size": 24675968
+     }
+    ]
+   },
+   {
+    "fitted_row": 201,
+    "position_um": [
+     1525.0,
+     2120.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1525.0um, y=2120.0um raw data.npy",
+      "session_id": "session02",
+      "crc32": "0a951227",
+      "size": 25700864
+     }
+    ]
+   },
+   {
+    "fitted_row": 202,
+    "position_um": [
+     1525.0,
+     2140.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1525.0um, y=2140.0um raw data.npy",
+      "session_id": "session02",
+      "crc32": "d3cb4dfd",
+      "size": 25328768
+     }
+    ]
+   },
+   {
+    "fitted_row": 203,
+    "position_um": [
+     1525.0,
+     2160.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1525.0um, y=2160.0um raw data.npy",
+      "session_id": "session02",
+      "crc32": "6ccd7906",
+      "size": 25661696
+     }
+    ]
+   },
+   {
+    "fitted_row": 204,
+    "position_um": [
+     1525.0,
+     2180.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1525.0um, y=2180.0um raw data.npy",
+      "session_id": "session02",
+      "crc32": "583ae45e",
+      "size": 25988096
+     }
+    ]
+   },
+   {
+    "fitted_row": 205,
+    "position_um": [
+     1525.0,
+     2200.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1525.0um, y=2200.0um raw data.npy",
+      "session_id": "session02",
+      "crc32": "2f981114",
+      "size": 24023168
+     }
+    ]
+   },
+   {
+    "fitted_row": 206,
+    "position_um": [
+     1465.0,
+     1200.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1200.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "55ec495d",
+      "size": 24982784
+     }
+    ]
+   },
+   {
+    "fitted_row": 207,
+    "position_um": [
+     1465.0,
+     1220.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1220.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "2cba4fcb",
+      "size": 24845696
+     }
+    ]
+   },
+   {
+    "fitted_row": 208,
+    "position_um": [
+     1465.0,
+     1240.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1240.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "de62d331",
+      "size": 25054592
+     }
+    ]
+   },
+   {
+    "fitted_row": 209,
+    "position_um": [
+     1465.0,
+     1260.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1260.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "176f1960",
+      "size": 25126400
+     }
+    ]
+   },
+   {
+    "fitted_row": 210,
+    "position_um": [
+     1465.0,
+     1280.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1280.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "92bc08bf",
+      "size": 25067648
+     }
+    ]
+   },
+   {
+    "fitted_row": 211,
+    "position_um": [
+     1465.0,
+     1300.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1300.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "8469149f",
+      "size": 25224320
+     }
+    ]
+   },
+   {
+    "fitted_row": 212,
+    "position_um": [
+     1465.0,
+     1320.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1320.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "374cd02f",
+      "size": 24806528
+     }
+    ]
+   },
+   {
+    "fitted_row": 213,
+    "position_um": [
+     1465.0,
+     1340.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1340.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "9f9d9407",
+      "size": 25348352
+     }
+    ]
+   },
+   {
+    "fitted_row": 214,
+    "position_um": [
+     1465.0,
+     1360.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1360.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "6b054244",
+      "size": 25315712
+     }
+    ]
+   },
+   {
+    "fitted_row": 231,
+    "position_um": [
+     1465.0,
+     1700.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1700.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "3ed8cf8b",
+      "size": 25302656
+     }
+    ]
+   },
+   {
+    "fitted_row": 232,
+    "position_um": [
+     1465.0,
+     1720.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1720.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "b1a2ab55",
+      "size": 25296128
+     }
+    ]
+   },
+   {
+    "fitted_row": 233,
+    "position_um": [
+     1465.0,
+     1740.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1740.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "7ba848b4",
+      "size": 25367936
+     }
+    ]
+   },
+   {
+    "fitted_row": 234,
+    "position_um": [
+     1465.0,
+     1760.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1760.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "faa2a122",
+      "size": 25439744
+     }
+    ]
+   },
+   {
+    "fitted_row": 235,
+    "position_um": [
+     1465.0,
+     1780.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1780.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "e3f7c98a",
+      "size": 25465856
+     }
+    ]
+   },
+   {
+    "fitted_row": 236,
+    "position_um": [
+     1465.0,
+     1800.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1800.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "498dd534",
+      "size": 25596416
+     }
+    ]
+   },
+   {
+    "fitted_row": 237,
+    "position_um": [
+     1465.0,
+     1820.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1820.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "d329a336",
+      "size": 25341824
+     }
+    ]
+   },
+   {
+    "fitted_row": 238,
+    "position_um": [
+     1465.0,
+     1840.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1840.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "134b6395",
+      "size": 25420160
+     }
+    ]
+   },
+   {
+    "fitted_row": 239,
+    "position_um": [
+     1465.0,
+     1860.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1860.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "731bf8dc",
+      "size": 25681280
+     }
+    ]
+   },
+   {
+    "fitted_row": 240,
+    "position_um": [
+     1465.0,
+     1880.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1880.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "55499483",
+      "size": 25524608
+     }
+    ]
+   },
+   {
+    "fitted_row": 241,
+    "position_um": [
+     1465.0,
+     1900.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1900.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "9770acdf",
+      "size": 25596416
+     }
+    ]
+   },
+   {
+    "fitted_row": 242,
+    "position_um": [
+     1465.0,
+     1920.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1920.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "8f44a63b",
+      "size": 25446272
+     }
+    ]
+   },
+   {
+    "fitted_row": 243,
+    "position_um": [
+     1465.0,
+     1940.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1940.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "110857de",
+      "size": 25785728
+     }
+    ]
+   },
+   {
+    "fitted_row": 244,
+    "position_um": [
+     1465.0,
+     1960.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1960.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "a0af3b8d",
+      "size": 25537664
+     }
+    ]
+   },
+   {
+    "fitted_row": 245,
+    "position_um": [
+     1465.0,
+     1980.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=1980.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "736d5cbf",
+      "size": 25792256
+     }
+    ]
+   },
+   {
+    "fitted_row": 246,
+    "position_um": [
+     1465.0,
+     2000.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=2000.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "de4481e9",
+      "size": 25759616
+     }
+    ]
+   },
+   {
+    "fitted_row": 247,
+    "position_um": [
+     1465.0,
+     2020.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=2020.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "e6f3fc4d",
+      "size": 25753088
+     }
+    ]
+   },
+   {
+    "fitted_row": 248,
+    "position_um": [
+     1465.0,
+     2040.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=2040.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "e40acc35",
+      "size": 25759616
+     }
+    ]
+   },
+   {
+    "fitted_row": 249,
+    "position_um": [
+     1465.0,
+     2060.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=2060.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "97978a01",
+      "size": 25596416
+     }
+    ]
+   },
+   {
+    "fitted_row": 250,
+    "position_um": [
+     1465.0,
+     2080.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=2080.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "c52745e3",
+      "size": 25844480
+     }
+    ]
+   },
+   {
+    "fitted_row": 251,
+    "position_um": [
+     1465.0,
+     2100.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=2100.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "a2672591",
+      "size": 25785728
+     }
+    ]
+   },
+   {
+    "fitted_row": 252,
+    "position_um": [
+     1465.0,
+     2120.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=2120.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "fa045a09",
+      "size": 25864064
+     }
+    ]
+   },
+   {
+    "fitted_row": 253,
+    "position_um": [
+     1465.0,
+     2140.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=2140.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "9c50bdbc",
+      "size": 25805312
+     }
+    ]
+   },
+   {
+    "fitted_row": 254,
+    "position_um": [
+     1465.0,
+     2160.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=2160.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "8633eb79",
+      "size": 25740032
+     }
+    ]
+   },
+   {
+    "fitted_row": 255,
+    "position_um": [
+     1465.0,
+     2180.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=2180.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "7240375f",
+      "size": 25622528
+     }
+    ]
+   },
+   {
+    "fitted_row": 256,
+    "position_um": [
+     1465.0,
+     2200.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1465.0um, y=2200.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "7717b04e",
+      "size": 25870592
+     }
+    ]
+   },
+   {
+    "fitted_row": 287,
+    "position_um": [
+     1485.0,
+     1800.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1485.0um, y=1800.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "ea07e674",
+      "size": 26960768
+     }
+    ]
+   },
+   {
+    "fitted_row": 288,
+    "position_um": [
+     1485.0,
+     1820.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1485.0um, y=1820.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "60777c48",
+      "size": 26027264
+     }
+    ]
+   },
+   {
+    "fitted_row": 289,
+    "position_um": [
+     1485.0,
+     1840.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1485.0um, y=1840.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "adc01d72",
+      "size": 26529920
+     }
+    ]
+   },
+   {
+    "fitted_row": 290,
+    "position_um": [
+     1485.0,
+     1860.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1485.0um, y=1860.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "67962889",
+      "size": 27933440
+     }
+    ]
+   },
+   {
+    "fitted_row": 303,
+    "position_um": [
+     1485.0,
+     2120.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1485.0um, y=2120.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "84e8a580",
+      "size": 24878336
+     }
+    ]
+   },
+   {
+    "fitted_row": 304,
+    "position_um": [
+     1485.0,
+     2140.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1485.0um, y=2140.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "d00a1866",
+      "size": 25433216
+     }
+    ]
+   },
+   {
+    "fitted_row": 305,
+    "position_um": [
+     1485.0,
+     2160.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1485.0um, y=2160.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "4c4d4d20",
+      "size": 25132928
+     }
+    ]
+   },
+   {
+    "fitted_row": 306,
+    "position_um": [
+     1485.0,
+     2180.0
+    ],
+    "raw_member_count": 2,
+    "unambiguous": false,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1485.0um, y=2180.0um raw data.npy",
+      "session_id": "session02",
+      "crc32": "ca16a9a5",
+      "size": 22972160
+     },
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1485.0um, y=2180.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "3b4edbd5",
+      "size": 24858752
+     }
+    ]
+   },
+   {
+    "fitted_row": 307,
+    "position_um": [
+     1485.0,
+     2200.0
+    ],
+    "raw_member_count": 2,
+    "unambiguous": false,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-06 093901chip15 45mW/2025-08-06 093901chip15 45mW , x=1485.0um, y=2200.0um raw data.npy",
+      "session_id": "session02",
+      "crc32": "8246f463",
+      "size": 25916288
+     },
+     {
+      "member": "Fig.S4/Data/2025-08-06 201930chip15 45mW/2025-08-06 201930chip15 45mW , x=1485.0um, y=2200.0um raw data.npy",
+      "session_id": "session03",
+      "crc32": "f93c48bb",
+      "size": 24976256
+     }
+    ]
+   },
+   {
+    "fitted_row": 308,
+    "position_um": [
+     1385.0,
+     1200.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1200.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "134b5121",
+      "size": 26347136
+     }
+    ]
+   },
+   {
+    "fitted_row": 309,
+    "position_um": [
+     1385.0,
+     1220.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1220.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "8062ccb3",
+      "size": 26334080
+     }
+    ]
+   },
+   {
+    "fitted_row": 310,
+    "position_um": [
+     1385.0,
+     1240.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1240.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "ee396e95",
+      "size": 26471168
+     }
+    ]
+   },
+   {
+    "fitted_row": 311,
+    "position_um": [
+     1385.0,
+     1260.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1260.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "8c1acd83",
+      "size": 26432000
+     }
+    ]
+   },
+   {
+    "fitted_row": 312,
+    "position_um": [
+     1385.0,
+     1280.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1280.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "14fb9e70",
+      "size": 26399360
+     }
+    ]
+   },
+   {
+    "fitted_row": 313,
+    "position_um": [
+     1385.0,
+     1300.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1300.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "6deb5de3",
+      "size": 26294912
+     }
+    ]
+   },
+   {
+    "fitted_row": 314,
+    "position_um": [
+     1385.0,
+     1320.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1320.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "fa2d8394",
+      "size": 26379776
+     }
+    ]
+   },
+   {
+    "fitted_row": 315,
+    "position_um": [
+     1385.0,
+     1340.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1340.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "861030f3",
+      "size": 26503808
+     }
+    ]
+   },
+   {
+    "fitted_row": 316,
+    "position_um": [
+     1385.0,
+     1360.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1360.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "73130921",
+      "size": 26314496
+     }
+    ]
+   },
+   {
+    "fitted_row": 317,
+    "position_um": [
+     1385.0,
+     1380.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1380.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "fad17d12",
+      "size": 26425472
+     }
+    ]
+   },
+   {
+    "fitted_row": 318,
+    "position_um": [
+     1385.0,
+     1400.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1400.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "a6d04534",
+      "size": 26366720
+     }
+    ]
+   },
+   {
+    "fitted_row": 319,
+    "position_um": [
+     1385.0,
+     1420.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1420.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "7eb25f9a",
+      "size": 25707392
+     }
+    ]
+   },
+   {
+    "fitted_row": 320,
+    "position_um": [
+     1385.0,
+     1440.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1440.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "ffdbc4ec",
+      "size": 26353664
+     }
+    ]
+   },
+   {
+    "fitted_row": 321,
+    "position_um": [
+     1385.0,
+     1460.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1460.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "294e4665",
+      "size": 26151296
+     }
+    ]
+   },
+   {
+    "fitted_row": 322,
+    "position_um": [
+     1385.0,
+     1480.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1480.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "04c41696",
+      "size": 26242688
+     }
+    ]
+   },
+   {
+    "fitted_row": 323,
+    "position_um": [
+     1385.0,
+     1500.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1500.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "8b7c4b11",
+      "size": 26216576
+     }
+    ]
+   },
+   {
+    "fitted_row": 324,
+    "position_um": [
+     1385.0,
+     1520.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1520.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "8b6172ee",
+      "size": 26196992
+     }
+    ]
+   },
+   {
+    "fitted_row": 325,
+    "position_um": [
+     1385.0,
+     1540.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1540.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "87662010",
+      "size": 26405888
+     }
+    ]
+   },
+   {
+    "fitted_row": 326,
+    "position_um": [
+     1385.0,
+     1560.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1560.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "457225c3",
+      "size": 25955456
+     }
+    ]
+   },
+   {
+    "fitted_row": 327,
+    "position_um": [
+     1385.0,
+     1580.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1580.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "57d98b8c",
+      "size": 26046848
+     }
+    ]
+   },
+   {
+    "fitted_row": 328,
+    "position_um": [
+     1385.0,
+     1600.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1600.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "f62e18c9",
+      "size": 26131712
+     }
+    ]
+   },
+   {
+    "fitted_row": 329,
+    "position_um": [
+     1385.0,
+     1620.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1620.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "0cf41eff",
+      "size": 25942400
+     }
+    ]
+   },
+   {
+    "fitted_row": 330,
+    "position_um": [
+     1385.0,
+     1640.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1640.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "584921e0",
+      "size": 26131712
+     }
+    ]
+   },
+   {
+    "fitted_row": 331,
+    "position_um": [
+     1385.0,
+     1660.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1660.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "ed9ed69d",
+      "size": 26007680
+     }
+    ]
+   },
+   {
+    "fitted_row": 332,
+    "position_um": [
+     1385.0,
+     1680.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1680.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "8ed73a2c",
+      "size": 26177408
+     }
+    ]
+   },
+   {
+    "fitted_row": 333,
+    "position_um": [
+     1385.0,
+     1700.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1700.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "ec71a692",
+      "size": 26118656
+     }
+    ]
+   },
+   {
+    "fitted_row": 334,
+    "position_um": [
+     1385.0,
+     1720.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1720.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "e5fa0310",
+      "size": 25942400
+     }
+    ]
+   },
+   {
+    "fitted_row": 335,
+    "position_um": [
+     1385.0,
+     1740.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1740.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "7e9f6d22",
+      "size": 25766144
+     }
+    ]
+   },
+   {
+    "fitted_row": 336,
+    "position_um": [
+     1385.0,
+     1760.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1760.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "4f02dcd4",
+      "size": 25824896
+     }
+    ]
+   },
+   {
+    "fitted_row": 337,
+    "position_um": [
+     1385.0,
+     1780.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1780.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "35d0f364",
+      "size": 25935872
+     }
+    ]
+   },
+   {
+    "fitted_row": 338,
+    "position_um": [
+     1385.0,
+     1800.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1800.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "80566e40",
+      "size": 25961984
+     }
+    ]
+   },
+   {
+    "fitted_row": 339,
+    "position_um": [
+     1385.0,
+     1820.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1820.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "2e2d717e",
+      "size": 25955456
+     }
+    ]
+   },
+   {
+    "fitted_row": 340,
+    "position_um": [
+     1385.0,
+     1840.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1840.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "4ba886ea",
+      "size": 25354880
+     }
+    ]
+   },
+   {
+    "fitted_row": 341,
+    "position_um": [
+     1385.0,
+     1860.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1860.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "1d114d5c",
+      "size": 26099072
+     }
+    ]
+   },
+   {
+    "fitted_row": 342,
+    "position_um": [
+     1385.0,
+     1880.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1880.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "b3490d75",
+      "size": 26105600
+     }
+    ]
+   },
+   {
+    "fitted_row": 343,
+    "position_um": [
+     1385.0,
+     1900.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1900.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "f9908245",
+      "size": 25883648
+     }
+    ]
+   },
+   {
+    "fitted_row": 344,
+    "position_um": [
+     1385.0,
+     1920.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1920.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "5f8c150a",
+      "size": 25975040
+     }
+    ]
+   },
+   {
+    "fitted_row": 345,
+    "position_um": [
+     1385.0,
+     1940.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1385.0um, y=1940.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "ee60689b",
+      "size": 26092544
+     }
+    ]
+   },
+   {
+    "fitted_row": 372,
+    "position_um": [
+     1405.0,
+     1460.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1405.0um, y=1460.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "48a624df",
+      "size": 25243904
+     }
+    ]
+   },
+   {
+    "fitted_row": 373,
+    "position_um": [
+     1405.0,
+     1480.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1405.0um, y=1480.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "20243885",
+      "size": 25433216
+     }
+    ]
+   },
+   {
+    "fitted_row": 374,
+    "position_um": [
+     1405.0,
+     1500.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1405.0um, y=1500.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "e17a9aca",
+      "size": 25426688
+     }
+    ]
+   },
+   {
+    "fitted_row": 375,
+    "position_um": [
+     1405.0,
+     1520.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1405.0um, y=1520.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "618c30af",
+      "size": 26366720
+     }
+    ]
+   },
+   {
+    "fitted_row": 389,
+    "position_um": [
+     1405.0,
+     1800.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1405.0um, y=1800.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "6f059b0d",
+      "size": 26418944
+     }
+    ]
+   },
+   {
+    "fitted_row": 390,
+    "position_um": [
+     1405.0,
+     1820.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1405.0um, y=1820.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "8b0570c7",
+      "size": 26432000
+     }
+    ]
+   },
+   {
+    "fitted_row": 391,
+    "position_um": [
+     1405.0,
+     1840.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1405.0um, y=1840.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "d3108899",
+      "size": 26471168
+     }
+    ]
+   },
+   {
+    "fitted_row": 392,
+    "position_um": [
+     1405.0,
+     1860.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1405.0um, y=1860.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "5c94c974",
+      "size": 26438528
+     }
+    ]
+   },
+   {
+    "fitted_row": 440,
+    "position_um": [
+     1425.0,
+     1800.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1425.0um, y=1800.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "c5901f2e",
+      "size": 26888960
+     }
+    ]
+   },
+   {
+    "fitted_row": 441,
+    "position_um": [
+     1425.0,
+     1820.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1425.0um, y=1820.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "890ebe6c",
+      "size": 26562560
+     }
+    ]
+   },
+   {
+    "fitted_row": 442,
+    "position_um": [
+     1425.0,
+     1840.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1425.0um, y=1840.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "df334a2a",
+      "size": 26725760
+     }
+    ]
+   },
+   {
+    "fitted_row": 443,
+    "position_um": [
+     1425.0,
+     1860.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1425.0um, y=1860.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "e7964760",
+      "size": 26647424
+     }
+    ]
+   },
+   {
+    "fitted_row": 456,
+    "position_um": [
+     1425.0,
+     2120.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1425.0um, y=2120.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "7b53f9a8",
+      "size": 26497280
+     }
+    ]
+   },
+   {
+    "fitted_row": 457,
+    "position_um": [
+     1425.0,
+     2140.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1425.0um, y=2140.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "9663ace2",
+      "size": 25955456
+     }
+    ]
+   },
+   {
+    "fitted_row": 458,
+    "position_um": [
+     1425.0,
+     2160.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1425.0um, y=2160.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "fb17beda",
+      "size": 26092544
+     }
+    ]
+   },
+   {
+    "fitted_row": 459,
+    "position_um": [
+     1425.0,
+     2180.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1425.0um, y=2180.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "7cff80d0",
+      "size": 26536448
+     }
+    ]
+   },
+   {
+    "fitted_row": 460,
+    "position_um": [
+     1425.0,
+     2200.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1425.0um, y=2200.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "3a204eb6",
+      "size": 26451584
+     }
+    ]
+   },
+   {
+    "fitted_row": 491,
+    "position_um": [
+     1445.0,
+     1800.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1445.0um, y=1800.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "d1f46fe4",
+      "size": 26451584
+     }
+    ]
+   },
+   {
+    "fitted_row": 492,
+    "position_um": [
+     1445.0,
+     1820.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1445.0um, y=1820.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "79559c4b",
+      "size": 26503808
+     }
+    ]
+   },
+   {
+    "fitted_row": 493,
+    "position_um": [
+     1445.0,
+     1840.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1445.0um, y=1840.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "bf8c573c",
+      "size": 26216576
+     }
+    ]
+   },
+   {
+    "fitted_row": 494,
+    "position_um": [
+     1445.0,
+     1860.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1445.0um, y=1860.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "4a0c2533",
+      "size": 26196992
+     }
+    ]
+   },
+   {
+    "fitted_row": 507,
+    "position_um": [
+     1445.0,
+     2120.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1445.0um, y=2120.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "1c3d4d7f",
+      "size": 26249216
+     }
+    ]
+   },
+   {
+    "fitted_row": 508,
+    "position_um": [
+     1445.0,
+     2140.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1445.0um, y=2140.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "6330ea09",
+      "size": 26196992
+     }
+    ]
+   },
+   {
+    "fitted_row": 509,
+    "position_um": [
+     1445.0,
+     2160.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1445.0um, y=2160.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "47ac8ed2",
+      "size": 25909760
+     }
+    ]
+   },
+   {
+    "fitted_row": 510,
+    "position_um": [
+     1445.0,
+     2180.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1445.0um, y=2180.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "ab642834",
+      "size": 26301440
+     }
+    ]
+   },
+   {
+    "fitted_row": 511,
+    "position_um": [
+     1445.0,
+     2200.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-07 093756chip15 45mW/2025-08-07 093756chip15 45mW , x=1445.0um, y=2200.0um raw data.npy",
+      "session_id": "session04",
+      "crc32": "c1f50ded",
+      "size": 25942400
+     }
+    ]
+   },
+   {
+    "fitted_row": 525,
+    "position_um": [
+     1365.0,
+     1460.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-08 125712chip15 45mW/2025-08-08 125712chip15 45mW , x=1365.0um, y=1460.0um raw data.npy",
+      "session_id": "session05",
+      "crc32": "2a30a5fc",
+      "size": 25511552
+     }
+    ]
+   },
+   {
+    "fitted_row": 526,
+    "position_um": [
+     1365.0,
+     1480.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-08 125712chip15 45mW/2025-08-08 125712chip15 45mW , x=1365.0um, y=1480.0um raw data.npy",
+      "session_id": "session05",
+      "crc32": "9de9cd41",
+      "size": 25491968
+     }
+    ]
+   },
+   {
+    "fitted_row": 527,
+    "position_um": [
+     1365.0,
+     1500.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-08 125712chip15 45mW/2025-08-08 125712chip15 45mW , x=1365.0um, y=1500.0um raw data.npy",
+      "session_id": "session05",
+      "crc32": "8139e365",
+      "size": 25139456
+     }
+    ]
+   },
+   {
+    "fitted_row": 528,
+    "position_um": [
+     1365.0,
+     1520.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-08 125712chip15 45mW/2025-08-08 125712chip15 45mW , x=1365.0um, y=1520.0um raw data.npy",
+      "session_id": "session05",
+      "crc32": "05c5fe1f",
+      "size": 25296128
+     }
+    ]
+   },
+   {
+    "fitted_row": 577,
+    "position_um": [
+     1345.0,
+     1460.0
+    ],
+    "raw_member_count": 2,
+    "unambiguous": false,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-08 191042chip15 45mW/2025-08-08 191042chip15 45mW , x=1345.0um, y=1460.0um raw data.npy",
+      "session_id": "session06",
+      "crc32": "eac1cf11",
+      "size": 27156608
+     },
+     {
+      "member": "Fig.S4/Data/2025-08-09 003340chip15 45mW/2025-08-09 003340chip15 45mW , x=1345.0um, y=1460.0um raw data.npy",
+      "session_id": "session07",
+      "crc32": "905c1f39",
+      "size": 24708608
+     }
+    ]
+   },
+   {
+    "fitted_row": 578,
+    "position_um": [
+     1345.0,
+     1480.0
+    ],
+    "raw_member_count": 2,
+    "unambiguous": false,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-08 191042chip15 45mW/2025-08-08 191042chip15 45mW , x=1345.0um, y=1480.0um raw data.npy",
+      "session_id": "session06",
+      "crc32": "eb7178ef",
+      "size": 27052160
+     },
+     {
+      "member": "Fig.S4/Data/2025-08-09 003340chip15 45mW/2025-08-09 003340chip15 45mW , x=1345.0um, y=1480.0um raw data.npy",
+      "session_id": "session07",
+      "crc32": "e7498ed6",
+      "size": 24832640
+     }
+    ]
+   },
+   {
+    "fitted_row": 579,
+    "position_um": [
+     1345.0,
+     1500.0
+    ],
+    "raw_member_count": 2,
+    "unambiguous": false,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-08 191042chip15 45mW/2025-08-08 191042chip15 45mW , x=1345.0um, y=1500.0um raw data.npy",
+      "session_id": "session06",
+      "crc32": "2248012b",
+      "size": 26849792
+     },
+     {
+      "member": "Fig.S4/Data/2025-08-09 003340chip15 45mW/2025-08-09 003340chip15 45mW , x=1345.0um, y=1500.0um raw data.npy",
+      "session_id": "session07",
+      "crc32": "3bf7f3fe",
+      "size": 24708608
+     }
+    ]
+   },
+   {
+    "fitted_row": 580,
+    "position_um": [
+     1345.0,
+     1520.0
+    ],
+    "raw_member_count": 2,
+    "unambiguous": false,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-08 191042chip15 45mW/2025-08-08 191042chip15 45mW , x=1345.0um, y=1520.0um raw data.npy",
+      "session_id": "session06",
+      "crc32": "b00ee421",
+      "size": 27195776
+     },
+     {
+      "member": "Fig.S4/Data/2025-08-09 003340chip15 45mW/2025-08-09 003340chip15 45mW , x=1345.0um, y=1520.0um raw data.npy",
+      "session_id": "session07",
+      "crc32": "5389063c",
+      "size": 24179840
+     }
+    ]
+   },
+   {
+    "fitted_row": 628,
+    "position_um": [
+     1325.0,
+     1460.0
+    ],
+    "raw_member_count": 2,
+    "unambiguous": false,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-09 003340chip15 45mW/2025-08-09 003340chip15 45mW , x=1325.0um, y=1460.0um raw data.npy",
+      "session_id": "session07",
+      "crc32": "fd4886b3",
+      "size": 23442176
+     },
+     {
+      "member": "Fig.S4/Data/2025-08-09 104618chip15 45mW/2025-08-09 104618chip15 45mW , x=1325.0um, y=1460.0um raw data.npy",
+      "session_id": "session08",
+      "crc32": "226e7243",
+      "size": 24813056
+     }
+    ]
+   },
+   {
+    "fitted_row": 629,
+    "position_um": [
+     1325.0,
+     1480.0
+    ],
+    "raw_member_count": 2,
+    "unambiguous": false,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-09 003340chip15 45mW/2025-08-09 003340chip15 45mW , x=1325.0um, y=1480.0um raw data.npy",
+      "session_id": "session07",
+      "crc32": "85834087",
+      "size": 23435648
+     },
+     {
+      "member": "Fig.S4/Data/2025-08-09 104618chip15 45mW/2025-08-09 104618chip15 45mW , x=1325.0um, y=1480.0um raw data.npy",
+      "session_id": "session08",
+      "crc32": "ec740761",
+      "size": 25198208
+     }
+    ]
+   },
+   {
+    "fitted_row": 630,
+    "position_um": [
+     1325.0,
+     1500.0
+    ],
+    "raw_member_count": 2,
+    "unambiguous": false,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-09 003340chip15 45mW/2025-08-09 003340chip15 45mW , x=1325.0um, y=1500.0um raw data.npy",
+      "session_id": "session07",
+      "crc32": "b65889f8",
+      "size": 23416064
+     },
+     {
+      "member": "Fig.S4/Data/2025-08-09 104618chip15 45mW/2025-08-09 104618chip15 45mW , x=1325.0um, y=1500.0um raw data.npy",
+      "session_id": "session08",
+      "crc32": "7a558777",
+      "size": 25361408
+     }
+    ]
+   },
+   {
+    "fitted_row": 631,
+    "position_um": [
+     1325.0,
+     1520.0
+    ],
+    "raw_member_count": 2,
+    "unambiguous": false,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-09 003340chip15 45mW/2025-08-09 003340chip15 45mW , x=1325.0um, y=1520.0um raw data.npy",
+      "session_id": "session07",
+      "crc32": "a7f44aae",
+      "size": 23559680
+     },
+     {
+      "member": "Fig.S4/Data/2025-08-09 104618chip15 45mW/2025-08-09 104618chip15 45mW , x=1325.0um, y=1520.0um raw data.npy",
+      "session_id": "session08",
+      "crc32": "c600eaad",
+      "size": 25498496
+     }
+    ]
+   },
+   {
+    "fitted_row": 679,
+    "position_um": [
+     1345.0,
+     1460.0
+    ],
+    "raw_member_count": 2,
+    "unambiguous": false,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-08 191042chip15 45mW/2025-08-08 191042chip15 45mW , x=1345.0um, y=1460.0um raw data.npy",
+      "session_id": "session06",
+      "crc32": "eac1cf11",
+      "size": 27156608
+     },
+     {
+      "member": "Fig.S4/Data/2025-08-09 003340chip15 45mW/2025-08-09 003340chip15 45mW , x=1345.0um, y=1460.0um raw data.npy",
+      "session_id": "session07",
+      "crc32": "905c1f39",
+      "size": 24708608
+     }
+    ]
+   },
+   {
+    "fitted_row": 680,
+    "position_um": [
+     1345.0,
+     1480.0
+    ],
+    "raw_member_count": 2,
+    "unambiguous": false,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-08 191042chip15 45mW/2025-08-08 191042chip15 45mW , x=1345.0um, y=1480.0um raw data.npy",
+      "session_id": "session06",
+      "crc32": "eb7178ef",
+      "size": 27052160
+     },
+     {
+      "member": "Fig.S4/Data/2025-08-09 003340chip15 45mW/2025-08-09 003340chip15 45mW , x=1345.0um, y=1480.0um raw data.npy",
+      "session_id": "session07",
+      "crc32": "e7498ed6",
+      "size": 24832640
+     }
+    ]
+   },
+   {
+    "fitted_row": 681,
+    "position_um": [
+     1345.0,
+     1500.0
+    ],
+    "raw_member_count": 2,
+    "unambiguous": false,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-08 191042chip15 45mW/2025-08-08 191042chip15 45mW , x=1345.0um, y=1500.0um raw data.npy",
+      "session_id": "session06",
+      "crc32": "2248012b",
+      "size": 26849792
+     },
+     {
+      "member": "Fig.S4/Data/2025-08-09 003340chip15 45mW/2025-08-09 003340chip15 45mW , x=1345.0um, y=1500.0um raw data.npy",
+      "session_id": "session07",
+      "crc32": "3bf7f3fe",
+      "size": 24708608
+     }
+    ]
+   },
+   {
+    "fitted_row": 682,
+    "position_um": [
+     1345.0,
+     1520.0
+    ],
+    "raw_member_count": 2,
+    "unambiguous": false,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-08 191042chip15 45mW/2025-08-08 191042chip15 45mW , x=1345.0um, y=1520.0um raw data.npy",
+      "session_id": "session06",
+      "crc32": "b00ee421",
+      "size": 27195776
+     },
+     {
+      "member": "Fig.S4/Data/2025-08-09 003340chip15 45mW/2025-08-09 003340chip15 45mW , x=1345.0um, y=1520.0um raw data.npy",
+      "session_id": "session07",
+      "crc32": "5389063c",
+      "size": 24179840
+     }
+    ]
+   },
+   {
+    "fitted_row": 730,
+    "position_um": [
+     1305.0,
+     1460.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-09 104618chip15 45mW/2025-08-09 104618chip15 45mW , x=1305.0um, y=1460.0um raw data.npy",
+      "session_id": "session08",
+      "crc32": "5eb9cab8",
+      "size": 24976256
+     }
+    ]
+   },
+   {
+    "fitted_row": 731,
+    "position_um": [
+     1305.0,
+     1480.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-09 104618chip15 45mW/2025-08-09 104618chip15 45mW , x=1305.0um, y=1480.0um raw data.npy",
+      "session_id": "session08",
+      "crc32": "6a346c98",
+      "size": 25048064
+     }
+    ]
+   },
+   {
+    "fitted_row": 732,
+    "position_um": [
+     1305.0,
+     1500.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-09 104618chip15 45mW/2025-08-09 104618chip15 45mW , x=1305.0um, y=1500.0um raw data.npy",
+      "session_id": "session08",
+      "crc32": "69340d40",
+      "size": 24989312
+     }
+    ]
+   },
+   {
+    "fitted_row": 733,
+    "position_um": [
+     1305.0,
+     1520.0
+    ],
+    "raw_member_count": 1,
+    "unambiguous": true,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-09 104618chip15 45mW/2025-08-09 104618chip15 45mW , x=1305.0um, y=1520.0um raw data.npy",
+      "session_id": "session08",
+      "crc32": "c35c9279",
+      "size": 25276544
+     }
+    ]
+   },
+   {
+    "fitted_row": 781,
+    "position_um": [
+     1325.0,
+     1460.0
+    ],
+    "raw_member_count": 2,
+    "unambiguous": false,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-09 003340chip15 45mW/2025-08-09 003340chip15 45mW , x=1325.0um, y=1460.0um raw data.npy",
+      "session_id": "session07",
+      "crc32": "fd4886b3",
+      "size": 23442176
+     },
+     {
+      "member": "Fig.S4/Data/2025-08-09 104618chip15 45mW/2025-08-09 104618chip15 45mW , x=1325.0um, y=1460.0um raw data.npy",
+      "session_id": "session08",
+      "crc32": "226e7243",
+      "size": 24813056
+     }
+    ]
+   },
+   {
+    "fitted_row": 782,
+    "position_um": [
+     1325.0,
+     1480.0
+    ],
+    "raw_member_count": 2,
+    "unambiguous": false,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-09 003340chip15 45mW/2025-08-09 003340chip15 45mW , x=1325.0um, y=1480.0um raw data.npy",
+      "session_id": "session07",
+      "crc32": "85834087",
+      "size": 23435648
+     },
+     {
+      "member": "Fig.S4/Data/2025-08-09 104618chip15 45mW/2025-08-09 104618chip15 45mW , x=1325.0um, y=1480.0um raw data.npy",
+      "session_id": "session08",
+      "crc32": "ec740761",
+      "size": 25198208
+     }
+    ]
+   },
+   {
+    "fitted_row": 783,
+    "position_um": [
+     1325.0,
+     1500.0
+    ],
+    "raw_member_count": 2,
+    "unambiguous": false,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-09 003340chip15 45mW/2025-08-09 003340chip15 45mW , x=1325.0um, y=1500.0um raw data.npy",
+      "session_id": "session07",
+      "crc32": "b65889f8",
+      "size": 23416064
+     },
+     {
+      "member": "Fig.S4/Data/2025-08-09 104618chip15 45mW/2025-08-09 104618chip15 45mW , x=1325.0um, y=1500.0um raw data.npy",
+      "session_id": "session08",
+      "crc32": "7a558777",
+      "size": 25361408
+     }
+    ]
+   },
+   {
+    "fitted_row": 784,
+    "position_um": [
+     1325.0,
+     1520.0
+    ],
+    "raw_member_count": 2,
+    "unambiguous": false,
+    "raw_members": [
+     {
+      "member": "Fig.S4/Data/2025-08-09 003340chip15 45mW/2025-08-09 003340chip15 45mW , x=1325.0um, y=1520.0um raw data.npy",
+      "session_id": "session07",
+      "crc32": "a7f44aae",
+      "size": 23559680
+     },
+     {
+      "member": "Fig.S4/Data/2025-08-09 104618chip15 45mW/2025-08-09 104618chip15 45mW , x=1325.0um, y=1520.0um raw data.npy",
+      "session_id": "session08",
+      "crc32": "c600eaad",
+      "size": 25498496
+     }
+    ]
+   }
+  ]
+ }
+}

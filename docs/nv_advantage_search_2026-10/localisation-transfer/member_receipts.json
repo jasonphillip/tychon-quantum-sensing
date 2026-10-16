@@ -1,0 +1,102 @@
+[
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1315.0um, y=1184.0um raw data.npy",
+    "sha256": "100e0c2f04e4b6c5e8262fa775564b78d60d43d1b2d1c3dbb340faee1a84980f"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1315.0um, y=1438.0um raw data.npy",
+    "sha256": "421cc8fbb4821be8d2745a6575da56e537486635c33adda379534c5c5d659634"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1315.0um, y=1692.0um raw data.npy",
+    "sha256": "ef998e004a18e32b72325a41e59fa57d191711e92cf8f3bee6a395a63e1a7548"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1315.0um, y=1946.0um raw data.npy",
+    "sha256": "262f795b8c0e4ef17161be56375bd50d53dad87e052ca9c2b3baba18cb0e1304"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1315.0um, y=2200.0um raw data.npy",
+    "sha256": "fec36ce18305d7db915331a1f1a81ac46e6dc3bb1638ce31d7ba9fd0ef763e33"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1377.5um, y=1184.0um raw data.npy",
+    "sha256": "7987845794f69df79ea1b0d0a6a857f215fd97c00c6acf30f45c9b42fd62e7bf"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1377.5um, y=1438.0um raw data.npy",
+    "sha256": "f4cc6dcba5b0db3f57b7d24d48c24e84c5419b7e11fc925291d4ddb0e6e0ba8e"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1377.5um, y=1692.0um raw data.npy",
+    "sha256": "9cfcb4bf93f5fb27ac348ad654afdd2d3c4fdc4e13accd5565b26898ade9d3e5"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1377.5um, y=1946.0um raw data.npy",
+    "sha256": "7fc036b352b87dc2c187b77de54330d41a8821830a2a7fae8da72eac5e4a582d"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1377.5um, y=2200.0um raw data.npy",
+    "sha256": "522ba9f6b589fc2c651710d2cb5d5b13d04fb11f2014b2a665f720adcbd93a19"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1440.0um, y=1184.0um raw data.npy",
+    "sha256": "0e289da3acebfcb255f5710221a128e39807242342996f7b79811bde82ca3546"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1440.0um, y=1438.0um raw data.npy",
+    "sha256": "459626aa8d7314a0d3885673df4c7fcd4b063ce3acf02565a4936ec7b5ca47ea"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1440.0um, y=1692.0um raw data.npy",
+    "sha256": "dc70303155a5abead3c0016d7716d58842bf3bc13871a600a1695af9ff90c97b"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1440.0um, y=1946.0um raw data.npy",
+    "sha256": "50f9fb129920da889ac6f74f994ca856434122bea35a1556a9416aa67687fc70"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1440.0um, y=2200.0um raw data.npy",
+    "sha256": "abed9b0847d6b675006778a826e12ccf561b10210f185b2c5c967932f6eeb5aa"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1502.5um, y=1184.0um raw data.npy",
+    "sha256": "fb9d622c94e6b1639cbba8923b6f370fdce9e85721b911f1fef9a22bbf4f067b"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1502.5um, y=1438.0um raw data.npy",
+    "sha256": "76dbfca78209f4caa4dcb1018c617ab46cf19979bc2f63016203a10af6d4ae3b"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1502.5um, y=1692.0um raw data.npy",
+    "sha256": "3465199664de707e961c061ad7ff21dc4bdb87e8f52bf7133ba1f15728f220f9"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1502.5um, y=1946.0um raw data.npy",
+    "sha256": "b7bd7a534f044e57a70b6b547bf331596690d6b17abb1e85fd3cd78efed8f715"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1502.5um, y=2200.0um raw data.npy",
+    "sha256": "0b77f3d6281b588d6a1533c4b9b8739f0ee760749da4b91f1b4a91d1c8c31921"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1565.0um, y=1184.0um raw data.npy",
+    "sha256": "7d389a3591633e7923c7c558d21b3c5219ede33f2c1a25c627bda1bec6ceb5da"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1565.0um, y=1438.0um raw data.npy",
+    "sha256": "5a2ca9805f155d54c0cc2debfe87dc214ecf20190a40fb48c0be16bda9529672"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1565.0um, y=1692.0um raw data.npy",
+    "sha256": "f638fffc049f39364d131b6790d8507ce68dba50f155c428c5a050fec60fe111"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1565.0um, y=1946.0um raw data.npy",
+    "sha256": "cf3a4fb1b8ea256b8c568988d8b2a12d4fd8b82f9b9b3d7416eb9bc47d3a2aad"
+  },
+  {
+    "member": "Fig.3 and ML model and data/Fig. 3b and Fig. 3c/2025-08-04 175200chip15 45mW/2025-08-04 175200chip15 45mW , x=1565.0um, y=2200.0um raw data.npy",
+    "sha256": "63318d5dafcbbbcec88784d0cedd199a81d39b20ce90295fa03fb4cfe64c3399"
+  }
+]

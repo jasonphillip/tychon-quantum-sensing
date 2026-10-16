@@ -1,0 +1,362 @@
+[
+  {
+    "fitted_row": 92,
+    "channels": [
+      {
+        "channel": 15,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 6,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 11,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 4,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 13,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 7,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 3,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 1,
+        "valid": true,
+        "reason": null
+      }
+    ]
+  },
+  {
+    "fitted_row": 205,
+    "channels": [
+      {
+        "channel": 15,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 6,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 11,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 4,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 13,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 7,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 3,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 1,
+        "valid": true,
+        "reason": null
+      }
+    ]
+  },
+  {
+    "fitted_row": 232,
+    "channels": [
+      {
+        "channel": 15,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 6,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 11,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 4,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 13,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 7,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 3,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 1,
+        "valid": true,
+        "reason": null
+      }
+    ]
+  },
+  {
+    "fitted_row": 317,
+    "channels": [
+      {
+        "channel": 15,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 6,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 11,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 4,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 13,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 7,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 3,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 1,
+        "valid": true,
+        "reason": null
+      }
+    ]
+  },
+  {
+    "fitted_row": 527,
+    "channels": [
+      {
+        "channel": 15,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 6,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 11,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 4,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 13,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 7,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 3,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 1,
+        "valid": true,
+        "reason": null
+      }
+    ]
+  },
+  {
+    "fitted_row": 732,
+    "channels": [
+      {
+        "channel": 15,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 6,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 11,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 4,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 13,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 7,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 3,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 1,
+        "valid": true,
+        "reason": null
+      }
+    ]
+  },
+  {
+    "fitted_row": 6,
+    "channels": [
+      {
+        "channel": 15,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 6,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 11,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 4,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 13,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 7,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 3,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 1,
+        "valid": true,
+        "reason": null
+      }
+    ]
+  },
+  {
+    "fitted_row": 203,
+    "channels": [
+      {
+        "channel": 15,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 6,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 11,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 4,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 13,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 7,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 3,
+        "valid": true,
+        "reason": null
+      },
+      {
+        "channel": 1,
+        "valid": true,
+        "reason": null
+      }
+    ]
+  }
+]

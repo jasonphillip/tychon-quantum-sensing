@@ -1,0 +1,62 @@
+{
+  "candidate": null,
+  "old_loss_control": null,
+  "classical_small": {
+    "mean_error_um": 45.019693934872585,
+    "median_error_um": 31.174202328573287,
+    "p95_error_um": 78.96950141572724,
+    "count": 48,
+    "invalid_rows": 0,
+    "coverage": 1.0
+  },
+  "classical_full": {
+    "mean_error_um": 48.369635089932814,
+    "median_error_um": 39.27755733657766,
+    "p95_error_um": 104.09870232433268,
+    "count": 48,
+    "invalid_rows": 0,
+    "coverage": 1.0
+  },
+  "candidate_to_classical_mean_ratio": null,
+  "candidate_to_classical_p95_ratio": null,
+  "candidate_to_full_classical_mean_ratio": null,
+  "candidate_to_old_loss_control_mean_ratio": null,
+  "small_to_full_classical_mean_ratio": 0.9307428896490175,
+  "small_to_full_classical_p95_ratio": 0.7586021694073358,
+  "label_budget_ratio": 0.5,
+  "small_label_budget": 124,
+  "full_label_budget": 248,
+  "label_budget_unit": "unique_stage_xy_positions_including_validation",
+  "evaluated_measurement_rows": 48,
+  "evaluated_unique_stage_positions": 36,
+  "spatial_block_count": 9,
+  "benchmark_complete": true,
+  "one_sided_95pct_classical_full_ratio": 1.1755427250463577,
+  "neural_criteria": {
+    "label_reduction": true,
+    "complete_classical_comparison": true,
+    "same_budget_useful_advantage": false,
+    "tail_safeguard": false,
+    "matched_full_pool_quality": false,
+    "full_coverage": false
+  },
+  "classical_criteria": {
+    "label_reduction": true,
+    "complete_classical_comparison": true,
+    "matched_full_pool_quality": true,
+    "tail_safeguard": true,
+    "full_coverage": true,
+    "test_size": true,
+    "test_groups": true,
+    "full_ratio_uncertainty": false
+  },
+  "neural_gate_passed": false,
+  "classical_gate_passed": false,
+  "selected_path": "CLASSICAL_CALIBRATION_EFFICIENCY",
+  "gate_passed": false,
+  "selection_rule": "neural_if_all_gates_pass_else_classical_if_all_gates_pass_else_close",
+  "unselected_path_confirmed": false,
+  "loss_change_improved_error": false,
+  "control_role": "diagnostic_attribution_only_never_alternative_candidate",
+  "scope": "published_version_A_fitted_feature_stage_coordinate_pairs_conditional_spatial_generalization"
+}

@@ -1,0 +1,162 @@
+{
+  "eligible": false,
+  "files": {
+    "f1.fits": {
+      "conditions": {
+        "clipping": true,
+        "coverage": true,
+        "minimum_spots": true,
+        "positive_covariance": true,
+        "registration": true,
+        "registration_sensitivity": true,
+        "reliability_lower": true,
+        "reliability_point": false
+      },
+      "disagreement": 8.980304489767715e-07,
+      "eligible": false,
+      "occupied_superblocks": 15,
+      "quality": {
+        "ambiguous_integer_fraction": 0.0,
+        "bad_frame_fraction": 0.0,
+        "clip_fraction": 0.0,
+        "full_repeat_disagreement": 1.0894387592721132e-05,
+        "mean_normalized_registration_residual": 0.03192002203945685
+      },
+      "registration_sensitivity": [
+        {
+          "reliability": 0.47771796945947936,
+          "shift_a": [
+            -1,
+            0
+          ],
+          "shift_b": [
+            1,
+            0
+          ],
+          "signal_ci_lower": 4.805043358778718e-07
+        },
+        {
+          "reliability": 0.4792225211115319,
+          "shift_a": [
+            1,
+            0
+          ],
+          "shift_b": [
+            -1,
+            0
+          ],
+          "signal_ci_lower": 4.829142446469133e-07
+        },
+        {
+          "reliability": 0.4642396231839024,
+          "shift_a": [
+            0,
+            -1
+          ],
+          "shift_b": [
+            0,
+            1
+          ],
+          "signal_ci_lower": 4.590622342797006e-07
+        },
+        {
+          "reliability": 0.47438479834528846,
+          "shift_a": [
+            0,
+            1
+          ],
+          "shift_b": [
+            0,
+            -1
+          ],
+          "signal_ci_lower": 4.760344261533744e-07
+        }
+      ],
+      "reliability": 0.49719448491182816,
+      "reliability_ci_lower": 0.35801147099321157,
+      "signal": 8.880089281356557e-07,
+      "signal_ci_lower": 5.140688489054721e-07,
+      "spots": 50
+    },
+    "f4.fits": {
+      "conditions": {
+        "clipping": true,
+        "coverage": true,
+        "minimum_spots": true,
+        "positive_covariance": true,
+        "registration": true,
+        "registration_sensitivity": true,
+        "reliability_lower": true,
+        "reliability_point": false
+      },
+      "disagreement": 9.165151738179607e-07,
+      "eligible": false,
+      "occupied_superblocks": 16,
+      "quality": {
+        "ambiguous_integer_fraction": 0.0,
+        "bad_frame_fraction": 0.0,
+        "clip_fraction": 0.0,
+        "full_repeat_disagreement": 8.802066969282551e-06,
+        "mean_normalized_registration_residual": 0.026585388059731898
+      },
+      "registration_sensitivity": [
+        {
+          "reliability": 0.4635424294800169,
+          "shift_a": [
+            -1,
+            0
+          ],
+          "shift_b": [
+            1,
+            0
+          ],
+          "signal_ci_lower": 5.089864339215933e-07
+        },
+        {
+          "reliability": 0.4223065496507173,
+          "shift_a": [
+            1,
+            0
+          ],
+          "shift_b": [
+            -1,
+            0
+          ],
+          "signal_ci_lower": 4.4762811974482714e-07
+        },
+        {
+          "reliability": 0.43704371299247985,
+          "shift_a": [
+            0,
+            -1
+          ],
+          "shift_b": [
+            0,
+            1
+          ],
+          "signal_ci_lower": 4.785989013324838e-07
+        },
+        {
+          "reliability": 0.4439672621264845,
+          "shift_a": [
+            0,
+            1
+          ],
+          "shift_b": [
+            0,
+            -1
+          ],
+          "signal_ci_lower": 4.738932728276643e-07
+        }
+      ],
+      "reliability": 0.43907474231381854,
+      "reliability_ci_lower": 0.34302994081533206,
+      "signal": 7.174194034884505e-07,
+      "signal_ci_lower": 4.802602955934967e-07,
+      "spots": 59
+    }
+  },
+  "protocol_sha256": "929b8f54d0b4f63fb731d0f6f7630bf2c2aff0a8b4b44e7c243bfa6bac1b2cc3",
+  "scope": "Fixed spot/contrast rule, two training acquisitions, conditional spatial uncertainty; no field truth or general no-signal claim",
+  "study": "widefield-redesign-2026-10-15"
+}
