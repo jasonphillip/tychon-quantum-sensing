@@ -28,4 +28,7 @@ regexes = [
   '''5a3fbeba89bb149c3b2098b1babeedd97a64ddb23bbfa669507b5a9964a97c7b''',
   '''53bb6c22ff69f0bf23d769f7e372c63b99a16c5b0fbe33f51f3be9fe01a2cef7''',
   '''c903576ad13a86a7aa41770a7eed32ab6626b98ab17561a0150317ad833d2e8a''',
+  # 2026-10-15 advantage search: widefield redesign verification manifest binds experiments/widefield_redesign/access.py
+  # by sha256 (key "experiments/widefield_redesign/access.py"); value verified equal to that file's sha256. Exact value only.
+  '''686f0da8ed28e41900a9526d87330a9664ee86ccfde43f60c13bbe8b307168c9''',
 ]
