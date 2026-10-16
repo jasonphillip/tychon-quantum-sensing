@@ -210,5 +210,6 @@
     "verify-saved"
   ],
   "source_paper": "https://www.nature.com/articles/s41598-022-22610-5",
-  "prior_exposure": "Custodian must record prior byte reads and decoding separately. f1/f12 had short range reads; both are training files. Do not claim their bytes were pristine."
+  "prior_exposure": "Custodian must record prior byte reads and decoding separately. f1/f12 had short range reads; both are training files. Do not claim their bytes were pristine.",
+  "custody_evidence_rule": "Reject known prior signal decoding or missing audit evidence. Preserve no record of decoding as uncertainty, not proof of never decoded. Prior byte reads and audit limitations stay explicit."
 }

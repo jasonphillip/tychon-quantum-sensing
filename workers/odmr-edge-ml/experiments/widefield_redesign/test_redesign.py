@@ -110,3 +110,46 @@ def test_bootstrap_recenters_each_resampled_region_set():
     aa-=aa.mean(axis=0);bb-=bb.mean(axis=0)
     assert np.isclose(s,np.mean(aa*bb),atol=1e-15)
     assert np.isclose(n,np.mean((aa-bb)**2)/2,atol=1e-15)
+
+
+def positive_saved_bundle(root):
+    from experiments.widefield_redesign.qualification import sufficient
+    files={};reports={}
+    f=2700+1.5*np.arange(200);line=16**2/(4*(f-2850)**2+16**2)
+    v=1-np.linspace(.01,.1,32)[:,None]*line
+    ids=np.asarray([[i,32+128*((i%8)//4)+16*(i//16),32+128*((i%8)%4)+16*((i//8)%2),i%8] for i in range(32)],np.int64)
+    indices=np.tile(np.arange(8),(2000,1));directions=[(-1,0),(1,0),(0,-1),(0,1)]
+    quality={'clip_fraction':0.,'bad_frame_fraction':0.,'ambiguous_integer_fraction':0.,'mean_normalized_registration_residual':0.,'full_repeat_disagreement':0.}
+    for name in ('f1.fits','f4.fits'):
+        stats=sufficient(v,v,ids[:,3]);result=decide(stats,indices,quality)
+        sensitivity=[{'shift_a':list(directions[j]),'shift_b':list(directions[o]),'signal_ci_lower':result['signal_ci_lower'],'reliability':result['reliability']} for j,o in enumerate((1,0,3,2))]
+        result['registration_sensitivity']=sensitivity;result['conditions']['registration_sensitivity']=True;result['eligible']=all(result['conditions'].values());reports[name]=result
+        saved=dict(stats,bootstrap_indices=indices)
+        for j in range(4):
+            for k,value in stats.items():saved[f'shift{j}::{k}']=value
+        payloads=[('geometry',{'ids':ids,'masks':np.ones((32,9,9),bool)}),
+                  ('spectra',{'ids':ids,'values':np.stack([v]*5),'clipped':np.zeros((5,32,200),bool)}),('statistics',saved)]
+        payloads +=[(f'shift{j}',{'ids':ids,'values':np.stack([v]*4)}) for j in range(4)]
+        for suffix,arrays in payloads:
+            p=root/(name+'.'+suffix+'.npz');np.savez_compressed(p,**arrays);files[p.name]=sha(p)
+        records=[{'repeat':r,'frequency':f,'failed':False,'correlation':1.,'margin':.5,'ambiguous_integer_peak':False,'normalized_residual':0.,'best_shift':[0,0],'refined_shift':[0.,0.]} for r in range(5) for f in range(200)]
+        p=root/(name+'.registration.json');write_json(p,{'records':records});files[p.name]=sha(p)
+    p=root/'report.json';write_json(p,{'files':reports,'eligible':all(r['eligible'] for r in reports.values())});files[p.name]=sha(p)
+    write_json(root/'verification-manifest.json',{'files':files})
+    return sha(root/'verification-manifest.json')
+
+
+def test_positive_saved_spectrum_roundtrip_all_shifts(tmp_path):
+    digest=positive_saved_bundle(tmp_path)
+    result=verify(tmp_path,digest)
+    assert result['status']=='PASS' and result['scientific_eligible']
+
+
+def test_consistently_hashed_mismatched_spot_ids_rejected(tmp_path):
+    positive_saved_bundle(tmp_path)
+    p=tmp_path/'f1.fits.spectra.npz'
+    with np.load(p,allow_pickle=False) as z:values={k:z[k] for k in z.files}
+    values['ids']=values['ids'].copy();values['ids'][0,1]+=1
+    np.savez_compressed(p,**values)
+    mp=tmp_path/'verification-manifest.json';m=json.loads(mp.read_text());m['files'][p.name]=sha(p);mp.write_text(json.dumps(m))
+    with pytest.raises(ValueError,match='spectra/flags'):verify(tmp_path,sha(mp))

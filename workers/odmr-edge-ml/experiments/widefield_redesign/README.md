@@ -157,7 +157,9 @@ Required source dependency: unchanged `experiments/measured_widefield/io.py` for
 No package installation, GPU or service change is requested.
 
 Custody JSON must have status`verified`, this study ID, and per-file SHA256, header SHA256, size, current,
-`prior_signal_decoded:false` and an explicit`prior_byte_exposure`record.
+`prior_decoding_status`, audit limitations, and an explicit `prior_byte_exposure` record.
+Accepted statuses describe no recorded decoding or recorded header-only access; neither proves no unrecorded access.
+Known signal decoding is rejected. The derived certificate binds the original custody and header-record hashes.
 Its path and both raw FITS hashes must be bound in approval inputs.
 Root approval pins every Python source here, protocol JSON and the unchanged reader.
 A valid active supervisor parent, approval/spec/run identities and held flock are required.

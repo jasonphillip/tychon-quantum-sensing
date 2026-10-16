@@ -29,7 +29,7 @@ def qualify(a,args):
         entry=custody['files'][name]; raw=Path(args.data)/name
         if raw.is_symlink():raise ValueError('Symlink raw input')
         raw=raw.resolve()
-        if entry.get('prior_signal_decoded') is not False or 'prior_byte_exposure' not in entry:raise ValueError('Missing honest prior-access certificate')
+        if entry.get('prior_decoding_status') not in ('no_record_of_decoding','header_only_recorded','no_prior_access_found_in_local_audit') or not entry.get('prior_access_limits') or 'prior_byte_exposure' not in entry:raise ValueError('Known decoding or incomplete prior-access evidence')
         if a['inputs'].get(str(raw))!=entry['sha256']:raise ValueError('Raw hash not bound by supervisor')
         header=inspect_header(raw)
         if not header['complete'] or header['header_sha256']!=entry['header_sha256'] or raw.stat().st_size!=entry['bytes']:raise ValueError('Header/size drift')
