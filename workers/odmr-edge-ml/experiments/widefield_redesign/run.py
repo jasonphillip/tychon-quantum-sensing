@@ -98,6 +98,7 @@ def main():
     if not output.is_absolute() or output.resolve().is_relative_to(ROOT) or output.exists():raise ValueError('Output must be new, absolute and outside source')
     a=gate(args.approval,args.command)
     if args.command=='fixtures':
+        output.mkdir(parents=True,exist_ok=False)
         import os
         os.environ['PYTEST_DISABLE_PLUGIN_AUTOLOAD']='1'
         import pytest
