@@ -39,4 +39,12 @@ regexes = [
   '''c5dbe4882ec1c017194890bef7f78035d81239f4cf5e994b1bdbcb5b7499460e''',  # vector_baseline_challenge/access.py
   '''de88946134f3efb355ee68692d4be01ea52145da32e58bc9b3d622e758d53c56''',  # vector_initializer_development/access.py
   '''f6ca8c7e91effa505155e0e6f1336d825f48a51af2a8d0a21ffa12ce8b8a6ba8''',  # vector_classical_qualification/access.py
+  # 2026-10-17 continuation: exact public provenance values, verified against the live
+  # Zenodo 14427490 record API and fastmachinelearning/ml-quantum-readout commit API.
+  # These are source-file MD5 checksums and an upstream Git commit, not credentials.
+  '''1616ed987b5bbb279cbe25d23f0e4b09''',  # 0528_X_test_0_770.npy
+  '''6e88a8afc3c75d45942f12a1350250eb''',  # 0528_y_train_0_770.npy
+  '''74f5f7ddd92fa414ef518ee7dba4f1b6''',  # 0528_y_test_0_770.npy
+  '''44a2e9d9d28284f257e18578ac6c3af4''',  # 0528_X_train_0_770.npy
+  '''2c7efadb21c1aa2bab2e5fc12ff403cb28af5d25''',  # author_code_commit
 ]
