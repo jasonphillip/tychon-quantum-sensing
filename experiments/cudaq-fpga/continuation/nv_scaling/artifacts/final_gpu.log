@@ -1,0 +1,3 @@
+./nv_scaling/scaling.py:70: FutureWarning: The CUDA-Q `sample` and `observe` algorithmic primitives will change in a future release. Existing code may require updates. See https://nvidia.github.io/cuda-quantum/latest/using/migration/upcoming_changes.html for details.
+  import cudaq
+{"status": "passed", "backend": "cudaq", "quantum_probability_count": 32768, "board_record_count": 1024, "max_probability_error": 2.151061218036432e-09, "max_density_error": 2.2538997522778442e-09, "process_elapsed_seconds": 428.21704864900676, "error": null}

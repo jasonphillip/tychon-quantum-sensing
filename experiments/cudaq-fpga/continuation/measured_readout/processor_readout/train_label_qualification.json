@@ -1,0 +1,100 @@
+{
+  "rows": 900000,
+  "labels": [
+    0.0,
+    1.0
+  ],
+  "counts": [
+    450000,
+    450000
+  ],
+  "run_count": 180,
+  "first_runs": [
+    {
+      "start": 0,
+      "stop": 5000,
+      "label": 0.0
+    },
+    {
+      "start": 5000,
+      "stop": 10000,
+      "label": 1.0
+    },
+    {
+      "start": 10000,
+      "stop": 15000,
+      "label": 0.0
+    },
+    {
+      "start": 15000,
+      "stop": 20000,
+      "label": 1.0
+    },
+    {
+      "start": 20000,
+      "stop": 25000,
+      "label": 0.0
+    },
+    {
+      "start": 25000,
+      "stop": 30000,
+      "label": 1.0
+    },
+    {
+      "start": 30000,
+      "stop": 35000,
+      "label": 0.0
+    },
+    {
+      "start": 35000,
+      "stop": 40000,
+      "label": 1.0
+    },
+    {
+      "start": 40000,
+      "stop": 45000,
+      "label": 0.0
+    },
+    {
+      "start": 45000,
+      "stop": 50000,
+      "label": 1.0
+    },
+    {
+      "start": 50000,
+      "stop": 55000,
+      "label": 0.0
+    },
+    {
+      "start": 55000,
+      "stop": 60000,
+      "label": 1.0
+    }
+  ],
+  "last_runs": [
+    {
+      "start": 880000,
+      "stop": 885000,
+      "label": 0.0
+    },
+    {
+      "start": 885000,
+      "stop": 890000,
+      "label": 1.0
+    },
+    {
+      "start": 890000,
+      "stop": 895000,
+      "label": 0.0
+    },
+    {
+      "start": 895000,
+      "stop": 900000,
+      "label": 1.0
+    }
+  ],
+  "whole_file_md5_verified": true,
+  "author_array_md5_verified": true,
+  "sha256": "43517f104f1de18d9669f8171aa4edb8d86e1bac69e43cf73af139af4618e0b6",
+  "test_record_values_read": 0
+}

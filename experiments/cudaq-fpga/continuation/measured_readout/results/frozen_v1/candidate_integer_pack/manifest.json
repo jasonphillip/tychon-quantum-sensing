@@ -1,0 +1,27 @@
+{
+  "records": 1000,
+  "input_shape": [
+    1000,
+    128
+  ],
+  "byte_order": "little",
+  "input_fraction_bits": 11,
+  "score_fraction_bits": 25,
+  "volts_per_normalized_unit": 0.07089742024739583,
+  "weights_i32": [
+    16384,
+    -2845
+  ],
+  "bias_i64": 42986618,
+  "full_int16_score_abs_bound": 40369122426,
+  "clipped_values": 0,
+  "python_bigint_scores_exact": true,
+  "float_decision_disagreements": 0,
+  "preparation_accuracy": 0.737,
+  "scope": "candidate coefficients and host arithmetic only; requires new build; no board replay",
+  "sha256": {
+    "labels_u8.bin": "fda0302e3ff1af6728f9b2c24b115bcd81d0fae6a80bd9cf595a126443febcb4",
+    "expected_scores_i64.bin": "95c10c747e88da7699008e7b424cfd117658f072dd8a5363baa06e8da0d89eb8",
+    "inputs_i16.bin": "bfc64f1a1d93fb2d3e71c657f8a8d4828b2a8e63f14f0cc26bbdaae414539fd3"
+  }
+}

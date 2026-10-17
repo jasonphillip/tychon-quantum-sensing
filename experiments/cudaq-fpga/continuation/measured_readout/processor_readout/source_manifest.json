@@ -1,0 +1,22 @@
+{
+  "QUALIFICATION.md": "34e8caab7d6b0820b74cc27d4c42c511f548c130f14e2e9cddeccb21a742e8dd",
+  "source_tree.json": "78b5faccf0ffd784cbbe2d3df4bce744d3608ac75a2526a3b42cb307771e9d95",
+  "qualification.json": "008e23bcec7def0ce3ced9eb1b805029582b5381efe6611f1bde7e28c6d2dc68",
+  "0528_X_train_0_770.npy.header": "67091a70cd513f5603455df8356b671ef2467ad5f671bc7df95df47ea1be3e5e",
+  "0528_y_test_0_770.npy.header": "20802370c1da881cb3f71f8b06a31331d76050e5c5967fbb34e3bae028311b8a",
+  "PROPOSED_PROTOCOL.json": "bffb0be2cf21e6d34c95afdbed6adb2e70e4a20f9db1a442f52f30a398d7ea44",
+  "proposal_validation.json": "c70642a27310030a85acc4e379a101e86c2f9854dc0b4dee18af9fafdf0fedb9",
+  "0528_y_train_0_770.npy.header": "44f09e8e009b26d527f0cf2091a3f03e29348fb494791221e70e5ac239de57ae",
+  "train_label_qualification.json": "d76b146c6433ed1e7911271e57fa9ef17d4ffd753fb5c17b36e0a673ac4b1b21",
+  "paper.html": "30fbab90e884c4d0019fb3eae672f1bfa1eefa71cff16fdfb467911c3a8d2cbb",
+  "headers.json": "db4e32d58d0d9997fe71b97cec2740bdec618291eb1213351fc03c820d8fc9ee",
+  "zenodo_metadata.json": "d4711e1bf827dabbea756b18f3479e4ab80b6e4411ecf72d8e2e2237037cd416",
+  "0528_X_test_0_770.npy.header": "1018cd37de21ca94e61b55caa683b34af6ccac71e5412cf8d433b966d33d61ce",
+  "inputs/0528_y_train_0_770.npy": "43517f104f1de18d9669f8171aa4edb8d86e1bac69e43cf73af139af4618e0b6",
+  "author_code/training/save_data.py": "504b0f8374c7097b8ff390f374154bf29c1180eafadddccbc821d12933f25058",
+  "author_code/utils/data.py": "91f578f38db887e6bc1df148ea3414fa9fa095708c08a950fb0ef00a7983bbbe",
+  "author_code/final/train.ipynb": "c6fd26cb56db36afb18839791ab62a27fea780d9205694fb17c2b3eef940a16f",
+  "author_code/data/README.md": "e6e8f6825e249c71935d9ba2bd0211a249323d71b6886a6a71ce59694372c14c",
+  "author_code/notebooks/process_data.ipynb": "f3e4dc238a0f260e995b1e49cb3a083b87aa41e53af380918e5ba9389a91e3bc",
+  "author_code/data/qick_data/generate_window.py": "f6b400c31f11c96d5becb6edbd9980ca993402619b7cb6ce6fe29101ffd5cae2"
+}

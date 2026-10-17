@@ -1,0 +1,392 @@
+{
+  "schema": "immutable_npy_ranges_v1",
+  "prior_reserved_bytes": 18134864,
+  "received_bytes": 302842240,
+  "ranges": {
+    "0528_X_train_0_770.npy:0:1024": {
+      "file": "inputs/ranges/0528_X_train_0_770.npy.0-1024.bin",
+      "source_file": "0528_X_train_0_770.npy",
+      "rows": [
+        0,
+        1024
+      ],
+      "byte_start": 128,
+      "bytes": 12615680,
+      "sha256": "173d4fe62a154189752a4352b827d0342602d501c39a2fa594c366558eb5e989",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_train_0_770.npy/content"
+    },
+    "0528_X_train_0_770.npy:5000:6024": {
+      "file": "inputs/ranges/0528_X_train_0_770.npy.5000-6024.bin",
+      "source_file": "0528_X_train_0_770.npy",
+      "rows": [
+        5000,
+        6024
+      ],
+      "byte_start": 61600128,
+      "bytes": 12615680,
+      "sha256": "0a26cf74306b0bf60a883d7b8064e1e0d85614c760b4ed197dd4761df28f0c83",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_train_0_770.npy/content"
+    },
+    "0528_X_train_0_770.npy:200000:201024": {
+      "file": "inputs/ranges/0528_X_train_0_770.npy.200000-201024.bin",
+      "source_file": "0528_X_train_0_770.npy",
+      "rows": [
+        200000,
+        201024
+      ],
+      "byte_start": 2464000128,
+      "bytes": 12615680,
+      "sha256": "099c6b9d151eb9a562d8052020c1b4badd3ac11d36dfa2010127a85cb2ab1fed",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_train_0_770.npy/content"
+    },
+    "0528_X_train_0_770.npy:205000:206024": {
+      "file": "inputs/ranges/0528_X_train_0_770.npy.205000-206024.bin",
+      "source_file": "0528_X_train_0_770.npy",
+      "rows": [
+        205000,
+        206024
+      ],
+      "byte_start": 2525600128,
+      "bytes": 12615680,
+      "sha256": "16f8d63901d5a85dcb004c94726ce4d79871df417ca487ad8c83bffd2b82737b",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_train_0_770.npy/content"
+    },
+    "0528_X_train_0_770.npy:400000:401024": {
+      "file": "inputs/ranges/0528_X_train_0_770.npy.400000-401024.bin",
+      "source_file": "0528_X_train_0_770.npy",
+      "rows": [
+        400000,
+        401024
+      ],
+      "byte_start": 4928000128,
+      "bytes": 12615680,
+      "sha256": "9bc1f044deb5857a57669f282c24e352f00f80553d0a1b5e6dfce8b2e291f96a",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_train_0_770.npy/content"
+    },
+    "0528_X_train_0_770.npy:405000:406024": {
+      "file": "inputs/ranges/0528_X_train_0_770.npy.405000-406024.bin",
+      "source_file": "0528_X_train_0_770.npy",
+      "rows": [
+        405000,
+        406024
+      ],
+      "byte_start": 4989600128,
+      "bytes": 12615680,
+      "sha256": "064623dfde95a651b6b53ba6ef42384c208cb942dfdc997d2621c54a32b57600",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_train_0_770.npy/content"
+    },
+    "0528_X_train_0_770.npy:600000:601024": {
+      "file": "inputs/ranges/0528_X_train_0_770.npy.600000-601024.bin",
+      "source_file": "0528_X_train_0_770.npy",
+      "rows": [
+        600000,
+        601024
+      ],
+      "byte_start": 7392000128,
+      "bytes": 12615680,
+      "sha256": "d0484db864b96c4803486f8dd9e67fc54039cd1e4439aa39ae1bd18973737998",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_train_0_770.npy/content"
+    },
+    "0528_X_train_0_770.npy:605000:606024": {
+      "file": "inputs/ranges/0528_X_train_0_770.npy.605000-606024.bin",
+      "source_file": "0528_X_train_0_770.npy",
+      "rows": [
+        605000,
+        606024
+      ],
+      "byte_start": 7453600128,
+      "bytes": 12615680,
+      "sha256": "995577eb4b475037f9492fbddb7a7948bf11e4357a8f746a255ff14e9683efac",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_train_0_770.npy/content"
+    },
+    "0528_X_train_0_770.npy:50000:51024": {
+      "file": "inputs/ranges/0528_X_train_0_770.npy.50000-51024.bin",
+      "source_file": "0528_X_train_0_770.npy",
+      "rows": [
+        50000,
+        51024
+      ],
+      "byte_start": 616000128,
+      "bytes": 12615680,
+      "sha256": "1e9df3e835bf462d73c5e7a4ee86be57aaabb91eb1208a627759864ece0b2c4c",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_train_0_770.npy/content"
+    },
+    "0528_X_train_0_770.npy:55000:56024": {
+      "file": "inputs/ranges/0528_X_train_0_770.npy.55000-56024.bin",
+      "source_file": "0528_X_train_0_770.npy",
+      "rows": [
+        55000,
+        56024
+      ],
+      "byte_start": 677600128,
+      "bytes": 12615680,
+      "sha256": "9f6bfa8098a5151bc9ac17dea0bbca98d87476b849011aa7cd3ec8963a040d44",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_train_0_770.npy/content"
+    },
+    "0528_X_train_0_770.npy:450000:451024": {
+      "file": "inputs/ranges/0528_X_train_0_770.npy.450000-451024.bin",
+      "source_file": "0528_X_train_0_770.npy",
+      "rows": [
+        450000,
+        451024
+      ],
+      "byte_start": 5544000128,
+      "bytes": 12615680,
+      "sha256": "4202e9d1ddfac1e5ff12a48f3f473dc00cd2d5250ffdeab64f6b58e4acdb615b",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_train_0_770.npy/content"
+    },
+    "0528_X_train_0_770.npy:455000:456024": {
+      "file": "inputs/ranges/0528_X_train_0_770.npy.455000-456024.bin",
+      "source_file": "0528_X_train_0_770.npy",
+      "rows": [
+        455000,
+        456024
+      ],
+      "byte_start": 5605600128,
+      "bytes": 12615680,
+      "sha256": "56cd813199a930c071626a86a09e1b2ebba292e467fc885f6d66d3ce2a715c6f",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_train_0_770.npy/content"
+    },
+    "0528_X_train_0_770.npy:100000:101024": {
+      "file": "inputs/ranges/0528_X_train_0_770.npy.100000-101024.bin",
+      "source_file": "0528_X_train_0_770.npy",
+      "rows": [
+        100000,
+        101024
+      ],
+      "byte_start": 1232000128,
+      "bytes": 12615680,
+      "sha256": "b7bf74c21388ec34d47c8c2a8fff74df2dd0a4f7ec0846e3f2f687aa83831322",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_train_0_770.npy/content"
+    },
+    "0528_X_train_0_770.npy:105000:106024": {
+      "file": "inputs/ranges/0528_X_train_0_770.npy.105000-106024.bin",
+      "source_file": "0528_X_train_0_770.npy",
+      "rows": [
+        105000,
+        106024
+      ],
+      "byte_start": 1293600128,
+      "bytes": 12615680,
+      "sha256": "eeec03d0edf92dbfa9e0a8ad3b0bdd52cdaf03ab80d9baf507d9f550611ae59c",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_train_0_770.npy/content"
+    },
+    "0528_X_train_0_770.npy:300000:301024": {
+      "file": "inputs/ranges/0528_X_train_0_770.npy.300000-301024.bin",
+      "source_file": "0528_X_train_0_770.npy",
+      "rows": [
+        300000,
+        301024
+      ],
+      "byte_start": 3696000128,
+      "bytes": 12615680,
+      "sha256": "15e0afa949c2d40c0e11d01e96bcc9f69d5fdda447e026dd84b146dde5b381f0",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_train_0_770.npy/content"
+    },
+    "0528_X_train_0_770.npy:305000:306024": {
+      "file": "inputs/ranges/0528_X_train_0_770.npy.305000-306024.bin",
+      "source_file": "0528_X_train_0_770.npy",
+      "rows": [
+        305000,
+        306024
+      ],
+      "byte_start": 3757600128,
+      "bytes": 12615680,
+      "sha256": "141dee578fb05bf4c50e4b6b41d9c52922dd9675debbe227ada6960fd3839aee",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_train_0_770.npy/content"
+    },
+    "0528_X_test_0_770.npy:0:1024": {
+      "file": "inputs/ranges/0528_X_test_0_770.npy.0-1024.bin",
+      "source_file": "0528_X_test_0_770.npy",
+      "rows": [
+        0,
+        1024
+      ],
+      "byte_start": 128,
+      "bytes": 12615680,
+      "sha256": "36f5c265ee2ffb833d9d0005d01cca7b8852504c088d07c2c07d83d47d32df49",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_test_0_770.npy/content"
+    },
+    "0528_X_test_0_770.npy:5000:6024": {
+      "file": "inputs/ranges/0528_X_test_0_770.npy.5000-6024.bin",
+      "source_file": "0528_X_test_0_770.npy",
+      "rows": [
+        5000,
+        6024
+      ],
+      "byte_start": 61600128,
+      "bytes": 12615680,
+      "sha256": "9ad9ae3d74feed58b673ed6b421eda6ce789bb27a5bc17e9bd01063976f9f7a4",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_test_0_770.npy/content"
+    },
+    "0528_X_test_0_770.npy:20000:21024": {
+      "file": "inputs/ranges/0528_X_test_0_770.npy.20000-21024.bin",
+      "source_file": "0528_X_test_0_770.npy",
+      "rows": [
+        20000,
+        21024
+      ],
+      "byte_start": 246400128,
+      "bytes": 12615680,
+      "sha256": "73eee686dad4434d7da611b570dc0baaf7cd615e4e7e3e6d1a006e4977a2edb7",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_test_0_770.npy/content"
+    },
+    "0528_X_test_0_770.npy:25000:26024": {
+      "file": "inputs/ranges/0528_X_test_0_770.npy.25000-26024.bin",
+      "source_file": "0528_X_test_0_770.npy",
+      "rows": [
+        25000,
+        26024
+      ],
+      "byte_start": 308000128,
+      "bytes": 12615680,
+      "sha256": "b5af33f77e77a8168c0ccea9af2c84b6218bb8efb7f253de32edb228168b0a4e",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_test_0_770.npy/content"
+    },
+    "0528_X_test_0_770.npy:40000:41024": {
+      "file": "inputs/ranges/0528_X_test_0_770.npy.40000-41024.bin",
+      "source_file": "0528_X_test_0_770.npy",
+      "rows": [
+        40000,
+        41024
+      ],
+      "byte_start": 492800128,
+      "bytes": 12615680,
+      "sha256": "c1b1c8858bb0367446fcda8adecaac2526adbaa18575723a96a5259bd2b9538b",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_test_0_770.npy/content"
+    },
+    "0528_X_test_0_770.npy:45000:46024": {
+      "file": "inputs/ranges/0528_X_test_0_770.npy.45000-46024.bin",
+      "source_file": "0528_X_test_0_770.npy",
+      "rows": [
+        45000,
+        46024
+      ],
+      "byte_start": 554400128,
+      "bytes": 12615680,
+      "sha256": "1ffe78d0bb2c6766fad5f420e2ad5af6b03344d1bbb17db7f9eacdfad6b76d6a",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_test_0_770.npy/content"
+    },
+    "0528_X_test_0_770.npy:60000:61024": {
+      "file": "inputs/ranges/0528_X_test_0_770.npy.60000-61024.bin",
+      "source_file": "0528_X_test_0_770.npy",
+      "rows": [
+        60000,
+        61024
+      ],
+      "byte_start": 739200128,
+      "bytes": 12615680,
+      "sha256": "3058c6c95e0a8b034faaa54aee4abe775822b851c5b6d69eef84cab10bd73342",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_test_0_770.npy/content"
+    },
+    "0528_X_test_0_770.npy:65000:66024": {
+      "file": "inputs/ranges/0528_X_test_0_770.npy.65000-66024.bin",
+      "source_file": "0528_X_test_0_770.npy",
+      "rows": [
+        65000,
+        66024
+      ],
+      "byte_start": 800800128,
+      "bytes": 12615680,
+      "sha256": "137b31f72b3685c45c3d98b4d0e510d7761aef698c0e83acf8625ba6886d0c19",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_test_0_770.npy/content"
+    },
+    "0528_y_test_0_770.npy:0:1024": {
+      "file": "inputs/ranges/0528_y_test_0_770.npy.0-1024.bin",
+      "source_file": "0528_y_test_0_770.npy",
+      "rows": [
+        0,
+        1024
+      ],
+      "byte_start": 128,
+      "bytes": 8192,
+      "sha256": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_y_test_0_770.npy/content"
+    },
+    "0528_y_test_0_770.npy:5000:6024": {
+      "file": "inputs/ranges/0528_y_test_0_770.npy.5000-6024.bin",
+      "source_file": "0528_y_test_0_770.npy",
+      "rows": [
+        5000,
+        6024
+      ],
+      "byte_start": 40128,
+      "bytes": 8192,
+      "sha256": "ffc1f5db1faa7b6402489b6c3c21711ad6cb122faa068ac9410c12ab126aa81e",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_y_test_0_770.npy/content"
+    },
+    "0528_y_test_0_770.npy:20000:21024": {
+      "file": "inputs/ranges/0528_y_test_0_770.npy.20000-21024.bin",
+      "source_file": "0528_y_test_0_770.npy",
+      "rows": [
+        20000,
+        21024
+      ],
+      "byte_start": 160128,
+      "bytes": 8192,
+      "sha256": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_y_test_0_770.npy/content"
+    },
+    "0528_y_test_0_770.npy:25000:26024": {
+      "file": "inputs/ranges/0528_y_test_0_770.npy.25000-26024.bin",
+      "source_file": "0528_y_test_0_770.npy",
+      "rows": [
+        25000,
+        26024
+      ],
+      "byte_start": 200128,
+      "bytes": 8192,
+      "sha256": "ffc1f5db1faa7b6402489b6c3c21711ad6cb122faa068ac9410c12ab126aa81e",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_y_test_0_770.npy/content"
+    },
+    "0528_y_test_0_770.npy:40000:41024": {
+      "file": "inputs/ranges/0528_y_test_0_770.npy.40000-41024.bin",
+      "source_file": "0528_y_test_0_770.npy",
+      "rows": [
+        40000,
+        41024
+      ],
+      "byte_start": 320128,
+      "bytes": 8192,
+      "sha256": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_y_test_0_770.npy/content"
+    },
+    "0528_y_test_0_770.npy:45000:46024": {
+      "file": "inputs/ranges/0528_y_test_0_770.npy.45000-46024.bin",
+      "source_file": "0528_y_test_0_770.npy",
+      "rows": [
+        45000,
+        46024
+      ],
+      "byte_start": 360128,
+      "bytes": 8192,
+      "sha256": "ffc1f5db1faa7b6402489b6c3c21711ad6cb122faa068ac9410c12ab126aa81e",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_y_test_0_770.npy/content"
+    },
+    "0528_y_test_0_770.npy:60000:61024": {
+      "file": "inputs/ranges/0528_y_test_0_770.npy.60000-61024.bin",
+      "source_file": "0528_y_test_0_770.npy",
+      "rows": [
+        60000,
+        61024
+      ],
+      "byte_start": 480128,
+      "bytes": 8192,
+      "sha256": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_y_test_0_770.npy/content"
+    },
+    "0528_y_test_0_770.npy:65000:66024": {
+      "file": "inputs/ranges/0528_y_test_0_770.npy.65000-66024.bin",
+      "source_file": "0528_y_test_0_770.npy",
+      "rows": [
+        65000,
+        66024
+      ],
+      "byte_start": 520128,
+      "bytes": 8192,
+      "sha256": "ffc1f5db1faa7b6402489b6c3c21711ad6cb122faa068ac9410c12ab126aa81e",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_y_test_0_770.npy/content"
+    }
+  },
+  "failures": []
+}

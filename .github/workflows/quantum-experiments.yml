@@ -36,7 +36,7 @@ jobs:
           "$RUNNER_TEMP/test-runner-deadline"
           test -z "$(git status --porcelain)"
       - name: Install saved arithmetic dependency
-        run: python3 -m pip install numpy==2.4.2
+        run: python3 -m pip install numpy==2.4.2 h5py==3.14.0
       - name: Verify compiled readout arithmetic
         working-directory: experiments/cudaq-fpga/readout
         run: python3 verify_frozen.py
@@ -47,4 +47,14 @@ jobs:
         working-directory: experiments/cudaq-fpga/qec
         run: |
           python3 verify_frozen.py
+          test -z "$(git status --porcelain)"
+      - name: Verify complete continuation evidence without new simulation
+        run: python3 experiments/cudaq-fpga/continuation/verify_saved_evidence.py
+      - name: Test continuation contracts with manufactured fixtures
+        run: |
+          python3 -m unittest discover -s experiments/cudaq-fpga/continuation -p test_public_verification.py -v
+          python3 -m unittest discover -s experiments/cudaq-fpga/continuation/demo -p test_show_evidence.py -v
+          python3 -m unittest discover -s experiments/cudaq-fpga/continuation/measured_readout -p test_evaluate.py -v
+          python3 -m unittest discover -s experiments/cudaq-fpga/continuation/measured_readout/processor_readout -p test_processor.py -v
+          python3 -m unittest discover -s experiments/cudaq-fpga/continuation/nv_scaling -p test_scaling.py -v
           test -z "$(git status --porcelain)"

@@ -1,0 +1,1 @@
+{"status": "passed", "backend": "cpu", "quantum_probability_count": 32768, "board_record_count": 1024, "max_probability_error": 0.0, "max_density_error": 0.0, "process_elapsed_seconds": 0.2086147039954085, "error": null}

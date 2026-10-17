@@ -1,0 +1,56 @@
+{
+  "schema": "nv_full_cudaq_v1",
+  "model": {
+    "nuclear_frequency_mhz": 0.8,
+    "hyperfine_parallel_mhz": 0.35,
+    "hyperfine_transverse_mhz": 0.25,
+    "rabi_mhz": 1.5
+  },
+  "delay_points": 64,
+  "maximum_delay_us": 4.0,
+  "phases_rad": [
+    0.0,
+    1.5707963267948966,
+    3.141592653589793,
+    4.71238898038469
+  ],
+  "detuning_range_mhz": [
+    -0.75,
+    0.75
+  ],
+  "density_dtype": "complex128",
+  "rk4_max_step_us": 0.002,
+  "configurations_per_chunk": 2,
+  "max_batch_size": 512,
+  "warm_repetitions": 2,
+  "shots_per_point": [
+    100,
+    500,
+    2000,
+    20000
+  ],
+  "noise_realizations": 2,
+  "photons_bright": 0.24,
+  "photons_dark": 0.1,
+  "photons_background": 0.02,
+  "gates": {
+    "probability_atol": 1e-06,
+    "density_atol": 1e-06,
+    "trace_atol": 1e-06,
+    "hermiticity_atol": 1e-06,
+    "minimum_eigenvalue": -1e-06,
+    "purity_atol": 1e-06,
+    "integer_reference_exact": true
+  },
+  "limits": {
+    "cpu_threads": 4,
+    "cpu_rss_gib": 8,
+    "gpu_incremental_gib": 24,
+    "seconds": 300
+  },
+  "notes": "All parameters are benchmark assumptions. Matched closed-system synthetic distribution. No robustness or sensor calibration claim.",
+  "split": "dev",
+  "configurations": 2,
+  "parameter_seed": 1061710101,
+  "noise_seed": 1061710102
+}

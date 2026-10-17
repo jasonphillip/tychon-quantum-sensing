@@ -1,0 +1,672 @@
+{
+  "schema": "processor_readout_final_v1",
+  "selected": "pooled_matched_filter@100:500",
+  "final": {
+    "pooled_boxcar@0:770": {
+      "coverage": 1.0,
+      "balanced_accuracy": 0.953857421875,
+      "pooled_accuracy": 0.953857421875,
+      "confusion_preparation_by_assignment": [
+        [
+          4007,
+          89
+        ],
+        [
+          289,
+          3807
+        ]
+      ],
+      "per_preparation_counts": [
+        4096,
+        4096
+      ],
+      "per_preparation_error": [
+        0.021728515625,
+        0.070556640625
+      ],
+      "per_preparation_accuracy_wilson95": [
+        [
+          0.9733380928544043,
+          0.9823086167447029
+        ],
+        [
+          0.9211919432008939,
+          0.9368900180981512
+        ]
+      ],
+      "pooled_accuracy_wilson95": [
+        0.9490977492338757,
+        0.9581916410455176
+      ],
+      "interval_scope": "conditional IID shot assumptions; pooled interval is not a balanced-accuracy interval"
+    },
+    "pooled_matched_filter@0:770": {
+      "coverage": 1.0,
+      "balanced_accuracy": 0.9534912109375,
+      "pooled_accuracy": 0.9534912109375,
+      "confusion_preparation_by_assignment": [
+        [
+          4008,
+          88
+        ],
+        [
+          293,
+          3803
+        ]
+      ],
+      "per_preparation_counts": [
+        4096,
+        4096
+      ],
+      "per_preparation_error": [
+        0.021484375,
+        0.071533203125
+      ],
+      "per_preparation_accuracy_wilson95": [
+        [
+          0.973606447163245,
+          0.9825280861773625
+        ],
+        [
+          0.9201664942823952,
+          0.9359641720506487
+        ]
+      ],
+      "pooled_accuracy_wilson95": [
+        0.9487146239763512,
+        0.9578426877202452
+      ],
+      "interval_scope": "conditional IID shot assumptions; pooled interval is not a balanced-accuracy interval"
+    },
+    "pooled_lda_shrinkage_0.2@0:770": {
+      "coverage": 1.0,
+      "balanced_accuracy": 0.9573974609375,
+      "pooled_accuracy": 0.9573974609375,
+      "confusion_preparation_by_assignment": [
+        [
+          4010,
+          86
+        ],
+        [
+          263,
+          3833
+        ]
+      ],
+      "per_preparation_counts": [
+        4096,
+        4096
+      ],
+      "per_preparation_error": [
+        0.02099609375,
+        0.064208984375
+      ],
+      "per_preparation_accuracy_wilson95": [
+        [
+          0.9741435999816663,
+          0.9829665808419419
+        ],
+        [
+          0.9278682941984233,
+          0.94289708437963
+        ]
+      ],
+      "pooled_accuracy_wilson95": [
+        0.9528054694403159,
+        0.961560680472779
+      ],
+      "interval_scope": "conditional IID shot assumptions; pooled interval is not a balanced-accuracy interval"
+    },
+    "affine_reference_boxcar@0:770": {
+      "coverage": 1.0,
+      "balanced_accuracy": 0.9539794921875,
+      "pooled_accuracy": 0.9539794921875,
+      "confusion_preparation_by_assignment": [
+        [
+          4006,
+          90
+        ],
+        [
+          287,
+          3809
+        ]
+      ],
+      "per_preparation_counts": [
+        4096,
+        4096
+      ],
+      "per_preparation_error": [
+        0.02197265625,
+        0.070068359375
+      ],
+      "per_preparation_accuracy_wilson95": [
+        [
+          0.9730698833974413,
+          0.9820890024601655
+        ],
+        [
+          0.9217048293210383,
+          0.9373527794610076
+        ]
+      ],
+      "pooled_accuracy_wilson95": [
+        0.949225475012935,
+        0.9583079414607238
+      ],
+      "interval_scope": "conditional IID shot assumptions; pooled interval is not a balanced-accuracy interval"
+    },
+    "pooled_boxcar@100:500": {
+      "coverage": 1.0,
+      "balanced_accuracy": 0.9583740234375,
+      "pooled_accuracy": 0.9583740234375,
+      "confusion_preparation_by_assignment": [
+        [
+          3997,
+          99
+        ],
+        [
+          242,
+          3854
+        ]
+      ],
+      "per_preparation_counts": [
+        4096,
+        4096
+      ],
+      "per_preparation_error": [
+        0.024169921875,
+        0.05908203125
+      ],
+      "per_preparation_accuracy_wilson95": [
+        [
+          0.9706621520616038,
+          0.9801063201225003
+        ],
+        [
+          0.9332758337542256,
+          0.9477338433953341
+        ]
+      ],
+      "pooled_accuracy_wilson95": [
+        0.9538296928229113,
+        0.962488666644308
+      ],
+      "interval_scope": "conditional IID shot assumptions; pooled interval is not a balanced-accuracy interval"
+    },
+    "pooled_matched_filter@100:500": {
+      "coverage": 1.0,
+      "balanced_accuracy": 0.958251953125,
+      "pooled_accuracy": 0.958251953125,
+      "confusion_preparation_by_assignment": [
+        [
+          3996,
+          100
+        ],
+        [
+          242,
+          3854
+        ]
+      ],
+      "per_preparation_counts": [
+        4096,
+        4096
+      ],
+      "per_preparation_error": [
+        0.0244140625,
+        0.05908203125
+      ],
+      "per_preparation_accuracy_wilson95": [
+        [
+          0.970395272680658,
+          0.9798853757619459
+        ],
+        [
+          0.9332758337542256,
+          0.9477338433953341
+        ]
+      ],
+      "pooled_accuracy_wilson95": [
+        0.9537016300583464,
+        0.9623727032146073
+      ],
+      "interval_scope": "conditional IID shot assumptions; pooled interval is not a balanced-accuracy interval"
+    },
+    "pooled_lda_shrinkage_0.2@100:500": {
+      "coverage": 1.0,
+      "balanced_accuracy": 0.958251953125,
+      "pooled_accuracy": 0.958251953125,
+      "confusion_preparation_by_assignment": [
+        [
+          3991,
+          105
+        ],
+        [
+          237,
+          3859
+        ]
+      ],
+      "per_preparation_counts": [
+        4096,
+        4096
+      ],
+      "per_preparation_error": [
+        0.025634765625,
+        0.057861328125
+      ],
+      "per_preparation_accuracy_wilson95": [
+        [
+          0.9690626764666648,
+          0.9787788532684374
+        ],
+        [
+          0.9345655263512737,
+          0.9488832695057877
+        ]
+      ],
+      "pooled_accuracy_wilson95": [
+        0.9537016300583464,
+        0.9623727032146073
+      ],
+      "interval_scope": "conditional IID shot assumptions; pooled interval is not a balanced-accuracy interval"
+    },
+    "affine_reference_boxcar@100:500": {
+      "coverage": 1.0,
+      "balanced_accuracy": 0.958251953125,
+      "pooled_accuracy": 0.958251953125,
+      "confusion_preparation_by_assignment": [
+        [
+          3994,
+          102
+        ],
+        [
+          240,
+          3856
+        ]
+      ],
+      "per_preparation_counts": [
+        4096,
+        4096
+      ],
+      "per_preparation_error": [
+        0.02490234375,
+        0.05859375
+      ],
+      "per_preparation_accuracy_wilson95": [
+        [
+          0.969861879182557,
+          0.9794431217770462
+        ],
+        [
+          0.9337916055815723,
+          0.9481937190509881
+        ]
+      ],
+      "pooled_accuracy_wilson95": [
+        0.9537016300583464,
+        0.9623727032146073
+      ],
+      "interval_scope": "conditional IID shot assumptions; pooled interval is not a balanced-accuracy interval"
+    },
+    "reference_boxcar@0:770": {
+      "coverage": 1.0,
+      "balanced_accuracy": 0.9539794921875,
+      "pooled_accuracy": 0.9539794921875,
+      "confusion_preparation_by_assignment": [
+        [
+          4008,
+          88
+        ],
+        [
+          289,
+          3807
+        ]
+      ],
+      "per_preparation_counts": [
+        4096,
+        4096
+      ],
+      "per_preparation_error": [
+        0.021484375,
+        0.070556640625
+      ],
+      "per_preparation_accuracy_wilson95": [
+        [
+          0.973606447163245,
+          0.9825280861773625
+        ],
+        [
+          0.9211919432008939,
+          0.9368900180981512
+        ]
+      ],
+      "pooled_accuracy_wilson95": [
+        0.949225475012935,
+        0.9583079414607238
+      ],
+      "interval_scope": "conditional IID shot assumptions; pooled interval is not a balanced-accuracy interval"
+    },
+    "reference_boxcar@100:500": {
+      "coverage": 1.0,
+      "balanced_accuracy": 0.9583740234375,
+      "pooled_accuracy": 0.9583740234375,
+      "confusion_preparation_by_assignment": [
+        [
+          3998,
+          98
+        ],
+        [
+          243,
+          3853
+        ]
+      ],
+      "per_preparation_counts": [
+        4096,
+        4096
+      ],
+      "per_preparation_error": [
+        0.02392578125,
+        0.059326171875
+      ],
+      "per_preparation_accuracy_wilson95": [
+        [
+          0.9709291555744165,
+          0.9803271403511878
+        ],
+        [
+          0.9330179998365595,
+          0.9475038535714999
+        ]
+      ],
+      "pooled_accuracy_wilson95": [
+        0.9538296928229113,
+        0.962488666644308
+      ],
+      "interval_scope": "conditional IID shot assumptions; pooled interval is not a balanced-accuracy interval"
+    }
+  },
+  "paired_calibration": {
+    "0:770": {
+      "calibration_minus_reference_balanced_accuracy": 0.0,
+      "corrected_records": 2,
+      "regressed_records": 2
+    },
+    "100:500": {
+      "calibration_minus_reference_balanced_accuracy": -0.0001220703125,
+      "corrected_records": 3,
+      "regressed_records": 4
+    }
+  },
+  "utility_acceptance_pass": true,
+  "drift_transfer_eligible": false,
+  "source_test_records": 8192,
+  "source_test_preparation_counts": [
+    4096,
+    4096
+  ],
+  "candidate_integer_pack": {
+    "candidate": "pooled_boxcar@100:500",
+    "records": 8192,
+    "input_pairs": 64,
+    "input_dtype": "little-endian int16",
+    "score_dtype": "little-endian int64",
+    "input_fraction_bits": 11,
+    "score_fraction_bits": 25,
+    "native_units_per_normalized_unit": 560.78,
+    "weights_i32": [
+      10235,
+      -16384
+    ],
+    "bias_i64": -33543462,
+    "full_int16_abs_score_bound": 55857632550,
+    "clipped_values": 0,
+    "python_bigint_scores_exact": true,
+    "float_decision_disagreements": 1,
+    "metrics": {
+      "coverage": 1.0,
+      "balanced_accuracy": 0.95849609375,
+      "pooled_accuracy": 0.95849609375,
+      "confusion_preparation_by_assignment": [
+        [
+          3998,
+          98
+        ],
+        [
+          242,
+          3854
+        ]
+      ],
+      "per_preparation_counts": [
+        4096,
+        4096
+      ],
+      "per_preparation_error": [
+        0.02392578125,
+        0.05908203125
+      ],
+      "per_preparation_accuracy_wilson95": [
+        [
+          0.9709291555744165,
+          0.9803271403511878
+        ],
+        [
+          0.9332758337542256,
+          0.9477338433953341
+        ]
+      ],
+      "pooled_accuracy_wilson95": [
+        0.9539577656673149,
+        0.9626046199941699
+      ],
+      "interval_scope": "conditional IID shot assumptions; pooled interval is not a balanced-accuracy interval"
+    },
+    "scope": "new host coefficients; requires future FPGA image; no hardware execution",
+    "sha256": {
+      "labels_u8.bin": "1b5b60409bec8497b76efa1a83091fa4482cbf3df0013aa04973c59ed89a4302",
+      "expected_scores_i64.bin": "67b35a0bcef13a67782ce1e1e1b9b7cb3d205e413743e46486c337db5119bade",
+      "inputs_i16.bin": "b0ff40d4a62542e1ac6f468fd2c528e6c60f123401ee8b5abd9d6691bffed9b6",
+      "source_rows_u32.bin": "8e15e039461a43615788558e9bb045d547789d3615b7137b15544b171cefd085"
+    }
+  },
+  "retrieval_seconds": 306.3471350001637,
+  "evaluation_export_seconds": 0.23448295798152685,
+  "elapsed_seconds": 306.5816188750323,
+  "peak_rss_bytes": 382074880,
+  "memory_method": "getrusage RUSAGE_SELF ru_maxrss",
+  "source_train_test_exact_duplicates": 0,
+  "training_receipt_sha256": "79cfec86ecc790c301fc1ca9ae9298f91da5ca44dd60562ce59b9a2161395134",
+  "predictions_sha256": "c5c8a4f58b4c12578272895c7d0568dad299609cb3b22f5ae662030de721d90e",
+  "source_test_ranges": {
+    "0528_X_test_0_770.npy:0:1024": {
+      "file": "inputs/ranges/0528_X_test_0_770.npy.0-1024.bin",
+      "source_file": "0528_X_test_0_770.npy",
+      "rows": [
+        0,
+        1024
+      ],
+      "byte_start": 128,
+      "bytes": 12615680,
+      "sha256": "36f5c265ee2ffb833d9d0005d01cca7b8852504c088d07c2c07d83d47d32df49",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_test_0_770.npy/content"
+    },
+    "0528_X_test_0_770.npy:5000:6024": {
+      "file": "inputs/ranges/0528_X_test_0_770.npy.5000-6024.bin",
+      "source_file": "0528_X_test_0_770.npy",
+      "rows": [
+        5000,
+        6024
+      ],
+      "byte_start": 61600128,
+      "bytes": 12615680,
+      "sha256": "9ad9ae3d74feed58b673ed6b421eda6ce789bb27a5bc17e9bd01063976f9f7a4",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_test_0_770.npy/content"
+    },
+    "0528_X_test_0_770.npy:20000:21024": {
+      "file": "inputs/ranges/0528_X_test_0_770.npy.20000-21024.bin",
+      "source_file": "0528_X_test_0_770.npy",
+      "rows": [
+        20000,
+        21024
+      ],
+      "byte_start": 246400128,
+      "bytes": 12615680,
+      "sha256": "73eee686dad4434d7da611b570dc0baaf7cd615e4e7e3e6d1a006e4977a2edb7",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_test_0_770.npy/content"
+    },
+    "0528_X_test_0_770.npy:25000:26024": {
+      "file": "inputs/ranges/0528_X_test_0_770.npy.25000-26024.bin",
+      "source_file": "0528_X_test_0_770.npy",
+      "rows": [
+        25000,
+        26024
+      ],
+      "byte_start": 308000128,
+      "bytes": 12615680,
+      "sha256": "b5af33f77e77a8168c0ccea9af2c84b6218bb8efb7f253de32edb228168b0a4e",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_test_0_770.npy/content"
+    },
+    "0528_X_test_0_770.npy:40000:41024": {
+      "file": "inputs/ranges/0528_X_test_0_770.npy.40000-41024.bin",
+      "source_file": "0528_X_test_0_770.npy",
+      "rows": [
+        40000,
+        41024
+      ],
+      "byte_start": 492800128,
+      "bytes": 12615680,
+      "sha256": "c1b1c8858bb0367446fcda8adecaac2526adbaa18575723a96a5259bd2b9538b",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_test_0_770.npy/content"
+    },
+    "0528_X_test_0_770.npy:45000:46024": {
+      "file": "inputs/ranges/0528_X_test_0_770.npy.45000-46024.bin",
+      "source_file": "0528_X_test_0_770.npy",
+      "rows": [
+        45000,
+        46024
+      ],
+      "byte_start": 554400128,
+      "bytes": 12615680,
+      "sha256": "1ffe78d0bb2c6766fad5f420e2ad5af6b03344d1bbb17db7f9eacdfad6b76d6a",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_test_0_770.npy/content"
+    },
+    "0528_X_test_0_770.npy:60000:61024": {
+      "file": "inputs/ranges/0528_X_test_0_770.npy.60000-61024.bin",
+      "source_file": "0528_X_test_0_770.npy",
+      "rows": [
+        60000,
+        61024
+      ],
+      "byte_start": 739200128,
+      "bytes": 12615680,
+      "sha256": "3058c6c95e0a8b034faaa54aee4abe775822b851c5b6d69eef84cab10bd73342",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_test_0_770.npy/content"
+    },
+    "0528_X_test_0_770.npy:65000:66024": {
+      "file": "inputs/ranges/0528_X_test_0_770.npy.65000-66024.bin",
+      "source_file": "0528_X_test_0_770.npy",
+      "rows": [
+        65000,
+        66024
+      ],
+      "byte_start": 800800128,
+      "bytes": 12615680,
+      "sha256": "137b31f72b3685c45c3d98b4d0e510d7761aef698c0e83acf8625ba6886d0c19",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_X_test_0_770.npy/content"
+    },
+    "0528_y_test_0_770.npy:0:1024": {
+      "file": "inputs/ranges/0528_y_test_0_770.npy.0-1024.bin",
+      "source_file": "0528_y_test_0_770.npy",
+      "rows": [
+        0,
+        1024
+      ],
+      "byte_start": 128,
+      "bytes": 8192,
+      "sha256": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_y_test_0_770.npy/content"
+    },
+    "0528_y_test_0_770.npy:5000:6024": {
+      "file": "inputs/ranges/0528_y_test_0_770.npy.5000-6024.bin",
+      "source_file": "0528_y_test_0_770.npy",
+      "rows": [
+        5000,
+        6024
+      ],
+      "byte_start": 40128,
+      "bytes": 8192,
+      "sha256": "ffc1f5db1faa7b6402489b6c3c21711ad6cb122faa068ac9410c12ab126aa81e",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_y_test_0_770.npy/content"
+    },
+    "0528_y_test_0_770.npy:20000:21024": {
+      "file": "inputs/ranges/0528_y_test_0_770.npy.20000-21024.bin",
+      "source_file": "0528_y_test_0_770.npy",
+      "rows": [
+        20000,
+        21024
+      ],
+      "byte_start": 160128,
+      "bytes": 8192,
+      "sha256": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_y_test_0_770.npy/content"
+    },
+    "0528_y_test_0_770.npy:25000:26024": {
+      "file": "inputs/ranges/0528_y_test_0_770.npy.25000-26024.bin",
+      "source_file": "0528_y_test_0_770.npy",
+      "rows": [
+        25000,
+        26024
+      ],
+      "byte_start": 200128,
+      "bytes": 8192,
+      "sha256": "ffc1f5db1faa7b6402489b6c3c21711ad6cb122faa068ac9410c12ab126aa81e",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_y_test_0_770.npy/content"
+    },
+    "0528_y_test_0_770.npy:40000:41024": {
+      "file": "inputs/ranges/0528_y_test_0_770.npy.40000-41024.bin",
+      "source_file": "0528_y_test_0_770.npy",
+      "rows": [
+        40000,
+        41024
+      ],
+      "byte_start": 320128,
+      "bytes": 8192,
+      "sha256": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_y_test_0_770.npy/content"
+    },
+    "0528_y_test_0_770.npy:45000:46024": {
+      "file": "inputs/ranges/0528_y_test_0_770.npy.45000-46024.bin",
+      "source_file": "0528_y_test_0_770.npy",
+      "rows": [
+        45000,
+        46024
+      ],
+      "byte_start": 360128,
+      "bytes": 8192,
+      "sha256": "ffc1f5db1faa7b6402489b6c3c21711ad6cb122faa068ac9410c12ab126aa81e",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_y_test_0_770.npy/content"
+    },
+    "0528_y_test_0_770.npy:60000:61024": {
+      "file": "inputs/ranges/0528_y_test_0_770.npy.60000-61024.bin",
+      "source_file": "0528_y_test_0_770.npy",
+      "rows": [
+        60000,
+        61024
+      ],
+      "byte_start": 480128,
+      "bytes": 8192,
+      "sha256": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_y_test_0_770.npy/content"
+    },
+    "0528_y_test_0_770.npy:65000:66024": {
+      "file": "inputs/ranges/0528_y_test_0_770.npy.65000-66024.bin",
+      "source_file": "0528_y_test_0_770.npy",
+      "rows": [
+        65000,
+        66024
+      ],
+      "byte_start": 520128,
+      "bytes": 8192,
+      "sha256": "ffc1f5db1faa7b6402489b6c3c21711ad6cb122faa068ac9410c12ab126aa81e",
+      "url": "https://zenodo.org/api/records/14427490/files/0528_y_test_0_770.npy/content"
+    }
+  },
+  "scope": "held-out source-test preparation-label classification; acquisition identities unverified; no drift, true-state certification, or FPGA execution"
+}

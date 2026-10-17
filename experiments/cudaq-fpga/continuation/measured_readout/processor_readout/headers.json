@@ -1,0 +1,60 @@
+{
+  "0528_X_test_0_770.npy": {
+    "header": {
+      "descr": "<f8",
+      "fortran_order": false,
+      "shape": [
+        100000,
+        1540
+      ]
+    },
+    "data_offset": 128,
+    "file_bytes": 1232000128,
+    "url": "https://zenodo.org/api/records/14427490/files/0528_X_test_0_770.npy/content",
+    "md5": "md5:1616ed987b5bbb279cbe25d23f0e4b09",
+    "header_sha256": "1018cd37de21ca94e61b55caa683b34af6ccac71e5412cf8d433b966d33d61ce"
+  },
+  "0528_y_train_0_770.npy": {
+    "header": {
+      "descr": "<f8",
+      "fortran_order": false,
+      "shape": [
+        900000
+      ]
+    },
+    "data_offset": 128,
+    "file_bytes": 7200128,
+    "url": "https://zenodo.org/api/records/14427490/files/0528_y_train_0_770.npy/content",
+    "md5": "md5:6e88a8afc3c75d45942f12a1350250eb",
+    "header_sha256": "44f09e8e009b26d527f0cf2091a3f03e29348fb494791221e70e5ac239de57ae"
+  },
+  "0528_y_test_0_770.npy": {
+    "header": {
+      "descr": "<f8",
+      "fortran_order": false,
+      "shape": [
+        100000
+      ]
+    },
+    "data_offset": 128,
+    "file_bytes": 800128,
+    "url": "https://zenodo.org/api/records/14427490/files/0528_y_test_0_770.npy/content",
+    "md5": "md5:74f5f7ddd92fa414ef518ee7dba4f1b6",
+    "header_sha256": "20802370c1da881cb3f71f8b06a31331d76050e5c5967fbb34e3bae028311b8a"
+  },
+  "0528_X_train_0_770.npy": {
+    "header": {
+      "descr": "<f8",
+      "fortran_order": false,
+      "shape": [
+        900000,
+        1540
+      ]
+    },
+    "data_offset": 128,
+    "file_bytes": 11088000128,
+    "url": "https://zenodo.org/api/records/14427490/files/0528_X_train_0_770.npy/content",
+    "md5": "md5:44a2e9d9d28284f257e18578ac6c3af4",
+    "header_sha256": "67091a70cd513f5603455df8356b671ef2467ad5f671bc7df95df47ea1be3e5e"
+  }
+}

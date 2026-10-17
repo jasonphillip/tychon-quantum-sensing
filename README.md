@@ -30,9 +30,14 @@ The [full results index](docs/results-index.md) retains scalar repairs, failed s
 
 Three additional demonstrations ran in FPGA fabric: qubit readout, coupled-spin NV estimation, and a small surface-code lookup.
 Across two cold boots, **171,650 replay calls** matched references for **17,165 frozen synthetic records**.
-CUDA-Q checked representative quantum calculations; the full datasets were CPU-generated.
+In that initial run, CUDA-Q checked representative quantum calculations; the full datasets were CPU-generated.
 The [separate experiment area](experiments/cudaq-fpga/README.md) includes source, per-call evidence, failures, and checks that run without hardware.
 These demonstrations extend beyond the original proposal and establish no live quantum-system or radiation validation.
+
+A [later continuation](experiments/cudaq-fpga/continuation/README.md) used CUDA-Q for all 32,768 quantum probabilities in a new synthetic dataset.
+All 1,024 resulting records matched on the FPGA, including full-width scores. The specialized CPU solution was substantially faster for this small model.
+A separate host-only classifier reached **95.83% preparation-label agreement on 8,192 held-out public qubit-readout records**.
+The continuation retains the failed thermal-detector test, CPU/GPU timings, and limits on acquisition independence.
 
 ## Three workstreams, one coordinator
 

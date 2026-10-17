@@ -1,0 +1,81 @@
+{
+  "schema": "processor_readout_train_receipt_v1",
+  "frozen_utc": "2026-10-17T18:53:09.738618+00:00",
+  "registration": {
+    "registered_utc": "2026-10-17T18:41:14.758434+00:00",
+    "scope": "train-only pipeline before signal retrieval; test requires independent release",
+    "sha256": {
+      "processor_io.py": "6575e07940ffee4cc51766c8b3b691a7a9b36d9f3f8179b7bdb4a041b25c44cf",
+      "processor_eval.py": "445d6f5b8d631e35e8acdd4423d269406102b43c71a7aa4ec5abd342793dab16",
+      "test_processor.py": "25e09889d6aec2b6f6c227ef0765d675cecf4b80deb0016b67f4f970ee2cb13b",
+      "PROPOSED_PROTOCOL.json": "bffb0be2cf21e6d34c95afdbed6adb2e70e4a20f9db1a442f52f30a398d7ea44",
+      "headers.json": "db4e32d58d0d9997fe71b97cec2740bdec618291eb1213351fc03c820d8fc9ee",
+      "inputs/0528_y_train_0_770.npy": "43517f104f1de18d9669f8171aa4edb8d86e1bac69e43cf73af139af4618e0b6",
+      "train_label_qualification.json": "d76b146c6433ed1e7911271e57fa9ef17d4ffd753fb5c17b36e0a673ac4b1b21"
+    }
+  },
+  "artifacts": {
+    "models.json": "4771bc75c19bc6016b19b6633215fd219e756671b256479d9ebbc1dd5f8b93e6",
+    "source_train_rows.json": "9cbdcbd4db57a8d5e726fb9675311d4c4e5d9e61822e505b97f3fd1d00a85fef",
+    "selection.json": "f0558a40351ceaaeb8f534418bd31469d7a17538439ce4a7d2bc1df9114d5a25",
+    "train_ranges.json": "664485d78c2699d330186abf6f4498f6f5e9385b12e7dbc8210537bebb7eb612"
+  },
+  "source_test_values_read": 0,
+  "training_rows": {
+    "reference": 8192,
+    "calibration": 4096,
+    "validation": 4096
+  },
+  "training_signal_checks": {
+    "reference": {
+      "shape": [
+        8192,
+        770,
+        2
+      ],
+      "minimum": -4252.0,
+      "maximum": 4280.0,
+      "all_integer_valued": true,
+      "preparation_counts": [
+        4096,
+        4096
+      ]
+    },
+    "calibration": {
+      "shape": [
+        4096,
+        770,
+        2
+      ],
+      "minimum": -4287.0,
+      "maximum": 4248.0,
+      "all_integer_valued": true,
+      "preparation_counts": [
+        2048,
+        2048
+      ]
+    },
+    "validation": {
+      "shape": [
+        4096,
+        770,
+        2
+      ],
+      "minimum": -4380.0,
+      "maximum": 4127.0,
+      "all_integer_valued": true,
+      "preparation_counts": [
+        2048,
+        2048
+      ]
+    }
+  },
+  "retrieval_seconds": 712.3197415410541,
+  "fit_selection_seconds": 0.29538924992084503,
+  "elapsed_seconds": 712.6151326252148,
+  "peak_rss_bytes": 504725504,
+  "memory_method": "getrusage RUSAGE_SELF ru_maxrss",
+  "numpy": "2.4.2",
+  "python": "3.14.3",
+  "source_scope": "native digital values; preparation labels; acquisition grouping unverified"
+}

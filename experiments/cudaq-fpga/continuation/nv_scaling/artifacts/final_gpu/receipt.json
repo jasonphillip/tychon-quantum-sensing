@@ -1,0 +1,3768 @@
+{
+  "status": "passed",
+  "backend": "cudaq",
+  "synthetic_only": true,
+  "protocol_sha256": "c42c84ab70cd67007fdf7d7f05e86b019a07a94355d1b84e4cae6900037e2662",
+  "protocol": {
+    "schema": "nv_full_cudaq_v1",
+    "model": {
+      "nuclear_frequency_mhz": 0.8,
+      "hyperfine_parallel_mhz": 0.35,
+      "hyperfine_transverse_mhz": 0.25,
+      "rabi_mhz": 1.5
+    },
+    "delay_points": 64,
+    "maximum_delay_us": 4.0,
+    "phases_rad": [
+      0.0,
+      1.5707963267948966,
+      3.141592653589793,
+      4.71238898038469
+    ],
+    "detuning_range_mhz": [
+      -0.75,
+      0.75
+    ],
+    "density_dtype": "complex128",
+    "rk4_max_step_us": 0.002,
+    "configurations_per_chunk": 2,
+    "max_batch_size": 512,
+    "warm_repetitions": 3,
+    "shots_per_point": [
+      100,
+      500,
+      2000,
+      20000
+    ],
+    "noise_realizations": 2,
+    "photons_bright": 0.24,
+    "photons_dark": 0.1,
+    "photons_background": 0.02,
+    "gates": {
+      "probability_atol": 1e-06,
+      "density_atol": 1e-06,
+      "trace_atol": 1e-06,
+      "hermiticity_atol": 1e-06,
+      "minimum_eigenvalue": -1e-06,
+      "purity_atol": 1e-06,
+      "integer_reference_exact": true
+    },
+    "limits": {
+      "cpu_threads": 4,
+      "cpu_rss_gib": 8,
+      "gpu_incremental_gib": 24,
+      "seconds": 1800
+    },
+    "notes": "All parameters are benchmark assumptions. Matched closed-system synthetic distribution. No robustness or sensor calibration claim.",
+    "split": "final",
+    "configurations": 128,
+    "parameter_seed": 1061710201,
+    "noise_seed": 1061710202
+  },
+  "python": "3.13.11 | packaged by Anaconda, Inc. | (main, Dec 10 2025, 21:29:12) [GCC 14.3.0]",
+  "numpy": "2.4.2",
+  "platform": "Linux-7.0.0-1019-nvidia-aarch64-with-glibc2.39",
+  "source_sha256": {
+    "compare_runs.py": "fb174b265b937e99af86d86cb997476b69e4f18ae8210f8f71d715ec6c2ac4ca",
+    "nv_model.py": "fab118bd8f4633ba74299dfee205b2e7c66d8afc968364ccf4cc1ddf55ab72ce",
+    "run_dataset.py": "dc8c580a42f6dee2dd620378206fcab1a1dc45146c76fd463c8f03396b9cfecd",
+    "scaling.py": "f23c0a92609c9572113f8e9a831657993b81cd765ec7ff9ad0ccacc38beae17d",
+    "test_scaling.py": "283e5507e1f00b95010928bde98e95aa884aa1af1f5b78c5be0e770e8f2c9b24",
+    "verify_pack.py": "75b878897b172ef1a57713a6604d9988cc956953cd682b2edefd522cf493b0df"
+  },
+  "quantum_generation": "CUDA-Q Dynamics GPU",
+  "detector_generation": "CPU NumPy binomial projection then conditional Poisson sampling",
+  "timing_definition": "Synchronized wall time; evolutions include operator preparation and implicit Hamiltonian uploads. Explicit state uploads/downloads are separate sub-timings. Process elapsed begins at first Python statement, not interpreter startup.",
+  "runs": [
+    {
+      "kind": "first_call",
+      "repeat": 0,
+      "quantum_seconds": 107.25541714800056,
+      "parts": {
+        "initial_state_upload_seconds": 0.21847380901454017,
+        "preparation_seconds": 2.2989888320298633,
+        "free_evolution_seconds": 93.65995767895947,
+        "readout_seconds": 10.83853768199333,
+        "final_download_seconds": 0.22758271903148852
+      }
+    },
+    {
+      "kind": "warm",
+      "repeat": 1,
+      "quantum_seconds": 106.63720217300579,
+      "parts": {
+        "initial_state_upload_seconds": 0.0177702019282151,
+        "preparation_seconds": 1.782543825916946,
+        "free_evolution_seconds": 93.65376438497333,
+        "readout_seconds": 10.944792530994164,
+        "final_download_seconds": 0.23279393797565717
+      }
+    },
+    {
+      "kind": "warm",
+      "repeat": 2,
+      "quantum_seconds": 106.63033664000977,
+      "parts": {
+        "initial_state_upload_seconds": 0.018117227882612497,
+        "preparation_seconds": 1.812593808004749,
+        "free_evolution_seconds": 93.72301607794361,
+        "readout_seconds": 10.83624362394039,
+        "final_download_seconds": 0.23142903302505147
+      }
+    },
+    {
+      "kind": "warm",
+      "repeat": 3,
+      "quantum_seconds": 106.799855869991,
+      "parts": {
+        "initial_state_upload_seconds": 0.018806910986313596,
+        "preparation_seconds": 1.8138989840081194,
+        "free_evolution_seconds": 93.76453484411468,
+        "readout_seconds": 10.91874152001401,
+        "final_download_seconds": 0.23518317603156902
+      }
+    }
+  ],
+  "backend_initialization_seconds": 0.7081964550015982,
+  "cudaq_environment": {
+    "cudaq": "0.16.0.post1",
+    "cupy": "13.6.0",
+    "gpu": "b'NVIDIA GB10'",
+    "evolve_signature": "(hamiltonian: 'Operator | SuperOperator | Sequence[Operator] | Sequence[SuperOperator]', dimensions: 'Mapping[int, int]' = {}, schedule: 'Schedule' = None, initial_state: 'InitialStateArgT | Sequence[InitialStateArgT]' = None, collapse_operators: 'Sequence[Operator] | Sequence[Sequence[Operator]]' = [], observables: 'Sequence[Operator]' = [], store_intermediate_results: 'IntermediateResultSave | bool' = <IntermediateResultSave.NONE: 1>, integrator: 'Optional[BaseIntegrator]' = None, shots_count: 'Optional[int]' = None, max_batch_size: 'Optional[int]' = None) -> 'cudaq_runtime.EvolveResult | Sequence[cudaq_runtime.EvolveResult]'"
+  },
+  "first_call_plus_initialization_seconds": 107.96361360300216,
+  "repeated_generation_max_density_difference": 0.0,
+  "physical_metrics": {
+    "trace_error": 2.6645553785043104e-15,
+    "hermiticity_error": 6.134352285395508e-16,
+    "minimum_eigenvalue": -1.0052104494665076e-09,
+    "purity_error": 5.591249685465986e-11,
+    "probability_min": 0.009948743610181932,
+    "probability_max": 0.9901300332507652
+  },
+  "quantum_probability_count": 32768,
+  "independent_configurations": 128,
+  "gpu_generated_fraction": 1.0,
+  "validation_seconds": 0.017317126999842003,
+  "max_probability_error": 2.151061218036432e-09,
+  "max_density_error": 2.2538997522778442e-09,
+  "noiseless_max_q14_difference": 1,
+  "noiseless_q14_exact_fraction": 0.99993896484375,
+  "cpu_detector_and_integer_reference_seconds": 0.0631631180003751,
+  "board_record_count": 1024,
+  "clipped_feature_count": 56,
+  "integer_expected_outputs": "Frozen CPU integer reference; C independent replay validation required separately.",
+  "gates": {
+    "physical": true,
+    "all_probabilities": true,
+    "all_density_elements": true,
+    "q14_max_one_lsb": true,
+    "repeat_reproducibility": true
+  },
+  "output_write_seconds": 0.011275063996436074,
+  "artifact_sha256": {
+    "quantum_dataset.npz": "865f285e55aa6778eb94b85df1d468ff84e8a509e7423ed5bd8401169e8f2b49",
+    "detector_counts.npz": "54aedb22332ebd879694657d5d09aebc79ad5dfac8193e6c6ea58be53353fffb"
+  },
+  "gpu_memory": {
+    "method": "CUDA memGetInfo and CuPy pool at synchronized stage checkpoints; CUDA-Q allocations are not all in the CuPy pool. Device free-memory changes are device-wide and sampled, not an allocation peak or exclusive process usage. Unified host RAM availability is not GPU allocation.",
+    "baseline_device_free_bytes": 2306678784,
+    "maximum_observed_device_free_decrement_bytes": 1414672384,
+    "max_observed_cupy_pool_used_bytes": 0,
+    "checkpoints": [
+      {
+        "label": "initialized",
+        "device_free_bytes": 2306678784,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 0
+      },
+      {
+        "label": "chunk_0_before_download",
+        "device_free_bytes": 1578692608,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_0_after_download",
+        "device_free_bytes": 1578692608,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_2_before_download",
+        "device_free_bytes": 1579683840,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_2_after_download",
+        "device_free_bytes": 1579683840,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_4_before_download",
+        "device_free_bytes": 1585840128,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_4_after_download",
+        "device_free_bytes": 1585840128,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_6_before_download",
+        "device_free_bytes": 1577676800,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_6_after_download",
+        "device_free_bytes": 1561763840,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_8_before_download",
+        "device_free_bytes": 1561452544,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_8_after_download",
+        "device_free_bytes": 1561452544,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_10_before_download",
+        "device_free_bytes": 1542680576,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_10_after_download",
+        "device_free_bytes": 1542680576,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_12_before_download",
+        "device_free_bytes": 1537953792,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_12_after_download",
+        "device_free_bytes": 1537953792,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_14_before_download",
+        "device_free_bytes": 1540685824,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_14_after_download",
+        "device_free_bytes": 1540685824,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_16_before_download",
+        "device_free_bytes": 1535860736,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_16_after_download",
+        "device_free_bytes": 1535860736,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_18_before_download",
+        "device_free_bytes": 1523687424,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_18_after_download",
+        "device_free_bytes": 1523687424,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_20_before_download",
+        "device_free_bytes": 1525542912,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_20_after_download",
+        "device_free_bytes": 1525542912,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_22_before_download",
+        "device_free_bytes": 1512808448,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_22_after_download",
+        "device_free_bytes": 1512808448,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_24_before_download",
+        "device_free_bytes": 1505603584,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_24_after_download",
+        "device_free_bytes": 1505603584,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_26_before_download",
+        "device_free_bytes": 1493803008,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_26_after_download",
+        "device_free_bytes": 1493803008,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_28_before_download",
+        "device_free_bytes": 1485250560,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_28_after_download",
+        "device_free_bytes": 1485680640,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_30_before_download",
+        "device_free_bytes": 1457496064,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_30_after_download",
+        "device_free_bytes": 1457496064,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_32_before_download",
+        "device_free_bytes": 1451855872,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_32_after_download",
+        "device_free_bytes": 1451855872,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_34_before_download",
+        "device_free_bytes": 1458061312,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_34_after_download",
+        "device_free_bytes": 1458376704,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_36_before_download",
+        "device_free_bytes": 1469140992,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_36_after_download",
+        "device_free_bytes": 1469140992,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_38_before_download",
+        "device_free_bytes": 1491816448,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_38_after_download",
+        "device_free_bytes": 1491816448,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_40_before_download",
+        "device_free_bytes": 1502728192,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_40_after_download",
+        "device_free_bytes": 1502728192,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_42_before_download",
+        "device_free_bytes": 1493291008,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_42_after_download",
+        "device_free_bytes": 1493291008,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_44_before_download",
+        "device_free_bytes": 1485484032,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_44_after_download",
+        "device_free_bytes": 1485484032,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_46_before_download",
+        "device_free_bytes": 1473765376,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_46_after_download",
+        "device_free_bytes": 1473765376,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_48_before_download",
+        "device_free_bytes": 1471950848,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_48_after_download",
+        "device_free_bytes": 1471950848,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_50_before_download",
+        "device_free_bytes": 1452134400,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_50_after_download",
+        "device_free_bytes": 1452134400,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_52_before_download",
+        "device_free_bytes": 1451896832,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_52_after_download",
+        "device_free_bytes": 1451896832,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_54_before_download",
+        "device_free_bytes": 1460072448,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_54_after_download",
+        "device_free_bytes": 1460072448,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_56_before_download",
+        "device_free_bytes": 1452396544,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_56_after_download",
+        "device_free_bytes": 1452396544,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_58_before_download",
+        "device_free_bytes": 1441136640,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_58_after_download",
+        "device_free_bytes": 1441136640,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_60_before_download",
+        "device_free_bytes": 1425108992,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_60_after_download",
+        "device_free_bytes": 1425108992,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_62_before_download",
+        "device_free_bytes": 1436246016,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_62_after_download",
+        "device_free_bytes": 1436246016,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_64_before_download",
+        "device_free_bytes": 1432690688,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_64_after_download",
+        "device_free_bytes": 1432690688,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_66_before_download",
+        "device_free_bytes": 1404395520,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_66_after_download",
+        "device_free_bytes": 1404395520,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_68_before_download",
+        "device_free_bytes": 1393651712,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_68_after_download",
+        "device_free_bytes": 1393651712,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_70_before_download",
+        "device_free_bytes": 1389641728,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_70_after_download",
+        "device_free_bytes": 1389641728,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_72_before_download",
+        "device_free_bytes": 1391505408,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_72_after_download",
+        "device_free_bytes": 1391505408,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_74_before_download",
+        "device_free_bytes": 1390018560,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_74_after_download",
+        "device_free_bytes": 1390018560,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_76_before_download",
+        "device_free_bytes": 1379778560,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_76_after_download",
+        "device_free_bytes": 1379778560,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_78_before_download",
+        "device_free_bytes": 1368612864,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_78_after_download",
+        "device_free_bytes": 1368612864,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_80_before_download",
+        "device_free_bytes": 1383907328,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_80_after_download",
+        "device_free_bytes": 1383907328,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_82_before_download",
+        "device_free_bytes": 1372372992,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_82_after_download",
+        "device_free_bytes": 1372372992,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_84_before_download",
+        "device_free_bytes": 1378746368,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_84_after_download",
+        "device_free_bytes": 1378746368,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_86_before_download",
+        "device_free_bytes": 1370841088,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_86_after_download",
+        "device_free_bytes": 1370841088,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_88_before_download",
+        "device_free_bytes": 1354432512,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_88_after_download",
+        "device_free_bytes": 1344847872,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_90_before_download",
+        "device_free_bytes": 1348227072,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_90_after_download",
+        "device_free_bytes": 1348227072,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_92_before_download",
+        "device_free_bytes": 1351634944,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_92_after_download",
+        "device_free_bytes": 1351634944,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_94_before_download",
+        "device_free_bytes": 1328275456,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_94_after_download",
+        "device_free_bytes": 1328275456,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_96_before_download",
+        "device_free_bytes": 1317642240,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_96_after_download",
+        "device_free_bytes": 1317642240,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_98_before_download",
+        "device_free_bytes": 1326084096,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_98_after_download",
+        "device_free_bytes": 1326084096,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_100_before_download",
+        "device_free_bytes": 1343193088,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_100_after_download",
+        "device_free_bytes": 1343193088,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_102_before_download",
+        "device_free_bytes": 1334931456,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_102_after_download",
+        "device_free_bytes": 1334931456,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_104_before_download",
+        "device_free_bytes": 1333129216,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_104_after_download",
+        "device_free_bytes": 1333080064,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_106_before_download",
+        "device_free_bytes": 1326612480,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_106_after_download",
+        "device_free_bytes": 1326612480,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_108_before_download",
+        "device_free_bytes": 1328250880,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_108_after_download",
+        "device_free_bytes": 1328250880,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_110_before_download",
+        "device_free_bytes": 1308569600,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_110_after_download",
+        "device_free_bytes": 1308569600,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_112_before_download",
+        "device_free_bytes": 1294438400,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_112_after_download",
+        "device_free_bytes": 1294438400,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_114_before_download",
+        "device_free_bytes": 1304125440,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_114_after_download",
+        "device_free_bytes": 1304125440,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_116_before_download",
+        "device_free_bytes": 1310134272,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_116_after_download",
+        "device_free_bytes": 1310134272,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_118_before_download",
+        "device_free_bytes": 1300037632,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_118_after_download",
+        "device_free_bytes": 1300037632,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_120_before_download",
+        "device_free_bytes": 1303789568,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_120_after_download",
+        "device_free_bytes": 1303789568,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_122_before_download",
+        "device_free_bytes": 1304567808,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_122_after_download",
+        "device_free_bytes": 1304567808,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_124_before_download",
+        "device_free_bytes": 1282043904,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_124_after_download",
+        "device_free_bytes": 1282482176,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_126_before_download",
+        "device_free_bytes": 1266966528,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_126_after_download",
+        "device_free_bytes": 1266966528,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_0_before_download",
+        "device_free_bytes": 1380130816,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_0_after_download",
+        "device_free_bytes": 1380130816,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_2_before_download",
+        "device_free_bytes": 1361747968,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_2_after_download",
+        "device_free_bytes": 1361747968,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_4_before_download",
+        "device_free_bytes": 1357721600,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_4_after_download",
+        "device_free_bytes": 1357721600,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_6_before_download",
+        "device_free_bytes": 1365405696,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_6_after_download",
+        "device_free_bytes": 1365405696,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_8_before_download",
+        "device_free_bytes": 1325211648,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_8_after_download",
+        "device_free_bytes": 1325395968,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_10_before_download",
+        "device_free_bytes": 1321803776,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_10_after_download",
+        "device_free_bytes": 1321803776,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_12_before_download",
+        "device_free_bytes": 1302581248,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_12_after_download",
+        "device_free_bytes": 1302581248,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_14_before_download",
+        "device_free_bytes": 1300729856,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_14_after_download",
+        "device_free_bytes": 1300729856,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_16_before_download",
+        "device_free_bytes": 1278615552,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_16_after_download",
+        "device_free_bytes": 1278615552,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_18_before_download",
+        "device_free_bytes": 1304477696,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_18_after_download",
+        "device_free_bytes": 1304477696,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_20_before_download",
+        "device_free_bytes": 1291653120,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_20_after_download",
+        "device_free_bytes": 1291653120,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_22_before_download",
+        "device_free_bytes": 1274220544,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_22_after_download",
+        "device_free_bytes": 1272856576,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_24_before_download",
+        "device_free_bytes": 1311236096,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_24_after_download",
+        "device_free_bytes": 1311236096,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_26_before_download",
+        "device_free_bytes": 1279868928,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_26_after_download",
+        "device_free_bytes": 1279483904,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_28_before_download",
+        "device_free_bytes": 1260957696,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_28_after_download",
+        "device_free_bytes": 1260957696,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_30_before_download",
+        "device_free_bytes": 1214853120,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_30_after_download",
+        "device_free_bytes": 1214853120,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_32_before_download",
+        "device_free_bytes": 1188921344,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_32_after_download",
+        "device_free_bytes": 1188921344,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_34_before_download",
+        "device_free_bytes": 1197858816,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_34_after_download",
+        "device_free_bytes": 1197858816,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_36_before_download",
+        "device_free_bytes": 1301905408,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_36_after_download",
+        "device_free_bytes": 1301905408,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_38_before_download",
+        "device_free_bytes": 1285136384,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_38_after_download",
+        "device_free_bytes": 1285136384,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_40_before_download",
+        "device_free_bytes": 1230557184,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_40_after_download",
+        "device_free_bytes": 1230557184,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_42_before_download",
+        "device_free_bytes": 1217425408,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_42_after_download",
+        "device_free_bytes": 1217425408,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_44_before_download",
+        "device_free_bytes": 1216225280,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_44_after_download",
+        "device_free_bytes": 1216225280,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_46_before_download",
+        "device_free_bytes": 1199632384,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_46_after_download",
+        "device_free_bytes": 1199632384,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_48_before_download",
+        "device_free_bytes": 1198862336,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_48_after_download",
+        "device_free_bytes": 1198862336,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_50_before_download",
+        "device_free_bytes": 1195401216,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_50_after_download",
+        "device_free_bytes": 1195401216,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_52_before_download",
+        "device_free_bytes": 1182822400,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_52_after_download",
+        "device_free_bytes": 1182822400,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_54_before_download",
+        "device_free_bytes": 1174388736,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_54_after_download",
+        "device_free_bytes": 1174388736,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_56_before_download",
+        "device_free_bytes": 1264988160,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_56_after_download",
+        "device_free_bytes": 1264988160,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_58_before_download",
+        "device_free_bytes": 1198796800,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_58_after_download",
+        "device_free_bytes": 1198796800,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_60_before_download",
+        "device_free_bytes": 1202761728,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_60_after_download",
+        "device_free_bytes": 1202761728,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_62_before_download",
+        "device_free_bytes": 1182486528,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_62_after_download",
+        "device_free_bytes": 1182486528,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_64_before_download",
+        "device_free_bytes": 1295364096,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_64_after_download",
+        "device_free_bytes": 1295364096,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_66_before_download",
+        "device_free_bytes": 1218977792,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_66_after_download",
+        "device_free_bytes": 1218977792,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_68_before_download",
+        "device_free_bytes": 1186910208,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_68_after_download",
+        "device_free_bytes": 1186910208,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_70_before_download",
+        "device_free_bytes": 1128431616,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_70_after_download",
+        "device_free_bytes": 1128431616,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_72_before_download",
+        "device_free_bytes": 1122537472,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_72_after_download",
+        "device_free_bytes": 1122537472,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_74_before_download",
+        "device_free_bytes": 1114943488,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_74_after_download",
+        "device_free_bytes": 1114943488,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_76_before_download",
+        "device_free_bytes": 1457618944,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_76_after_download",
+        "device_free_bytes": 1457618944,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_78_before_download",
+        "device_free_bytes": 1466732544,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_78_after_download",
+        "device_free_bytes": 1466732544,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_80_before_download",
+        "device_free_bytes": 1468137472,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_80_after_download",
+        "device_free_bytes": 1468137472,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_82_before_download",
+        "device_free_bytes": 1450532864,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_82_after_download",
+        "device_free_bytes": 1450532864,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_84_before_download",
+        "device_free_bytes": 1441353728,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_84_after_download",
+        "device_free_bytes": 1433169920,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_86_before_download",
+        "device_free_bytes": 1448464384,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_86_after_download",
+        "device_free_bytes": 1448464384,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_88_before_download",
+        "device_free_bytes": 1446002688,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_88_after_download",
+        "device_free_bytes": 1446002688,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_90_before_download",
+        "device_free_bytes": 1425293312,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_90_after_download",
+        "device_free_bytes": 1425293312,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_92_before_download",
+        "device_free_bytes": 1409945600,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_92_after_download",
+        "device_free_bytes": 1409945600,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_94_before_download",
+        "device_free_bytes": 1400659968,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_94_after_download",
+        "device_free_bytes": 1400659968,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_96_before_download",
+        "device_free_bytes": 1404485632,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_96_after_download",
+        "device_free_bytes": 1404485632,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_98_before_download",
+        "device_free_bytes": 1393537024,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_98_after_download",
+        "device_free_bytes": 1393537024,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_100_before_download",
+        "device_free_bytes": 1393889280,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_100_after_download",
+        "device_free_bytes": 1393889280,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_102_before_download",
+        "device_free_bytes": 1411596288,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_102_after_download",
+        "device_free_bytes": 1411596288,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_104_before_download",
+        "device_free_bytes": 1412857856,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_104_after_download",
+        "device_free_bytes": 1412878336,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_106_before_download",
+        "device_free_bytes": 1409974272,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_106_after_download",
+        "device_free_bytes": 1409974272,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_108_before_download",
+        "device_free_bytes": 1386344448,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_108_after_download",
+        "device_free_bytes": 1378160640,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_110_before_download",
+        "device_free_bytes": 1384378368,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_110_after_download",
+        "device_free_bytes": 1384378368,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_112_before_download",
+        "device_free_bytes": 1380167680,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_112_after_download",
+        "device_free_bytes": 1380155392,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_114_before_download",
+        "device_free_bytes": 1380114432,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_114_after_download",
+        "device_free_bytes": 1380114432,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_116_before_download",
+        "device_free_bytes": 1380671488,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_116_after_download",
+        "device_free_bytes": 1380671488,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_118_before_download",
+        "device_free_bytes": 1365794816,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_118_after_download",
+        "device_free_bytes": 1365794816,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_120_before_download",
+        "device_free_bytes": 1356005376,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_120_after_download",
+        "device_free_bytes": 1356005376,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_122_before_download",
+        "device_free_bytes": 1342115840,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_122_after_download",
+        "device_free_bytes": 1342115840,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_124_before_download",
+        "device_free_bytes": 1351286784,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_124_after_download",
+        "device_free_bytes": 1351286784,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_126_before_download",
+        "device_free_bytes": 1364615168,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_126_after_download",
+        "device_free_bytes": 1364615168,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_0_before_download",
+        "device_free_bytes": 1339224064,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_0_after_download",
+        "device_free_bytes": 1339224064,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_2_before_download",
+        "device_free_bytes": 1341259776,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_2_after_download",
+        "device_free_bytes": 1341259776,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_4_before_download",
+        "device_free_bytes": 1368891392,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_4_after_download",
+        "device_free_bytes": 1368891392,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_6_before_download",
+        "device_free_bytes": 1363230720,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_6_after_download",
+        "device_free_bytes": 1363230720,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_8_before_download",
+        "device_free_bytes": 1365176320,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_8_after_download",
+        "device_free_bytes": 1365176320,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_10_before_download",
+        "device_free_bytes": 1358245888,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_10_after_download",
+        "device_free_bytes": 1358245888,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_12_before_download",
+        "device_free_bytes": 1328574464,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_12_after_download",
+        "device_free_bytes": 1328574464,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_14_before_download",
+        "device_free_bytes": 1315176448,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_14_after_download",
+        "device_free_bytes": 1315176448,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_16_before_download",
+        "device_free_bytes": 1309491200,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_16_after_download",
+        "device_free_bytes": 1309491200,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_18_before_download",
+        "device_free_bytes": 1306775552,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_18_after_download",
+        "device_free_bytes": 1306775552,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_20_before_download",
+        "device_free_bytes": 1441947648,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_20_after_download",
+        "device_free_bytes": 1441947648,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_22_before_download",
+        "device_free_bytes": 1399681024,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_22_after_download",
+        "device_free_bytes": 1399681024,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_24_before_download",
+        "device_free_bytes": 1360891904,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_24_after_download",
+        "device_free_bytes": 1360891904,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_26_before_download",
+        "device_free_bytes": 1350324224,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_26_after_download",
+        "device_free_bytes": 1350324224,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_28_before_download",
+        "device_free_bytes": 1329496064,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_28_after_download",
+        "device_free_bytes": 1329496064,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_30_before_download",
+        "device_free_bytes": 1326825472,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_30_after_download",
+        "device_free_bytes": 1326825472,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_32_before_download",
+        "device_free_bytes": 1321115648,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_32_after_download",
+        "device_free_bytes": 1321115648,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_34_before_download",
+        "device_free_bytes": 1298034688,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_34_after_download",
+        "device_free_bytes": 1298034688,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_36_before_download",
+        "device_free_bytes": 1375682560,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_36_after_download",
+        "device_free_bytes": 1375682560,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_38_before_download",
+        "device_free_bytes": 1301278720,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_38_after_download",
+        "device_free_bytes": 1300824064,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_40_before_download",
+        "device_free_bytes": 1286115328,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_40_after_download",
+        "device_free_bytes": 1286115328,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_42_before_download",
+        "device_free_bytes": 1273487360,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_42_after_download",
+        "device_free_bytes": 1273487360,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_44_before_download",
+        "device_free_bytes": 1288740864,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_44_after_download",
+        "device_free_bytes": 1288740864,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_46_before_download",
+        "device_free_bytes": 1287139328,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_46_after_download",
+        "device_free_bytes": 1287139328,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_48_before_download",
+        "device_free_bytes": 1278291968,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_48_after_download",
+        "device_free_bytes": 1278291968,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_50_before_download",
+        "device_free_bytes": 1292906496,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_50_after_download",
+        "device_free_bytes": 1292906496,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_52_before_download",
+        "device_free_bytes": 1286074368,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_52_after_download",
+        "device_free_bytes": 1286074368,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_54_before_download",
+        "device_free_bytes": 1267154944,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_54_after_download",
+        "device_free_bytes": 1267154944,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_56_before_download",
+        "device_free_bytes": 1242120192,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_56_after_download",
+        "device_free_bytes": 1242120192,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_58_before_download",
+        "device_free_bytes": 1329598464,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_58_after_download",
+        "device_free_bytes": 1329598464,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_60_before_download",
+        "device_free_bytes": 1272807424,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_60_after_download",
+        "device_free_bytes": 1272807424,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_62_before_download",
+        "device_free_bytes": 1286406144,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_62_after_download",
+        "device_free_bytes": 1286406144,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_64_before_download",
+        "device_free_bytes": 1282375680,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_64_after_download",
+        "device_free_bytes": 1282375680,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_66_before_download",
+        "device_free_bytes": 1271443456,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_66_after_download",
+        "device_free_bytes": 1271443456,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_68_before_download",
+        "device_free_bytes": 1253552128,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_68_after_download",
+        "device_free_bytes": 1253552128,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_70_before_download",
+        "device_free_bytes": 1259982848,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_70_after_download",
+        "device_free_bytes": 1259982848,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_72_before_download",
+        "device_free_bytes": 1217863680,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_72_after_download",
+        "device_free_bytes": 1218064384,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_74_before_download",
+        "device_free_bytes": 1255825408,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_74_after_download",
+        "device_free_bytes": 1255825408,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_76_before_download",
+        "device_free_bytes": 1239314432,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_76_after_download",
+        "device_free_bytes": 1239314432,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_78_before_download",
+        "device_free_bytes": 1224904704,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_78_after_download",
+        "device_free_bytes": 1224904704,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_80_before_download",
+        "device_free_bytes": 1220304896,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_80_after_download",
+        "device_free_bytes": 1220304896,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_82_before_download",
+        "device_free_bytes": 1224589312,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_82_after_download",
+        "device_free_bytes": 1224589312,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_84_before_download",
+        "device_free_bytes": 1205985280,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_84_after_download",
+        "device_free_bytes": 1205985280,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_86_before_download",
+        "device_free_bytes": 1189720064,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_86_after_download",
+        "device_free_bytes": 1189720064,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_88_before_download",
+        "device_free_bytes": 1160261632,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_88_after_download",
+        "device_free_bytes": 1146167296,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_90_before_download",
+        "device_free_bytes": 1150271488,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_90_after_download",
+        "device_free_bytes": 1150271488,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_92_before_download",
+        "device_free_bytes": 1226219520,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_92_after_download",
+        "device_free_bytes": 1225764864,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_94_before_download",
+        "device_free_bytes": 1206009856,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_94_after_download",
+        "device_free_bytes": 1206009856,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_96_before_download",
+        "device_free_bytes": 1155055616,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_96_after_download",
+        "device_free_bytes": 1155055616,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_98_before_download",
+        "device_free_bytes": 1150681088,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_98_after_download",
+        "device_free_bytes": 1150681088,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_100_before_download",
+        "device_free_bytes": 1146212352,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_100_after_download",
+        "device_free_bytes": 1146212352,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_102_before_download",
+        "device_free_bytes": 1136988160,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_102_after_download",
+        "device_free_bytes": 1136988160,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_104_before_download",
+        "device_free_bytes": 1192894464,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_104_after_download",
+        "device_free_bytes": 1192894464,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_106_before_download",
+        "device_free_bytes": 1173204992,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_106_after_download",
+        "device_free_bytes": 1172869120,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_108_before_download",
+        "device_free_bytes": 1139933184,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_108_after_download",
+        "device_free_bytes": 1139933184,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_110_before_download",
+        "device_free_bytes": 1125400576,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_110_after_download",
+        "device_free_bytes": 1125400576,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_112_before_download",
+        "device_free_bytes": 1126309888,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_112_after_download",
+        "device_free_bytes": 1126309888,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_114_before_download",
+        "device_free_bytes": 1119432704,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_114_after_download",
+        "device_free_bytes": 1119629312,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_116_before_download",
+        "device_free_bytes": 1174593536,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_116_after_download",
+        "device_free_bytes": 1174593536,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_118_before_download",
+        "device_free_bytes": 1157713920,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_118_after_download",
+        "device_free_bytes": 1157713920,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_120_before_download",
+        "device_free_bytes": 1092620288,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_120_after_download",
+        "device_free_bytes": 1092620288,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_122_before_download",
+        "device_free_bytes": 1089208320,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_122_after_download",
+        "device_free_bytes": 1089208320,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_124_before_download",
+        "device_free_bytes": 1063911424,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_124_after_download",
+        "device_free_bytes": 1063911424,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_126_before_download",
+        "device_free_bytes": 1189097472,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_126_after_download",
+        "device_free_bytes": 1189097472,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_0_before_download",
+        "device_free_bytes": 1140948992,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_0_after_download",
+        "device_free_bytes": 1140948992,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_2_before_download",
+        "device_free_bytes": 1128210432,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_2_after_download",
+        "device_free_bytes": 1128210432,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_4_before_download",
+        "device_free_bytes": 1085919232,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_4_after_download",
+        "device_free_bytes": 1085919232,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_6_before_download",
+        "device_free_bytes": 1187291136,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_6_after_download",
+        "device_free_bytes": 1187291136,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_8_before_download",
+        "device_free_bytes": 1155203072,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_8_after_download",
+        "device_free_bytes": 1155203072,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_10_before_download",
+        "device_free_bytes": 1125580800,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_10_after_download",
+        "device_free_bytes": 1125580800,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_12_before_download",
+        "device_free_bytes": 1091506176,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_12_after_download",
+        "device_free_bytes": 1091506176,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_14_before_download",
+        "device_free_bytes": 1079267328,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_14_after_download",
+        "device_free_bytes": 1079267328,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_16_before_download",
+        "device_free_bytes": 1015885824,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_16_after_download",
+        "device_free_bytes": 1015885824,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_18_before_download",
+        "device_free_bytes": 1026629632,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_18_after_download",
+        "device_free_bytes": 1026629632,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_20_before_download",
+        "device_free_bytes": 1146388480,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_20_after_download",
+        "device_free_bytes": 1146388480,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_22_before_download",
+        "device_free_bytes": 1120280576,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_22_after_download",
+        "device_free_bytes": 1120280576,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_24_before_download",
+        "device_free_bytes": 1087135744,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_24_after_download",
+        "device_free_bytes": 1087135744,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_26_before_download",
+        "device_free_bytes": 1087504384,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_26_after_download",
+        "device_free_bytes": 1087504384,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_28_before_download",
+        "device_free_bytes": 1064464384,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_28_after_download",
+        "device_free_bytes": 1064464384,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_30_before_download",
+        "device_free_bytes": 1113321472,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_30_after_download",
+        "device_free_bytes": 1112866816,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_32_before_download",
+        "device_free_bytes": 1082920960,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_32_after_download",
+        "device_free_bytes": 1082920960,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_34_before_download",
+        "device_free_bytes": 1051013120,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_34_after_download",
+        "device_free_bytes": 1050103808,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_36_before_download",
+        "device_free_bytes": 1039704064,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_36_after_download",
+        "device_free_bytes": 1039704064,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_38_before_download",
+        "device_free_bytes": 1108013056,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_38_after_download",
+        "device_free_bytes": 1107951616,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_40_before_download",
+        "device_free_bytes": 1067442176,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_40_after_download",
+        "device_free_bytes": 1067442176,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_42_before_download",
+        "device_free_bytes": 1081200640,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_42_after_download",
+        "device_free_bytes": 1081200640,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_44_before_download",
+        "device_free_bytes": 1060425728,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_44_after_download",
+        "device_free_bytes": 1060425728,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_46_before_download",
+        "device_free_bytes": 1023741952,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_46_after_download",
+        "device_free_bytes": 1023741952,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_48_before_download",
+        "device_free_bytes": 1006272512,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_48_after_download",
+        "device_free_bytes": 1006272512,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_50_before_download",
+        "device_free_bytes": 1108455424,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_50_after_download",
+        "device_free_bytes": 1108455424,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_52_before_download",
+        "device_free_bytes": 1082548224,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_52_after_download",
+        "device_free_bytes": 1082101760,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_54_before_download",
+        "device_free_bytes": 1054728192,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_54_after_download",
+        "device_free_bytes": 1054728192,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_56_before_download",
+        "device_free_bytes": 1074843648,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_56_after_download",
+        "device_free_bytes": 1074843648,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_58_before_download",
+        "device_free_bytes": 1033723904,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_58_after_download",
+        "device_free_bytes": 1033723904,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_60_before_download",
+        "device_free_bytes": 1097437184,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_60_after_download",
+        "device_free_bytes": 1097437184,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_62_before_download",
+        "device_free_bytes": 1047699456,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_62_after_download",
+        "device_free_bytes": 1047699456,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_64_before_download",
+        "device_free_bytes": 994144256,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_64_after_download",
+        "device_free_bytes": 994144256,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_66_before_download",
+        "device_free_bytes": 1056780288,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_66_after_download",
+        "device_free_bytes": 1056780288,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_68_before_download",
+        "device_free_bytes": 1054355456,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_68_after_download",
+        "device_free_bytes": 1054355456,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_70_before_download",
+        "device_free_bytes": 1042890752,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_70_after_download",
+        "device_free_bytes": 1042890752,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_72_before_download",
+        "device_free_bytes": 1039585280,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_72_after_download",
+        "device_free_bytes": 1039585280,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_74_before_download",
+        "device_free_bytes": 1012568064,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_74_after_download",
+        "device_free_bytes": 1012568064,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_76_before_download",
+        "device_free_bytes": 1039859712,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_76_after_download",
+        "device_free_bytes": 1031675904,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_78_before_download",
+        "device_free_bytes": 987271168,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_78_after_download",
+        "device_free_bytes": 987271168,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_80_before_download",
+        "device_free_bytes": 966307840,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_80_after_download",
+        "device_free_bytes": 966307840,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_82_before_download",
+        "device_free_bytes": 1048711168,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_82_after_download",
+        "device_free_bytes": 1048711168,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_84_before_download",
+        "device_free_bytes": 1022767104,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_84_after_download",
+        "device_free_bytes": 1022767104,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_86_before_download",
+        "device_free_bytes": 995794944,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_86_after_download",
+        "device_free_bytes": 995794944,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_88_before_download",
+        "device_free_bytes": 933441536,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_88_after_download",
+        "device_free_bytes": 933441536,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_90_before_download",
+        "device_free_bytes": 973336576,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_90_after_download",
+        "device_free_bytes": 973336576,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_92_before_download",
+        "device_free_bytes": 950607872,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_92_after_download",
+        "device_free_bytes": 950607872,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_94_before_download",
+        "device_free_bytes": 1009680384,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_94_after_download",
+        "device_free_bytes": 1009680384,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_96_before_download",
+        "device_free_bytes": 983240704,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_96_after_download",
+        "device_free_bytes": 983240704,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_98_before_download",
+        "device_free_bytes": 1003794432,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_98_after_download",
+        "device_free_bytes": 1003794432,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_100_before_download",
+        "device_free_bytes": 927330304,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_100_after_download",
+        "device_free_bytes": 927330304,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_102_before_download",
+        "device_free_bytes": 1004548096,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_102_after_download",
+        "device_free_bytes": 1004548096,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_104_before_download",
+        "device_free_bytes": 1024413696,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_104_after_download",
+        "device_free_bytes": 1016094720,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_106_before_download",
+        "device_free_bytes": 968007680,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_106_after_download",
+        "device_free_bytes": 968007680,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_108_before_download",
+        "device_free_bytes": 949526528,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_108_after_download",
+        "device_free_bytes": 949526528,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_110_before_download",
+        "device_free_bytes": 929402880,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_110_after_download",
+        "device_free_bytes": 929402880,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_112_before_download",
+        "device_free_bytes": 945123328,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_112_after_download",
+        "device_free_bytes": 945123328,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_114_before_download",
+        "device_free_bytes": 926236672,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_114_after_download",
+        "device_free_bytes": 926236672,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_116_before_download",
+        "device_free_bytes": 948879360,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_116_after_download",
+        "device_free_bytes": 948879360,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_118_before_download",
+        "device_free_bytes": 917467136,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_118_after_download",
+        "device_free_bytes": 917467136,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_120_before_download",
+        "device_free_bytes": 952532992,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_120_after_download",
+        "device_free_bytes": 952532992,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_122_before_download",
+        "device_free_bytes": 943190016,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_122_after_download",
+        "device_free_bytes": 943190016,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_124_before_download",
+        "device_free_bytes": 892006400,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_124_after_download",
+        "device_free_bytes": 899883008,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_126_before_download",
+        "device_free_bytes": 895275008,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_126_after_download",
+        "device_free_bytes": 895275008,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      }
+    ]
+  },
+  "process_peak_rss_bytes": 2598612992,
+  "process_elapsed_seconds": 428.21704864900676
+}

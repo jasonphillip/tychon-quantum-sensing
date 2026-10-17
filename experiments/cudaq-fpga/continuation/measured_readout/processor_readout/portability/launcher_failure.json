@@ -1,0 +1,7 @@
+{
+  "stage": "Linux portability launcher before exec_command or SSH execution",
+  "error": "SyntaxError: Unexpected string",
+  "executed_remote_command": false,
+  "retry": "one changed approach: JavaScript template string instead of malformed quoted argument",
+  "outcome": "PASS; see linux_results.json"
+}

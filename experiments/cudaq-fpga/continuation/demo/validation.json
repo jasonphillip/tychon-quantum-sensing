@@ -1,0 +1,12 @@
+{
+  "schema": "saved_evidence_demo_validation_v1",
+  "recorded_utc": "2026-10-17T19:02:00.918870+00:00",
+  "command": "python3 ./demo/show_evidence.py --root . --manifest demo/evidence_manifest.json",
+  "exit_code": 0,
+  "verified_files": 27,
+  "displayed_facts": 9,
+  "failure_contract_tests": 6,
+  "test_exit_code": 0,
+  "manifest_sha256": "e1a8223a04aeb109fecbff1325f5672445caf76c3df4999b65e9145e22d625dc",
+  "scope": "Executed local display and fixture tests; no new GPU or hardware run."
+}

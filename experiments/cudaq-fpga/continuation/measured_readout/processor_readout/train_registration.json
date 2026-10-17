@@ -1,0 +1,13 @@
+{
+  "registered_utc": "2026-10-17T18:41:14.758434+00:00",
+  "scope": "train-only pipeline before signal retrieval; test requires independent release",
+  "sha256": {
+    "processor_io.py": "6575e07940ffee4cc51766c8b3b691a7a9b36d9f3f8179b7bdb4a041b25c44cf",
+    "processor_eval.py": "445d6f5b8d631e35e8acdd4423d269406102b43c71a7aa4ec5abd342793dab16",
+    "test_processor.py": "25e09889d6aec2b6f6c227ef0765d675cecf4b80deb0016b67f4f970ee2cb13b",
+    "PROPOSED_PROTOCOL.json": "bffb0be2cf21e6d34c95afdbed6adb2e70e4a20f9db1a442f52f30a398d7ea44",
+    "headers.json": "db4e32d58d0d9997fe71b97cec2740bdec618291eb1213351fc03c820d8fc9ee",
+    "inputs/0528_y_train_0_770.npy": "43517f104f1de18d9669f8171aa4edb8d86e1bac69e43cf73af139af4618e0b6",
+    "train_label_qualification.json": "d76b146c6433ed1e7911271e57fa9ef17d4ffd753fb5c17b36e0a673ac4b1b21"
+  }
+}

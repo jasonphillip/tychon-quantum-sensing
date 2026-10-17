@@ -1,0 +1,139 @@
+{
+  "schema": "nv_scaling_board_pack_v1",
+  "count": 16,
+  "abi": {
+    "input": "128 int16 little endian, I[0:64] followed by Q[0:64], Q14",
+    "output": "uint16 lowest-index argmin and uint64 full squared-distance score",
+    "template_count": 121,
+    "rom_sha256": "b4c8515c0c4842d613a58fc7a23e528c956343bf86ba515cda5715ca57110f8f",
+    "board_executed": false
+  },
+  "files": {
+    "expected_indices_u16.bin": {
+      "sha256": "8c868176c25386b5a06507dc9ddddae08c6a929f493674aae8ecfbffcc1458bc",
+      "bytes": 32
+    },
+    "expected_scores_u64.bin": {
+      "sha256": "8c36d0b49059c1cdaea1520daf255fa4ca9ef53c8c749364a08d771032ec4247",
+      "bytes": 128
+    },
+    "inputs_i16.bin": {
+      "sha256": "c209b11c9b23f28408b8638728098e558de3afe1a874d5e0a895240cb7776b8f",
+      "bytes": 4096
+    }
+  },
+  "cases": [
+    {
+      "id": "dev-00000-r100-n0",
+      "configuration": 0,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 1
+    },
+    {
+      "id": "dev-00000-r100-n1",
+      "configuration": 0,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "dev-00000-r500-n0",
+      "configuration": 0,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "dev-00000-r500-n1",
+      "configuration": 0,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "dev-00000-r2000-n0",
+      "configuration": 0,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "dev-00000-r2000-n1",
+      "configuration": 0,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "dev-00000-r20000-n0",
+      "configuration": 0,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "dev-00000-r20000-n1",
+      "configuration": 0,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "dev-00001-r100-n0",
+      "configuration": 1,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "dev-00001-r100-n1",
+      "configuration": 1,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "dev-00001-r500-n0",
+      "configuration": 1,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "dev-00001-r500-n1",
+      "configuration": 1,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "dev-00001-r2000-n0",
+      "configuration": 1,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "dev-00001-r2000-n1",
+      "configuration": 1,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "dev-00001-r20000-n0",
+      "configuration": 1,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "dev-00001-r20000-n1",
+      "configuration": 1,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    }
+  ]
+}

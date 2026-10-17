@@ -1,0 +1,53 @@
+{
+  "started_utc": "2026-10-17T18:34:38.242190+00:00",
+  "status": "PASS",
+  "registration_sha256": "096a1f08ca40840502119a4e276a6e45fcafc9f509c1c724744915f12db447c8",
+  "final_set_consumed_from_start": true,
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/timeout",
+        "1800",
+        "python3",
+        "./nv_scaling/run_dataset.py",
+        "--protocol",
+        "./nv_scaling/protocol_final.json",
+        "--backend",
+        "cudaq",
+        "--output",
+        "./nv_scaling/artifacts/final_gpu"
+      ],
+      "started_utc": "2026-10-17T18:34:38.242455+00:00",
+      "thread_limits": 1,
+      "log": "./nv_scaling/artifacts/final_gpu.log",
+      "external_timeout_seconds": 1800,
+      "returncode": 0,
+      "wall_seconds": 428.8183391019993,
+      "completed_utc": "2026-10-17T18:41:47.060890+00:00",
+      "log_sha256": "ba8777dc1cdd27555189bc016831f81c6ba8db96860ed3525d114c82a2342671"
+    },
+    {
+      "argv": [
+        "/usr/bin/timeout",
+        "300",
+        "python3",
+        "./nv_scaling/run_dataset.py",
+        "--protocol",
+        "./nv_scaling/protocol_final.json",
+        "--backend",
+        "cpu",
+        "--output",
+        "./nv_scaling/artifacts/final_cpu_linux"
+      ],
+      "started_utc": "2026-10-17T18:41:47.063473+00:00",
+      "thread_limits": 1,
+      "log": "./nv_scaling/artifacts/final_cpu_linux.log",
+      "external_timeout_seconds": 300,
+      "returncode": 0,
+      "wall_seconds": 0.23284161399351433,
+      "completed_utc": "2026-10-17T18:41:47.296379+00:00",
+      "log_sha256": "69f196c9e70569d78333b6dcde8f9169be5ee656980dc34eda8a53cb7af3406b"
+    }
+  ],
+  "completed_utc": "2026-10-17T18:41:47.296615+00:00"
+}

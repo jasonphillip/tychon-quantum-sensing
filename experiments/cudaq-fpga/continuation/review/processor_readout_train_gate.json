@@ -1,0 +1,18 @@
+{
+  "frozen_training_rows": 16384,
+  "frozen_training_ranges": 16,
+  "selected": "pooled_matched_filter@100:500",
+  "status": "PASS",
+  "checked_utc": "2026-10-17T18:54:02.506072+00:00",
+  "training_receipt_sha256": "79cfec86ecc790c301fc1ca9ae9298f91da5ca44dd60562ce59b9a2161395134",
+  "checks": [
+    "registered hashes",
+    "frozen artifacts",
+    "16 cached range hashes",
+    "16384 finite source rows and per-row hashes",
+    "exact partitions and label counts",
+    "eight candidates and tie order",
+    "valid scales and affine fits",
+    "source-test sealed"
+  ]
+}

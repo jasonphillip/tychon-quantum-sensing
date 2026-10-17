@@ -1,0 +1,38 @@
+{
+  "registered_utc": "2026-10-17T18:30:04.655737+00:00",
+  "scope": "before any final signal read",
+  "sha256": {
+    "protocol.json": "646c9a333ae36abc22af37cbc27c136df9195b874abaf637d893294c74d55622",
+    "PROTOCOL.md": "4808a1abf66c00d9a4fe8d0484b213b12b37029acef7998c11900ae646c459a5",
+    "evaluate.py": "fab8f44b3415a176eb89f7c335540c1ae9942ff858d9585521654e3426e576a7",
+    "test_evaluate.py": "b8f60a5febfa2d869a370c7004369d1f7ed84825222fd05735925f5e036f7e81",
+    "inputs/data/bolometer-characterization-timetrace-76.nc": "fe151d5ba54c38ac32edc5f0a2e8e7977e2b14cdb9c9ec2680b0b3892e5b9df0",
+    "zenodo_10000511_metadata.json": "0c36770185608f7c8dd7b73cbd31628a406f63a508d24ff4da8314cd2780d484"
+  },
+  "qualification": {
+    "shape": [
+      2,
+      1000,
+      781
+    ],
+    "preparation_values": [
+      0.0,
+      1.0
+    ],
+    "signal_units": "V",
+    "time_units": "s",
+    "sample_start_s": 0.0,
+    "sample_end_s": 4.992e-05,
+    "sample_interval_s": 6.4e-08,
+    "guid": "aaaaaaaa-0000-0000-0000-018210c3d8f3",
+    "run_timestamp": "2022-07-18 13:04:06",
+    "completed_timestamp": "2022-07-18 13:04:35",
+    "sample_name": "B03-1",
+    "exp_name": "bolometer-characterization-sakari",
+    "measured_raw_records": true,
+    "compatible_independent_acquisitions": 1,
+    "within_acquisition_eligible": true,
+    "drift_transfer_eligible": false,
+    "label_scope": "intended preparation, not verified true-state labels"
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "status": "passed",
+  "backend": "cpu",
+  "synthetic_only": true,
+  "protocol_sha256": "40e784eba9d89640e856e67783a2c1d06b1aa4d31539e51a1f76319ebe2044ea",
+  "protocol": {
+    "schema": "nv_full_cudaq_v1",
+    "model": {
+      "nuclear_frequency_mhz": 0.8,
+      "hyperfine_parallel_mhz": 0.35,
+      "hyperfine_transverse_mhz": 0.25,
+      "rabi_mhz": 1.5
+    },
+    "delay_points": 64,
+    "maximum_delay_us": 4.0,
+    "phases_rad": [
+      0.0,
+      1.5707963267948966,
+      3.141592653589793,
+      4.71238898038469
+    ],
+    "detuning_range_mhz": [
+      -0.75,
+      0.75
+    ],
+    "density_dtype": "complex128",
+    "rk4_max_step_us": 0.002,
+    "configurations_per_chunk": 2,
+    "max_batch_size": 512,
+    "warm_repetitions": 2,
+    "shots_per_point": [
+      100,
+      500,
+      2000,
+      20000
+    ],
+    "noise_realizations": 2,
+    "photons_bright": 0.24,
+    "photons_dark": 0.1,
+    "photons_background": 0.02,
+    "gates": {
+      "probability_atol": 1e-06,
+      "density_atol": 1e-06,
+      "trace_atol": 1e-06,
+      "hermiticity_atol": 1e-06,
+      "minimum_eigenvalue": -1e-06,
+      "purity_atol": 1e-06,
+      "integer_reference_exact": true
+    },
+    "limits": {
+      "cpu_threads": 4,
+      "cpu_rss_gib": 8,
+      "gpu_incremental_gib": 24,
+      "seconds": 300
+    },
+    "notes": "All parameters are benchmark assumptions. Matched closed-system synthetic distribution. No robustness or sensor calibration claim.",
+    "split": "dev",
+    "configurations": 2,
+    "parameter_seed": 1061710101,
+    "noise_seed": 1061710102
+  },
+  "python": "3.14.3 (main, Feb  3 2026, 15:32:20) [Clang 17.0.0 (clang-1700.6.3.2)]",
+  "numpy": "2.4.2",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "source_sha256": {
+    "nv_model.py": "fab118bd8f4633ba74299dfee205b2e7c66d8afc968364ccf4cc1ddf55ab72ce",
+    "run_dataset.py": "dc8c580a42f6dee2dd620378206fcab1a1dc45146c76fd463c8f03396b9cfecd",
+    "scaling.py": "f23c0a92609c9572113f8e9a831657993b81cd765ec7ff9ad0ccacc38beae17d",
+    "test_scaling.py": "283e5507e1f00b95010928bde98e95aa884aa1af1f5b78c5be0e770e8f2c9b24",
+    "verify_pack.py": "75b878897b172ef1a57713a6604d9988cc956953cd682b2edefd522cf493b0df"
+  },
+  "quantum_generation": "specialized NumPy Hermitian eigensolver CPU",
+  "detector_generation": "CPU NumPy binomial projection then conditional Poisson sampling",
+  "timing_definition": "Synchronized wall time; evolutions include operator preparation and implicit Hamiltonian uploads. Explicit state uploads/downloads are separate sub-timings. Process elapsed begins at first Python statement, not interpreter startup.",
+  "runs": [
+    {
+      "kind": "first_call",
+      "repeat": 0,
+      "quantum_seconds": 0.0003938749432563782,
+      "parts": {}
+    },
+    {
+      "kind": "warm",
+      "repeat": 1,
+      "quantum_seconds": 0.00022820895537734032,
+      "parts": {}
+    },
+    {
+      "kind": "warm",
+      "repeat": 2,
+      "quantum_seconds": 0.00022087502293288708,
+      "parts": {}
+    }
+  ],
+  "backend_initialization_seconds": 1.166015863418579e-06,
+  "first_call_plus_initialization_seconds": 0.00039504095911979675,
+  "repeated_generation_max_density_difference": 0.0,
+  "physical_metrics": {
+    "trace_error": 1.998629418587297e-15,
+    "hermiticity_error": 1.5917919408906608e-16,
+    "minimum_eigenvalue": -2.707655938438093e-16,
+    "purity_error": 1.9985363363635975e-15,
+    "probability_min": 0.03824540811843844,
+    "probability_max": 0.9620961859035815
+  },
+  "quantum_probability_count": 512,
+  "independent_configurations": 2,
+  "gpu_generated_fraction": 0.0,
+  "validation_seconds": 0.00022491696290671825,
+  "max_probability_error": 0.0,
+  "max_density_error": 0.0,
+  "noiseless_max_q14_difference": 0,
+  "noiseless_q14_exact_fraction": 1.0,
+  "cpu_detector_and_integer_reference_seconds": 0.0010765409097075462,
+  "board_record_count": 16,
+  "clipped_feature_count": 1,
+  "integer_expected_outputs": "Frozen CPU integer reference; C independent replay validation required separately.",
+  "gates": {
+    "physical": true,
+    "all_probabilities": true,
+    "all_density_elements": true,
+    "q14_max_one_lsb": true,
+    "repeat_reproducibility": true
+  },
+  "output_write_seconds": 0.002089875051751733,
+  "artifact_sha256": {
+    "detector_counts.npz": "3f46b3e13bab8c4b305fc19ec7006e6cc0449f9d2cb21805e56c3f4d06ebc21b",
+    "quantum_dataset.npz": "7cec71e03d17ee94e8fb492a358503df227601d3069c30f7ef454c0d37798845"
+  },
+  "process_peak_rss_bytes": 41140224,
+  "process_elapsed_seconds": 0.07311679190024734
+}

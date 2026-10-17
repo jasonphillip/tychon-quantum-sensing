@@ -1,0 +1,64 @@
+{
+  "candidate": "pooled_boxcar@100:500",
+  "records": 8192,
+  "input_pairs": 64,
+  "input_dtype": "little-endian int16",
+  "score_dtype": "little-endian int64",
+  "input_fraction_bits": 11,
+  "score_fraction_bits": 25,
+  "native_units_per_normalized_unit": 560.78,
+  "weights_i32": [
+    10235,
+    -16384
+  ],
+  "bias_i64": -33543462,
+  "full_int16_abs_score_bound": 55857632550,
+  "clipped_values": 0,
+  "python_bigint_scores_exact": true,
+  "float_decision_disagreements": 1,
+  "metrics": {
+    "coverage": 1.0,
+    "balanced_accuracy": 0.95849609375,
+    "pooled_accuracy": 0.95849609375,
+    "confusion_preparation_by_assignment": [
+      [
+        3998,
+        98
+      ],
+      [
+        242,
+        3854
+      ]
+    ],
+    "per_preparation_counts": [
+      4096,
+      4096
+    ],
+    "per_preparation_error": [
+      0.02392578125,
+      0.05908203125
+    ],
+    "per_preparation_accuracy_wilson95": [
+      [
+        0.9709291555744165,
+        0.9803271403511878
+      ],
+      [
+        0.9332758337542256,
+        0.9477338433953341
+      ]
+    ],
+    "pooled_accuracy_wilson95": [
+      0.9539577656673149,
+      0.9626046199941699
+    ],
+    "interval_scope": "conditional IID shot assumptions; pooled interval is not a balanced-accuracy interval"
+  },
+  "scope": "new host coefficients; requires future FPGA image; no hardware execution",
+  "sha256": {
+    "labels_u8.bin": "1b5b60409bec8497b76efa1a83091fa4482cbf3df0013aa04973c59ed89a4302",
+    "expected_scores_i64.bin": "67b35a0bcef13a67782ce1e1e1b9b7cb3d205e413743e46486c337db5119bade",
+    "inputs_i16.bin": "b0ff40d4a62542e1ac6f468fd2c528e6c60f123401ee8b5abd9d6691bffed9b6",
+    "source_rows_u32.bin": "8e15e039461a43615788558e9bb045d547789d3615b7137b15544b171cefd085"
+  }
+}

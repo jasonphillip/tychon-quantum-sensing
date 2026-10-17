@@ -1,0 +1,194 @@
+{
+  "schema": "measured_readout_result_v1",
+  "qualification": {
+    "shape": [
+      2,
+      1000,
+      781
+    ],
+    "preparation_values": [
+      0.0,
+      1.0
+    ],
+    "signal_units": "V",
+    "time_units": "s",
+    "sample_start_s": 0.0,
+    "sample_end_s": 4.992e-05,
+    "sample_interval_s": 6.4e-08,
+    "guid": "aaaaaaaa-0000-0000-0000-018210c3d8f3",
+    "run_timestamp": "2022-07-18 13:04:06",
+    "completed_timestamp": "2022-07-18 13:04:35",
+    "sample_name": "B03-1",
+    "exp_name": "bolometer-characterization-sakari",
+    "measured_raw_records": true,
+    "compatible_independent_acquisitions": 1,
+    "within_acquisition_eligible": true,
+    "drift_transfer_eligible": false,
+    "label_scope": "intended preparation, not verified true-state labels"
+  },
+  "selected": "pooled_lda",
+  "final": {
+    "pooled_boxcar": {
+      "coverage": 1.0,
+      "balanced_accuracy": 0.737,
+      "confusion_preparation_by_assignment": [
+        [
+          445,
+          55
+        ],
+        [
+          208,
+          292
+        ]
+      ],
+      "per_preparation_error": [
+        0.10999999999999999,
+        0.41600000000000004
+      ],
+      "correct": 737,
+      "records": 1000,
+      "conditional_iid_wilson95": [
+        0.7088429762689252,
+        0.7633431402089217
+      ]
+    },
+    "pooled_matched_filter": {
+      "coverage": 1.0,
+      "balanced_accuracy": 0.743,
+      "confusion_preparation_by_assignment": [
+        [
+          449,
+          51
+        ],
+        [
+          206,
+          294
+        ]
+      ],
+      "per_preparation_error": [
+        0.10199999999999998,
+        0.41200000000000003
+      ],
+      "correct": 743,
+      "records": 1000,
+      "conditional_iid_wilson95": [
+        0.7150222127820682,
+        0.769117982593952
+      ]
+    },
+    "pooled_lda": {
+      "coverage": 1.0,
+      "balanced_accuracy": 0.758,
+      "confusion_preparation_by_assignment": [
+        [
+          432,
+          68
+        ],
+        [
+          174,
+          326
+        ]
+      ],
+      "per_preparation_error": [
+        0.136,
+        0.348
+      ],
+      "correct": 758,
+      "records": 1000,
+      "conditional_iid_wilson95": [
+        0.7304996799200717,
+        0.7835257127013818
+      ]
+    },
+    "affine_reference_boxcar": {
+      "coverage": 1.0,
+      "balanced_accuracy": 0.743,
+      "confusion_preparation_by_assignment": [
+        [
+          447,
+          53
+        ],
+        [
+          204,
+          296
+        ]
+      ],
+      "per_preparation_error": [
+        0.10599999999999998,
+        0.40800000000000003
+      ],
+      "correct": 743,
+      "records": 1000,
+      "conditional_iid_wilson95": [
+        0.7150222127820682,
+        0.769117982593952
+      ]
+    },
+    "reference_boxcar_uncalibrated": {
+      "coverage": 1.0,
+      "balanced_accuracy": 0.739,
+      "confusion_preparation_by_assignment": [
+        [
+          445,
+          55
+        ],
+        [
+          206,
+          294
+        ]
+      ],
+      "per_preparation_error": [
+        0.10999999999999999,
+        0.41200000000000003
+      ],
+      "correct": 739,
+      "records": 1000,
+      "conditional_iid_wilson95": [
+        0.7109019937060769,
+        0.7652688157378277
+      ]
+    }
+  },
+  "calibration_gain_over_reference": 0.0040000000000000036,
+  "calibration_gain_nonnegative": true,
+  "utility_acceptance_pass": false,
+  "drift_transfer_eligible": false,
+  "candidate_integer_pack": {
+    "records": 1000,
+    "input_shape": [
+      1000,
+      128
+    ],
+    "byte_order": "little",
+    "input_fraction_bits": 11,
+    "score_fraction_bits": 25,
+    "volts_per_normalized_unit": 0.07089742024739583,
+    "weights_i32": [
+      16384,
+      -2845
+    ],
+    "bias_i64": 42986618,
+    "full_int16_score_abs_bound": 40369122426,
+    "clipped_values": 0,
+    "python_bigint_scores_exact": true,
+    "float_decision_disagreements": 0,
+    "preparation_accuracy": 0.737,
+    "scope": "candidate coefficients and host arithmetic only; requires new build; no board replay",
+    "sha256": {
+      "labels_u8.bin": "fda0302e3ff1af6728f9b2c24b115bcd81d0fae6a80bd9cf595a126443febcb4",
+      "expected_scores_i64.bin": "95c10c747e88da7699008e7b424cfd117658f072dd8a5363baa06e8da0d89eb8",
+      "inputs_i16.bin": "bfc64f1a1d93fb2d3e71c657f8a8d4828b2a8e63f14f0cc26bbdaae414539fd3"
+    }
+  },
+  "elapsed_seconds": 0.019704875070601702,
+  "peak_rss_bytes": 108068864,
+  "memory_method": "getrusage RUSAGE_SELF ru_maxrss",
+  "python": "3.14.3",
+  "numpy": "2.4.2",
+  "h5py": "3.16.0",
+  "scope": "within-acquisition preparation-label agreement; no physical true-state fidelity or drift-transfer claim; no FPGA run",
+  "output_hashes": {
+    "final_predictions.csv": "3d98545716b8caf41fe80ce6ff0e2b4968e96e6441e8296f36986054a6ee9d54",
+    "selection_before_final.json": "848d7db376222a5a43c7364b306b53bdec33bffc528272145ffa71389fc20f2a"
+  }
+}

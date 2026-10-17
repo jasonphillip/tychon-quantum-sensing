@@ -1,0 +1,376 @@
+{
+  "selected": "pooled_matched_filter@100:500",
+  "boxcar_pack_candidate": "pooled_boxcar@100:500",
+  "candidates": [
+    {
+      "id": "pooled_boxcar@0:770",
+      "method": "pooled_boxcar",
+      "window": [
+        0,
+        770
+      ],
+      "validation": {
+        "coverage": 1.0,
+        "balanced_accuracy": 0.948974609375,
+        "pooled_accuracy": 0.948974609375,
+        "confusion_preparation_by_assignment": [
+          [
+            2003,
+            45
+          ],
+          [
+            164,
+            1884
+          ]
+        ],
+        "per_preparation_counts": [
+          2048,
+          2048
+        ],
+        "per_preparation_error": [
+          0.02197265625,
+          0.080078125
+        ],
+        "per_preparation_accuracy_wilson95": [
+          [
+            0.9707265797621114,
+            0.9835381815734792
+          ],
+          [
+            0.9073656123856932,
+            0.9309057816373998
+          ]
+        ],
+        "pooled_accuracy_wilson95": [
+          0.9418050708778951,
+          0.955302789741175
+        ],
+        "interval_scope": "conditional IID shot assumptions; pooled interval is not a balanced-accuracy interval"
+      }
+    },
+    {
+      "id": "pooled_matched_filter@0:770",
+      "method": "pooled_matched_filter",
+      "window": [
+        0,
+        770
+      ],
+      "validation": {
+        "coverage": 1.0,
+        "balanced_accuracy": 0.94775390625,
+        "pooled_accuracy": 0.94775390625,
+        "confusion_preparation_by_assignment": [
+          [
+            2003,
+            45
+          ],
+          [
+            169,
+            1879
+          ]
+        ],
+        "per_preparation_counts": [
+          2048,
+          2048
+        ],
+        "per_preparation_error": [
+          0.02197265625,
+          0.08251953125
+        ],
+        "per_preparation_accuracy_wilson95": [
+          [
+            0.9707265797621114,
+            0.9835381815734792
+          ],
+          [
+            0.9047675864187177,
+            0.928630136708892
+          ]
+        ],
+        "pooled_accuracy_wilson95": [
+          0.9405100178795183,
+          0.9541587240320502
+        ],
+        "interval_scope": "conditional IID shot assumptions; pooled interval is not a balanced-accuracy interval"
+      }
+    },
+    {
+      "id": "pooled_lda_shrinkage_0.2@0:770",
+      "method": "pooled_lda_shrinkage_0.2",
+      "window": [
+        0,
+        770
+      ],
+      "validation": {
+        "coverage": 1.0,
+        "balanced_accuracy": 0.951416015625,
+        "pooled_accuracy": 0.951416015625,
+        "confusion_preparation_by_assignment": [
+          [
+            2003,
+            45
+          ],
+          [
+            154,
+            1894
+          ]
+        ],
+        "per_preparation_counts": [
+          2048,
+          2048
+        ],
+        "per_preparation_error": [
+          0.02197265625,
+          0.0751953125
+        ],
+        "per_preparation_accuracy_wilson95": [
+          [
+            0.9707265797621114,
+            0.9835381815734792
+          ],
+          [
+            0.912571396348843,
+            0.9354473394652162
+          ]
+        ],
+        "pooled_accuracy_wilson95": [
+          0.9443984033341,
+          0.9575876946999731
+        ],
+        "interval_scope": "conditional IID shot assumptions; pooled interval is not a balanced-accuracy interval"
+      }
+    },
+    {
+      "id": "affine_reference_boxcar@0:770",
+      "method": "affine_reference_boxcar",
+      "window": [
+        0,
+        770
+      ],
+      "validation": {
+        "coverage": 1.0,
+        "balanced_accuracy": 0.94921875,
+        "pooled_accuracy": 0.94921875,
+        "confusion_preparation_by_assignment": [
+          [
+            2003,
+            45
+          ],
+          [
+            163,
+            1885
+          ]
+        ],
+        "per_preparation_counts": [
+          2048,
+          2048
+        ],
+        "per_preparation_error": [
+          0.02197265625,
+          0.07958984375
+        ],
+        "per_preparation_accuracy_wilson95": [
+          [
+            0.9707265797621114,
+            0.9835381815734792
+          ],
+          [
+            0.9078855970825328,
+            0.9313605311196567
+          ]
+        ],
+        "pooled_accuracy_wilson95": [
+          0.9420642079017939,
+          0.9555314764587765
+        ],
+        "interval_scope": "conditional IID shot assumptions; pooled interval is not a balanced-accuracy interval"
+      }
+    },
+    {
+      "id": "pooled_boxcar@100:500",
+      "method": "pooled_boxcar",
+      "window": [
+        100,
+        500
+      ],
+      "validation": {
+        "coverage": 1.0,
+        "balanced_accuracy": 0.95458984375,
+        "pooled_accuracy": 0.95458984375,
+        "confusion_preparation_by_assignment": [
+          [
+            1998,
+            50
+          ],
+          [
+            136,
+            1912
+          ]
+        ],
+        "per_preparation_counts": [
+          2048,
+          2048
+        ],
+        "per_preparation_error": [
+          0.0244140625,
+          0.06640625
+        ],
+        "per_preparation_accuracy_wilson95": [
+          [
+            0.9679587134367476,
+            0.98143237700336
+          ],
+          [
+            0.9219778657610942,
+            0.9435860852767042
+          ]
+        ],
+        "pooled_accuracy_wilson95": [
+          0.947776604127552,
+          0.9605512025460251
+        ],
+        "interval_scope": "conditional IID shot assumptions; pooled interval is not a balanced-accuracy interval"
+      }
+    },
+    {
+      "id": "pooled_matched_filter@100:500",
+      "method": "pooled_matched_filter",
+      "window": [
+        100,
+        500
+      ],
+      "validation": {
+        "coverage": 1.0,
+        "balanced_accuracy": 0.954833984375,
+        "pooled_accuracy": 0.954833984375,
+        "confusion_preparation_by_assignment": [
+          [
+            2001,
+            47
+          ],
+          [
+            138,
+            1910
+          ]
+        ],
+        "per_preparation_counts": [
+          2048,
+          2048
+        ],
+        "per_preparation_error": [
+          0.02294921875,
+          0.0673828125
+        ],
+        "per_preparation_accuracy_wilson95": [
+          [
+            0.9696172179609267,
+            0.9826980750164708
+          ],
+          [
+            0.9209302227135099,
+            0.9426842599660952
+          ]
+        ],
+        "pooled_accuracy_wilson95": [
+          0.9480368065317946,
+          0.9607788238832828
+        ],
+        "interval_scope": "conditional IID shot assumptions; pooled interval is not a balanced-accuracy interval"
+      }
+    },
+    {
+      "id": "pooled_lda_shrinkage_0.2@100:500",
+      "method": "pooled_lda_shrinkage_0.2",
+      "window": [
+        100,
+        500
+      ],
+      "validation": {
+        "coverage": 1.0,
+        "balanced_accuracy": 0.954345703125,
+        "pooled_accuracy": 0.954345703125,
+        "confusion_preparation_by_assignment": [
+          [
+            1995,
+            53
+          ],
+          [
+            134,
+            1914
+          ]
+        ],
+        "per_preparation_counts": [
+          2048,
+          2048
+        ],
+        "per_preparation_error": [
+          0.02587890625,
+          0.0654296875
+        ],
+        "per_preparation_accuracy_wilson95": [
+          [
+            0.9663063536491754,
+            0.9801605342536424
+          ],
+          [
+            0.9230261702489779,
+            0.9444872491470135
+          ]
+        ],
+        "pooled_accuracy_wilson95": [
+          0.947516451879336,
+          0.9603235310527409
+        ],
+        "interval_scope": "conditional IID shot assumptions; pooled interval is not a balanced-accuracy interval"
+      }
+    },
+    {
+      "id": "affine_reference_boxcar@100:500",
+      "method": "affine_reference_boxcar",
+      "window": [
+        100,
+        500
+      ],
+      "validation": {
+        "coverage": 1.0,
+        "balanced_accuracy": 0.954833984375,
+        "pooled_accuracy": 0.954833984375,
+        "confusion_preparation_by_assignment": [
+          [
+            1997,
+            51
+          ],
+          [
+            134,
+            1914
+          ]
+        ],
+        "per_preparation_counts": [
+          2048,
+          2048
+        ],
+        "per_preparation_error": [
+          0.02490234375,
+          0.0654296875
+        ],
+        "per_preparation_accuracy_wilson95": [
+          [
+            0.9674072699019736,
+            0.9810090863590375
+          ],
+          [
+            0.9230261702489779,
+            0.9444872491470135
+          ]
+        ],
+        "pooled_accuracy_wilson95": [
+          0.9480368065317946,
+          0.9607788238832828
+        ],
+        "interval_scope": "conditional IID shot assumptions; pooled interval is not a balanced-accuracy interval"
+      }
+    }
+  ],
+  "frozen_before_test_download": true,
+  "source_test_values_read": 0
+}

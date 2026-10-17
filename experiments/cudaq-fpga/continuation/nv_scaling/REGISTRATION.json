@@ -1,0 +1,37 @@
+{
+  "schema": "nv_scaling_final_registration_v1",
+  "registered_utc": "2026-10-17T18:33:36.478860+00:00",
+  "status": "frozen before final evaluation",
+  "protocol_sha256": "c42c84ab70cd67007fdf7d7f05e86b019a07a94355d1b84e4cae6900037e2662",
+  "files": {
+    "compare_runs.py": "fb174b265b937e99af86d86cb997476b69e4f18ae8210f8f71d715ec6c2ac4ca",
+    "config.json": "c0e7839882d2de032a0a0e25dd396f506fdb4d2d69214ad24d79227630607379",
+    "frozen/nv_match.c": "0519008afbff84880930baf8113c3c4c0fe155d8481a9b1eed74651502dfba99",
+    "frozen/templates_i16le.bin": "b4c8515c0c4842d613a58fc7a23e528c956343bf86ba515cda5715ca57110f8f",
+    "nv_model.py": "fab118bd8f4633ba74299dfee205b2e7c66d8afc968364ccf4cc1ddf55ab72ce",
+    "protocol_dev.json": "40e784eba9d89640e856e67783a2c1d06b1aa4d31539e51a1f76319ebe2044ea",
+    "protocol_final.json": "c42c84ab70cd67007fdf7d7f05e86b019a07a94355d1b84e4cae6900037e2662",
+    "run_dataset.py": "dc8c580a42f6dee2dd620378206fcab1a1dc45146c76fd463c8f03396b9cfecd",
+    "scaling.py": "f23c0a92609c9572113f8e9a831657993b81cd765ec7ff9ad0ccacc38beae17d",
+    "test_scaling.py": "283e5507e1f00b95010928bde98e95aa884aa1af1f5b78c5be0e770e8f2c9b24",
+    "verify_pack.py": "75b878897b172ef1a57713a6604d9988cc956953cd682b2edefd522cf493b0df"
+  },
+  "development": {
+    "comparison_sha256": "c23d0e7314a924006e5308d6bd4d57eba5787231efb0ac9b7218fdd131480574",
+    "gpu_receipt_sha256": "c7702ea9b73a32302744386e751bbbe3d8e0acc3d358d702171f0aa2170220d4",
+    "c_verification_sha256": "d652917ba21c8158c0143f1c5b173e7992383de40c7ac0aab46361738e3caefd",
+    "all_gates_passed": true,
+    "cudaq_seconds_per_2_configurations": 1.6849917014988023
+  },
+  "final": {
+    "independent_configurations": 128,
+    "quantum_probabilities_per_generation": 32768,
+    "complete_generations": 4,
+    "detector_records": 1024,
+    "expected_generation_seconds_linear_estimate": 431.3578755836934,
+    "external_timeout_seconds": 1800,
+    "no_guaranteed_speedup": true,
+    "new_board_run_required": true
+  },
+  "batching_evidence": "Batched API requested; no fallback warning in retained log. Absence of warnings does not independently prove simultaneous GPU batching."
+}

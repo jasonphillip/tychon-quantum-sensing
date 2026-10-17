@@ -1,0 +1,212 @@
+[
+  {
+    "name": "timetrace-sensitivity-rabi.py",
+    "bytes": 28866,
+    "compressed_bytes": 7133,
+    "crc32": "b2d056bb"
+  },
+  {
+    "name": "timetrace-sensitivity-rabi.ipynb",
+    "bytes": 604011,
+    "compressed_bytes": 308367,
+    "crc32": "258b4947"
+  },
+  {
+    "name": "single-shot.py",
+    "bytes": 36809,
+    "compressed_bytes": 10476,
+    "crc32": "3e2fc4c1"
+  },
+  {
+    "name": "single-shot.ipynb",
+    "bytes": 1550470,
+    "compressed_bytes": 808724,
+    "crc32": "7157a487"
+  },
+  {
+    "name": "characterization measurements.py",
+    "bytes": 38530,
+    "compressed_bytes": 9917,
+    "crc32": "7fb9ab55"
+  },
+  {
+    "name": "characterization measurements.ipynb",
+    "bytes": 2417990,
+    "compressed_bytes": 1318039,
+    "crc32": "29a231ad"
+  },
+  {
+    "name": "three-bolometer multiplexing example.py",
+    "bytes": 8708,
+    "compressed_bytes": 3106,
+    "crc32": "1ba1de8d"
+  },
+  {
+    "name": "three-bolometer multiplexing example.ipynb",
+    "bytes": 2283550,
+    "compressed_bytes": 1585956,
+    "crc32": "e3473b3d"
+  },
+  {
+    "name": "three-bolometer-micrographs.svg",
+    "bytes": 1724241,
+    "compressed_bytes": 1283787,
+    "crc32": "4bf792d0"
+  },
+  {
+    "name": "utils.py",
+    "bytes": 7720,
+    "compressed_bytes": 2843,
+    "crc32": "eb833adc"
+  },
+  {
+    "name": "requirements.txt",
+    "bytes": 106,
+    "compressed_bytes": 86,
+    "crc32": "48df1d5f"
+  },
+  {
+    "name": "requirements-extra.txt",
+    "bytes": 101,
+    "compressed_bytes": 80,
+    "crc32": "2a115ba7"
+  },
+  {
+    "name": "README.md",
+    "bytes": 1836,
+    "compressed_bytes": 909,
+    "crc32": "a5230a12"
+  },
+  {
+    "name": "data/qubit-bolometer-readout-MC6-I06-95.nc",
+    "bytes": 377160,
+    "compressed_bytes": 279910,
+    "crc32": "e68b6815"
+  },
+  {
+    "name": "data/qubit-bolometer-readout-MC6-I06-126.nc",
+    "bytes": 96321578,
+    "compressed_bytes": 55812938,
+    "crc32": "2241f5cb"
+  },
+  {
+    "name": "data/qubit-bolometer-readout-MC6-I06-126-ref.nc",
+    "bytes": 96321065,
+    "compressed_bytes": 5433448,
+    "crc32": "27a72958"
+  },
+  {
+    "name": "data/qubit-bolometer-readout-MC6-I06-127.nc",
+    "bytes": 232179814,
+    "compressed_bytes": 177447480,
+    "crc32": "355a04b8"
+  },
+  {
+    "name": "data/qubit-bolometer-readout-MC6-I06-127-ref.nc",
+    "bytes": 232178247,
+    "compressed_bytes": 17055479,
+    "crc32": "0ea5288b"
+  },
+  {
+    "name": "data/qubit-bolometer-readout-MC6-I06-135.nc",
+    "bytes": 331505822,
+    "compressed_bytes": 192263419,
+    "crc32": "fe0ef413"
+  },
+  {
+    "name": "data/qubit-bolometer-readout-MC6-I06-143.nc",
+    "bytes": 331505822,
+    "compressed_bytes": 192129115,
+    "crc32": "4bb27896"
+  },
+  {
+    "name": "data/qubit-bolometer-readout-MC6-I06-145.nc",
+    "bytes": 431524816,
+    "compressed_bytes": 221200858,
+    "crc32": "bada14fc"
+  },
+  {
+    "name": "data/qubit-bolometer-readout-MC6-I06-176.nc",
+    "bytes": 160019,
+    "compressed_bytes": 63089,
+    "crc32": "640cac97"
+  },
+  {
+    "name": "data/qubit-bolometer-initial-experiments-77.nc",
+    "bytes": 170917,
+    "compressed_bytes": 57734,
+    "crc32": "0530da46"
+  },
+  {
+    "name": "data/qubit-bolometer-initial-experiments-79.nc",
+    "bytes": 128938,
+    "compressed_bytes": 18371,
+    "crc32": "7993904d"
+  },
+  {
+    "name": "data/bolometer-characterization-timetrace-5.nc",
+    "bytes": 101319,
+    "compressed_bytes": 15165,
+    "crc32": "c71aa04d"
+  },
+  {
+    "name": "data/bolometer-characterization-timetrace-74.nc",
+    "bytes": 146061,
+    "compressed_bytes": 57226,
+    "crc32": "1451a468"
+  },
+  {
+    "name": "data/bolometer-characterization-timetrace-76.nc",
+    "bytes": 25176338,
+    "compressed_bytes": 8689480,
+    "crc32": "72e56066"
+  },
+  {
+    "name": "data/bolometer-characterization-timetrace-76-calculated-fidelity.nc",
+    "bytes": 32258112,
+    "compressed_bytes": 1446298,
+    "crc32": "d14f5a9e"
+  },
+  {
+    "name": "data/bolometer-characterization-timetrace-77.nc",
+    "bytes": 563562,
+    "compressed_bytes": 219263,
+    "crc32": "d44580f5"
+  },
+  {
+    "name": "data/B03-1-heater-reflectance-3.nc",
+    "bytes": 6491620,
+    "compressed_bytes": 4254001,
+    "crc32": "805885ab"
+  },
+  {
+    "name": "data/B03-1-heater-reflectance-6.nc",
+    "bytes": 6491624,
+    "compressed_bytes": 4245876,
+    "crc32": "12b6043f"
+  },
+  {
+    "name": "data/B03-1-gain-compression-14.nc",
+    "bytes": 40727172,
+    "compressed_bytes": 26854619,
+    "crc32": "b2131bb9"
+  },
+  {
+    "name": "data/B03-1-gain-compression-19.nc",
+    "bytes": 12486836,
+    "compressed_bytes": 8246038,
+    "crc32": "9baa47ec"
+  },
+  {
+    "name": "data/Bolo11_3f_02-multiplexing-cooldown75-58.nc",
+    "bytes": 2936548,
+    "compressed_bytes": 1502478,
+    "crc32": "e8876d3c"
+  },
+  {
+    "name": "data/Bolo11_3f_02-multiplexing-cooldown75-81.nc",
+    "bytes": 482736,
+    "compressed_bytes": 259211,
+    "crc32": "33f7ce7c"
+  }
+]

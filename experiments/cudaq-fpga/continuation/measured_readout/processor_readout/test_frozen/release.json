@@ -1,0 +1,7 @@
+{
+  "schema": "processor_readout_test_release_v1",
+  "approved": true,
+  "reviewer": "Codex QEC subagent and coordinator (AI code and methods review; not human review)",
+  "training_receipt_sha256": "79cfec86ecc790c301fc1ca9ae9298f91da5ca44dd60562ce59b9a2161395134",
+  "released_utc": "2026-10-17T18:54:02.506072+00:00"
+}

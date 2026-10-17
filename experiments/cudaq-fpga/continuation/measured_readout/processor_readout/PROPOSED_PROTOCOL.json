@@ -1,0 +1,170 @@
+{
+  "schema": "processor_readout_proposed_protocol_v1",
+  "status": "awaiting coordinator protocol review; no final evaluation authorized yet",
+  "source_record": "https://zenodo.org/records/14427490",
+  "license": "CC-BY-4.0",
+  "source_code_commit": "2c7efadb21c1aa2bab2e5fc12ff403cb28af5d25",
+  "layout": "C-order float64 rows; interleaved I0,Q0,...,I769,Q769",
+  "signal_units": "native QICK digital readout values; volts conversion not established",
+  "labels": "0 ground preparation, 1 excited preparation; not perfect true-state labels",
+  "drift_transfer_eligible": false,
+  "group_warning": "10,000-row index tiles match preparation runs; they are not asserted independent acquisitions",
+  "source_train": {
+    "reference": [
+      [
+        0,
+        1024
+      ],
+      [
+        5000,
+        6024
+      ],
+      [
+        200000,
+        201024
+      ],
+      [
+        205000,
+        206024
+      ],
+      [
+        400000,
+        401024
+      ],
+      [
+        405000,
+        406024
+      ],
+      [
+        600000,
+        601024
+      ],
+      [
+        605000,
+        606024
+      ]
+    ],
+    "calibration": [
+      [
+        50000,
+        51024
+      ],
+      [
+        55000,
+        56024
+      ],
+      [
+        450000,
+        451024
+      ],
+      [
+        455000,
+        456024
+      ]
+    ],
+    "validation": [
+      [
+        100000,
+        101024
+      ],
+      [
+        105000,
+        106024
+      ],
+      [
+        300000,
+        301024
+      ],
+      [
+        305000,
+        306024
+      ]
+    ]
+  },
+  "source_test": {
+    "final": [
+      [
+        0,
+        1024
+      ],
+      [
+        5000,
+        6024
+      ],
+      [
+        20000,
+        21024
+      ],
+      [
+        25000,
+        26024
+      ],
+      [
+        40000,
+        41024
+      ],
+      [
+        45000,
+        46024
+      ],
+      [
+        60000,
+        61024
+      ],
+      [
+        65000,
+        66024
+      ]
+    ],
+    "read_policy": "do not retrieve labels or signals until protocol is approved and train-only model/selection are frozen",
+    "if_labels_differ": "retain records and report actual class counts; stop if either class has fewer than 1024; do not resample final"
+  },
+  "methods": [
+    "pooled_boxcar",
+    "pooled_matched_filter",
+    "pooled_lda_shrinkage_0.2",
+    "affine_reference_boxcar"
+  ],
+  "information_budget": "All methods receive the same reference and calibration labels; pooled baselines fit all 12,288 rows. Affine model fits reference boxcar with 8,192 and transform with 4,096. Validation uses 4,096 source-train rows only.",
+  "candidate_windows": [
+    [
+      0,
+      770
+    ],
+    [
+      100,
+      500
+    ]
+  ],
+  "window_origin": "Full source trace and one paper-prior window; no added search windows after results",
+  "binning": "64 equal-width time bins using overlap-weighted piecewise-constant sample integration; preserves full-window mean and 64-IQ-pair interface",
+  "affine": "same least-squares real IQ matrix/offset formula, empirical reference templates, min singular value0.15, max condition10; new coefficients",
+  "selection": "highest source-train validation balanced accuracy among eight method/window pairs; exact ties prefer boxcar, matched filter, LDA, affine, then shorter window",
+  "final_metrics": [
+    "balanced preparation accuracy",
+    "confusion matrix",
+    "per-preparation error",
+    "conditional IID Wilson intervals",
+    "paired method disagreements",
+    "calibration gain against fixed reference",
+    "quantization/clipping and score parity"
+  ],
+  "utility_acceptance": "selected final balanced preparation accuracy >=0.90; engineering feasibility only; no equality/advantage claim against the paper",
+  "fixed_point": "new boxcar coefficients only; int16 interleaved64-IQ inputs and int64 scores; no FPGA execution and no LDA compatibility claim",
+  "download_budget_bytes": {
+    "remaining_signal_ranges": 302776320,
+    "remaining_selected_test_labels": 65536,
+    "new_remaining_total": 302841856,
+    "prior_thermal_zip_ranges": 8934736,
+    "prior_source_train_labels": 7200128,
+    "lane_known_data_total": 318976720,
+    "lane_ceiling": 400000000
+  },
+  "resources": {
+    "cpu_threads": 4,
+    "memory_gib": 8,
+    "wall_seconds": 1800,
+    "GPU": false
+  },
+  "no_neural_training": true
+}

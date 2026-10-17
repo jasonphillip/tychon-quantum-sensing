@@ -1,0 +1,97 @@
+{
+  "status": "passed",
+  "protocol_sha256": "40e784eba9d89640e856e67783a2c1d06b1aa4d31539e51a1f76319ebe2044ea",
+  "independent_configurations": 2,
+  "quantum_probability_count": 512,
+  "gpu_generated_fraction": 1.0,
+  "max_complete_probability_difference": 4.755168481196392e-10,
+  "max_complete_density_difference": 1.0784030739574057e-09,
+  "cpu_warm_quantum_seconds": {
+    "median": 0.00029069849551888183,
+    "minimum": 0.00025976198958233,
+    "maximum": 0.00032163500145543367
+  },
+  "gpu_warm_quantum_seconds": {
+    "median": 1.6849917014988023,
+    "minimum": 1.6769441229989752,
+    "maximum": 1.6930392799986294
+  },
+  "cpu_seconds_divided_by_gpu_seconds": 0.00017252221198496415,
+  "ratio_interpretation": "Above one favors GPU; below one favors CPU. No speedup acceptance gate.",
+  "first_call_plus_initialization_seconds": {
+    "cpu": 0.0005044999998062849,
+    "gpu": 2.99046153499512
+  },
+  "process_peak_rss_bytes": {
+    "cpu": 40722432,
+    "gpu": 1591300096
+  },
+  "gpu_memory": {
+    "method": "CUDA memGetInfo and CuPy pool at synchronized stage checkpoints; CUDA-Q allocations are not all in the CuPy pool. Device free-memory changes are device-wide and sampled, not an allocation peak or exclusive process usage. Unified host RAM availability is not GPU allocation.",
+    "baseline_device_free_bytes": 2116337664,
+    "maximum_observed_device_free_decrement_bytes": 727728128,
+    "max_observed_cupy_pool_used_bytes": 0,
+    "checkpoints": [
+      {
+        "label": "initialized",
+        "device_free_bytes": 2116337664,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 0
+      },
+      {
+        "label": "chunk_0_before_download",
+        "device_free_bytes": 1389064192,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_0_after_download",
+        "device_free_bytes": 1388609536,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_0_before_download",
+        "device_free_bytes": 1423691776,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_0_after_download",
+        "device_free_bytes": 1423691776,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_0_before_download",
+        "device_free_bytes": 1439850496,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      },
+      {
+        "label": "chunk_0_after_download",
+        "device_free_bytes": 1439850496,
+        "device_total_bytes": 130661138432,
+        "cupy_pool_used_bytes": 0,
+        "cupy_pool_reserved_bytes": 1024
+      }
+    ]
+  },
+  "batched_api_used": true,
+  "sequential_fallback_warning_observed": false,
+  "batch_execution_evidence": "Batched API requested; no fallback warning in retained log. Absence of warnings does not independently prove simultaneous GPU batching.",
+  "retained_warnings": [
+    "./nv_scaling/scaling.py:70: FutureWarning: The CUDA-Q `sample` and `observe` algorithmic primitives will change in a future release. Existing code may require updates. See https://nvidia.github.io/cuda-quantum/latest/using/migration/upcoming_changes.html for details."
+  ],
+  "gpu_log_sha256": "517316ea150bd6f4b0500e33fbe78e613be04ce4c6233efb727835c05a7f28c5",
+  "board_executed": false,
+  "cpu_single_pipeline_component_sum_seconds": 0.0030023930012248456,
+  "gpu_single_pipeline_component_sum_seconds": 2.992434879997745,
+  "pipeline_sum_note": "Component sum includes first generation, initialization, CPU detector/integer reference, and writes. It excludes validation and repeated timing passes; it is not a separately measured total."
+}

@@ -1,0 +1,10 @@
+init OK (control plane alive)
+[after_init  ] CTRL=0x00000000 ERR=0x00000000 MODEL=0xc8000400 IO=0xc8000000 VER=0x20000000
+model: 1 input(s) / 1 output(s), sanity=0
+[before_start] CTRL=0x00000000 ERR=0x00000000 MODEL=0xc8000400 IO=0xc8000000 VER=0x20000000
+vbx_cnn_model_start ret=0
+[after_start ] CTRL=0x00000004 ERR=0x00000000 MODEL=0xc8000400 IO=0xc8000000 VER=0x20000000
+poll ended: iters=0 last_poll_ret=0
+[final       ] CTRL=0x00000000 ERR=0x00000000 MODEL=0xc8000400 IO=0xc8000000 VER=0x20000000
+error_val=0
+RESULT: INFERENCE COMPLETED

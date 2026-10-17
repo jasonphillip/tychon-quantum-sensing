@@ -1,0 +1,7195 @@
+{
+  "schema": "nv_scaling_board_pack_v1",
+  "count": 1024,
+  "abi": {
+    "input": "128 int16 little endian, I[0:64] followed by Q[0:64], Q14",
+    "output": "uint16 lowest-index argmin and uint64 full squared-distance score",
+    "template_count": 121,
+    "rom_sha256": "b4c8515c0c4842d613a58fc7a23e528c956343bf86ba515cda5715ca57110f8f",
+    "board_executed": false
+  },
+  "files": {
+    "expected_indices_u16.bin": {
+      "sha256": "c430571fb21f9f89636ff7a8691a1eb68293ec29e10e7e8a648bfa9560f71152",
+      "bytes": 2048
+    },
+    "expected_scores_u64.bin": {
+      "sha256": "58597983c2b405104b48bce7320c8aff88f0f8c9ed6ac2cb7839f16b290d045a",
+      "bytes": 8192
+    },
+    "inputs_i16.bin": {
+      "sha256": "83fb1cf748fbf854ea0690a7ee7e362b412891f2202ae59642f96c29888631b7",
+      "bytes": 262144
+    }
+  },
+  "cases": [
+    {
+      "id": "final-00000-r100-n0",
+      "configuration": 0,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00000-r100-n1",
+      "configuration": 0,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00000-r500-n0",
+      "configuration": 0,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00000-r500-n1",
+      "configuration": 0,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00000-r2000-n0",
+      "configuration": 0,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00000-r2000-n1",
+      "configuration": 0,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00000-r20000-n0",
+      "configuration": 0,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00000-r20000-n1",
+      "configuration": 0,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00001-r100-n0",
+      "configuration": 1,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00001-r100-n1",
+      "configuration": 1,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00001-r500-n0",
+      "configuration": 1,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00001-r500-n1",
+      "configuration": 1,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00001-r2000-n0",
+      "configuration": 1,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00001-r2000-n1",
+      "configuration": 1,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00001-r20000-n0",
+      "configuration": 1,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00001-r20000-n1",
+      "configuration": 1,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00002-r100-n0",
+      "configuration": 2,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00002-r100-n1",
+      "configuration": 2,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00002-r500-n0",
+      "configuration": 2,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00002-r500-n1",
+      "configuration": 2,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00002-r2000-n0",
+      "configuration": 2,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00002-r2000-n1",
+      "configuration": 2,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00002-r20000-n0",
+      "configuration": 2,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00002-r20000-n1",
+      "configuration": 2,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00003-r100-n0",
+      "configuration": 3,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00003-r100-n1",
+      "configuration": 3,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00003-r500-n0",
+      "configuration": 3,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00003-r500-n1",
+      "configuration": 3,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00003-r2000-n0",
+      "configuration": 3,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00003-r2000-n1",
+      "configuration": 3,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00003-r20000-n0",
+      "configuration": 3,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00003-r20000-n1",
+      "configuration": 3,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00004-r100-n0",
+      "configuration": 4,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00004-r100-n1",
+      "configuration": 4,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00004-r500-n0",
+      "configuration": 4,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00004-r500-n1",
+      "configuration": 4,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00004-r2000-n0",
+      "configuration": 4,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00004-r2000-n1",
+      "configuration": 4,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00004-r20000-n0",
+      "configuration": 4,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00004-r20000-n1",
+      "configuration": 4,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00005-r100-n0",
+      "configuration": 5,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00005-r100-n1",
+      "configuration": 5,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00005-r500-n0",
+      "configuration": 5,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00005-r500-n1",
+      "configuration": 5,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00005-r2000-n0",
+      "configuration": 5,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00005-r2000-n1",
+      "configuration": 5,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00005-r20000-n0",
+      "configuration": 5,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00005-r20000-n1",
+      "configuration": 5,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00006-r100-n0",
+      "configuration": 6,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00006-r100-n1",
+      "configuration": 6,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00006-r500-n0",
+      "configuration": 6,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00006-r500-n1",
+      "configuration": 6,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00006-r2000-n0",
+      "configuration": 6,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00006-r2000-n1",
+      "configuration": 6,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00006-r20000-n0",
+      "configuration": 6,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00006-r20000-n1",
+      "configuration": 6,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00007-r100-n0",
+      "configuration": 7,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00007-r100-n1",
+      "configuration": 7,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00007-r500-n0",
+      "configuration": 7,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00007-r500-n1",
+      "configuration": 7,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00007-r2000-n0",
+      "configuration": 7,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00007-r2000-n1",
+      "configuration": 7,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00007-r20000-n0",
+      "configuration": 7,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00007-r20000-n1",
+      "configuration": 7,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00008-r100-n0",
+      "configuration": 8,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00008-r100-n1",
+      "configuration": 8,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00008-r500-n0",
+      "configuration": 8,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00008-r500-n1",
+      "configuration": 8,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00008-r2000-n0",
+      "configuration": 8,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00008-r2000-n1",
+      "configuration": 8,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00008-r20000-n0",
+      "configuration": 8,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00008-r20000-n1",
+      "configuration": 8,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00009-r100-n0",
+      "configuration": 9,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00009-r100-n1",
+      "configuration": 9,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00009-r500-n0",
+      "configuration": 9,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00009-r500-n1",
+      "configuration": 9,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00009-r2000-n0",
+      "configuration": 9,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00009-r2000-n1",
+      "configuration": 9,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00009-r20000-n0",
+      "configuration": 9,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00009-r20000-n1",
+      "configuration": 9,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00010-r100-n0",
+      "configuration": 10,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 2
+    },
+    {
+      "id": "final-00010-r100-n1",
+      "configuration": 10,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00010-r500-n0",
+      "configuration": 10,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00010-r500-n1",
+      "configuration": 10,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00010-r2000-n0",
+      "configuration": 10,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00010-r2000-n1",
+      "configuration": 10,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00010-r20000-n0",
+      "configuration": 10,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00010-r20000-n1",
+      "configuration": 10,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00011-r100-n0",
+      "configuration": 11,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00011-r100-n1",
+      "configuration": 11,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00011-r500-n0",
+      "configuration": 11,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00011-r500-n1",
+      "configuration": 11,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00011-r2000-n0",
+      "configuration": 11,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00011-r2000-n1",
+      "configuration": 11,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00011-r20000-n0",
+      "configuration": 11,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00011-r20000-n1",
+      "configuration": 11,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00012-r100-n0",
+      "configuration": 12,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00012-r100-n1",
+      "configuration": 12,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00012-r500-n0",
+      "configuration": 12,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00012-r500-n1",
+      "configuration": 12,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00012-r2000-n0",
+      "configuration": 12,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00012-r2000-n1",
+      "configuration": 12,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00012-r20000-n0",
+      "configuration": 12,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00012-r20000-n1",
+      "configuration": 12,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00013-r100-n0",
+      "configuration": 13,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00013-r100-n1",
+      "configuration": 13,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00013-r500-n0",
+      "configuration": 13,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00013-r500-n1",
+      "configuration": 13,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00013-r2000-n0",
+      "configuration": 13,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00013-r2000-n1",
+      "configuration": 13,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00013-r20000-n0",
+      "configuration": 13,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00013-r20000-n1",
+      "configuration": 13,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00014-r100-n0",
+      "configuration": 14,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00014-r100-n1",
+      "configuration": 14,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00014-r500-n0",
+      "configuration": 14,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00014-r500-n1",
+      "configuration": 14,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00014-r2000-n0",
+      "configuration": 14,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00014-r2000-n1",
+      "configuration": 14,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00014-r20000-n0",
+      "configuration": 14,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00014-r20000-n1",
+      "configuration": 14,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00015-r100-n0",
+      "configuration": 15,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00015-r100-n1",
+      "configuration": 15,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00015-r500-n0",
+      "configuration": 15,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00015-r500-n1",
+      "configuration": 15,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00015-r2000-n0",
+      "configuration": 15,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00015-r2000-n1",
+      "configuration": 15,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00015-r20000-n0",
+      "configuration": 15,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00015-r20000-n1",
+      "configuration": 15,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00016-r100-n0",
+      "configuration": 16,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00016-r100-n1",
+      "configuration": 16,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00016-r500-n0",
+      "configuration": 16,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00016-r500-n1",
+      "configuration": 16,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00016-r2000-n0",
+      "configuration": 16,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00016-r2000-n1",
+      "configuration": 16,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00016-r20000-n0",
+      "configuration": 16,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00016-r20000-n1",
+      "configuration": 16,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00017-r100-n0",
+      "configuration": 17,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00017-r100-n1",
+      "configuration": 17,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00017-r500-n0",
+      "configuration": 17,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00017-r500-n1",
+      "configuration": 17,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00017-r2000-n0",
+      "configuration": 17,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00017-r2000-n1",
+      "configuration": 17,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00017-r20000-n0",
+      "configuration": 17,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00017-r20000-n1",
+      "configuration": 17,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00018-r100-n0",
+      "configuration": 18,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00018-r100-n1",
+      "configuration": 18,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00018-r500-n0",
+      "configuration": 18,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00018-r500-n1",
+      "configuration": 18,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00018-r2000-n0",
+      "configuration": 18,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00018-r2000-n1",
+      "configuration": 18,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00018-r20000-n0",
+      "configuration": 18,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00018-r20000-n1",
+      "configuration": 18,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00019-r100-n0",
+      "configuration": 19,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00019-r100-n1",
+      "configuration": 19,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00019-r500-n0",
+      "configuration": 19,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00019-r500-n1",
+      "configuration": 19,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00019-r2000-n0",
+      "configuration": 19,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00019-r2000-n1",
+      "configuration": 19,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00019-r20000-n0",
+      "configuration": 19,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00019-r20000-n1",
+      "configuration": 19,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00020-r100-n0",
+      "configuration": 20,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00020-r100-n1",
+      "configuration": 20,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00020-r500-n0",
+      "configuration": 20,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00020-r500-n1",
+      "configuration": 20,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00020-r2000-n0",
+      "configuration": 20,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00020-r2000-n1",
+      "configuration": 20,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00020-r20000-n0",
+      "configuration": 20,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00020-r20000-n1",
+      "configuration": 20,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00021-r100-n0",
+      "configuration": 21,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00021-r100-n1",
+      "configuration": 21,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00021-r500-n0",
+      "configuration": 21,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00021-r500-n1",
+      "configuration": 21,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00021-r2000-n0",
+      "configuration": 21,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00021-r2000-n1",
+      "configuration": 21,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00021-r20000-n0",
+      "configuration": 21,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00021-r20000-n1",
+      "configuration": 21,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00022-r100-n0",
+      "configuration": 22,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00022-r100-n1",
+      "configuration": 22,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00022-r500-n0",
+      "configuration": 22,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00022-r500-n1",
+      "configuration": 22,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00022-r2000-n0",
+      "configuration": 22,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00022-r2000-n1",
+      "configuration": 22,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00022-r20000-n0",
+      "configuration": 22,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00022-r20000-n1",
+      "configuration": 22,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00023-r100-n0",
+      "configuration": 23,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00023-r100-n1",
+      "configuration": 23,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00023-r500-n0",
+      "configuration": 23,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00023-r500-n1",
+      "configuration": 23,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00023-r2000-n0",
+      "configuration": 23,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00023-r2000-n1",
+      "configuration": 23,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00023-r20000-n0",
+      "configuration": 23,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00023-r20000-n1",
+      "configuration": 23,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00024-r100-n0",
+      "configuration": 24,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00024-r100-n1",
+      "configuration": 24,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 2
+    },
+    {
+      "id": "final-00024-r500-n0",
+      "configuration": 24,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00024-r500-n1",
+      "configuration": 24,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00024-r2000-n0",
+      "configuration": 24,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00024-r2000-n1",
+      "configuration": 24,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00024-r20000-n0",
+      "configuration": 24,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00024-r20000-n1",
+      "configuration": 24,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00025-r100-n0",
+      "configuration": 25,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00025-r100-n1",
+      "configuration": 25,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00025-r500-n0",
+      "configuration": 25,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00025-r500-n1",
+      "configuration": 25,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00025-r2000-n0",
+      "configuration": 25,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00025-r2000-n1",
+      "configuration": 25,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00025-r20000-n0",
+      "configuration": 25,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00025-r20000-n1",
+      "configuration": 25,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00026-r100-n0",
+      "configuration": 26,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00026-r100-n1",
+      "configuration": 26,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00026-r500-n0",
+      "configuration": 26,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00026-r500-n1",
+      "configuration": 26,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00026-r2000-n0",
+      "configuration": 26,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00026-r2000-n1",
+      "configuration": 26,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00026-r20000-n0",
+      "configuration": 26,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00026-r20000-n1",
+      "configuration": 26,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00027-r100-n0",
+      "configuration": 27,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00027-r100-n1",
+      "configuration": 27,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00027-r500-n0",
+      "configuration": 27,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00027-r500-n1",
+      "configuration": 27,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00027-r2000-n0",
+      "configuration": 27,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00027-r2000-n1",
+      "configuration": 27,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00027-r20000-n0",
+      "configuration": 27,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00027-r20000-n1",
+      "configuration": 27,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00028-r100-n0",
+      "configuration": 28,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00028-r100-n1",
+      "configuration": 28,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00028-r500-n0",
+      "configuration": 28,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00028-r500-n1",
+      "configuration": 28,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00028-r2000-n0",
+      "configuration": 28,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00028-r2000-n1",
+      "configuration": 28,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00028-r20000-n0",
+      "configuration": 28,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00028-r20000-n1",
+      "configuration": 28,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00029-r100-n0",
+      "configuration": 29,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00029-r100-n1",
+      "configuration": 29,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00029-r500-n0",
+      "configuration": 29,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00029-r500-n1",
+      "configuration": 29,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00029-r2000-n0",
+      "configuration": 29,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00029-r2000-n1",
+      "configuration": 29,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00029-r20000-n0",
+      "configuration": 29,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00029-r20000-n1",
+      "configuration": 29,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00030-r100-n0",
+      "configuration": 30,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00030-r100-n1",
+      "configuration": 30,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00030-r500-n0",
+      "configuration": 30,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00030-r500-n1",
+      "configuration": 30,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00030-r2000-n0",
+      "configuration": 30,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00030-r2000-n1",
+      "configuration": 30,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00030-r20000-n0",
+      "configuration": 30,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00030-r20000-n1",
+      "configuration": 30,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00031-r100-n0",
+      "configuration": 31,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00031-r100-n1",
+      "configuration": 31,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00031-r500-n0",
+      "configuration": 31,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00031-r500-n1",
+      "configuration": 31,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00031-r2000-n0",
+      "configuration": 31,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00031-r2000-n1",
+      "configuration": 31,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00031-r20000-n0",
+      "configuration": 31,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00031-r20000-n1",
+      "configuration": 31,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00032-r100-n0",
+      "configuration": 32,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00032-r100-n1",
+      "configuration": 32,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00032-r500-n0",
+      "configuration": 32,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00032-r500-n1",
+      "configuration": 32,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00032-r2000-n0",
+      "configuration": 32,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00032-r2000-n1",
+      "configuration": 32,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00032-r20000-n0",
+      "configuration": 32,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00032-r20000-n1",
+      "configuration": 32,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00033-r100-n0",
+      "configuration": 33,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00033-r100-n1",
+      "configuration": 33,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00033-r500-n0",
+      "configuration": 33,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00033-r500-n1",
+      "configuration": 33,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00033-r2000-n0",
+      "configuration": 33,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00033-r2000-n1",
+      "configuration": 33,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00033-r20000-n0",
+      "configuration": 33,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00033-r20000-n1",
+      "configuration": 33,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00034-r100-n0",
+      "configuration": 34,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00034-r100-n1",
+      "configuration": 34,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00034-r500-n0",
+      "configuration": 34,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00034-r500-n1",
+      "configuration": 34,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00034-r2000-n0",
+      "configuration": 34,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00034-r2000-n1",
+      "configuration": 34,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00034-r20000-n0",
+      "configuration": 34,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00034-r20000-n1",
+      "configuration": 34,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00035-r100-n0",
+      "configuration": 35,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00035-r100-n1",
+      "configuration": 35,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00035-r500-n0",
+      "configuration": 35,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00035-r500-n1",
+      "configuration": 35,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00035-r2000-n0",
+      "configuration": 35,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00035-r2000-n1",
+      "configuration": 35,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00035-r20000-n0",
+      "configuration": 35,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00035-r20000-n1",
+      "configuration": 35,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00036-r100-n0",
+      "configuration": 36,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00036-r100-n1",
+      "configuration": 36,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00036-r500-n0",
+      "configuration": 36,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00036-r500-n1",
+      "configuration": 36,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00036-r2000-n0",
+      "configuration": 36,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00036-r2000-n1",
+      "configuration": 36,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00036-r20000-n0",
+      "configuration": 36,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00036-r20000-n1",
+      "configuration": 36,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00037-r100-n0",
+      "configuration": 37,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00037-r100-n1",
+      "configuration": 37,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00037-r500-n0",
+      "configuration": 37,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00037-r500-n1",
+      "configuration": 37,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00037-r2000-n0",
+      "configuration": 37,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00037-r2000-n1",
+      "configuration": 37,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00037-r20000-n0",
+      "configuration": 37,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00037-r20000-n1",
+      "configuration": 37,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00038-r100-n0",
+      "configuration": 38,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00038-r100-n1",
+      "configuration": 38,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00038-r500-n0",
+      "configuration": 38,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00038-r500-n1",
+      "configuration": 38,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00038-r2000-n0",
+      "configuration": 38,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00038-r2000-n1",
+      "configuration": 38,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00038-r20000-n0",
+      "configuration": 38,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00038-r20000-n1",
+      "configuration": 38,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00039-r100-n0",
+      "configuration": 39,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00039-r100-n1",
+      "configuration": 39,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00039-r500-n0",
+      "configuration": 39,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00039-r500-n1",
+      "configuration": 39,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00039-r2000-n0",
+      "configuration": 39,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00039-r2000-n1",
+      "configuration": 39,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00039-r20000-n0",
+      "configuration": 39,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00039-r20000-n1",
+      "configuration": 39,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00040-r100-n0",
+      "configuration": 40,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00040-r100-n1",
+      "configuration": 40,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00040-r500-n0",
+      "configuration": 40,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00040-r500-n1",
+      "configuration": 40,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00040-r2000-n0",
+      "configuration": 40,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00040-r2000-n1",
+      "configuration": 40,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00040-r20000-n0",
+      "configuration": 40,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00040-r20000-n1",
+      "configuration": 40,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00041-r100-n0",
+      "configuration": 41,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00041-r100-n1",
+      "configuration": 41,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00041-r500-n0",
+      "configuration": 41,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00041-r500-n1",
+      "configuration": 41,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00041-r2000-n0",
+      "configuration": 41,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00041-r2000-n1",
+      "configuration": 41,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00041-r20000-n0",
+      "configuration": 41,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00041-r20000-n1",
+      "configuration": 41,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00042-r100-n0",
+      "configuration": 42,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00042-r100-n1",
+      "configuration": 42,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00042-r500-n0",
+      "configuration": 42,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00042-r500-n1",
+      "configuration": 42,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00042-r2000-n0",
+      "configuration": 42,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00042-r2000-n1",
+      "configuration": 42,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00042-r20000-n0",
+      "configuration": 42,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00042-r20000-n1",
+      "configuration": 42,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00043-r100-n0",
+      "configuration": 43,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00043-r100-n1",
+      "configuration": 43,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00043-r500-n0",
+      "configuration": 43,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00043-r500-n1",
+      "configuration": 43,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00043-r2000-n0",
+      "configuration": 43,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00043-r2000-n1",
+      "configuration": 43,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00043-r20000-n0",
+      "configuration": 43,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00043-r20000-n1",
+      "configuration": 43,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00044-r100-n0",
+      "configuration": 44,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00044-r100-n1",
+      "configuration": 44,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00044-r500-n0",
+      "configuration": 44,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00044-r500-n1",
+      "configuration": 44,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00044-r2000-n0",
+      "configuration": 44,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00044-r2000-n1",
+      "configuration": 44,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00044-r20000-n0",
+      "configuration": 44,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00044-r20000-n1",
+      "configuration": 44,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00045-r100-n0",
+      "configuration": 45,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00045-r100-n1",
+      "configuration": 45,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00045-r500-n0",
+      "configuration": 45,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00045-r500-n1",
+      "configuration": 45,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00045-r2000-n0",
+      "configuration": 45,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00045-r2000-n1",
+      "configuration": 45,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00045-r20000-n0",
+      "configuration": 45,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00045-r20000-n1",
+      "configuration": 45,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00046-r100-n0",
+      "configuration": 46,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00046-r100-n1",
+      "configuration": 46,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00046-r500-n0",
+      "configuration": 46,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00046-r500-n1",
+      "configuration": 46,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00046-r2000-n0",
+      "configuration": 46,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00046-r2000-n1",
+      "configuration": 46,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00046-r20000-n0",
+      "configuration": 46,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00046-r20000-n1",
+      "configuration": 46,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00047-r100-n0",
+      "configuration": 47,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00047-r100-n1",
+      "configuration": 47,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00047-r500-n0",
+      "configuration": 47,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00047-r500-n1",
+      "configuration": 47,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00047-r2000-n0",
+      "configuration": 47,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00047-r2000-n1",
+      "configuration": 47,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00047-r20000-n0",
+      "configuration": 47,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00047-r20000-n1",
+      "configuration": 47,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00048-r100-n0",
+      "configuration": 48,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00048-r100-n1",
+      "configuration": 48,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00048-r500-n0",
+      "configuration": 48,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00048-r500-n1",
+      "configuration": 48,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00048-r2000-n0",
+      "configuration": 48,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00048-r2000-n1",
+      "configuration": 48,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00048-r20000-n0",
+      "configuration": 48,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00048-r20000-n1",
+      "configuration": 48,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00049-r100-n0",
+      "configuration": 49,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00049-r100-n1",
+      "configuration": 49,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00049-r500-n0",
+      "configuration": 49,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00049-r500-n1",
+      "configuration": 49,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00049-r2000-n0",
+      "configuration": 49,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00049-r2000-n1",
+      "configuration": 49,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00049-r20000-n0",
+      "configuration": 49,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00049-r20000-n1",
+      "configuration": 49,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00050-r100-n0",
+      "configuration": 50,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00050-r100-n1",
+      "configuration": 50,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00050-r500-n0",
+      "configuration": 50,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00050-r500-n1",
+      "configuration": 50,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00050-r2000-n0",
+      "configuration": 50,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00050-r2000-n1",
+      "configuration": 50,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00050-r20000-n0",
+      "configuration": 50,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00050-r20000-n1",
+      "configuration": 50,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00051-r100-n0",
+      "configuration": 51,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00051-r100-n1",
+      "configuration": 51,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00051-r500-n0",
+      "configuration": 51,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00051-r500-n1",
+      "configuration": 51,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00051-r2000-n0",
+      "configuration": 51,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00051-r2000-n1",
+      "configuration": 51,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00051-r20000-n0",
+      "configuration": 51,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00051-r20000-n1",
+      "configuration": 51,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00052-r100-n0",
+      "configuration": 52,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00052-r100-n1",
+      "configuration": 52,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00052-r500-n0",
+      "configuration": 52,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00052-r500-n1",
+      "configuration": 52,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00052-r2000-n0",
+      "configuration": 52,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00052-r2000-n1",
+      "configuration": 52,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00052-r20000-n0",
+      "configuration": 52,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00052-r20000-n1",
+      "configuration": 52,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00053-r100-n0",
+      "configuration": 53,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00053-r100-n1",
+      "configuration": 53,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00053-r500-n0",
+      "configuration": 53,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00053-r500-n1",
+      "configuration": 53,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00053-r2000-n0",
+      "configuration": 53,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00053-r2000-n1",
+      "configuration": 53,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00053-r20000-n0",
+      "configuration": 53,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00053-r20000-n1",
+      "configuration": 53,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00054-r100-n0",
+      "configuration": 54,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00054-r100-n1",
+      "configuration": 54,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00054-r500-n0",
+      "configuration": 54,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00054-r500-n1",
+      "configuration": 54,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00054-r2000-n0",
+      "configuration": 54,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00054-r2000-n1",
+      "configuration": 54,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00054-r20000-n0",
+      "configuration": 54,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00054-r20000-n1",
+      "configuration": 54,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00055-r100-n0",
+      "configuration": 55,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00055-r100-n1",
+      "configuration": 55,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00055-r500-n0",
+      "configuration": 55,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00055-r500-n1",
+      "configuration": 55,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00055-r2000-n0",
+      "configuration": 55,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00055-r2000-n1",
+      "configuration": 55,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00055-r20000-n0",
+      "configuration": 55,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00055-r20000-n1",
+      "configuration": 55,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00056-r100-n0",
+      "configuration": 56,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00056-r100-n1",
+      "configuration": 56,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00056-r500-n0",
+      "configuration": 56,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00056-r500-n1",
+      "configuration": 56,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00056-r2000-n0",
+      "configuration": 56,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00056-r2000-n1",
+      "configuration": 56,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00056-r20000-n0",
+      "configuration": 56,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00056-r20000-n1",
+      "configuration": 56,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00057-r100-n0",
+      "configuration": 57,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00057-r100-n1",
+      "configuration": 57,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00057-r500-n0",
+      "configuration": 57,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00057-r500-n1",
+      "configuration": 57,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00057-r2000-n0",
+      "configuration": 57,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00057-r2000-n1",
+      "configuration": 57,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00057-r20000-n0",
+      "configuration": 57,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00057-r20000-n1",
+      "configuration": 57,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00058-r100-n0",
+      "configuration": 58,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00058-r100-n1",
+      "configuration": 58,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 2
+    },
+    {
+      "id": "final-00058-r500-n0",
+      "configuration": 58,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00058-r500-n1",
+      "configuration": 58,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00058-r2000-n0",
+      "configuration": 58,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00058-r2000-n1",
+      "configuration": 58,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00058-r20000-n0",
+      "configuration": 58,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00058-r20000-n1",
+      "configuration": 58,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00059-r100-n0",
+      "configuration": 59,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00059-r100-n1",
+      "configuration": 59,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00059-r500-n0",
+      "configuration": 59,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00059-r500-n1",
+      "configuration": 59,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00059-r2000-n0",
+      "configuration": 59,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00059-r2000-n1",
+      "configuration": 59,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00059-r20000-n0",
+      "configuration": 59,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00059-r20000-n1",
+      "configuration": 59,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00060-r100-n0",
+      "configuration": 60,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00060-r100-n1",
+      "configuration": 60,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00060-r500-n0",
+      "configuration": 60,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00060-r500-n1",
+      "configuration": 60,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00060-r2000-n0",
+      "configuration": 60,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00060-r2000-n1",
+      "configuration": 60,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00060-r20000-n0",
+      "configuration": 60,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00060-r20000-n1",
+      "configuration": 60,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00061-r100-n0",
+      "configuration": 61,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00061-r100-n1",
+      "configuration": 61,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00061-r500-n0",
+      "configuration": 61,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00061-r500-n1",
+      "configuration": 61,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00061-r2000-n0",
+      "configuration": 61,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00061-r2000-n1",
+      "configuration": 61,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00061-r20000-n0",
+      "configuration": 61,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00061-r20000-n1",
+      "configuration": 61,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00062-r100-n0",
+      "configuration": 62,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00062-r100-n1",
+      "configuration": 62,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00062-r500-n0",
+      "configuration": 62,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00062-r500-n1",
+      "configuration": 62,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00062-r2000-n0",
+      "configuration": 62,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00062-r2000-n1",
+      "configuration": 62,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00062-r20000-n0",
+      "configuration": 62,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00062-r20000-n1",
+      "configuration": 62,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00063-r100-n0",
+      "configuration": 63,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00063-r100-n1",
+      "configuration": 63,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00063-r500-n0",
+      "configuration": 63,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00063-r500-n1",
+      "configuration": 63,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00063-r2000-n0",
+      "configuration": 63,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00063-r2000-n1",
+      "configuration": 63,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00063-r20000-n0",
+      "configuration": 63,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00063-r20000-n1",
+      "configuration": 63,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00064-r100-n0",
+      "configuration": 64,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00064-r100-n1",
+      "configuration": 64,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00064-r500-n0",
+      "configuration": 64,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00064-r500-n1",
+      "configuration": 64,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00064-r2000-n0",
+      "configuration": 64,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00064-r2000-n1",
+      "configuration": 64,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00064-r20000-n0",
+      "configuration": 64,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00064-r20000-n1",
+      "configuration": 64,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00065-r100-n0",
+      "configuration": 65,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00065-r100-n1",
+      "configuration": 65,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00065-r500-n0",
+      "configuration": 65,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00065-r500-n1",
+      "configuration": 65,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00065-r2000-n0",
+      "configuration": 65,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00065-r2000-n1",
+      "configuration": 65,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00065-r20000-n0",
+      "configuration": 65,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00065-r20000-n1",
+      "configuration": 65,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00066-r100-n0",
+      "configuration": 66,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00066-r100-n1",
+      "configuration": 66,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00066-r500-n0",
+      "configuration": 66,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00066-r500-n1",
+      "configuration": 66,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00066-r2000-n0",
+      "configuration": 66,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00066-r2000-n1",
+      "configuration": 66,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00066-r20000-n0",
+      "configuration": 66,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00066-r20000-n1",
+      "configuration": 66,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00067-r100-n0",
+      "configuration": 67,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00067-r100-n1",
+      "configuration": 67,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00067-r500-n0",
+      "configuration": 67,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00067-r500-n1",
+      "configuration": 67,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00067-r2000-n0",
+      "configuration": 67,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00067-r2000-n1",
+      "configuration": 67,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00067-r20000-n0",
+      "configuration": 67,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00067-r20000-n1",
+      "configuration": 67,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00068-r100-n0",
+      "configuration": 68,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00068-r100-n1",
+      "configuration": 68,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00068-r500-n0",
+      "configuration": 68,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00068-r500-n1",
+      "configuration": 68,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00068-r2000-n0",
+      "configuration": 68,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00068-r2000-n1",
+      "configuration": 68,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00068-r20000-n0",
+      "configuration": 68,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00068-r20000-n1",
+      "configuration": 68,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00069-r100-n0",
+      "configuration": 69,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00069-r100-n1",
+      "configuration": 69,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00069-r500-n0",
+      "configuration": 69,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00069-r500-n1",
+      "configuration": 69,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00069-r2000-n0",
+      "configuration": 69,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00069-r2000-n1",
+      "configuration": 69,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00069-r20000-n0",
+      "configuration": 69,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00069-r20000-n1",
+      "configuration": 69,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00070-r100-n0",
+      "configuration": 70,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00070-r100-n1",
+      "configuration": 70,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00070-r500-n0",
+      "configuration": 70,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00070-r500-n1",
+      "configuration": 70,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00070-r2000-n0",
+      "configuration": 70,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00070-r2000-n1",
+      "configuration": 70,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00070-r20000-n0",
+      "configuration": 70,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00070-r20000-n1",
+      "configuration": 70,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00071-r100-n0",
+      "configuration": 71,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00071-r100-n1",
+      "configuration": 71,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00071-r500-n0",
+      "configuration": 71,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00071-r500-n1",
+      "configuration": 71,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00071-r2000-n0",
+      "configuration": 71,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00071-r2000-n1",
+      "configuration": 71,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00071-r20000-n0",
+      "configuration": 71,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00071-r20000-n1",
+      "configuration": 71,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00072-r100-n0",
+      "configuration": 72,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00072-r100-n1",
+      "configuration": 72,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00072-r500-n0",
+      "configuration": 72,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00072-r500-n1",
+      "configuration": 72,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00072-r2000-n0",
+      "configuration": 72,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00072-r2000-n1",
+      "configuration": 72,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00072-r20000-n0",
+      "configuration": 72,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00072-r20000-n1",
+      "configuration": 72,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00073-r100-n0",
+      "configuration": 73,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 2
+    },
+    {
+      "id": "final-00073-r100-n1",
+      "configuration": 73,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00073-r500-n0",
+      "configuration": 73,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00073-r500-n1",
+      "configuration": 73,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00073-r2000-n0",
+      "configuration": 73,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00073-r2000-n1",
+      "configuration": 73,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00073-r20000-n0",
+      "configuration": 73,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00073-r20000-n1",
+      "configuration": 73,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00074-r100-n0",
+      "configuration": 74,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00074-r100-n1",
+      "configuration": 74,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00074-r500-n0",
+      "configuration": 74,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00074-r500-n1",
+      "configuration": 74,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00074-r2000-n0",
+      "configuration": 74,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00074-r2000-n1",
+      "configuration": 74,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00074-r20000-n0",
+      "configuration": 74,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00074-r20000-n1",
+      "configuration": 74,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00075-r100-n0",
+      "configuration": 75,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00075-r100-n1",
+      "configuration": 75,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00075-r500-n0",
+      "configuration": 75,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00075-r500-n1",
+      "configuration": 75,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00075-r2000-n0",
+      "configuration": 75,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00075-r2000-n1",
+      "configuration": 75,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00075-r20000-n0",
+      "configuration": 75,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00075-r20000-n1",
+      "configuration": 75,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00076-r100-n0",
+      "configuration": 76,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00076-r100-n1",
+      "configuration": 76,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00076-r500-n0",
+      "configuration": 76,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00076-r500-n1",
+      "configuration": 76,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00076-r2000-n0",
+      "configuration": 76,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00076-r2000-n1",
+      "configuration": 76,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00076-r20000-n0",
+      "configuration": 76,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00076-r20000-n1",
+      "configuration": 76,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00077-r100-n0",
+      "configuration": 77,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00077-r100-n1",
+      "configuration": 77,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00077-r500-n0",
+      "configuration": 77,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00077-r500-n1",
+      "configuration": 77,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00077-r2000-n0",
+      "configuration": 77,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00077-r2000-n1",
+      "configuration": 77,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00077-r20000-n0",
+      "configuration": 77,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00077-r20000-n1",
+      "configuration": 77,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00078-r100-n0",
+      "configuration": 78,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00078-r100-n1",
+      "configuration": 78,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00078-r500-n0",
+      "configuration": 78,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00078-r500-n1",
+      "configuration": 78,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00078-r2000-n0",
+      "configuration": 78,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00078-r2000-n1",
+      "configuration": 78,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00078-r20000-n0",
+      "configuration": 78,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00078-r20000-n1",
+      "configuration": 78,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00079-r100-n0",
+      "configuration": 79,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00079-r100-n1",
+      "configuration": 79,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00079-r500-n0",
+      "configuration": 79,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00079-r500-n1",
+      "configuration": 79,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00079-r2000-n0",
+      "configuration": 79,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00079-r2000-n1",
+      "configuration": 79,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00079-r20000-n0",
+      "configuration": 79,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00079-r20000-n1",
+      "configuration": 79,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00080-r100-n0",
+      "configuration": 80,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00080-r100-n1",
+      "configuration": 80,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00080-r500-n0",
+      "configuration": 80,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00080-r500-n1",
+      "configuration": 80,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00080-r2000-n0",
+      "configuration": 80,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00080-r2000-n1",
+      "configuration": 80,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00080-r20000-n0",
+      "configuration": 80,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00080-r20000-n1",
+      "configuration": 80,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00081-r100-n0",
+      "configuration": 81,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00081-r100-n1",
+      "configuration": 81,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00081-r500-n0",
+      "configuration": 81,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00081-r500-n1",
+      "configuration": 81,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00081-r2000-n0",
+      "configuration": 81,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00081-r2000-n1",
+      "configuration": 81,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00081-r20000-n0",
+      "configuration": 81,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00081-r20000-n1",
+      "configuration": 81,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00082-r100-n0",
+      "configuration": 82,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00082-r100-n1",
+      "configuration": 82,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00082-r500-n0",
+      "configuration": 82,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00082-r500-n1",
+      "configuration": 82,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00082-r2000-n0",
+      "configuration": 82,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00082-r2000-n1",
+      "configuration": 82,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00082-r20000-n0",
+      "configuration": 82,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00082-r20000-n1",
+      "configuration": 82,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00083-r100-n0",
+      "configuration": 83,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00083-r100-n1",
+      "configuration": 83,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00083-r500-n0",
+      "configuration": 83,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00083-r500-n1",
+      "configuration": 83,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00083-r2000-n0",
+      "configuration": 83,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00083-r2000-n1",
+      "configuration": 83,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00083-r20000-n0",
+      "configuration": 83,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00083-r20000-n1",
+      "configuration": 83,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00084-r100-n0",
+      "configuration": 84,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00084-r100-n1",
+      "configuration": 84,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00084-r500-n0",
+      "configuration": 84,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00084-r500-n1",
+      "configuration": 84,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00084-r2000-n0",
+      "configuration": 84,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00084-r2000-n1",
+      "configuration": 84,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00084-r20000-n0",
+      "configuration": 84,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00084-r20000-n1",
+      "configuration": 84,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00085-r100-n0",
+      "configuration": 85,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00085-r100-n1",
+      "configuration": 85,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00085-r500-n0",
+      "configuration": 85,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00085-r500-n1",
+      "configuration": 85,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00085-r2000-n0",
+      "configuration": 85,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00085-r2000-n1",
+      "configuration": 85,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00085-r20000-n0",
+      "configuration": 85,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00085-r20000-n1",
+      "configuration": 85,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00086-r100-n0",
+      "configuration": 86,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00086-r100-n1",
+      "configuration": 86,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00086-r500-n0",
+      "configuration": 86,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00086-r500-n1",
+      "configuration": 86,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00086-r2000-n0",
+      "configuration": 86,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00086-r2000-n1",
+      "configuration": 86,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00086-r20000-n0",
+      "configuration": 86,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00086-r20000-n1",
+      "configuration": 86,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00087-r100-n0",
+      "configuration": 87,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00087-r100-n1",
+      "configuration": 87,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00087-r500-n0",
+      "configuration": 87,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00087-r500-n1",
+      "configuration": 87,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00087-r2000-n0",
+      "configuration": 87,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00087-r2000-n1",
+      "configuration": 87,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00087-r20000-n0",
+      "configuration": 87,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00087-r20000-n1",
+      "configuration": 87,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00088-r100-n0",
+      "configuration": 88,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00088-r100-n1",
+      "configuration": 88,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00088-r500-n0",
+      "configuration": 88,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00088-r500-n1",
+      "configuration": 88,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00088-r2000-n0",
+      "configuration": 88,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00088-r2000-n1",
+      "configuration": 88,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00088-r20000-n0",
+      "configuration": 88,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00088-r20000-n1",
+      "configuration": 88,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00089-r100-n0",
+      "configuration": 89,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00089-r100-n1",
+      "configuration": 89,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 2
+    },
+    {
+      "id": "final-00089-r500-n0",
+      "configuration": 89,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00089-r500-n1",
+      "configuration": 89,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00089-r2000-n0",
+      "configuration": 89,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00089-r2000-n1",
+      "configuration": 89,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00089-r20000-n0",
+      "configuration": 89,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00089-r20000-n1",
+      "configuration": 89,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00090-r100-n0",
+      "configuration": 90,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00090-r100-n1",
+      "configuration": 90,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00090-r500-n0",
+      "configuration": 90,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00090-r500-n1",
+      "configuration": 90,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00090-r2000-n0",
+      "configuration": 90,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00090-r2000-n1",
+      "configuration": 90,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00090-r20000-n0",
+      "configuration": 90,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00090-r20000-n1",
+      "configuration": 90,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00091-r100-n0",
+      "configuration": 91,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00091-r100-n1",
+      "configuration": 91,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00091-r500-n0",
+      "configuration": 91,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00091-r500-n1",
+      "configuration": 91,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00091-r2000-n0",
+      "configuration": 91,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00091-r2000-n1",
+      "configuration": 91,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00091-r20000-n0",
+      "configuration": 91,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00091-r20000-n1",
+      "configuration": 91,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00092-r100-n0",
+      "configuration": 92,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00092-r100-n1",
+      "configuration": 92,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00092-r500-n0",
+      "configuration": 92,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00092-r500-n1",
+      "configuration": 92,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00092-r2000-n0",
+      "configuration": 92,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00092-r2000-n1",
+      "configuration": 92,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00092-r20000-n0",
+      "configuration": 92,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00092-r20000-n1",
+      "configuration": 92,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00093-r100-n0",
+      "configuration": 93,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00093-r100-n1",
+      "configuration": 93,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00093-r500-n0",
+      "configuration": 93,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00093-r500-n1",
+      "configuration": 93,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00093-r2000-n0",
+      "configuration": 93,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00093-r2000-n1",
+      "configuration": 93,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00093-r20000-n0",
+      "configuration": 93,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00093-r20000-n1",
+      "configuration": 93,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00094-r100-n0",
+      "configuration": 94,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00094-r100-n1",
+      "configuration": 94,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00094-r500-n0",
+      "configuration": 94,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00094-r500-n1",
+      "configuration": 94,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00094-r2000-n0",
+      "configuration": 94,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00094-r2000-n1",
+      "configuration": 94,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00094-r20000-n0",
+      "configuration": 94,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00094-r20000-n1",
+      "configuration": 94,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00095-r100-n0",
+      "configuration": 95,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00095-r100-n1",
+      "configuration": 95,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00095-r500-n0",
+      "configuration": 95,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00095-r500-n1",
+      "configuration": 95,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00095-r2000-n0",
+      "configuration": 95,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00095-r2000-n1",
+      "configuration": 95,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00095-r20000-n0",
+      "configuration": 95,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00095-r20000-n1",
+      "configuration": 95,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00096-r100-n0",
+      "configuration": 96,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00096-r100-n1",
+      "configuration": 96,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00096-r500-n0",
+      "configuration": 96,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00096-r500-n1",
+      "configuration": 96,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00096-r2000-n0",
+      "configuration": 96,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00096-r2000-n1",
+      "configuration": 96,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00096-r20000-n0",
+      "configuration": 96,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00096-r20000-n1",
+      "configuration": 96,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00097-r100-n0",
+      "configuration": 97,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00097-r100-n1",
+      "configuration": 97,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00097-r500-n0",
+      "configuration": 97,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00097-r500-n1",
+      "configuration": 97,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00097-r2000-n0",
+      "configuration": 97,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00097-r2000-n1",
+      "configuration": 97,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00097-r20000-n0",
+      "configuration": 97,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00097-r20000-n1",
+      "configuration": 97,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00098-r100-n0",
+      "configuration": 98,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00098-r100-n1",
+      "configuration": 98,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00098-r500-n0",
+      "configuration": 98,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00098-r500-n1",
+      "configuration": 98,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00098-r2000-n0",
+      "configuration": 98,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00098-r2000-n1",
+      "configuration": 98,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00098-r20000-n0",
+      "configuration": 98,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00098-r20000-n1",
+      "configuration": 98,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00099-r100-n0",
+      "configuration": 99,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00099-r100-n1",
+      "configuration": 99,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00099-r500-n0",
+      "configuration": 99,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00099-r500-n1",
+      "configuration": 99,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00099-r2000-n0",
+      "configuration": 99,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00099-r2000-n1",
+      "configuration": 99,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00099-r20000-n0",
+      "configuration": 99,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00099-r20000-n1",
+      "configuration": 99,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00100-r100-n0",
+      "configuration": 100,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00100-r100-n1",
+      "configuration": 100,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00100-r500-n0",
+      "configuration": 100,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00100-r500-n1",
+      "configuration": 100,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00100-r2000-n0",
+      "configuration": 100,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00100-r2000-n1",
+      "configuration": 100,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00100-r20000-n0",
+      "configuration": 100,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00100-r20000-n1",
+      "configuration": 100,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00101-r100-n0",
+      "configuration": 101,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00101-r100-n1",
+      "configuration": 101,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00101-r500-n0",
+      "configuration": 101,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00101-r500-n1",
+      "configuration": 101,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00101-r2000-n0",
+      "configuration": 101,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00101-r2000-n1",
+      "configuration": 101,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00101-r20000-n0",
+      "configuration": 101,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00101-r20000-n1",
+      "configuration": 101,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00102-r100-n0",
+      "configuration": 102,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00102-r100-n1",
+      "configuration": 102,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00102-r500-n0",
+      "configuration": 102,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00102-r500-n1",
+      "configuration": 102,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00102-r2000-n0",
+      "configuration": 102,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00102-r2000-n1",
+      "configuration": 102,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00102-r20000-n0",
+      "configuration": 102,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00102-r20000-n1",
+      "configuration": 102,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00103-r100-n0",
+      "configuration": 103,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00103-r100-n1",
+      "configuration": 103,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00103-r500-n0",
+      "configuration": 103,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00103-r500-n1",
+      "configuration": 103,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00103-r2000-n0",
+      "configuration": 103,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00103-r2000-n1",
+      "configuration": 103,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00103-r20000-n0",
+      "configuration": 103,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00103-r20000-n1",
+      "configuration": 103,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00104-r100-n0",
+      "configuration": 104,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00104-r100-n1",
+      "configuration": 104,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00104-r500-n0",
+      "configuration": 104,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00104-r500-n1",
+      "configuration": 104,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00104-r2000-n0",
+      "configuration": 104,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00104-r2000-n1",
+      "configuration": 104,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00104-r20000-n0",
+      "configuration": 104,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00104-r20000-n1",
+      "configuration": 104,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00105-r100-n0",
+      "configuration": 105,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00105-r100-n1",
+      "configuration": 105,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00105-r500-n0",
+      "configuration": 105,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00105-r500-n1",
+      "configuration": 105,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00105-r2000-n0",
+      "configuration": 105,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00105-r2000-n1",
+      "configuration": 105,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00105-r20000-n0",
+      "configuration": 105,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00105-r20000-n1",
+      "configuration": 105,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00106-r100-n0",
+      "configuration": 106,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00106-r100-n1",
+      "configuration": 106,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00106-r500-n0",
+      "configuration": 106,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00106-r500-n1",
+      "configuration": 106,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00106-r2000-n0",
+      "configuration": 106,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00106-r2000-n1",
+      "configuration": 106,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00106-r20000-n0",
+      "configuration": 106,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00106-r20000-n1",
+      "configuration": 106,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00107-r100-n0",
+      "configuration": 107,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00107-r100-n1",
+      "configuration": 107,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00107-r500-n0",
+      "configuration": 107,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00107-r500-n1",
+      "configuration": 107,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00107-r2000-n0",
+      "configuration": 107,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00107-r2000-n1",
+      "configuration": 107,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00107-r20000-n0",
+      "configuration": 107,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00107-r20000-n1",
+      "configuration": 107,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00108-r100-n0",
+      "configuration": 108,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00108-r100-n1",
+      "configuration": 108,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00108-r500-n0",
+      "configuration": 108,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00108-r500-n1",
+      "configuration": 108,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00108-r2000-n0",
+      "configuration": 108,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00108-r2000-n1",
+      "configuration": 108,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00108-r20000-n0",
+      "configuration": 108,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00108-r20000-n1",
+      "configuration": 108,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00109-r100-n0",
+      "configuration": 109,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00109-r100-n1",
+      "configuration": 109,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00109-r500-n0",
+      "configuration": 109,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00109-r500-n1",
+      "configuration": 109,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00109-r2000-n0",
+      "configuration": 109,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00109-r2000-n1",
+      "configuration": 109,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00109-r20000-n0",
+      "configuration": 109,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00109-r20000-n1",
+      "configuration": 109,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00110-r100-n0",
+      "configuration": 110,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00110-r100-n1",
+      "configuration": 110,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00110-r500-n0",
+      "configuration": 110,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00110-r500-n1",
+      "configuration": 110,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00110-r2000-n0",
+      "configuration": 110,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00110-r2000-n1",
+      "configuration": 110,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00110-r20000-n0",
+      "configuration": 110,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00110-r20000-n1",
+      "configuration": 110,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00111-r100-n0",
+      "configuration": 111,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00111-r100-n1",
+      "configuration": 111,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00111-r500-n0",
+      "configuration": 111,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00111-r500-n1",
+      "configuration": 111,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00111-r2000-n0",
+      "configuration": 111,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00111-r2000-n1",
+      "configuration": 111,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00111-r20000-n0",
+      "configuration": 111,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00111-r20000-n1",
+      "configuration": 111,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00112-r100-n0",
+      "configuration": 112,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00112-r100-n1",
+      "configuration": 112,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00112-r500-n0",
+      "configuration": 112,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00112-r500-n1",
+      "configuration": 112,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00112-r2000-n0",
+      "configuration": 112,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00112-r2000-n1",
+      "configuration": 112,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00112-r20000-n0",
+      "configuration": 112,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00112-r20000-n1",
+      "configuration": 112,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00113-r100-n0",
+      "configuration": 113,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00113-r100-n1",
+      "configuration": 113,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00113-r500-n0",
+      "configuration": 113,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00113-r500-n1",
+      "configuration": 113,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00113-r2000-n0",
+      "configuration": 113,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00113-r2000-n1",
+      "configuration": 113,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00113-r20000-n0",
+      "configuration": 113,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00113-r20000-n1",
+      "configuration": 113,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00114-r100-n0",
+      "configuration": 114,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00114-r100-n1",
+      "configuration": 114,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00114-r500-n0",
+      "configuration": 114,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00114-r500-n1",
+      "configuration": 114,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00114-r2000-n0",
+      "configuration": 114,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00114-r2000-n1",
+      "configuration": 114,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00114-r20000-n0",
+      "configuration": 114,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00114-r20000-n1",
+      "configuration": 114,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00115-r100-n0",
+      "configuration": 115,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00115-r100-n1",
+      "configuration": 115,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00115-r500-n0",
+      "configuration": 115,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00115-r500-n1",
+      "configuration": 115,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00115-r2000-n0",
+      "configuration": 115,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00115-r2000-n1",
+      "configuration": 115,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00115-r20000-n0",
+      "configuration": 115,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00115-r20000-n1",
+      "configuration": 115,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00116-r100-n0",
+      "configuration": 116,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00116-r100-n1",
+      "configuration": 116,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00116-r500-n0",
+      "configuration": 116,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00116-r500-n1",
+      "configuration": 116,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00116-r2000-n0",
+      "configuration": 116,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00116-r2000-n1",
+      "configuration": 116,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00116-r20000-n0",
+      "configuration": 116,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00116-r20000-n1",
+      "configuration": 116,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00117-r100-n0",
+      "configuration": 117,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00117-r100-n1",
+      "configuration": 117,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00117-r500-n0",
+      "configuration": 117,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00117-r500-n1",
+      "configuration": 117,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00117-r2000-n0",
+      "configuration": 117,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00117-r2000-n1",
+      "configuration": 117,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00117-r20000-n0",
+      "configuration": 117,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00117-r20000-n1",
+      "configuration": 117,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00118-r100-n0",
+      "configuration": 118,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00118-r100-n1",
+      "configuration": 118,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00118-r500-n0",
+      "configuration": 118,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00118-r500-n1",
+      "configuration": 118,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00118-r2000-n0",
+      "configuration": 118,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00118-r2000-n1",
+      "configuration": 118,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00118-r20000-n0",
+      "configuration": 118,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00118-r20000-n1",
+      "configuration": 118,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00119-r100-n0",
+      "configuration": 119,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00119-r100-n1",
+      "configuration": 119,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00119-r500-n0",
+      "configuration": 119,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00119-r500-n1",
+      "configuration": 119,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00119-r2000-n0",
+      "configuration": 119,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00119-r2000-n1",
+      "configuration": 119,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00119-r20000-n0",
+      "configuration": 119,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00119-r20000-n1",
+      "configuration": 119,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00120-r100-n0",
+      "configuration": 120,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00120-r100-n1",
+      "configuration": 120,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00120-r500-n0",
+      "configuration": 120,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00120-r500-n1",
+      "configuration": 120,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00120-r2000-n0",
+      "configuration": 120,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00120-r2000-n1",
+      "configuration": 120,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00120-r20000-n0",
+      "configuration": 120,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00120-r20000-n1",
+      "configuration": 120,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00121-r100-n0",
+      "configuration": 121,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00121-r100-n1",
+      "configuration": 121,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00121-r500-n0",
+      "configuration": 121,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00121-r500-n1",
+      "configuration": 121,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00121-r2000-n0",
+      "configuration": 121,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00121-r2000-n1",
+      "configuration": 121,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00121-r20000-n0",
+      "configuration": 121,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00121-r20000-n1",
+      "configuration": 121,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00122-r100-n0",
+      "configuration": 122,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00122-r100-n1",
+      "configuration": 122,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00122-r500-n0",
+      "configuration": 122,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00122-r500-n1",
+      "configuration": 122,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00122-r2000-n0",
+      "configuration": 122,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00122-r2000-n1",
+      "configuration": 122,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00122-r20000-n0",
+      "configuration": 122,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00122-r20000-n1",
+      "configuration": 122,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00123-r100-n0",
+      "configuration": 123,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00123-r100-n1",
+      "configuration": 123,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00123-r500-n0",
+      "configuration": 123,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00123-r500-n1",
+      "configuration": 123,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00123-r2000-n0",
+      "configuration": 123,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00123-r2000-n1",
+      "configuration": 123,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00123-r20000-n0",
+      "configuration": 123,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00123-r20000-n1",
+      "configuration": 123,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00124-r100-n0",
+      "configuration": 124,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00124-r100-n1",
+      "configuration": 124,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00124-r500-n0",
+      "configuration": 124,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00124-r500-n1",
+      "configuration": 124,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00124-r2000-n0",
+      "configuration": 124,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00124-r2000-n1",
+      "configuration": 124,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00124-r20000-n0",
+      "configuration": 124,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00124-r20000-n1",
+      "configuration": 124,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00125-r100-n0",
+      "configuration": 125,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00125-r100-n1",
+      "configuration": 125,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00125-r500-n0",
+      "configuration": 125,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00125-r500-n1",
+      "configuration": 125,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00125-r2000-n0",
+      "configuration": 125,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00125-r2000-n1",
+      "configuration": 125,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00125-r20000-n0",
+      "configuration": 125,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00125-r20000-n1",
+      "configuration": 125,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00126-r100-n0",
+      "configuration": 126,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00126-r100-n1",
+      "configuration": 126,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 1
+    },
+    {
+      "id": "final-00126-r500-n0",
+      "configuration": 126,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00126-r500-n1",
+      "configuration": 126,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00126-r2000-n0",
+      "configuration": 126,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00126-r2000-n1",
+      "configuration": 126,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00126-r20000-n0",
+      "configuration": 126,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00126-r20000-n1",
+      "configuration": 126,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00127-r100-n0",
+      "configuration": 127,
+      "shots_per_point": 100,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00127-r100-n1",
+      "configuration": 127,
+      "shots_per_point": 100,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00127-r500-n0",
+      "configuration": 127,
+      "shots_per_point": 500,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00127-r500-n1",
+      "configuration": 127,
+      "shots_per_point": 500,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00127-r2000-n0",
+      "configuration": 127,
+      "shots_per_point": 2000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00127-r2000-n1",
+      "configuration": 127,
+      "shots_per_point": 2000,
+      "replicate": 1,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00127-r20000-n0",
+      "configuration": 127,
+      "shots_per_point": 20000,
+      "replicate": 0,
+      "clipped_features": 0
+    },
+    {
+      "id": "final-00127-r20000-n1",
+      "configuration": 127,
+      "shots_per_point": 20000,
+      "replicate": 1,
+      "clipped_features": 0
+    }
+  ]
+}

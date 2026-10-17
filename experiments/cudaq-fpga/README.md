@@ -1,15 +1,29 @@
 # CUDA-Q and FPGA experiments
 
 Three synthetic quantum workloads ran on a PolarFire SoC development kit on October 17, 2026.
-CUDA-Q checked representative quantum evolutions and circuits on an NVIDIA GB10 workstation.
-The CPU generated the full datasets. Small classical inference cores then processed frozen records in FPGA fabric.
+In that initial run, CUDA-Q checked representative quantum evolutions and circuits on an NVIDIA GB10 workstation.
+The CPU generated those full datasets. Small classical inference cores then processed frozen records in FPGA fabric.
 
 These experiments extend the project beyond its original SBIR proposal scope.
 They share the board and verification approach described in the [main project](../../README.md).
 They are a separate experimental area, with their own inputs, failure records, and acceptance checks.
 The original [proposal crosswalk](../../docs/proposal/README.md) remains the record of proposed and delivered sensing work.
 
-## Measured FPGA results
+## Continuation: complete CUDA-Q generation and measured readout
+
+The [continuation study](continuation/README.md) adds complete CUDA-Q generation and one replay on the unchanged FPGA image.
+CUDA-Q generated all **32,768 quantum probabilities** for 128 fresh effective NV configurations.
+All **1,024 encoded records** matched on the FPGA, including complete 64-bit scores.
+The specialized CPU solver was approximately **8,537 times faster** than the configured CUDA-Q implementation for this four-level model.
+This establishes an integration path without establishing GPU acceleration.
+
+Separate software studies used public measured qubit-readout data.
+The frozen QICK matched filter reached **95.8252%** across 8,192 held-out preparation-labelled records, passing its 90% target.
+The thermal-detector study reached **75.8%** across 1,000 records, below its separate 80% target.
+New measured-data coefficients remain host-only. No acquisition-transfer or calibration benefit is established.
+The continuation includes source, provenance mappings, saved-result verification, and clearly labeled AI reviews.
+
+## Initial measured FPGA results
 
 | Demonstration | Frozen records | Exact replay calls | Fabric cycles | Core time at 125 MHz | Median host time |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -29,7 +43,8 @@ The [execution summary](evidence/summary.json) and [per-call receipts](evidence/
 ## What the experiments establish
 
 The board executed three compact classical algorithms against saved synthetic inputs.
-CUDA-Q supplied independent checks of selected quantum calculations. It did not generate the complete datasets.
+For the initial three-demo run, CUDA-Q supplied checks of selected quantum calculations and did not generate the complete datasets.
+The continuation above separately records complete CUDA-Q generation.
 These results establish neither a GPU speed advantage nor quantum advantage.
 No live quantum sensor or QPU supplied the inputs. Board power and radiation tolerance were not measured.
 Quantum error correction does not make an FPGA resistant to radiation.
@@ -88,8 +103,8 @@ See [provenance](PROVENANCE.md) for file mappings and publication transformation
 
 ## Next useful studies
 
-1. Test readout calibration on an independent public measured dataset with sufficient labels and acquisition metadata.
-2. Define a larger coupled-spin problem where CUDA-Q contributes materially; compare accuracy, runtime, and memory against strong CPU baselines.
+1. Deploy the frozen measured-data boxcar coefficients and verify every full-width FPGA score. Seek acquisition metadata before claiming drift transfer.
+2. Profile the current CUDA-Q implementation, then choose a physically justified larger model and compare against strong CPU baselines.
 3. Test a bounded temporal QEC interface before proposing another FPGA implementation. Compare with established decoders on equal information.
 
 Register new evaluation seeds and acceptance rules before those studies.

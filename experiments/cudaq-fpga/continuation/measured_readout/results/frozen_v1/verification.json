@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "registered_hashes": 6,
+  "exact_integer_records": 1000,
+  "affine_paired_better": 5,
+  "affine_paired_worse": 1,
+  "exact_discordant_binomial_two_sided_p": 0.21875,
+  "post_run_diagnostic": true,
+  "scope": "saved predictions only; conditional independent-shot assumption; no new evaluation"
+}

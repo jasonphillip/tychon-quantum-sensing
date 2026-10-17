@@ -1,0 +1,28 @@
+Tychon quantum sensing continuation
+Copyright 2026 Jason Phillip
+
+Authored project software follows the Apache License, Version 2.0, included in LICENSE.
+Copied source mappings and hashes are retained in nv_scaling/SOURCE_MAP.json.
+The public verifier rechecks saved board results without hardware access.
+
+Measured data retain their source licenses. They are not relicensed as project software.
+
+Thermal-detector data and derived records:
+Gunyho, Andras Marton; Kundu, Suman; Ma, Jian; Liu, Wei; Niemelä, Sakari;
+Catto, Giacomo; Vadimov, Vasilii; Vesterinen, Visa; Singh, Priyank;
+Chen, Qiming; Möttönen, Mikko.
+Data for "Single-Shot Readout of a Superconducting Qubit Using a Thermal Detector".
+Zenodo record 10000511, DOI 10.5281/zenodo.10000511, CC-BY-4.0.
+https://zenodo.org/records/10000511
+
+Processor-readout data and derived records:
+Botao Du. Data for "End-to-end workflow for machine learning-based qubit readout with QICK and hls4ml".
+Zenodo record 14427490, DOI 10.5281/zenodo.14427490, CC-BY-4.0.
+https://zenodo.org/records/14427490
+
+The experiment reports describe row selection, binning, fitting, and fixed-point transformations.
+Source metadata, byte-range provenance, hashes, and retained limitations accompany the derived records.
+CC-BY-4.0: https://creativecommons.org/licenses/by/4.0/
+
+CUDA-Q, NumPy, h5py, compilers, and vendor FPGA tools are external dependencies.
+The public package does not distribute these toolchains, vendor-generated IP, or FPGA programming images.

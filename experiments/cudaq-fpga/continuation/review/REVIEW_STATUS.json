@@ -1,0 +1,13 @@
+{
+  "schema": "external_review_status_v1",
+  "status": "prepared_not_sent",
+  "independent_human_review_received": false,
+  "AI_methods_review_received": true,
+  "reviewer_selected": false,
+  "messages_sent": 0,
+  "reason_pending": "A specific external reviewer or public discussion destination has not been selected.",
+  "candidate_channels": [
+    "https://github.com/NVIDIA/cuda-quantum/discussions",
+    "https://github.com/fastmachinelearning/hls4ml/discussions"
+  ]
+}

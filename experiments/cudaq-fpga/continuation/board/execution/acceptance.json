@@ -1,0 +1,145 @@
+{
+  "schema": "full_cudaq_nv_board_replay_v1",
+  "status": "PASS",
+  "started_utc": "2026-10-17T18:45:01.364231+00:00",
+  "commands": [
+    {
+      "name": "nv-parse",
+      "argv": [
+        "../deployment/quantum_demo_run-v2.riscv64",
+        "--core",
+        "nv",
+        "--inputs",
+        "board/stress/nv/inputs_i16.bin",
+        "--expected",
+        "board/stress/nv/expected_indices_u16.bin",
+        "--output",
+        "board/execution/nv-parse.csv",
+        "--json",
+        "board/execution/nv-parse.json",
+        "--repeat",
+        "1",
+        "--timeout-ms",
+        "100",
+        "--scores",
+        "board/stress/nv/expected_scores_u64.bin",
+        "--self-test"
+      ],
+      "started_utc": "2026-10-17T18:45:01.640830+00:00",
+      "timeout_seconds": 30,
+      "stdout": "nv-parse.stdout.txt",
+      "stderr": "nv-parse.stderr.txt",
+      "returncode": 0,
+      "wall_seconds": 0.012389997999889601
+    },
+    {
+      "name": "control-static",
+      "argv": [
+        "../deployment/quantum_demo_control_test.riscv64",
+        "--self-test"
+      ],
+      "started_utc": "2026-10-17T18:45:01.866841+00:00",
+      "timeout_seconds": 30,
+      "stdout": "control-static.stdout.txt",
+      "stderr": "control-static.stderr.txt",
+      "returncode": 0,
+      "wall_seconds": 0.005391998999584757
+    },
+    {
+      "name": "control-fabric",
+      "argv": [
+        "../deployment/quantum_demo_control_test.riscv64",
+        "--run"
+      ],
+      "started_utc": "2026-10-17T18:45:02.081212+00:00",
+      "timeout_seconds": 30,
+      "stdout": "control-fabric.stdout.txt",
+      "stderr": "control-fabric.stderr.txt",
+      "returncode": 0,
+      "wall_seconds": 0.0074169979998259805
+    },
+    {
+      "name": "nv-replay",
+      "argv": [
+        "../deployment/quantum_demo_run-v2.riscv64",
+        "--core",
+        "nv",
+        "--inputs",
+        "board/stress/nv/inputs_i16.bin",
+        "--expected",
+        "board/stress/nv/expected_indices_u16.bin",
+        "--output",
+        "board/execution/nv-replay.csv",
+        "--json",
+        "board/execution/nv-replay.json",
+        "--repeat",
+        "1",
+        "--timeout-ms",
+        "100",
+        "--scores",
+        "board/stress/nv/expected_scores_u64.bin"
+      ],
+      "started_utc": "2026-10-17T18:45:02.301777+00:00",
+      "timeout_seconds": 30,
+      "stdout": "nv-replay.stdout.txt",
+      "stderr": "nv-replay.stderr.txt",
+      "returncode": 0,
+      "wall_seconds": 0.26919095700031903
+    }
+  ],
+  "board_executed": true,
+  "fabric_attempted": true,
+  "replay_attempted": true,
+  "programmed_image_changed": false,
+  "scope": "synthetic CUDA-Q-derived records",
+  "expected_boot_id": "0a33ca92-8c42-4db5-8815-00f93df307d3",
+  "source_sha256": "797f86ad799b9b595ed9c1eff9e755f96b35a1033bfd210ce7fb9159c68ef29a",
+  "manifest_sha256": "0055ab3fa477e42add618d068b408cf0000fa5bea4409c8da113d35d5aeda391",
+  "records": 1024,
+  "binary_sha256": {
+    "quantum_demo_run-v2.riscv64": "96fee46e885958a85573a68489b249908eeb437c757d4e0b0f24c6a252908a38",
+    "quantum_demo_control_test.riscv64": "90b3f7642d80db6e946728d0196dbf8099837814d0a0ad65f97e151515c5a2fa"
+  },
+  "accepted_calls": 1024,
+  "replay_receipt": {
+    "schema": "quantum_demo_replay_v1",
+    "core": "nv",
+    "mode": "fabric_mmio",
+    "exit_code": 0,
+    "reason": "all fabric results match exact references",
+    "hardware_opened": true,
+    "identity_verified": true,
+    "id": "0x51465047",
+    "abi": "0x00010000",
+    "base": "0x60040000",
+    "span": 4096,
+    "validated_records": 1024,
+    "repeat": 1,
+    "planned_calls": 1024,
+    "attempted_calls": 1024,
+    "completed_calls": 1024,
+    "mismatches": 0,
+    "host_timeout_ms": 100,
+    "fabric_timeout_cycles": 1000000,
+    "last_status": 10,
+    "last_error": 0,
+    "fabric_cycles_min": 23479,
+    "fabric_cycles_max": 23479,
+    "latency_sample_count": 1024,
+    "host_total_ns": {
+      "p50": 209000,
+      "p99": 215000,
+      "max": 290000
+    },
+    "host_call_ns": {
+      "p50": 193000,
+      "p99": 194000,
+      "max": 236999
+    },
+    "latency_scope": "successful completed calls only; total includes register setup/input writes and output reads; call starts immediately before START; CSV IO excluded; fabric cycles are not converted to nanoseconds",
+    "inputs": "board/stress/nv/inputs_i16.bin",
+    "expected": "board/stress/nv/expected_indices_u16.bin",
+    "scores": "board/stress/nv/expected_scores_u64.bin"
+  },
+  "completed_utc": "2026-10-17T18:45:02.937852+00:00"
+}

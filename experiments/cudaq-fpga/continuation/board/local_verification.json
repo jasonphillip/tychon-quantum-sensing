@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "verified_utc": "2026-10-17T18:46:04.197006+00:00",
+  "scope": "Independent local recheck of saved FPGA outputs; no new board calls",
+  "replay": {
+    "records": 1024,
+    "accepted_calls": 1024,
+    "full_csv_validated": true
+  },
+  "control_checks": 15,
+  "manifest_sha256": "0055ab3fa477e42add618d068b408cf0000fa5bea4409c8da113d35d5aeda391",
+  "csv_sha256": "ed6c6f237103866e494f9e05d143b75f52c07162011bf799faad333da3dea1c7",
+  "v250_exit_code": 0,
+  "v250_log_sha256": "895b33b4e27fc083990a6dae4ff0430e26701b6b809ea9796081b92b42e0f47e",
+  "v250_result": "INFERENCE COMPLETED; error_val=0"
+}

@@ -1,0 +1,172 @@
+{
+  "downloaded_bytes": 8934736,
+  "requests": [
+    {
+      "start": 922897987,
+      "requested": 22,
+      "received": 22
+    },
+    {
+      "start": 922897967,
+      "requested": 20,
+      "received": 20
+    },
+    {
+      "start": 922894243,
+      "requested": 3744,
+      "received": 3744
+    },
+    {
+      "start": 922897987,
+      "requested": 22,
+      "received": 22
+    },
+    {
+      "start": 922897967,
+      "requested": 20,
+      "received": 20
+    },
+    {
+      "start": 922894243,
+      "requested": 3744,
+      "received": 3744
+    },
+    {
+      "start": 5339527,
+      "requested": 30,
+      "received": 30
+    },
+    {
+      "start": 5339557,
+      "requested": 9,
+      "received": 9
+    },
+    {
+      "start": 5339594,
+      "requested": 909,
+      "received": 909
+    },
+    {
+      "start": 315677,
+      "requested": 30,
+      "received": 30
+    },
+    {
+      "start": 315707,
+      "requested": 14,
+      "received": 14
+    },
+    {
+      "start": 315749,
+      "requested": 10476,
+      "received": 10476
+    },
+    {
+      "start": 5336298,
+      "requested": 30,
+      "received": 30
+    },
+    {
+      "start": 5336328,
+      "requested": 8,
+      "received": 8
+    },
+    {
+      "start": 5336364,
+      "requested": 2843,
+      "received": 2843
+    },
+    {
+      "start": 5339207,
+      "requested": 30,
+      "received": 30
+    },
+    {
+      "start": 5339237,
+      "requested": 16,
+      "received": 16
+    },
+    {
+      "start": 5339281,
+      "requested": 86,
+      "received": 86
+    },
+    {
+      "start": 922897987,
+      "requested": 22,
+      "received": 22
+    },
+    {
+      "start": 922897967,
+      "requested": 20,
+      "received": 20
+    },
+    {
+      "start": 922894243,
+      "requested": 3744,
+      "received": 3744
+    },
+    {
+      "start": 867176068,
+      "requested": 30,
+      "received": 30
+    },
+    {
+      "start": 867176098,
+      "requested": 47,
+      "received": 47
+    },
+    {
+      "start": 867176173,
+      "requested": 8689480,
+      "received": 8689480
+    },
+    {
+      "start": 877312076,
+      "requested": 30,
+      "received": 30
+    },
+    {
+      "start": 877312106,
+      "requested": 47,
+      "received": 47
+    },
+    {
+      "start": 877312181,
+      "requested": 219263,
+      "received": 219263
+    }
+  ],
+  "members": {
+    "README.md": {
+      "bytes": 1836,
+      "sha256": "55718b960983905695c8749a5ad74a97089675e96e97ca4539a00304fe72e179",
+      "crc32": "a5230a12"
+    },
+    "single-shot.py": {
+      "bytes": 36809,
+      "sha256": "31d415da81466e73540257a2972a736900465f6fcf48f69a02c0be6767d4e8af",
+      "crc32": "3e2fc4c1"
+    },
+    "utils.py": {
+      "bytes": 7720,
+      "sha256": "687eccd5b91dbd03295eac82e4dcba2b9d7ba551fefeb8a22a11498d771f6501",
+      "crc32": "eb833adc"
+    },
+    "requirements.txt": {
+      "bytes": 106,
+      "sha256": "32c3ab8f00ac20b76e6b8eb99928ed0f923cfdc1f2072cbc1ff392bb78833a32",
+      "crc32": "48df1d5f"
+    },
+    "data/bolometer-characterization-timetrace-76.nc": {
+      "bytes": 25176338,
+      "sha256": "fe151d5ba54c38ac32edc5f0a2e8e7977e2b14cdb9c9ec2680b0b3892e5b9df0",
+      "crc32": "72e56066"
+    },
+    "data/bolometer-characterization-timetrace-77.nc": {
+      "bytes": 563562,
+      "sha256": "ce1636dff7b522375b5020229a9ec8c84aa334b53485df49f72899bb39d688bd",
+      "crc32": "d44580f5"
+    }
+  }
+}

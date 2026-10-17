@@ -1,0 +1,61 @@
+{
+  "utc": "2026-10-17T19:01:43.833392+00:00",
+  "platform": "Linux-7.0.0-1019-nvidia-aarch64-with-glibc2.39",
+  "python": "3.13.11",
+  "numpy": "2.4.2",
+  "h5py": "3.14.0",
+  "bundle_sha256": "895011d14a5beb59362fd945d0e162d9ddfcca02eda1f5810215081641e38bac",
+  "verified_source_files": 18,
+  "scope": "fixture tests and saved evidence only; no raw source downloads, model fitting, scientific reevaluation, or hardware",
+  "runs": [
+    {
+      "name": "processor_unit",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "./measured_readout/processor_readout",
+        "-p",
+        "test_processor.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.10233084599894937,
+      "stdout": "",
+      "stderr": "test_affine_recovery_and_rank_failure (test_processor.ProcessorContracts.test_affine_recovery_and_rank_failure) ... ok\ntest_approved_ranges_are_disjoint_and_budgeted (test_processor.ProcessorContracts.test_approved_ranges_are_disjoint_and_budgeted) ... ok\ntest_baselines_and_integer_pack (test_processor.ProcessorContracts.test_baselines_and_integer_pack) ... ok\ntest_bin_overlap_matches_independent_integer_grid (test_processor.ProcessorContracts.test_bin_overlap_matches_independent_integer_grid) ... ok\ntest_binning_preserves_mean_for_both_windows (test_processor.ProcessorContracts.test_binning_preserves_mean_for_both_windows) ... ok\ntest_budget_checked_before_request (test_processor.ProcessorContracts.test_budget_checked_before_request) ... ok\ntest_ignored_http_range_never_reads_body (test_processor.ProcessorContracts.test_ignored_http_range_never_reads_body) ... ok\ntest_immutable_range_tampering_rejected (test_processor.ProcessorContracts.test_immutable_range_tampering_rejected) ... ok\ntest_invalid_affine_is_not_selected (test_processor.ProcessorContracts.test_invalid_affine_is_not_selected) ... ok\ntest_npy_row_byte_offsets (test_processor.ProcessorContracts.test_npy_row_byte_offsets) ... ok\ntest_overlapping_train_ranges_fail (test_processor.ProcessorContracts.test_overlapping_train_ranges_fail) ... ok\ntest_preparation_intervals_not_pooled_balanced_interval (test_processor.ProcessorContracts.test_preparation_intervals_not_pooled_balanced_interval) ... ok\ntest_range_bounds_duplicate_and_boolean_fail (test_processor.ProcessorContracts.test_range_bounds_duplicate_and_boolean_fail) ... ok\ntest_release_binds_code_and_model (test_processor.ProcessorContracts.test_release_binds_code_and_model) ... ok\ntest_release_required_before_any_test_request (test_processor.ProcessorContracts.test_release_required_before_any_test_request) ... ok\ntest_release_wrong_receipt_or_false_rejected (test_processor.ProcessorContracts.test_release_wrong_receipt_or_false_rejected) ... ok\ntest_selection_ties_use_method_then_shorter_window (test_processor.ProcessorContracts.test_selection_ties_use_method_then_shorter_window) ... ok\ntest_truncated_range_preserved_and_counted (test_processor.ProcessorContracts.test_truncated_range_preserved_and_counted) ... ok\n\n----------------------------------------------------------------------\nRan 18 tests in 0.020s\n\nOK\n"
+    },
+    {
+      "name": "thermal_unit",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "./measured_readout",
+        "-p",
+        "test_evaluate.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.08877275200211443,
+      "stdout": "",
+      "stderr": "test_affine_recovers_transform_without_evaluation (test_evaluate.EvaluationContracts.test_affine_recovers_transform_without_evaluation) ... ok\ntest_binning_reads_only_requested_block (test_evaluate.EvaluationContracts.test_binning_reads_only_requested_block) ... ok\ntest_classical_baselines_and_direction (test_evaluate.EvaluationContracts.test_classical_baselines_and_direction) ... ok\ntest_degenerate_classifier_rejected (test_evaluate.EvaluationContracts.test_degenerate_classifier_rejected) ... ok\ntest_fixed_point_export_matches_reference_and_counts_clipping (test_evaluate.EvaluationContracts.test_fixed_point_export_matches_reference_and_counts_clipping) ... ok\ntest_frozen_splits_disjoint (test_evaluate.EvaluationContracts.test_frozen_splits_disjoint) ... ok\ntest_metrics_and_conditional_interval (test_evaluate.EvaluationContracts.test_metrics_and_conditional_interval) ... ok\ntest_nonfinite_not_silently_removed (test_evaluate.EvaluationContracts.test_nonfinite_not_silently_removed) ... ok\ntest_singular_affine_rejected (test_evaluate.EvaluationContracts.test_singular_affine_rejected) ... ok\ntest_split_overlap_rejected (test_evaluate.EvaluationContracts.test_split_overlap_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.017s\n\nOK\n"
+    },
+    {
+      "name": "saved_pack",
+      "command": [
+        "python3",
+        "./measured_readout/processor_readout/verify_saved_processor.py",
+        "--pack-only"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.10193561100459192,
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"exact_integer_records\": 8192,\n  \"prediction_candidates_checked\": 8,\n  \"selected\": \"pooled_matched_filter@100:500\",\n  \"selected_balanced_accuracy\": 0.958251953125,\n  \"scope\": \"saved integer/CSV checks only; no model fitting, new scientific evaluation, or hardware execution\"\n}\n",
+      "stderr": ""
+    }
+  ],
+  "status": "PASS"
+}

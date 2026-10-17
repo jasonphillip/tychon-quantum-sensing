@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "source_train_partition_label_counts": {
+    "reference": {
+      "0": 4096,
+      "1": 4096
+    },
+    "calibration": {
+      "0": 2048,
+      "1": 2048
+    },
+    "validation": {
+      "0": 2048,
+      "1": 2048
+    }
+  },
+  "source_test_rows": 8192,
+  "source_test_values_read": 0,
+  "row_ranges_disjoint_within_source": true,
+  "byte_budget_verified": true
+}

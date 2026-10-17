@@ -1,0 +1,48 @@
+{
+  "shape": [
+    2,
+    1000,
+    781
+  ],
+  "preparation_values": [
+    0.0,
+    1.0
+  ],
+  "signal_units": "V",
+  "time_units": "s",
+  "sample_start_s": 0.0,
+  "sample_end_s": 4.992e-05,
+  "sample_interval_s": 6.4e-08,
+  "guid": "aaaaaaaa-0000-0000-0000-018210c3d8f3",
+  "run_timestamp": "2022-07-18 13:04:06",
+  "completed_timestamp": "2022-07-18 13:04:35",
+  "sample_name": "B03-1",
+  "exp_name": "bolometer-characterization-sakari",
+  "measured_raw_records": true,
+  "compatible_independent_acquisitions": 1,
+  "within_acquisition_eligible": true,
+  "drift_transfer_eligible": false,
+  "label_scope": "intended preparation, not verified true-state labels",
+  "source_url": "https://zenodo.org/records/10000511",
+  "source_doi": "10.5281/zenodo.10000511",
+  "license": "CC-BY-4.0",
+  "detector": "thermal detector (bolometer) coupled to superconducting-qubit readout",
+  "source_format_evidence": [
+    "inputs/README.md: NetCDF with QCoDeS instrument snapshots",
+    "inputs/single-shot.py:237-247 integrated run 77; 459-474 full timetrace run 76",
+    "inputs/utils.py:84-99 intended preparation label interpretation"
+  ],
+  "other_selected_acquisition": {
+    "file": "inputs/data/bolometer-characterization-timetrace-77.nc",
+    "shape": [
+      2,
+      10000
+    ],
+    "format": "already integrated IQ; no per-shot time trace",
+    "evaluated": false,
+    "reason_excluded": "incompatible representation; no justified acquisition-group drift split"
+  },
+  "time_order_caveat": "splits use ordered stored shot indices only; per-shot timestamps and cross-preparation interleave are not established",
+  "integrity": "selected ZIP member CRC verified; SHA256 recorded; full archive MD5 not verified because full archive was not downloaded",
+  "input_immutability": "selected member files saved read-only; registration verifies raw run-76 SHA256 before evaluation"
+}

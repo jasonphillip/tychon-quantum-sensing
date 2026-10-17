@@ -1,0 +1,33 @@
+{
+  "status": "conditionally eligible for source-train/source-test preparation classification; drift transfer ineligible",
+  "checked_utc": "2026-10-17T18:35:50.369610+00:00",
+  "source_url": "https://zenodo.org/records/14427490",
+  "license": "CC-BY-4.0",
+  "headers_verified": [
+    "X_train (900000,1540) <f8",
+    "X_test (100000,1540) <f8",
+    "y_train (900000,) <f8",
+    "y_test (100000,) <f8"
+  ],
+  "data_offset_bytes": 128,
+  "test_values_read": 0,
+  "train_signal_values_read": 0,
+  "training_label_counts": {
+    "0": 450000,
+    "1": 450000
+  },
+  "training_label_runs": "180 alternating runs, each5000 rows",
+  "exact_author_training_label_array_md5_verified": true,
+  "full_training_label_file_md5_verified": true,
+  "layout_support": [
+    "author_code/training/save_data.py constructs [shot,time,2] then row-major flattens",
+    "author_code/data/qick_data/generate_window.py slices [2*start:2*end]",
+    "author_code/final/train.ipynb loads exact0528 names and defines g=0/e=1"
+  ],
+  "acquisition_provenance_limit": "Author preprocessing concatenates100 HDF5 files and splits first90%; exact exported row-to-file map and original acquisition timestamps are absent. Alternating label blocks are not independent acquisition proof.",
+  "unit_limit": "Do not use older data/README 1440-column/2.6ns description for these1540-column files. Paper describes770 samples over2.5us; exported arrays have no voltage scale or exact time coordinate.",
+  "paper": "https://arxiv.org/html/2501.14663v1",
+  "author_code_commit": "2c7efadb21c1aa2bab2e5fc12ff403cb28af5d25",
+  "paper_version_warning": "HTML header contains generated date text; cite arXiv version v1/Jan24,2025 rather than that display date",
+  "proposed_protocol_sha256": "bffb0be2cf21e6d34c95afdbed6adb2e70e4a20f9db1a442f52f30a398d7ea44"
+}

@@ -1,0 +1,24 @@
+{
+  "schema":"quantum_demo_control_v1",
+  "mode":"static_no_mmio",
+  "exit_code":0,
+  "reason":"static expectations passed; no hardware opened or tested",
+  "base":"0x60040000",
+  "span":4096,
+  "deadline_ms":100,
+  "hardware_opened":false,
+  "identity_verified":false,
+  "register_writes":false,
+  "start_written":false,
+  "id":0,
+  "abi":0,
+  "original_timeout":0,
+  "timeout_restored":false,
+  "cycle_scope":"fabric counter values only; no clock conversion or latency claim",
+  "checks":[
+    {"name":"static_identity_and_layout","pass":true,"detail":"fixed ABI identity and aligned 64-word input range; no MMIO","hardware_snapshot":false},
+    {"name":"static_qec_zero_reference","pass":true,"detail":"syndrome 0 reference transcribed from frozen ROM and expected vector; no MMIO","hardware_snapshot":false},
+    {"name":"static_clear_expectation","pass":true,"detail":"validates expected CLEAR preservation predicate; no device behavior tested","hardware_snapshot":false},
+    {"name":"static_counter_wrap","pass":true,"detail":"completed counter delta is modulo 2^32; no MMIO","hardware_snapshot":false}
+  ]
+}

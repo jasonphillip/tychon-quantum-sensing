@@ -1,0 +1,77 @@
+{
+  "files": {
+    "processor_readout/processor_io.py": {
+      "sha256": "6575e07940ffee4cc51766c8b3b691a7a9b36d9f3f8179b7bdb4a041b25c44cf",
+      "bytes": 6092
+    },
+    "processor_readout/processor_eval.py": {
+      "sha256": "445d6f5b8d631e35e8acdd4423d269406102b43c71a7aa4ec5abd342793dab16",
+      "bytes": 14797
+    },
+    "processor_readout/test_processor.py": {
+      "sha256": "25e09889d6aec2b6f6c227ef0765d675cecf4b80deb0016b67f4f970ee2cb13b",
+      "bytes": 9271
+    },
+    "processor_readout/PROPOSED_PROTOCOL.json": {
+      "sha256": "bffb0be2cf21e6d34c95afdbed6adb2e70e4a20f9db1a442f52f30a398d7ea44",
+      "bytes": 4322
+    },
+    "processor_readout/verify_saved_processor.py": {
+      "sha256": "ed28797ded122787542f513507c31f5247b2794f6344a1f9e776126d670891a1",
+      "bytes": 4029
+    },
+    "processor_readout/test_frozen/metrics.json": {
+      "sha256": "eb9ac03f0ed929e5af40864e613fe32bcb6e4a1d6627ad4d4fb2cdf68ce518cc",
+      "bytes": 19125
+    },
+    "processor_readout/test_frozen/duplicate_check.json": {
+      "sha256": "cecd377aff0c140376a49d0fb06590fec62e062423b7515e41c43203fa583f2b",
+      "bytes": 52
+    },
+    "processor_readout/test_frozen/predictions.csv": {
+      "sha256": "c5c8a4f58b4c12578272895c7d0568dad299609cb3b22f5ae662030de721d90e",
+      "bytes": 201897
+    },
+    "processor_readout/test_frozen/release.json": {
+      "sha256": "fc663f28f29ead9c335de0452399324c5606f35a0d63d08d9425ac55ec5245c4",
+      "bytes": 322
+    },
+    "processor_readout/test_frozen/train_receipt.json": {
+      "sha256": "79cfec86ecc790c301fc1ca9ae9298f91da5ca44dd60562ce59b9a2161395134",
+      "bytes": 2617
+    },
+    "processor_readout/test_frozen/candidate_integer_pack/labels_u8.bin": {
+      "sha256": "1b5b60409bec8497b76efa1a83091fa4482cbf3df0013aa04973c59ed89a4302",
+      "bytes": 8192
+    },
+    "processor_readout/test_frozen/candidate_integer_pack/expected_scores_i64.bin": {
+      "sha256": "67b35a0bcef13a67782ce1e1e1b9b7cb3d205e413743e46486c337db5119bade",
+      "bytes": 65536
+    },
+    "processor_readout/test_frozen/candidate_integer_pack/inputs_i16.bin": {
+      "sha256": "b0ff40d4a62542e1ac6f468fd2c528e6c60f123401ee8b5abd9d6691bffed9b6",
+      "bytes": 2097152
+    },
+    "processor_readout/test_frozen/candidate_integer_pack/manifest.json": {
+      "sha256": "945efa478d6ecd455886e65e2f51fd077c6e371d67b4c1b0b44489e7907f3ce7",
+      "bytes": 1750
+    },
+    "processor_readout/test_frozen/candidate_integer_pack/source_rows_u32.bin": {
+      "sha256": "8e15e039461a43615788558e9bb045d547789d3615b7137b15544b171cefd085",
+      "bytes": 32768
+    },
+    "evaluate.py": {
+      "sha256": "fab8f44b3415a176eb89f7c335540c1ae9942ff858d9585521654e3426e576a7",
+      "bytes": 11639
+    },
+    "test_evaluate.py": {
+      "sha256": "b8f60a5febfa2d869a370c7004369d1f7ed84825222fd05735925f5e036f7e81",
+      "bytes": 4374
+    },
+    "protocol.json": {
+      "sha256": "646c9a333ae36abc22af37cbc27c136df9195b874abaf637d893294c74d55622",
+      "bytes": 2740
+    }
+  },
+  "scope": "fixture and saved-pack portability only; no fitting or scientific evaluation"
+}

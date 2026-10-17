@@ -1,0 +1,140 @@
+{
+  "schema": "quantum_fpga_evidence_display_v1",
+  "files": {
+    "nv_scaling/artifacts/final_comparison.json": "8e7971bb6391d4dc623ac50124e4ebd69bec4b6583ffda90513ef9735f1c34e4",
+    "nv_scaling/artifacts/final_independent_acceptance_linux.json": "d987a54c3bfd1c57edddd3e0ffbc09b4403acb661f3a9904667357d6ff30b31d",
+    "nv_scaling/artifacts/final_independent_acceptance.json": "43624d2c3342460da0fcaa21471e4b8a4da73dce321b536716ef2d96c27deb99",
+    "nv_scaling/REGISTRATION.json": "096a1f08ca40840502119a4e276a6e45fcafc9f509c1c724744915f12db447c8",
+    "nv_scaling/protocol_final.json": "c42c84ab70cd67007fdf7d7f05e86b019a07a94355d1b84e4cae6900037e2662",
+    "nv_launch_receipt.json": "cc0195bb3307c882cd9b051eabfb6bc7d005a55570e2cb0fdf29aefe15b37681",
+    "board/local_verification.json": "cd170c64d0d4bb88339b1e5f3ab3ffe914db4ad63e597a0d191800f06d0a5ca1",
+    "board/execution/nv-replay.json": "3667c839e67ba81222cb432b99a0513a7abea2a530ecc097ab3c8fb0073d9d48",
+    "board/execution/nv-replay.csv": "ed6c6f237103866e494f9e05d143b75f52c07162011bf799faad333da3dea1c7",
+    "board/execution/v250-regression.log": "895b33b4e27fc083990a6dae4ff0430e26701b6b809ea9796081b92b42e0f47e",
+    "measured_readout/results/frozen_v1/metrics.json": "f98f7da43607cedd725013a8bc1cc4c2a7eb48b63ba97bacb10978534eb50757",
+    "measured_readout/registration.json": "e168286e81e8870f79e2b17890cf31088600956ef6aa3bc5bfc3d946f6bb31cf",
+    "measured_readout/consumed.json": "0e516c85703c2d2338af09a388e887c2c8a793d30b2a858c46d4d840f1056724",
+    "review/REVIEW_STATUS.json": "ceaf315c7fc79769d3c87a348b779213ea0b59d20d5dfa7bb96652369532fa70",
+    "measured_readout/processor_readout/test_frozen/metrics.json": "eb9ac03f0ed929e5af40864e613fe32bcb6e4a1d6627ad4d4fb2cdf68ce518cc",
+    "measured_readout/processor_readout/test_frozen/predictions.csv": "c5c8a4f58b4c12578272895c7d0568dad299609cb3b22f5ae662030de721d90e",
+    "measured_readout/processor_readout/train_frozen/receipt.json": "79cfec86ecc790c301fc1ca9ae9298f91da5ca44dd60562ce59b9a2161395134",
+    "measured_readout/processor_readout/train_frozen/selection.json": "f0558a40351ceaaeb8f534418bd31469d7a17538439ce4a7d2bc1df9114d5a25",
+    "measured_readout/processor_readout/train_registration.json": "99d983d8f5e1def1e604d73e0e82d1b923aea28d44fd1a2af380be3ddc263a6f",
+    "measured_readout/processor_readout/test_consumed.json": "4450ba7dbfbf6c08e5b3bfa873e41c14a2c623b553c35e32a612da60e467ac07",
+    "review/processor_readout_test_release.json": "fc663f28f29ead9c335de0452399324c5606f35a0d63d08d9425ac55ec5245c4",
+    "review/processor_readout_train_gate.json": "8bdc0bafab4f55fe39dc2ff7088cf0d40141664ce9b29cd88287cdc919a95fda",
+    "measured_readout/processor_readout/test_frozen/candidate_integer_pack/labels_u8.bin": "1b5b60409bec8497b76efa1a83091fa4482cbf3df0013aa04973c59ed89a4302",
+    "measured_readout/processor_readout/test_frozen/candidate_integer_pack/expected_scores_i64.bin": "67b35a0bcef13a67782ce1e1e1b9b7cb3d205e413743e46486c337db5119bade",
+    "measured_readout/processor_readout/test_frozen/candidate_integer_pack/inputs_i16.bin": "b0ff40d4a62542e1ac6f468fd2c528e6c60f123401ee8b5abd9d6691bffed9b6",
+    "measured_readout/processor_readout/test_frozen/candidate_integer_pack/manifest.json": "945efa478d6ecd455886e65e2f51fd077c6e371d67b4c1b0b44489e7907f3ce7",
+    "measured_readout/processor_readout/test_frozen/candidate_integer_pack/source_rows_u32.bin": "8e15e039461a43615788558e9bb045d547789d3615b7137b15544b171cefd085"
+  },
+  "facts": [
+    {
+      "label": "CUDA-Q generated quantum probabilities",
+      "value": 32768,
+      "scope": "All 128 fresh effective NV configurations; synthetic detector counts",
+      "evidence": [
+        "nv_scaling/artifacts/final_comparison.json",
+        "nv_scaling/artifacts/final_independent_acceptance_linux.json"
+      ]
+    },
+    {
+      "label": "Maximum complete probability difference",
+      "value": 2.151061218036432e-09,
+      "scope": "CUDA-Q versus specialized CPU; frozen tolerance 1e-6",
+      "evidence": [
+        "nv_scaling/artifacts/final_comparison.json",
+        "nv_scaling/artifacts/final_independent_acceptance_linux.json"
+      ]
+    },
+    {
+      "label": "Warm quantum generation seconds",
+      "value": {
+        "CPU": 0.01249188999645412,
+        "CUDA_Q_GPU": 106.63720217300579
+      },
+      "scope": "Same four-level problem; specialized exact CPU versus configured CUDA-Q RK4 implementation. No GPU acceleration claim.",
+      "evidence": [
+        "nv_scaling/artifacts/final_comparison.json"
+      ]
+    },
+    {
+      "label": "New FPGA replay",
+      "value": {
+        "records": 1024,
+        "mismatches": 0,
+        "core_cycles": 23479,
+        "host_median_microseconds": 209.0
+      },
+      "scope": "Existing image; synthetic saved inputs; exact indices and full 64-bit scores",
+      "evidence": [
+        "board/local_verification.json",
+        "board/execution/nv-replay.json",
+        "board/execution/nv-replay.csv"
+      ]
+    },
+    {
+      "label": "Existing V250 inference after replay",
+      "value": "PASS",
+      "scope": "Saved completion log, error_val 0",
+      "evidence": [
+        "board/local_verification.json",
+        "board/execution/v250-regression.log"
+      ]
+    },
+    {
+      "label": "Thermal-detector held-out preparation accuracy",
+      "value": {
+        "selected": "pooled_lda",
+        "balanced_accuracy": 0.758,
+        "target_pass": false
+      },
+      "scope": "1,000 shots within one acquisition; host only; failed 80% target. Integer boxcar candidate separately scores 73.7%.",
+      "evidence": [
+        "measured_readout/results/frozen_v1/metrics.json",
+        "measured_readout/registration.json",
+        "measured_readout/consumed.json"
+      ]
+    },
+    {
+      "label": "Measured processor-readout final result",
+      "value": {
+        "selected": "pooled_matched_filter@100:500",
+        "records": 8192,
+        "balanced_preparation_accuracy": 0.958251953125,
+        "target_pass": true
+      },
+      "scope": "Frozen model and 8,192 source-test rows; 90% target; host only. No independent-acquisition transfer or calibration-benefit claim.",
+      "evidence": [
+        "measured_readout/processor_readout/test_frozen/metrics.json",
+        "measured_readout/processor_readout/test_frozen/predictions.csv",
+        "measured_readout/processor_readout/train_frozen/selection.json",
+        "measured_readout/processor_readout/test_consumed.json",
+        "review/processor_readout_test_release.json"
+      ]
+    },
+    {
+      "label": "Separate processor-readout integer export",
+      "value": {
+        "candidate": "pooled_boxcar@100:500",
+        "balanced_preparation_accuracy": 0.95849609375,
+        "clipped_values": 0,
+        "float_decision_changes": 1
+      },
+      "scope": "8,192 full integer scores verified on host; new coefficients require a future FPGA build. One changed decision is not an advantage claim.",
+      "evidence": [
+        "measured_readout/processor_readout/test_frozen/metrics.json",
+        "measured_readout/processor_readout/test_frozen/candidate_integer_pack/manifest.json"
+      ]
+    },
+    {
+      "label": "Independent human review",
+      "value": "Pending; no messages sent",
+      "scope": "AI methods reviews do not establish external endorsement",
+      "evidence": [
+        "review/REVIEW_STATUS.json"
+      ]
+    }
+  ]
+}
