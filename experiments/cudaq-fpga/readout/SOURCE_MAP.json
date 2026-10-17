@@ -1,0 +1,340 @@
+{
+  "schema": "readout_public_source_map_v1",
+  "source_root_label": "original-feasibility/readout",
+  "notes": [
+    "Paths identify the original readout workspace relative to its root, without private host paths.",
+    "Original numerical files are byte-identical. Only recorded command paths are normalized where listed.",
+    "Historical provenance source hashes identify the original executed version, not an assertion that publication reran those experiments.",
+    "SOURCE_MAP.json excludes its own hash."
+  ],
+  "files": {
+    "readout_pilot.py": {
+      "source": "readout_pilot.py",
+      "source_sha256": "52ba914e29dd3bd193892008f67f10c4cd6ab39636ce063493c5ef8e0caa125c",
+      "public_sha256": "52ba914e29dd3bd193892008f67f10c4cd6ab39636ce063493c5ef8e0caa125c",
+      "transformations": []
+    },
+    "test_readout.py": {
+      "source": "test_readout.py",
+      "source_sha256": "f8cda6d920ecce45360db6221663739db4c7a689b8f2349ea9e1aaae11d31a2e",
+      "public_sha256": "f8cda6d920ecce45360db6221663739db4c7a689b8f2349ea9e1aaae11d31a2e",
+      "transformations": []
+    },
+    "fixed_readout.c": {
+      "source": "fixed_readout.c",
+      "source_sha256": "fd1f675754e77816dfae89ccb6621cacd52188ea51b20713195d2e74db613aac",
+      "public_sha256": "fd1f675754e77816dfae89ccb6621cacd52188ea51b20713195d2e74db613aac",
+      "transformations": []
+    },
+    "fixed_readout128.cpp": {
+      "source": "fixed_readout128.cpp",
+      "source_sha256": "781e7dd34d8da2eda73378fd1c4a9634da44881b4d656f51a93c47a60e87c316",
+      "public_sha256": "781e7dd34d8da2eda73378fd1c4a9634da44881b4d656f51a93c47a60e87c316",
+      "transformations": []
+    },
+    "boxcar_readout64.cpp": {
+      "source": "boxcar_readout64.cpp",
+      "source_sha256": "b657467dfe0051d7945851f1bdb4db408b56921f34de55f78e322ae84a003af7",
+      "public_sha256": "b657467dfe0051d7945851f1bdb4db408b56921f34de55f78e322ae84a003af7",
+      "transformations": []
+    },
+    "host_testbench.cpp": {
+      "source": "host_testbench.cpp",
+      "source_sha256": "36c7fb6b59535ec7e9f6c4b7a78485569cea126afdad02cb7f5be6eaf7a64a10",
+      "public_sha256": "36c7fb6b59535ec7e9f6c4b7a78485569cea126afdad02cb7f5be6eaf7a64a10",
+      "transformations": []
+    },
+    "export_hls.py": {
+      "source": "export_hls.py",
+      "source_sha256": "e5c1c5b019d293dd21e4f4b61cf6b198155522d9fc9063935e2906a3e7f0e578",
+      "public_sha256": "e5c1c5b019d293dd21e4f4b61cf6b198155522d9fc9063935e2906a3e7f0e578",
+      "transformations": []
+    },
+    "config.json": {
+      "source": "config.json",
+      "source_sha256": "53f9705d8bac669f6ec157c79b114949d98f7eeb0210de257fe49d1f5d81ada3",
+      "public_sha256": "53f9705d8bac669f6ec157c79b114949d98f7eeb0210de257fe49d1f5d81ada3",
+      "transformations": []
+    },
+    "config_v2.json": {
+      "source": "config_v2.json",
+      "source_sha256": "449a801b0f3284cd5e33536279ceee30815509e91fd96c00bb8f684530f4485b",
+      "public_sha256": "449a801b0f3284cd5e33536279ceee30815509e91fd96c00bb8f684530f4485b",
+      "transformations": []
+    },
+    "requirements.txt": {
+      "source": "requirements.txt",
+      "source_sha256": "bb260e03cdea3a1ab25a889a9edc62ced108f38d1fc09ddc7a67c718b12e5958",
+      "public_sha256": "bb260e03cdea3a1ab25a889a9edc62ced108f38d1fc09ddc7a67c718b12e5958",
+      "transformations": []
+    },
+    "stress_v2/run_stress.py": {
+      "source": "stress_v2/run_stress.py",
+      "source_sha256": "956679d35a4715aa3051e3285f74b12ec21e7c382607412e4457bc1eefd41b9e",
+      "public_sha256": "956679d35a4715aa3051e3285f74b12ec21e7c382607412e4457bc1eefd41b9e",
+      "transformations": []
+    },
+    "stress_v2/test_stress.py": {
+      "source": "stress_v2/test_stress.py",
+      "source_sha256": "a5cbf224c82ae4347f2dc7b03273deed580d0824fb54e72111e6f4ab9b446eb7",
+      "public_sha256": "a5cbf224c82ae4347f2dc7b03273deed580d0824fb54e72111e6f4ab9b446eb7",
+      "transformations": []
+    },
+    "stress_v2/replay_reference.cpp": {
+      "source": "stress_v2/replay_reference.cpp",
+      "source_sha256": "5e7db657838969150d9fa66ac04efd70b8d022a2fd3e0fee896e71bec1289587",
+      "public_sha256": "5e7db657838969150d9fa66ac04efd70b8d022a2fd3e0fee896e71bec1289587",
+      "transformations": []
+    },
+    "stress_v2/config.json": {
+      "source": "stress_v2/config.json",
+      "source_sha256": "496292e4db647c2195941d987bcfb35afc538fe387023e47681da244fb165ede",
+      "public_sha256": "496292e4db647c2195941d987bcfb35afc538fe387023e47681da244fb165ede",
+      "transformations": []
+    },
+    "stress_v2/FROZEN_PROTOCOL.md": {
+      "source": "stress_v2/FROZEN_PROTOCOL.md",
+      "source_sha256": "1f5265d10520d380d08b5f86dc45f3c57c130346bd7f4f2924418426cd5ffdb8",
+      "public_sha256": "1f5265d10520d380d08b5f86dc45f3c57c130346bd7f4f2924418426cd5ffdb8",
+      "transformations": []
+    },
+    "artifacts/cpu/config.json": {
+      "source": "artifacts/cpu/config.json",
+      "source_sha256": "53f9705d8bac669f6ec157c79b114949d98f7eeb0210de257fe49d1f5d81ada3",
+      "public_sha256": "53f9705d8bac669f6ec157c79b114949d98f7eeb0210de257fe49d1f5d81ada3",
+      "transformations": []
+    },
+    "artifacts/cpu/failure.json": {
+      "source": "artifacts/cpu/failure.json",
+      "source_sha256": "17c935cfa9b925a53c5f2e2169941f4bd384453a448976f65676094617120cce",
+      "public_sha256": "17c935cfa9b925a53c5f2e2169941f4bd384453a448976f65676094617120cce",
+      "transformations": []
+    },
+    "artifacts/cpu/physics.json": {
+      "source": "artifacts/cpu/physics.json",
+      "source_sha256": "87689ced0d5e435e699c48ce3efcced9a36fb5631d28d6c7a942e48addbc9b36",
+      "public_sha256": "87689ced0d5e435e699c48ce3efcced9a36fb5631d28d6c7a942e48addbc9b36",
+      "transformations": []
+    },
+    "artifacts/cpu/provenance.json": {
+      "source": "artifacts/cpu/provenance.json",
+      "source_sha256": "bd7395c8467ba9fbde21bc45e81a70c106896b34bb164e5ac8c398c0f4066781",
+      "public_sha256": "1c059115be8eee6c8dcfafac6c0dd108802a3f0be5c0bdb4f45363a5446a835f",
+      "transformations": [
+        "Normalized original absolute readout command path to <readout>."
+      ]
+    },
+    "artifacts/cpu_v2/config.json": {
+      "source": "artifacts/cpu_v2/config.json",
+      "source_sha256": "449a801b0f3284cd5e33536279ceee30815509e91fd96c00bb8f684530f4485b",
+      "public_sha256": "449a801b0f3284cd5e33536279ceee30815509e91fd96c00bb8f684530f4485b",
+      "transformations": []
+    },
+    "artifacts/cpu_v2/model.json": {
+      "source": "artifacts/cpu_v2/model.json",
+      "source_sha256": "d6be7723f2475c1801dda4163e88f6a3cc25ab20629eaced03a1949ef62364a8",
+      "public_sha256": "d6be7723f2475c1801dda4163e88f6a3cc25ab20629eaced03a1949ef62364a8",
+      "transformations": []
+    },
+    "artifacts/cpu_v2/metrics.json": {
+      "source": "artifacts/cpu_v2/metrics.json",
+      "source_sha256": "ff384a79b25f4ae13d28d1c46730334e8c121063e906e21263d5b7595da5cb19",
+      "public_sha256": "ff384a79b25f4ae13d28d1c46730334e8c121063e906e21263d5b7595da5cb19",
+      "transformations": []
+    },
+    "artifacts/cpu_v2/physics.json": {
+      "source": "artifacts/cpu_v2/physics.json",
+      "source_sha256": "f20adcbc658fc4a3a76734b4477128a59fd159be25ab3e4e43ac4325c3a8889e",
+      "public_sha256": "f20adcbc658fc4a3a76734b4477128a59fd159be25ab3e4e43ac4325c3a8889e",
+      "transformations": []
+    },
+    "artifacts/cpu_v2/provenance.json": {
+      "source": "artifacts/cpu_v2/provenance.json",
+      "source_sha256": "c3adf22bd467971e253176f08b89d66d978389d0eac3e1682935e22ff1928e05",
+      "public_sha256": "d886a1474c5f41b50342722d9211c116678011384c0ddd51c107f1ba8a4c159d",
+      "transformations": [
+        "Normalized original absolute readout command path to <readout>."
+      ]
+    },
+    "artifacts/cpu_v2/cpp_receipt.json": {
+      "source": "artifacts/cpu_v2/cpp_receipt.json",
+      "source_sha256": "9c9d2260d6485cac81119b692577a1087946ab2372bf020aaa7796c0fefa6176",
+      "public_sha256": "2fa28ea9dd0f248f8757d8bac70ea20c7149ec1ed364fce941f6c81c57e03420",
+      "transformations": [
+        "Normalized original absolute readout command path to <readout>.",
+        "Normalized recorded compiler/interpreter location; historical execution metrics unchanged."
+      ]
+    },
+    "artifacts/cpu_v2/fixed_test_vectors.npz": {
+      "source": "artifacts/cpu_v2/fixed_test_vectors.npz",
+      "source_sha256": "735e9f39d62b4667aad387e251a5f3fb102b1ff033f02b6a7d14cbb935a902a4",
+      "public_sha256": "735e9f39d62b4667aad387e251a5f3fb102b1ff033f02b6a7d14cbb935a902a4",
+      "transformations": []
+    },
+    "artifacts/cpu_v2/readout_pilot.executed.py": {
+      "source": "artifacts/cpu_v2/readout_pilot.executed.py",
+      "source_sha256": "fd0bc82a1f3b5ed6c64b1e754d68a00aa53f86780eaf6fe305382859d304fc2f",
+      "public_sha256": "fd0bc82a1f3b5ed6c64b1e754d68a00aa53f86780eaf6fe305382859d304fc2f",
+      "transformations": []
+    },
+    "artifacts/gpu_v2/config.json": {
+      "source": "artifacts/gpu_v2/config.json",
+      "source_sha256": "449a801b0f3284cd5e33536279ceee30815509e91fd96c00bb8f684530f4485b",
+      "public_sha256": "449a801b0f3284cd5e33536279ceee30815509e91fd96c00bb8f684530f4485b",
+      "transformations": []
+    },
+    "artifacts/gpu_v2/failure.json": {
+      "source": "artifacts/gpu_v2/failure.json",
+      "source_sha256": "5a25cf466b883edf24e136f4b9b0823f3249d258b13f02b679fb5c833b3d7a27",
+      "public_sha256": "5a25cf466b883edf24e136f4b9b0823f3249d258b13f02b679fb5c833b3d7a27",
+      "transformations": []
+    },
+    "artifacts/gpu_v2/provenance.json": {
+      "source": "artifacts/gpu_v2/provenance.json",
+      "source_sha256": "29516844df5f25ec7c26839e75fbd9160ece4c6b7d39da5764e1b6462945660d",
+      "public_sha256": "0e2656663f4b00ba6d2f7252a0a3c1841dd730e3f7338b4c677233d1de35f9da",
+      "transformations": [
+        "Normalized original absolute readout command path to <readout>."
+      ]
+    },
+    "artifacts/gpu_v2_retry/config.json": {
+      "source": "artifacts/gpu_v2_retry/config.json",
+      "source_sha256": "449a801b0f3284cd5e33536279ceee30815509e91fd96c00bb8f684530f4485b",
+      "public_sha256": "449a801b0f3284cd5e33536279ceee30815509e91fd96c00bb8f684530f4485b",
+      "transformations": []
+    },
+    "artifacts/gpu_v2_retry/metrics.json": {
+      "source": "artifacts/gpu_v2_retry/metrics.json",
+      "source_sha256": "f4e0d9763b06fdcc8ab460a0fdf3ef4cf4475ead4dc73a344651851562399336",
+      "public_sha256": "f4e0d9763b06fdcc8ab460a0fdf3ef4cf4475ead4dc73a344651851562399336",
+      "transformations": []
+    },
+    "artifacts/gpu_v2_retry/provenance.json": {
+      "source": "artifacts/gpu_v2_retry/provenance.json",
+      "source_sha256": "7b658ebb932d3843dc8f023a25b6b87793934b94a10c7db7a1507fea269ccb9b",
+      "public_sha256": "d224ce0d2fecc582004cf9d8e900e6d5905c438f1265fe6133b6d04764010ba0",
+      "transformations": [
+        "Normalized original absolute readout command path to <readout>."
+      ]
+    },
+    "artifacts/gpu_v2_retry/cudaq_observables.npz": {
+      "source": "artifacts/gpu_v2_retry/cudaq_observables.npz",
+      "source_sha256": "d07bfd33a8fb3d134013700d0de6d1bb4a4490920288b3ab322fea5074af70cd",
+      "public_sha256": "d07bfd33a8fb3d134013700d0de6d1bb4a4490920288b3ab322fea5074af70cd",
+      "transformations": []
+    },
+    "stress_v2/artifacts/frozen_v2/config.json": {
+      "source": "stress_v2/artifacts/frozen_v2/config.json",
+      "source_sha256": "496292e4db647c2195941d987bcfb35afc538fe387023e47681da244fb165ede",
+      "public_sha256": "496292e4db647c2195941d987bcfb35afc538fe387023e47681da244fb165ede",
+      "transformations": []
+    },
+    "stress_v2/artifacts/frozen_v2/metrics.json": {
+      "source": "stress_v2/artifacts/frozen_v2/metrics.json",
+      "source_sha256": "6caa3dd7c06756169fc409246037460352bbdcdf97891e9f159f175604907a86",
+      "public_sha256": "6caa3dd7c06756169fc409246037460352bbdcdf97891e9f159f175604907a86",
+      "transformations": []
+    },
+    "stress_v2/artifacts/frozen_v2/group_results.json": {
+      "source": "stress_v2/artifacts/frozen_v2/group_results.json",
+      "source_sha256": "14abf7d70cbbddfa289d039ef4f72542b4324f417c54eec9012fbc3052cce6df",
+      "public_sha256": "14abf7d70cbbddfa289d039ef4f72542b4324f417c54eec9012fbc3052cce6df",
+      "transformations": []
+    },
+    "stress_v2/artifacts/frozen_v2/groups.json": {
+      "source": "stress_v2/artifacts/frozen_v2/groups.json",
+      "source_sha256": "8735157099cd7e82e16f12fcd7595a00cdbaa955c2380f4f3770d1eaefd1ed4b",
+      "public_sha256": "8735157099cd7e82e16f12fcd7595a00cdbaa955c2380f4f3770d1eaefd1ed4b",
+      "transformations": []
+    },
+    "stress_v2/artifacts/frozen_v2/calibration_fits.json": {
+      "source": "stress_v2/artifacts/frozen_v2/calibration_fits.json",
+      "source_sha256": "bd2e2f32dafcfe84feb2911bfdedb547f21ca624370b4bc76a93a8357d22cccd",
+      "public_sha256": "bd2e2f32dafcfe84feb2911bfdedb547f21ca624370b4bc76a93a8357d22cccd",
+      "transformations": []
+    },
+    "stress_v2/artifacts/frozen_v2/physics.json": {
+      "source": "stress_v2/artifacts/frozen_v2/physics.json",
+      "source_sha256": "d82b69dd8af6ef861b685b00810d04298aa2e86eb9ed560dea771a00e8ad19cd",
+      "public_sha256": "d82b69dd8af6ef861b685b00810d04298aa2e86eb9ed560dea771a00e8ad19cd",
+      "transformations": []
+    },
+    "stress_v2/artifacts/frozen_v2/clipping_report.json": {
+      "source": "stress_v2/artifacts/frozen_v2/clipping_report.json",
+      "source_sha256": "8d5a708d92664ff5d5bc258c931e820dc7e73ad13e3bc93f84d98c6df8faabe3",
+      "public_sha256": "8d5a708d92664ff5d5bc258c931e820dc7e73ad13e3bc93f84d98c6df8faabe3",
+      "transformations": []
+    },
+    "stress_v2/artifacts/frozen_v2/reference_receipt.json": {
+      "source": "stress_v2/artifacts/frozen_v2/reference_receipt.json",
+      "source_sha256": "94cb6bbb20adc7b765e04a664be652d7710ce03464fbd0d7d4e190c6bbaf411f",
+      "public_sha256": "e930019d2a3790ac3c117187ca012fcf541df4867c59756ab78271db74690c4e",
+      "transformations": [
+        "Normalized original absolute readout command path to <readout>.",
+        "Normalized recorded compiler/interpreter location; historical execution metrics unchanged."
+      ]
+    },
+    "stress_v2/artifacts/frozen_v2/provenance.json": {
+      "source": "stress_v2/artifacts/frozen_v2/provenance.json",
+      "source_sha256": "e78be651c3a334031f0780dd3ba2174574241078cf29c7bd286db5a11d8ad9bc",
+      "public_sha256": "3c32920ffa3f105dffbe4762c1c7e9fb7b5c9294f843e995833ae0bc367e0177",
+      "transformations": [
+        "Normalized original absolute readout command path to <readout>."
+      ]
+    },
+    "stress_v2/artifacts/frozen_v2/board_replay/inputs_i16.bin": {
+      "source": "stress_v2/artifacts/frozen_v2/board_replay/inputs_i16.bin",
+      "source_sha256": "fa4114c8437a3f3fd58258a64e07f5ac9318d60e066f95ec0721fe4aabf2d414",
+      "public_sha256": "fa4114c8437a3f3fd58258a64e07f5ac9318d60e066f95ec0721fe4aabf2d414",
+      "transformations": []
+    },
+    "stress_v2/artifacts/frozen_v2/board_replay/expected_scores_i64.bin": {
+      "source": "stress_v2/artifacts/frozen_v2/board_replay/expected_scores_i64.bin",
+      "source_sha256": "49d14e9d066c92cab0502db381509511b6e4dc69e0502d4f69499675632f5516",
+      "public_sha256": "49d14e9d066c92cab0502db381509511b6e4dc69e0502d4f69499675632f5516",
+      "transformations": []
+    },
+    "stress_v2/artifacts/frozen_v2/board_replay/labels_u8.bin": {
+      "source": "stress_v2/artifacts/frozen_v2/board_replay/labels_u8.bin",
+      "source_sha256": "43366fe9db4bfcddb988330d8b1e695ac797cda3cbe2a70e2ef5e47abf1d8dd6",
+      "public_sha256": "43366fe9db4bfcddb988330d8b1e695ac797cda3cbe2a70e2ef5e47abf1d8dd6",
+      "transformations": []
+    },
+    "stress_v2/artifacts/frozen_v2/board_replay/records.json": {
+      "source": "stress_v2/artifacts/frozen_v2/board_replay/records.json",
+      "source_sha256": "75ccb03d0537aa0e744080a56b45e63c9914d0bfe3799ebdc21b2b88a59bc6a9",
+      "public_sha256": "75ccb03d0537aa0e744080a56b45e63c9914d0bfe3799ebdc21b2b88a59bc6a9",
+      "transformations": []
+    },
+    "stress_v2/artifacts/frozen_v2/board_replay/manifest.json": {
+      "source": "stress_v2/artifacts/frozen_v2/board_replay/manifest.json",
+      "source_sha256": "65b5213eb8b98a3cd2604279687850fbbc41c5442098817519aca7880ba64acb",
+      "public_sha256": "65b5213eb8b98a3cd2604279687850fbbc41c5442098817519aca7880ba64acb",
+      "transformations": []
+    },
+    "README.md": {
+      "source": "REPORT.md",
+      "source_sha256": "6a8821c23bea1214b8bd8f2bb96b841e3cc3f3d9435966f67ea01af0852ee385",
+      "public_sha256": "82b2ddd28c1daaf893f760ef51f00c5f78a84de603c323bae791aa10eb895a71",
+      "transformations": [
+        "Rewritten public summary, portable instructions, explicit representative GPU scope; obsolete internal handoffs omitted."
+      ]
+    },
+    "stress_v2/README.md": {
+      "source": "stress_v2/REPORT.md",
+      "source_sha256": "cf76ad42472fdc60b50741976f556a5a208976c900e644c7a28ca02b9baa70b7",
+      "public_sha256": "ec784cf576d1162f03ee33ddd6ee9ec4196b94a2a435a0af7300ece613d34440",
+      "transformations": [
+        "Condensed public stress results and limitations; private execution paths omitted."
+      ]
+    },
+    "verify_frozen.py": {
+      "source": null,
+      "source_sha256": null,
+      "public_sha256": "410379349e8069688c138920eab9261c89704abb0b1aaf6c22927b82142d61be",
+      "transformations": [
+        "New publication verifier: hash and shape checks plus existing frozen C++ score replay; no scientific data generation."
+      ]
+    }
+  }
+}

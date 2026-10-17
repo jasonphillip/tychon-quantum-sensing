@@ -1,0 +1,99 @@
+{
+  "status": "passed",
+  "synthetic_only": true,
+  "config_sha256": "c0e7839882d2de032a0a0e25dd396f506fdb4d2d69214ad24d79227630607379",
+  "source_sha256": "dd2eb65f4711bfd0587d4d2d237d04f78632831ca97b79fbc3247b383336f7af",
+  "model_source_sha256": "fab118bd8f4633ba74299dfee205b2e7c66d8afc968364ccf4cc1ddf55ab72ce",
+  "python": "3.13.11 | packaged by Anaconda, Inc. | (main, Dec 10 2025, 21:29:12) [GCC 14.3.0]",
+  "numpy": "2.4.2",
+  "platform": "Linux-7.0.0-1019-nvidia-aarch64-with-glibc2.39",
+  "step_us": 0.001,
+  "cases": [
+    {
+      "detuning_mhz": -0.75,
+      "delay_us": 0.0,
+      "phase_rad": 0.0,
+      "probability_error": 7.575257088277883e-11,
+      "density_max_error": 5.7401305930683293e-11,
+      "trace_error": 6.661338240269523e-16,
+      "hermitian_error": 4.9065389333867974e-18,
+      "minimum_eigenvalue": -7.628075667712678e-12
+    },
+    {
+      "detuning_mhz": -0.75,
+      "delay_us": 4.0,
+      "phase_rad": 1.5707963267948966,
+      "probability_error": 6.338374269913573e-12,
+      "density_max_error": 1.036481789743976e-10,
+      "trace_error": 4.440892127653618e-16,
+      "hermitian_error": 1.4821483875836085e-17,
+      "minimum_eigenvalue": -6.547094496112382e-11
+    },
+    {
+      "detuning_mhz": 0.75,
+      "delay_us": 4.0,
+      "phase_rad": 0.0,
+      "probability_error": 1.103450386619188e-10,
+      "density_max_error": 1.0321188348427844e-10,
+      "trace_error": 3.330669258912635e-16,
+      "hermitian_error": 3.469446951953614e-18,
+      "minimum_eigenvalue": -4.665318445264638e-11
+    },
+    {
+      "detuning_mhz": 0.75,
+      "delay_us": 0.13,
+      "phase_rad": 3.141592653589793,
+      "probability_error": 6.776498806542375e-11,
+      "density_max_error": 5.640905010071424e-11,
+      "trace_error": 6.6613381503209e-16,
+      "hermitian_error": 3.469446951953614e-18,
+      "minimum_eigenvalue": -5.565047515195323e-12
+    },
+    {
+      "detuning_mhz": 0.0,
+      "delay_us": 4.0,
+      "phase_rad": 4.71238898038469,
+      "probability_error": 4.623523786794599e-13,
+      "density_max_error": 4.187302000062326e-11,
+      "trace_error": 1.3322676319630954e-15,
+      "hermitian_error": 3.469446951953614e-18,
+      "minimum_eigenvalue": -4.811080504834155e-12
+    },
+    {
+      "detuning_mhz": 0.0,
+      "delay_us": 0.0,
+      "phase_rad": 1.5707963267948966,
+      "probability_error": 4.631295351026955e-13,
+      "density_max_error": 3.069546625701206e-11,
+      "trace_error": 0.0,
+      "hermitian_error": 0.0,
+      "minimum_eigenvalue": -3.3160186827813313e-13
+    },
+    {
+      "detuning_mhz": 0.123,
+      "delay_us": 2.17,
+      "phase_rad": 0.73,
+      "probability_error": 1.0017195409440012e-12,
+      "density_max_error": 5.380923693950519e-11,
+      "trace_error": 2.6645352596786167e-15,
+      "hermitian_error": 7.757919228897728e-18,
+      "minimum_eigenvalue": -1.2098018687086118e-11
+    },
+    {
+      "detuning_mhz": -0.213,
+      "delay_us": 0.318,
+      "phase_rad": 4.71238898038469,
+      "probability_error": 3.212374810827188e-12,
+      "density_max_error": 2.5002904705293003e-11,
+      "trace_error": 8.881784217360159e-16,
+      "hermitian_error": 1.3985787785349405e-17,
+      "minimum_eigenvalue": -1.6789971825763394e-11
+    }
+  ],
+  "gpu": "b'NVIDIA GB10'",
+  "cupy": "13.6.0",
+  "cudaq": "0.16.0.post1",
+  "max_probability_error": 1.103450386619188e-10,
+  "max_density_error": 1.036481789743976e-10,
+  "wall_seconds": 5.452816603006795
+}

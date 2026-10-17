@@ -16,6 +16,7 @@ This file maps the published source and evidence. The [reviewer guide](docs/star
 | [workers/polarfire-hybrid-control/](workers/polarfire-hybrid-control/) | FPGA design, firmware, and board evidence |
 | [demo/fpga-demo-dashboard/](demo/fpga-demo-dashboard/) | Dashboard, including a software dry-run mode |
 | [orchestrator/tvw/audits/](orchestrator/tvw/audits/) | Historical reviews, dispatches, and critic outputs |
+| [experiments/cudaq-fpga/](experiments/cudaq-fpga/README.md) | Three later quantum-workload demonstrations, frozen records, FPGA receipts, and offline checks |
 | [planning/](planning/) | Historical plans and conversation excerpts |
 
 ## Commands and saved evidence

@@ -1,0 +1,740 @@
+{
+  "schema": "quantum_board_acceptance_v1",
+  "started_utc": "2026-10-17T17:33:05.855129+00:00",
+  "status": "PASS",
+  "mode": "fabric_acceptance",
+  "output": "<board-workdir>/replay-u73ea3g3",
+  "commands": [
+    {
+      "name": "readout-parse",
+      "argv": [
+        "<board-workdir>/quantum_demo_run-v2.riscv64",
+        "--core",
+        "readout",
+        "--inputs",
+        "<board-workdir>/stress/readout/inputs_i16.bin",
+        "--expected",
+        "<board-workdir>/stress/readout/expected_scores_i64.bin",
+        "--output",
+        "<board-workdir>/replay-u73ea3g3/readout-parse.csv",
+        "--json",
+        "<board-workdir>/replay-u73ea3g3/readout-parse.json",
+        "--repeat",
+        "1",
+        "--timeout-ms",
+        "100",
+        "--self-test"
+      ],
+      "started_utc": "2026-10-17T17:33:06.507947+00:00",
+      "timeout_seconds": 30,
+      "stdout": "readout-parse.stdout.txt",
+      "stderr": "readout-parse.stderr.txt",
+      "returncode": 0,
+      "wall_seconds": 0.06913399999999825,
+      "validation": {
+        "records": 10240,
+        "accepted_calls": 0,
+        "full_csv_validated": true
+      },
+      "accepted": true
+    },
+    {
+      "name": "nv-parse",
+      "argv": [
+        "<board-workdir>/quantum_demo_run-v2.riscv64",
+        "--core",
+        "nv",
+        "--inputs",
+        "<board-workdir>/stress/nv/inputs_i16.bin",
+        "--expected",
+        "<board-workdir>/stress/nv/expected_indices_u16.bin",
+        "--output",
+        "<board-workdir>/replay-u73ea3g3/nv-parse.csv",
+        "--json",
+        "<board-workdir>/replay-u73ea3g3/nv-parse.json",
+        "--repeat",
+        "1",
+        "--timeout-ms",
+        "100",
+        "--scores",
+        "<board-workdir>/stress/nv/expected_scores_u64.bin",
+        "--self-test"
+      ],
+      "started_utc": "2026-10-17T17:33:06.626958+00:00",
+      "timeout_seconds": 30,
+      "stdout": "nv-parse.stdout.txt",
+      "stderr": "nv-parse.stderr.txt",
+      "returncode": 0,
+      "wall_seconds": 0.020182999999995843,
+      "validation": {
+        "records": 2061,
+        "accepted_calls": 0,
+        "full_csv_validated": true
+      },
+      "accepted": true
+    },
+    {
+      "name": "qec-parse",
+      "argv": [
+        "<board-workdir>/quantum_demo_run-v2.riscv64",
+        "--core",
+        "qec",
+        "--inputs",
+        "<board-workdir>/stress/qec/inputs_u8.bin",
+        "--expected",
+        "<board-workdir>/stress/qec/expected_corrections_u32.bin",
+        "--output",
+        "<board-workdir>/replay-u73ea3g3/qec-parse.csv",
+        "--json",
+        "<board-workdir>/replay-u73ea3g3/qec-parse.json",
+        "--repeat",
+        "1",
+        "--timeout-ms",
+        "100",
+        "--self-test"
+      ],
+      "started_utc": "2026-10-17T17:33:06.676736+00:00",
+      "timeout_seconds": 30,
+      "stdout": "qec-parse.stdout.txt",
+      "stderr": "qec-parse.stderr.txt",
+      "returncode": 0,
+      "wall_seconds": 0.007094000000002154,
+      "validation": {
+        "records": 4864,
+        "accepted_calls": 0,
+        "full_csv_validated": true
+      },
+      "accepted": true
+    },
+    {
+      "name": "control-parse",
+      "argv": [
+        "<board-workdir>/quantum_demo_control_test.riscv64",
+        "--self-test"
+      ],
+      "started_utc": "2026-10-17T17:33:06.713646+00:00",
+      "timeout_seconds": 30,
+      "stdout": "control-parse.stdout.txt",
+      "stderr": "control-parse.stderr.txt",
+      "returncode": 0,
+      "wall_seconds": 0.006967000000003054,
+      "validation": null,
+      "accepted": true
+    },
+    {
+      "name": "control-fabric",
+      "argv": [
+        "<board-workdir>/quantum_demo_control_test.riscv64",
+        "--run"
+      ],
+      "started_utc": "2026-10-17T17:33:07.353391+00:00",
+      "timeout_seconds": 30,
+      "stdout": "control-fabric.stdout.txt",
+      "stderr": "control-fabric.stderr.txt",
+      "returncode": 0,
+      "wall_seconds": 0.007038999999998907,
+      "validation": null,
+      "accepted": true
+    },
+    {
+      "name": "readout-r1",
+      "argv": [
+        "<board-workdir>/quantum_demo_run-v2.riscv64",
+        "--core",
+        "readout",
+        "--inputs",
+        "<board-workdir>/stress/readout/inputs_i16.bin",
+        "--expected",
+        "<board-workdir>/stress/readout/expected_scores_i64.bin",
+        "--output",
+        "<board-workdir>/replay-u73ea3g3/readout-r1.csv",
+        "--json",
+        "<board-workdir>/replay-u73ea3g3/readout-r1.json",
+        "--repeat",
+        "1",
+        "--timeout-ms",
+        "100"
+      ],
+      "started_utc": "2026-10-17T17:33:07.993587+00:00",
+      "timeout_seconds": 300,
+      "stdout": "readout-r1.stdout.txt",
+      "stderr": "readout-r1.stderr.txt",
+      "returncode": 0,
+      "wall_seconds": 0.5213030000000032,
+      "validation": {
+        "records": 10240,
+        "accepted_calls": 10240,
+        "full_csv_validated": true
+      },
+      "accepted": true
+    },
+    {
+      "name": "nv-r1",
+      "argv": [
+        "<board-workdir>/quantum_demo_run-v2.riscv64",
+        "--core",
+        "nv",
+        "--inputs",
+        "<board-workdir>/stress/nv/inputs_i16.bin",
+        "--expected",
+        "<board-workdir>/stress/nv/expected_indices_u16.bin",
+        "--output",
+        "<board-workdir>/replay-u73ea3g3/nv-r1.csv",
+        "--json",
+        "<board-workdir>/replay-u73ea3g3/nv-r1.json",
+        "--repeat",
+        "1",
+        "--timeout-ms",
+        "100",
+        "--scores",
+        "<board-workdir>/stress/nv/expected_scores_u64.bin"
+      ],
+      "started_utc": "2026-10-17T17:33:12.675605+00:00",
+      "timeout_seconds": 300,
+      "stdout": "nv-r1.stdout.txt",
+      "stderr": "nv-r1.stderr.txt",
+      "returncode": 0,
+      "wall_seconds": 0.5198930000000033,
+      "validation": {
+        "records": 2061,
+        "accepted_calls": 2061,
+        "full_csv_validated": true
+      },
+      "accepted": true
+    },
+    {
+      "name": "qec-r1",
+      "argv": [
+        "<board-workdir>/quantum_demo_run-v2.riscv64",
+        "--core",
+        "qec",
+        "--inputs",
+        "<board-workdir>/stress/qec/inputs_u8.bin",
+        "--expected",
+        "<board-workdir>/stress/qec/expected_corrections_u32.bin",
+        "--output",
+        "<board-workdir>/replay-u73ea3g3/qec-r1.csv",
+        "--json",
+        "<board-workdir>/replay-u73ea3g3/qec-r1.json",
+        "--repeat",
+        "1",
+        "--timeout-ms",
+        "100"
+      ],
+      "started_utc": "2026-10-17T17:33:14.574656+00:00",
+      "timeout_seconds": 300,
+      "stdout": "qec-r1.stdout.txt",
+      "stderr": "qec-r1.stderr.txt",
+      "returncode": 0,
+      "wall_seconds": 0.1683219999999963,
+      "validation": {
+        "records": 4864,
+        "accepted_calls": 4864,
+        "full_csv_validated": true
+      },
+      "accepted": true
+    },
+    {
+      "name": "readout-r4",
+      "argv": [
+        "<board-workdir>/quantum_demo_run-v2.riscv64",
+        "--core",
+        "readout",
+        "--inputs",
+        "<board-workdir>/stress/readout/inputs_i16.bin",
+        "--expected",
+        "<board-workdir>/stress/readout/expected_scores_i64.bin",
+        "--output",
+        "<board-workdir>/replay-u73ea3g3/readout-r4.csv",
+        "--json",
+        "<board-workdir>/replay-u73ea3g3/readout-r4.json",
+        "--repeat",
+        "4",
+        "--timeout-ms",
+        "100"
+      ],
+      "started_utc": "2026-10-17T17:33:17.078335+00:00",
+      "timeout_seconds": 300,
+      "stdout": "readout-r4.stdout.txt",
+      "stderr": "readout-r4.stderr.txt",
+      "returncode": 0,
+      "wall_seconds": 1.9293800000000019,
+      "validation": {
+        "records": 10240,
+        "accepted_calls": 40960,
+        "full_csv_validated": true
+      },
+      "accepted": true
+    },
+    {
+      "name": "nv-r4",
+      "argv": [
+        "<board-workdir>/quantum_demo_run-v2.riscv64",
+        "--core",
+        "nv",
+        "--inputs",
+        "<board-workdir>/stress/nv/inputs_i16.bin",
+        "--expected",
+        "<board-workdir>/stress/nv/expected_indices_u16.bin",
+        "--output",
+        "<board-workdir>/replay-u73ea3g3/nv-r4.csv",
+        "--json",
+        "<board-workdir>/replay-u73ea3g3/nv-r4.json",
+        "--repeat",
+        "4",
+        "--timeout-ms",
+        "100",
+        "--scores",
+        "<board-workdir>/stress/nv/expected_scores_u64.bin"
+      ],
+      "started_utc": "2026-10-17T17:34:18.998672+00:00",
+      "timeout_seconds": 300,
+      "stdout": "nv-r4.stdout.txt",
+      "stderr": "nv-r4.stderr.txt",
+      "returncode": 0,
+      "wall_seconds": 1.975440000000006,
+      "validation": {
+        "records": 2061,
+        "accepted_calls": 8244,
+        "full_csv_validated": true
+      },
+      "accepted": true
+    },
+    {
+      "name": "qec-r4",
+      "argv": [
+        "<board-workdir>/quantum_demo_run-v2.riscv64",
+        "--core",
+        "qec",
+        "--inputs",
+        "<board-workdir>/stress/qec/inputs_u8.bin",
+        "--expected",
+        "<board-workdir>/stress/qec/expected_corrections_u32.bin",
+        "--output",
+        "<board-workdir>/replay-u73ea3g3/qec-r4.csv",
+        "--json",
+        "<board-workdir>/replay-u73ea3g3/qec-r4.json",
+        "--repeat",
+        "4",
+        "--timeout-ms",
+        "100"
+      ],
+      "started_utc": "2026-10-17T17:34:24.528589+00:00",
+      "timeout_seconds": 300,
+      "stdout": "qec-r4.stdout.txt",
+      "stderr": "qec-r4.stderr.txt",
+      "returncode": 0,
+      "wall_seconds": 0.6207899999999995,
+      "validation": {
+        "records": 4864,
+        "accepted_calls": 19456,
+        "full_csv_validated": true
+      },
+      "accepted": true
+    }
+  ],
+  "hash_checks": [
+    {
+      "before": "all parser checks",
+      "files": {
+        "quantum_demo_run-v2.riscv64": {
+          "expected_sha256": "96fee46e885958a85573a68489b249908eeb437c757d4e0b0f24c6a252908a38",
+          "sha256": "96fee46e885958a85573a68489b249908eeb437c757d4e0b0f24c6a252908a38",
+          "match": true
+        },
+        "quantum_demo_control_test.riscv64": {
+          "expected_sha256": "90b3f7642d80db6e946728d0196dbf8099837814d0a0ad65f97e151515c5a2fa",
+          "sha256": "90b3f7642d80db6e946728d0196dbf8099837814d0a0ad65f97e151515c5a2fa",
+          "match": true
+        },
+        "stress/readout/inputs_i16.bin": {
+          "expected_sha256": "fa4114c8437a3f3fd58258a64e07f5ac9318d60e066f95ec0721fe4aabf2d414",
+          "sha256": "fa4114c8437a3f3fd58258a64e07f5ac9318d60e066f95ec0721fe4aabf2d414",
+          "match": true
+        },
+        "stress/readout/expected_scores_i64.bin": {
+          "expected_sha256": "49d14e9d066c92cab0502db381509511b6e4dc69e0502d4f69499675632f5516",
+          "sha256": "49d14e9d066c92cab0502db381509511b6e4dc69e0502d4f69499675632f5516",
+          "match": true
+        },
+        "stress/nv/inputs_i16.bin": {
+          "expected_sha256": "4a36b321605c52b164f3f60da56663ec4851f8d7eb6e2a198fe32f9df97066d4",
+          "sha256": "4a36b321605c52b164f3f60da56663ec4851f8d7eb6e2a198fe32f9df97066d4",
+          "match": true
+        },
+        "stress/nv/expected_indices_u16.bin": {
+          "expected_sha256": "c06bbd37041d6459c8317af865fe46557d98b4d08d0c53a448d47c415563148a",
+          "sha256": "c06bbd37041d6459c8317af865fe46557d98b4d08d0c53a448d47c415563148a",
+          "match": true
+        },
+        "stress/nv/expected_scores_u64.bin": {
+          "expected_sha256": "f5dbb1cd54bd475b25dbfa79317b3f226e33003febce8cd9be1550a9f2590e6b",
+          "sha256": "f5dbb1cd54bd475b25dbfa79317b3f226e33003febce8cd9be1550a9f2590e6b",
+          "match": true
+        },
+        "stress/qec/inputs_u8.bin": {
+          "expected_sha256": "2355d67968f25df23ad164a72401eab76721d0c197c05aed66e9870c992a374d",
+          "sha256": "2355d67968f25df23ad164a72401eab76721d0c197c05aed66e9870c992a374d",
+          "match": true
+        },
+        "stress/qec/expected_corrections_u32.bin": {
+          "expected_sha256": "5da948da519ad18ccc1dc741a906a7a1463079c6174c5dd54143e870575cf88b",
+          "sha256": "5da948da519ad18ccc1dc741a906a7a1463079c6174c5dd54143e870575cf88b",
+          "match": true
+        }
+      }
+    },
+    {
+      "before": "control-fabric",
+      "files": {
+        "quantum_demo_run-v2.riscv64": {
+          "expected_sha256": "96fee46e885958a85573a68489b249908eeb437c757d4e0b0f24c6a252908a38",
+          "sha256": "96fee46e885958a85573a68489b249908eeb437c757d4e0b0f24c6a252908a38",
+          "match": true
+        },
+        "quantum_demo_control_test.riscv64": {
+          "expected_sha256": "90b3f7642d80db6e946728d0196dbf8099837814d0a0ad65f97e151515c5a2fa",
+          "sha256": "90b3f7642d80db6e946728d0196dbf8099837814d0a0ad65f97e151515c5a2fa",
+          "match": true
+        },
+        "stress/readout/inputs_i16.bin": {
+          "expected_sha256": "fa4114c8437a3f3fd58258a64e07f5ac9318d60e066f95ec0721fe4aabf2d414",
+          "sha256": "fa4114c8437a3f3fd58258a64e07f5ac9318d60e066f95ec0721fe4aabf2d414",
+          "match": true
+        },
+        "stress/readout/expected_scores_i64.bin": {
+          "expected_sha256": "49d14e9d066c92cab0502db381509511b6e4dc69e0502d4f69499675632f5516",
+          "sha256": "49d14e9d066c92cab0502db381509511b6e4dc69e0502d4f69499675632f5516",
+          "match": true
+        },
+        "stress/nv/inputs_i16.bin": {
+          "expected_sha256": "4a36b321605c52b164f3f60da56663ec4851f8d7eb6e2a198fe32f9df97066d4",
+          "sha256": "4a36b321605c52b164f3f60da56663ec4851f8d7eb6e2a198fe32f9df97066d4",
+          "match": true
+        },
+        "stress/nv/expected_indices_u16.bin": {
+          "expected_sha256": "c06bbd37041d6459c8317af865fe46557d98b4d08d0c53a448d47c415563148a",
+          "sha256": "c06bbd37041d6459c8317af865fe46557d98b4d08d0c53a448d47c415563148a",
+          "match": true
+        },
+        "stress/nv/expected_scores_u64.bin": {
+          "expected_sha256": "f5dbb1cd54bd475b25dbfa79317b3f226e33003febce8cd9be1550a9f2590e6b",
+          "sha256": "f5dbb1cd54bd475b25dbfa79317b3f226e33003febce8cd9be1550a9f2590e6b",
+          "match": true
+        },
+        "stress/qec/inputs_u8.bin": {
+          "expected_sha256": "2355d67968f25df23ad164a72401eab76721d0c197c05aed66e9870c992a374d",
+          "sha256": "2355d67968f25df23ad164a72401eab76721d0c197c05aed66e9870c992a374d",
+          "match": true
+        },
+        "stress/qec/expected_corrections_u32.bin": {
+          "expected_sha256": "5da948da519ad18ccc1dc741a906a7a1463079c6174c5dd54143e870575cf88b",
+          "sha256": "5da948da519ad18ccc1dc741a906a7a1463079c6174c5dd54143e870575cf88b",
+          "match": true
+        }
+      }
+    },
+    {
+      "before": "readout-r1",
+      "files": {
+        "quantum_demo_run-v2.riscv64": {
+          "expected_sha256": "96fee46e885958a85573a68489b249908eeb437c757d4e0b0f24c6a252908a38",
+          "sha256": "96fee46e885958a85573a68489b249908eeb437c757d4e0b0f24c6a252908a38",
+          "match": true
+        },
+        "quantum_demo_control_test.riscv64": {
+          "expected_sha256": "90b3f7642d80db6e946728d0196dbf8099837814d0a0ad65f97e151515c5a2fa",
+          "sha256": "90b3f7642d80db6e946728d0196dbf8099837814d0a0ad65f97e151515c5a2fa",
+          "match": true
+        },
+        "stress/readout/inputs_i16.bin": {
+          "expected_sha256": "fa4114c8437a3f3fd58258a64e07f5ac9318d60e066f95ec0721fe4aabf2d414",
+          "sha256": "fa4114c8437a3f3fd58258a64e07f5ac9318d60e066f95ec0721fe4aabf2d414",
+          "match": true
+        },
+        "stress/readout/expected_scores_i64.bin": {
+          "expected_sha256": "49d14e9d066c92cab0502db381509511b6e4dc69e0502d4f69499675632f5516",
+          "sha256": "49d14e9d066c92cab0502db381509511b6e4dc69e0502d4f69499675632f5516",
+          "match": true
+        },
+        "stress/nv/inputs_i16.bin": {
+          "expected_sha256": "4a36b321605c52b164f3f60da56663ec4851f8d7eb6e2a198fe32f9df97066d4",
+          "sha256": "4a36b321605c52b164f3f60da56663ec4851f8d7eb6e2a198fe32f9df97066d4",
+          "match": true
+        },
+        "stress/nv/expected_indices_u16.bin": {
+          "expected_sha256": "c06bbd37041d6459c8317af865fe46557d98b4d08d0c53a448d47c415563148a",
+          "sha256": "c06bbd37041d6459c8317af865fe46557d98b4d08d0c53a448d47c415563148a",
+          "match": true
+        },
+        "stress/nv/expected_scores_u64.bin": {
+          "expected_sha256": "f5dbb1cd54bd475b25dbfa79317b3f226e33003febce8cd9be1550a9f2590e6b",
+          "sha256": "f5dbb1cd54bd475b25dbfa79317b3f226e33003febce8cd9be1550a9f2590e6b",
+          "match": true
+        },
+        "stress/qec/inputs_u8.bin": {
+          "expected_sha256": "2355d67968f25df23ad164a72401eab76721d0c197c05aed66e9870c992a374d",
+          "sha256": "2355d67968f25df23ad164a72401eab76721d0c197c05aed66e9870c992a374d",
+          "match": true
+        },
+        "stress/qec/expected_corrections_u32.bin": {
+          "expected_sha256": "5da948da519ad18ccc1dc741a906a7a1463079c6174c5dd54143e870575cf88b",
+          "sha256": "5da948da519ad18ccc1dc741a906a7a1463079c6174c5dd54143e870575cf88b",
+          "match": true
+        }
+      }
+    },
+    {
+      "before": "nv-r1",
+      "files": {
+        "quantum_demo_run-v2.riscv64": {
+          "expected_sha256": "96fee46e885958a85573a68489b249908eeb437c757d4e0b0f24c6a252908a38",
+          "sha256": "96fee46e885958a85573a68489b249908eeb437c757d4e0b0f24c6a252908a38",
+          "match": true
+        },
+        "quantum_demo_control_test.riscv64": {
+          "expected_sha256": "90b3f7642d80db6e946728d0196dbf8099837814d0a0ad65f97e151515c5a2fa",
+          "sha256": "90b3f7642d80db6e946728d0196dbf8099837814d0a0ad65f97e151515c5a2fa",
+          "match": true
+        },
+        "stress/readout/inputs_i16.bin": {
+          "expected_sha256": "fa4114c8437a3f3fd58258a64e07f5ac9318d60e066f95ec0721fe4aabf2d414",
+          "sha256": "fa4114c8437a3f3fd58258a64e07f5ac9318d60e066f95ec0721fe4aabf2d414",
+          "match": true
+        },
+        "stress/readout/expected_scores_i64.bin": {
+          "expected_sha256": "49d14e9d066c92cab0502db381509511b6e4dc69e0502d4f69499675632f5516",
+          "sha256": "49d14e9d066c92cab0502db381509511b6e4dc69e0502d4f69499675632f5516",
+          "match": true
+        },
+        "stress/nv/inputs_i16.bin": {
+          "expected_sha256": "4a36b321605c52b164f3f60da56663ec4851f8d7eb6e2a198fe32f9df97066d4",
+          "sha256": "4a36b321605c52b164f3f60da56663ec4851f8d7eb6e2a198fe32f9df97066d4",
+          "match": true
+        },
+        "stress/nv/expected_indices_u16.bin": {
+          "expected_sha256": "c06bbd37041d6459c8317af865fe46557d98b4d08d0c53a448d47c415563148a",
+          "sha256": "c06bbd37041d6459c8317af865fe46557d98b4d08d0c53a448d47c415563148a",
+          "match": true
+        },
+        "stress/nv/expected_scores_u64.bin": {
+          "expected_sha256": "f5dbb1cd54bd475b25dbfa79317b3f226e33003febce8cd9be1550a9f2590e6b",
+          "sha256": "f5dbb1cd54bd475b25dbfa79317b3f226e33003febce8cd9be1550a9f2590e6b",
+          "match": true
+        },
+        "stress/qec/inputs_u8.bin": {
+          "expected_sha256": "2355d67968f25df23ad164a72401eab76721d0c197c05aed66e9870c992a374d",
+          "sha256": "2355d67968f25df23ad164a72401eab76721d0c197c05aed66e9870c992a374d",
+          "match": true
+        },
+        "stress/qec/expected_corrections_u32.bin": {
+          "expected_sha256": "5da948da519ad18ccc1dc741a906a7a1463079c6174c5dd54143e870575cf88b",
+          "sha256": "5da948da519ad18ccc1dc741a906a7a1463079c6174c5dd54143e870575cf88b",
+          "match": true
+        }
+      }
+    },
+    {
+      "before": "qec-r1",
+      "files": {
+        "quantum_demo_run-v2.riscv64": {
+          "expected_sha256": "96fee46e885958a85573a68489b249908eeb437c757d4e0b0f24c6a252908a38",
+          "sha256": "96fee46e885958a85573a68489b249908eeb437c757d4e0b0f24c6a252908a38",
+          "match": true
+        },
+        "quantum_demo_control_test.riscv64": {
+          "expected_sha256": "90b3f7642d80db6e946728d0196dbf8099837814d0a0ad65f97e151515c5a2fa",
+          "sha256": "90b3f7642d80db6e946728d0196dbf8099837814d0a0ad65f97e151515c5a2fa",
+          "match": true
+        },
+        "stress/readout/inputs_i16.bin": {
+          "expected_sha256": "fa4114c8437a3f3fd58258a64e07f5ac9318d60e066f95ec0721fe4aabf2d414",
+          "sha256": "fa4114c8437a3f3fd58258a64e07f5ac9318d60e066f95ec0721fe4aabf2d414",
+          "match": true
+        },
+        "stress/readout/expected_scores_i64.bin": {
+          "expected_sha256": "49d14e9d066c92cab0502db381509511b6e4dc69e0502d4f69499675632f5516",
+          "sha256": "49d14e9d066c92cab0502db381509511b6e4dc69e0502d4f69499675632f5516",
+          "match": true
+        },
+        "stress/nv/inputs_i16.bin": {
+          "expected_sha256": "4a36b321605c52b164f3f60da56663ec4851f8d7eb6e2a198fe32f9df97066d4",
+          "sha256": "4a36b321605c52b164f3f60da56663ec4851f8d7eb6e2a198fe32f9df97066d4",
+          "match": true
+        },
+        "stress/nv/expected_indices_u16.bin": {
+          "expected_sha256": "c06bbd37041d6459c8317af865fe46557d98b4d08d0c53a448d47c415563148a",
+          "sha256": "c06bbd37041d6459c8317af865fe46557d98b4d08d0c53a448d47c415563148a",
+          "match": true
+        },
+        "stress/nv/expected_scores_u64.bin": {
+          "expected_sha256": "f5dbb1cd54bd475b25dbfa79317b3f226e33003febce8cd9be1550a9f2590e6b",
+          "sha256": "f5dbb1cd54bd475b25dbfa79317b3f226e33003febce8cd9be1550a9f2590e6b",
+          "match": true
+        },
+        "stress/qec/inputs_u8.bin": {
+          "expected_sha256": "2355d67968f25df23ad164a72401eab76721d0c197c05aed66e9870c992a374d",
+          "sha256": "2355d67968f25df23ad164a72401eab76721d0c197c05aed66e9870c992a374d",
+          "match": true
+        },
+        "stress/qec/expected_corrections_u32.bin": {
+          "expected_sha256": "5da948da519ad18ccc1dc741a906a7a1463079c6174c5dd54143e870575cf88b",
+          "sha256": "5da948da519ad18ccc1dc741a906a7a1463079c6174c5dd54143e870575cf88b",
+          "match": true
+        }
+      }
+    },
+    {
+      "before": "readout-r4",
+      "files": {
+        "quantum_demo_run-v2.riscv64": {
+          "expected_sha256": "96fee46e885958a85573a68489b249908eeb437c757d4e0b0f24c6a252908a38",
+          "sha256": "96fee46e885958a85573a68489b249908eeb437c757d4e0b0f24c6a252908a38",
+          "match": true
+        },
+        "quantum_demo_control_test.riscv64": {
+          "expected_sha256": "90b3f7642d80db6e946728d0196dbf8099837814d0a0ad65f97e151515c5a2fa",
+          "sha256": "90b3f7642d80db6e946728d0196dbf8099837814d0a0ad65f97e151515c5a2fa",
+          "match": true
+        },
+        "stress/readout/inputs_i16.bin": {
+          "expected_sha256": "fa4114c8437a3f3fd58258a64e07f5ac9318d60e066f95ec0721fe4aabf2d414",
+          "sha256": "fa4114c8437a3f3fd58258a64e07f5ac9318d60e066f95ec0721fe4aabf2d414",
+          "match": true
+        },
+        "stress/readout/expected_scores_i64.bin": {
+          "expected_sha256": "49d14e9d066c92cab0502db381509511b6e4dc69e0502d4f69499675632f5516",
+          "sha256": "49d14e9d066c92cab0502db381509511b6e4dc69e0502d4f69499675632f5516",
+          "match": true
+        },
+        "stress/nv/inputs_i16.bin": {
+          "expected_sha256": "4a36b321605c52b164f3f60da56663ec4851f8d7eb6e2a198fe32f9df97066d4",
+          "sha256": "4a36b321605c52b164f3f60da56663ec4851f8d7eb6e2a198fe32f9df97066d4",
+          "match": true
+        },
+        "stress/nv/expected_indices_u16.bin": {
+          "expected_sha256": "c06bbd37041d6459c8317af865fe46557d98b4d08d0c53a448d47c415563148a",
+          "sha256": "c06bbd37041d6459c8317af865fe46557d98b4d08d0c53a448d47c415563148a",
+          "match": true
+        },
+        "stress/nv/expected_scores_u64.bin": {
+          "expected_sha256": "f5dbb1cd54bd475b25dbfa79317b3f226e33003febce8cd9be1550a9f2590e6b",
+          "sha256": "f5dbb1cd54bd475b25dbfa79317b3f226e33003febce8cd9be1550a9f2590e6b",
+          "match": true
+        },
+        "stress/qec/inputs_u8.bin": {
+          "expected_sha256": "2355d67968f25df23ad164a72401eab76721d0c197c05aed66e9870c992a374d",
+          "sha256": "2355d67968f25df23ad164a72401eab76721d0c197c05aed66e9870c992a374d",
+          "match": true
+        },
+        "stress/qec/expected_corrections_u32.bin": {
+          "expected_sha256": "5da948da519ad18ccc1dc741a906a7a1463079c6174c5dd54143e870575cf88b",
+          "sha256": "5da948da519ad18ccc1dc741a906a7a1463079c6174c5dd54143e870575cf88b",
+          "match": true
+        }
+      }
+    },
+    {
+      "before": "nv-r4",
+      "files": {
+        "quantum_demo_run-v2.riscv64": {
+          "expected_sha256": "96fee46e885958a85573a68489b249908eeb437c757d4e0b0f24c6a252908a38",
+          "sha256": "96fee46e885958a85573a68489b249908eeb437c757d4e0b0f24c6a252908a38",
+          "match": true
+        },
+        "quantum_demo_control_test.riscv64": {
+          "expected_sha256": "90b3f7642d80db6e946728d0196dbf8099837814d0a0ad65f97e151515c5a2fa",
+          "sha256": "90b3f7642d80db6e946728d0196dbf8099837814d0a0ad65f97e151515c5a2fa",
+          "match": true
+        },
+        "stress/readout/inputs_i16.bin": {
+          "expected_sha256": "fa4114c8437a3f3fd58258a64e07f5ac9318d60e066f95ec0721fe4aabf2d414",
+          "sha256": "fa4114c8437a3f3fd58258a64e07f5ac9318d60e066f95ec0721fe4aabf2d414",
+          "match": true
+        },
+        "stress/readout/expected_scores_i64.bin": {
+          "expected_sha256": "49d14e9d066c92cab0502db381509511b6e4dc69e0502d4f69499675632f5516",
+          "sha256": "49d14e9d066c92cab0502db381509511b6e4dc69e0502d4f69499675632f5516",
+          "match": true
+        },
+        "stress/nv/inputs_i16.bin": {
+          "expected_sha256": "4a36b321605c52b164f3f60da56663ec4851f8d7eb6e2a198fe32f9df97066d4",
+          "sha256": "4a36b321605c52b164f3f60da56663ec4851f8d7eb6e2a198fe32f9df97066d4",
+          "match": true
+        },
+        "stress/nv/expected_indices_u16.bin": {
+          "expected_sha256": "c06bbd37041d6459c8317af865fe46557d98b4d08d0c53a448d47c415563148a",
+          "sha256": "c06bbd37041d6459c8317af865fe46557d98b4d08d0c53a448d47c415563148a",
+          "match": true
+        },
+        "stress/nv/expected_scores_u64.bin": {
+          "expected_sha256": "f5dbb1cd54bd475b25dbfa79317b3f226e33003febce8cd9be1550a9f2590e6b",
+          "sha256": "f5dbb1cd54bd475b25dbfa79317b3f226e33003febce8cd9be1550a9f2590e6b",
+          "match": true
+        },
+        "stress/qec/inputs_u8.bin": {
+          "expected_sha256": "2355d67968f25df23ad164a72401eab76721d0c197c05aed66e9870c992a374d",
+          "sha256": "2355d67968f25df23ad164a72401eab76721d0c197c05aed66e9870c992a374d",
+          "match": true
+        },
+        "stress/qec/expected_corrections_u32.bin": {
+          "expected_sha256": "5da948da519ad18ccc1dc741a906a7a1463079c6174c5dd54143e870575cf88b",
+          "sha256": "5da948da519ad18ccc1dc741a906a7a1463079c6174c5dd54143e870575cf88b",
+          "match": true
+        }
+      }
+    },
+    {
+      "before": "qec-r4",
+      "files": {
+        "quantum_demo_run-v2.riscv64": {
+          "expected_sha256": "96fee46e885958a85573a68489b249908eeb437c757d4e0b0f24c6a252908a38",
+          "sha256": "96fee46e885958a85573a68489b249908eeb437c757d4e0b0f24c6a252908a38",
+          "match": true
+        },
+        "quantum_demo_control_test.riscv64": {
+          "expected_sha256": "90b3f7642d80db6e946728d0196dbf8099837814d0a0ad65f97e151515c5a2fa",
+          "sha256": "90b3f7642d80db6e946728d0196dbf8099837814d0a0ad65f97e151515c5a2fa",
+          "match": true
+        },
+        "stress/readout/inputs_i16.bin": {
+          "expected_sha256": "fa4114c8437a3f3fd58258a64e07f5ac9318d60e066f95ec0721fe4aabf2d414",
+          "sha256": "fa4114c8437a3f3fd58258a64e07f5ac9318d60e066f95ec0721fe4aabf2d414",
+          "match": true
+        },
+        "stress/readout/expected_scores_i64.bin": {
+          "expected_sha256": "49d14e9d066c92cab0502db381509511b6e4dc69e0502d4f69499675632f5516",
+          "sha256": "49d14e9d066c92cab0502db381509511b6e4dc69e0502d4f69499675632f5516",
+          "match": true
+        },
+        "stress/nv/inputs_i16.bin": {
+          "expected_sha256": "4a36b321605c52b164f3f60da56663ec4851f8d7eb6e2a198fe32f9df97066d4",
+          "sha256": "4a36b321605c52b164f3f60da56663ec4851f8d7eb6e2a198fe32f9df97066d4",
+          "match": true
+        },
+        "stress/nv/expected_indices_u16.bin": {
+          "expected_sha256": "c06bbd37041d6459c8317af865fe46557d98b4d08d0c53a448d47c415563148a",
+          "sha256": "c06bbd37041d6459c8317af865fe46557d98b4d08d0c53a448d47c415563148a",
+          "match": true
+        },
+        "stress/nv/expected_scores_u64.bin": {
+          "expected_sha256": "f5dbb1cd54bd475b25dbfa79317b3f226e33003febce8cd9be1550a9f2590e6b",
+          "sha256": "f5dbb1cd54bd475b25dbfa79317b3f226e33003febce8cd9be1550a9f2590e6b",
+          "match": true
+        },
+        "stress/qec/inputs_u8.bin": {
+          "expected_sha256": "2355d67968f25df23ad164a72401eab76721d0c197c05aed66e9870c992a374d",
+          "sha256": "2355d67968f25df23ad164a72401eab76721d0c197c05aed66e9870c992a374d",
+          "match": true
+        },
+        "stress/qec/expected_corrections_u32.bin": {
+          "expected_sha256": "5da948da519ad18ccc1dc741a906a7a1463079c6174c5dd54143e870575cf88b",
+          "sha256": "5da948da519ad18ccc1dc741a906a7a1463079c6174c5dd54143e870575cf88b",
+          "match": true
+        }
+      }
+    }
+  ],
+  "fabric_started": true,
+  "completed_utc": "2026-10-17T17:34:31.904666+00:00"
+}

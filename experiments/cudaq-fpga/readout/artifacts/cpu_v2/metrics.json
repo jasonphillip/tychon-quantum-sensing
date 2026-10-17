@@ -1,0 +1,135 @@
+{
+  "passed": true,
+  "scope": "synthetic receiver data and host C inference; no FPGA execution",
+  "selected_model": "boxcar",
+  "validation_selection": {
+    "boxcar": 1.0,
+    "matched_filter": 1.0,
+    "lda": 1.0
+  },
+  "partitions": {
+    "train": {
+      "records": 1280,
+      "devices": 80,
+      "models": {
+        "boxcar": 1.0,
+        "matched_filter": 1.0,
+        "lda": 1.0
+      },
+      "fixed_accuracy": 1.0,
+      "float_fixed_disagreement": 0.0
+    },
+    "validation": {
+      "records": 320,
+      "devices": 20,
+      "models": {
+        "boxcar": 1.0,
+        "matched_filter": 1.0,
+        "lda": 1.0
+      },
+      "fixed_accuracy": 1.0,
+      "float_fixed_disagreement": 0.0
+    },
+    "test": {
+      "records": 640,
+      "devices": 40,
+      "models": {
+        "boxcar": 1.0,
+        "matched_filter": 1.0,
+        "lda": 1.0
+      },
+      "fixed_accuracy": 1.0,
+      "float_fixed_disagreement": 0.0
+    },
+    "stress": {
+      "records": 640,
+      "devices": 40,
+      "models": {
+        "boxcar": 0.9796875,
+        "matched_filter": 0.9859375,
+        "lda": 0.9875
+      },
+      "fixed_accuracy": 0.9796875,
+      "float_fixed_disagreement": 0.0
+    }
+  },
+  "physics": {
+    "passed": true,
+    "cases": [
+      {
+        "case": "ground_nominal",
+        "delta_rad_per_us": -3.4557519189487724,
+        "drive_rad_per_us": 4.39822971502571,
+        "alpha_max_abs_error": 2.8058644372879902e-11,
+        "truncation_difference": 5.958068650017227e-12,
+        "step_halving_difference": 2.610614025564004e-11,
+        "number_max_abs_error": 1.0324452404120166e-10,
+        "peak_mean_photons": 1.0465156004293243,
+        "trace_error": 1.554315062907633e-15,
+        "hermiticity_error": 1.1236938283130691e-16,
+        "minimum_eigenvalue": -1.1402703201876679e-09,
+        "boundary_population": 4.934534280236185e-13,
+        "passed": true
+      },
+      {
+        "case": "excited_nominal",
+        "delta_rad_per_us": 4.71238898038469,
+        "drive_rad_per_us": 4.39822971502571,
+        "alpha_max_abs_error": 6.068641933061157e-11,
+        "truncation_difference": 1.2401504269967414e-13,
+        "step_halving_difference": 5.645914815004484e-11,
+        "number_max_abs_error": 1.2003809057858916e-10,
+        "peak_mean_photons": 0.8073828435222574,
+        "trace_error": 1.1102230247029183e-15,
+        "hermiticity_error": 5.551115123125783e-17,
+        "minimum_eigenvalue": -1.236361420507014e-09,
+        "boundary_population": 1.3002177989196745e-14,
+        "passed": true
+      },
+      {
+        "case": "ground_drift",
+        "delta_rad_per_us": -0.3141592653589793,
+        "drive_rad_per_us": 4.838052686528282,
+        "alpha_max_abs_error": 3.4379800601970587e-07,
+        "truncation_difference": 3.4366715437199104e-07,
+        "step_halving_difference": 5.997951581039762e-12,
+        "number_max_abs_error": 4.1860157029560696e-07,
+        "peak_mean_photons": 2.3189031030475054,
+        "trace_error": 9.99200731372477e-16,
+        "hermiticity_error": 8.391472671209643e-17,
+        "minimum_eigenvalue": -1.542161305658102e-09,
+        "boundary_population": 1.9210157078188055e-08,
+        "passed": true
+      },
+      {
+        "case": "excited_drift",
+        "delta_rad_per_us": 7.853981633974483,
+        "drive_rad_per_us": 4.838052686528282,
+        "alpha_max_abs_error": 3.3219906187380537e-10,
+        "truncation_difference": 5.79553433516819e-16,
+        "step_halving_difference": 3.090521812244942e-10,
+        "number_max_abs_error": 3.916086344091241e-10,
+        "peak_mean_photons": 0.5655209130651202,
+        "trace_error": 1.3322676528851395e-15,
+        "hermiticity_error": 7.850462293418876e-17,
+        "minimum_eigenvalue": -2.3112945052700053e-09,
+        "boundary_population": 8.05714404078855e-17,
+        "passed": true
+      }
+    ]
+  },
+  "host_c_bit_exact": true,
+  "clipped_input_values": 0,
+  "max_score_quantization_error": 0.005030984680843176,
+  "accumulator_worst_case_abs_bound": 40468904932,
+  "signed_accumulator_bits_sufficient": 37,
+  "macs_per_record": 128,
+  "coefficient_bytes": 264,
+  "input_bytes_per_record": 256,
+  "elapsed_s": 1.1448802079539746,
+  "versions": {
+    "python": "3.14.3",
+    "numpy": "2.4.2",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O"
+  }
+}

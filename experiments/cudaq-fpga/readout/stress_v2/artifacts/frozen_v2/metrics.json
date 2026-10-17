@@ -1,0 +1,545 @@
+{
+  "correctness_passed": true,
+  "utility_passed": true,
+  "utility_gates": {
+    "nominal_accuracy": true,
+    "receiver_drift_accuracy": true,
+    "receiver_drift_calibration_gain": true,
+    "calibration_coverage": true
+  },
+  "summaries": {
+    "nominal": {
+      "development": {
+        "groups": 8,
+        "shots": 256,
+        "raw_boxcar": {
+          "correct": 252,
+          "shots": 256,
+          "accuracy": 0.984375,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.9375
+        },
+        "calibrated_boxcar": {
+          "correct": 252,
+          "shots": 256,
+          "accuracy": 0.984375,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.9375
+        },
+        "local_matched_filter": {
+          "correct": 252,
+          "shots": 256,
+          "accuracy": 0.984375,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.9375
+        },
+        "local_lda": {
+          "correct": 252,
+          "shots": 256,
+          "accuracy": 0.984375,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.9375
+        },
+        "calibration_gain": 0.0,
+        "relaxed_excited_shots": 5
+      },
+      "validation": {
+        "groups": 8,
+        "shots": 256,
+        "raw_boxcar": {
+          "correct": 256,
+          "shots": 256,
+          "accuracy": 1.0,
+          "coverage": 1.0,
+          "worst_group_accuracy": 1.0
+        },
+        "calibrated_boxcar": {
+          "correct": 256,
+          "shots": 256,
+          "accuracy": 1.0,
+          "coverage": 1.0,
+          "worst_group_accuracy": 1.0
+        },
+        "local_matched_filter": {
+          "correct": 255,
+          "shots": 256,
+          "accuracy": 0.99609375,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.96875
+        },
+        "local_lda": {
+          "correct": 256,
+          "shots": 256,
+          "accuracy": 1.0,
+          "coverage": 1.0,
+          "worst_group_accuracy": 1.0
+        },
+        "calibration_gain": 0.0,
+        "relaxed_excited_shots": 1
+      },
+      "final": {
+        "groups": 32,
+        "shots": 1024,
+        "raw_boxcar": {
+          "correct": 1017,
+          "shots": 1024,
+          "accuracy": 0.9931640625,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.9375
+        },
+        "calibrated_boxcar": {
+          "correct": 1017,
+          "shots": 1024,
+          "accuracy": 0.9931640625,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.9375
+        },
+        "local_matched_filter": {
+          "correct": 1017,
+          "shots": 1024,
+          "accuracy": 0.9931640625,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.9375
+        },
+        "local_lda": {
+          "correct": 1018,
+          "shots": 1024,
+          "accuracy": 0.994140625,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.9375
+        },
+        "calibration_gain": 0.0,
+        "relaxed_excited_shots": 13
+      }
+    },
+    "receiver_drift": {
+      "development": {
+        "groups": 8,
+        "shots": 256,
+        "raw_boxcar": {
+          "correct": 213,
+          "shots": 256,
+          "accuracy": 0.83203125,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.5
+        },
+        "calibrated_boxcar": {
+          "correct": 256,
+          "shots": 256,
+          "accuracy": 1.0,
+          "coverage": 1.0,
+          "worst_group_accuracy": 1.0
+        },
+        "local_matched_filter": {
+          "correct": 256,
+          "shots": 256,
+          "accuracy": 1.0,
+          "coverage": 1.0,
+          "worst_group_accuracy": 1.0
+        },
+        "local_lda": {
+          "correct": 254,
+          "shots": 256,
+          "accuracy": 0.9921875,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.96875
+        },
+        "calibration_gain": 0.16796875,
+        "relaxed_excited_shots": 0
+      },
+      "validation": {
+        "groups": 8,
+        "shots": 256,
+        "raw_boxcar": {
+          "correct": 202,
+          "shots": 256,
+          "accuracy": 0.7890625,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.5
+        },
+        "calibrated_boxcar": {
+          "correct": 246,
+          "shots": 256,
+          "accuracy": 0.9609375,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.90625
+        },
+        "local_matched_filter": {
+          "correct": 251,
+          "shots": 256,
+          "accuracy": 0.98046875,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.9375
+        },
+        "local_lda": {
+          "correct": 247,
+          "shots": 256,
+          "accuracy": 0.96484375,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.90625
+        },
+        "calibration_gain": 0.171875,
+        "relaxed_excited_shots": 6
+      },
+      "final": {
+        "groups": 32,
+        "shots": 1024,
+        "raw_boxcar": {
+          "correct": 824,
+          "shots": 1024,
+          "accuracy": 0.8046875,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.5
+        },
+        "calibrated_boxcar": {
+          "correct": 1007,
+          "shots": 1024,
+          "accuracy": 0.9833984375,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.9375
+        },
+        "local_matched_filter": {
+          "correct": 1006,
+          "shots": 1024,
+          "accuracy": 0.982421875,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.9375
+        },
+        "local_lda": {
+          "correct": 1003,
+          "shots": 1024,
+          "accuracy": 0.9794921875,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.90625
+        },
+        "calibration_gain": 0.1787109375,
+        "relaxed_excited_shots": 24
+      }
+    },
+    "cavity_mismatch": {
+      "development": {
+        "groups": 8,
+        "shots": 256,
+        "raw_boxcar": {
+          "correct": 253,
+          "shots": 256,
+          "accuracy": 0.98828125,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.9375
+        },
+        "calibrated_boxcar": {
+          "correct": 256,
+          "shots": 256,
+          "accuracy": 1.0,
+          "coverage": 1.0,
+          "worst_group_accuracy": 1.0
+        },
+        "local_matched_filter": {
+          "correct": 256,
+          "shots": 256,
+          "accuracy": 1.0,
+          "coverage": 1.0,
+          "worst_group_accuracy": 1.0
+        },
+        "local_lda": {
+          "correct": 252,
+          "shots": 256,
+          "accuracy": 0.984375,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.96875
+        },
+        "calibration_gain": 0.01171875,
+        "relaxed_excited_shots": 5
+      },
+      "validation": {
+        "groups": 8,
+        "shots": 256,
+        "raw_boxcar": {
+          "correct": 237,
+          "shots": 256,
+          "accuracy": 0.92578125,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.78125
+        },
+        "calibrated_boxcar": {
+          "correct": 253,
+          "shots": 256,
+          "accuracy": 0.98828125,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.9375
+        },
+        "local_matched_filter": {
+          "correct": 253,
+          "shots": 256,
+          "accuracy": 0.98828125,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.9375
+        },
+        "local_lda": {
+          "correct": 252,
+          "shots": 256,
+          "accuracy": 0.984375,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.9375
+        },
+        "calibration_gain": 0.0625,
+        "relaxed_excited_shots": 3
+      },
+      "final": {
+        "groups": 32,
+        "shots": 1024,
+        "raw_boxcar": {
+          "correct": 926,
+          "shots": 1024,
+          "accuracy": 0.904296875,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.5
+        },
+        "calibrated_boxcar": {
+          "correct": 1018,
+          "shots": 1024,
+          "accuracy": 0.994140625,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.96875
+        },
+        "local_matched_filter": {
+          "correct": 1019,
+          "shots": 1024,
+          "accuracy": 0.9951171875,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.96875
+        },
+        "local_lda": {
+          "correct": 1014,
+          "shots": 1024,
+          "accuracy": 0.990234375,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.90625
+        },
+        "calibration_gain": 0.08984375,
+        "relaxed_excited_shots": 17
+      }
+    },
+    "short_t1": {
+      "development": {
+        "groups": 8,
+        "shots": 256,
+        "raw_boxcar": {
+          "correct": 223,
+          "shots": 256,
+          "accuracy": 0.87109375,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.71875
+        },
+        "calibrated_boxcar": {
+          "correct": 235,
+          "shots": 256,
+          "accuracy": 0.91796875,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.84375
+        },
+        "local_matched_filter": {
+          "correct": 232,
+          "shots": 256,
+          "accuracy": 0.90625,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.8125
+        },
+        "local_lda": {
+          "correct": 220,
+          "shots": 256,
+          "accuracy": 0.859375,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.78125
+        },
+        "calibration_gain": 0.046875,
+        "relaxed_excited_shots": 56
+      },
+      "validation": {
+        "groups": 8,
+        "shots": 256,
+        "raw_boxcar": {
+          "correct": 215,
+          "shots": 256,
+          "accuracy": 0.83984375,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.6875
+        },
+        "calibrated_boxcar": {
+          "correct": 218,
+          "shots": 256,
+          "accuracy": 0.8515625,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.75
+        },
+        "local_matched_filter": {
+          "correct": 220,
+          "shots": 256,
+          "accuracy": 0.859375,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.75
+        },
+        "local_lda": {
+          "correct": 209,
+          "shots": 256,
+          "accuracy": 0.81640625,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.65625
+        },
+        "calibration_gain": 0.01171875,
+        "relaxed_excited_shots": 62
+      },
+      "final": {
+        "groups": 32,
+        "shots": 1024,
+        "raw_boxcar": {
+          "correct": 914,
+          "shots": 1024,
+          "accuracy": 0.892578125,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.6875
+        },
+        "calibrated_boxcar": {
+          "correct": 936,
+          "shots": 1024,
+          "accuracy": 0.9140625,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.78125
+        },
+        "local_matched_filter": {
+          "correct": 938,
+          "shots": 1024,
+          "accuracy": 0.916015625,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.71875
+        },
+        "local_lda": {
+          "correct": 913,
+          "shots": 1024,
+          "accuracy": 0.8916015625,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.71875
+        },
+        "calibration_gain": 0.021484375,
+        "relaxed_excited_shots": 202
+      }
+    },
+    "stale_calibration": {
+      "development": {
+        "groups": 8,
+        "shots": 256,
+        "raw_boxcar": {
+          "correct": 211,
+          "shots": 256,
+          "accuracy": 0.82421875,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.5
+        },
+        "calibrated_boxcar": {
+          "correct": 252,
+          "shots": 256,
+          "accuracy": 0.984375,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.90625
+        },
+        "local_matched_filter": {
+          "correct": 251,
+          "shots": 256,
+          "accuracy": 0.98046875,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.875
+        },
+        "local_lda": {
+          "correct": 244,
+          "shots": 256,
+          "accuracy": 0.953125,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.84375
+        },
+        "calibration_gain": 0.16015625,
+        "relaxed_excited_shots": 4
+      },
+      "validation": {
+        "groups": 8,
+        "shots": 256,
+        "raw_boxcar": {
+          "correct": 252,
+          "shots": 256,
+          "accuracy": 0.984375,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.90625
+        },
+        "calibrated_boxcar": {
+          "correct": 244,
+          "shots": 256,
+          "accuracy": 0.953125,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.875
+        },
+        "local_matched_filter": {
+          "correct": 248,
+          "shots": 256,
+          "accuracy": 0.96875,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.875
+        },
+        "local_lda": {
+          "correct": 242,
+          "shots": 256,
+          "accuracy": 0.9453125,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.84375
+        },
+        "calibration_gain": -0.03125,
+        "relaxed_excited_shots": 4
+      },
+      "final": {
+        "groups": 32,
+        "shots": 1024,
+        "raw_boxcar": {
+          "correct": 893,
+          "shots": 1024,
+          "accuracy": 0.8720703125,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.5
+        },
+        "calibrated_boxcar": {
+          "correct": 983,
+          "shots": 1024,
+          "accuracy": 0.9599609375,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.65625
+        },
+        "local_matched_filter": {
+          "correct": 995,
+          "shots": 1024,
+          "accuracy": 0.9716796875,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.84375
+        },
+        "local_lda": {
+          "correct": 974,
+          "shots": 1024,
+          "accuracy": 0.951171875,
+          "coverage": 1.0,
+          "worst_group_accuracy": 0.8125
+        },
+        "calibration_gain": 0.087890625,
+        "relaxed_excited_shots": 15
+      }
+    }
+  },
+  "evaluation_shots": 7680,
+  "calibration_shots": 15360,
+  "physical_groups": 240,
+  "board_replay_records": 10240,
+  "clipped_input_values": 1,
+  "invalid_calibration_groups": 0,
+  "elapsed_s": 2.5189695419976488,
+  "scope": "synthetic stress, classical host calibration and unchanged integer core; no new GPU, sensor or FPGA execution",
+  "versions": {
+    "python": "3.14.3",
+    "numpy": "2.4.2",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O"
+  }
+}

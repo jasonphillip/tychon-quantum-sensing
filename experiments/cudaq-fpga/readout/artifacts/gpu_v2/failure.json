@@ -1,0 +1,4 @@
+{
+  "type": "AttributeError",
+  "message": "module 'cudaq.operators.custom' has no attribute 'custom'"
+}

@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "evidence": "host C execution only",
+  "compile_command": [
+    "cc",
+    "-std=c99",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "nv_match.c",
+    "artifacts/hls_reference_v1/nv_testbench.c",
+    "-o",
+    "artifacts/hls_reference_v1/nv_testbench"
+  ],
+  "run_command": [
+    "artifacts/hls_reference_v1/nv_testbench"
+  ],
+  "stdout": "NV host reference: 8/8 vectors agree exactly\n",
+  "sample_ids": [
+    20,
+    21,
+    22,
+    23,
+    28,
+    29,
+    30,
+    31
+  ],
+  "source_sha256": "0519008afbff84880930baf8113c3c4c0fe155d8481a9b1eed74651502dfba99",
+  "artifact_sha256": {
+    "nv_rom.h": "10c1d98928af8c97dae83555a5bc58ced17a663069c63bf11c8a5c0dc7c67855",
+    "nv_vectors.h": "c02e10304d41d7ed21761bb08878858a9be92da45868aad73ecc61f8d0aa98a1",
+    "nv_testbench.c": "56444eee16ce08053763ceaa670ce58dcdffb4cbecbe6fae258ec4d04e213084"
+  }
+}

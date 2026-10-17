@@ -1,0 +1,101 @@
+{
+  "verified_utc": "2026-10-17T17:31:14.667936+00:00",
+  "remote_files_verified": 56,
+  "timing_report_citations_verified": {
+    "reports/Vectorblox_FD0AEBB95776A726D3D_max_timing_violations_slow_lv_lt.xml": "b6ec40ac7854ce46e1d87b7d2aef99ab5c12f70098be46da787607613d95d5fd",
+    "reports/Vectorblox_FD0AEBB95776A726D3D_min_timing_violations_slow_lv_lt.xml": "1fdedc4efd9d51bc4ea0bce28b15cfe3d57908054b2c2786a421a734b2e73bf5",
+    "reports/Vectorblox_FD0AEBB95776A726D3D_max_timing_violations_fast_hv_lt.xml": "c29ae4356972231784e9592a13b45f55b27fc595657ddaa2dd2c9a44831c6197",
+    "reports/Vectorblox_FD0AEBB95776A726D3D_min_timing_violations_fast_hv_lt.xml": "8fe1dfd2d1495440fe3e7aac058c6560328abb80be27e29d7f49998fa3268566",
+    "reports/Vectorblox_FD0AEBB95776A726D3D_max_timing_violations_slow_lv_ht.xml": "44adcedb13b96c2de2e7b934ae50424c264a12401f9caa4bef713d6388811bc5",
+    "reports/Vectorblox_FD0AEBB95776A726D3D_min_timing_violations_slow_lv_ht.xml": "e53cf76a93f013e0c3592eb337a8d0e7d9826e4b3f416cd96d06b887774daac3",
+    "reports/Vectorblox_FD0AEBB95776A726D3D_max_timing_violations_multi_corner.xml": "22c3f3bcb03eb3a0e1edf6b5e190691442be59723430ec82cfb7aa862d127c7d",
+    "reports/Vectorblox_FD0AEBB95776A726D3D_min_timing_violations_multi_corner.xml": "11996fc8c45cbe470191c52839477eef59024186ae8758416ff713349a344e8a",
+    "reports/Vectorblox_FD0AEBB95776A726D3D_max_timing_multi_corner.xml": "3953eed5487938ed5e894f12e5adf96b5606949147534c5d49496c3e39179f68",
+    "reports/Vectorblox_FD0AEBB95776A726D3D_min_timing_multi_corner.xml": "9d561418e10adfa15d1658427a69596b39ea48fbb060ec4d2beb982a403aefa1",
+    "reports/Vectorblox_FD0AEBB95776A726D3D_timing_constraints_coverage.xml": "fa826480165a605b353ad78b57db2ad9443820ec9f97fc8bcf399c15fa777bcc"
+  },
+  "all_eight_violation_reports_no_path": true,
+  "fabric_and_snvm_digests_match_export_and_program": {
+    "Fabric": "54f7ac716caef24769371b7ca9f646eadf3fbb639cdf927bb51207ed48a1078c",
+    "sNVM": "49d5c5c9791f1b73acba321228d0b5def83f628185366190a6d5cbc9bef3d36d"
+  },
+  "job_sha256": "ec12633f2d78edef3d649b7e98af18253f11f5dc023187cc01edcd50d319b7db",
+  "final_timing_summary": {
+    "max": [
+      {
+        "clock": "CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0/OUT0",
+        "period_ns": 8.0,
+        "frequency_mhz": 125.0,
+        "slack_ns": 1.634,
+        "corner": "slow_lv_ht"
+      },
+      {
+        "clock": "CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0/OUT1",
+        "period_ns": 8.0,
+        "frequency_mhz": 125.0,
+        "slack_ns": 1.757,
+        "corner": "slow_lv_ht"
+      },
+      {
+        "clock": "CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0/OUT3",
+        "period_ns": 20.0,
+        "frequency_mhz": 50.0,
+        "slack_ns": 2.391,
+        "corner": "slow_lv_ht"
+      },
+      {
+        "clock": "FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/pll_inst_0/OUT0",
+        "period_ns": 10.0,
+        "frequency_mhz": 100.0,
+        "slack_ns": 0.878,
+        "corner": "slow_lv_ht"
+      },
+      {
+        "clock": "FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/pll_inst_0/OUT1",
+        "period_ns": 5.0,
+        "frequency_mhz": 200.0,
+        "slack_ns": 1.049,
+        "corner": "slow_lv_ht"
+      }
+    ],
+    "min": [
+      {
+        "clock": "CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0/OUT0",
+        "period_ns": 8.0,
+        "frequency_mhz": 125.0,
+        "slack_ns": 0.059,
+        "corner": "fast_hv_lt"
+      },
+      {
+        "clock": "CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0/OUT1",
+        "period_ns": 8.0,
+        "frequency_mhz": 125.0,
+        "slack_ns": 0.065,
+        "corner": "fast_hv_lt"
+      },
+      {
+        "clock": "CLOCKS_AND_RESETS_inst_0/CCC_FIC_x_CLK/PF_CCC_C0_0/pll_inst_0/OUT3",
+        "period_ns": 20.0,
+        "frequency_mhz": 50.0,
+        "slack_ns": 0.062,
+        "corner": "fast_hv_lt"
+      },
+      {
+        "clock": "FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/pll_inst_0/OUT0",
+        "period_ns": 10.0,
+        "frequency_mhz": 100.0,
+        "slack_ns": 0.021,
+        "corner": "slow_lv_ht"
+      },
+      {
+        "clock": "FIC_0_PERIPHERALS_1/Vectorblox_ss_0/PF_CCC_C1_0/PF_CCC_C1_0/pll_inst_0/OUT1",
+        "period_ns": 5.0,
+        "frequency_mhz": 200.0,
+        "slack_ns": 0.006,
+        "corner": "slow_lv_ht"
+      }
+    ]
+  },
+  "scope": "Curated verification receipt. Full licensed design and raw tool logs are excluded from the public payload.",
+  "source_receipt_sha256": "2a7327e537852673862956536132d4e1b5445486e1008f66682098e0b01c6891"
+}

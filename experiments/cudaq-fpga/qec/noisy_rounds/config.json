@@ -1,0 +1,20 @@
+{
+  "schema": "d3_repeated_phenomenological_v1",
+  "frozen_date": "2026-10-17",
+  "rounds": [3, 5, 9],
+  "noise_pairs": [[0.0, 0.02], [0.001, 0.005], [0.01, 0.01], [0.03, 0.03]],
+  "trials_per_cell": 20000,
+  "data_seed": 531710171,
+  "measurement_seed": 531710172,
+  "board_trials_per_cell": 128,
+  "fixed_core_sha256": "41c9ec5853491830082aaaf47e5a3336d2e19a793644ec0fa4a884f04ea93a7c",
+  "fixed_header_sha256": "6950fd7d1cdc39badde012c2b5934f619905b7fc24f35e85db978082be31acb9",
+  "fixed_tables_json_sha256": "f3063a4a128014f70fbc4009d671ed3c49fffa38527a9f079682d2159a7e90eb",
+  "dependencies": {"numpy": "2.2.6", "stim": "1.15.0", "pymatching": "2.3.1"},
+  "noise_placement": "Before each of R rounds, each data qubit independently receives I with probability1-p or X/Y/Z with probabilityp/3. Errors accumulate without intermediate physical correction. Each of eight recorded stabilizer bits flips independently with probabilityq. Append one perfect terminal syndrome, with no additional data noise, only for offline controls and PyMatching.",
+  "online_compression": ["last_noisy", "per_bit_majority_of_R_noisy_rounds"],
+  "offline_controls": ["fixed_lut_on_perfect_terminal", "separate_XZ_spacetime_PyMatching"],
+  "failure_definition": "Residual outside stabilizer group. Report nonzero-syndrome failures separately from zero-syndrome nontrivial-logical failures. Offline methods receive perfect terminal information that online compression does not receive.",
+  "gates": {"all_27_single_errors_last_and_matching": true, "perfect_measurement_single_fault_graph_checks": true, "all_exported_corrections_exact": true},
+  "note": "No monotonic performance, threshold, or advantage gate. Majority compression can fail on late data errors. No gate-level faults, leakage, crosstalk, QPU, GPU, or board execution claim. Frozen FPGA table remains unchanged."
+}

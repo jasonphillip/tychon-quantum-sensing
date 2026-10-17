@@ -1,0 +1,50 @@
+name: Quantum experiment evidence
+
+"on":
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  saved-evidence:
+    name: Saved FPGA evidence / ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-24.04, macos-14]
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 10
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      VECLIB_MAXIMUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify all recorded FPGA replay calls
+        run: python3 experiments/cudaq-fpga/verify_saved_evidence.py
+      - name: Verify failure behavior
+        run: python3 -m unittest discover -s experiments/cudaq-fpga -p test_saved_evidence.py -v
+      - name: Test host deadlines with fake registers
+        run: |
+          cc -O2 -std=c11 -Wall -Wextra -Werror experiments/cudaq-fpga/deployment/test_runner_deadline.c -o "$RUNNER_TEMP/test-runner-deadline"
+          "$RUNNER_TEMP/test-runner-deadline"
+          test -z "$(git status --porcelain)"
+      - name: Install saved arithmetic dependency
+        run: python3 -m pip install numpy==2.4.2
+      - name: Verify compiled readout arithmetic
+        working-directory: experiments/cudaq-fpga/readout
+        run: python3 verify_frozen.py
+      - name: Verify frozen NV arithmetic
+        working-directory: experiments/cudaq-fpga/nv
+        run: python3 verify_board_vectors_v2.py --directory artifacts/stress_frozen_v2/board_vectors
+      - name: Verify compiled QEC arithmetic
+        working-directory: experiments/cudaq-fpga/qec
+        run: |
+          python3 verify_frozen.py
+          test -z "$(git status --porcelain)"

@@ -1,0 +1,26 @@
+{
+  "interpretation": "post-run analytic diagnostic; no decoder changes",
+  "cells": [
+    {
+      "rounds": 3,
+      "last_exact_failure": 0.1492369774182145,
+      "majority_exact_failure": 0.009432840843226153,
+      "last_observed": 0.15075,
+      "majority_observed": 0.00955
+    },
+    {
+      "rounds": 5,
+      "last_exact_failure": 0.1492369774182145,
+      "majority_exact_failure": 0.0006207849334595172,
+      "last_observed": 0.1511,
+      "majority_observed": 0.0007
+    },
+    {
+      "rounds": 9,
+      "last_exact_failure": 0.1492369774182145,
+      "majority_exact_failure": 3.0160213946306413e-06,
+      "last_observed": 0.1463,
+      "majority_observed": 0.0
+    }
+  ]
+}

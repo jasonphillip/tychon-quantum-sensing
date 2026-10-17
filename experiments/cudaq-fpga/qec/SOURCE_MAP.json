@@ -1,0 +1,339 @@
+{
+  "schema": "qec_publication_source_map_v1",
+  "prepared_utc": "2026-10-17",
+  "original_root_label": "quantum-fpga-feasibility/qec",
+  "published_root": "experiments/cudaq-fpga/qec",
+  "policy": "All copied source, frozen configuration, numerical receipt, replay manifest, and replay binary bytes are unchanged except the documented protocol guidance. SOURCE_MAP.json excludes its own hash to avoid self-reference. No private hostnames or home paths are published.",
+  "documentation_inputs": [
+    {
+      "source_path": "qec/REPORT.md",
+      "source_sha256": "4cc37c6f1e32845ec3d29a17f2b2365e7aaa2042f7301325e7badefa875fafc2"
+    },
+    {
+      "source_path": "qec/noisy_rounds/REPORT.md",
+      "source_sha256": "a8c5d5d1a5e19d2b989574af8c54d0d62d1d2bdb9f99dcfef7e8040e803fe49b"
+    }
+  ],
+  "excluded": [
+    "Private command receipts and raw tool logs",
+    "Environments, executables, shared libraries, and caches",
+    "Generated Microchip HDL and IP",
+    "Raw noisy-round Monte Carlo NPZ arrays; original hashes remain in frozen metrics",
+    "Internal reports and FPGA handoffs superseded by public README"
+  ],
+  "files": [
+    {
+      "published_path": "README.md",
+      "published_bytes": 8007,
+      "published_sha256": "d8e409f6d8a678b5827b9a9b770527e023b13bc90cd921514097e4c5811cbfb4",
+      "source_path": null,
+      "source_sha256": null,
+      "publication_change": "New public documentation derived from frozen reports; portable commands replace private machine paths."
+    },
+    {
+      "published_path": "artifacts/cudaq_nvidia_fp32_failed.json",
+      "published_bytes": 13141,
+      "published_sha256": "78133f8f1668548a3a85507052ed264e86ac523cef4ddf4fb0ce62750b893ce2",
+      "source_path": "qec/artifacts/cudaq_nvidia_fp32_failed.json",
+      "source_bytes": 13141,
+      "source_sha256": "78133f8f1668548a3a85507052ed264e86ac523cef4ddf4fb0ce62750b893ce2",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "artifacts/cudaq_nvidia_fp64.json",
+      "published_bytes": 13285,
+      "published_sha256": "ba0c6eafec5f4b33414d8f3d71a2c9d88522391ebefb4178510a81d071641b70",
+      "source_path": "qec/artifacts/cudaq_nvidia_fp64.json",
+      "source_bytes": 13285,
+      "source_sha256": "ba0c6eafec5f4b33414d8f3d71a2c9d88522391ebefb4178510a81d071641b70",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "artifacts/linux_validation/metrics.json",
+      "published_bytes": 6847,
+      "published_sha256": "3c53a44b6d1173caf8a213deb2a2712d861f202d6549f35bdf09e55b621c900c",
+      "source_path": "qec/artifacts/linux_validation/metrics.json",
+      "source_bytes": 6847,
+      "source_sha256": "3c53a44b6d1173caf8a213deb2a2712d861f202d6549f35bdf09e55b621c900c",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "artifacts/mac_retry/correction_tables.json",
+      "published_bytes": 8115,
+      "published_sha256": "f3063a4a128014f70fbc4009d671ed3c49fffa38527a9f079682d2159a7e90eb",
+      "source_path": "qec/artifacts/mac_retry/correction_tables.json",
+      "source_bytes": 8115,
+      "source_sha256": "f3063a4a128014f70fbc4009d671ed3c49fffa38527a9f079682d2159a7e90eb",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "artifacts/mac_retry/coset_weight_enumerators.json",
+      "published_bytes": 112166,
+      "published_sha256": "a99154b607fc93371b9203793b3b6d1a4111496155b3b1da91ab715c77d6089d",
+      "source_path": "qec/artifacts/mac_retry/coset_weight_enumerators.json",
+      "source_bytes": 112166,
+      "source_sha256": "a99154b607fc93371b9203793b3b6d1a4111496155b3b1da91ab715c77d6089d",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "artifacts/mac_retry/metrics.json",
+      "published_bytes": 6770,
+      "published_sha256": "3c61ad27648279ee30ed728e3d48771903f856928fba89e957b2419e9ee91f1d",
+      "source_path": "qec/artifacts/mac_retry/metrics.json",
+      "source_bytes": 6770,
+      "source_sha256": "3c61ad27648279ee30ed728e3d48771903f856928fba89e957b2419e9ee91f1d",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "artifacts/mac_retry/reference_failure_weight_counts.json",
+      "published_bytes": 369,
+      "published_sha256": "e27b0c70c846ae22c5554f7c2bc0b9ae9def06fe19e4506af21f8f6ac8700d4b",
+      "source_path": "qec/artifacts/mac_retry/reference_failure_weight_counts.json",
+      "source_bytes": 369,
+      "source_sha256": "e27b0c70c846ae22c5554f7c2bc0b9ae9def06fe19e4506af21f8f6ac8700d4b",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "config.json",
+      "published_bytes": 1526,
+      "published_sha256": "a9c4eccc66e90ccb5fb08fee22688362050b5f71c77bc71ebec369c6549b9188",
+      "source_path": "qec/config.json",
+      "source_bytes": 1526,
+      "source_sha256": "a9c4eccc66e90ccb5fb08fee22688362050b5f71c77bc71ebec369c6549b9188",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "cudaq_spotcheck.py",
+      "published_bytes": 6056,
+      "published_sha256": "69bbcab566800127913b5edb47ef720e50201c855633e2f2f673272975c8e38b",
+      "source_path": "qec/cudaq_spotcheck.py",
+      "source_bytes": 6056,
+      "source_sha256": "69bbcab566800127913b5edb47ef720e50201c855633e2f2f673272975c8e38b",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "hls/Makefile",
+      "published_bytes": 58,
+      "published_sha256": "8aab1f9ca1bdc7dfca5161a40bbe3bd149ea7688183a20fcbeb3ce41494d74c6",
+      "source_path": "qec/hls/Makefile",
+      "source_bytes": 58,
+      "source_sha256": "8aab1f9ca1bdc7dfca5161a40bbe3bd149ea7688183a20fcbeb3ce41494d74c6",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "hls/config.tcl",
+      "published_bytes": 117,
+      "published_sha256": "972360c9d7c2f9254565f6ba879f90a591e02d2faa07d622179076f25472fc0e",
+      "source_path": "qec/hls/config.tcl",
+      "source_bytes": 117,
+      "source_sha256": "972360c9d7c2f9254565f6ba879f90a591e02d2faa07d622179076f25472fc0e",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "hls/golden_corrections.h",
+      "published_bytes": 2265,
+      "published_sha256": "a588698bf56f52bdecc0127295132918eeeed7933a9870d002568534d212e1d3",
+      "source_path": "qec/hls/golden_corrections.h",
+      "source_bytes": 2265,
+      "source_sha256": "a588698bf56f52bdecc0127295132918eeeed7933a9870d002568534d212e1d3",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "hls/wrapper.cpp",
+      "published_bytes": 691,
+      "published_sha256": "6e9a918e18c40ee712233281ab49c5d63ecfc9d2a0858dbf3edf5ad07a31f571",
+      "source_path": "qec/hls/wrapper.cpp",
+      "source_bytes": 691,
+      "source_sha256": "6e9a918e18c40ee712233281ab49c5d63ecfc9d2a0858dbf3edf5ad07a31f571",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "host_benchmark.cpp",
+      "published_bytes": 2016,
+      "published_sha256": "1a138a506dd1ad9f8a1f34af728940da91e7802c6f3f0925d821dbce66bcf909",
+      "source_path": "qec/host_benchmark.cpp",
+      "source_bytes": 2016,
+      "source_sha256": "1a138a506dd1ad9f8a1f34af728940da91e7802c6f3f0925d821dbce66bcf909",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "noisy_rounds/PROTOCOL.md",
+      "published_bytes": 3553,
+      "published_sha256": "ebe5b04e338c8e36c699807a172c86d2d6afd846c1dccaaf497e5ca6eafc341b",
+      "source_path": "qec/noisy_rounds/PROTOCOL.md",
+      "source_bytes": 3603,
+      "source_sha256": "ba96c1f39e4fc516b884551919b0ece37031453d6df53790c369a59f37d8c81a",
+      "publication_change": "Replace private coordinator and repository execution guidance with portable isolated-environment guidance; scientific protocol unchanged."
+    },
+    {
+      "published_path": "noisy_rounds/artifacts/frozen_v1/board_vectors/expected_corrections_u32.bin",
+      "published_bytes": 19456,
+      "published_sha256": "5da948da519ad18ccc1dc741a906a7a1463079c6174c5dd54143e870575cf88b",
+      "source_path": "qec/noisy_rounds/artifacts/frozen_v1/board_vectors/expected_corrections_u32.bin",
+      "source_bytes": 19456,
+      "source_sha256": "5da948da519ad18ccc1dc741a906a7a1463079c6174c5dd54143e870575cf88b",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "noisy_rounds/artifacts/frozen_v1/board_vectors/inputs_u8.bin",
+      "published_bytes": 4864,
+      "published_sha256": "2355d67968f25df23ad164a72401eab76721d0c197c05aed66e9870c992a374d",
+      "source_path": "qec/noisy_rounds/artifacts/frozen_v1/board_vectors/inputs_u8.bin",
+      "source_bytes": 4864,
+      "source_sha256": "2355d67968f25df23ad164a72401eab76721d0c197c05aed66e9870c992a374d",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "noisy_rounds/artifacts/frozen_v1/board_vectors/manifest.json",
+      "published_bytes": 1618703,
+      "published_sha256": "98fc26cfe4ea643f7873b6f646a186b133e85c0f86220d49373eec7b466c1907",
+      "source_path": "qec/noisy_rounds/artifacts/frozen_v1/board_vectors/manifest.json",
+      "source_bytes": 1618703,
+      "source_sha256": "98fc26cfe4ea643f7873b6f646a186b133e85c0f86220d49373eec7b466c1907",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "noisy_rounds/artifacts/frozen_v1/frozen_config.json",
+      "published_bytes": 2024,
+      "published_sha256": "5d2a4c97fd027b917a264f37f534033914777ff4c3d13432305dd0195104410f",
+      "source_path": "qec/noisy_rounds/artifacts/frozen_v1/frozen_config.json",
+      "source_bytes": 2024,
+      "source_sha256": "5d2a4c97fd027b917a264f37f534033914777ff4c3d13432305dd0195104410f",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "noisy_rounds/artifacts/frozen_v1/measurement_only_analytic_check.json",
+      "published_bytes": 691,
+      "published_sha256": "5e88f0275284c1c7cdfcf2bffb002ba29b08b91527e30e300c8f0816e9c35d63",
+      "source_path": "qec/noisy_rounds/artifacts/frozen_v1/measurement_only_analytic_check.json",
+      "source_bytes": 691,
+      "source_sha256": "5e88f0275284c1c7cdfcf2bffb002ba29b08b91527e30e300c8f0816e9c35d63",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "noisy_rounds/artifacts/frozen_v1/metrics.json",
+      "published_bytes": 23854,
+      "published_sha256": "b61b4d3b77033d16b51456ef043931fad0acfcb6795602cfaecf2f00e28f83f7",
+      "source_path": "qec/noisy_rounds/artifacts/frozen_v1/metrics.json",
+      "source_bytes": 23854,
+      "source_sha256": "b61b4d3b77033d16b51456ef043931fad0acfcb6795602cfaecf2f00e28f83f7",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "noisy_rounds/config.json",
+      "published_bytes": 1860,
+      "published_sha256": "6d12759f1ba119d1829cc23341b9168d1cb0560616e04ff110d3fb0fe14783f2",
+      "source_path": "qec/noisy_rounds/config.json",
+      "source_bytes": 1860,
+      "source_sha256": "6d12759f1ba119d1829cc23341b9168d1cb0560616e04ff110d3fb0fe14783f2",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "noisy_rounds/noisy_model.py",
+      "published_bytes": 5905,
+      "published_sha256": "bf5006b372f8a86b7379a2c87aece75eb0514f268ab45a3c54bd756964f969ea",
+      "source_path": "qec/noisy_rounds/noisy_model.py",
+      "source_bytes": 5905,
+      "source_sha256": "bf5006b372f8a86b7379a2c87aece75eb0514f268ab45a3c54bd756964f969ea",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "noisy_rounds/requirements-lock.txt",
+      "published_bytes": 250,
+      "published_sha256": "a4a190f1eff47cb1d586c3cfe45817f71d0102f9cafbd4e0e42355751d615a30",
+      "source_path": "qec/noisy_rounds/requirements-lock.txt",
+      "source_bytes": 250,
+      "source_sha256": "a4a190f1eff47cb1d586c3cfe45817f71d0102f9cafbd4e0e42355751d615a30",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "noisy_rounds/run_noisy.py",
+      "published_bytes": 9816,
+      "published_sha256": "fbbd9006d2423e2e13d66e788052142c25efdd2fad97d68809125275b8ecb8ec",
+      "source_path": "qec/noisy_rounds/run_noisy.py",
+      "source_bytes": 9816,
+      "source_sha256": "fbbd9006d2423e2e13d66e788052142c25efdd2fad97d68809125275b8ecb8ec",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "noisy_rounds/test_noisy.py",
+      "published_bytes": 5370,
+      "published_sha256": "cf9ef1c1f252c53155aa41fe9cc257992b950c1767e16a1b1da3f81f310cde98",
+      "source_path": "qec/noisy_rounds/test_noisy.py",
+      "source_bytes": 5370,
+      "source_sha256": "cf9ef1c1f252c53155aa41fe9cc257992b950c1767e16a1b1da3f81f310cde98",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "noisy_rounds/verify_board_vectors.py",
+      "published_bytes": 1792,
+      "published_sha256": "e95fee36f4b2d593347f84b488c3651508fcfcf0ee21b3934ec5f376d05463f4",
+      "source_path": "qec/noisy_rounds/verify_board_vectors.py",
+      "source_bytes": 1792,
+      "source_sha256": "e95fee36f4b2d593347f84b488c3651508fcfcf0ee21b3934ec5f376d05463f4",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "qec_decoder.cpp",
+      "published_bytes": 409,
+      "published_sha256": "41c9ec5853491830082aaaf47e5a3336d2e19a793644ec0fa4a884f04ea93a7c",
+      "source_path": "qec/qec_decoder.cpp",
+      "source_bytes": 409,
+      "source_sha256": "41c9ec5853491830082aaaf47e5a3336d2e19a793644ec0fa4a884f04ea93a7c",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "qec_decoder.h",
+      "published_bytes": 440,
+      "published_sha256": "53c3c8de6548c740104779c04613f26e92a23511a58ead39c00342181ecb47c8",
+      "source_path": "qec/qec_decoder.h",
+      "source_bytes": 440,
+      "source_sha256": "53c3c8de6548c740104779c04613f26e92a23511a58ead39c00342181ecb47c8",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "qec_model.py",
+      "published_bytes": 4216,
+      "published_sha256": "10b4aec002ba41aa0bd57be086dd50285320881448f5101bdca781856e84224c",
+      "source_path": "qec/qec_model.py",
+      "source_bytes": 4216,
+      "source_sha256": "10b4aec002ba41aa0bd57be086dd50285320881448f5101bdca781856e84224c",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "qec_tables.h",
+      "published_bytes": 4660,
+      "published_sha256": "6950fd7d1cdc39badde012c2b5934f619905b7fc24f35e85db978082be31acb9",
+      "source_path": "qec/qec_tables.h",
+      "source_bytes": 4660,
+      "source_sha256": "6950fd7d1cdc39badde012c2b5934f619905b7fc24f35e85db978082be31acb9",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "run_benchmark.py",
+      "published_bytes": 9717,
+      "published_sha256": "4372105734adcd82eed3709d602d81ca2fa82146a9fedc1fe98eec1b41c2616a",
+      "source_path": "qec/run_benchmark.py",
+      "source_bytes": 9717,
+      "source_sha256": "4372105734adcd82eed3709d602d81ca2fa82146a9fedc1fe98eec1b41c2616a",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "test_qec.py",
+      "published_bytes": 3096,
+      "published_sha256": "1199f1fac60e7756dd45c82d7d4a019aec09ab808bed6739b3e12c0181e4e94b",
+      "source_path": "qec/test_qec.py",
+      "source_bytes": 3096,
+      "source_sha256": "1199f1fac60e7756dd45c82d7d4a019aec09ab808bed6739b3e12c0181e4e94b",
+      "publication_change": "none; byte-identical"
+    },
+    {
+      "published_path": "verify_frozen.py",
+      "published_bytes": 3101,
+      "published_sha256": "d45c8079018bf9d4e0c3a81e52df269fc4e86c3990576ecb56a67ad73e5f9acd",
+      "source_path": null,
+      "source_sha256": null,
+      "publication_change": "New publication-only verifier; checks saved bytes and compiled decoder output without trial sampling."
+    }
+  ]
+}

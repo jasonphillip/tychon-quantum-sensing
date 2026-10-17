@@ -1,0 +1,9 @@
+{
+  "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 python3 test_stress_v2.py",
+  "exit_code": 0,
+  "tests_passed": 6,
+  "reported_test_seconds": 0.206,
+  "independent_dephasing_rk4_max_density_error": 1.8172963936589323e-12,
+  "checks": ["Matched model equals frozen v1", "Drifted microwave amplitude retains fixed pulse durations", "Free dephasing versus independently integrated Lindblad equation", "Mismatch density physicality and scalar/vector agreement", "Profiled gain/offset objective", "Compound photon count moments under drift"],
+  "receipt_origin": "Recorded from successful tool execution output; no final-data retuning"
+}

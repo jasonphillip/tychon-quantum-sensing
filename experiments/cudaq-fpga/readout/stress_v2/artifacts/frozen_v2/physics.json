@@ -1,0 +1,53 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "label": 0,
+      "event_us": null,
+      "detuning_shift": 0,
+      "max_error": 1.2541079728446533e-13
+    },
+    {
+      "label": 1,
+      "event_us": null,
+      "detuning_shift": 0,
+      "max_error": 2.6970605686282846e-13
+    },
+    {
+      "label": 1,
+      "event_us": 0,
+      "detuning_shift": 0,
+      "max_error": 1.2541079728446533e-13
+    },
+    {
+      "label": 1,
+      "event_us": 0.001,
+      "detuning_shift": -3.7,
+      "max_error": 9.753006403854544e-13
+    },
+    {
+      "label": 1,
+      "event_us": 0.37,
+      "detuning_shift": 3.7,
+      "max_error": 1.705402761231513e-12
+    },
+    {
+      "label": 1,
+      "event_us": 1.274,
+      "detuning_shift": -3.7,
+      "max_error": 2.3611132902224817e-12
+    },
+    {
+      "label": 1,
+      "event_us": 1.5750000000000002,
+      "detuning_shift": 0,
+      "max_error": 2.6970605686282846e-13
+    },
+    {
+      "label": 1,
+      "event_us": 2,
+      "detuning_shift": 3.7,
+      "max_error": 1.705402761231513e-12
+    }
+  ]
+}

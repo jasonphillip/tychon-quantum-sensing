@@ -1,0 +1,22 @@
+{
+  "compile_command": [
+    "c++",
+    "-std=c++11",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "<readout>/stress_v2/replay_reference.cpp",
+    "-o",
+    "<readout>/stress_v2/artifacts/frozen_v2/replay_reference"
+  ],
+  "command": [
+    "<readout>/stress_v2/artifacts/frozen_v2/replay_reference",
+    "<readout>/stress_v2/artifacts/frozen_v2/board_replay/inputs_i16.bin",
+    "<readout>/stress_v2/artifacts/frozen_v2/board_replay/expected_scores_i64.bin"
+  ],
+  "stdout": "10240/10240 frozen readout scores bit-exact; portable host reference only\n",
+  "stderr": "",
+  "compile_stderr": "",
+  "exit_code": 0
+}

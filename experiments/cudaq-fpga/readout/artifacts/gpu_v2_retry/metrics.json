@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "backend": "real CUDA-Q Dynamics",
+  "cases": [
+    {
+      "case": "ground_nominal",
+      "alpha_max_abs_error": 3.160072246992905e-11,
+      "number_max_abs_error": 1.1628359386506304e-10,
+      "trace_max_abs_error": 1.9984014443252818e-15,
+      "passed": true
+    },
+    {
+      "case": "excited_nominal",
+      "alpha_max_abs_error": 6.834464856947719e-11,
+      "number_max_abs_error": 1.351850853481551e-10,
+      "trace_max_abs_error": 1.5543122344752192e-15,
+      "passed": true
+    },
+    {
+      "case": "ground_drift",
+      "alpha_max_abs_error": 3.4379807914792045e-07,
+      "number_max_abs_error": 4.186017745766435e-07,
+      "trace_max_abs_error": 2.4424906541753444e-15,
+      "passed": true
+    },
+    {
+      "case": "excited_drift",
+      "alpha_max_abs_error": 3.7412511903615794e-10,
+      "number_max_abs_error": 4.410205534099987e-10,
+      "trace_max_abs_error": 1.7763568394002505e-15,
+      "passed": true
+    }
+  ],
+  "elapsed_evolution_s": 2.8668246260058368,
+  "device": "NVIDIA GB10",
+  "cudaq": "0.16.0.post1",
+  "cupy": "13.6.0",
+  "python": "3.13.11",
+  "numpy": "2.4.2",
+  "fock_levels": 16,
+  "integrator": {
+    "method": "RK4",
+    "max_step_us": 0.002
+  }
+}

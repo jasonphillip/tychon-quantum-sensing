@@ -1,0 +1,9 @@
+{
+  "command": "python3 test_nv.py",
+  "exit_code": 0,
+  "tests_passed": 8,
+  "reported_test_seconds": 0.272,
+  "independent_rk4_max_density_error": 8.699639672688065e-12,
+  "checks": ["Hamiltonian and density invariants", "independent commutator RK4", "zero-coupling finite-pulse Bloch rotations", "ideal-pulse limit and phase sign", "vectorized versus direct sequence", "transverse coupling affects observables", "quantization saturation and overflow", "invalid model and delays"],
+  "receipt_origin": "Recorded from successful tool execution output; no test rerun or retuning"
+}

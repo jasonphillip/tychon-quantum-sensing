@@ -1,0 +1,28 @@
+{
+  "schema": "readout_board_replay_v2",
+  "records": 10240,
+  "input_dtype": "int16 little-endian",
+  "input_shape": [
+    10240,
+    128
+  ],
+  "input_order": "I0,Q0,I1,Q1,...,I63,Q63",
+  "input_fraction_bits": 11,
+  "input_bytes_per_record": 256,
+  "output_dtype": "int64 little-endian",
+  "output_fraction_bits": 25,
+  "output_bytes_per_record": 8,
+  "decision": "score>=0 means initially excited; agreement with labels is not guaranteed",
+  "model_sha256": "d6be7723f2475c1801dda4163e88f6a3cc25ab20629eaced03a1949ef62364a8",
+  "core_sha256": "b657467dfe0051d7945851f1bdb4db408b56921f34de55f78e322ae84a003af7",
+  "weight_i": -16384,
+  "weight_q": 2811,
+  "bias": 214072292,
+  "source": "frozen final synthetic shots; raw and host-calibrated paired views",
+  "sha256": {
+    "expected_scores_i64.bin": "49d14e9d066c92cab0502db381509511b6e4dc69e0502d4f69499675632f5516",
+    "inputs_i16.bin": "fa4114c8437a3f3fd58258a64e07f5ac9318d60e066f95ec0721fe4aabf2d414",
+    "labels_u8.bin": "43366fe9db4bfcddb988330d8b1e695ac797cda3cbe2a70e2ef5e47abf1d8dd6",
+    "records.json": "75ccb03d0537aa0e744080a56b45e63c9914d0bfe3799ebdc21b2b88a59bc6a9"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "data_shape": [
+    3072,
+    4,
+    64
+  ],
+  "feature_shape": [
+    3072,
+    128
+  ],
+  "board_vector_count": 2061,
+  "all_board_binary_hashes_verified": true,
+  "group_split_disjoint": true,
+  "all_evaluated_groups_final": true,
+  "fixed_float_disagreements": 2,
+  "disagreement_sample_ids": [
+    865,
+    968
+  ],
+  "disagreement_clipped_values": [
+    3,
+    3
+  ]
+}

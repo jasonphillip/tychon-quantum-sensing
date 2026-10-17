@@ -1,0 +1,1021 @@
+{
+  "schema": "nv_c13_finite_pulse_stress_v2",
+  "status": "completed",
+  "synthetic_only": true,
+  "final_split_consumed": true,
+  "config_sha256": "13ab4563fda673be381d0068f6098820853136f77074b26c714e8415381cfd6e",
+  "samples": 3072,
+  "physical_configurations": 96,
+  "final_readouts": 2048,
+  "final_physical_configurations": 64,
+  "final_cells": [
+    {
+      "scenario": "matched",
+      "repetitions_per_phase_delay": 100,
+      "total_repetitions": 25600,
+      "modeled_acquisition_seconds": 0.1621333333333333,
+      "physical_configurations": 64,
+      "readouts": 128,
+      "clipped_readouts": 15,
+      "clipped_values": 15,
+      "fixed_float_grid_agreement": 1.0,
+      "fixed_grid": {
+        "mae_hz": 4404.8412917214755,
+        "p95_absolute_error_hz": 9054.175533606041,
+        "max_absolute_error_hz": 15602.327935627658,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          3803.673683020108,
+          5063.807697633509
+        ]
+      },
+      "nominal_grid": {
+        "mae_hz": 4404.8412917214755,
+        "p95_absolute_error_hz": 9054.175533606041,
+        "max_absolute_error_hz": 15602.327935627658,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          3792.7533142903612,
+          4995.611034269322
+        ]
+      },
+      "nominal_refined": {
+        "mae_hz": 3583.0926871497795,
+        "p95_absolute_error_hz": 8776.191359846669,
+        "max_absolute_error_hz": 14012.50654523456,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          3147.732237743326,
+          4052.665656371215
+        ]
+      },
+      "profiled_refined": {
+        "mae_hz": 4274.398244446692,
+        "p95_absolute_error_hz": 9486.708469369434,
+        "max_absolute_error_hz": 14859.267018436138,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          3641.79994659605,
+          4797.269405374094
+        ]
+      },
+      "development_constant": {
+        "mae_hz": 368205.0487742752,
+        "p95_absolute_error_hz": 701161.6406856407,
+        "max_absolute_error_hz": 757328.8798806177,
+        "fraction_over_25khz": 0.96875,
+        "mae_cluster_bootstrap_95_hz": [
+          316506.2151679484,
+          424110.29822816304
+        ]
+      }
+    },
+    {
+      "scenario": "matched",
+      "repetitions_per_phase_delay": 500,
+      "total_repetitions": 128000,
+      "modeled_acquisition_seconds": 0.8106666666666664,
+      "physical_configurations": 64,
+      "readouts": 128,
+      "clipped_readouts": 0,
+      "clipped_values": 0,
+      "fixed_float_grid_agreement": 1.0,
+      "fixed_grid": {
+        "mae_hz": 3620.719042553308,
+        "p95_absolute_error_hz": 7432.699167465502,
+        "max_absolute_error_hz": 9660.634635288767,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          3088.153309389214,
+          4177.558503694667
+        ]
+      },
+      "nominal_grid": {
+        "mae_hz": 3620.719042553308,
+        "p95_absolute_error_hz": 7432.699167465502,
+        "max_absolute_error_hz": 9660.634635288767,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          3008.9299381099318,
+          4074.9472522317833
+        ]
+      },
+      "nominal_refined": {
+        "mae_hz": 1577.9129243490056,
+        "p95_absolute_error_hz": 3666.791738639399,
+        "max_absolute_error_hz": 4727.349498765243,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          1384.8245535679116,
+          1814.5653924829508
+        ]
+      },
+      "profiled_refined": {
+        "mae_hz": 1816.7515552510845,
+        "p95_absolute_error_hz": 3877.1662550167252,
+        "max_absolute_error_hz": 7108.223799308977,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          1583.930111996733,
+          2041.0194883785005
+        ]
+      },
+      "development_constant": {
+        "mae_hz": 368205.0487742752,
+        "p95_absolute_error_hz": 701161.6406856407,
+        "max_absolute_error_hz": 757328.8798806177,
+        "fraction_over_25khz": 0.96875,
+        "mae_cluster_bootstrap_95_hz": [
+          310393.7653648504,
+          413887.2038596388
+        ]
+      }
+    },
+    {
+      "scenario": "matched",
+      "repetitions_per_phase_delay": 2000,
+      "total_repetitions": 512000,
+      "modeled_acquisition_seconds": 3.2426666666666657,
+      "physical_configurations": 64,
+      "readouts": 128,
+      "clipped_readouts": 0,
+      "clipped_values": 0,
+      "fixed_float_grid_agreement": 1.0,
+      "fixed_grid": {
+        "mae_hz": 3307.520069832341,
+        "p95_absolute_error_hz": 5898.782088606942,
+        "max_absolute_error_hz": 7690.804808890061,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          2872.111580141708,
+          3782.7910581383135
+        ]
+      },
+      "nominal_grid": {
+        "mae_hz": 3307.520069832341,
+        "p95_absolute_error_hz": 5898.782088606942,
+        "max_absolute_error_hz": 7690.804808890061,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          2825.632790705681,
+          3776.46609110876
+        ]
+      },
+      "nominal_refined": {
+        "mae_hz": 751.0773307043976,
+        "p95_absolute_error_hz": 1857.0630429879366,
+        "max_absolute_error_hz": 2631.452661530087,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          659.0059496369432,
+          833.9492066799896
+        ]
+      },
+      "profiled_refined": {
+        "mae_hz": 856.2041914661186,
+        "p95_absolute_error_hz": 2150.8399308014846,
+        "max_absolute_error_hz": 2729.6837951999996,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          757.1148666992052,
+          961.3313988245104
+        ]
+      },
+      "development_constant": {
+        "mae_hz": 368205.0487742752,
+        "p95_absolute_error_hz": 701161.6406856407,
+        "max_absolute_error_hz": 757328.8798806177,
+        "fraction_over_25khz": 0.96875,
+        "mae_cluster_bootstrap_95_hz": [
+          316007.3503046981,
+          419975.9665368491
+        ]
+      }
+    },
+    {
+      "scenario": "matched",
+      "repetitions_per_phase_delay": 20000,
+      "total_repetitions": 5120000,
+      "modeled_acquisition_seconds": 32.42666666666666,
+      "physical_configurations": 64,
+      "readouts": 128,
+      "clipped_readouts": 0,
+      "clipped_values": 0,
+      "fixed_float_grid_agreement": 1.0,
+      "fixed_grid": {
+        "mae_hz": 3293.8007887051654,
+        "p95_absolute_error_hz": 5898.782088606942,
+        "max_absolute_error_hz": 6812.770816750802,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          2876.942297424871,
+          3753.998520687114
+        ]
+      },
+      "nominal_grid": {
+        "mae_hz": 3293.8007887051654,
+        "p95_absolute_error_hz": 5898.782088606942,
+        "max_absolute_error_hz": 6812.770816750802,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          2805.255951680597,
+          3773.584003477677
+        ]
+      },
+      "nominal_refined": {
+        "mae_hz": 253.1225549632059,
+        "p95_absolute_error_hz": 617.3442239864265,
+        "max_absolute_error_hz": 789.6122159655738,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          219.43413993447004,
+          287.3781462370314
+        ]
+      },
+      "profiled_refined": {
+        "mae_hz": 280.8894791018166,
+        "p95_absolute_error_hz": 732.5117561563746,
+        "max_absolute_error_hz": 1149.0393775026864,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          240.78803602274985,
+          321.0042599231186
+        ]
+      },
+      "development_constant": {
+        "mae_hz": 368205.0487742752,
+        "p95_absolute_error_hz": 701161.6406856407,
+        "max_absolute_error_hz": 757328.8798806177,
+        "fraction_over_25khz": 0.96875,
+        "mae_cluster_bootstrap_95_hz": [
+          312613.1458780742,
+          421622.6263611148
+        ]
+      }
+    },
+    {
+      "scenario": "optical_drift",
+      "repetitions_per_phase_delay": 100,
+      "total_repetitions": 25600,
+      "modeled_acquisition_seconds": 0.1621333333333333,
+      "physical_configurations": 64,
+      "readouts": 128,
+      "clipped_readouts": 40,
+      "clipped_values": 80,
+      "fixed_float_grid_agreement": 0.984375,
+      "fixed_grid": {
+        "mae_hz": 6299.368230962858,
+        "p95_absolute_error_hz": 16112.17887537651,
+        "max_absolute_error_hz": 25253.411310465934,
+        "fraction_over_25khz": 0.015625,
+        "mae_cluster_bootstrap_95_hz": [
+          5438.664302611922,
+          7261.193007069652
+        ]
+      },
+      "nominal_grid": {
+        "mae_hz": 6226.366651820732,
+        "p95_absolute_error_hz": 16112.17887537651,
+        "max_absolute_error_hz": 25253.411310465934,
+        "fraction_over_25khz": 0.015625,
+        "mae_cluster_bootstrap_95_hz": [
+          5294.928310822083,
+          7113.270538452257
+        ]
+      },
+      "nominal_refined": {
+        "mae_hz": 4543.712861951496,
+        "p95_absolute_error_hz": 12512.255738773354,
+        "max_absolute_error_hz": 22813.43550615911,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          3795.65632394989,
+          5369.866804006398
+        ]
+      },
+      "profiled_refined": {
+        "mae_hz": 4253.606607056969,
+        "p95_absolute_error_hz": 11265.75004242181,
+        "max_absolute_error_hz": 17541.809991395763,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          3706.648562924425,
+          4847.06337820632
+        ]
+      },
+      "development_constant": {
+        "mae_hz": 368205.0487742752,
+        "p95_absolute_error_hz": 701161.6406856407,
+        "max_absolute_error_hz": 757328.8798806177,
+        "fraction_over_25khz": 0.96875,
+        "mae_cluster_bootstrap_95_hz": [
+          319707.4597487692,
+          417748.09986308747
+        ]
+      }
+    },
+    {
+      "scenario": "optical_drift",
+      "repetitions_per_phase_delay": 500,
+      "total_repetitions": 128000,
+      "modeled_acquisition_seconds": 0.8106666666666664,
+      "physical_configurations": 64,
+      "readouts": 128,
+      "clipped_readouts": 2,
+      "clipped_values": 2,
+      "fixed_float_grid_agreement": 1.0,
+      "fixed_grid": {
+        "mae_hz": 4672.840320460911,
+        "p95_absolute_error_hz": 11008.2636317542,
+        "max_absolute_error_hz": 15272.54213347462,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          4048.7647483589785,
+          5286.27931797538
+        ]
+      },
+      "nominal_grid": {
+        "mae_hz": 4672.840320460911,
+        "p95_absolute_error_hz": 11008.2636317542,
+        "max_absolute_error_hz": 15272.54213347462,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          4021.3668282569206,
+          5321.989330414802
+        ]
+      },
+      "nominal_refined": {
+        "mae_hz": 3232.2326050679844,
+        "p95_absolute_error_hz": 9356.812159152681,
+        "max_absolute_error_hz": 17535.6412781352,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          2657.6182107225727,
+          3875.24915343221
+        ]
+      },
+      "profiled_refined": {
+        "mae_hz": 2089.6453337760295,
+        "p95_absolute_error_hz": 5464.139341914206,
+        "max_absolute_error_hz": 9216.528754239076,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          1789.2158926772534,
+          2435.4055667865264
+        ]
+      },
+      "development_constant": {
+        "mae_hz": 368205.0487742752,
+        "p95_absolute_error_hz": 701161.6406856407,
+        "max_absolute_error_hz": 757328.8798806177,
+        "fraction_over_25khz": 0.96875,
+        "mae_cluster_bootstrap_95_hz": [
+          316277.03324745124,
+          420435.8673714455
+        ]
+      }
+    },
+    {
+      "scenario": "optical_drift",
+      "repetitions_per_phase_delay": 2000,
+      "total_repetitions": 512000,
+      "modeled_acquisition_seconds": 3.2426666666666657,
+      "physical_configurations": 64,
+      "readouts": 128,
+      "clipped_readouts": 0,
+      "clipped_values": 0,
+      "fixed_float_grid_agreement": 1.0,
+      "fixed_grid": {
+        "mae_hz": 4259.171720486468,
+        "p95_absolute_error_hz": 8435.47225635316,
+        "max_absolute_error_hz": 15272.54213347462,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          3658.5095300196417,
+          4951.1968960618
+        ]
+      },
+      "nominal_grid": {
+        "mae_hz": 4259.171720486468,
+        "p95_absolute_error_hz": 8435.47225635316,
+        "max_absolute_error_hz": 15272.54213347462,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          3628.542119655612,
+          4890.291949190878
+        ]
+      },
+      "nominal_refined": {
+        "mae_hz": 2728.7608714780886,
+        "p95_absolute_error_hz": 7848.131647297096,
+        "max_absolute_error_hz": 16185.744947359553,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          2174.6231245743647,
+          3398.773022852604
+        ]
+      },
+      "profiled_refined": {
+        "mae_hz": 1046.8726629665903,
+        "p95_absolute_error_hz": 2907.748132417767,
+        "max_absolute_error_hz": 3637.9974137644153,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          906.9159542999545,
+          1191.7678447499407
+        ]
+      },
+      "development_constant": {
+        "mae_hz": 368205.0487742752,
+        "p95_absolute_error_hz": 701161.6406856407,
+        "max_absolute_error_hz": 757328.8798806177,
+        "fraction_over_25khz": 0.96875,
+        "mae_cluster_bootstrap_95_hz": [
+          316720.6834605597,
+          422972.77174524585
+        ]
+      }
+    },
+    {
+      "scenario": "optical_drift",
+      "repetitions_per_phase_delay": 20000,
+      "total_repetitions": 5120000,
+      "modeled_acquisition_seconds": 32.42666666666666,
+      "physical_configurations": 64,
+      "readouts": 128,
+      "clipped_readouts": 0,
+      "clipped_values": 0,
+      "fixed_float_grid_agreement": 1.0,
+      "fixed_grid": {
+        "mae_hz": 4450.804879923627,
+        "p95_absolute_error_hz": 11276.223661145834,
+        "max_absolute_error_hz": 15272.54213347462,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          3733.806236654405,
+          5312.559335438571
+        ]
+      },
+      "nominal_grid": {
+        "mae_hz": 4450.804879923627,
+        "p95_absolute_error_hz": 11276.223661145834,
+        "max_absolute_error_hz": 15272.54213347462,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          3652.7522876839625,
+          5276.283431813801
+        ]
+      },
+      "nominal_refined": {
+        "mae_hz": 2422.262510386099,
+        "p95_absolute_error_hz": 7283.828765049007,
+        "max_absolute_error_hz": 14480.035111318763,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          1820.2102603621286,
+          3077.4887615380558
+        ]
+      },
+      "profiled_refined": {
+        "mae_hz": 364.6342296592536,
+        "p95_absolute_error_hz": 917.6305244405121,
+        "max_absolute_error_hz": 1895.48248965829,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          317.41936997629574,
+          425.6960025000505
+        ]
+      },
+      "development_constant": {
+        "mae_hz": 368205.0487742752,
+        "p95_absolute_error_hz": 701161.6406856407,
+        "max_absolute_error_hz": 757328.8798806177,
+        "fraction_over_25khz": 0.96875,
+        "mae_cluster_bootstrap_95_hz": [
+          316029.89989266853,
+          424868.5169399837
+        ]
+      }
+    },
+    {
+      "scenario": "control_drift",
+      "repetitions_per_phase_delay": 100,
+      "total_repetitions": 25600,
+      "modeled_acquisition_seconds": 0.1621333333333333,
+      "physical_configurations": 64,
+      "readouts": 128,
+      "clipped_readouts": 25,
+      "clipped_values": 27,
+      "fixed_float_grid_agreement": 1.0,
+      "fixed_grid": {
+        "mae_hz": 5482.246776170392,
+        "p95_absolute_error_hz": 12030.944579506919,
+        "max_absolute_error_hz": 23596.00684461516,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          4722.0365656799895,
+          6346.427341381525
+        ]
+      },
+      "nominal_grid": {
+        "mae_hz": 5482.246776170392,
+        "p95_absolute_error_hz": 12030.944579506919,
+        "max_absolute_error_hz": 23596.00684461516,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          4645.23413732208,
+          6288.887299529269
+        ]
+      },
+      "nominal_refined": {
+        "mae_hz": 4736.6440009044,
+        "p95_absolute_error_hz": 10419.190233499325,
+        "max_absolute_error_hz": 17872.808053979283,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          4178.5254262610215,
+          5335.012160453035
+        ]
+      },
+      "profiled_refined": {
+        "mae_hz": 5271.768095686271,
+        "p95_absolute_error_hz": 11546.59773731952,
+        "max_absolute_error_hz": 18792.26206787421,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          4550.268366018883,
+          6131.588780999829
+        ]
+      },
+      "development_constant": {
+        "mae_hz": 368205.0487742752,
+        "p95_absolute_error_hz": 701161.6406856407,
+        "max_absolute_error_hz": 757328.8798806177,
+        "fraction_over_25khz": 0.96875,
+        "mae_cluster_bootstrap_95_hz": [
+          312460.78731537785,
+          422064.504815582
+        ]
+      }
+    },
+    {
+      "scenario": "control_drift",
+      "repetitions_per_phase_delay": 500,
+      "total_repetitions": 128000,
+      "modeled_acquisition_seconds": 0.8106666666666664,
+      "physical_configurations": 64,
+      "readouts": 128,
+      "clipped_readouts": 0,
+      "clipped_values": 0,
+      "fixed_float_grid_agreement": 1.0,
+      "fixed_grid": {
+        "mae_hz": 4802.80742657636,
+        "p95_absolute_error_hz": 10010.147411251613,
+        "max_absolute_error_hz": 17507.99467836295,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          4098.66418970813,
+          5561.6347696165385
+        ]
+      },
+      "nominal_grid": {
+        "mae_hz": 4802.80742657636,
+        "p95_absolute_error_hz": 10010.147411251613,
+        "max_absolute_error_hz": 17507.99467836295,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          4074.3969860210027,
+          5519.728781102578
+        ]
+      },
+      "nominal_refined": {
+        "mae_hz": 3366.5187903633396,
+        "p95_absolute_error_hz": 7197.9650816577705,
+        "max_absolute_error_hz": 12170.814855329725,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          2891.2247918520397,
+          3826.5262024494587
+        ]
+      },
+      "profiled_refined": {
+        "mae_hz": 3482.3433725001796,
+        "p95_absolute_error_hz": 7833.072665717469,
+        "max_absolute_error_hz": 12129.093372914222,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          3079.982444898275,
+          3936.0773049208105
+        ]
+      },
+      "development_constant": {
+        "mae_hz": 368205.0487742752,
+        "p95_absolute_error_hz": 701161.6406856407,
+        "max_absolute_error_hz": 757328.8798806177,
+        "fraction_over_25khz": 0.96875,
+        "mae_cluster_bootstrap_95_hz": [
+          310597.6477153571,
+          424727.1028898335
+        ]
+      }
+    },
+    {
+      "scenario": "control_drift",
+      "repetitions_per_phase_delay": 2000,
+      "total_repetitions": 512000,
+      "modeled_acquisition_seconds": 3.2426666666666657,
+      "physical_configurations": 64,
+      "readouts": 128,
+      "clipped_readouts": 0,
+      "clipped_values": 0,
+      "fixed_float_grid_agreement": 1.0,
+      "fixed_grid": {
+        "mae_hz": 4500.098177251997,
+        "p95_absolute_error_hz": 9581.093551084274,
+        "max_absolute_error_hz": 11096.006844615204,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          3785.604336637455,
+          5295.779812766774
+        ]
+      },
+      "nominal_grid": {
+        "mae_hz": 4500.098177251997,
+        "p95_absolute_error_hz": 9581.093551084274,
+        "max_absolute_error_hz": 11096.006844615204,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          3750.0890170190128,
+          5220.716745323111
+        ]
+      },
+      "nominal_refined": {
+        "mae_hz": 2887.110897134322,
+        "p95_absolute_error_hz": 5975.407369817492,
+        "max_absolute_error_hz": 7280.942372659305,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          2477.462765363635,
+          3233.5033953147777
+        ]
+      },
+      "profiled_refined": {
+        "mae_hz": 2878.2550522765832,
+        "p95_absolute_error_hz": 6012.593578003611,
+        "max_absolute_error_hz": 7093.668257426189,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          2518.7355153289977,
+          3275.137533651911
+        ]
+      },
+      "development_constant": {
+        "mae_hz": 368205.0487742752,
+        "p95_absolute_error_hz": 701161.6406856407,
+        "max_absolute_error_hz": 757328.8798806177,
+        "fraction_over_25khz": 0.96875,
+        "mae_cluster_bootstrap_95_hz": [
+          314555.7087325538,
+          423091.667678947
+        ]
+      }
+    },
+    {
+      "scenario": "control_drift",
+      "repetitions_per_phase_delay": 20000,
+      "total_repetitions": 5120000,
+      "modeled_acquisition_seconds": 32.42666666666666,
+      "physical_configurations": 64,
+      "readouts": 128,
+      "clipped_readouts": 0,
+      "clipped_values": 0,
+      "fixed_float_grid_agreement": 1.0,
+      "fixed_grid": {
+        "mae_hz": 4425.082657708423,
+        "p95_absolute_error_hz": 9482.955036485117,
+        "max_absolute_error_hz": 11096.006844615204,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          3722.202507954681,
+          5122.548088123539
+        ]
+      },
+      "nominal_grid": {
+        "mae_hz": 4425.082657708423,
+        "p95_absolute_error_hz": 9482.955036485117,
+        "max_absolute_error_hz": 11096.006844615204,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          3738.1712540609005,
+          5159.549828334754
+        ]
+      },
+      "nominal_refined": {
+        "mae_hz": 2894.851450352746,
+        "p95_absolute_error_hz": 6033.223672521064,
+        "max_absolute_error_hz": 6941.505638953183,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          2506.425589226753,
+          3328.866615345028
+        ]
+      },
+      "profiled_refined": {
+        "mae_hz": 2857.6326171973597,
+        "p95_absolute_error_hz": 6161.288047913621,
+        "max_absolute_error_hz": 7026.66953445491,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          2428.9991690206766,
+          3225.0059034564474
+        ]
+      },
+      "development_constant": {
+        "mae_hz": 368205.0487742752,
+        "p95_absolute_error_hz": 701161.6406856407,
+        "max_absolute_error_hz": 757328.8798806177,
+        "fraction_over_25khz": 0.96875,
+        "mae_cluster_bootstrap_95_hz": [
+          312514.99494896084,
+          418748.14435636
+        ]
+      }
+    },
+    {
+      "scenario": "combined_mismatch",
+      "repetitions_per_phase_delay": 100,
+      "total_repetitions": 25600,
+      "modeled_acquisition_seconds": 0.1621333333333333,
+      "physical_configurations": 64,
+      "readouts": 128,
+      "clipped_readouts": 20,
+      "clipped_values": 30,
+      "fixed_float_grid_agreement": 1.0,
+      "fixed_grid": {
+        "mae_hz": 10230.053622885363,
+        "p95_absolute_error_hz": 19773.174478661338,
+        "max_absolute_error_hz": 249483.6572453205,
+        "fraction_over_25khz": 0.015625,
+        "mae_cluster_bootstrap_95_hz": [
+          7409.850848260227,
+          14479.241174885774
+        ]
+      },
+      "nominal_grid": {
+        "mae_hz": 10230.053622885363,
+        "p95_absolute_error_hz": 19773.174478661338,
+        "max_absolute_error_hz": 249483.6572453205,
+        "fraction_over_25khz": 0.015625,
+        "mae_cluster_bootstrap_95_hz": [
+          7621.38086324428,
+          14520.228010701425
+        ]
+      },
+      "nominal_refined": {
+        "mae_hz": 9387.854699203664,
+        "p95_absolute_error_hz": 18250.384795408532,
+        "max_absolute_error_hz": 254863.43819176327,
+        "fraction_over_25khz": 0.015625,
+        "mae_cluster_bootstrap_95_hz": [
+          6548.358279654394,
+          13771.592116835443
+        ]
+      },
+      "profiled_refined": {
+        "mae_hz": 7270.55018891924,
+        "p95_absolute_error_hz": 17951.697680897247,
+        "max_absolute_error_hz": 30062.152376324426,
+        "fraction_over_25khz": 0.015625,
+        "mae_cluster_bootstrap_95_hz": [
+          6257.416800674518,
+          8304.753126896809
+        ]
+      },
+      "development_constant": {
+        "mae_hz": 368205.0487742752,
+        "p95_absolute_error_hz": 701161.6406856407,
+        "max_absolute_error_hz": 757328.8798806177,
+        "fraction_over_25khz": 0.96875,
+        "mae_cluster_bootstrap_95_hz": [
+          314753.10964057874,
+          418700.51417203934
+        ]
+      }
+    },
+    {
+      "scenario": "combined_mismatch",
+      "repetitions_per_phase_delay": 500,
+      "total_repetitions": 128000,
+      "modeled_acquisition_seconds": 0.8106666666666664,
+      "physical_configurations": 64,
+      "readouts": 128,
+      "clipped_readouts": 1,
+      "clipped_values": 1,
+      "fixed_float_grid_agreement": 1.0,
+      "fixed_grid": {
+        "mae_hz": 6613.348429280064,
+        "p95_absolute_error_hz": 16363.417538795093,
+        "max_absolute_error_hz": 19773.174478661338,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          5644.919049431825,
+          7675.013264777371
+        ]
+      },
+      "nominal_grid": {
+        "mae_hz": 6613.348429280064,
+        "p95_absolute_error_hz": 16363.417538795093,
+        "max_absolute_error_hz": 19773.174478661338,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          5604.7998181488565,
+          7564.099940848263
+        ]
+      },
+      "nominal_refined": {
+        "mae_hz": 5148.030128938224,
+        "p95_absolute_error_hz": 13282.013989334771,
+        "max_absolute_error_hz": 18384.829165250056,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          4337.525410542702,
+          6128.757027593159
+        ]
+      },
+      "profiled_refined": {
+        "mae_hz": 4778.831014126348,
+        "p95_absolute_error_hz": 12025.406667641377,
+        "max_absolute_error_hz": 14937.736129519457,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          4132.244391293817,
+          5460.205053795795
+        ]
+      },
+      "development_constant": {
+        "mae_hz": 368205.0487742752,
+        "p95_absolute_error_hz": 701161.6406856407,
+        "max_absolute_error_hz": 757328.8798806177,
+        "fraction_over_25khz": 0.96875,
+        "mae_cluster_bootstrap_95_hz": [
+          315663.566538316,
+          421949.9498485927
+        ]
+      }
+    },
+    {
+      "scenario": "combined_mismatch",
+      "repetitions_per_phase_delay": 2000,
+      "total_repetitions": 512000,
+      "modeled_acquisition_seconds": 3.2426666666666657,
+      "physical_configurations": 64,
+      "readouts": 128,
+      "clipped_readouts": 0,
+      "clipped_values": 0,
+      "fixed_float_grid_agreement": 1.0,
+      "fixed_grid": {
+        "mae_hz": 6243.03783343382,
+        "p95_absolute_error_hz": 15163.20138512189,
+        "max_absolute_error_hz": 25253.411310465934,
+        "fraction_over_25khz": 0.0078125,
+        "mae_cluster_bootstrap_95_hz": [
+          5297.103968213489,
+          7248.4871467948315
+        ]
+      },
+      "nominal_grid": {
+        "mae_hz": 6243.03783343382,
+        "p95_absolute_error_hz": 15163.20138512189,
+        "max_absolute_error_hz": 25253.411310465934,
+        "fraction_over_25khz": 0.0078125,
+        "mae_cluster_bootstrap_95_hz": [
+          5253.277531008736,
+          7361.582028762157
+        ]
+      },
+      "nominal_refined": {
+        "mae_hz": 4886.66068753455,
+        "p95_absolute_error_hz": 12822.895531507404,
+        "max_absolute_error_hz": 19658.273621320637,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          4023.636697571967,
+          5840.353454653347
+        ]
+      },
+      "profiled_refined": {
+        "mae_hz": 4304.121319862717,
+        "p95_absolute_error_hz": 10270.505066893695,
+        "max_absolute_error_hz": 12564.322655823467,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          3689.794146802973,
+          5074.278598414684
+        ]
+      },
+      "development_constant": {
+        "mae_hz": 368205.0487742752,
+        "p95_absolute_error_hz": 701161.6406856407,
+        "max_absolute_error_hz": 757328.8798806177,
+        "fraction_over_25khz": 0.96875,
+        "mae_cluster_bootstrap_95_hz": [
+          316626.80382271286,
+          418995.80388594256
+        ]
+      }
+    },
+    {
+      "scenario": "combined_mismatch",
+      "repetitions_per_phase_delay": 20000,
+      "total_repetitions": 5120000,
+      "modeled_acquisition_seconds": 32.42666666666666,
+      "physical_configurations": 64,
+      "readouts": 128,
+      "clipped_readouts": 0,
+      "clipped_values": 0,
+      "fixed_float_grid_agreement": 1.0,
+      "fixed_grid": {
+        "mae_hz": 6111.565659336844,
+        "p95_absolute_error_hz": 14775.326639847139,
+        "max_absolute_error_hz": 19773.174478661338,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          5122.309895238651,
+          7157.633852727111
+        ]
+      },
+      "nominal_grid": {
+        "mae_hz": 6111.565659336844,
+        "p95_absolute_error_hz": 14775.326639847139,
+        "max_absolute_error_hz": 19773.174478661338,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          5155.937480683351,
+          7199.458334468108
+        ]
+      },
+      "nominal_refined": {
+        "mae_hz": 4662.974117569474,
+        "p95_absolute_error_hz": 12805.816429400005,
+        "max_absolute_error_hz": 17205.3207187427,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          3745.4042748024576,
+          5562.422810868076
+        ]
+      },
+      "profiled_refined": {
+        "mae_hz": 4181.245242511375,
+        "p95_absolute_error_hz": 9762.93456109267,
+        "max_absolute_error_hz": 10828.65904667571,
+        "fraction_over_25khz": 0.0,
+        "mae_cluster_bootstrap_95_hz": [
+          3535.634507035256,
+          4919.8299479752595
+        ]
+      },
+      "development_constant": {
+        "mae_hz": 368205.0487742752,
+        "p95_absolute_error_hz": 701161.6406856407,
+        "max_absolute_error_hz": 757328.8798806177,
+        "fraction_over_25khz": 0.96875,
+        "mae_cluster_bootstrap_95_hz": [
+          315446.04052812286,
+          425600.4363517901
+        ]
+      }
+    }
+  ],
+  "gates": {
+    "c_integer_parity": true,
+    "matched_500_fixed_mae": true,
+    "combined_2000_fixed_mae": true,
+    "all_cells_fixed_float_grid_agreement": false
+  },
+  "board_replay_vectors": 2061,
+  "fit_seconds": 19.40945458295755,
+  "wall_seconds": 20.105361375026405,
+  "python": "3.14.3 (main, Feb  3 2026, 15:32:20) [Clang 17.0.0 (clang-1700.6.3.2)]",
+  "numpy": "2.4.2",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "source_sha256": {
+    "nv_stress.py": "346113a7178fe862bca0f3a071a9a50ea1677cdbe8a04bf8c903f05de6c10675",
+    "run_stress_v2.py": "105ab98a81af43088408c8c54892f9c751e2fabeba9f69719d083bcfec172593",
+    "nv_model.py": "fab118bd8f4633ba74299dfee205b2e7c66d8afc968364ccf4cc1ddf55ab72ce",
+    "nv_match.c": "0519008afbff84880930baf8113c3c4c0fe155d8481a9b1eed74651502dfba99"
+  },
+  "artifact_sha256": {
+    "frozen_config.json": "f52c86de3221c25a11210e7fe8a78446d9a8430b32fb4d5d1d0495e92e6c32ec",
+    "synthetic_stress_data.npz": "5b8ce03c753623bfb2851155a7ce9e8911ec0ed44b77e9a7157583733ec1596e",
+    "final_predictions.npz": "96bdc7bae073c204ca25d4f63e8a5d5f0cc961dc43abe3a427348e20acecafcd"
+  },
+  "limitations": [
+    "No measured sensor or apparatus timing",
+    "Unknown nuisance values do not enter estimators",
+    "V1 core and ROM unchanged",
+    "Final data are consumed; no retuning allowed",
+    "Confidence intervals cluster paired readouts by configuration, not total sample count",
+    "Higher shot counts do not repair model mismatch",
+    "Board replay requires independent coordinator execution"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "recorded_utc": "2026-10-17 17:32:35 UTC",
+  "boot_id": "b5b5c213-1f02-49b1-9a4b-29f0b52e52db",
+  "command": "ssh gpu-workstation 'ssh root@<board-host> \"timeout 10 <board-bringup-dir>/vbx_probe <board-bringup-dir>/fcnn_v2_residual_dataset_a.vnnx\"'",
+  "chunk_id": "c9b027",
+  "wall_time_seconds": 0.000010667,
+  "exit_code": 0,
+  "original_token_count": 147,
+  "output": "init OK (control plane alive)\n[after_init  ] CTRL=0x00000000 ERR=0x00000000 MODEL=0x747bfdff IO=0xfffbd7fb VER=0x20000000\nmodel: 1 input(s) / 1 output(s), sanity=0\n[before_start] CTRL=0x00000000 ERR=0x00000000 MODEL=0x747bfdff IO=0xfffbd7fb VER=0x20000000\nvbx_cnn_model_start ret=0\n[after_start ] CTRL=0x00000004 ERR=0x00000000 MODEL=0xc8000400 IO=0xc8000000 VER=0x20000000\n  poll#0 ret=1 CTRL=0x00000004 ERR=0x00000000\npoll ended: iters=1 last_poll_ret=0\n[final       ] CTRL=0x00000000 ERR=0x00000000 MODEL=0xc8000400 IO=0xc8000000 VER=0x20000000\nerror_val=0\nRESULT: INFERENCE COMPLETED\n"
+}

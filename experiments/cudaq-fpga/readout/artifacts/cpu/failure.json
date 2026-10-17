@@ -1,0 +1,4 @@
+{
+  "type": "RuntimeError",
+  "message": "physical correctness gate failed; no data evaluation performed"
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "readout_drift_calibration_v2",
+  "frozen_date": "2026-10-17",
+  "seed": 202610171304,
+  "source_model_sha256": "d6be7723f2475c1801dda4163e88f6a3cc25ab20629eaced03a1949ef62364a8",
+  "samples": 64,
+  "sample_interval_us": 0.025,
+  "base_kappa_rad_per_us": 6.283185307179586,
+  "base_chi_rad_per_us": 4.084070449666731,
+  "base_drive_rad_per_us": 4.39822971502571,
+  "base_detuning_rad_per_us": 0.6283185307179586,
+  "groups_per_partition": {"development": 8, "validation": 8, "final": 32},
+  "calibration_shots_per_class": 32,
+  "evaluation_shots_per_class": 16,
+  "calibration": {"method": "least-squares real affine IQ transform from labelled calibration means to fixed nominal templates", "maximum_condition_number": 10.0, "minimum_singular_value": 0.15},
+  "lda_shrinkage": 0.2,
+  "selection": "none; frozen v1 boxcar remains deployed; all other methods are comparators",
+  "noise_model": "stationary per-quadrature Gaussian AR1 plus explicitly listed shot DC noise; no measurement-conditioned quantum trajectories",
+  "relaxation_model": "one exponential excited-to-ground transition per initially excited shot; continuous cavity amplitude at transition; no upward transitions",
+  "range_origin": "All numeric ranges are benchmark assumptions, not inferred from measured hardware or claimed representative population statistics.",
+  "scenarios": [
+    {"name":"nominal","detuning_add_mhz":[-0.05,0.05],"kappa_factor":[0.95,1.05],"drive_factor":[0.96,1.04],"gain":[0.95,1.05],"phase_rad":[-0.1,0.1],"iq_gain":[0.97,1.03],"iq_skew":[-0.03,0.03],"offset":[-0.05,0.05],"noise_sigma":[0.60,0.70],"noise_ar1":[0.25,0.4],"shot_dc_sigma":0.02,"t1_us":[40,100],"postcal_phase_rad":[-0.02,0.02],"postcal_offset":[-0.01,0.01]},
+    {"name":"receiver_drift","detuning_add_mhz":[-0.15,0.15],"kappa_factor":[0.95,1.05],"drive_factor":[0.95,1.05],"gain":[0.6,1.4],"phase_rad":[-1.2,1.2],"iq_gain":[0.8,1.2],"iq_skew":[-0.15,0.15],"offset":[-0.35,0.35],"noise_sigma":[0.65,1.0],"noise_ar1":[0.35,0.65],"shot_dc_sigma":0.04,"t1_us":[20,80],"postcal_phase_rad":[-0.08,0.08],"postcal_offset":[-0.03,0.03]},
+    {"name":"cavity_mismatch","detuning_add_mhz":[-0.6,0.6],"kappa_factor":[0.85,1.15],"drive_factor":[0.85,1.15],"gain":[0.8,1.2],"phase_rad":[-0.5,0.5],"iq_gain":[0.9,1.1],"iq_skew":[-0.1,0.1],"offset":[-0.15,0.15],"noise_sigma":[0.65,0.95],"noise_ar1":[0.3,0.6],"shot_dc_sigma":0.03,"t1_us":[20,80],"postcal_phase_rad":[-0.08,0.08],"postcal_offset":[-0.03,0.03]},
+    {"name":"short_t1","detuning_add_mhz":[-0.1,0.1],"kappa_factor":[0.95,1.05],"drive_factor":[0.95,1.05],"gain":[0.8,1.2],"phase_rad":[-0.4,0.4],"iq_gain":[0.9,1.1],"iq_skew":[-0.1,0.1],"offset":[-0.15,0.15],"noise_sigma":[0.65,0.9],"noise_ar1":[0.3,0.6],"shot_dc_sigma":0.03,"t1_us":[1,5],"postcal_phase_rad":[-0.08,0.08],"postcal_offset":[-0.03,0.03]},
+    {"name":"stale_calibration","detuning_add_mhz":[-0.15,0.15],"kappa_factor":[0.95,1.05],"drive_factor":[0.95,1.05],"gain":[0.7,1.3],"phase_rad":[-0.8,0.8],"iq_gain":[0.85,1.15],"iq_skew":[-0.1,0.1],"offset":[-0.2,0.2],"noise_sigma":[0.65,0.9],"noise_ar1":[0.3,0.6],"shot_dc_sigma":0.04,"t1_us":[20,80],"postcal_phase_rad":[-0.6,0.6],"postcal_offset":[-0.25,0.25]}
+  ],
+  "correctness_acceptance": {"independent_piecewise_rk4_max_error":1e-7,"all_integer_cpp_scores_exact":true,"core_hash_unchanged":true,"model_hash_unchanged":true,"no_partition_group_overlap":true,"portable_pack_roundtrip_exact":true},
+  "utility_acceptance": {"nominal_calibrated_accuracy_min":0.97,"receiver_drift_calibrated_accuracy_min":0.90,"receiver_drift_absolute_gain_min":0.03,"nominal_and_drift_calibration_coverage_min":0.95,"other_scenarios":"diagnostic; failures are retained without retuning"},
+  "board_replay": {"partition":"final","modes":["raw","calibrated_when_valid"],"input_dtype":"little-endian int16","input_shape_per_record":[128],"input_fraction_bits":11,"output_dtype":"little-endian int64","output_fraction_bits":25,"expected_source":"unchanged frozen integer boxcar","ordering":"scenario, group, label, replicate, mode"},
+  "resources": {"cpu_threads":4,"max_memory_gib":4,"max_cpu_seconds":300,"gpu_execution":"coordinator only; no new GPU work required for this classical stress extension"}
+}

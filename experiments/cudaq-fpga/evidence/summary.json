@@ -1,0 +1,293 @@
+{
+  "schema": "quantum_fpga_execution_summary_v2",
+  "date": "2026-10-17",
+  "scope": "synthetic/replayed data on FPGA development kit",
+  "board_executed": true,
+  "timing_closed": true,
+  "target": "MPFS250T-FCVG484, STD/EXT integrated Libero configuration",
+  "fabric_clock_hz": 125000000,
+  "job_sha256": "ec12633f2d78edef3d649b7e98af18253f11f5dc023187cc01edcd50d319b7db",
+  "rollback_job_sha256": "6d5cae6c30053ed5d16325f9cc03e57eb706e6ab3f3f9306d741cad02d711c6c",
+  "rollback_executed": false,
+  "accepted_calls": 171650,
+  "frozen_records": 17165,
+  "passes_per_record": 10,
+  "repeated_calls_are_independent_samples": false,
+  "v250_regression_passed_after_each_boot": true,
+  "radiation_validated": false,
+  "physical_quantum_system_validated": false,
+  "board_power_measured": false,
+  "customer_demand_validated": false,
+  "gpu_speedup_established": false,
+  "full_dataset_generated_with_cudaq": false,
+  "cudaq_scope": "representative validation on NVIDIA GB10; complete datasets CPU-generated",
+  "whole_design_resources": {
+    "lut4": 85567,
+    "dff": 65204,
+    "logic_elements": 102415,
+    "lut4_percent": 33.66,
+    "dff_percent": 25.65,
+    "logic_elements_percent": 40.29
+  },
+  "timing": {
+    "worst_setup_slack_ns": 0.878,
+    "worst_hold_slack_ns": 0.006,
+    "fic0_setup_slack_ns": 1.634,
+    "fic0_hold_slack_ns": 0.059,
+    "unconstrained_fic0_checks": 0,
+    "inherited_unconstrained_fic3_checks": 15
+  },
+  "board_runs": [
+    {
+      "directory": "evidence/board/boot-1",
+      "boot_id": "b5b5c213-1f02-49b1-9a4b-29f0b52e52db",
+      "status": "PASS",
+      "started_utc": "2026-10-17T17:31:21.244488+00:00",
+      "completed_utc": "2026-10-17T17:32:01.940339+00:00",
+      "accepted_calls": 85825,
+      "control_checks_passed": 15,
+      "tracks": {
+        "readout": [
+          {
+            "repeat": 1,
+            "validated_records": 10240,
+            "completed_calls": 10240,
+            "mismatches": 0,
+            "fabric_cycles_min": 85,
+            "fabric_cycles_max": 85,
+            "host_total_ns": {
+              "p50": 22000,
+              "p99": 23000,
+              "max": 109000
+            },
+            "host_call_ns": {
+              "p50": 6000,
+              "p99": 6000,
+              "max": 93000
+            }
+          },
+          {
+            "repeat": 4,
+            "validated_records": 10240,
+            "completed_calls": 40960,
+            "mismatches": 0,
+            "fabric_cycles_min": 85,
+            "fabric_cycles_max": 85,
+            "host_total_ns": {
+              "p50": 22000,
+              "p99": 23000,
+              "max": 181000
+            },
+            "host_call_ns": {
+              "p50": 6000,
+              "p99": 6000,
+              "max": 134000
+            }
+          }
+        ],
+        "nv": [
+          {
+            "repeat": 1,
+            "validated_records": 2061,
+            "completed_calls": 2061,
+            "mismatches": 0,
+            "fabric_cycles_min": 23479,
+            "fabric_cycles_max": 23479,
+            "host_total_ns": {
+              "p50": 209000,
+              "p99": 239000,
+              "max": 270000
+            },
+            "host_call_ns": {
+              "p50": 193000,
+              "p99": 194000,
+              "max": 230000
+            }
+          },
+          {
+            "repeat": 4,
+            "validated_records": 2061,
+            "completed_calls": 8244,
+            "mismatches": 0,
+            "fabric_cycles_min": 23479,
+            "fabric_cycles_max": 23479,
+            "host_total_ns": {
+              "p50": 209006,
+              "p99": 213007,
+              "max": 338010
+            },
+            "host_call_ns": {
+              "p50": 193006,
+              "p99": 194006,
+              "max": 322009
+            }
+          }
+        ],
+        "qec": [
+          {
+            "repeat": 1,
+            "validated_records": 4864,
+            "completed_calls": 4864,
+            "mismatches": 0,
+            "fabric_cycles_min": 4,
+            "fabric_cycles_max": 4,
+            "host_total_ns": {
+              "p50": 9000,
+              "p99": 10000,
+              "max": 83000
+            },
+            "host_call_ns": {
+              "p50": 6000,
+              "p99": 6000,
+              "max": 72000
+            }
+          },
+          {
+            "repeat": 4,
+            "validated_records": 4864,
+            "completed_calls": 19456,
+            "mismatches": 0,
+            "fabric_cycles_min": 4,
+            "fabric_cycles_max": 4,
+            "host_total_ns": {
+              "p50": 9000,
+              "p99": 10001,
+              "max": 178004
+            },
+            "host_call_ns": {
+              "p50": 6000,
+              "p99": 6001,
+              "max": 174004
+            }
+          }
+        ]
+      }
+    },
+    {
+      "directory": "evidence/board/boot-2",
+      "boot_id": "0a33ca92-8c42-4db5-8815-00f93df307d3",
+      "status": "PASS",
+      "started_utc": "2026-10-17T17:33:05.855129+00:00",
+      "completed_utc": "2026-10-17T17:34:31.904666+00:00",
+      "accepted_calls": 85825,
+      "control_checks_passed": 15,
+      "tracks": {
+        "readout": [
+          {
+            "repeat": 1,
+            "validated_records": 10240,
+            "completed_calls": 10240,
+            "mismatches": 0,
+            "fabric_cycles_min": 85,
+            "fabric_cycles_max": 85,
+            "host_total_ns": {
+              "p50": 22000,
+              "p99": 23000,
+              "max": 148000
+            },
+            "host_call_ns": {
+              "p50": 6000,
+              "p99": 6000,
+              "max": 89000
+            }
+          },
+          {
+            "repeat": 4,
+            "validated_records": 10240,
+            "completed_calls": 40960,
+            "mismatches": 0,
+            "fabric_cycles_min": 85,
+            "fabric_cycles_max": 85,
+            "host_total_ns": {
+              "p50": 22000,
+              "p99": 23000,
+              "max": 182000
+            },
+            "host_call_ns": {
+              "p50": 6000,
+              "p99": 6000,
+              "max": 166000
+            }
+          }
+        ],
+        "nv": [
+          {
+            "repeat": 1,
+            "validated_records": 2061,
+            "completed_calls": 2061,
+            "mismatches": 0,
+            "fabric_cycles_min": 23479,
+            "fabric_cycles_max": 23479,
+            "host_total_ns": {
+              "p50": 209000,
+              "p99": 210000,
+              "max": 334000
+            },
+            "host_call_ns": {
+              "p50": 193000,
+              "p99": 194000,
+              "max": 318000
+            }
+          },
+          {
+            "repeat": 4,
+            "validated_records": 2061,
+            "completed_calls": 8244,
+            "mismatches": 0,
+            "fabric_cycles_min": 23479,
+            "fabric_cycles_max": 23479,
+            "host_total_ns": {
+              "p50": 209000,
+              "p99": 211000,
+              "max": 336000
+            },
+            "host_call_ns": {
+              "p50": 193000,
+              "p99": 194000,
+              "max": 252000
+            }
+          }
+        ],
+        "qec": [
+          {
+            "repeat": 1,
+            "validated_records": 4864,
+            "completed_calls": 4864,
+            "mismatches": 0,
+            "fabric_cycles_min": 4,
+            "fabric_cycles_max": 4,
+            "host_total_ns": {
+              "p50": 9000,
+              "p99": 10000,
+              "max": 56000
+            },
+            "host_call_ns": {
+              "p50": 6000,
+              "p99": 6000,
+              "max": 52000
+            }
+          },
+          {
+            "repeat": 4,
+            "validated_records": 4864,
+            "completed_calls": 19456,
+            "mismatches": 0,
+            "fabric_cycles_min": 4,
+            "fabric_cycles_max": 4,
+            "host_total_ns": {
+              "p50": 9000,
+              "p99": 10000,
+              "max": 62000
+            },
+            "host_call_ns": {
+              "p50": 6000,
+              "p99": 6000,
+              "max": 59000
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "final_board_state": "State recorded at completion: powered on with validated candidate. Not a live status API."
+}

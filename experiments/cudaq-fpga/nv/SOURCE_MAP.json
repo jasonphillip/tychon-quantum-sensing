@@ -1,0 +1,376 @@
+{
+  "schema": "nv_public_source_map_v1",
+  "source_snapshot": "quantum-fpga-feasibility/nv, frozen 2026-10-17",
+  "purpose": "Map curated public files to original bytes without publishing machine-specific paths. Historical command metadata is normalized; numerical arrays and results are unchanged.",
+  "files": [
+    {
+      "source_relative_path": "nv/FPGA_CONTRACT.md",
+      "public_relative_path": "FPGA_CONTRACT.md",
+      "source_sha256": "4d0d505c56f0a7c880199d16ba15c4d2a10fce3d6ea8d0cc0d54a78867f58810",
+      "public_sha256": "d517983ff80ea98b36aaa0509cf4632fb2f2942fe1519129ff710e41f8df90c2",
+      "byte_identical": false,
+      "transformations": [
+        "Replace historical pre-hardware status with scoped interface description; clarify stress shot normalization"
+      ]
+    },
+    {
+      "source_relative_path": "nv/FROZEN_PROTOCOL.md",
+      "public_relative_path": "FROZEN_PROTOCOL.md",
+      "source_sha256": "bd5d22e0106d0201817439631ad67b98699c9c560d6972c723e77da1147b93f8",
+      "public_sha256": "d0bd67477fb2de78b7703bd19c6611307ca642307b73b1f3b6c4d6e2d4b6dba5",
+      "byte_identical": false,
+      "transformations": [
+        "Remove internal execution/environment notes; clarify accumulator type against unchanged C source"
+      ]
+    },
+    {
+      "source_relative_path": "nv/SOURCES.md",
+      "public_relative_path": "SOURCES.md",
+      "source_sha256": "4fcb4909eb4e9d1b0a2c0f986db5f633cbb7df8ed8291f56dce65cb8084134f7",
+      "public_sha256": "4fcb4909eb4e9d1b0a2c0f986db5f633cbb7df8ed8291f56dce65cb8084134f7",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/STRESS_PROTOCOL_V2.md",
+      "public_relative_path": "STRESS_PROTOCOL_V2.md",
+      "source_sha256": "eb27ff556db9476c9505f2109a761bb3f6f0926d51d72b3e84e62fe21139e909",
+      "public_sha256": "e9992af60603aba1d0e821a88f2e72c9889e7f09cbc496c2231e42ec52511468",
+      "byte_identical": false,
+      "transformations": [
+        "Remove internal ownership and workspace instructions; retain frozen scientific protocol"
+      ]
+    },
+    {
+      "source_relative_path": "nv/artifacts/cpu_frozen_v1/dataset_validation.json",
+      "public_relative_path": "artifacts/cpu_frozen_v1/dataset_validation.json",
+      "source_sha256": "ed00e9c2a13f3f51a0bdd28ba38dd313055e084450de3a52aa015e14eddbc807",
+      "public_sha256": "ed00e9c2a13f3f51a0bdd28ba38dd313055e084450de3a52aa015e14eddbc807",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/artifacts/cpu_frozen_v1/frozen_config.json",
+      "public_relative_path": "artifacts/cpu_frozen_v1/frozen_config.json",
+      "source_sha256": "acf65e24ecadfe78e8aaa5d6bd1cf9306032bdae0e972f25110b0f3495868598",
+      "public_sha256": "acf65e24ecadfe78e8aaa5d6bd1cf9306032bdae0e972f25110b0f3495868598",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/artifacts/cpu_frozen_v1/metrics.json",
+      "public_relative_path": "artifacts/cpu_frozen_v1/metrics.json",
+      "source_sha256": "b7c636ebd6dc936c4d073dcc9177d612c6116dbf5351a2dc348c106b7cf7c481",
+      "public_sha256": "aa203094ab31dd26084ab7b4c1f427fa7547f60bc199f5272c278dbbecc23b7b",
+      "byte_identical": false,
+      "transformations": [
+        "Normalize historical command metadata to paths relative to nv/ and portable compiler/interpreter names"
+      ]
+    },
+    {
+      "source_relative_path": "nv/artifacts/cpu_frozen_v1/synthetic_data.npz",
+      "public_relative_path": "artifacts/cpu_frozen_v1/synthetic_data.npz",
+      "source_sha256": "beed0af2162659198a49a9678f463bdb2e863bea02d56d53b7521ec2a56610cb",
+      "public_sha256": "beed0af2162659198a49a9678f463bdb2e863bea02d56d53b7521ec2a56610cb",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/artifacts/cpu_frozen_v1/templates.npz",
+      "public_relative_path": "artifacts/cpu_frozen_v1/templates.npz",
+      "source_sha256": "e9cb51c0662197c8166ea4c50e45cae7306dd8176cbb58b3422dd9eb4ea2fe74",
+      "public_sha256": "e9cb51c0662197c8166ea4c50e45cae7306dd8176cbb58b3422dd9eb4ea2fe74",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/artifacts/cpu_frozen_v1/templates_i16le.bin",
+      "public_relative_path": "artifacts/cpu_frozen_v1/templates_i16le.bin",
+      "source_sha256": "b4c8515c0c4842d613a58fc7a23e528c956343bf86ba515cda5715ca57110f8f",
+      "public_sha256": "b4c8515c0c4842d613a58fc7a23e528c956343bf86ba515cda5715ca57110f8f",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/artifacts/cpu_frozen_v1/test_inputs_i16le.bin",
+      "public_relative_path": "artifacts/cpu_frozen_v1/test_inputs_i16le.bin",
+      "source_sha256": "e5ef5684f97b10cce570a5a35213f05d418e47e131488c2654bf4b7c49f478a3",
+      "public_sha256": "e5ef5684f97b10cce570a5a35213f05d418e47e131488c2654bf4b7c49f478a3",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/artifacts/cpu_frozen_v1/test_predictions.npz",
+      "public_relative_path": "artifacts/cpu_frozen_v1/test_predictions.npz",
+      "source_sha256": "21176f09509e8d99e1f1e6d7556ceaa7c7a018645be8c574522d1c219d94afbf",
+      "public_sha256": "21176f09509e8d99e1f1e6d7556ceaa7c7a018645be8c574522d1c219d94afbf",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/artifacts/cpu_test_receipt.json",
+      "public_relative_path": "artifacts/cpu_test_receipt.json",
+      "source_sha256": "10ca0a72894d70e38230a0e6cabdb61ff6acefd63e7a45895d1f6c10547fb598",
+      "public_sha256": "bcf1d1d91c19359d86837a3aebf2ba060b251015d659f8e5b805329ec5b7c68d",
+      "byte_identical": false,
+      "transformations": [
+        "Normalize historical command metadata to paths relative to nv/ and portable compiler/interpreter names"
+      ]
+    },
+    {
+      "source_relative_path": "nv/artifacts/cudaq_check_v1.json",
+      "public_relative_path": "artifacts/cudaq_check_v1.json",
+      "source_sha256": "bbb5da6e596fe6603b475c32c6398d16dc18d61edcf171fe102d8dbf0ced5120",
+      "public_sha256": "bbb5da6e596fe6603b475c32c6398d16dc18d61edcf171fe102d8dbf0ced5120",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/artifacts/hls_reference_v1/nv_rom.h",
+      "public_relative_path": "artifacts/hls_reference_v1/nv_rom.h",
+      "source_sha256": "10c1d98928af8c97dae83555a5bc58ced17a663069c63bf11c8a5c0dc7c67855",
+      "public_sha256": "10c1d98928af8c97dae83555a5bc58ced17a663069c63bf11c8a5c0dc7c67855",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/artifacts/hls_reference_v1/nv_testbench.c",
+      "public_relative_path": "artifacts/hls_reference_v1/nv_testbench.c",
+      "source_sha256": "56444eee16ce08053763ceaa670ce58dcdffb4cbecbe6fae258ec4d04e213084",
+      "public_sha256": "56444eee16ce08053763ceaa670ce58dcdffb4cbecbe6fae258ec4d04e213084",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/artifacts/hls_reference_v1/nv_vectors.h",
+      "public_relative_path": "artifacts/hls_reference_v1/nv_vectors.h",
+      "source_sha256": "c02e10304d41d7ed21761bb08878858a9be92da45868aad73ecc61f8d0aa98a1",
+      "public_sha256": "c02e10304d41d7ed21761bb08878858a9be92da45868aad73ecc61f8d0aa98a1",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/artifacts/hls_reference_v1/receipt.json",
+      "public_relative_path": "artifacts/hls_reference_v1/receipt.json",
+      "source_sha256": "10e8c01c1ad92acf874ff374988813e52a25ae28dd047ebe9f6ecb58110d001b",
+      "public_sha256": "0528a14499b62c0d9e6b09ab12f59eafda78a9525252352d85cf2dcea6445f1a",
+      "byte_identical": false,
+      "transformations": [
+        "Normalize historical command metadata to paths relative to nv/ and portable compiler/interpreter names"
+      ]
+    },
+    {
+      "source_relative_path": "nv/artifacts/stress_frozen_v2/board_vectors/expected_indices_u16.bin",
+      "public_relative_path": "artifacts/stress_frozen_v2/board_vectors/expected_indices_u16.bin",
+      "source_sha256": "c06bbd37041d6459c8317af865fe46557d98b4d08d0c53a448d47c415563148a",
+      "public_sha256": "c06bbd37041d6459c8317af865fe46557d98b4d08d0c53a448d47c415563148a",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/artifacts/stress_frozen_v2/board_vectors/expected_scores_u64.bin",
+      "public_relative_path": "artifacts/stress_frozen_v2/board_vectors/expected_scores_u64.bin",
+      "source_sha256": "f5dbb1cd54bd475b25dbfa79317b3f226e33003febce8cd9be1550a9f2590e6b",
+      "public_sha256": "f5dbb1cd54bd475b25dbfa79317b3f226e33003febce8cd9be1550a9f2590e6b",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/artifacts/stress_frozen_v2/board_vectors/inputs_i16.bin",
+      "public_relative_path": "artifacts/stress_frozen_v2/board_vectors/inputs_i16.bin",
+      "source_sha256": "4a36b321605c52b164f3f60da56663ec4851f8d7eb6e2a198fe32f9df97066d4",
+      "public_sha256": "4a36b321605c52b164f3f60da56663ec4851f8d7eb6e2a198fe32f9df97066d4",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/artifacts/stress_frozen_v2/board_vectors/manifest.json",
+      "public_relative_path": "artifacts/stress_frozen_v2/board_vectors/manifest.json",
+      "source_sha256": "4739d4f7d769a63247cd29837e35ec3bd4454f99c03a26890ec4720d8d09e3c3",
+      "public_sha256": "c03d7f751b85c4bafdad08403128f4099ae9000efc1293be7e7fa08e6ac87cce",
+      "byte_identical": false,
+      "transformations": [
+        "Normalize historical command metadata to paths relative to nv/ and portable compiler/interpreter names"
+      ]
+    },
+    {
+      "source_relative_path": "nv/artifacts/stress_frozen_v2/frozen_config.json",
+      "public_relative_path": "artifacts/stress_frozen_v2/frozen_config.json",
+      "source_sha256": "f52c86de3221c25a11210e7fe8a78446d9a8430b32fb4d5d1d0495e92e6c32ec",
+      "public_sha256": "f52c86de3221c25a11210e7fe8a78446d9a8430b32fb4d5d1d0495e92e6c32ec",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/artifacts/stress_frozen_v2/metrics.json",
+      "public_relative_path": "artifacts/stress_frozen_v2/metrics.json",
+      "source_sha256": "14eba0d52f314789f89163a3ae9f569a4591734cede5e571934e674fc4cabe02",
+      "public_sha256": "14eba0d52f314789f89163a3ae9f569a4591734cede5e571934e674fc4cabe02",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/artifacts/stress_frozen_v2/validation.json",
+      "public_relative_path": "artifacts/stress_frozen_v2/validation.json",
+      "source_sha256": "887e0daed7fd8c6f644c8d0ea311e7c8625c9e828c24d857f3e7d108c0260618",
+      "public_sha256": "887e0daed7fd8c6f644c8d0ea311e7c8625c9e828c24d857f3e7d108c0260618",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/artifacts/stress_test_receipt_v2.json",
+      "public_relative_path": "artifacts/stress_test_receipt_v2.json",
+      "source_sha256": "762b14a0e7ea4136e4a808e150e0083968f4cd4b08352325f7317bd661f69468",
+      "public_sha256": "fa2c313f8ce8b659b00a136a3da277af900fffbd388576923b87bc03f152a334",
+      "byte_identical": false,
+      "transformations": [
+        "Normalize historical command metadata to paths relative to nv/ and portable compiler/interpreter names"
+      ]
+    },
+    {
+      "source_relative_path": "nv/check_cudaq.py",
+      "public_relative_path": "check_cudaq.py",
+      "source_sha256": "dd2eb65f4711bfd0587d4d2d237d04f78632831ca97b79fbc3247b383336f7af",
+      "public_sha256": "dd2eb65f4711bfd0587d4d2d237d04f78632831ca97b79fbc3247b383336f7af",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/config.json",
+      "public_relative_path": "config.json",
+      "source_sha256": "c0e7839882d2de032a0a0e25dd396f506fdb4d2d69214ad24d79227630607379",
+      "public_sha256": "c0e7839882d2de032a0a0e25dd396f506fdb4d2d69214ad24d79227630607379",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/export_hls_reference.py",
+      "public_relative_path": "export_hls_reference.py",
+      "source_sha256": "90218cb32f5a5c14dd2c0f2c584bd26a94c6e19a27926f94e10bf0d6bf9d1f03",
+      "public_sha256": "90218cb32f5a5c14dd2c0f2c584bd26a94c6e19a27926f94e10bf0d6bf9d1f03",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/hls/Makefile",
+      "public_relative_path": "hls/Makefile",
+      "source_sha256": "8132ccd6412d94065d3547885de8443e09cc52edfbab6b9b3f8b2b48678ff749",
+      "public_sha256": "8132ccd6412d94065d3547885de8443e09cc52edfbab6b9b3f8b2b48678ff749",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/hls/config.tcl",
+      "public_relative_path": "hls/config.tcl",
+      "source_sha256": "aaf9c956fffece97a0745df81fb2a692af0ee8107609177320baa70b502f6671",
+      "public_sha256": "aaf9c956fffece97a0745df81fb2a692af0ee8107609177320baa70b502f6671",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/hls/wrapper.cpp",
+      "public_relative_path": "hls/wrapper.cpp",
+      "source_sha256": "8b04a17d2725d69b91062a1a34201f98a95e4d43b9c787af04c8ad5cc0abb872",
+      "public_sha256": "8b04a17d2725d69b91062a1a34201f98a95e4d43b9c787af04c8ad5cc0abb872",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/nv_match.c",
+      "public_relative_path": "nv_match.c",
+      "source_sha256": "0519008afbff84880930baf8113c3c4c0fe155d8481a9b1eed74651502dfba99",
+      "public_sha256": "0519008afbff84880930baf8113c3c4c0fe155d8481a9b1eed74651502dfba99",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/nv_model.py",
+      "public_relative_path": "nv_model.py",
+      "source_sha256": "fab118bd8f4633ba74299dfee205b2e7c66d8afc968364ccf4cc1ddf55ab72ce",
+      "public_sha256": "fab118bd8f4633ba74299dfee205b2e7c66d8afc968364ccf4cc1ddf55ab72ce",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/nv_stress.py",
+      "public_relative_path": "nv_stress.py",
+      "source_sha256": "346113a7178fe862bca0f3a071a9a50ea1677cdbe8a04bf8c903f05de6c10675",
+      "public_sha256": "346113a7178fe862bca0f3a071a9a50ea1677cdbe8a04bf8c903f05de6c10675",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/run_pilot.py",
+      "public_relative_path": "run_pilot.py",
+      "source_sha256": "0117d2963a7406d5ab516b0bfcb8b1bb7af6d30542b41ab8e16565d376694a68",
+      "public_sha256": "0117d2963a7406d5ab516b0bfcb8b1bb7af6d30542b41ab8e16565d376694a68",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/run_stress_v2.py",
+      "public_relative_path": "run_stress_v2.py",
+      "source_sha256": "105ab98a81af43088408c8c54892f9c751e2fabeba9f69719d083bcfec172593",
+      "public_sha256": "105ab98a81af43088408c8c54892f9c751e2fabeba9f69719d083bcfec172593",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/stress_config_v2.json",
+      "public_relative_path": "stress_config_v2.json",
+      "source_sha256": "13ab4563fda673be381d0068f6098820853136f77074b26c714e8415381cfd6e",
+      "public_sha256": "13ab4563fda673be381d0068f6098820853136f77074b26c714e8415381cfd6e",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/test_nv.py",
+      "public_relative_path": "test_nv.py",
+      "source_sha256": "6192aa09cb71be677a999f7d4a794fe06a9a22d99ba832c7a9ba3def93f3e5ac",
+      "public_sha256": "6192aa09cb71be677a999f7d4a794fe06a9a22d99ba832c7a9ba3def93f3e5ac",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/test_stress_v2.py",
+      "public_relative_path": "test_stress_v2.py",
+      "source_sha256": "5ee99cd69989d90bb4ac298b86c0592ae3d5a3c07932103cb1e7fbfb22dc2a74",
+      "public_sha256": "5ee99cd69989d90bb4ac298b86c0592ae3d5a3c07932103cb1e7fbfb22dc2a74",
+      "byte_identical": true,
+      "transformations": []
+    },
+    {
+      "source_relative_path": "nv/verify_board_vectors_v2.py",
+      "public_relative_path": "verify_board_vectors_v2.py",
+      "source_sha256": "43f57e134b1cd016b51d0474795af07d40d4ef8556c85eb5ea69c027664c2978",
+      "public_sha256": "43f57e134b1cd016b51d0474795af07d40d4ef8556c85eb5ea69c027664c2978",
+      "byte_identical": true,
+      "transformations": []
+    }
+  ],
+  "omitted": [
+    "Python environments and caches",
+    "Compiled host executables and shared libraries",
+    "Generated Microchip HDL/IP and raw vendor logs",
+    "Internal execution failures, handoffs, and full workspace reports",
+    "Duplicate Linux execution artifacts",
+    "Raw v2 synthetic_stress_data.npz and final_predictions.npz; their historical hashes remain in frozen metrics. The generators can recreate them in a fresh output directory."
+  ],
+  "notes": [
+    "Core, ROM, every numerical binary, configurations, CUDA-Q check source and GPU receipt retain original bytes.",
+    "Altered JSON command strings are portable equivalents, not a claim that those literal commands ran originally.",
+    "SOURCE_MAP.json describes its own generated provenance and is not recursively hashed."
+  ],
+  "created_files": [
+    {
+      "public_relative_path": "README.md",
+      "public_sha256": "5dd5c230ebdd9cedd61e0688a4c695faab6559345bd91482f015210d7b93419c",
+      "origin": "Authored for public curation; no prior source bytes"
+    },
+    {
+      "public_relative_path": "requirements.txt",
+      "public_sha256": "15374b6b9793ecfd27cb81d62ed5ea14420e42bc105ea4238559a10452312165",
+      "origin": "Authored for public curation; no prior source bytes"
+    }
+  ]
+}

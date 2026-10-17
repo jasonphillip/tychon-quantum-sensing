@@ -1,0 +1,29 @@
+{
+  "compile_command": [
+    "c++",
+    "-std=c++11",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-I",
+    "<readout>/artifacts/cpu_v2",
+    "<readout>/fixed_readout128.cpp",
+    "<readout>/boxcar_readout64.cpp",
+    "<readout>/host_testbench.cpp",
+    "-o",
+    "<readout>/artifacts/cpu_v2/host_testbench"
+  ],
+  "command": [
+    "<readout>/artifacts/cpu_v2/host_testbench"
+  ],
+  "exit_code": 0,
+  "stdout": "2884/2884 fixed-input vectors bit-exact; generic and boxcar cores; host only\n",
+  "stderr": "",
+  "compiler_stderr": "",
+  "vectors": 2884,
+  "generic_multiplies": 128,
+  "boxcar_multiplies": 2,
+  "boxcar_coefficient_storage_bytes": 12,
+  "evidence": "host execution only"
+}

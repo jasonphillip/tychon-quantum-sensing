@@ -1,0 +1,17 @@
+{
+  "utc": "2026-10-17T15:22:40.418474+00:00",
+  "argv": [
+    "<readout>/readout_pilot.py",
+    "gpu",
+    "--config",
+    "<readout>/config_v2.json",
+    "--output",
+    "<readout>/artifacts/gpu_v2_retry"
+  ],
+  "mode": "gpu",
+  "sha256": {
+    "config_v2.json": "449a801b0f3284cd5e33536279ceee30815509e91fd96c00bb8f684530f4485b",
+    "readout_pilot.py": "52ba914e29dd3bd193892008f67f10c4cd6ab39636ce063493c5ef8e0caa125c",
+    "fixed_readout.c": "fd1f675754e77816dfae89ccb6621cacd52188ea51b20713195d2e74db613aac"
+  }
+}

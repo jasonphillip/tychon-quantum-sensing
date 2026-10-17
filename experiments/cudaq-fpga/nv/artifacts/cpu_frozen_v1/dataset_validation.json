@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "counts_shape": [
+    384,
+    4,
+    64
+  ],
+  "feature_shape": [
+    384,
+    128
+  ],
+  "group_split_disjoint": true,
+  "physical_probabilities": true,
+  "counts_min": 2281,
+  "counts_max": 5369,
+  "feature_min": -1.072857142857143,
+  "feature_max": 1.0571428571428574
+}

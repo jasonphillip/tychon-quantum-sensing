@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "<readout>/stress_v2/run_stress.py",
+    "--output",
+    "<readout>/stress_v2/artifacts/frozen_v2"
+  ],
+  "utc": "2026-10-17T15:49:29.968966+00:00",
+  "sha256": {
+    "<readout>/stress_v2/config.json": "496292e4db647c2195941d987bcfb35afc538fe387023e47681da244fb165ede",
+    "<readout>/stress_v2/run_stress.py": "956679d35a4715aa3051e3285f74b12ec21e7c382607412e4457bc1eefd41b9e",
+    "<readout>/stress_v2/replay_reference.cpp": "5e7db657838969150d9fa66ac04efd70b8d022a2fd3e0fee896e71bec1289587",
+    "<readout>/boxcar_readout64.cpp": "b657467dfe0051d7945851f1bdb4db408b56921f34de55f78e322ae84a003af7",
+    "<readout>/artifacts/cpu_v2/model.json": "d6be7723f2475c1801dda4163e88f6a3cc25ab20629eaced03a1949ef62364a8"
+  }
+}

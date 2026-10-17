@@ -1,0 +1,749 @@
+{
+  "status": "completed",
+  "schema": "d3_repeated_phenomenological_v1",
+  "final_streams_consumed": true,
+  "config_sha256": "6d12759f1ba119d1829cc23341b9168d1cb0560616e04ff110d3fb0fe14783f2",
+  "total_trials": 240000,
+  "cells": [
+    {
+      "cell_id": "r3_p0_q0.02",
+      "noisy_rounds": 3,
+      "data_depolarizing_probability": 0.0,
+      "measurement_flip_probability": 0.02,
+      "initial_syndrome": 0,
+      "terminal_measurement": "perfect, no added data noise; offline methods only",
+      "matching_data_marginal": 0.0,
+      "matching_ignores_Y_sector_correlation": true,
+      "last_noisy": {
+        "trials": 20000,
+        "failure_count": 3015,
+        "failure_rate": 0.15075,
+        "failure_rate_wilson_95": [
+          0.14585825762033255,
+          0.1557758795648565
+        ],
+        "residual_syndrome_count": 3015,
+        "codespace_logical_failure_count": 0
+      },
+      "majority_noisy": {
+        "trials": 20000,
+        "failure_count": 191,
+        "failure_rate": 0.00955,
+        "failure_rate_wilson_95": [
+          0.008293147145280776,
+          0.01099522102215225
+        ],
+        "residual_syndrome_count": 191,
+        "codespace_logical_failure_count": 0
+      },
+      "final_perfect": {
+        "trials": 20000,
+        "failure_count": 0,
+        "failure_rate": 0.0,
+        "failure_rate_wilson_95": [
+          0.0,
+          0.00019203605610462553
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 0
+      },
+      "spacetime_pymatching": {
+        "trials": 20000,
+        "failure_count": 0,
+        "failure_rate": 0.0,
+        "failure_rate_wilson_95": [
+          0.0,
+          0.00019203605610462553
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 0
+      },
+      "paired_offline_comparison": {
+        "matching_only_failures": 0,
+        "static_only_failures": 0
+      }
+    },
+    {
+      "cell_id": "r3_p0.001_q0.005",
+      "noisy_rounds": 3,
+      "data_depolarizing_probability": 0.001,
+      "measurement_flip_probability": 0.005,
+      "initial_syndrome": 0,
+      "terminal_measurement": "perfect, no added data noise; offline methods only",
+      "matching_data_marginal": 0.0006666666666666666,
+      "matching_ignores_Y_sector_correlation": true,
+      "last_noisy": {
+        "trials": 20000,
+        "failure_count": 776,
+        "failure_rate": 0.0388,
+        "failure_rate_wilson_95": [
+          0.0362109292015871,
+          0.041566204856563815
+        ],
+        "residual_syndrome_count": 773,
+        "codespace_logical_failure_count": 3
+      },
+      "majority_noisy": {
+        "trials": 20000,
+        "failure_count": 186,
+        "failure_rate": 0.0093,
+        "failure_rate_wilson_95": [
+          0.008060738256756444,
+          0.010727725928704634
+        ],
+        "residual_syndrome_count": 184,
+        "codespace_logical_failure_count": 2
+      },
+      "final_perfect": {
+        "trials": 20000,
+        "failure_count": 3,
+        "failure_rate": 0.00015,
+        "failure_rate_wilson_95": [
+          5.101481799495055e-05,
+          0.0004409636272928435
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 3
+      },
+      "spacetime_pymatching": {
+        "trials": 20000,
+        "failure_count": 1,
+        "failure_rate": 5e-05,
+        "failure_rate_wilson_95": [
+          8.826282272974824e-06,
+          0.0002831905702260402
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 1
+      },
+      "paired_offline_comparison": {
+        "matching_only_failures": 0,
+        "static_only_failures": 2
+      }
+    },
+    {
+      "cell_id": "r3_p0.01_q0.01",
+      "noisy_rounds": 3,
+      "data_depolarizing_probability": 0.01,
+      "measurement_flip_probability": 0.01,
+      "initial_syndrome": 0,
+      "terminal_measurement": "perfect, no added data noise; offline methods only",
+      "matching_data_marginal": 0.006666666666666667,
+      "matching_ignores_Y_sector_correlation": true,
+      "last_noisy": {
+        "trials": 20000,
+        "failure_count": 1798,
+        "failure_rate": 0.0899,
+        "failure_rate_wilson_95": [
+          0.08601413467217055,
+          0.09394337330104645
+        ],
+        "residual_syndrome_count": 1609,
+        "codespace_logical_failure_count": 189
+      },
+      "majority_noisy": {
+        "trials": 20000,
+        "failure_count": 1932,
+        "failure_rate": 0.0966,
+        "failure_rate_wilson_95": [
+          0.09258299689947441,
+          0.10077193779059082
+        ],
+        "residual_syndrome_count": 1833,
+        "codespace_logical_failure_count": 99
+      },
+      "final_perfect": {
+        "trials": 20000,
+        "failure_count": 211,
+        "failure_rate": 0.01055,
+        "failure_rate_wilson_95": [
+          0.00922503440072636,
+          0.012062949694594456
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 211
+      },
+      "spacetime_pymatching": {
+        "trials": 20000,
+        "failure_count": 209,
+        "failure_rate": 0.01045,
+        "failure_rate_wilson_95": [
+          0.009131692560516238,
+          0.0119563299420158
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 209
+      },
+      "paired_offline_comparison": {
+        "matching_only_failures": 62,
+        "static_only_failures": 64
+      }
+    },
+    {
+      "cell_id": "r3_p0.03_q0.03",
+      "noisy_rounds": 3,
+      "data_depolarizing_probability": 0.03,
+      "measurement_flip_probability": 0.03,
+      "initial_syndrome": 0,
+      "terminal_measurement": "perfect, no added data noise; offline methods only",
+      "matching_data_marginal": 0.02,
+      "matching_ignores_Y_sector_correlation": true,
+      "last_noisy": {
+        "trials": 20000,
+        "failure_count": 5498,
+        "failure_rate": 0.2749,
+        "failure_rate_wilson_95": [
+          0.2687561105609187,
+          0.28113034407153953
+        ],
+        "residual_syndrome_count": 4246,
+        "codespace_logical_failure_count": 1252
+      },
+      "majority_noisy": {
+        "trials": 20000,
+        "failure_count": 5765,
+        "failure_rate": 0.28825,
+        "failure_rate_wilson_95": [
+          0.28201371032364025,
+          0.29456761694612005
+        ],
+        "residual_syndrome_count": 5149,
+        "codespace_logical_failure_count": 616
+      },
+      "final_perfect": {
+        "trials": 20000,
+        "failure_count": 1587,
+        "failure_rate": 0.07935,
+        "failure_rate_wilson_95": [
+          0.07568438886215002,
+          0.08317717107185081
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 1587
+      },
+      "spacetime_pymatching": {
+        "trials": 20000,
+        "failure_count": 1536,
+        "failure_rate": 0.0768,
+        "failure_rate_wilson_95": [
+          0.0731904297655396,
+          0.08057210955234734
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 1536
+      },
+      "paired_offline_comparison": {
+        "matching_only_failures": 383,
+        "static_only_failures": 434
+      }
+    },
+    {
+      "cell_id": "r5_p0_q0.02",
+      "noisy_rounds": 5,
+      "data_depolarizing_probability": 0.0,
+      "measurement_flip_probability": 0.02,
+      "initial_syndrome": 0,
+      "terminal_measurement": "perfect, no added data noise; offline methods only",
+      "matching_data_marginal": 0.0,
+      "matching_ignores_Y_sector_correlation": true,
+      "last_noisy": {
+        "trials": 20000,
+        "failure_count": 3022,
+        "failure_rate": 0.1511,
+        "failure_rate_wilson_95": [
+          0.1462034621449299,
+          0.1561305406150199
+        ],
+        "residual_syndrome_count": 3022,
+        "codespace_logical_failure_count": 0
+      },
+      "majority_noisy": {
+        "trials": 20000,
+        "failure_count": 14,
+        "failure_rate": 0.0007,
+        "failure_rate_wilson_95": [
+          0.00041703692288281327,
+          0.0011747302827432658
+        ],
+        "residual_syndrome_count": 14,
+        "codespace_logical_failure_count": 0
+      },
+      "final_perfect": {
+        "trials": 20000,
+        "failure_count": 0,
+        "failure_rate": 0.0,
+        "failure_rate_wilson_95": [
+          0.0,
+          0.00019203605610462553
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 0
+      },
+      "spacetime_pymatching": {
+        "trials": 20000,
+        "failure_count": 0,
+        "failure_rate": 0.0,
+        "failure_rate_wilson_95": [
+          0.0,
+          0.00019203605610462553
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 0
+      },
+      "paired_offline_comparison": {
+        "matching_only_failures": 0,
+        "static_only_failures": 0
+      }
+    },
+    {
+      "cell_id": "r5_p0.001_q0.005",
+      "noisy_rounds": 5,
+      "data_depolarizing_probability": 0.001,
+      "measurement_flip_probability": 0.005,
+      "initial_syndrome": 0,
+      "terminal_measurement": "perfect, no added data noise; offline methods only",
+      "matching_data_marginal": 0.0006666666666666666,
+      "matching_ignores_Y_sector_correlation": true,
+      "last_noisy": {
+        "trials": 20000,
+        "failure_count": 835,
+        "failure_rate": 0.04175,
+        "failure_rate_wilson_95": [
+          0.03906482209600865,
+          0.04461117894941124
+        ],
+        "residual_syndrome_count": 833,
+        "codespace_logical_failure_count": 2
+      },
+      "majority_noisy": {
+        "trials": 20000,
+        "failure_count": 380,
+        "failure_rate": 0.019,
+        "failure_rate_wilson_95": [
+          0.017198196134101285,
+          0.020986542551871358
+        ],
+        "residual_syndrome_count": 378,
+        "codespace_logical_failure_count": 2
+      },
+      "final_perfect": {
+        "trials": 20000,
+        "failure_count": 2,
+        "failure_rate": 0.0001,
+        "failure_rate_wilson_95": [
+          2.7424035272726838e-05,
+          0.0003645736136206778
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 2
+      },
+      "spacetime_pymatching": {
+        "trials": 20000,
+        "failure_count": 2,
+        "failure_rate": 0.0001,
+        "failure_rate_wilson_95": [
+          2.7424035272726838e-05,
+          0.0003645736136206778
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 2
+      },
+      "paired_offline_comparison": {
+        "matching_only_failures": 1,
+        "static_only_failures": 1
+      }
+    },
+    {
+      "cell_id": "r5_p0.01_q0.01",
+      "noisy_rounds": 5,
+      "data_depolarizing_probability": 0.01,
+      "measurement_flip_probability": 0.01,
+      "initial_syndrome": 0,
+      "terminal_measurement": "perfect, no added data noise; offline methods only",
+      "matching_data_marginal": 0.006666666666666667,
+      "matching_ignores_Y_sector_correlation": true,
+      "last_noisy": {
+        "trials": 20000,
+        "failure_count": 2130,
+        "failure_rate": 0.1065,
+        "failure_rate_wilson_95": [
+          0.10230012126777116,
+          0.11085101110838316
+        ],
+        "residual_syndrome_count": 1630,
+        "codespace_logical_failure_count": 500
+      },
+      "majority_noisy": {
+        "trials": 20000,
+        "failure_count": 3519,
+        "failure_rate": 0.17595,
+        "failure_rate_wilson_95": [
+          0.17073515745994855,
+          0.18128930110801283
+        ],
+        "residual_syndrome_count": 3315,
+        "codespace_logical_failure_count": 204
+      },
+      "final_perfect": {
+        "trials": 20000,
+        "failure_count": 540,
+        "failure_rate": 0.027,
+        "failure_rate_wilson_95": [
+          0.024842894026511762,
+          0.029338772082563205
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 540
+      },
+      "spacetime_pymatching": {
+        "trials": 20000,
+        "failure_count": 373,
+        "failure_rate": 0.01865,
+        "failure_rate_wilson_95": [
+          0.016865411648461913,
+          0.020619461462750004
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 373
+      },
+      "paired_offline_comparison": {
+        "matching_only_failures": 112,
+        "static_only_failures": 279
+      }
+    },
+    {
+      "cell_id": "r5_p0.03_q0.03",
+      "noisy_rounds": 5,
+      "data_depolarizing_probability": 0.03,
+      "measurement_flip_probability": 0.03,
+      "initial_syndrome": 0,
+      "terminal_measurement": "perfect, no added data noise; offline methods only",
+      "matching_data_marginal": 0.02,
+      "matching_ignores_Y_sector_correlation": true,
+      "last_noisy": {
+        "trials": 20000,
+        "failure_count": 7073,
+        "failure_rate": 0.35365,
+        "failure_rate_wilson_95": [
+          0.3470526449677281,
+          0.36030356398589375
+        ],
+        "residual_syndrome_count": 4299,
+        "codespace_logical_failure_count": 2774
+      },
+      "majority_noisy": {
+        "trials": 20000,
+        "failure_count": 9266,
+        "failure_rate": 0.4633,
+        "failure_rate_wilson_95": [
+          0.45639688041320403,
+          0.47021721503331404
+        ],
+        "residual_syndrome_count": 8250,
+        "codespace_logical_failure_count": 1016
+      },
+      "final_perfect": {
+        "trials": 20000,
+        "failure_count": 3441,
+        "failure_rate": 0.17205,
+        "failure_rate_wilson_95": [
+          0.16688236912760898,
+          0.17734358732159003
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 3441
+      },
+      "spacetime_pymatching": {
+        "trials": 20000,
+        "failure_count": 2548,
+        "failure_rate": 0.1274,
+        "failure_rate_wilson_95": [
+          0.12285055466985959,
+          0.13209255059914957
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 2548
+      },
+      "paired_offline_comparison": {
+        "matching_only_failures": 646,
+        "static_only_failures": 1539
+      }
+    },
+    {
+      "cell_id": "r9_p0_q0.02",
+      "noisy_rounds": 9,
+      "data_depolarizing_probability": 0.0,
+      "measurement_flip_probability": 0.02,
+      "initial_syndrome": 0,
+      "terminal_measurement": "perfect, no added data noise; offline methods only",
+      "matching_data_marginal": 0.0,
+      "matching_ignores_Y_sector_correlation": true,
+      "last_noisy": {
+        "trials": 20000,
+        "failure_count": 2926,
+        "failure_rate": 0.1463,
+        "failure_rate_wilson_95": [
+          0.14147004520957315,
+          0.15126580109651525
+        ],
+        "residual_syndrome_count": 2926,
+        "codespace_logical_failure_count": 0
+      },
+      "majority_noisy": {
+        "trials": 20000,
+        "failure_count": 0,
+        "failure_rate": 0.0,
+        "failure_rate_wilson_95": [
+          0.0,
+          0.00019203605610462553
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 0
+      },
+      "final_perfect": {
+        "trials": 20000,
+        "failure_count": 0,
+        "failure_rate": 0.0,
+        "failure_rate_wilson_95": [
+          0.0,
+          0.00019203605610462553
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 0
+      },
+      "spacetime_pymatching": {
+        "trials": 20000,
+        "failure_count": 0,
+        "failure_rate": 0.0,
+        "failure_rate_wilson_95": [
+          0.0,
+          0.00019203605610462553
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 0
+      },
+      "paired_offline_comparison": {
+        "matching_only_failures": 0,
+        "static_only_failures": 0
+      }
+    },
+    {
+      "cell_id": "r9_p0.001_q0.005",
+      "noisy_rounds": 9,
+      "data_depolarizing_probability": 0.001,
+      "measurement_flip_probability": 0.005,
+      "initial_syndrome": 0,
+      "terminal_measurement": "perfect, no added data noise; offline methods only",
+      "matching_data_marginal": 0.0006666666666666666,
+      "matching_ignores_Y_sector_correlation": true,
+      "last_noisy": {
+        "trials": 20000,
+        "failure_count": 816,
+        "failure_rate": 0.0408,
+        "failure_rate_wilson_95": [
+          0.03814534201689153,
+          0.043631023897034965
+        ],
+        "residual_syndrome_count": 801,
+        "codespace_logical_failure_count": 15
+      },
+      "majority_noisy": {
+        "trials": 20000,
+        "failure_count": 704,
+        "failure_rate": 0.0352,
+        "failure_rate_wilson_95": [
+          0.03273393139847561,
+          0.037844585319279256
+        ],
+        "residual_syndrome_count": 697,
+        "codespace_logical_failure_count": 7
+      },
+      "final_perfect": {
+        "trials": 20000,
+        "failure_count": 16,
+        "failure_rate": 0.0008,
+        "failure_rate_wilson_95": [
+          0.0004925085701393533,
+          0.0012992202282755049
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 16
+      },
+      "spacetime_pymatching": {
+        "trials": 20000,
+        "failure_count": 11,
+        "failure_rate": 0.00055,
+        "failure_rate_wilson_95": [
+          0.00030714858193327043,
+          0.00098467623450964
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 11
+      },
+      "paired_offline_comparison": {
+        "matching_only_failures": 2,
+        "static_only_failures": 7
+      }
+    },
+    {
+      "cell_id": "r9_p0.01_q0.01",
+      "noisy_rounds": 9,
+      "data_depolarizing_probability": 0.01,
+      "measurement_flip_probability": 0.01,
+      "initial_syndrome": 0,
+      "terminal_measurement": "perfect, no added data noise; offline methods only",
+      "matching_data_marginal": 0.006666666666666667,
+      "matching_ignores_Y_sector_correlation": true,
+      "last_noisy": {
+        "trials": 20000,
+        "failure_count": 3003,
+        "failure_rate": 0.15015,
+        "failure_rate_wilson_95": [
+          0.1452664999944601,
+          0.1551678676339963
+        ],
+        "residual_syndrome_count": 1523,
+        "codespace_logical_failure_count": 1480
+      },
+      "majority_noisy": {
+        "trials": 20000,
+        "failure_count": 6421,
+        "failure_rate": 0.32105,
+        "failure_rate_wilson_95": [
+          0.31461438767601346,
+          0.32755434202846645
+        ],
+        "residual_syndrome_count": 5975,
+        "codespace_logical_failure_count": 446
+      },
+      "final_perfect": {
+        "trials": 20000,
+        "failure_count": 1591,
+        "failure_rate": 0.07955,
+        "failure_rate_wilson_95": [
+          0.07588004237000219,
+          0.08338144074957617
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 1591
+      },
+      "spacetime_pymatching": {
+        "trials": 20000,
+        "failure_count": 738,
+        "failure_rate": 0.0369,
+        "failure_rate_wilson_95": [
+          0.034375015078263654,
+          0.03960284871690045
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 738
+      },
+      "paired_offline_comparison": {
+        "matching_only_failures": 194,
+        "static_only_failures": 1047
+      }
+    },
+    {
+      "cell_id": "r9_p0.03_q0.03",
+      "noisy_rounds": 9,
+      "data_depolarizing_probability": 0.03,
+      "measurement_flip_probability": 0.03,
+      "initial_syndrome": 0,
+      "terminal_measurement": "perfect, no added data noise; offline methods only",
+      "matching_data_marginal": 0.02,
+      "matching_ignores_Y_sector_correlation": true,
+      "last_noisy": {
+        "trials": 20000,
+        "failure_count": 9973,
+        "failure_rate": 0.49865,
+        "failure_rate_wilson_95": [
+          0.4917214307685029,
+          0.5055790877288485
+        ],
+        "residual_syndrome_count": 4322,
+        "codespace_logical_failure_count": 5651
+      },
+      "majority_noisy": {
+        "trials": 20000,
+        "failure_count": 14070,
+        "failure_rate": 0.7035,
+        "failure_rate_wilson_95": [
+          0.6971317899121281,
+          0.7097900514130373
+        ],
+        "residual_syndrome_count": 12568,
+        "codespace_logical_failure_count": 1502
+      },
+      "final_perfect": {
+        "trials": 20000,
+        "failure_count": 7239,
+        "failure_rate": 0.36195,
+        "failure_rate_wilson_95": [
+          0.35531693614619025,
+          0.36863608500890027
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 7239
+      },
+      "spacetime_pymatching": {
+        "trials": 20000,
+        "failure_count": 4562,
+        "failure_rate": 0.2281,
+        "failure_rate_wilson_95": [
+          0.22233718324886073,
+          0.2339672459584489
+        ],
+        "residual_syndrome_count": 0,
+        "codespace_logical_failure_count": 4562
+      },
+      "paired_offline_comparison": {
+        "matching_only_failures": 1196,
+        "static_only_failures": 3873
+      }
+    }
+  ],
+  "board_vectors": 4864,
+  "compiled_reference_exact": true,
+  "matching_terminal_consistency": true,
+  "wall_seconds": 0.9279892920749262,
+  "versions": {
+    "numpy": "2.2.6",
+    "scipy": "1.17.1",
+    "stim": "1.15.0",
+    "pymatching": "2.3.1"
+  },
+  "python": "3.11.17 (main, Oct  1 2026, 00:48:48) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "source_sha256": {
+    "noisy_model.py": "bf5006b372f8a86b7379a2c87aece75eb0514f268ab45a3c54bd756964f969ea",
+    "run_noisy.py": "fbbd9006d2423e2e13d66e788052142c25efdd2fad97d68809125275b8ecb8ec",
+    "test_noisy.py": "cf9ef1c1f252c53155aa41fe9cc257992b950c1767e16a1b1da3f81f310cde98",
+    "qec_model.py": "10b4aec002ba41aa0bd57be086dd50285320881448f5101bdca781856e84224c",
+    "qec_decoder.cpp": "41c9ec5853491830082aaaf47e5a3336d2e19a793644ec0fa4a884f04ea93a7c"
+  },
+  "artifact_sha256": {
+    "frozen_config.json": "5d2a4c97fd027b917a264f37f534033914777ff4c3d13432305dd0195104410f",
+    "r9_p0.001_q0.005.npz": "055c40a08a70f613d28c319e104e63069af754e91bad9ff478502cee5bf1ef3b",
+    "r3_p0.03_q0.03.npz": "9cbbbbc2331f3ff368d9a2c5ff839d1b2fff9ef92b58bdbc8d161e52de890089",
+    "r9_p0.01_q0.01.npz": "a17a5ffbd748ca15dbc4acb0501e54d74d3bda1bbccd9fea561745fd8f14467f",
+    "reference_wrapper.cpp": "1545cd91625b575e3424f6c553eb8e07ae01b507d6abff56cb39d51f18ab10c2",
+    "r5_p0.03_q0.03.npz": "3c6568a755f32ea9f12292b3ad217d854a7c573d32f0ae5165e670ca392a2f79",
+    "r3_p0.001_q0.005.npz": "6caef2b7544e30139863d13ec71b92549c8baf81df92c3e5b7d3e3821541a89b",
+    "r5_p0_q0.02.npz": "e20ee6d10c1609de34dd112184fcc49dd91fdb4df5c0b79e77a85a2eef477d16",
+    "r3_p0_q0.02.npz": "b5b3097bcf689d448ad2dccd8206ed2be3eff4c1676e6fe2e9b41317602b2209",
+    "r3_p0.01_q0.01.npz": "5cb1ec0638d4d2be6b5fc201cbfd7ea3fefa3094842609fd01c59b161a19d40e",
+    "r9_p0.03_q0.03.npz": "8aa01ac3a4cee7a140676adc1b79394ac93ea149ea0032f795bb85cc011378c9",
+    "r9_p0_q0.02.npz": "0e9ab3ee85e2ef66e8d54e2ca1e511e5431a6f686185d035eba01d682acd82b2",
+    "r5_p0.01_q0.01.npz": "3747747c9fd58805b6acfa2964d401a3997ab85999d0371f0f15c56476ab2eac",
+    "r5_p0.001_q0.005.npz": "c10f7e7f71effb2d0f4f98bec7e07bb9ee11493343b87af8daed4231b027a00f",
+    "compile.json": "3bbecce55b6fefd31d3cd59b8e85d1dd33e994eb91e2fe7d3e0187586c2326e3"
+  },
+  "limits": [
+    "Phenomenological, not gate-level circuit noise",
+    "Online methods lack perfect terminal information",
+    "Separate-sector MWPM ignores Y correlation",
+    "Static LUT remains a one-round core",
+    "History compression runs on host",
+    "No threshold, novel decoder, GPU or quantum-hardware result"
+  ]
+}

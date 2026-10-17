@@ -35,3 +35,12 @@ Every result with its limits, and the timeline: [case study](../docs/case-study.
 - [Measured-data feasibility](../workers/odmr-edge-ml/docs/measured_data_feasibility_2026-10.md). Initial field-label eligibility assessment; later measured pilots evaluated different targets.
 - [Training-target diagnosis](../workers/odmr-edge-ml/docs/training_target_diagnosis_2026-10.json). Recorded diagnosis of clipped training targets.
 - [Claims requiring scrutiny](../orchestrator/INVENTORY.md#6-weakest-claims--what-would-not-survive-a-sharp-reviewer). Historical inventory; read its correction note and the later reports above.
+
+## Later CUDA-Q and FPGA experiments
+
+These experiments extend beyond the original proposal scope.
+[Readout, coupled-spin NV estimation, and a small QEC lookup](../experiments/cudaq-fpga/README.md) ran in FPGA fabric.
+The saved record contains 171,650 exact calls over 17,165 frozen synthetic records across two boots.
+CUDA-Q checked representative calculations; CPUs generated the complete datasets.
+[Offline verification](../experiments/cudaq-fpga/README.md#verify-saved-evidence) checks the published receipts without hardware.
+Each track retains its failed comparisons and limits. No live quantum system or radiation test was involved.

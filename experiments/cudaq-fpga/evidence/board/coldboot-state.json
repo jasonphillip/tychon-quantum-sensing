@@ -1,0 +1,10 @@
+{
+  "recorded_utc": "2026-10-17 17:33:49 UTC",
+  "prior_boot_id": "b5b5c213-1f02-49b1-9a4b-29f0b52e52db",
+  "sequence": "Linux sync/poweroff, Kasa tree off, Kasa tree on, normal Linux boot; no reprogramming between boot IDs",
+  "chunk_id": "73319b",
+  "wall_time_seconds": 0.000011875,
+  "exit_code": 0,
+  "original_token_count": 62,
+  "output": "mpfs-icicle-kit\nLinux mpfs-icicle-kit 6.18.17-linux4microchip-2026.04.1-g7fbe4f69684d #1 SMP Wed Apr 29 16:43:56 UTC 2026 riscv64 GNU/Linux\n0a33ca92-8c42-4db5-8815-00f93df307d3\n20.20 50.20\nvbx_only\nfpga_lsram\ndma-controller@60010000\nvbx@60030000\n"
+}

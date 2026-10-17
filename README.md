@@ -26,6 +26,14 @@ The project connects five workstreams: physics simulation, edge ML, FPGA control
 
 The [full results index](docs/results-index.md) retains scalar repairs, failed stress tests, measurement-design comparisons, controller measurements, and stopped candidates. Each report records its own data, comparator, acceptance rule, and limits. The [engineering decisions](docs/engineering-decisions.md) explain withdrawn claims and corrections. Negative results remain part of the record.
 
+## Beyond the proposal: CUDA-Q and FPGA experiments
+
+Three additional demonstrations ran in FPGA fabric: qubit readout, coupled-spin NV estimation, and a small surface-code lookup.
+Across two cold boots, **171,650 replay calls** matched references for **17,165 frozen synthetic records**.
+CUDA-Q checked representative quantum calculations; the full datasets were CPU-generated.
+The [separate experiment area](experiments/cudaq-fpga/README.md) includes source, per-call evidence, failures, and checks that run without hardware.
+These demonstrations extend beyond the original proposal and establish no live quantum-system or radiation validation.
+
 ## Three workstreams, one coordinator
 
 Coding agents wrote most of the code from my specifications. I set the direction, relayed work between sessions, and reviewed results. The [human steering record](planning/excerpts/human-steering.md) preserves concrete interventions; [what the models could not do](planning/excerpts/what-the-models-could-not-do.md) records their limits.

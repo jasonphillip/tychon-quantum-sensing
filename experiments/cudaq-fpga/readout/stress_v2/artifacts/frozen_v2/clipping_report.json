@@ -1,0 +1,17 @@
+{
+  "total_clipped_values": 1,
+  "final_clipped_values": 1,
+  "cases": [
+    {
+      "group": 183,
+      "scenario": "short_t1",
+      "partition": "final",
+      "shot": 22,
+      "mode": "calibrated",
+      "feature": 86,
+      "float_value": -16.60028362022182,
+      "quantized_before_saturation": -33997,
+      "quantized_after_saturation": -32768
+    }
+  ]
+}

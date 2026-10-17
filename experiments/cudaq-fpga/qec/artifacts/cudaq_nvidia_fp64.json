@@ -1,0 +1,439 @@
+{
+  "status": "PASS",
+  "target_requested": "nvidia",
+  "precision_requested": "fp64",
+  "target_reported": "Target nvidia\n\tsimulator=custatevec_fp64\n\tplatform=default\n\tdescription=The NVIDIA Target provides a simulated QPU via cuStateVec (state-vector simulation) integration.\n\tprecision=fp64\nSupported Arguments:\n  - option (Specify the target options as a comma-separated list.\nSupported options are 'fp32', 'fp64', 'mgpu', 'mqpu'.\nFor example, the 'fp32,mgpu' option combination will activate multi-GPU distribution with single-precision. Not all option combinations are supported.)\n",
+  "cudaq_version": "CUDA-Q Version 0.16.0 (https://github.com/NVIDIA/cuda-quantum 62fce8b862302158e0119c65e3ce57538f3af048)",
+  "cudaq_distributions": {
+    "cuda-quantum-cu13": "0.16.0.post1"
+  },
+  "available_gpus": 1,
+  "python_version": "3.13.11 | packaged by Anaconda, Inc. | (main, Dec 10 2025, 21:29:12) [GCC 14.3.0]",
+  "platform": "Linux-7.0.0-1019-nvidia-aarch64-with-glibc2.39",
+  "config_sha256": "a9c4eccc66e90ccb5fb08fee22688362050b5f71c77bc71ebec369c6549b9188",
+  "wall_seconds": 5.851095568999881,
+  "syndrome_cases": 60,
+  "logical_basis_cases": 8,
+  "max_absolute_error": 1.7053025658242404e-13,
+  "results": [
+    {
+      "pauli_word": 0,
+      "expected_syndrome": 0,
+      "observed_syndrome_expectation": -7.105427357601002e-15,
+      "absolute_error": 7.105427357601002e-15
+    },
+    {
+      "pauli_word": 1,
+      "expected_syndrome": 1,
+      "observed_syndrome_expectation": 0.9999999999999858,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 512,
+      "expected_syndrome": 16,
+      "observed_syndrome_expectation": 15.999999999999986,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 513,
+      "expected_syndrome": 17,
+      "observed_syndrome_expectation": 16.999999999999986,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 2,
+      "expected_syndrome": 1,
+      "observed_syndrome_expectation": 0.9999999999999858,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 1024,
+      "expected_syndrome": 48,
+      "observed_syndrome_expectation": 47.999999999999986,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 1026,
+      "expected_syndrome": 49,
+      "observed_syndrome_expectation": 48.999999999999986,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 4,
+      "expected_syndrome": 2,
+      "observed_syndrome_expectation": 1.9999999999999858,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 2048,
+      "expected_syndrome": 32,
+      "observed_syndrome_expectation": 31.999999999999957,
+      "absolute_error": 4.263256414560601e-14
+    },
+    {
+      "pauli_word": 2052,
+      "expected_syndrome": 34,
+      "observed_syndrome_expectation": 33.999999999999986,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 8,
+      "expected_syndrome": 5,
+      "observed_syndrome_expectation": 4.999999999999986,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 4096,
+      "expected_syndrome": 64,
+      "observed_syndrome_expectation": 63.99999999999996,
+      "absolute_error": 4.263256414560601e-14
+    },
+    {
+      "pauli_word": 4104,
+      "expected_syndrome": 69,
+      "observed_syndrome_expectation": 68.99999999999996,
+      "absolute_error": 4.263256414560601e-14
+    },
+    {
+      "pauli_word": 16,
+      "expected_syndrome": 9,
+      "observed_syndrome_expectation": 8.999999999999986,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 8192,
+      "expected_syndrome": 96,
+      "observed_syndrome_expectation": 95.99999999999993,
+      "absolute_error": 7.105427357601002e-14
+    },
+    {
+      "pauli_word": 8208,
+      "expected_syndrome": 105,
+      "observed_syndrome_expectation": 104.99999999999993,
+      "absolute_error": 7.105427357601002e-14
+    },
+    {
+      "pauli_word": 32,
+      "expected_syndrome": 10,
+      "observed_syndrome_expectation": 9.999999999999986,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 16384,
+      "expected_syndrome": 32,
+      "observed_syndrome_expectation": 31.999999999999957,
+      "absolute_error": 4.263256414560601e-14
+    },
+    {
+      "pauli_word": 16416,
+      "expected_syndrome": 42,
+      "observed_syndrome_expectation": 41.999999999999986,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 64,
+      "expected_syndrome": 4,
+      "observed_syndrome_expectation": 3.999999999999986,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 32768,
+      "expected_syndrome": 64,
+      "observed_syndrome_expectation": 63.99999999999996,
+      "absolute_error": 4.263256414560601e-14
+    },
+    {
+      "pauli_word": 32832,
+      "expected_syndrome": 68,
+      "observed_syndrome_expectation": 67.99999999999996,
+      "absolute_error": 4.263256414560601e-14
+    },
+    {
+      "pauli_word": 128,
+      "expected_syndrome": 8,
+      "observed_syndrome_expectation": 7.999999999999986,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 65536,
+      "expected_syndrome": 192,
+      "observed_syndrome_expectation": 191.9999999999999,
+      "absolute_error": 1.1368683772161603e-13
+    },
+    {
+      "pauli_word": 65664,
+      "expected_syndrome": 200,
+      "observed_syndrome_expectation": 199.9999999999999,
+      "absolute_error": 1.1368683772161603e-13
+    },
+    {
+      "pauli_word": 256,
+      "expected_syndrome": 8,
+      "observed_syndrome_expectation": 7.999999999999986,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 131072,
+      "expected_syndrome": 128,
+      "observed_syndrome_expectation": 127.99999999999991,
+      "absolute_error": 8.526512829121202e-14
+    },
+    {
+      "pauli_word": 131328,
+      "expected_syndrome": 136,
+      "observed_syndrome_expectation": 135.9999999999999,
+      "absolute_error": 1.1368683772161603e-13
+    },
+    {
+      "pauli_word": 155828,
+      "expected_syndrome": 201,
+      "observed_syndrome_expectation": 200.9999999999999,
+      "absolute_error": 1.1368683772161603e-13
+    },
+    {
+      "pauli_word": 19161,
+      "expected_syndrome": 17,
+      "observed_syndrome_expectation": 16.999999999999986,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 199728,
+      "expected_syndrome": 83,
+      "observed_syndrome_expectation": 82.99999999999996,
+      "absolute_error": 4.263256414560601e-14
+    },
+    {
+      "pauli_word": 174808,
+      "expected_syndrome": 144,
+      "observed_syndrome_expectation": 143.9999999999999,
+      "absolute_error": 1.1368683772161603e-13
+    },
+    {
+      "pauli_word": 160594,
+      "expected_syndrome": 148,
+      "observed_syndrome_expectation": 147.9999999999999,
+      "absolute_error": 1.1368683772161603e-13
+    },
+    {
+      "pauli_word": 134350,
+      "expected_syndrome": 154,
+      "observed_syndrome_expectation": 153.9999999999999,
+      "absolute_error": 1.1368683772161603e-13
+    },
+    {
+      "pauli_word": 229160,
+      "expected_syndrome": 71,
+      "observed_syndrome_expectation": 70.99999999999996,
+      "absolute_error": 4.263256414560601e-14
+    },
+    {
+      "pauli_word": 56139,
+      "expected_syndrome": 25,
+      "observed_syndrome_expectation": 24.999999999999986,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 190064,
+      "expected_syndrome": 167,
+      "observed_syndrome_expectation": 166.9999999999999,
+      "absolute_error": 1.1368683772161603e-13
+    },
+    {
+      "pauli_word": 258904,
+      "expected_syndrome": 16,
+      "observed_syndrome_expectation": 15.999999999999986,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 103023,
+      "expected_syndrome": 217,
+      "observed_syndrome_expectation": 216.9999999999999,
+      "absolute_error": 1.1368683772161603e-13
+    },
+    {
+      "pauli_word": 111339,
+      "expected_syndrome": 179,
+      "observed_syndrome_expectation": 178.9999999999999,
+      "absolute_error": 1.1368683772161603e-13
+    },
+    {
+      "pauli_word": 192255,
+      "expected_syndrome": 136,
+      "observed_syndrome_expectation": 135.9999999999999,
+      "absolute_error": 1.1368683772161603e-13
+    },
+    {
+      "pauli_word": 78658,
+      "expected_syndrome": 253,
+      "observed_syndrome_expectation": 252.99999999999983,
+      "absolute_error": 1.7053025658242404e-13
+    },
+    {
+      "pauli_word": 128417,
+      "expected_syndrome": 187,
+      "observed_syndrome_expectation": 186.9999999999999,
+      "absolute_error": 1.1368683772161603e-13
+    },
+    {
+      "pauli_word": 182965,
+      "expected_syndrome": 216,
+      "observed_syndrome_expectation": 215.9999999999999,
+      "absolute_error": 1.1368683772161603e-13
+    },
+    {
+      "pauli_word": 88334,
+      "expected_syndrome": 142,
+      "observed_syndrome_expectation": 141.9999999999999,
+      "absolute_error": 1.1368683772161603e-13
+    },
+    {
+      "pauli_word": 225473,
+      "expected_syndrome": 77,
+      "observed_syndrome_expectation": 76.99999999999996,
+      "absolute_error": 4.263256414560601e-14
+    },
+    {
+      "pauli_word": 223595,
+      "expected_syndrome": 35,
+      "observed_syndrome_expectation": 34.999999999999986,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 113714,
+      "expected_syndrome": 178,
+      "observed_syndrome_expectation": 177.9999999999999,
+      "absolute_error": 1.1368683772161603e-13
+    },
+    {
+      "pauli_word": 201391,
+      "expected_syndrome": 21,
+      "observed_syndrome_expectation": 20.999999999999986,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 225376,
+      "expected_syndrome": 78,
+      "observed_syndrome_expectation": 77.99999999999996,
+      "absolute_error": 4.263256414560601e-14
+    },
+    {
+      "pauli_word": 234865,
+      "expected_syndrome": 126,
+      "observed_syndrome_expectation": 125.99999999999993,
+      "absolute_error": 7.105427357601002e-14
+    },
+    {
+      "pauli_word": 199314,
+      "expected_syndrome": 112,
+      "observed_syndrome_expectation": 111.99999999999993,
+      "absolute_error": 7.105427357601002e-14
+    },
+    {
+      "pauli_word": 13289,
+      "expected_syndrome": 58,
+      "observed_syndrome_expectation": 57.999999999999986,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 31015,
+      "expected_syndrome": 32,
+      "observed_syndrome_expectation": 31.999999999999957,
+      "absolute_error": 4.263256414560601e-14
+    },
+    {
+      "pauli_word": 6081,
+      "expected_syndrome": 101,
+      "observed_syndrome_expectation": 100.99999999999993,
+      "absolute_error": 7.105427357601002e-14
+    },
+    {
+      "pauli_word": 200862,
+      "expected_syndrome": 7,
+      "observed_syndrome_expectation": 6.999999999999986,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 204554,
+      "expected_syndrome": 12,
+      "observed_syndrome_expectation": 11.999999999999986,
+      "absolute_error": 1.4210854715202004e-14
+    },
+    {
+      "pauli_word": 152720,
+      "expected_syndrome": 209,
+      "observed_syndrome_expectation": 208.9999999999999,
+      "absolute_error": 1.1368683772161603e-13
+    },
+    {
+      "pauli_word": 36853,
+      "expected_syndrome": 68,
+      "observed_syndrome_expectation": 67.99999999999996,
+      "absolute_error": 4.263256414560601e-14
+    },
+    {
+      "pauli_word": 177707,
+      "expected_syndrome": 207,
+      "observed_syndrome_expectation": 206.9999999999999,
+      "absolute_error": 1.1368683772161603e-13
+    }
+  ],
+  "logical_checks": [
+    {
+      "logical_word": 0,
+      "plus_basis": false,
+      "expected": 1,
+      "actual": 0.9999999999999993,
+      "absolute_error": 6.661338147750939e-16
+    },
+    {
+      "logical_word": 0,
+      "plus_basis": true,
+      "expected": 1,
+      "actual": 0.9999999999999992,
+      "absolute_error": 7.771561172376096e-16
+    },
+    {
+      "logical_word": 73,
+      "plus_basis": false,
+      "expected": -1,
+      "actual": -0.9999999999999993,
+      "absolute_error": 6.661338147750939e-16
+    },
+    {
+      "logical_word": 73,
+      "plus_basis": true,
+      "expected": 1,
+      "actual": 0.9999999999999992,
+      "absolute_error": 7.771561172376096e-16
+    },
+    {
+      "logical_word": 3584,
+      "plus_basis": false,
+      "expected": 1,
+      "actual": 0.9999999999999993,
+      "absolute_error": 6.661338147750939e-16
+    },
+    {
+      "logical_word": 3584,
+      "plus_basis": true,
+      "expected": -1,
+      "actual": -0.9999999999999992,
+      "absolute_error": 7.771561172376096e-16
+    },
+    {
+      "logical_word": 3657,
+      "plus_basis": false,
+      "expected": -1,
+      "actual": -0.9999999999999993,
+      "absolute_error": 6.661338147750939e-16
+    },
+    {
+      "logical_word": 3657,
+      "plus_basis": true,
+      "expected": -1,
+      "actual": -0.9999999999999992,
+      "absolute_error": 7.771561172376096e-16
+    }
+  ],
+  "scope": "ideal Clifford state preparation and Pauli injections; no noisy syndrome circuits"
+}

@@ -1,0 +1,93 @@
+{
+  "schema": "nv_c13_finite_pulse_v1",
+  "synthetic_only": true,
+  "config_sha256": "c0e7839882d2de032a0a0e25dd396f506fdb4d2d69214ad24d79227630607379",
+  "python": "3.14.3 (main, Feb  3 2026, 15:32:20) [Clang 17.0.0 (clang-1700.6.3.2)]",
+  "numpy": "2.4.2",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "samples": 384,
+  "configuration_counts": [
+    48,
+    16,
+    32
+  ],
+  "heldout_samples": 128,
+  "heldout_configurations": 32,
+  "float_coarse": {
+    "mae_hz": 3331.1774373835715,
+    "p95_absolute_error_hz": 6191.8571016086335,
+    "max_absolute_error_hz": 6983.117839233555
+  },
+  "float_refined": {
+    "mae_hz": 252.14663748512982,
+    "p95_absolute_error_hz": 597.2759382142035,
+    "max_absolute_error_hz": 878.7173862566666
+  },
+  "fixed_grid": {
+    "mae_hz": 3331.1774373835715,
+    "p95_absolute_error_hz": 6191.8571016086335,
+    "max_absolute_error_hz": 6983.117839233555
+  },
+  "train_constant": {
+    "mae_hz": 460532.3396567743,
+    "p95_absolute_error_hz": 739525.3919445463,
+    "max_absolute_error_hz": 741427.6510491708
+  },
+  "fixed_float_grid_agreement": 1.0,
+  "input_clipped_values": 0,
+  "template_clipped_values": 0,
+  "template_bytes": 30976,
+  "input_bytes": 256,
+  "distance_terms_per_sample": 15488,
+  "worst_case_score": 549739036800,
+  "c_reference": {
+    "status": "passed",
+    "compiler": "cc",
+    "command": [
+      "cc",
+      "-std=c99",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-shared",
+      "-fPIC",
+      "nv_match.c",
+      "-o",
+      "artifacts/cpu_frozen_v1/nv_match.so"
+    ],
+    "matched_cases": 128,
+    "extreme_score": 549739036800,
+    "tie_index": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "gates": {
+    "refined_mae": true,
+    "fixed_extra_mae": true,
+    "fixed_grid_agreement": true,
+    "no_clipping": true,
+    "c_parity": true
+  },
+  "combined_baseline_evaluation_seconds": 0.56070491601713,
+  "total_seconds": 0.766516541945748,
+  "source_sha256": {
+    "nv_model.py": "fab118bd8f4633ba74299dfee205b2e7c66d8afc968364ccf4cc1ddf55ab72ce",
+    "run_pilot.py": "0117d2963a7406d5ab516b0bfcb8b1bb7af6d30542b41ab8e16565d376694a68",
+    "nv_match.c": "0519008afbff84880930baf8113c3c4c0fe155d8481a9b1eed74651502dfba99"
+  },
+  "artifact_sha256": {
+    "synthetic_data.npz": "beed0af2162659198a49a9678f463bdb2e863bea02d56d53b7521ec2a56610cb",
+    "frozen_config.json": "acf65e24ecadfe78e8aaa5d6bd1cf9306032bdae0e972f25110b0f3495868598",
+    "templates.npz": "e9cb51c0662197c8166ea4c50e45cae7306dd8176cbb58b3422dd9eb4ea2fe74",
+    "test_predictions.npz": "21176f09509e8d99e1f1e6d7556ceaa7c7a018645be8c574522d1c219d94afbf",
+    "test_inputs_i16le.bin": "e5ef5684f97b10cce570a5a35213f05d418e47e131488c2654bf4b7c49f478a3",
+    "templates_i16le.bin": "b4c8515c0c4842d613a58fc7a23e528c956343bf86ba515cda5715ca57110f8f"
+  },
+  "limitations": [
+    "No live sensor, FPGA execution, synthesis, power, radiation, or GPU performance evidence",
+    "All nuisance parameters known; only detuning varies",
+    "Test split now consumed",
+    "One run timing includes generator, fit and host operations; not a performance study"
+  ]
+}

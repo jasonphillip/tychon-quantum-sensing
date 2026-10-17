@@ -1,0 +1,17 @@
+{
+  "utc": "2026-10-17T15:19:35.170148+00:00",
+  "argv": [
+    "<readout>/readout_pilot.py",
+    "cpu",
+    "--config",
+    "<readout>/config_v2.json",
+    "--output",
+    "<readout>/artifacts/cpu_v2"
+  ],
+  "mode": "cpu",
+  "sha256": {
+    "config_v2.json": "449a801b0f3284cd5e33536279ceee30815509e91fd96c00bb8f684530f4485b",
+    "readout_pilot.py": "fd0bc82a1f3b5ed6c64b1e754d68a00aa53f86780eaf6fe305382859d304fc2f",
+    "fixed_readout.c": "fd1f675754e77816dfae89ccb6621cacd52188ea51b20713195d2e74db613aac"
+  }
+}
