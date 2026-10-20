@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="72" viewBox="0 0 560 72" role="img" aria-labelledby="t">
+  <title id="t">Ask this repository a question on DeepWiki. No account needed.</title>
+  <rect x="1" y="1" width="558" height="70" rx="12" fill="#155eef" stroke="#0b3fa8" stroke-width="2"/>
+  <text x="280" y="31" fill="#fff" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="bold" text-anchor="middle">Ask this repository a question</text>
+  <text x="280" y="55" fill="#dbe6ff" font-family="Arial, Helvetica, sans-serif" font-size="14" text-anchor="middle">DeepWiki chat with cited answers. No account, no install. Click to open.</text>
+</svg>
