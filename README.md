@@ -16,6 +16,8 @@ I submitted an SBIR Phase I proposal during the first week of August 2025. The p
 
 Without funding for that team, I continued alone with AI agents, owning the architecture, experiments, debugging and evidence review, and extended the work into areas my plan had deferred to Phase II: on-board inference, controller measurements, and hierarchical INT8 model experiments. With no specialists to check the work, I built the Tychon Verification Workbench, which tests claims against project evidence; the [proposal crosswalk](https://github.com/jasonphillip/tychon-quantum-sensing/blob/main/docs/proposal/README.md#work-extended-beyond-the-phase-i-feasibility-plan) records what was delivered, what went beyond the feasibility plan, and what remains unresolved.
 
+Built the traditional way, this repository would take a team of five specialists about nine months, roughly $850,000 at United States median pay rates ([how that is estimated](docs/traditional-cost.md)).
+
 The project connects five workstreams: physics simulation, edge ML, FPGA control, vector tracking, and technical verification. A conservative audit of selected archived LLM records counted **1,357 submitted interactions**, **217 identified conversations and coding sessions**, and **113 distinct activity dates**, from July 2, 2025 through October 15, 2026. [Methodology and aggregate data](https://github.com/jasonphillip/tychon-quantum-sensing/blob/main/docs/workflow-retrospective.md#activity-count-methodology).
 
 ## Representative results
@@ -86,6 +88,7 @@ For a small synthetic training benchmark, use [`make bench`](bench/README.md). I
 | Plan a meaningful next study or contribute | [Next sensing study](docs/next-sensing-study.md), [contribution guide](CONTRIBUTING.md) |
 | Learn the physics or navigate as an agent | [Primer](docs/primer.md), [glossary](docs/glossary.md), [repository map](AGENTS.md), [llms.txt](llms.txt) |
 | Ask questions without a GitHub account | [DeepWiki chat](https://deepwiki.com/jasonphillip/tychon-quantum-sensing) answers on a web page. For your own assistant, change `github.com` to `gitingest.com` in this repository's URL ([digest](https://gitingest.com/jasonphillip/tychon-quantum-sensing)), then paste or upload the digest into ChatGPT, Claude or another chatbot. |
+| See the scale of the work in traditional terms | [What this would traditionally cost to build](docs/traditional-cost.md), with the sources behind each number |
 
 ## License, citation and history
 
