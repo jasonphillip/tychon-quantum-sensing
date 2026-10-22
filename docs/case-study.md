@@ -106,7 +106,7 @@ The first three repositories below were the original workers, restarted in clean
 | Date | Event |
 |---|---|
 | 2025-07-02 to 08-04 | Proposal origin, scope changes, and research condensed with Claude and Gemini; [eight drafting excerpts](../planning/excerpts/00-proposal-2025.md) |
-| First week of August 2025 (Jason's recollection; precise day unverified) | Proposal FX255-PCSO2-0044 submitted under topic AFX255-PCSO2; [archived technical volume and claim crosswalk](proposal/README.md) |
+| First week of August 2025 (Jason's recollection; precise day unverified) | Proposal FX255-PCSO2-0044 submitted under topic AFX255-PCSO2; [proposal claims versus delivered state](proposal/README.md) |
 | 2025-08-05 | Advertised close, noon ET, per the [AFWERX opening bulletin](https://content.govdelivery.com/accounts/USAFAFWERX/bulletins/3e789fe); the bulletin is not a receipt. The solicitation anticipated notification about 90 calendar days later |
 | 2025, autumn | [Federal shutdown](https://piv.opm.gov/chcoc/latest-memos/employee-pay-leave-benefits-and-other-human-resources-programs-affected-by-the-lapse-in-appropriations/) and [SBIR authorization lapse](https://www.nist.gov/tpo/small-business-innovation-research-program-sbir) fall within the wait; neither is shown to have caused this delay |
 | 2026-03-04 | [Planning starts in a claude.ai project](../planning/excerpts/playbook-creation-2026-03.md); execution playbook v4 is dated 2026-03-09, with a numbered decision log |

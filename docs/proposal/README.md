@@ -65,20 +65,13 @@ These excerpts do not show that the whole plan was completed.
 
 ## Optional historical background
 
-- [Technical volume](technical-volume-2025-redacted.pdf): optional reading; a scrubbed, 16-page derivative of a privately retained archived copy.
-- [File manifest](manifest.json): output hashes, page counts, and archived-source hashes.
+- The redacted technical volume was available on this page from October 15 to October 22, 2026. It was withdrawn on October 22, 2026, pending an export-control review. This note takes no position on whether the material is export-controlled. The volume remains privately retained.
+- [File manifest](manifest.json): records the withdrawal and the hashes of the withdrawn file.
 - [Eight proposal-development selections](../../planning/excerpts/00-proposal-2025.md): dated prompt/reply evidence and one email excerpt.
 
-The submission date rests on Jason's recollection of the first week of August 2025. These records do not establish the exact day or an upload receipt. The archived technical copy is not verified as the exact submitted bytes.
-The proposal and topic identifiers above follow privately retained records. The archived volume retains its original identifier typos.
-Page references in the crosswalk use printed page numbers; the PDF has an additional contents page.
-
-The cover sheet, budget, and separate certifications are excluded. Within the technical volume, the SBC ID, teammate names, personnel school names, institutional affiliations in the related-work group labels, private contact details, named customer references and discussions, prior customer-work table, commercial strategy and pricing, and certification bodies are omitted.
-Original pagination is retained. Team roles, original duties, and degree fields remain; Jason stays named.
-Public researcher citations and group names are retained. Original metadata, comments, attachments, hidden content, and active links were removed.
-
-**Jason’s statement:** all proposal information came from public sources, and his position is that ITAR does not apply.
-This is Jason’s position, not an independent legal finding. The archived ITAR declaration remains within the omitted certification body.
+The submission date rests on Jason's recollection of the first week of August 2025. These records do not establish the exact day or an upload receipt.
+The proposal and topic identifiers above follow privately retained records.
+Page references in the crosswalk use the printed page numbers of the privately retained technical volume.
 
 ## What this archive adds
 
