@@ -39,7 +39,13 @@ To check the published kit evidence against its saved predictions, follow the [r
 
 **What the demonstrations show.** Two recordings. The [actual-board run](docs/board-demo-2026-10-22.md) below (62 seconds) shows the published INT8 model running on the Icicle Kit's V250 NPU over 512 **replayed synthetic** spectra, the kit output compared bit for bit with the published kit output and the CPU INT8 simulation, and what that does and does not establish. The [dashboard dry-run recording](demo/fpga-demo-dashboard/README.md#dry-run-recording) is a software model. Every value in it, including the PASS and LIVE badges, comes from that model, not from hardware.
 
+<p align="center">
+  <a href="docs/lab.md"><img src="docs/media/icicle-kit-in-enclosure.jpg" alt="The board: a PolarFire SoC Icicle Kit in its grey enclosure, cables through the side holes, photographed July 2026" width="420"></a>
+</p>
+
 ![Actual-board run on the Icicle Kit: replayed synthetic input, 512 of 512 outputs identical to the published kit output and the CPU INT8 simulation](docs/media/board-demo-2026-10-22.gif)
+
+The photo is the board the recording ran on: the production Icicle Kit in its enclosure ([lab page](docs/lab.md)).
 
 If this is useful, star the repository, [report a reproduction result](https://github.com/jasonphillip/tychon-quantum-sensing/issues/1), or [say how you might use a component](https://github.com/jasonphillip/tychon-quantum-sensing/discussions) in Discussions. Small first tasks carry the [good first issue](https://github.com/jasonphillip/tychon-quantum-sensing/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) label.
 

@@ -2,6 +2,12 @@
 
 **Replayed synthetic input.** This recording shows the published INT8 model running on the PolarFire SoC Icicle Kit's VectorBlox V250 NPU over the same 512 synthetic ODMR spectra as the [2026-10-14 evidence run](../workers/odmr-edge-ml/docs/deployed_model_on_kit_2026-10.md). No diamond, no measured spectrum and no sensor was involved.
 
+**The board.** The production PolarFire SoC Icicle Kit (MPFS250T) in its grey enclosure, cables through the drilled side holes, photographed July 2026. The [lab page](lab.md) describes the setup.
+
+![The PolarFire SoC Icicle Kit in its enclosure, with the MPFS250T under the centre of the board](media/icicle-kit-in-enclosure.jpg)
+
+**The run.**
+
 ![Terminal recording of the actual-board run: SSH to the kit, input hashes, pfkit infer, and a bit-for-bit comparison](media/board-demo-2026-10-22.gif)
 
 The recording ([asciinema cast](media/board-demo-2026-10-22.cast), 62 seconds) shows four steps.
