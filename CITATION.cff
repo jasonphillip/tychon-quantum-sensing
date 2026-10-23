@@ -1,20 +1,42 @@
 cff-version: 1.2.0
-message: "If you refer to this work, please cite it as below."
+message: >-
+  If you refer to this work, please cite it as below. This project has no
+  live NV-diamond measurement setup; FPGA tests used replayed synthetic spectra.
 type: software
 title: "Tychon quantum sensing: an agent-orchestrated NV-magnetometer build"
 version: 1.0.0
 date-released: "2026-10-12"
 doi: 10.5281/zenodo.23323385
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23323384
+    description: "Concept DOI; resolves to the latest version"
+  - type: doi
+    value: 10.5281/zenodo.23323385
+    description: "Version 1.0.0"
+  - type: url
+    value: "https://zenodo.org/records/23323385"
+    description: "Zenodo record for version 1.0.0"
+license: Apache-2.0
 abstract: >-
   Software for NV-diamond quantum magnetometers built with coding agents:
   a physics simulator, INT8 edge machine learning, PID plus neural-network
   control on a PolarFire SoC FPGA, a field-vector tracker, a demo dashboard,
   and a workbench that checks written claims with local language-model critics.
+  Current validation limits: this project has no live NV-diamond measurement
+  setup. FPGA tests used replayed synthetic spectra. Separate software studies
+  used public measured NV datasets, but incomplete reference labels, calibration
+  records, and independent acquisitions limited the conclusions. The FPGA
+  control path and model inference ran on a development kit with replayed
+  input. These parts are not one integrated sensing system. Reliable sensing
+  and a useful neural advantage over strong classical methods remain unproven.
 authors:
   - family-names: Phillip
     given-names: Jason
+    affiliation: "Tychon AI"
     website: "https://tychonai.com/"
 repository-code: "https://github.com/jasonphillip/tychon-quantum-sensing"
+url: "https://github.com/jasonphillip/tychon-quantum-sensing"
 keywords:
   - quantum sensing
   - NV diamond
