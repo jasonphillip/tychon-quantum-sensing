@@ -14,24 +14,26 @@ Software toward AI-assisted control of an NV-diamond magnetometer, developed and
 
 ## Try it
 
-Three things you can do from a fresh checkout. The first two run on a CPU with Python 3.11. The third needs a PolarFire SoC Icicle Kit and Microchip's tools.
+Three things you can do from a fresh checkout. The first two run on a CPU with Python 3.11, 3.12 or 3.13 and take about a minute together (measured 26 Oct 2026 on an Arm Linux machine without a GPU: 10 s for step 1, 20 s for step 2). The third needs a PolarFire SoC Icicle Kit and Microchip's tools.
 
-**1. Generate NV spectra.** The simulator writes a tiny ODMR dataset in about a second.
+**1. Generate NV spectra.** The simulator writes a tiny ODMR dataset in about a second. Use a virtual environment if you prefer; step 2 creates its own `.venv`.
 
 ```bash
-python -m pip install -e workers/nv-sensor-sim
-python -m nv_sensor_sim.pipelines.batch_generate \
+python3 -m pip install -e workers/nv-sensor-sim
+python3 -m nv_sensor_sim.pipelines.batch_generate \
   --config workers/nv-sensor-sim/configs/quickstart_tiny.yaml --output-dir /tmp/nv-sim-tiny
 ```
 
-It writes `dataset.h5` and `manifest.json`. The [synthetic-data walkthrough](docs/synthetic-data.md) explains the recipe, the one-spectrum Python call, and what synthetic spectra do not establish.
+The last line printed is `Dataset written to /tmp/nv-sim-tiny`. That folder holds `dataset.h5` and `manifest.json`; the manifest records 2 train, 1 validation and 1 test spectra, `master_seed` 42, the qutip backend and the generator's git commit. The [synthetic-data walkthrough](docs/synthetic-data.md) explains the recipe, the one-spectrum Python call, and what synthetic spectra do not establish.
 
 **2. Inspect or run the software checks.** The smoke check imports the packages and generates a tiny synthetic dataset. It does not establish model accuracy.
 
 ```bash
-make install BENCH_PY=python3.11
+make install   # uses python3; add BENCH_PY=/path/to/python3.11 if your python3 is outside 3.11 to 3.13
 make smoke
 ```
+
+`make smoke` ends with a JSON block that starts with `"status": "PASS"` and lists the Python and package versions it ran with. A qutip warning that matplotlib is missing is expected and harmless.
 
 To check the published kit evidence against its saved predictions, follow the [reproduction guide](docs/reproduce-evidence.md) to the `make verify-evidence KIT_EVIDENCE_DIR=...` command. It ends with `RESULT: PASS` only if every check passes, and a correctly reproduced scientific FAIL counts as a successful reproduction. For a small synthetic training benchmark, use [`make bench`](bench/README.md); its reference error is 10.53 µT against a 12.26 µT constant, separate from the kit model.
 
