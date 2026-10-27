@@ -1,19 +1,19 @@
 # Tychon quantum sensing
 
-> Source and evidence for synthetic ODMR simulation, scalar and vector field estimation, and FPGA control with replayed input. No live diamond sensor is demonstrated.
+> NV-diamond spectrum simulation, scalar and vector field estimation, and PolarFire SoC control. The kit watchdog tripped at a median 2.000 ms over 120 trips with replayed input. Jason directed coding agents, and local critics checked written claims against project evidence.
 
 ## Start here
 
 - [Project overview](README.md): scope, representative results, and repository layout.
-- [Reviewer guide](docs/start-here-reviewers.md): a 20-minute path through reproduction, results, and limitations.
+- [Reviewer guide](docs/start-here-reviewers.md): a 20-minute path through kit results, reproduction, and source reports.
 - [Repository map](AGENTS.md): component paths, available commands, and evidence boundaries.
-- [Case study](docs/case-study.md): results, limits, and project history.
-- [2025 proposal excerpts](planning/excerpts/00-proposal-2025.md): eight drafting selections with explicit attribution and limits.
+- [Case study](docs/case-study.md): kit results, build method, and project history.
+- [2025 proposal excerpts](planning/excerpts/00-proposal-2025.md): eight attributed drafting selections.
 - [Conversation record](planning/excerpts/README.md): proposal, learning, planning, building, and review exchanges with source attribution.
 - [What the models could not do](planning/excerpts/what-the-models-could-not-do.md): observed limits and corrections from this project.
-- [Engineering decisions](docs/engineering-decisions.md): a withdrawn comparison, watchdog correction, and loss ablation.
-- [Detailed results](docs/results-index.md): experiment results with their evidence and limits.
-- [Contributing](CONTRIBUTING.md): scoped reproduction, simulator-validation, and classical-comparison tasks.
+- [Engineering decisions](docs/engineering-decisions.md): three decisions with their evidence: a baseline correction, a watchdog fix, and a loss ablation.
+- [Detailed results](docs/results-index.md): measured and simulated results with source reports.
+- [Contributing](CONTRIBUTING.md): reproduction, simulator, and classical-comparison tasks.
 
 ## Reproduction and evidence
 

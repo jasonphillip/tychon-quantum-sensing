@@ -1,14 +1,12 @@
 # Next sensing study: less calibration for NV thermometry
 
-Status: **BLOCKED — protocol proposal, no numerical run authorized.**
-Assessment date: October 16, 2026.
-
-The selected question is whether an NV thermometer can use half as many reference-temperature calibration settings.
+The proposed study asks whether an NV thermometer can use half as many reference-temperature calibration settings.
 It must preserve temperature accuracy on complete, untouched thermal acquisitions.
 The intended user is a laboratory calibrating a fiber-coupled NV thermometer.
 This study would use existing computers and public or redistributable measurements.
 It requires no FPGA work, live diamond, or new equipment.
 
+Assessment date: October 16, 2026. Status: protocol proposal; numerical work blocked pending the data eligibility gate.
 This is one proposed task, not a search across new architectures.
 The scientific objective remains unmet.
 The existing [measured studies](nv_advantage_search_2026-10.md) and [vector comparison](nv_vector_development_2026-10.md) retain their verdicts.

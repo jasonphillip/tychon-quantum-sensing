@@ -1,19 +1,12 @@
 # FPGA Demo Dashboard
 
-Live demo control panel for the **PolarFire SoC Icicle Kit** (MPFS250T + CoreVectorBlox V250).
-Runs fully offline on a Mac/Linux laptop; talks to the kit over SSH.
+This offline Mac/Linux dashboard controls the PolarFire SoC Icicle Kit (MPFS250T + CoreVectorBlox V250) over SSH. LIVE mode shows the kit controller with replayed synthetic input; DRY-RUN mode generates values from a software model. Jason directed coding agents and checked written claims with local critics. The [FPGA controller](../../workers/polarfire-hybrid-control/README.md) and [project overview](../../README.md) link the measurements and build path.
 
-Part of [Tychon quantum sensing](../../README.md). It shows the FPGA control loop from
-[`polarfire-hybrid-control`](../../workers/polarfire-hybrid-control/README.md). The default mode is
-**DRY-RUN**: every value, including the PASS and LIVE badges, then comes from a software model of
-the kit, not from hardware. LIVE mode reads the kit, whose input is replayed synthetic spectra, not
-a live diamond sensor.
-
-The design notes and implementation plan behind this dashboard are kept in a private planning folder and are not part of this repository.
+The default DRY-RUN mode produces every displayed value, including PASS and LIVE badges, from a software model. Design notes and the implementation plan are retained in a private planning folder.
 
 ## Dry-run recording
 
-**Software dry-run, not hardware evidence.** Every value in this recording, including the PASS and LIVE badges, comes from the dashboard's software model. The three scripted scenarios show a clamp event, watchdog fallback and a clean run.
+**Software dry-run.** Every value in this recording, including the PASS and LIVE badges, comes from the dashboard's software model. The three scripted scenarios show a clamp event, watchdog fallback and a clean run.
 
 ![Software dry-run dashboard with simulated controller traces and status badges](../../docs/media/dashboard-demo.gif)
 

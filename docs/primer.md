@@ -1,6 +1,6 @@
 # NV-diamond sensing in plain words
 
-This page explains the sensor to readers who know software or AI but not the physics, and says why this repository puts a small neural network on an FPGA. Terms are defined in the [glossary](glossary.md).
+NV-diamond sensors turn magnetic-field changes into shifts in optical resonance spectra. This page follows those spectra into the repository's field estimate and bounded neural correction on a PolarFire SoC kit. Jason directed the coding agents and checked claims with local critics. Terms are in the [glossary](glossary.md); measured results are in the [results index](results-index.md).
 
 ```mermaid
 flowchart LR

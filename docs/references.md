@@ -1,6 +1,6 @@
 # Sources I grounded on
 
-I loaded these documents into NotebookLM notebooks while learning the toolchain and the physics. The public datasets the simulator loads are listed at the end. The [method page](method.md) covers how I used the notebooks. Titles are as the notebooks list them, and I added links where the source is a public repository, a preprint or a dataset DOI.
+I used these manuals, papers, and datasets to plan the simulator and PolarFire SoC work, then directed coding agents through the build. Local critics checked written claims against project files. The [method page](method.md) explains the source workflow, and the [results index](results-index.md) links the measured reports. Titles follow the notebook records; public sources have links where available.
 
 ## Microchip PolarFire SoC and VectorBlox
 

@@ -2,17 +2,7 @@
 
 Between March and October 2026 I planned and built five connected repositories for AI-assisted control of NV-diamond quantum magnetometers: a physics simulator, an edge-ML training and export pipeline, a PID plus neural-network controller on production PolarFire SoC silicon (paced by software on the SoC's processor, with replayed ODMR input), a learned vector tracker (FP32 simulation only), and a workbench that checks written claims against evidence. Claude Code and Codex wrote the code from written specs and data contracts. I ran the planning, the cross-model reviews and the claim checks, and I reviewed what came back.
 
-The scope comes from a technical plan I developed in July and August 2025 for an AFWERX SBIR Phase I proposal ([FX255-PCSO2-0044](proposal/README.md)). I recall submitting it during the first week of August 2025. That is my recollection; the precise submission day and upload receipt remain unverified.
-
-I expected notification about 90 calendar days after the August 5 closing, as the solicitation anticipated. The [AFWERX notification FAQ](https://afwerx.com/contact-faq/what-is-the-timeframe-for-select-non-select-notifications/) also states a 90-day timeframe. The archived not-selected notice is dated May 12, 2026, roughly nine months later. The wait spanned the federal shutdown and the SBIR authorization lapse. These records do not show that either one caused this delay. The proposal was not selected. It brought no award, no contract and no government funding.
-
-The proposed team included me and three additional engineering specialists: one PhD and two master's-level engineers. Without funding for the team, I continued with AI agents. I owned the architecture, the experiments, the debugging and the evidence review. I prepared a full technical report before the decision. I turned the plan into a 90-day build plan in March 2026 and kept building into October. Files that say Phase I, KPP (key performance parameter) or deliverable follow the plan and report I wrote for that proposal.
-
-Work reached beyond the Phase I feasibility plan in three areas: on-board inference measurement, board-level controller measurements and a hierarchical two-stage INT8 model. The last ended in a documented negative result. The [proposal crosswalk](proposal/README.md#work-extended-beyond-the-phase-i-feasibility-plan) gives the evidence and the limit for each. These extensions do not show that all proposal targets were met.
-
-The recorded activity is a conservative count from selected private archives. It shows over 1,300 submitted interactions in over 200 conversations and coding sessions, on over 100 dates between July 2025 and October 2026. These are not unique tasks, labor hours or a claim that I wrote every word. Rules and limits: [activity-count methodology](workflow-retrospective.md#activity-count-methodology) and the [aggregate counts](activity-counts-2026-10-16.json).
-
-Three decisions with their evidence and attribution: [engineering-decisions.md](engineering-decisions.md). Selected conversation evidence: [research and verification](../planning/excerpts/05-research-and-verification.md). Terms: [glossary](glossary.md). Back to the [project overview](../README.md).
+The PolarFire SoC kit completed a processor-paced eight-hour control-loop soak at 3,319 Hz with replayed input. The [results table](#results-and-limits) keeps its data conditions and limits. I directed coding agents across the build and checked claims with local critics. The [reviewer path](start-here-reviewers.md) links each report.
 
 ## How I ran it
 
@@ -20,7 +10,7 @@ I did the planning in one claude.ai project that held the original technical pla
 
 Claude produced the designs and Gemini Deep Think reviewed them as a second model. Claude then sorted the review items into those to act on and those to defer or close, and I logged the outcome in an integration tracker.
 
-Without the planned specialists available to check my work, I built the Tychon Verification Workbench. It later became the orchestrator. It does not replace independent subject-matter review. It checks the claims in my own technical report against the project's ground truth. Its critics see only the project's own files, never the web; the reasons are in [orchestrator/README.md](../orchestrator/README.md). It builds searchable corpora from the docs and code, extracts each claim and runs it past an ensemble of critic models on my own machines, with no cloud inference and a stop-gate after each stage. In the first audit on 2026-05-01 a manual structure review of the report found the abstract and body disagreeing on timing slack, an unfinished deliverable section and a missing reference list, all rated critical. All three were closed in the corrected report.
+Without the planned specialists available to check my work, I built the Tychon Verification Workbench. It later became the orchestrator. It checks the claims in my own technical report against the project's ground truth. Its critics see only the project's own files, never the web; the reasons are in [orchestrator/README.md](../orchestrator/README.md). It builds searchable corpora from the docs and code, extracts each claim and runs it past an ensemble of critic models on my own machines, with no cloud inference and a stop-gate after each stage. In the first audit on 2026-05-01 a manual structure review of the report found the abstract and body disagreeing on timing slack, an unfinished deliverable section and a missing reference list, all rated critical. All three were closed in the corrected report.
 
 The second audit showed the cost of a closed corpus. A critic marked a correct timing claim CONTRADICTED because the corpus held both an early timing run and the final one, and the critic read the early run. After I archived the early run, the claim came back SUPPORTED. The lesson I recorded was that evidence needs version metadata, such as which run and which design state, before a bigger critic is worth adding.
 
@@ -102,6 +92,18 @@ The first three repositories below were the original workers, restarted in clean
 - The archived first attempts (`tychon-nv-sim`, `tychon-odmr-ml`, `tychon-polarfire-control`) were replaced by the 2026-04-03 restart.
 
 ## Timeline
+
+The scope comes from a technical plan I developed in July and August 2025 for an AFWERX SBIR Phase I proposal ([FX255-PCSO2-0044](proposal/README.md)). I recall submitting it during the first week of August 2025. That is my recollection; the precise submission day and upload receipt remain unverified.
+
+I expected notification about 90 calendar days after the August 5 closing, as the solicitation anticipated. The [AFWERX notification FAQ](https://afwerx.com/contact-faq/what-is-the-timeframe-for-select-non-select-notifications/) also states a 90-day timeframe. The archived not-selected notice is dated May 12, 2026, roughly nine months later. The wait spanned the federal shutdown and the SBIR authorization lapse. These records do not show that either one caused this delay. The proposal was not selected. It brought no award, no contract and no government funding.
+
+The proposed team included me and three additional engineering specialists: one PhD and two master's-level engineers. Without funding for the team, I continued with AI agents. I owned the architecture, the experiments, the debugging and the evidence review. I prepared a full technical report before the decision. I turned the plan into a 90-day build plan in March 2026 and kept building into October. Files that say Phase I, KPP (key performance parameter) or deliverable follow the plan and report I wrote for that proposal.
+
+Work reached beyond the Phase I feasibility plan in three areas: on-board inference measurement, board-level controller measurements and a hierarchical two-stage INT8 model. The last ended in a documented negative result. The [proposal crosswalk](proposal/README.md#work-extended-beyond-the-phase-i-feasibility-plan) gives the evidence and the limit for each. These extensions do not show that all proposal targets were met.
+
+The recorded activity is a conservative count from selected private archives. It shows over 1,300 submitted interactions in over 200 conversations and coding sessions, on over 100 dates between July 2025 and October 2026. These are not unique tasks, labor hours or a claim that I wrote every word. Rules and limits: [activity-count methodology](workflow-retrospective.md#activity-count-methodology) and the [aggregate counts](activity-counts-2026-10-16.json).
+
+Three decisions with their evidence and attribution: [engineering-decisions.md](engineering-decisions.md). Selected conversation evidence: [research and verification](../planning/excerpts/05-research-and-verification.md). Terms: [glossary](glossary.md). Back to the [project overview](../README.md).
 
 | Date | Event |
 |---|---|

@@ -1,8 +1,6 @@
 # PolarFire Hybrid Control
 
-Hybrid PID + neural-network control on a commercial PolarFire SoC Icicle Kit (MPFS250T), using SmartHLS C++ and CoreVectorBlox V250. Part of [Tychon quantum sensing](../../README.md).
-
-**Hardware scope.** The recorded tests used one development kit with replayed input, not a live diamond sensor. An RT PolarFire port and space qualification remain future work; neither is demonstrated here.
+Hybrid PID and neural-network correction on a PolarFire SoC Icicle Kit (MPFS250T), using SmartHLS C++ and CoreVectorBlox V250. On the kit, I measured a median watchdog trip time of 2.000 ms over 120 trips with replayed input. The processor-paced loop completed an 8.01-hour soak at 3,319 Hz. Jason directed coding agents and checked claims with local critics. [Tychon quantum sensing](../../README.md) links the other workstreams.
 
 ## Where this fits
 
@@ -22,6 +20,10 @@ Hybrid PID + neural-network control on a commercial PolarFire SoC Icicle Kit (MP
 - Kit-resident **MSS-paced closed loop measured on silicon 2026-07-02**: the on-kit V250→PID daemon sustains **~3.3 kHz standalone** (proven laptop-disconnected, from distinct hardware `axi_write_count` + software step counters), and passed an **8-hour daytime soak: 95.7 M steps at 3319 Hz, zero stalls, 5 transient >2 ms scheduling stalls, each counted as a trip by the 2 ms fabric watchdog, memory flat** (a counted trip does not show that the controller fell back; the fallback measurement is the item above) (`docs/mss_paced_loop_measured_2026-07-02.md`) — the loop is MSS software (not fabric-resident) with a replayed input (not a live sensor)
 - Libero SoC project targeting MPFS250T with CoreVectorBlox V250
 - Static timing (SmartTime) and power estimation (SmartPower)
+
+## Scope and evidence
+
+The recorded tests used one development kit with replayed input. Hardware scope and recovery conditions are in the [results index](../../docs/results-index.md) and the linked measurement reports.
 
 ## Architecture
 

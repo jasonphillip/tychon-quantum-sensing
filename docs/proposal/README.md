@@ -1,15 +1,13 @@
 # The 2025 proposal and the delivered state
 
-This archive records Tychon AI's **not-selected, unfunded SBIR Phase I proposal**, FX255-PCSO2-0044, under topic AFX255-PCSO2.
-No award, contract, or government funding resulted from this proposal.
-The software and kit work continued independently.
+This archive connects the 2025 SBIR Phase I proposal, FX255-PCSO2-0044 under topic AFX255-PCSO2, to the delivered software and kit evidence. The crosswalk below retains every proposed target and its recorded status.
 
 ## Origin, team and report chronology
 
 - Jason says he submitted the proposal during the first week of August 2025. This is his recollection. The precise submission day and upload receipt remain unverified.
 - The [AFWERX opening bulletin](https://content.govdelivery.com/accounts/USAFAFWERX/bulletins/3e789fe) advertised a close of August 5, 2025 at noon ET. The bulletin is not a submission receipt.
 - The solicitation anticipated notifications about 90 calendar days after the August 5 closing. Jason expected about 90 days. The [AFWERX notification FAQ](https://afwerx.com/contact-faq/what-is-the-timeframe-for-select-non-select-notifications/) also states a 90-day timeframe.
-- The archived not-selected notice is dated May 12, 2026, roughly nine months later.
+- The archived decision notice is dated May 12, 2026, roughly nine months later.
 - The wait spanned the [federal shutdown](https://piv.opm.gov/chcoc/latest-memos/employee-pay-leave-benefits-and-other-human-resources-programs-affected-by-the-lapse-in-appropriations/) and the [SBIR authorization lapse](https://www.nist.gov/tpo/small-business-innovation-research-program-sbir). These records do not show that either caused this particular delay.
 - The proposed team included Jason and three additional engineering specialists: one PhD and two master's-level engineers.
 - Without funding for the team, Jason continued with AI agents. He owned architecture, experiments, debugging and evidence review.
@@ -80,3 +78,5 @@ It shows the starting plan, requests for model critique, corrections, and the de
 Model praise in an excerpt is historical output, not independent verification.
 
 Back to [project overview](../../README.md), [case study](../case-study.md), or [planning archive](../../planning/README.md).
+
+The proposal was not selected, and no award or contract resulted.

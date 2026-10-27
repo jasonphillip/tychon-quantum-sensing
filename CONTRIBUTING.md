@@ -1,10 +1,8 @@
 # Contributing
 
-Start with a small, reviewable change. A reproducible negative result is a useful contribution.
+This repository connects NV-diamond spectrum simulation, field estimators, and kit control. The [results index](docs/results-index.md) records measured kit tests and synthetic evaluations. Jason directed coding agents and checked claims with local critics. Start with a small, reviewable change and use the links below.
 
-This repository contains software, synthetic studies, public measured-data replays, and development-kit evidence.
-It does not contain a validated live NV-diamond sensing system.
-Keep those evidence types separate.
+Reproduction reports should name the data and execution target. The [reviewer guide](docs/start-here-reviewers.md) separates the evidence types.
 
 ## Start here
 

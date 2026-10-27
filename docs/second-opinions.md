@@ -1,12 +1,12 @@
 # Second opinions: where another model caught a mistake
 
-Most of the work ran through one planning chat and the coding agents. For some problems I asked a different model on purpose.
+I directed coding agents from written plans and asked other models to check selected math, plans, and claims. The [case study](case-study.md) connects those reviews to the build and its measured results.
 
 - Gemini Deep Think for math and physics, where it was the strongest model I had at the time.
 - ChatGPT Pro to review a plan or a patch that another model had written.
 - Claude, with the project files at hand, to check numbers before they went into a document.
 
-No single model was right every time, including the ones I trusted most.
+The examples below record both useful corrections and mistakes from those reviews.
 
 The examples below come from my chat history. I found them by running a classifier (TypeSafe's Jev model) over about 1,100 project-related conversations and then reading the top candidates. The quotes are exact, and the model names come from the chats themselves, because the exports don't record them.
 

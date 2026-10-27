@@ -1,9 +1,6 @@
 # odmr-vector-tracking
 
-**Learned tracking of NV-diamond ODMR resonances through frequency-space crossings — to extend
-vector-magnetometer dynamic range without a larger bias field.**
-
-Part of [Tychon quantum sensing](../../README.md), as the fourth worker (started 2026-06-29). It trains on time-series datasets from [`nv-sensor-sim`](../nv-sensor-sim/README.md) ([synthetic-data walkthrough](../../docs/synthetic-data.md)) and produces FP32 PyTorch checkpoints and evaluation reports in [`docs/`](docs/). It works in simulation only and is not connected to the FPGA loop.
+This worker tests learned association of NV-diamond ODMR resonances through frequency-space crossings. A registered comparison on two sealed synthetic sets selected classical exact inversion as the reference under realistic conditions ([protocol](docs/comparison_study_protocol_2026-10.md)). Jason directed the coding agents and checked written claims with local critics. The worker uses [`nv-sensor-sim`](../nv-sensor-sim/README.md) time-series datasets and publishes FP32 evaluations in [`docs/`](docs/).
 
 ## The problem in one paragraph
 
@@ -19,8 +16,7 @@ remedy is a bigger bias magnet (more line spacing), at a real hardware/SWaP/cono
 
 Replace "track a frequency" with **"track an identity"**: a physics-informed, sequential model
 that maintains the per-axis association *through* crossings, using each axis's hyperfine
-signature and known Zeeman slope as a fingerprint. This extends usable dynamic range at a fixed
-(smaller) bias. It is also the function that justifies a learned block alongside the FPGA PID —
+signature and known Zeeman slope as a fingerprint. The proposed method targets a fixed bias. In the broader system,
 the model does association/estimation, the PID does the fast loop, a safety layer bounds it.
 
 ## Where it sits

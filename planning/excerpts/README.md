@@ -2,7 +2,6 @@
 
 This record follows selected conversations from the 2025 proposal through publication in October 2026.
 It includes model suggestions, Jason's instructions, worker replies, and corrections.
-The proposal was not selected; no SBIR award or contract resulted.
 
 **Editorial note.** Context and outcomes are editorial summaries, separate from quoted chat messages.
 Quotes preserve source spelling; cuts are marked […].

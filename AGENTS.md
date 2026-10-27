@@ -1,6 +1,6 @@
 # Repository map
 
-This file maps the published source and evidence. The [reviewer guide](docs/start-here-reviewers.md) gives a 20-minute reading path.
+This repository joins spectrum simulation, field estimators, and PolarFire SoC control. The kit-resident loop completed an 8.01-hour soak at 3,319 Hz with replayed input. Jason directed coding agents and used local critics to check written claims. This map links the source and evidence; the [reviewer guide](docs/start-here-reviewers.md) gives a 20-minute reading path.
 
 ## Layout
 

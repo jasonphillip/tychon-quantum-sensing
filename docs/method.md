@@ -1,6 +1,6 @@
 # Method and tooling
 
-I started from vendor manuals and asked a grounded Q&A tool questions about them. The answers cited the manuals. From those answers I wrote code, ran it in simulation, synthesised it, and checked it on the bench. Then I wrote claims about the results, and local critic models checked those claims against the repo's evidence.
+I directed coding agents from vendor manuals and grounded Q&A to simulation, synthesis, and kit checks. I wrote the claims about those results; local language-model critics checked them against the repository evidence. The kit watchdog measurement reached a median 2.000 ms over 120 trips with replayed input ([results](results-index.md)).
 
 ## Workflow
 

@@ -1,10 +1,6 @@
 # Reproduce the published evidence
 
-`make verify-evidence` checks seven named parts of the public record.
-It verifies hashes and recomputes saved arithmetic.
-It does not train a model, run inference, fetch data, or use an FPGA.
-A reproduced scientific failure is a successful verification.
-The command does not establish sensing performance beyond the original evidence.
+The published kit and software results have saved outputs for offline checks. `make verify-evidence` checks seven named parts of that record by comparing hashes and recomputing arithmetic. Jason directed the build and used local critics to check written claims. The command runs without training, inference, data fetches, or FPGA access. A reproduced scientific failure is a successful evidence check.
 
 ## Install the arithmetic dependencies
 

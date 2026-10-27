@@ -1,6 +1,6 @@
 # Orchestrator (TVW)
 
-TVW started as the Tychon Verification Workbench. I built it on 2026-05-01 to check my own work: every claim in my technical report, which follows the SBIR Phase I final-report format for a proposal not selected on 2026-05-12 and never a contract, tested against the project's own documents, code and data. Two days later, on 2026-05-03, it became the Tychon Orchestration Workbench, the session that hands work to the worker repositories and checks what comes back. The original folder name, `tychon-verification-workbench`, still shows where it started.
+TVW started as the Tychon Verification Workbench. I built it on 2026-05-01 to check my own work: every claim in my technical report tested against the project's own documents, code and data. Two days later, on 2026-05-03, it became the Tychon Orchestration Workbench, the session that hands work to the worker repositories and checks what comes back. The original folder name, `tychon-verification-workbench`, still shows where it started.
 
 ## Why the critics stay local and off the web
 

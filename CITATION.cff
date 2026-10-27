@@ -22,17 +22,13 @@ identifiers:
     description: "Version 1.0.0"
 license: Apache-2.0
 abstract: >-
-  Software for NV-diamond quantum magnetometers built with coding agents:
-  a physics simulator, INT8 edge machine learning, PID plus neural-network
-  control on a PolarFire SoC FPGA, a field-vector tracker, a demo dashboard,
-  and a workbench that checks written claims with local language-model critics.
-  Current validation limits: this project has no live NV-diamond measurement
-  setup. FPGA tests used replayed synthetic spectra. Separate software studies
-  used public measured NV datasets, but incomplete reference labels, calibration
-  records, and independent acquisitions limited the conclusions. The FPGA
-  control path and model inference ran on a development kit with replayed
-  input. These parts are not one integrated sensing system. Reliable sensing
-  and a useful neural advantage over strong classical methods remain unproven.
+  NV-diamond spectrum simulation, scalar and vector field estimation, and
+  bounded neural correction to PID on a PolarFire SoC development kit.
+  A kit-resident processor-paced loop completed an 8.01-hour soak at 3,319 Hz
+  with replayed input. On 512 held-out synthetic spectra, kit INT8 outputs
+  matched CPU INT8 outputs bit for bit. Jason directed coding agents across
+  the build and checked written claims with local language-model critics.
+  The repository links each measurement to its report and conditions.
 authors:
   - family-names: Phillip
     given-names: Jason

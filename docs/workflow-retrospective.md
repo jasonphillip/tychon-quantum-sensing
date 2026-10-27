@@ -1,9 +1,8 @@
 # Agent workflow retrospective
 
-This retrospective covers the review and dispatch records kept in this repository. Sections 1 to 5 use records only and add no new measurements. Their review counts and tables are unchanged since the earlier review.
-An activity audit dated October 16, 2026 is added at the end, in [Activity-count methodology](#activity-count-methodology).
+The review inventory covers 50 audit files and lists 156 numbered findings, with written action recorded for 62. I directed the coding agents and used local critics to check claims. The [case study](case-study.md#how-i-ran-it) traces that workflow; [Activity-count methodology](#activity-count-methodology) records the October 16, 2026 activity audit.
 
-The [case study](case-study.md#how-i-ran-it) explains why I built the workbench without the planned specialists. The [proposal crosswalk](proposal/README.md#work-extended-beyond-the-phase-i-feasibility-plan) records three extensions into areas deferred to Phase II, including a failed model experiment.
+Sections 1 to 5 retain their original counts and tables. The [proposal crosswalk](proposal/README.md#work-extended-beyond-the-phase-i-feasibility-plan) records the later extensions.
 
 ## 1. What was measured and what was not
 

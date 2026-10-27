@@ -4,10 +4,7 @@ Three synthetic quantum workloads ran on a PolarFire SoC development kit on Octo
 In that initial run, CUDA-Q checked representative quantum evolutions and circuits on an NVIDIA GB10 workstation.
 The CPU generated those full datasets. Small classical inference cores then processed frozen records in FPGA fabric.
 
-These experiments extend the project beyond its original SBIR proposal scope.
-They share the board and verification approach described in the [main project](../../README.md).
-They are a separate experimental area, with their own inputs, failure records, and acceptance checks.
-The original [proposal crosswalk](../../docs/proposal/README.md) remains the record of proposed and delivered sensing work.
+Jason directed coding agents through these experiments and used local critics to check written claims. The [main project](../../README.md) links the board and verification reports. Each experiment has its own inputs, failure records and acceptance checks.
 
 ## Continuation: complete CUDA-Q generation and measured readout
 
@@ -15,12 +12,12 @@ The [continuation study](continuation/README.md) adds complete CUDA-Q generation
 CUDA-Q generated all **32,768 quantum probabilities** for 128 fresh effective NV configurations.
 All **1,024 encoded records** matched on the FPGA, including complete 64-bit scores.
 The specialized CPU solver was approximately **8,537 times faster** than the configured CUDA-Q implementation for this four-level model.
-This establishes an integration path without establishing GPU acceleration.
+The [continuation study](continuation/README.md) records the integration path and CPU/GPU timing.
 
 Separate software studies used public measured qubit-readout data.
 The frozen QICK matched filter reached **95.8252%** across 8,192 held-out preparation-labelled records, passing its 90% target.
 The thermal-detector study reached **75.8%** across 1,000 records, below its separate 80% target.
-New measured-data coefficients remain host-only. No acquisition-transfer or calibration benefit is established.
+New measured-data coefficients were evaluated on the host. The continuation records the acquisition and calibration conditions.
 The continuation includes source, provenance mappings, saved-result verification, and clearly labeled AI reviews.
 
 ## Initial measured FPGA results

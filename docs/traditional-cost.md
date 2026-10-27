@@ -1,6 +1,6 @@
 # What this would traditionally cost to build
 
-A repository like this one would take a team of five specialists about nine months to build, roughly $850,000 in pay, benefits and equipment at United States median rates. The table names the five roles and what each one builds.
+I estimate five specialists over about nine months to build this repository by traditional staffing, roughly $850,000 in pay, benefits and equipment at United States median rates. The table names each role, its work, and the cost basis. The repository records kit measurements and the agent-directed build in the [case study](case-study.md).
 
 ## The team
 

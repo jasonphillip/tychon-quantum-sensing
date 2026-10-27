@@ -1,8 +1,6 @@
 # Synthetic ODMR CPU benchmark
 
-From a clean checkout, run this one command at the monorepo root. It creates
-`.venv`, installs CPU PyTorch and both workers into that venv, then runs the
-benchmark. Later runs reuse the venv.
+`make bench` produced 10.53 µT mean field error against a 12.26 µT training-mean baseline on 200 synthetic test spectra, using FP32 CPU inference. Jason directed the coding agents and checked claims with local critics. Run the command at the monorepo root from a clean checkout. It creates `.venv`, installs CPU PyTorch and both workers, then runs the benchmark. Later runs reuse the venv.
 Python 3.11 (the CI route), 3.12 or 3.13 and pip access to PyPI and the PyTorch CPU wheel index are required
 (the Makefile uses `python3.11` when present, otherwise `python3`; override with `BENCH_PY=`).
 CI runs it on Python 3.11; the reference values in `bench/expected.json` were measured with 3.13.11.

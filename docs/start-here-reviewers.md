@@ -1,15 +1,10 @@
 # A 20-minute reviewer path
 
-This path separates synthetic evaluation, recorded kit tests and work still pending.
-Allow 20 minutes for reading. Installation and benchmark runtime are additional.
-Keep the [glossary](glossary.md) open for unfamiliar terms.
+This path starts with measured kit results and follows their source reports. Allow 20 minutes for reading. Installation and benchmark runtime are additional. Keep the [glossary](glossary.md) open for unfamiliar terms.
 
-## Minutes 0–2: establish the scope
+## Minutes 0–2: inspect the kit results
 
-Read the [README](../README.md), especially **Demonstrated state** and **Three workstreams, one coordinator**.
-The controller used replayed synthetic spectra on a PolarFire SoC development kit.
-No live diamond sensor was connected.
-The scalar controller, vector tracker and CPU benchmark have different evidence and limits.
+Read the [README](../README.md), especially **Representative results** and **Three workstreams, one coordinator**. The PolarFire SoC development kit ran a processor-paced loop at 3,319 Hz over an eight-hour soak with replayed input. Open the [soak report](../workers/polarfire-hybrid-control/docs/mss_paced_loop_measured_2026-07-02.md) for the counters and conditions. Jason directed the coding agents, and local critics checked written claims against repository evidence.
 
 ## Minutes 2–5: reproduce the CPU benchmark, or inspect its records
 
@@ -57,7 +52,7 @@ Read [engineering decision 2: watchdog fallback](engineering-decisions.md#2-test
 Follow its links to the test plan and before/after raw summaries.
 Compare a counted watchdog trip with an observed PID-only controller update.
 The decision record describes the software correction and remaining processor-freeze and recovery-step limitations.
-This is a recorded kit investigation; it does not establish physical actuator or live-sensor behavior.
+This is a recorded kit investigation with replayed input.
 
 ## Minutes 12–14: read the pre-registered comparison study
 
@@ -92,6 +87,8 @@ To check it yourself, run the record's offline checker on the published predicti
 Optional follow-on: the [known-axis bias comparison](../workers/odmr-edge-ml/docs/scalar_bias_design_2026-10.md) is a separate, changed task (field along one known axis, classical fit only). Its record gives two NumPy-only commands that recompute the development and sealed-evaluation metrics from the saved arrays; set `CHECKOUT` to the `workers/odmr-edge-ml` folder of this checkout.
 
 ## Minutes 19–20: resolve terms and record open questions
+
+The kit controller used replayed synthetic spectra. The scalar controller, vector tracker and CPU benchmark have different evidence and limits. [Results and limits](case-study.md#results-and-limits) keeps the full account.
 
 Use the [glossary](glossary.md) for ODMR, FP32, INT8, PID, VectorBlox and V250.
 Record the commit, workflow run and report date you inspected.
