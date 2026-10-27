@@ -101,7 +101,7 @@ Without funding for that team, I continued alone with AI agents, owning the arch
 
 The project connects five workstreams: physics simulation, edge ML, FPGA control, vector tracking, and technical verification. A conservative audit of selected archived LLM records counted **1,357 submitted interactions**, **217 identified conversations and coding sessions**, and **113 distinct activity dates**, from July 2, 2025 through October 15, 2026. [Methodology and aggregate data](https://github.com/jasonphillip/tychon-quantum-sensing/blob/main/docs/workflow-retrospective.md#activity-count-methodology).
 
-Built the traditional way, this repository would take a team of five specialists about nine months, roughly $850,000 at United States median pay rates ([how that is estimated](docs/traditional-cost.md)).
+Built the traditional way, this repository would take a team of five specialists about nine months ([how that is estimated](docs/traditional-cost.md)).
 
 ## Where to go
 
