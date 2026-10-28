@@ -36,7 +36,7 @@ The workflow does not upload `bench/results.json` as an artifact.
 Reference values and thresholds are recorded evidence, not a new measurement.
 A successful run for another commit does not establish the result for your checkout.
 
-For a fixed archival reference, [CITATION.cff](../CITATION.cff) identifies version 1.1.0, released 2026-10-23.
+For a fixed archival reference, [CITATION.cff](../CITATION.cff) identifies version 1.2.0, released 2026-10-28.
 Its [version DOI](https://doi.org/10.5281/zenodo.23323385) is an archive fallback.
 Check its contents before using it for later evidence, including the kit report dated 2026-10-14.
 
