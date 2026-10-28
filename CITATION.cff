@@ -5,17 +5,20 @@ type: software
 title: "Tychon quantum sensing: an agent-orchestrated NV-magnetometer build"
 version: 1.2.0
 date-released: "2026-10-28"
-doi: 10.5281/zenodo.23323384
+doi: 10.5281/zenodo.23732019
 identifiers:
   - type: doi
     value: 10.5281/zenodo.23323384
     description: "Concept DOI; resolves to the latest version"
   - type: doi
+    value: 10.5281/zenodo.23732019
+    description: "Version 1.2.0"
+  - type: url
+    value: "https://zenodo.org/records/23732019"
+    description: "Zenodo record for version 1.2.0"
+  - type: doi
     value: 10.5281/zenodo.23599431
     description: "Version 1.1.0"
-  - type: url
-    value: "https://zenodo.org/records/23599431"
-    description: "Zenodo record for version 1.1.0"
   - type: doi
     value: 10.5281/zenodo.23323385
     description: "Version 1.0.0"
