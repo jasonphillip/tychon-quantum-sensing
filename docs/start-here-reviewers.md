@@ -4,7 +4,7 @@ This path starts with measured kit results and follows their source reports. All
 
 ## Minutes 0–2: inspect the kit results
 
-Read the [README](../README.md), especially **Representative results** and **Three workstreams, one coordinator**. The PolarFire SoC development kit ran a processor-paced loop at 3,319 Hz over an eight-hour soak with replayed input. Open the [soak report](../workers/polarfire-hybrid-control/docs/mss_paced_loop_measured_2026-07-02.md) for the counters and conditions. Jason directed the coding agents, and local critics checked written claims against repository evidence.
+Read the [README](../README.md), especially **Representative results** and **How it was built**. The PolarFire SoC development kit ran a processor-paced loop at 3,319 Hz over an eight-hour soak with replayed input. Open the [soak report](../workers/polarfire-hybrid-control/docs/mss_paced_loop_measured_2026-07-02.md) for the counters and conditions. Jason directed the coding agents, and local critics checked written claims against repository evidence.
 
 ## Minutes 2–5: reproduce the CPU benchmark, or inspect its records
 

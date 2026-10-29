@@ -80,22 +80,13 @@ All 1,024 resulting records matched on the FPGA, including full-width scores.
 On public measured data, a separate host-only classifier reached **95.83% preparation-label agreement on 8,192 held-out qubit-readout records**.
 The continuation records the thermal-detector test and CPU/GPU timings.
 
-## Three workstreams, one coordinator
+## How it was built
 
 Coding agents wrote most of the code from my specifications. I set the direction, relayed work between sessions, and reviewed results. The [human steering record](planning/excerpts/human-steering.md) preserves concrete interventions; [what the models could not do](planning/excerpts/what-the-models-could-not-do.md) records their limits.
 
 The original three worker repositories had separate agent sessions. A planning session coordinated their inputs and outputs. I initially pasted prompts and replies between sessions; later work used file-based dispatches. A fourth worker added vector tracking. Their histories are preserved here.
 
-```mermaid
-flowchart LR
-  J["Jason: requirements and review"] <--> O["Planning and coordination"]
-  O --> S["Spectrum simulation"]
-  O --> M["Model training and evaluation"]
-  O --> F["FPGA control and firmware"]
-  S -->|"synthetic spectra"| M
-  M -->|"INT8 model"| F
-  S --> T["Vector tracking: separate software studies"]
-```
+![Agentic hardware-in-the-loop R&D, drawn in four columns. The engineer works from a terminal session, with approval gates, project memory and research corpora. Retrieval, verification, skills and providers, and lane dispatch sit in an agent harness around an AI orchestrator. The hardware lab is a DGX Spark cluster, a Beelink with the Microchip FPGA toolchain, and the PolarFire SoC Icicle Kit. The lab automation column shows the bench layer, the build and test pipeline, the scheduler and the worker lanes, joined by two-way links.](docs/media/agentic-hardware-rd-2026-10-29.png)
 
 The [simulator](workers/nv-sensor-sim/), [scalar models](workers/odmr-edge-ml/), [FPGA controller](workers/polarfire-hybrid-control/), and [vector tracker](workers/odmr-vector-tracking/) remain separate components. Processor software starts each kit controller update. The fabric clamp remains, but watchdog recovery still depends on processor execution. [Controller scope and safety limits](workers/polarfire-hybrid-control/README.md#safety-architecture).
 
